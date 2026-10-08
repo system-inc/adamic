@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-457-array-carrier/wrong-arity
+    checked_views_callable_share_b_test.go:102: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.updateTypeReferenceNode expected (node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined) => TypeReferenceNode, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466-array-carrier/wrong-arity
+    checked_views_callable_share_b_test.go:102: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList expected (elements: readonly Expression[]) => NodeArray<Expression>, found function with arity 0\n"
+--- FAIL: TestCheckedViewCallableShareBFamilies (1.09s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-457-array-carrier/wrong-arity (0.55s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-466-array-carrier/wrong-arity (0.54s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.097s
+FAIL

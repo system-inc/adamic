@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ModuleBlock { readonly value: number; }
+interface Statement { readonly value: number; }
+interface Base {readonly updateModuleBlock:unknown;}
+interface Target {updateModuleBlock(node: ModuleBlock, statements: readonly Statement[]): ModuleBlock;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.updateModuleBlock({value:3},[{value:3}]).value}`);}
+probe({updateModuleBlock:():ModuleBlock=>{return {value:3};}});

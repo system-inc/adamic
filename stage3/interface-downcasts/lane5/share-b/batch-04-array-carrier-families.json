@@ -1,0 +1,81 @@
+[
+  {
+    "rank": 457,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeReferenceNode",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 7597,
+      "column": 28
+    },
+    "read": "factory.updateTypeReferenceNode",
+    "call": "factory.updateTypeReferenceNode(\r\n                        root,\r\n                        typeName,\r\n                        typeArguments,\r\n                    )",
+    "utf16Start": 413291,
+    "utf16End": 413322,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "updateTypeReferenceNode(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined): TypeReferenceNode;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "expected": "(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined) => TypeReferenceNode",
+    "directory": "rank-457-array-carrier",
+    "resultType": "TypeReferenceNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ],
+    "carrierDeclarations": [
+      "interface NodeArray<T> extends ReadonlyArray<T> {}"
+    ]
+  },
+  {
+    "rank": 466,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExpressionsOfCommaDelimitedList",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2855,
+      "column": 25
+    },
+    "read": "parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList",
+    "call": "parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList(elementsArray)",
+    "utf16Start": 116748,
+    "utf16End": 116812,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeExpressionsOfCommaDelimitedList(elements: readonly Expression[]): NodeArray<Expression>;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "expected": "(elements: readonly Expression[]) => NodeArray<Expression>",
+    "directory": "rank-466-array-carrier",
+    "resultType": "NodeArray<Expression>",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [
+      "interface NodeArray<T> extends ReadonlyArray<T> {}"
+    ]
+  }
+]

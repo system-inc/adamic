@@ -112,6 +112,27 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 64,
+    "pair": "typeof tracingEnabled | undefined.push",
+    "reads": 26,
+    "read": "tracing?.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-64/contract-probe.a:16:90: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "callable parameter contracts for Phase and the recursive Args index signature",
+    "fixture": "rank-64/contract-probe.a",
+    "basis": "original namespace signature admission probe; no intrinsic execution or host certification claimed"
+  },
+  {
+    "rank": 97,
+    "pair": "SymbolTable | undefined.get",
+    "reads": 18,
+    "read": "topNamespace.parent.parent.symbol.exports?.get",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion and immutable intrinsic signatures for the original get contract",
+    "fixture": "rank-97/actual-map.a",
+    "basis": "actual Map receiver; original string brand aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: topNamespace.parent.parent.symbol.exports?.get expected (key: __String) => Symbol | undefined, found function with unknown signature\n"
+  },
+  {
     "rank": 112,
     "pair": "Map<string, boolean>.get",
     "reads": 15,
@@ -131,6 +152,16 @@
     "needed": "original overload-set callable descriptors and overload selection checks",
     "fixture": "rank-130/contract-probe.a",
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 169,
+    "pair": "typeof import(\"fs\").writeSync",
+    "reads": 11,
+    "read": "fs.writeSync",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-169/contract-probe.a:30:85: Adamic 0.1 refuses checked view read of field writeSync with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "overloaded external callable contracts and Node byte-view receiver/signature metadata",
+    "fixture": "rank-169/contract-probe.a",
+    "basis": "original namespace signature admission probe; no intrinsic execution or host certification claimed"
   },
   {
     "rank": 172,
@@ -226,6 +257,17 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 229,
+    "pair": "Map<string, CommandLineOption>.get",
+    "reads": 7,
+    "read": "optionsNameMap.get",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion and immutable intrinsic signatures for the original get contract",
+    "fixture": "rank-229/actual-map.a",
+    "basis": "actual Map receiver; original string brand aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: optionsNameMap.get expected (key: string) => CommandLineOption | undefined, found function with unknown signature\n"
+  },
+  {
     "rank": 232,
     "pair": "Map<string, string>.has",
     "reads": 7,
@@ -286,6 +328,27 @@
     "needed": "nested optional AnyFunction callback contract with rest-never parameters",
     "fixture": "rank-262/contract-probe.a",
     "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 265,
+    "pair": "typeof tracingEnabled | undefined.instant",
+    "reads": 7,
+    "read": "tracing?.instant",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-265/contract-probe.a:16:90: Adamic 0.1 refuses checked view read of field instant with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "callable parameter contracts for Phase and the recursive Args index signature",
+    "fixture": "rank-265/contract-probe.a",
+    "basis": "original namespace signature admission probe; no intrinsic execution or host certification claimed"
+  },
+  {
+    "rank": 280,
+    "pair": "Map<Path, ParsedConfig> | undefined.get",
+    "reads": 6,
+    "read": "parsedConfigs?.get",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-280/actual-map.a:3:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "needed": "original Path brand admission or a proven checked adapter preserving its any-typed __pathBrand declaration",
+    "fixture": "rank-280/actual-map.a",
+    "basis": "actual Map receiver; original string brand aliases retained",
+    "expectedJavaScript": null
   },
   {
     "rank": 283,

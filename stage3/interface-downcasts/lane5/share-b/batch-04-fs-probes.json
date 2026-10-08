@@ -1,0 +1,31 @@
+[
+  {
+    "rank": 169,
+    "type": "typeof import(\"fs\")",
+    "field": "writeSync",
+    "candidateReads": 11,
+    "witness": {
+      "file": "src/compiler/tracing.ts",
+      "line": 99,
+      "column": 9
+    },
+    "read": "fs.writeSync",
+    "declaration": "readonly writeSync: {(\n        fd: number,\n        buffer: NodeJS.ArrayBufferView,\n        offset?: number | null,\n        length?: number | null,\n        position?: number | null,\n    ): number;\n(\n        fd: number,\n        string: string,\n        position?: number | null,\n        encoding?: BufferEncoding | null,\n    ): number;};",
+    "originalFunctionHeaders": [
+      "function writeSync(\n        fd: number,\n        buffer: NodeJS.ArrayBufferView,\n        offset?: number | null,\n        length?: number | null,\n        position?: number | null,\n    ): number;",
+      "function writeSync(\n        fd: number,\n        string: string,\n        position?: number | null,\n        encoding?: BufferEncoding | null,\n    ): number;"
+    ],
+    "declarationFile": "stage3/fixtures/assertions/api/node_modules/@types/node/fs.d.ts",
+    "declarationRoot": "repository",
+    "declarationSha256": "f96a48183254c00d24575401f1a761b4ce4927d927407e7862a83e06ce5d6964",
+    "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "utf16Start": 3087,
+    "utf16End": 3099,
+    "filename": "rank-169/contract-probe.a",
+    "output": "number\n",
+    "refusal": "checked view read of field writeSync with unsupported callable contract",
+    "externalPackage": "@types/node",
+    "externalVersion": "25.3.3",
+    "adjacentBasis": "byte view carrier reduced; BufferEncoding declaration retained; overload admission only, no external host certification"
+  }
+]

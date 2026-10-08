@@ -5,6 +5,23 @@ const crypto = require('crypto');
 const ts = require(path.join(process.argv[2], 'lib/typescript.js'));
 const families = JSON.parse(fs.readFileSync(path.join(__dirname, process.env.ADAMIC_CALLABLE_SHARE_B_FAMILIES || 'families.json')));
 const normalized = text => text.replace(/\s+/g, '');
+const repository = path.resolve(__dirname, '../../../..');
+const carrierText = text => normalized(text.replace(/^export\s+/, '').replace(/^const\s+enum/, 'enum'));
+function verifyCarriers(source, member, filename) {
+ for (const declaration of member.carrierDeclarations || []) {
+  if (!source.statements.some(node => carrierText(node.getText(source)) === carrierText(declaration))) throw Error(filename + ': carrier declaration changed');
+  if (member.carrierSource || member.originalFunctionHeaders && member.declarationRoot !== 'repository') {
+   const evidence = member.carrierSource || {filename: member.declarationFile, sha256: member.declarationSha256};
+   const bytes = fs.readFileSync(path.join(process.argv[2], evidence.filename));
+   if (crypto.createHash('sha256').update(bytes).digest('hex') !== evidence.sha256) throw Error('carrier source changed');
+   const original = ts.createSourceFile(evidence.filename, bytes.toString('utf8'), ts.ScriptTarget.Latest, true);
+   let found = false;
+   function visit(node) { if (carrierText(node.getText(original)) === carrierText(declaration)) found = true; ts.forEachChild(node, visit); }
+   visit(original);
+   if (!found) throw Error(filename + ': carrier provenance changed');
+  }
+ }
+}
 let count = 0;
 for (const family of families) {
  const bytes = fs.readFileSync(path.join(process.argv[2], family.witness.file));
@@ -19,6 +36,9 @@ for (const family of families) {
   // In-memory mutations prove the source-declaration and enum evidence pins.
   if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '535' && family.rank === 535 && variant === 'good') fixtureText = fixtureText.replace('node: Node','node: number');
   if (process.env.ADAMIC_CALLABLE_SHARE_B_ENUM_MUTANT === '175' && family.rank === 175 && variant === 'good') fixtureText = fixtureText.replace(/Let\s*= 1 << 0/,'Let = 1 << 1');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '469' && family.rank === 469 && variant === 'good') fixtureText = fixtureText.replace('hint: EmitHint', 'hint: number');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_ENUM_MUTANT === '469' && family.rank === 469 && variant === 'good') fixtureText = fixtureText.replace('SourceFile,', 'SourceFile = 1,');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_ARRAY_MUTANT === '466' && family.rank === 466 && variant === 'good') fixtureText = fixtureText.replace('interface NodeArray<T> extends ReadonlyArray<T> {}', 'interface NodeArray<T> { readonly value: number; }');
   const source = ts.createSourceFile(file,fixtureText,ts.ScriptTarget.Latest,true);
   let declaration, read;
   function visit(node) {
@@ -38,6 +58,7 @@ for (const family of families) {
    function find(n) {if(ts.isEnumDeclaration(n)&&n.name.text===carrier.name) originalEnum=n;ts.forEachChild(n,find);}find(original);
    if (!originalEnum || normalized(originalEnum.getText(original).replace(/^export\s+/,'').replace(/^const\s+enum/,'enum'))!==normalized(carrier.declaration)) throw Error('enum provenance changed');
   }
+  verifyCarriers(source, family, file);
   count++;
  }
 }
@@ -55,7 +76,7 @@ for (const member of blocked) {
  if (normalized(declarations.join('\n')) !== normalized(member.declaration) || !read) throw Error(files[member.rank] + ': original blocker declaration/read changed');
 }
 
-const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
+const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json','batch-04-tracing-probes.json','batch-04-map-probes.json','batch-04-fs-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
 const optional = JSON.parse(fs.readFileSync(path.join(__dirname,'batch-02-original.json'))).members.find(m=>m.rank===205);
 for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
  const source = ts.createSourceFile(member.filename,fs.readFileSync(path.join(__dirname,member.filename),'utf8'),ts.ScriptTarget.Latest,true);
@@ -66,10 +87,13 @@ for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
   ts.forEachChild(node,visit);
  }
  visit(source);
- for (const [file,hash] of [[member.witness.file,member.fileSha256],[member.declarationFile,member.declarationSha256]]) {
-  if (crypto.createHash('sha256').update(fs.readFileSync(path.join(process.argv[2],file))).digest('hex')!==hash) throw Error('original source changed '+file);
+ const declarationRoot = member.declarationRoot === 'repository' ? repository : process.argv[2];
+ for (const [root,file,hash] of [[process.argv[2],member.witness.file,member.fileSha256],[declarationRoot,member.declarationFile,member.declarationSha256]]) {
+  if (crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')!==hash) throw Error('original source changed '+file);
  }
- for (const header of member.originalFunctionHeaders || []) {if(!fs.readFileSync(path.join(process.argv[2],member.declarationFile),'utf8').includes(header)) throw Error('namespace function header changed');}
+ if (member.utf16Start !== undefined && fs.readFileSync(path.join(process.argv[2],member.witness.file),'utf8').slice(member.utf16Start,member.utf16End) !== member.read) throw Error('original probe read span changed');
+ verifyCarriers(source, member, member.filename);
+ for (const header of member.originalFunctionHeaders || []) {if(!fs.readFileSync(path.join(declarationRoot,member.declarationFile),'utf8').includes(header)) throw Error('namespace function header changed');}
  if (normalized(declarations.join('\n'))!==normalized(member.declaration)||!read) throw Error(member.filename+': original declaration/read changed');
 }
 console.log('Verified ' + families.length + ' pairs / ' + families.reduce((n,f)=>n+f.candidateReads,0) + ' candidate reads in ' + count + ' original-member fixtures.');

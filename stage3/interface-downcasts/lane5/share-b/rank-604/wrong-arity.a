@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ExportAssignment { readonly value: number; }
+interface ModifierLike { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly updateExportAssignment:unknown;}
+interface Target {updateExportAssignment(node: ExportAssignment, modifiers: readonly ModifierLike[] | undefined, expression: Expression): ExportAssignment;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateExportAssignment({value:3},[{value:3}],{value:3}).value}`);}
+probe({updateExportAssignment:():ExportAssignment=>{return {value:3};}});

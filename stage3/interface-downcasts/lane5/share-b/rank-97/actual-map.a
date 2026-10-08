@@ -1,0 +1,29 @@
+// Original member/read/key aliases; adjacent result object reduced.
+interface Symbol {readonly value:number;}
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+enum InternalSymbolName {
+    Call = "__call", // Call signatures
+    Constructor = "__constructor", // Constructor implementations
+    New = "__new", // Constructor signatures
+    Index = "__index", // Index signatures
+    ExportStar = "__export", // Module export * declarations
+    Global = "__global", // Global self-reference
+    Missing = "__missing", // Indicates missing symbol
+    Type = "__type", // Anonymous type literal symbol
+    Object = "__object", // Anonymous object literal declaration
+    JSXAttributes = "__jsxAttributes", // Anonymous JSX attributes object literal declaration
+    Class = "__class", // Unnamed class expression
+    Function = "__function", // Unnamed function expression
+    Computed = "__computed", // Computed property name declaration with dynamic name
+    Resolving = "__resolving__", // Indicator symbol used to mark partially resolved type aliases
+    ExportEquals = "export=", // Export assignment symbol
+    Default = "default", // Default export symbol (technically not wholly internal, but included here for usability)
+    This = "this",
+    InstantiationExpression = "__instantiationExpression", // Instantiation expressions
+    ImportAttributes = "__importAttributes",
+}
+type SymbolTable = Map<__String, Symbol>;
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const topNamespace={parent:{parent:{symbol:{exports:value as Target<__String,Symbol>}}}};const result=topNamespace.parent.parent.symbol.exports?.get(InternalSymbolName.Call);if(result!==undefined){console.log(`${result.value}`);}}
+const map=new Map<__String,Symbol>();map.set(InternalSymbolName.Call,{value:3});probe(map);

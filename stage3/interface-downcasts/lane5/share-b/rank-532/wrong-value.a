@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface Base {readonly createRewriteRelativeImportExtensionsHelper:unknown;}
+interface Target {createRewriteRelativeImportExtensionsHelper(expression: Expression): Expression;}
+function probe(value:Base):void {function emitHelpers():Target {return value as Target;}console.log(`${emitHelpers().createRewriteRelativeImportExtensionsHelper({value:3}).value}`);}
+probe({createRewriteRelativeImportExtensionsHelper:7});

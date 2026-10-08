@@ -1,0 +1,7 @@
+// Original member/read/key aliases; adjacent result object reduced.
+interface CommandLineOption {readonly value:number;}
+
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const optionsNameMap=value as Target<string,CommandLineOption>;const result=optionsNameMap.get("value3");if(result!==undefined){console.log(`${result.value}`);}}
+const map=new Map<string,CommandLineOption>();map.set("value3",{value:3});probe(map);

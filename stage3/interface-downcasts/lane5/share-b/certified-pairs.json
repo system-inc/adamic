@@ -150,6 +150,16 @@
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
   },
   {
+    "rank": 373,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getResolvedProjectReferences",
+    "candidateReads": 5,
+    "directory": "rank-373",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 376,
     "receiver_type_id": 9939,
     "type": "Program",
@@ -208,6 +218,26 @@
     "directory": "rank-400",
     "certified": true,
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
+  },
+  {
+    "rank": 403,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getReferencedExportContainer",
+    "candidateReads": 4,
+    "directory": "rank-403",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 409,
+    "receiver_type_id": 95248,
+    "type": "HostForUseSourceOfProjectReferenceRedirect",
+    "field": "getResolvedProjectReferences",
+    "candidateReads": 4,
+    "directory": "rank-409",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 412,
@@ -305,9 +335,9 @@
     "type": "NodeFactory",
     "field": "updateTypeReferenceNode",
     "candidateReads": 4,
-    "directory": "rank-457",
+    "directory": "rank-457-array-carrier",
     "certified": true,
-    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+    "basis": "original member/read with NodeArray<T> extends ReadonlyArray<T>; original array representation retained; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 466,
@@ -315,9 +345,19 @@
     "type": "ParenthesizerRules",
     "field": "parenthesizeExpressionsOfCommaDelimitedList",
     "candidateReads": 4,
-    "directory": "rank-466",
+    "directory": "rank-466-array-carrier",
     "certified": true,
-    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+    "basis": "original member/read with NodeArray<T> extends ReadonlyArray<T>; original array representation retained; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 469,
+    "receiver_type_id": 12132,
+    "type": "Printer",
+    "field": "writeNode",
+    "candidateReads": 4,
+    "directory": "rank-469",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 478,
@@ -350,6 +390,16 @@
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 490,
+    "receiver_type_id": 8229,
+    "type": "System",
+    "field": "writeFile",
+    "candidateReads": 4,
+    "directory": "rank-490",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 526,
     "receiver_type_id": 12054,
     "type": "EmitHelperFactory",
@@ -358,6 +408,16 @@
     "directory": "rank-526",
     "certified": true,
     "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 532,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createRewriteRelativeImportExtensionsHelper",
+    "candidateReads": 3,
+    "directory": "rank-532",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 535,
@@ -400,6 +460,116 @@
     "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 580,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createAssignmentTargetWrapper",
+    "candidateReads": 3,
+    "directory": "rank-580",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 583,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createConstructorTypeNode",
+    "candidateReads": 3,
+    "directory": "rank-583",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 586,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createImportAttribute",
+    "candidateReads": 3,
+    "directory": "rank-586",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 589,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createLoopVariable",
+    "candidateReads": 3,
+    "directory": "rank-589",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 595,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createPostfixIncrement",
+    "candidateReads": 3,
+    "directory": "rank-595",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 598,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createThisTypeNode",
+    "candidateReads": 3,
+    "directory": "rank-598",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 601,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateCaseBlock",
+    "candidateReads": 3,
+    "directory": "rank-601",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 604,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateExportAssignment",
+    "candidateReads": 3,
+    "directory": "rank-604",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 607,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateModuleBlock",
+    "candidateReads": 3,
+    "directory": "rank-607",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 610,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateQualifiedName",
+    "candidateReads": 3,
+    "directory": "rank-610",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 613,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateSwitchStatement",
+    "candidateReads": 3,
+    "directory": "rank-613",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 622,
     "receiver_type_id": 9939,
     "type": "Program",
@@ -418,6 +588,26 @@
     "directory": "rank-634",
     "certified": true,
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
+  },
+  {
+    "rank": 649,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "getAllAccessorDeclarations",
+    "candidateReads": 3,
+    "directory": "rank-649",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 661,
+    "receiver_type_id": 9940,
+    "type": "TypeCheckerHost",
+    "field": "isSourceFileDefaultLibrary",
+    "candidateReads": 3,
+    "directory": "rank-661",
+    "certified": true,
+    "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 748,

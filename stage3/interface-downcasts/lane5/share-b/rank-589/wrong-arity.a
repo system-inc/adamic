@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Identifier { readonly value: number; }
+interface Base {readonly createLoopVariable:unknown;}
+interface Target {createLoopVariable(reservedInNestedScopes?: boolean): Identifier;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createLoopVariable(true).value}`);}
+probe({createLoopVariable:():Identifier=>{return {value:3};}});

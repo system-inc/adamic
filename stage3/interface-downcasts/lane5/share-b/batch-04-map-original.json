@@ -1,0 +1,75 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 97,
+      "receiver_type_id": 8812,
+      "type": "SymbolTable | undefined",
+      "field": "get",
+      "candidateReads": 18,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 906,
+        "column": 35
+      },
+      "read": "topNamespace.parent.parent.symbol.exports?.get",
+      "call": "topNamespace.parent.parent.symbol.exports?.get(\"export=\" as __String)",
+      "utf16Start": 42828,
+      "utf16End": 42874,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declaration": "get(key: K): V | undefined;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 229,
+      "receiver_type_id": 11271,
+      "type": "Map<string, CommandLineOption>",
+      "field": "get",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2146,
+        "column": 12
+      },
+      "read": "optionsNameMap.get",
+      "call": "optionsNameMap.get(optionName)",
+      "utf16Start": 83190,
+      "utf16End": 83208,
+      "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "declaration": "get(key: K): V | undefined;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 280,
+      "receiver_type_id": 100577,
+      "type": "Map<Path, ParsedConfig> | undefined",
+      "field": "get",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 674,
+        "column": 32
+      },
+      "read": "parsedConfigs?.get",
+      "call": "parsedConfigs?.get(configPath)",
+      "utf16Start": 33333,
+      "utf16End": 33351,
+      "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+      "declaration": "get(key: K): V | undefined;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    }
+  ]
+}

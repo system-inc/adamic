@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ThisTypeNode { readonly value: number; }
+interface Base {readonly createThisTypeNode:unknown;}
+interface Target {createThisTypeNode(): ThisTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createThisTypeNode().value}`);}
+probe({createThisTypeNode:7});

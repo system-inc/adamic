@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly writeFile:unknown;}
+interface Target {writeFile(path: string, data: string, writeByteOrderMark?: boolean): void;}
+function probe(value:Base):void {const sys=value as Target;sys.writeFile("value3","value3",true);}
+probe({writeFile:7});

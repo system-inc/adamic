@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface PostfixUnaryExpression { readonly value: number; }
+interface Base {readonly createPostfixIncrement:unknown;}
+interface Target {createPostfixIncrement(operand: Expression): PostfixUnaryExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createPostfixIncrement({value:3}).value}`);}
+probe({createPostfixIncrement:():PostfixUnaryExpression=>{return {value:3};}});

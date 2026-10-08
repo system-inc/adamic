@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeReferenceNode { readonly value: number; }
+interface EntityName { readonly value: number; }
+interface NodeArray<T> extends ReadonlyArray<T> {}
+interface TypeNode { readonly value: number; }
+interface Base {readonly updateTypeReferenceNode:unknown;}
+interface Target {updateTypeReferenceNode(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined): TypeReferenceNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.updateTypeReferenceNode({value:3},{value:3},[{value:3}]).value}`);}
+probe({updateTypeReferenceNode:(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined):number=>9});

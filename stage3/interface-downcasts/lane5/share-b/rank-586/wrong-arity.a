@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ImportAttributeName { readonly value: number; }
+interface Expression { readonly value: number; }
+interface ImportAttribute { readonly value: number; }
+interface Base {readonly createImportAttribute:unknown;}
+interface Target {createImportAttribute(name: ImportAttributeName, value: Expression): ImportAttribute;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createImportAttribute({value:3},{value:3}).value}`);}
+probe({createImportAttribute:():ImportAttribute=>{return {value:3};}});

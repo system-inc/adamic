@@ -1,0 +1,7 @@
+// Original member/read/key aliases; adjacent result object reduced.
+interface ParsedConfig {readonly value:number;}
+type Path = string & { __pathBrand: any; };
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const parsedConfigs=value as Target<Path,ParsedConfig>;const result=parsedConfigs?.get("value3" as Path);if(result!==undefined){console.log(`${result.value}`);}}
+const map=new Map<Path,ParsedConfig>();map.set("value3" as Path,{value:3});probe(map);

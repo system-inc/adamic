@@ -1,0 +1,31 @@
+// Original writeSync overloads; adjacent byte-view carrier reduced for admission only.
+import * as NodeJS from "./node-byte-view.a";
+type BufferEncoding =
+            | "ascii"
+            | "utf8"
+            | "utf-8"
+            | "utf16le"
+            | "utf-16le"
+            | "ucs2"
+            | "ucs-2"
+            | "base64"
+            | "base64url"
+            | "latin1"
+            | "binary"
+            | "hex";
+interface Base {readonly writeSync:unknown;}
+interface Target {readonly writeSync: {(
+        fd: number,
+        buffer: NodeJS.ArrayBufferView,
+        offset?: number | null,
+        length?: number | null,
+        position?: number | null,
+    ): number;
+(
+        fd: number,
+        string: string,
+        position?: number | null,
+        encoding?: BufferEncoding | null,
+    ): number;};}
+function probe(value:Base):void {const fs:Target=value as Target;console.log(typeof fs.writeSync);}
+probe({writeSync:7});

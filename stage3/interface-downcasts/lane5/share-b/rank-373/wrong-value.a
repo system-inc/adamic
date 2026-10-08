@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ResolvedProjectReference { readonly value: number; }
+interface Base {readonly getResolvedProjectReferences:unknown;}
+interface Target {getResolvedProjectReferences(): readonly (ResolvedProjectReference | undefined)[] | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program!.getResolvedProjectReferences();if (result !== undefined) {for (const element of result) {if (element !== undefined) {console.log(`${element.value}`);}}}}
+probe({getResolvedProjectReferences:7});

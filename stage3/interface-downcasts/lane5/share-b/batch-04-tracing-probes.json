@@ -1,0 +1,58 @@
+[
+  {
+    "rank": 64,
+    "type": "typeof tracingEnabled | undefined",
+    "field": "push",
+    "candidateReads": 26,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 1345,
+      "column": 5
+    },
+    "read": "tracing?.push",
+    "declaration": "readonly push: (phase: Phase, name: string, args?: Args, separateBeginAndEnd?: boolean) => void;",
+    "originalFunctionHeaders": [
+      "export function push(phase: Phase, name: string, args?: Args, separateBeginAndEnd = false): void"
+    ],
+    "carrierDeclarations": [
+      "interface Args {\n        [key: string]: string | number | boolean | null | undefined | Args | readonly (string | number | boolean | null | undefined | Args)[]; // eslint-disable-line no-restricted-syntax\n    }",
+      "enum Phase {\n        Parse = \"parse\",\n        Program = \"program\",\n        Bind = \"bind\",\n        Check = \"check\", // Before we get into checking types (e.g. checkSourceFile)\n        CheckTypes = \"checkTypes\",\n        Emit = \"emit\",\n        Session = \"session\",\n    }"
+    ],
+    "declarationFile": "src/compiler/tracing.ts",
+    "declarationSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "utf16Start": 74947,
+    "utf16End": 74960,
+    "filename": "rank-64/contract-probe.a",
+    "output": "number\n",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 265,
+    "type": "typeof tracingEnabled | undefined",
+    "field": "instant",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 18171,
+      "column": 33
+    },
+    "read": "tracing?.instant",
+    "declaration": "readonly instant: (phase: Phase, name: string, args?: Args) => void;",
+    "originalFunctionHeaders": [
+      "export function instant(phase: Phase, name: string, args?: Args): void"
+    ],
+    "carrierDeclarations": [
+      "interface Args {\n        [key: string]: string | number | boolean | null | undefined | Args | readonly (string | number | boolean | null | undefined | Args)[]; // eslint-disable-line no-restricted-syntax\n    }",
+      "enum Phase {\n        Parse = \"parse\",\n        Program = \"program\",\n        Bind = \"bind\",\n        Check = \"check\", // Before we get into checking types (e.g. checkSourceFile)\n        CheckTypes = \"checkTypes\",\n        Emit = \"emit\",\n        Session = \"session\",\n    }"
+    ],
+    "declarationFile": "src/compiler/tracing.ts",
+    "declarationSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "utf16Start": 1056856,
+    "utf16End": 1056872,
+    "filename": "rank-265/contract-probe.a",
+    "output": "number\n",
+    "refusal": "checked view read of field instant with unsupported callable contract"
+  }
+]

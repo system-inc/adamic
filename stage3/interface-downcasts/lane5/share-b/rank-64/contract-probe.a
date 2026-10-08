@@ -1,0 +1,17 @@
+// Original tracing declarations; false default represented as optional boolean.
+interface Args {
+        [key: string]: string | number | boolean | null | undefined | Args | readonly (string | number | boolean | null | undefined | Args)[]; // eslint-disable-line no-restricted-syntax
+    }
+enum Phase {
+        Parse = "parse",
+        Program = "program",
+        Bind = "bind",
+        Check = "check", // Before we get into checking types (e.g. checkSourceFile)
+        CheckTypes = "checkTypes",
+        Emit = "emit",
+        Session = "session",
+    }
+interface Base {readonly push:unknown;}
+interface Target {readonly push: (phase: Phase, name: string, args?: Args, separateBeginAndEnd?: boolean) => void;}
+function probe(value:Base):void {const tracing:Target=value as Target;console.log(typeof tracing?.push);}
+probe({push:7});

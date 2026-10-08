@@ -57,7 +57,7 @@ for (const pair of pairs) {
  visit(source);
  const receiver = pair.type.replace(/ \| undefined$/, '');
  const name = receiver.endsWith('[]') ? (receiver.startsWith('readonly ') ? 'ReadonlyArray' : 'Array') : receiver.replace(/<.*>$/, '');
- const found = member(name, pair.field);
+ const found = member(name === 'SymbolTable' ? 'Map' : name, pair.field);
  if (!read || !found) throw Error('missing original ' + pair.rank + ' ' + pair.type + '.' + pair.field);
  const declarationFile = path.relative(original, found.source.fileName);
  members.push({rank:pair.rank, receiver_type_id:pair.receiver_type_id, type:pair.type, field:pair.field, candidateReads:pair.reads, witness:pair.witness, read:read.getText(source), call:read.parent.getText(source), utf16Start:read.getStart(source), utf16End:read.end, fileSha256:hash(source.text), declaration:found.declarations.map(d => d.getText(found.source)).join('\n'), declarationFile, declarationSha256:hash(found.source.text), inheritancePath:found.inheritancePath});

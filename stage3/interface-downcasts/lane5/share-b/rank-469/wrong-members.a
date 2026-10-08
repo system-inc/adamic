@@ -1,0 +1,18 @@
+// Original declaration and read; adjacent data carriers reduced.
+enum EmitHint {
+    SourceFile,              // Emitting a SourceFile
+    Expression,              // Emitting an Expression
+    IdentifierName,          // Emitting an IdentifierName
+    MappedTypeParameter,     // Emitting a TypeParameterDeclaration inside of a MappedTypeNode
+    Unspecified,             // Emitting an otherwise unspecified node
+    EmbeddedStatement,       // Emitting an embedded statement
+    JsxAttributeValue,       // Emitting a JSX attribute value
+    ImportTypeNodeAttributes,// Emitting attributes as part of an ImportTypeNode
+}
+interface Node { readonly value: number; }
+interface SourceFile { readonly value: number; }
+interface EmitTextWriter { readonly value: number; }
+interface Base {readonly writeNode:unknown;}
+interface Target {writeNode(hint: EmitHint, node: Node, sourceFile: SourceFile | undefined, writer: EmitTextWriter): void;}
+function probe(value:Base):void {const printer=value as Target;printer.writeNode(EmitHint.SourceFile,{value:3},{value:3},{value:3});}
+probe({writeNode:(hint:number,node:number,sourceFile:number,writer:number):void=>{}});

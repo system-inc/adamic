@@ -1,0 +1,23 @@
+// Full external namespace overload declarations from the pinned Node types.
+const fs=require('fs'),path=require('path'),crypto=require('crypto');
+const ts=require('/tmp/lane5-b-original/lib/typescript.js');
+const repo=path.resolve(__dirname,'../../../..'),original='/tmp/lane5-b-original';
+const declarationFile='stage3/fixtures/assertions/api/node_modules/@types/node/fs.d.ts';
+const declarationBytes=fs.readFileSync(path.join(repo,declarationFile),'utf8');
+const source=ts.createSourceFile('fs.d.ts',declarationBytes,ts.ScriptTarget.Latest,true),functions=[];
+function scan(n){if(ts.isFunctionDeclaration(n)&&n.name.text==='writeSync')functions.push(n);ts.forEachChild(n,scan);}scan(source);
+if(functions.length!==2)throw Error('original overload count');
+const headers=functions.map(n=>n.getText(source));
+const declaration='readonly writeSync: {'+headers.map(h=>h.replace(/^function\s+writeSync\s*/, '')).join('\n')+'};';
+const pair=require('../unknown-callable-pairs-ranked.json').find(p=>p.rank===169);
+const readSource=ts.createSourceFile(pair.witness.file,fs.readFileSync(path.join(original,pair.witness.file),'utf8'),ts.ScriptTarget.Latest,true);let read;
+function visit(n){if(ts.isPropertyAccessExpression(n)&&n.name.text===pair.field){const lc=readSource.getLineAndCharacterOfPosition(n.getStart(readSource));if(lc.line+1===pair.witness.line&&lc.character+1===pair.witness.column)read=n;}ts.forEachChild(n,visit);}visit(readSource);if(!read)throw Error('missing read');
+const bufferSource=ts.createSourceFile('buffer.d.ts',fs.readFileSync(path.join(repo,'stage3/fixtures/assertions/api/node_modules/@types/node/buffer.d.ts'),'utf8'),ts.ScriptTarget.Latest,true);let encoding;
+function find(n){if(ts.isTypeAliasDeclaration(n)&&n.name.text==='BufferEncoding')encoding=n.getText(bufferSource);ts.forEachChild(n,find);}find(bufferSource);if(!encoding)throw Error('missing BufferEncoding');
+const carriers='import * as NodeJS from \"./node-byte-view.a\";\n'+encoding;
+const filename='rank-169/contract-probe.a';fs.mkdirSync(path.join(__dirname,'rank-169'),{recursive:true});
+fs.writeFileSync(path.join(__dirname,'rank-169/node-byte-view.a'),'// Adjacent carrier module for the original qualified byte-view reference.\nexport interface ArrayBufferView {readonly value:number;}\n');
+fs.writeFileSync(path.join(__dirname,filename),'// Original writeSync overloads; adjacent byte-view carrier reduced for admission only.\n'+carriers+'\ninterface Base {readonly writeSync:unknown;}\ninterface Target {'+declaration+'}\nfunction probe(value:Base):void {const fs:Target=value as Target;console.log(typeof '+read.getText(readSource)+');}\nprobe({writeSync:7});\n');
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const metadata={rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:pair.witness,read:read.getText(readSource),declaration,originalFunctionHeaders:headers,declarationFile,declarationRoot:'repository',declarationSha256:hash(declarationBytes),fileSha256:hash(readSource.text),utf16Start:read.getStart(readSource),utf16End:read.end,filename,output:'number\n',refusal:'checked view read of field writeSync with unsupported callable contract',externalPackage:'@types/node',externalVersion:require(path.join(repo,'stage3/fixtures/assertions/api/node_modules/@types/node/package.json')).version,adjacentBasis:'byte view carrier reduced; BufferEncoding declaration retained; overload admission only, no external host certification'};
+fs.writeFileSync(path.join(__dirname,'batch-04-fs-probes.json'),JSON.stringify([metadata],null,2)+'\n');

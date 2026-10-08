@@ -6,8 +6,8 @@ from pathlib import Path
 import subprocess
 
 root = Path(__file__).resolve().parents[4]
-logs = Path('/tmp/lane5-b-mutants')
-logs.mkdir(exist_ok=True)
+logs = Path('/tmp/lane5-b-mutants') / Path(os.environ.get('ADAMIC_CALLABLE_SHARE_B_FAMILIES', 'families.json')).stem
+logs.mkdir(parents=True, exist_ok=True)
 families = json.loads((Path(__file__).parent / os.environ.get('ADAMIC_CALLABLE_SHARE_B_FAMILIES', 'families.json')).read_text())
 controls = logs / 'controls.log'
 with controls.open('w') as log:

@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface CaseBlock { readonly value: number; }
+interface CaseOrDefaultClause { readonly value: number; }
+interface Base {readonly updateCaseBlock:unknown;}
+interface Target {updateCaseBlock(node: CaseBlock, clauses: readonly CaseOrDefaultClause[]): CaseBlock;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateCaseBlock({value:3},[{value:3}]).value}`);}
+probe({updateCaseBlock:(node: CaseBlock, clauses: readonly CaseOrDefaultClause[]):CaseBlock=>{console.log(`${node.value}`);for (const element of clauses) {console.log(`${element.value}`);}return {value:3};}});

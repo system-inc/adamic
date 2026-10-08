@@ -1,0 +1,10 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Modifier { readonly value: number; }
+interface TypeParameterDeclaration { readonly value: number; }
+interface ParameterDeclaration { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface ConstructorTypeNode { readonly value: number; }
+interface Base {readonly createConstructorTypeNode:unknown;}
+interface Target {createConstructorTypeNode(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode): ConstructorTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createConstructorTypeNode([{value:3}],[{value:3}],[{value:3}],{value:3}).value}`);}
+probe({createConstructorTypeNode:(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode):ConstructorTypeNode=>{if (modifiers !== undefined) {for (const element of modifiers) {console.log(`${element.value}`);}}if (typeParameters !== undefined) {for (const element of typeParameters) {console.log(`${element.value}`);}}for (const element of parameters) {console.log(`${element.value}`);}console.log(`${type.value}`);return {value:3};}});

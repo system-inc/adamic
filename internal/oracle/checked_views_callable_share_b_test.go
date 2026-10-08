@@ -20,6 +20,7 @@ type callableShareBFamily struct {
 	Expected   string
 	Arity      string
 	Variants   []string
+	NodeErrors []string
 }
 
 func callableShareBFamilies(t *testing.T) []callableShareBFamily {
@@ -58,7 +59,11 @@ func TestCheckedViewCallableShareBFamilies(t *testing.T) {
 			t.Run(family.Directory+"/"+variant, func(t *testing.T) {
 				program, path := interfaceFixture(t, "lane5/share-b/"+family.Directory+"/"+variant)
 				truth := onNode(t, path)
-				if variant == "wrong-value" {
+				nodeError := variant == "wrong-value"
+				for _, expectedError := range family.NodeErrors {
+					nodeError = nodeError || variant == expectedError
+				}
+				if nodeError {
 					if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "TypeError:") {
 						t.Fatalf("Node: %#v", truth)
 					}
@@ -152,6 +157,7 @@ func TestCheckedViewCallableShareBCounts(t *testing.T) {
 			rows = append(rows, counted(t, filepath.Join("stage3/interface-downcasts/lane5/share-b", probe.Filename), false, nil, false, false))
 		}
 	}
+	rows = append(rows, counted(t, "stage3/interface-downcasts/lane5/share-b/rank-169/node-byte-view.a", false, nil, false, false))
 	path := filepath.Join(repository, "internal/oracle/counts.md")
 	contents, err := os.ReadFile(path)
 	if err != nil {
@@ -259,7 +265,7 @@ func callableShareBArityMutant(t *testing.T, program *ir.Program, family callabl
 // Not parallel: ordered admission evidence is collected for this share's ledger.
 func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 	var data []byte
-	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json"} {
+	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json", "batch-04-tracing-probes.json", "batch-04-fs-probes.json"} {
 		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
 		if err != nil {
 			t.Fatal(err)
@@ -304,7 +310,7 @@ func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 
 // Not parallel: ordered original-receiver gap observations share their ledger.
 func TestCheckedViewCallableShareBCollectionReceivers(t *testing.T) {
-	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}} {
+	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}, {"batch-04-map-probes.json", "map"}} {
 		data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", group.Filename))
 		if err != nil {
 			t.Fatal(err)
@@ -355,5 +361,20 @@ func TestCheckedViewCallableShareBCollectionReceivers(t *testing.T) {
 				t.Logf("rank %d JavaScript observation: %q", probe.Rank, got.stderr)
 			})
 		}
+	}
+}
+
+func TestCheckedViewCallableShareBByteViewModule(t *testing.T) {
+	t.Parallel()
+	program, path := interfaceFixture(t, "lane5/share-b/rank-169/node-byte-view")
+	truth := onNode(t, path)
+	sanitized, binary := nativelyUncached(t, program)
+	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

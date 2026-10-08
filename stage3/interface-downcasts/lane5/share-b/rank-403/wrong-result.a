@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Identifier { readonly value: number; }
+interface SourceFile { readonly value: number; }
+interface ModuleDeclaration { readonly value: number; }
+interface EnumDeclaration { readonly value: number; }
+interface Base {readonly getReferencedExportContainer:unknown;}
+interface Target {getReferencedExportContainer(node: Identifier, prefixLocals?: boolean): SourceFile | ModuleDeclaration | EnumDeclaration | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.getReferencedExportContainer({value:3},true);if (result !== undefined) {console.log(`${result.value}`);}}
+probe({getReferencedExportContainer:(node: Identifier, prefixLocals?: boolean):number=>9});

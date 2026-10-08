@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface AccessorDeclaration { readonly value: number; }
+interface AllAccessorDeclarations { readonly value: number; }
+interface Base {readonly getAllAccessorDeclarations:unknown;}
+interface Target {getAllAccessorDeclarations(declaration: AccessorDeclaration): AllAccessorDeclarations;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.getAllAccessorDeclarations({value:3}).value}`);}
+probe({getAllAccessorDeclarations:(declaration:number):AllAccessorDeclarations=>{return {value:3};}});

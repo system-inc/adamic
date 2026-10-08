@@ -1,0 +1,103 @@
+[
+  {
+    "rank": 97,
+    "receiver_type_id": 8812,
+    "type": "SymbolTable | undefined",
+    "field": "get",
+    "candidateReads": 18,
+    "witness": {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 906,
+      "column": 35
+    },
+    "read": "topNamespace.parent.parent.symbol.exports?.get",
+    "call": "topNamespace.parent.parent.symbol.exports?.get(\"export=\" as __String)",
+    "utf16Start": 42828,
+    "utf16End": 42874,
+    "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-97/actual-map.a",
+    "carrierDeclarations": [
+      "type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;",
+      "enum InternalSymbolName {\n    Call = \"__call\", // Call signatures\n    Constructor = \"__constructor\", // Constructor implementations\n    New = \"__new\", // Constructor signatures\n    Index = \"__index\", // Index signatures\n    ExportStar = \"__export\", // Module export * declarations\n    Global = \"__global\", // Global self-reference\n    Missing = \"__missing\", // Indicates missing symbol\n    Type = \"__type\", // Anonymous type literal symbol\n    Object = \"__object\", // Anonymous object literal declaration\n    JSXAttributes = \"__jsxAttributes\", // Anonymous JSX attributes object literal declaration\n    Class = \"__class\", // Unnamed class expression\n    Function = \"__function\", // Unnamed function expression\n    Computed = \"__computed\", // Computed property name declaration with dynamic name\n    Resolving = \"__resolving__\", // Indicator symbol used to mark partially resolved type aliases\n    ExportEquals = \"export=\", // Export assignment symbol\n    Default = \"default\", // Default export symbol (technically not wholly internal, but included here for usability)\n    This = \"this\",\n    InstantiationExpression = \"__instantiationExpression\", // Instantiation expressions\n    ImportAttributes = \"__importAttributes\",\n}",
+      "type SymbolTable = Map<__String, Symbol>;"
+    ],
+    "carrierSource": {
+      "filename": "src/compiler/types.ts",
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+    },
+    "output": "3\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: topNamespace.parent.parent.symbol.exports?.get expected (key: __String) => Symbol | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 229,
+    "receiver_type_id": 11271,
+    "type": "Map<string, CommandLineOption>",
+    "field": "get",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2146,
+      "column": 12
+    },
+    "read": "optionsNameMap.get",
+    "call": "optionsNameMap.get(optionName)",
+    "utf16Start": 83190,
+    "utf16End": 83208,
+    "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-229/actual-map.a",
+    "carrierDeclarations": [],
+    "carrierSource": {
+      "filename": "src/compiler/types.ts",
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+    },
+    "output": "3\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: optionsNameMap.get expected (key: string) => CommandLineOption | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 280,
+    "receiver_type_id": 100577,
+    "type": "Map<Path, ParsedConfig> | undefined",
+    "field": "get",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 674,
+      "column": 32
+    },
+    "read": "parsedConfigs?.get",
+    "call": "parsedConfigs?.get(configPath)",
+    "utf16Start": 33333,
+    "utf16End": 33351,
+    "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-280/actual-map.a",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierSource": {
+      "filename": "src/compiler/types.ts",
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+    },
+    "output": "3\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void"
+  }
+]

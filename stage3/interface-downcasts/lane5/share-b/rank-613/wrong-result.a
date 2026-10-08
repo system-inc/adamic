@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SwitchStatement { readonly value: number; }
+interface Expression { readonly value: number; }
+interface CaseBlock { readonly value: number; }
+interface Base {readonly updateSwitchStatement:unknown;}
+interface Target {updateSwitchStatement(node: SwitchStatement, expression: Expression, caseBlock: CaseBlock): SwitchStatement;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateSwitchStatement({value:3},{value:3},{value:3}).value}`);}
+probe({updateSwitchStatement:(node: SwitchStatement, expression: Expression, caseBlock: CaseBlock):number=>9});
