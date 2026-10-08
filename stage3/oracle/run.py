@@ -15,7 +15,10 @@ parser.add_argument('tree', type=Path)
 parser.add_argument('output', type=Path)
 parser.add_argument('--runners', default='all', help='all, or upstream comma-separated runner names')
 parser.add_argument('--tests', help='upstream test regex, for targeted mutant checks')
-parser.add_argument('--workers', type=int, default=4)
+# Eight workers, fixed: the verdicts are identical at 4, 8, 16 and 24 (106,366 tests, Oct 7), and 8
+# ran the suite in 134 s against 225 s at 4 and 135 s at 24 on a 24-CPU slot. One per CPU went red on
+# the whole gate, where 64 workers beside every other package tripped upstream's 40 s hook timeout.
+parser.add_argument('--workers', type=int, default=8)
 parser.add_argument('--limit-seconds', type=int, default=2400)
 args = parser.parse_args()
 # Upstream's parallel host ignores --tests; one worker uses runtests' Mocha grep.

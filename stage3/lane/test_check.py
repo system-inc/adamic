@@ -65,6 +65,8 @@ class LandingLaneTests(unittest.TestCase):
         self.sanctioned_file.write_text(json.dumps(self.fixture_sanction))
         evidence = LANE.parent / 'adapt/75-optional-widening/evidence/full-apply'
         self.oracle = json.loads((evidence / 'oracle-report.json').read_text())
+        # The evidence ran upstream's 4 workers, before the lane fixed eight.
+        self.oracle['workers'] = 8
         self.log = gzip.decompress((evidence / 'oracle-tests.log.gz').read_bytes()).decode()
         # Counts and failure title come from the real upstream reporter.
         # API mutants use an isolated, valid declaration snapshot.
@@ -254,7 +256,9 @@ class LandingLaneTests(unittest.TestCase):
     def test_filtered_run(self):
         for field, value, label in [('runners', 'compiler', 'runners'),
                                     ('tests', 'Public APIs', 'test filter'),
-                                    ('workers', 1, 'workers'), ('status', 'pass', 'oracle status')]:
+                                    ('workers', 1, 'workers'), ('workers', 4, 'workers'),
+                                    ('workers', 64, 'workers'),
+                                    ('status', 'pass', 'oracle status')]:
             with self.subTest(field=field):
                 oracle = copy.deepcopy(self.oracle)
                 self.oracle[field] = value

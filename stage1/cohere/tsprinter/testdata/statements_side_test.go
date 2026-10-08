@@ -118,6 +118,9 @@ func TestAdamicStatementCorpus(t *testing.T) {
 	for _, source := range []string{"", ";", ";;", "function named(){}", "{;}", "const veryLongIdentifierAlpha=veryLongIdentifierBeta+veryLongIdentifierGamma+veryLongIdentifierDelta;f(veryLongIdentifierAlpha);"} {
 		add("program-boundary", source)
 	}
+	for _, source := range []string{"function named();", "function named(x);", "function named(...items);", "function named(x=1);", "{function named();}", "yield\nvalue;", "yield\n0;", "yield 0;", "{}[0];", "p?x:y;", "{p?x:y;}"} {
+		add("tsc-corpus-boundary", source)
+	}
 	options := formatoptions.Default()
 	options.PrintWidth = 80
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")

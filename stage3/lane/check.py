@@ -80,7 +80,8 @@ def inspect(execution, oracle, log, expected, api_errors):
     equal('node version', oracle.get('node'), platform.get('node'))
     equal('runners', oracle.get('runners'), 'all')
     equal('test filter', oracle.get('tests'), None)
-    equal('workers', oracle.get('workers'), 4)
+    # Eight, fixed, whatever the box (stage3/oracle/run.py).
+    equal('workers', oracle.get('workers'), 8)
     return dict(status='fail' if errors else 'pass', errors=errors,
                 counts=oracle.get('counts'), failed_tests=titles,
                 baseline_diffs=oracle.get('baseline_diffs'))

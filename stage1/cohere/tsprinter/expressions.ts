@@ -252,7 +252,7 @@ export class Expressions {
             forceNoIndent ? parts : this.docs.indent(parts),
             outer === 'PropertyAccessExpression' && !extra ? this.docs.softline() : this.docs.text(''),
         ]);
-        if(parent === firstNonConditional) result = this.docs.group(result);
+        if(parent < 0 || parent === firstNonConditional) result = this.docs.group(result);
         if(parentTest || extra)
             result = this.docs.group(
                 this.docs.concat([
@@ -801,12 +801,14 @@ export class Expressions {
             if(item.kind === 'AsteriskToken') generator = '*';
             if(item.kind === 'Identifier') name = ` ${item.text}`;
         }
-        return this.docs.concat([
+        const signature = this.docs.concat([
             this.docs.text(`${async}function${generator}${name}`),
             this.parametersDoc(index),
-            this.docs.text(' '),
-            this.statementDoc(node.children[node.children.length - 1] ?? panic('missing function body'), index),
         ]);
+        const body = node.children[node.children.length - 1] ?? panic('missing function child');
+        if(node.kind === 'FunctionDeclaration' && this.node(body).kind !== 'Block')
+            return this.docs.concat([signature, this.docs.text(';')]);
+        return this.docs.concat([signature, this.docs.text(' '), this.statementDoc(body, index)]);
     }
     methodDoc(index: number): number {
         const node = this.node(index);
@@ -1785,6 +1787,9 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
         return { kind: 'NotYet', reason: 'comment-attachment' };
     if(hasBlankLine(source) || source.includes('\r')) return { kind: 'NotYet', reason: 'source-trivia' };
     const parser = new Parser(source, 'expression.ts');
+    // Go formats the standalone text as a program: a leading brace is a block,
+    // even when the selector extracted it from an object receiver.
+    if(parser.kind() === 'OpenBraceToken') return formatProgram(parser, source, settings);
     const root = parser.expression();
     if(parser.kind() === 'SemicolonToken') parser.next();
     if(parser.kind() !== 'EndOfFile') return { kind: 'NotYet', reason: 'expression-file' };
@@ -1804,4 +1809,14 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
     )
         printed = docs.concat([docs.text('('), printed, docs.text(')')]);
     return { kind: 'Ok', text: docs.print(docs.concat([printed, docs.text(';'), docs.hardline()])) };
+}
+
+export function formatProgram(parser: Parser, source: string, settings: SettingsOptions): ResultType {
+    const root = parser.file();
+    const docs = new Documents(settings);
+    const printer = new Expressions(parser, source, docs);
+    const reason = printer.statementUnsupported(root);
+    if(reason !== '') return { kind: 'NotYet', reason };
+    const printed = docs.print(printer.statementDoc(printer.normalize(root), -1));
+    return { kind: 'Ok', text: printed === '' ? '' : `${printed}\n` };
 }

@@ -1,0 +1,16 @@
+// nexus/consistency_no_return_void.go:100; `^(function|class|let|async)\b`
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "function", 4);
+observe(regex, "xfunction", 5);
+observe(regex, "function\n", 6);
+observe(regex, "let", 7);
+observe(regex, "class", 8);

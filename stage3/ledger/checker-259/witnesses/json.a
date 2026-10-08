@@ -1,1 +1,2 @@
+// a-check: type error TS2322
 const result: string = JSON.stringify({ value: 1 });

@@ -4,6 +4,38 @@ Observed: Node expectations 301/301 and ordinary golden comparison 301/301; 60 c
 Mutants: one diagnostic column, stderr and exit each caught by its exact comparison; eight provenance mutants caught.
 Not covered: actual native execution, full upstream/Adamic gates, and adapted-source typechecking; standard build failed, targeted Node bundle succeeded.
 
+## October 8 filename ruling
+
+The 21:50 @system_adamic ruling identifies this corpus as verbatim upstream
+TypeScript data. All 300 inputs were renamed with git mv from input.a to the
+exact upstream filenames recorded by source in selection.json. All selected
+extensions are .ts; there are no .tsx or .d.ts inputs in this selection.
+Each input is byte-identical to both its unchanged source_sha256 and the pinned
+upstream checkout. The manifest now records its local path separately from
+its upstream source path. No corpus header or developer-tools exemption remains.
+
+The importer, materializer's caller, audit and provenance mutants use the new
+paths. README.md, NOTICE and SELECTION.md describe the same layout. All goldens,
+expected streams and reference baselines are unchanged. The authored tiny .a
+files retain their existing a-check headers; only their first-line gate metadata
+is omitted when materializing scratch .ts files, preserving golden positions.
+
+The ordinary README command ran on a freshly adapted pinned Node CLI:
+
+```sh
+TSC_RESULTS=/tmp/stage3-ruling/node-goldens stage3/drivers/tsc/run.sh node /tmp/stage3-ruling/adapted/built/local/tsc.js > /tmp/stage3-ruling/node-goldens.log 2>&1
+python3 stage3/drivers/tsc/audit.py > /tmp/stage3-ruling/corpus-audit.log 2>&1
+python3 stage3/drivers/tsc/mutants.py node /tmp/stage3-ruling/adapted/built/local/tsc.js > /tmp/stage3-ruling/driver-mutants.log 2>&1
+```
+
+All three commands exit 0. Node matches 301/301 projects in 53.234s. The audit
+holds all original byte pins. Three exact-output mutants and nine provenance
+mutants are caught, including a new incorrect manifest source-path mutant.
+The targeted bundle uses npx hereby tsc --no-typecheck; it does not establish
+adapted-source typechecking or native tsc correctness. Current logs and the
+rename map are retained in ../../a-check-headers/. The original unit's report
+below remains historical evidence of its initial build and selection.
+
 ## What ran
 
 All committed changes are under `stage3/drivers/tsc/`. No compiler implementation,

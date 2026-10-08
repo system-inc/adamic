@@ -1,0 +1,15 @@
+{
+  "name": "@typescript-eslint/no-this-alias",
+  "kinds": [
+    "VariableDeclaration",
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoThisAlias",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoThisAlias",
+  "parent": false,
+  "node": true
+}
