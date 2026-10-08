@@ -1,0 +1,869 @@
+{
+  "compiler_base": "b410340dc8f889b5799c3bc519117c63def3aa24",
+  "replay_merge": "9a1f14c5d994aa855625e7cfa295677060348fec",
+  "first_push": "03db4467",
+  "second_push": "a301653b",
+  "source_manifest": "All 81 source hashes match codex/stage3-notyet-table:stage3/notyet-table/source-manifest.json.",
+  "observations": "Six reduced kinds lower and agree with source Node in both backends, including ASan/UBSan and leak checks. Two examples reproduce historical signatures before the change and advance after it. Five other examples already reach different stops in the smallest selected unit before this change. No census-wide 43-site unlock is claimed.",
+  "inference": "All six kinds use the existing boxed-union pointer ABI. Unboxed scalar callable views still need adapters and stay NotYet. Library intrinsic callback adapters retain their existing source-signature behavior.",
+  "scope": "Minimal shared hooks censusCallableSlotless and sameKeeping. No IR, backend, flow or runtime C changes. Two obsolete refusal-test rows are covered by the diagnostic fixture. No code copied from cohere.",
+  "commands": [
+    "export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh > /tmp/function-values-setup.log 2>&1",
+    "source /workspace/adamic-tools/env.sh (each test/build shell)",
+    "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/function_values_' -count=1 -timeout 10m > /tmp/function-values-all-final.log 2>&1",
+    "python3 internal/oracle/testdata/run-function-values-mutants.py > /tmp/function-values-all-mutants-final.log 2>&1",
+    "go test ./internal/lower -run 'TestFunctionValueUnionViewsStayNotYet|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat' -count=1 -timeout 10m > /tmp/function-values-lower-final.log 2>&1",
+    "go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts > /tmp/function-values-counts-final.log 2>&1",
+    "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(function_values_return|library_array_flat_map|method_coverage_string_overloads)' -count=1 -timeout 10m > /tmp/function-values-return-final.log 2>&1",
+    "Guarded replay workers generated with stage3/census/latent/make_overlay.py; go build -buildvcs=false -overlay=SCRATCH/overlay.json -o WORKER ./stage3/census/latent/replay/worker; workers use -project /tmp/function-values-census-input/src/tsc/tsc.ts -where EXACT_EXAMPLE -kind NotYet -reason EXACT_CENSUS_REASON.",
+    "git diff --check; gofmt on changed Go files; focused tests only, no whole packages or full gate."
+  ],
+  "replays": [
+    {
+      "example": "return-checker",
+      "historical_kind_root_count": 38,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 643177,
+            "body_end": 643294,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "serializePropertySymbolForInterface",
+            "parent": "/tmp/function-values-census-input/src/compiler/checker.ts:9346:9",
+            "top": "/tmp/function-values-census-input/src/compiler/checker.ts:1486:1",
+            "depth": 3
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10979:24",
+            "reason": "a function value returning union of differently held members",
+            "text": "/tmp/function-values-census-input/src/compiler/checker.ts:10979:24: stage 0 can't lower a function value returning union of differently held members yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.043637384s\nreproduced NotYet: a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/checker.ts:10979:24\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 643177,
+            "body_end": 643294,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "serializePropertySymbolForInterface",
+            "parent": "/tmp/function-values-census-input/src/compiler/checker.ts:9346:9",
+            "top": "/tmp/function-values-census-input/src/compiler/checker.ts:1486:1",
+            "depth": 3
+          }
+        ],
+        "findings": [],
+        "stderr": "replay load/register/lower: 2.072908792s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/checker.ts:10979:24 (selected /tmp/function-values-census-input/src/compiler/checker.ts:10978:13)\n"
+      }
+    },
+    {
+      "example": "return-core",
+      "historical_kind_root_count": 38,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 13646,
+            "body_end": 14097,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "flatMap",
+            "top": "/tmp/function-values-census-input/src/compiler/core.ts:399:1"
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:403:19",
+            "reason": "a value of type U | readonly U[] | undefined",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:403:19: stage 0 can't lower a value of type U | readonly U[] | undefined yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:404:17",
+            "reason": "reading v",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:404:17: stage 0 can't lower reading v yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.134786416s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/core.ts:403:23 (selected /tmp/function-values-census-input/src/compiler/core.ts:399:1)\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 13646,
+            "body_end": 14097,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "flatMap",
+            "top": "/tmp/function-values-census-input/src/compiler/core.ts:399:1"
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:403:19",
+            "reason": "a value of type U | readonly U[] | undefined",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:403:19: stage 0 can't lower a value of type U | readonly U[] | undefined yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/core.ts:399:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:404:17",
+            "reason": "reading v",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:404:17: stage 0 can't lower reading v yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 1.982098183s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/core.ts:403:23 (selected /tmp/function-values-census-input/src/compiler/core.ts:399:1)\n"
+      }
+    },
+    {
+      "example": "options",
+      "historical_kind_root_count": 1,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 17488,
+            "body_end": 22106,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "changeCompilerHostLikeToUseCache",
+            "top": "/tmp/function-values-census-input/src/compiler/program.ts:520:1"
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:530:27",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:530:27: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:531:29",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:531:29: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:532:34",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:532:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:536:15",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:536:15: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:537:23",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:537:23: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:538:13",
+            "reason": "reading value",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:538:13: stage 0 can't lower reading value yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:539:16",
+            "reason": "reading setReadFileCache",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:539:16: stage 0 can't lower reading setReadFileCache yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:541:31",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:541:31: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:546:5",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:546:5: stage 0 can't lower replacing a represented method at runtime yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:558:106",
+            "reason": "a function value taking CreateSourceFileOptions | ScriptTarget",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:558:106: stage 0 can't lower a function value taking CreateSourceFileOptions | ScriptTarget yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:573:5",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:573:5: stage 0 can't lower replacing a represented method at runtime yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:582:43",
+            "reason": "a rest parameter outside a nongeneric named function",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:582:43: stage 0 can't lower a rest parameter outside a nongeneric named function yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:606:19",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:606:19: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:607:27",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:607:27: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:608:17",
+            "reason": "reading value",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:608:17: stage 0 can't lower reading value yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:609:30",
+            "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:609:30: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:610:13",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:610:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:611:20",
+            "reason": "reading newValue",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:611:20: stage 0 can't lower reading newValue yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:615:13",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:615:13: stage 0 can't lower replacing a represented method at runtime yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:629:9",
+            "reason": "reading getSourceFileWithCache",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:629:9: stage 0 can't lower reading getSourceFileWithCache yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.183606667s\nreproduced NotYet: a function value taking CreateSourceFileOptions | ScriptTarget at /tmp/function-values-census-input/src/compiler/program.ts:558:106\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 17488,
+            "body_end": 22106,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "changeCompilerHostLikeToUseCache",
+            "top": "/tmp/function-values-census-input/src/compiler/program.ts:520:1"
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:530:27",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:530:27: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:531:29",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:531:29: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:532:34",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:532:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:536:15",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:536:15: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:537:23",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:537:23: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:538:13",
+            "reason": "reading value",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:538:13: stage 0 can't lower reading value yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:539:16",
+            "reason": "reading setReadFileCache",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:539:16: stage 0 can't lower reading setReadFileCache yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:541:31",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:541:31: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:546:5",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:546:5: stage 0 can't lower replacing a represented method at runtime yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:559:15",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:559:15: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:562:23",
+            "reason": "a call through ?. (an optional call)",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:562:23: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:563:13",
+            "reason": "reading value",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:563:13: stage 0 can't lower reading value yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:566:13",
+            "reason": "a BinaryExpression with a value and a boolean",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:566:13: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:573:5",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:573:5: stage 0 can't lower replacing a represented method at runtime yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:582:43",
+            "reason": "a rest parameter outside a nongeneric named function",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:582:43: stage 0 can't lower a rest parameter outside a nongeneric named function yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:606:19",
+            "reason": "a value of type Path",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:606:19: stage 0 can't lower a value of type Path yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:607:27",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:607:27: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:608:17",
+            "reason": "reading value",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:608:17: stage 0 can't lower reading value yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:609:30",
+            "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:609:30: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:610:13",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:610:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:611:20",
+            "reason": "reading newValue",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:611:20: stage 0 can't lower reading newValue yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/program.ts:520:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/program.ts:615:13",
+            "reason": "replacing a represented method at runtime",
+            "text": "/tmp/function-values-census-input/src/compiler/program.ts:615:13: stage 0 can't lower replacing a represented method at runtime yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.266517797s\nreplay signature did not reproduce: NotYet a function value taking CreateSourceFileOptions | ScriptTarget at /tmp/function-values-census-input/src/compiler/program.ts:558:106 (selected /tmp/function-values-census-input/src/compiler/program.ts:520:1)\n"
+      }
+    },
+    {
+      "example": "signature",
+      "historical_kind_root_count": 1,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 92355,
+            "body_end": 93414,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "handleNewSignature",
+            "parent": "/tmp/function-values-census-input/src/compiler/builder.ts:1909:5",
+            "top": "/tmp/function-values-census-input/src/compiler/builder.ts:1673:1",
+            "depth": 2
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+            "reason": "a value of type unknown",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1975:17",
+            "reason": "a BinaryExpression as a statement",
+            "text": "/tmp/function-values-census-input/src/compiler/builder.ts:1975:17: stage 0 can't lower a BinaryExpression as a statement yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1977:38",
+            "reason": "reading oldSignature",
+            "text": "/tmp/function-values-census-input/src/compiler/builder.ts:1977:38: stage 0 can't lower reading oldSignature yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.035698617s\nreplay signature did not reproduce: NotYet a function value taking EmitSignature | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1973:41 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1973:13)\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 92355,
+            "body_end": 93414,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "handleNewSignature",
+            "parent": "/tmp/function-values-census-input/src/compiler/builder.ts:1909:5",
+            "top": "/tmp/function-values-census-input/src/compiler/builder.ts:1673:1",
+            "depth": 2
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+            "reason": "a value of type unknown",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1975:17",
+            "reason": "a BinaryExpression as a statement",
+            "text": "/tmp/function-values-census-input/src/compiler/builder.ts:1975:17: stage 0 can't lower a BinaryExpression as a statement yet"
+          },
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1977:38",
+            "reason": "reading oldSignature",
+            "text": "/tmp/function-values-census-input/src/compiler/builder.ts:1977:38: stage 0 can't lower reading oldSignature yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.04722231s\nreplay signature did not reproduce: NotYet a function value taking EmitSignature | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1973:41 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1973:13)\n"
+      }
+    },
+    {
+      "example": "chain",
+      "historical_kind_root_count": 1,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1635:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 74584,
+            "body_end": 74886,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "flattenDiagnosticMessageText",
+            "parent": "/tmp/function-values-census-input/src/compiler/builder.ts:1621:1",
+            "top": "/tmp/function-values-census-input/src/compiler/builder.ts:1621:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1635:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+            "reason": "a value of type unknown",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.096897554s\nreplay signature did not reproduce: NotYet a function value taking string | DiagnosticMessageChain | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1635:43 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1635:5)\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1635:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 74584,
+            "body_end": 74886,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "flattenDiagnosticMessageText",
+            "parent": "/tmp/function-values-census-input/src/compiler/builder.ts:1621:1",
+            "top": "/tmp/function-values-census-input/src/compiler/builder.ts:1621:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/builder.ts:1635:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+            "reason": "a value of type unknown",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.022555628s\nreplay signature did not reproduce: NotYet a function value taking string | DiagnosticMessageChain | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1635:43 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1635:5)\n"
+      }
+    },
+    {
+      "example": "diagnostic",
+      "historical_kind_root_count": 1,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 10276,
+            "body_end": 10650,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "formatDefaultValue",
+            "parent": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:244:1",
+            "top": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:244:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1337:1",
+            "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.099564557s\nreplay signature did not reproduce: NotYet a function value taking string | number | boolean | DiagnosticMessage | undefined at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:308:9 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5)\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 10276,
+            "body_end": 10650,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "formatDefaultValue",
+            "parent": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:244:1",
+            "top": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:244:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:1337:1",
+            "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+            "text": "/tmp/function-values-census-input/src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+          }
+        ],
+        "stderr": "replay load/register/lower: 1.969950533s\nreplay signature did not reproduce: NotYet a function value taking string | number | boolean | DiagnosticMessage | undefined at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:308:9 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5)\n"
+      }
+    },
+    {
+      "example": "array",
+      "historical_kind_root_count": 1,
+      "observed_before": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 19301,
+            "body_end": 19577,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "example",
+            "parent": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:478:1",
+            "top": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:478:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/commandLineParser.ts:2206:63",
+            "reason": "a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[]",
+            "text": "/tmp/function-values-census-input/src/compiler/commandLineParser.ts:2206:63: stage 0 can't lower a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[] yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.01767775s\nreplay signature did not reproduce: NotYet a function value taking string | string[] at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:22 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5)\n"
+      },
+      "observed_after": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 19301,
+            "body_end": 19577,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "example",
+            "parent": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:478:1",
+            "top": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:478:1",
+            "depth": 1
+          }
+        ],
+        "findings": [
+          {
+            "measurement": "measured on a checker-rejected entry-root program",
+            "unit": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/tmp/function-values-census-input/src/compiler/commandLineParser.ts:2206:63",
+            "reason": "a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[]",
+            "text": "/tmp/function-values-census-input/src/compiler/commandLineParser.ts:2206:63: stage 0 can't lower a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[] yet"
+          }
+        ],
+        "stderr": "replay load/register/lower: 1.958476512s\nreplay signature did not reproduce: NotYet a function value taking string | string[] at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:22 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5)\n"
+      }
+    }
+  ],
+  "logs": {
+    "/tmp/function-values-setup.log": "v24.19.0\nsetup: node ready (0.058s)\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.073s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.450s)\n\nadded 3 packages in 718ms\nsetup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.253s\nsetup: markdown dependencies ready (1.417s)\nsubmodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359\nsetup: submodules ready (17.773s)\nsetup: go build ready (315.810s)\nsetup: test binaries deferred (use --warm-tests) (315.937s)\nsetup: build cache warm (315.939s)\nsetup: build-flags commit=a05d5d5e1de17c79573d0981f2f7670fed2c9cac nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.00 0.00 0.00 1/136 811 load-after=14.37 9.07 3.90 4/160 5897\nsetup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (315.971s)\nsetup: source /workspace/adamic-tools/env.sh\nsetup: logs /tmp/adamic-gate/setup.QTM9VF\n",
+    "/tmp/function-values-before-return.log": "--- FAIL: TestNativeAgreesWithNode (0.02s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a (0.04s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_return.a:7:15: stage 0 can't lower a function value returning union of differently held members yet\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.062s\nFAIL\n",
+    "/tmp/function-values-before-test.log": "--- FAIL: TestNativeAgreesWithNode (0.11s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a (0.41s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_return.a:2:28: stage 0 can't lower a BinaryExpression with a string and a number yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a (0.49s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_diagnostic.a:7:14: stage 0 can't lower a function value taking union of differently held members yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a (0.53s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_signature.a:6:14: stage 0 can't lower a function value taking union of differently held members yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a (0.60s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_array.a:4:14: stage 0 can't lower a function value taking union of differently held members yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a (0.69s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_chain.a:6:14: stage 0 can't lower a function value taking union of differently held members yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a (0.39s)\n        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/function_values_options.a:5:14: stage 0 can't lower a function value taking union of differently held members yet\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.937s\nFAIL\n",
+    "/tmp/function-values-all-final.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.926s\n",
+    "/tmp/function-values-all-mutants-final.log": "return exit 1\ncaught by behavioral oracle: /tmp/function-values-mutant-return.log\narguments exit 1\ncaught by behavioral oracle: /tmp/function-values-mutant-arguments.log\nviews exit 1 caught all four unsafe callable views: /tmp/function-values-mutant-views.log\n",
+    "/tmp/function-values-lower-final.log": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.540s\n",
+    "/tmp/function-values-counts-final.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t22.111s\n",
+    "/tmp/function-values-mutant-return.log": "--- FAIL: TestNativeAgreesWithNode (0.01s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a (0.42s)\n        oracle_test.go:761: exit codes differ\n            node:   exit 0, stdout \"true\\nstring:held0\\nnumber:42\\nboolean:false\\nmissing\\nfirst1,second2\\nscalar3\\nobject4\\nscalar5\\n\", stderr \"\"\n            native: exit 70, stdout \"true\\nnumber:99\\nnumber:99\\nnumber:99\\nnumber:99\\n\", stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n        oracle_test.go:767: JavaScript backend: exit codes differ\n            node:    exit 0, stdout \"true\\nstring:held0\\nnumber:42\\nboolean:false\\nmissing\\nfirst1,second2\\nscalar3\\nobject4\\nscalar5\\n\", stderr \"\"\n            backend: exit 70, stdout \"true\\nnumber:99\\nnumber:99\\nnumber:99\\nnumber:99\\n\", stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n        oracle_test.go:774: leaks:\n            exit 70\n            adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\nFAIL\ngate cache: native hits=0 misses=3\ngate cache: node hits=0 misses=2\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.435s\nFAIL\n",
+    "/tmp/function-values-mutant-arguments.log": "--- FAIL: TestNativeAgreesWithNode (0.01s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a (0.54s)\n        oracle_test.go:761: exit codes differ\n            node:   exit 0, stdout \"7:12\\n\", stderr \"\"\n            native: exit 70, stdout \"\", stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n        oracle_test.go:767: JavaScript backend: exit codes differ\n            node:    exit 0, stdout \"7:12\\n\", stderr \"\"\n            backend: exit 70, stdout \"\", stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n        oracle_test.go:774: leaks:\n            exit 70\n            adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a (0.57s)\n        oracle_test.go:761: stdout differs\n            node:   exit 0, stdout \"single1:first2,second3\\n\", stderr \"\"\n            native: exit 0, stdout \"mutant:mutant\\n\", stderr \"\"\n        oracle_test.go:767: JavaScript backend: stdout differs\n            node:    exit 0, stdout \"single1:first2,second3\\n\", stderr \"\"\n            backend: exit 0, stdout \"mutant:mutant\\n\", stderr \"\"\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a (0.57s)\n        oracle_test.go:761: stdout differs\n            node:   exit 0, stdout \"missing:missing:plain1:tuple2\\n\", stderr \"\"\n            native: exit 0, stdout \"mutant:mutant:mutant:mutant\\n\", stderr \"\"\n        oracle_test.go:767: JavaScript backend: stdout differs\n            node:    exit 0, stdout \"missing:missing:plain1:tuple2\\n\", stderr \"\"\n            backend: exit 0, stdout \"mutant:mutant:mutant:mutant\\n\", stderr \"\"\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a (0.59s)\n        oracle_test.go:761: stdout differs\n            node:   exit 0, stdout \"missing:plain1:chain2\\n\", stderr \"\"\n            native: exit 0, stdout \"mutant:mutant:mutant\\n\", stderr \"\"\n        oracle_test.go:767: JavaScript backend: stdout differs\n            node:    exit 0, stdout \"missing:plain1:chain2\\n\", stderr \"\"\n            backend: exit 0, stdout \"mutant:mutant:mutant\\n\", stderr \"\"\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a (0.62s)\n        oracle_test.go:761: stdout differs\n            node:   exit 0, stdout \"missing:text1:23:false:true:diagnostic2\\narrow:42\\n0,1\\n\", stderr \"\"\n            native: exit 0, stdout \"mutant:mutant:mutant:mutant:mutant:mutant\\narrow:42\\n0,1\\n\", stderr \"\"\n        oracle_test.go:767: JavaScript backend: stdout differs\n            node:    exit 0, stdout \"missing:text1:23:false:true:diagnostic2\\narrow:42\\n0,1\\n\", stderr \"\"\n            backend: exit 0, stdout \"mutant:mutant:mutant:mutant:mutant:mutant\\narrow:42\\n0,1\\n\", stderr \"\"\nFAIL\ngate cache: native hits=0 misses=15\ngate cache: node hits=0 misses=10\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.641s\nFAIL\n",
+    "/tmp/function-values-mutant-views.log": "--- FAIL: TestFunctionValueUnionViewsStayNotYet (0.11s)\n    function_values_test.go:19: callable view requires a union slot adapter, got <nil>\n    function_values_test.go:19: callable view requires a union slot adapter, got <nil>\n    function_values_test.go:19: callable view requires a union slot adapter, got <nil>\n    function_values_test.go:19: callable view requires a union slot adapter, got <nil>\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/lower\t0.119s\nFAIL\n",
+    "/tmp/function-values-return-final.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.722s\n",
+    "/tmp/function-values-parameter-group-one.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.623s\n",
+    "/tmp/function-values-counts-return-final.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t23.286s\n",
+    "/tmp/function-values-counts-parameter-one.log": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t23.483s\n"
+  }
+}

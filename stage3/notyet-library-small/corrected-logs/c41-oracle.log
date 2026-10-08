@@ -1,0 +1,94 @@
+=== RUN   TestCheckedNonNullTypeScript
+=== PAUSE TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullAdamicRefusal
+=== PAUSE TestCheckedNonNullAdamicRefusal
+=== RUN   TestCheckedNonNullCounts
+=== PAUSE TestCheckedNonNullCounts
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused
+=== PAUSE TestPossibleNonNullAdamicAssertionsAreRefused
+=== CONT  TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullTypeScript/narrowed
+=== CONT  TestCheckedNonNullAdamicRefusal
+=== CONT  TestPossibleNonNullAdamicAssertionsAreRefused
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/read
+=== PAUSE TestCheckedNonNullTypeScript/narrowed
+=== CONT  TestCheckedNonNullCounts
+=== RUN   TestCheckedNonNullTypeScript/present
+=== PAUSE TestCheckedNonNullTypeScript/present
+=== RUN   TestCheckedNonNullTypeScript/undefined
+=== PAUSE TestCheckedNonNullTypeScript/undefined
+=== RUN   TestCheckedNonNullTypeScript/null
+=== PAUSE TestCheckedNonNullTypeScript/null
+=== RUN   TestCheckedNonNullTypeScript/initializer
+=== PAUSE TestCheckedNonNullTypeScript/initializer
+=== RUN   TestCheckedNonNullTypeScript/let_initializer
+=== PAUSE TestCheckedNonNullTypeScript/let_initializer
+=== CONT  TestCheckedNonNullTypeScript/narrowed
+=== CONT  TestCheckedNonNullTypeScript/let_initializer
+--- PASS: TestCheckedNonNullAdamicRefusal (0.16s)
+=== CONT  TestCheckedNonNullTypeScript/null
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/typeerror
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:51: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:51: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:166: gate cache native miss
+=== NAME  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:51: gate cache node miss
+--- PASS: TestPossibleNonNullAdamicAssertionsAreRefused (0.27s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/read (0.20s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/typeerror (0.07s)
+=== CONT  TestCheckedNonNullTypeScript/initializer
+=== CONT  TestCheckedNonNullTypeScript/undefined
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:167: | internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:51: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:166: gate cache native miss
+    non_null_checked_test.go:167: | internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |
+    non_null_checked_test.go:166: gate cache native miss
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:79: gate cache node miss
+    non_null_checked_test.go:138: look-through mutant caught before either backend: union return where number is required
+=== CONT  TestCheckedNonNullTypeScript/present
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:79: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:79: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:79: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:167: | internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:51: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:166: gate cache native miss
+    non_null_checked_test.go:167: | internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:103: no-check mutant caught: stdout "before\ntrue\n" exit 0
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:166: gate cache native miss
+    non_null_checked_test.go:167: | internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:79: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:174: gate cache native miss
+--- PASS: TestCheckedNonNullTypeScript (0.00s)
+    --- PASS: TestCheckedNonNullTypeScript/initializer (0.08s)
+    --- PASS: TestCheckedNonNullTypeScript/narrowed (0.80s)
+    --- PASS: TestCheckedNonNullTypeScript/null (0.73s)
+    --- PASS: TestCheckedNonNullTypeScript/let_initializer (0.89s)
+    --- PASS: TestCheckedNonNullTypeScript/undefined (0.77s)
+    --- PASS: TestCheckedNonNullTypeScript/present (0.52s)
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:175: | internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+    non_null_checked_test.go:174: gate cache native miss
+    non_null_checked_test.go:175: | internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+--- PASS: TestCheckedNonNullCounts (1.50s)
+PASS
+gate cache: native hits=0 misses=7
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.512s

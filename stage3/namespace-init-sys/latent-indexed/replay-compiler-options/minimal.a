@@ -1,0 +1,8 @@
+interface CompilerOptions {
+    target?: number;
+    [option: string]: number | undefined;
+}
+function observe(options: CompilerOptions): number {
+    return options.target ?? 0;
+}
+console.log(`${observe({ target: 1 })}`);

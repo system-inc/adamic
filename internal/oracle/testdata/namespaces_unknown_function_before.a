@@ -1,0 +1,8 @@
+// A pure exported function still needs its namespace to have executed.
+function right(): boolean { console.log('right'); return true; }
+function read(): boolean { return Debug.answer(right()); }
+function invoke(action: () => boolean): boolean { return action(); }
+let action = (): boolean => true;
+action = read;
+console.log(`${invoke(action)}`);
+namespace Debug { export function answer(value: boolean): boolean { return value; } }

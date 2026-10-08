@@ -1,0 +1,18 @@
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+    namespaces_test.go:136: reaching call lost its initialization refusal: <nil>
+=== RUN   TestNamespaceInitializationReachability/helper
+    namespaces_test.go:136: reaching call lost its initialization refusal: <nil>
+=== RUN   TestNamespaceInitializationReachability/cycle
+    namespaces_test.go:136: reaching call lost its initialization refusal: <nil>
+--- FAIL: TestNamespaceInitializationReachability (0.16s)
+    --- FAIL: TestNamespaceInitializationReachability/direct (0.06s)
+    --- FAIL: TestNamespaceInitializationReachability/helper (0.05s)
+    --- FAIL: TestNamespaceInitializationReachability/cycle (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.202s
+FAIL
+
+mutant_exit=1
