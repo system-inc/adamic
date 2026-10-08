@@ -1,0 +1,169 @@
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { utf8At, utf8Length } from 'adamic';
+import { fileComments } from './comments.a';
+import type { CommentRange } from './comments.a';
+import { classify, groupOrder } from './groups.a';
+import { localNames } from './bindings.a';
+import { message } from './messages.a';
+
+class ClassifiedImport {
+    readonly source: string;
+    readonly group: string;
+    readonly text: string;
+    constructor(source: string, group: string, text: string) { this.source = source; this.group = group; this.text = text; }
+}
+function inner(comment: CommentRange): string {
+    let raw = comment.text.slice(2);
+    if(comment.text.startsWith('/*') && comment.text.endsWith('*/')) { raw = comment.text.slice(2, -2); }
+    let start = 0;
+    while(raw.charCodeAt(start) === 32 || raw.charCodeAt(start) === 9) { start++; }
+    return raw.slice(start);
+}
+function trails(source: string, start: number): boolean {
+    for(let i = start - 1; i >= 0; i--) {
+        const c = source.charCodeAt(i);
+        if(c === 10 || c === 13) { return false; }
+        if(c !== 32 && c !== 9) { return true; }
+    }
+    return false;
+}
+function endOfSection(source: string, end: number): number {
+    let cursor = end;
+    while(source.charCodeAt(cursor) === 32 || source.charCodeAt(cursor) === 9) { cursor++; }
+    if(source.slice(cursor, cursor + 2) === '//') {
+        while(cursor < source.length && source.charCodeAt(cursor) !== 10 && source.charCodeAt(cursor) !== 13) { cursor++; }
+        end = cursor;
+    }
+    return source.charCodeAt(end) === 10 ? end + 1 : end;
+}
+function byteCompare(first: string, second: string): number {
+    const a = utf8Length(first);
+    const b = utf8Length(second);
+    for(let i = 0; i < Math.min(a, b); i++) {
+        const delta = utf8At(first, i) - utf8At(second, i);
+        if(delta !== 0) { return delta; }
+    }
+    return a - b;
+}
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        const source = context.source;
+        const statements = context.node(index).children;
+        const imports = statements.filter(statement => context.kind(statement) === 'ImportDeclaration');
+        const first = imports[0] ?? -1;
+        const last = imports[imports.length - 1] ?? -1;
+        if(first < 0 || last < 0) { return; }
+        const comments = fileComments(context, context.node(index));
+        let directive = '';
+        let directiveNode = -1;
+        const firstStatement = statements[0] ?? -1;
+        if(context.kind(firstStatement) === 'ExpressionStatement') {
+            const expression = context.node(firstStatement).children[0] ?? -1;
+            if(context.kind(expression) === 'StringLiteral') {
+                const text = context.node(expression).text;
+                if(text === 'use client' || text === 'use server') { directive = text; directiveNode = firstStatement; }
+            }
+        }
+        const firstStart = context.start(first);
+        let sectionStart = firstStart;
+        if(directiveNode >= 0) { sectionStart = context.start(directiveNode); }
+        else {
+            let earliest = -1;
+            for(const comment of comments) {
+                if(comment.text.startsWith('/*') || comment.end > firstStart || comment.start < context.node(first).pos || !inner(comment).startsWith('Dependencies')) { continue; }
+                if(earliest < 0 || comment.start < earliest) { earliest = comment.start; }
+            }
+            if(earliest >= 0) { sectionStart = earliest; }
+        }
+        let description = -1;
+        if(directiveNode >= 0) {
+            for(let i = 0; i < comments.length; i++) {
+                const comment = comments[i];
+                if(comment !== undefined && comment.text.startsWith('/*') && comment.start >= context.node(directiveNode).end && comment.end < firstStart) { description = i; }
+            }
+        }
+        const classified: ClassifiedImport[] = [];
+        for(const declaration of imports) {
+            const start = context.start(declaration);
+            const end = context.node(declaration).end;
+            const module = context.node(declaration).children.find(child => ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(child))) ?? -1;
+            const moduleText = module < 0 ? '' : context.node(module).text;
+            const clause = context.children(declaration, 'ImportClause')[0] ?? -1;
+            const typeOnly = clause >= 0 && context.node(clause).semantic === 'TypeKeyword';
+            const preserved: string[] = [];
+            for(let i = 0; i < comments.length; i++) {
+                const comment = comments[i];
+                if(comment === undefined || comment.start < context.node(declaration).pos || comment.end > start || trails(source, comment.start) || comment.start < sectionStart) { continue; }
+                const value = inner(comment);
+                if(value.startsWith('Dependencies -') || value.includes('client-only features') || value.includes('server-only features') || i === description) { continue; }
+                preserved.push(comment.text);
+            }
+            let text = source.slice(start, end);
+            for(const comment of comments) {
+                if(comment.start < end) { continue; }
+                const between = source.slice(end, comment.start);
+                if(between.includes('\n') || between.includes('\r') || between.trim() !== '') { continue; }
+                text += ' ' + comment.text;
+                break;
+            }
+            if(preserved.length > 0) { text = preserved.join('\n') + '\n' + text; }
+            classified.push(new ClassifiedImport(moduleText, classify(moduleText, typeOnly, localNames(context, declaration)), text));
+        }
+        const interleaved: string[] = [];
+        const firstIndex = statements.indexOf(first);
+        const lastIndex = statements.indexOf(last);
+        let sectionEnd = context.node(last).end;
+        for(let i = firstIndex; i <= lastIndex; i++) {
+            const statement = statements[i] ?? -1;
+            if(statement < 0 || context.kind(statement) === 'ImportDeclaration') { continue; }
+            const start = context.start(statement);
+            const prefix: string[] = [];
+            for(const comment of comments) {
+                if(comment.start >= context.node(statement).pos && comment.end <= start && comment.start >= sectionStart) { prefix.push(comment.text); }
+            }
+            let text = source.slice(start, context.node(statement).end);
+            if(prefix.length > 0) { text = prefix.join('\n') + '\n' + text; }
+            interleaved.push(text);
+            sectionEnd = Math.max(sectionEnd, context.node(statement).end);
+        }
+        sectionEnd = endOfSection(source, sectionEnd);
+        const lines: string[] = [];
+        if(directive !== '') { lines.push("'" + directive + "'; // Uses " + (directive === 'use client' ? 'client' : 'server') + '-only features'); lines.push(''); }
+        if(description >= 0) { lines.push(comments[description]?.text ?? ''); lines.push(''); }
+        let firstGroup = true;
+        for(const group of groupOrder) {
+            const items = classified.filter(item => item.group === group);
+            if(items.length === 0) { continue; }
+            items.sort((first, second) => {
+                if(group === 'Frameworks') {
+                    const firstReact = first.source === 'react';
+                    const secondReact = second.source === 'react';
+                    if(firstReact !== secondReact) { return firstReact ? -1 : 1; }
+                }
+                return byteCompare(first.source, second.source);
+            });
+            if(!firstGroup) { lines.push(''); }
+            firstGroup = false;
+            lines.push('// Dependencies - ' + group);
+            for(const item of items) { lines.push(item.text); }
+        }
+        let expected = lines.join('\n') + '\n';
+        if(interleaved.length > 0) { expected += '\n' + interleaved.join('\n\n') + '\n'; }
+        if(sectionEnd > source.length || source.slice(sectionStart, sectionEnd) === expected) { return; }
+        let suppressed = false;
+        for(const comment of comments) {
+            if(comment.end <= sectionStart) {
+                const text = inner(comment);
+                if(text.startsWith('eslint-disable') || text.startsWith('cohere-disable') || text.startsWith('verify-disable')) { suppressed = true; }
+            }
+        }
+        const edits: SuggestionEdit[] = [];
+        if(interleaved.length === 0 && !suppressed) { edits.push(new SuggestionEdit(sectionStart, sectionEnd, expected)); }
+        context.reportNode(first, 'structure/consistency-require-organized-imports', 'importsNotOrganized', message, edits);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

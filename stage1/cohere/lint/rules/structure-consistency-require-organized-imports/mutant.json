@@ -1,0 +1,6 @@
+{
+  "name": "react framework priority reversed",
+  "file": "rule.a",
+  "from": "const firstReact = first.source === 'react';",
+  "to": "const firstReact = first.source === 'next';"
+}

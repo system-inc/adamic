@@ -1,0 +1,73 @@
+export const groupOrder: readonly string[] = ["Project", "Node", "Frameworks", "Third-party", "Nexus", "Appearance", "Theme", "Localization", "Types", "Constants", "Providers", "Context", "Services", "Data", "Shared State", "APIs", "Hooks", "Layouts", "Components", "Local Components", "Animations", "Assets", "Utilities"];
+const builtins: readonly string[] = ["assert", "async_hooks", "buffer", "child_process", "cluster", "console", "constants", "crypto", "dgram", "diagnostics_channel", "dns", "domain", "events", "fs", "http", "http2", "https", "inspector", "module", "net", "os", "path", "perf_hooks", "process", "punycode", "querystring", "readline", "repl", "stream", "string_decoder", "sys", "timers", "tls", "trace_events", "tty", "url", "util", "v8", "vm", "wasi", "worker_threads", "zlib"];
+const segments: readonly string[] = ["/appearance/", "/theme/", "/localization/", "/_localization/", "/_translations", "/locales/", "/context/", "/services/", "/data/", "/shared-state/", "/api/", "/hooks/", "/animations/", "/components/", "/modules/", "/layouts/", "/pages/", "/utilities/"];
+const groups: readonly string[] = ["Appearance", "Theme", "Localization", "Localization", "Localization", "Localization", "Context", "Services", "Data", "Shared State", "APIs", "Hooks", "Animations", "Components", "Components", "Layouts", "Components", "Utilities"];
+function word(code: number): boolean { return code === 95 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57); }
+function endsWord(source: string, needle: string): boolean {
+    for(let i = 0; i + needle.length <= source.length; i++) {
+        if(source.slice(i, i + needle.length) !== needle) { continue; }
+        let after = i + needle.length;
+        if(needle === 'Provider' && source.charCodeAt(after) === 115) { after++; }
+        if(after >= source.length || !word(source.charCodeAt(after))) { return true; }
+    }
+    return false;
+}
+function constants(source: string): boolean { return endsWord(source, 'Constants') || endsWord(source, 'Config') || endsWord(source, 'Enums'); }
+function hook(name: string): boolean { const c = name.charCodeAt(3); return name.startsWith('use') && c >= 65 && c <= 90; }
+function hooks(names: readonly string[]): boolean { return names.some(name => hook(name)); }
+function providers(names: readonly string[]): boolean { return names.some(name => name.endsWith('Provider') || name.endsWith('Providers')); }
+function hookPath(source: string): boolean {
+    for(let i = 0; i + 4 < source.length; i++) {
+        const c = source.charCodeAt(i + 4);
+        if(source.slice(i, i + 4) === '/use' && c >= 65 && c <= 90) { return true; }
+    }
+    return false;
+}
+function relative(source: string, typeOnly: boolean, names: readonly string[]): string {
+    if(source.includes('/utilities/')) { return 'Utilities'; }
+    if(source.includes('/api/')) { return 'APIs'; }
+    if(source.includes('/hooks/') || hookPath(source)) { return 'Hooks'; }
+    if(source.includes('/data/')) { return 'Data'; }
+    if(source.includes('/appearance/')) { return 'Appearance'; }
+    if(source.includes('/theme/')) { return 'Theme'; }
+    if(source.includes('/localization/') || source.includes('/_localization/') || source.includes('/_translations') || source.includes('/locales/')) { return 'Localization'; }
+    if(source.includes('/layouts/')) { return 'Layouts'; }
+    if(source.includes('/context/') || source.includes('Context')) { return 'Context'; }
+    if(source.includes('/services/')) { return 'Services'; }
+    if(source.includes('/shared-state/')) { return 'Shared State'; }
+    if(source.includes('/animations/')) { return 'Animations'; }
+    if(source.endsWith('.svg')) { return 'Assets'; }
+    if(hooks(names)) { return 'Hooks'; }
+    if(providers(names) || endsWord(source, 'Provider')) { return 'Providers'; }
+    if(typeOnly) { return 'Types'; }
+    if(constants(source)) { return 'Constants'; }
+    return 'Local Components';
+}
+function firstParty(source: string, typeOnly: boolean, names: readonly string[]): string {
+    if(typeOnly) { return 'Types'; }
+    if(constants(source)) { return 'Constants'; }
+    if(providers(names) || endsWord(source, 'Provider')) { return 'Providers'; }
+    for(let i = 0; i < segments.length; i++) {
+        if(!source.includes(segments[i] ?? '')) { continue; }
+        const group = groups[i] ?? '';
+        return group === 'Components' && hooks(names) ? 'Hooks' : group;
+    }
+    if(source.includes('/app/') || source.endsWith('/app')) {
+        if(hooks(names)) { return 'Hooks'; }
+        if(providers(names)) { return 'Providers'; }
+        return 'Components';
+    }
+    if(source === '@project/ProjectSettings') { return 'Project'; }
+    return hooks(names) ? 'Hooks' : 'Components';
+}
+export function classify(source: string, typeOnly: boolean, names: readonly string[]): string {
+    if(source.startsWith('@nexus/') || source.includes('/nexus/')) { return 'Nexus'; }
+    if(source.startsWith('./') || source.startsWith('../')) { return relative(source, typeOnly, names); }
+    if(source.startsWith('node:') || builtins.includes(source.split('/')[0] ?? '')) { return 'Node'; }
+    if(['react', 'react-dom', 'next'].includes(source) || ['react/', 'react-dom/', 'next/'].some(prefix => source.startsWith(prefix))) { return 'Frameworks'; }
+    if(source.startsWith('@structure/assets/') || source.endsWith('.svg') || source.startsWith('@phosphor-icons/')) { return 'Assets'; }
+    if(source.startsWith('motion')) { return 'Animations'; }
+    if(source.startsWith('@structure/') || source.startsWith('@project/')) { return firstParty(source, typeOnly, names); }
+    if(typeOnly) { return 'Types'; }
+    return hooks(names) ? 'Hooks' : 'Third-party';
+}

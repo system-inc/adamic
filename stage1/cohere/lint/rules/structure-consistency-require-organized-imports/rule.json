@@ -1,0 +1,12 @@
+{
+  "name": "structure/consistency-require-organized-imports",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleOrganizedImports",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestConsistencyOrganizeImports"
+}

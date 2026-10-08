@@ -1,0 +1,7 @@
+'use client';
+/* File overview */
+import Link from 'next/link'; // Link documentation
+import React from 'react';
+import type { Thing } from '@structure/source/components/Thing';
+import { Thing as useThing } from '@structure/source/components/Thing';
+export const result = 1;

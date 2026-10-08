@@ -1,0 +1,40 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/imports/nodes.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+const empty: readonly number[] = [];
+// Only this import's subtree is projected; integer links preserve the shared helper's contract.
+function project(context: RuleContext, index: number, nodes: HelperNode[]): number {
+    const node = context.node(index);
+    const slot = nodes.length;
+    nodes.push({kind: node.kind, text: node.text, expression: -1, name: -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: empty});
+    const children: number[] = [];
+    for(const child of node.children) { children.push(project(context, child, nodes)); }
+    let name = -1;
+    let clause = -1;
+    let named = -1;
+    for(const child of children) {
+        const kind = nodes[child]?.kind ?? '';
+        if(kind === 'Identifier' || kind === 'StringLiteral') { name = child; }
+        if(kind === 'ImportClause') { clause = child; }
+        if(kind === 'NamespaceImport' || kind === 'NamedImports') { named = child; }
+    }
+    const property = node.kind === 'ImportSpecifier' && children.length > 1 ? children[0] ?? -1 : -1;
+    nodes[slot] = {kind: node.kind, text: node.text, expression: -1, name, propertyName: property, importClause: clause, namedBindings: named, elements: children};
+    return slot;
+}
+export function localNames(context: RuleContext, index: number): string[] {
+    const nodes: HelperNode[] = [];
+    const root = project(context, index, nodes);
+    const bindings = bindingsOf(nodes, root);
+    const names: string[] = [];
+    if(bindings.default >= 0 && nodes[bindings.default]?.kind === 'Identifier') { names.push(nodes[bindings.default]?.text ?? ''); }
+    if(bindings.namespace >= 0) {
+        const name = nodes[bindings.namespace]?.name ?? -1;
+        if(name >= 0 && nodes[name]?.kind === 'Identifier') { names.push(nodes[name]?.text ?? ''); }
+    }
+    for(const element of bindings.named) {
+        const name = nodes[element]?.name ?? -1;
+        if(name >= 0 && nodes[name]?.kind === 'Identifier') { names.push(nodes[name]?.text ?? ''); }
+    }
+    return names;
+}
