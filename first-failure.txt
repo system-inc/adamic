@@ -1,0 +1,35 @@
+FIRST FAILURE (tests, at 462.5 s):
+github.com/system-inc/adamic/stage1/typescript/parser TestIncompleteCompilerAgrees
+-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-2364
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-2503
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-2503
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-2642
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-2642
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-2781
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-2781
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-2920
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-2920
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3059
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3059
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3198
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3198
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3337
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3337
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3476
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3476
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3615
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3615
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3754
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3754
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-3893
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-3893
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-4032
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-4032
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-4171
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-4171
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-remove-4310
+    incomplete_test.go:320: missing case /home/ahra/adamic-tools/gate-inputs/typescript/src/compiler/watchUtilities.ts-duplicate-4310
+    incomplete_test.go:324: missing or extra case count: compared 0, expected 22497
+    incomplete_test.go:327: comparison completed after checking 0 inputs; failures retained
+--- FAIL: TestIncompleteCompilerAgrees (323.93s)
+
