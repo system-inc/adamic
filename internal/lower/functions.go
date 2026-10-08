@@ -91,7 +91,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
+		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.QuestionToken == nil && (declared.Initializer == nil || name.Kind == ast.KindObjectBindingPattern && !function.Closure) {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
 			function.Parameters = append(function.Parameters, incoming)
@@ -163,36 +163,16 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// Defaults run before the body, in order, after a constructor's fields, as JavaScript runs them.
 	var prologue, lowered []ir.Statement
 	var err error
-	if len(patterns) > 0 && len(defaults) > 0 {
-		// JavaScript binds parameters in order, a default perhaps reading a name destructured
-		// before it; the two together aren't lowered yet.
-		err = l.notYet(declaration, "a destructured parameter beside a parameter with a default")
+	if len(defaults) > 0 {
+		for _, parameter := range patterns {
+			if parameter.pattern.Kind == ast.KindArrayBindingPattern {
+				err = l.notYet(declaration, "a destructured parameter beside a parameter with a default")
+				break
+			}
+		}
 	}
-	for _, parameter := range patterns {
-		if err != nil {
-			break
-		}
-		var destructured []ir.Statement
-		patternType := l.checker.GetTypeAtLocation(parameter.parameter)
-		heldAs, _ := l.representation(patternType)
-		destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
-		prologue = append(prologue, destructured...)
-	}
-	for _, parameter := range defaults {
-		if err != nil {
-			break
-		}
-		var fallback ir.Expression
-		if fallback, err = l.expression(parameter.initializer); err != nil {
-			break
-		}
-		of := l.result.Locals[parameter.local].Type
-		if fallback = fit(fallback, of); fallback.Type() != of {
-			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
-			break
-		}
-		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+	if err == nil {
+		prologue, err = l.parameterPrologue(declaration, defaults, patterns)
 	}
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex

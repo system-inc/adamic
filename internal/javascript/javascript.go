@@ -771,6 +771,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.UndefinedOnly && expression.Panic != nil {
 			return "adamicDefined(" + e.value(expression.Value) + ", " + e.value(expression.Panic) + ")"
 		}
+		if expression.UndefinedOnly {
+			return "((adamicDefaultValue) => adamicDefaultValue === undefined ? (" + e.value(expression.Fallback) + ") : adamicDefaultValue)(" + e.value(expression.Value) + ")"
+		}
 		if expression.Panic != nil {
 			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
 		}
