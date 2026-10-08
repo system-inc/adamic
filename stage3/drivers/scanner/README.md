@@ -118,7 +118,7 @@ binaries on the same files.json corpus before using their timings as a proof.
 
 The coverage dump scans every corpus file twice, first with `skipTrivia: true`,
 then with `skipTrivia: false`. Every token includes `getTokenValue()` serialized
-with JSON.stringify, alongside kind, full start, start, end, flags and raw text.
+with the driver's JSON string escaper, alongside kind, full start, start, end, flags and raw text.
 The value is exactly the scanner's current value, including stale values on
 punctuation. Inline error rows include code, category, the callback's scanner
 position (the error start), length, message text and substitution argument.
@@ -139,3 +139,31 @@ All three source mutants exit zero on Node and produce unequal dumps. The
 error mutant removes exactly one row. Native execution remains blocked by the
 previously recorded typed captureStackTrace marker refusal; this expanded
 coverage result is a Node reference proof, not a native proof.
+
+
+## Driver JSON escaping
+
+The driver quotes strings directly instead of calling JSON.stringify on a
+string/number/null union. escapeJsonString emits JSON's quote/backslash and
+short control escapes, lowercase four-digit escapes for remaining controls
+and lone surrogates, and preserves valid surrogate pairs. Optional strings
+emit null when absent; diagnostic payloads narrow to strings or numbers before
+formatting, with non-finite numbers represented as null.
+
+The fixture harness extracts the exact three function bodies from main.a.
+It runs every code unit 0 through 0x7F separately and together, valid surrogate
+pairs, lone/reversed surrogates and U+2028/U+2029, plus diagnostic payloads.
+Node's JSON.stringify independently supplies expected bytes. Dropping the
+newline escape must still build/run and fail the byte comparison, on Node
+and on the native control compiler.
+
+```sh
+source /workspace/adamic-tools/env.sh
+SCANNER_TYPESCRIPT=/workspace/scratch/native3-cache/api/node_modules/typescript/lib/typescript.js \
+  node stage3/drivers/scanner/escape-proof.cjs NEW_RESULTS \
+  /workspace/scratch/scanner-any-next-adamic /workspace/scanner-native3-next > escape-proof.log 2>&1
+```
+
+Omit the two compiler arguments for a Node-only proof. See
+[evidence/json-escape/REPORT.md](evidence/json-escape/REPORT.md) for the measured
+fixture, mutant, complete token-stream comparison and discovery checkpoint.
