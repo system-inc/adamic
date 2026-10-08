@@ -1,0 +1,94 @@
+{
+  "node": {
+    "bytes": 36429231,
+    "sha256": "686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615",
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  "mutant": {
+    "bytes": 36429231,
+    "sha256": "191c170d2ef907d82e866563dc5b6b5593eb9d65f7a75288ee8665461cfbbb08",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "cmp of complete preorder dump; both Node executions exited zero"
+  },
+  "mutation": {
+    "line": 166,
+    "before": "Identifier 3128 3145 0\tmoduleSpecifiers",
+    "after": "Identifier 3128 3146 0\tmoduleSpecifiers",
+    "changed_lines": 1
+  },
+  "files": 81,
+  "schema": "parser-preorder-with-jsdoc-v2",
+  "coverage": {
+    "jsdoc_nodes": 4149,
+    "tag_nodes": 3846,
+    "type_expressions": 5,
+    "jsdoc_diagnostics": 0
+  },
+  "full_slice_comparison_exit": 0,
+  "omission": {
+    "declaration": {
+      "file": "src/compiler/parser.ts",
+      "name": "initializeState",
+      "start": 88764,
+      "end": 90691,
+      "removed_bytes": 1927,
+      "mutation": "remove the entire reached function declaration"
+    },
+    "run_exit": 1,
+    "stderr": "ReferenceError: initializeState is not defined",
+    "dump_bytes": 0,
+    "comparison_exit": 1,
+    "caught_by": "driver fails immediately on the removed reached declaration; complete dump comparison also fails"
+  },
+  "jsdoc_mutants": {
+    "dropped_tags": {
+      "control": {
+        "bytes": 36429231,
+        "sha256": "686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615",
+        "exit": 0,
+        "jsdoc_nodes": 4149,
+        "tag_nodes": 3846,
+        "type_expressions": 5,
+        "jsdoc_diagnostics": 0
+      },
+      "mutant": {
+        "bytes": 35909216,
+        "sha256": "201fdbf9e380a125c917af20e481f9858467bd94c2d3abc73c73612c5dc95ed4",
+        "exit": 0,
+        "jsdoc_nodes": 4149,
+        "tag_nodes": 0,
+        "type_expressions": 0,
+        "jsdoc_diagnostics": 0
+      },
+      "comparison_exit": 1,
+      "caught_by": "complete extended dump; both Node runs exit zero, same JSDoc count but zero tags"
+    },
+    "jsdoc_diagnostic": {
+      "control": {
+        "bytes": 2309,
+        "sha256": "d761bb2adccc0e74139a553f52d7bdcd3315d70d5aba6575d7d350a80d78cd77",
+        "exit": 0,
+        "jsdoc_nodes": 4,
+        "tag_nodes": 5,
+        "type_expressions": 5,
+        "jsdoc_diagnostics": 1
+      },
+      "mutant": {
+        "bytes": 2309,
+        "sha256": "1a2a89e5839433b641f7071a1057fc453d9cd500d1a1a4936c41d6878e28a1e3",
+        "exit": 0,
+        "jsdoc_nodes": 4,
+        "tag_nodes": 5,
+        "type_expressions": 5,
+        "jsdoc_diagnostics": 1
+      },
+      "comparison_exit": 1,
+      "line": 44,
+      "before": "jsDocDiagnostic 1 1110 13 1\tType expected.",
+      "after": "jsDocDiagnostic 1 1111 13 1\tType expected.",
+      "caught_by": "only JSDoc diagnostic code changes; trees and parse diagnostics remain identical"
+    }
+  }
+}

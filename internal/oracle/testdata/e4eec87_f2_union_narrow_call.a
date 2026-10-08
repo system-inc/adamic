@@ -1,0 +1,14 @@
+function first(useText: boolean): string | number {
+	return useText ? 'text' : 7;
+}
+let shared: string | number = first(true);
+function toNumber(): void {
+	shared = 12345;
+}
+function check(): void {
+	if (typeof shared === 'string') {
+		toNumber();
+		console.log(`after toNumber: ${shared.length}`);
+	}
+}
+check();

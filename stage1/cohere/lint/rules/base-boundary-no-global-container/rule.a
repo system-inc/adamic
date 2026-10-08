@@ -1,0 +1,26 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { boundaryNoGlobalContainerMessage } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.text !== 'getGlobalContainer') {
+            return;
+        }
+        this.context.reportRange(
+            this.context.start(index),
+            node.end,
+            'base/boundary-no-global-container',
+            'boundaryNoGlobalContainer',
+            boundaryNoGlobalContainerMessage,
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

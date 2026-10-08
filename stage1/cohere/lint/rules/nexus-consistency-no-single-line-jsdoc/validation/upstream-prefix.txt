@@ -1,0 +1,5 @@
+func TestConsistencyNoSingleLineJsDocFires(t *testing.T) {
+func TestConsistencyNoSingleLineJsDocStaysSilent(t *testing.T) {
+func TestConsistencyNoSingleLineJsDocFixesWithOnlyWhitespaceAfter(t *testing.T) {
+func TestConsistencyNoSingleLineJsDocFixes(t *testing.T) {
+func TestConsistencyNoSingleLineJsDocWithholdsUnsafeFixes(t *testing.T) {

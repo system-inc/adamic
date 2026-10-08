@@ -1,0 +1,8 @@
+=== RUN   TestNativeCacheGeneratedC
+=== PAUSE TestNativeCacheGeneratedC
+=== CONT  TestNativeCacheGeneratedC
+    cache_test.go:50: changed emitted C served "before\n", want "after\n"
+--- FAIL: TestNativeCacheGeneratedC (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.064s
+FAIL
