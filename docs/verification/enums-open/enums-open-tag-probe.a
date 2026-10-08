@@ -1,3 +1,4 @@
+// a-check: refused adamic/enum-literal
 enum Kind { A, B }
 interface A { readonly kind: Kind.A; readonly value: string }
 interface B { readonly kind: Kind.B; readonly value: number }
