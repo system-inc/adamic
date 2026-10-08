@@ -44,6 +44,21 @@ heartbeat() {
   git -C "${records}" push -q origin "HEAD:refs/heads/records/full-gate-heartbeat" || true
 }
 
+# Between whole gates the box lends one area slot to the fast-gate watcher (@system_adamic, Oct 8 05:22),
+# and a whole gate takes it back first: the line "<box> B" comes out of the watcher's slot table, any
+# fast gate still on the box is stopped (the watcher sees it void and runs it again elsewhere), and the
+# run waits for that slot's lock. Lent again when the run's verdict is published, and on every idle minute.
+slots=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}/slots
+lend() {
+  [ -f "${slots}" ] || return 0
+  grep -qx "${box} B" "${slots}" || echo "${box} B" >> "${slots}"
+}
+reclaim() {
+  [ -f "${slots}" ] || return 0
+  grep -vx "${box} B" "${slots}" > "${slots}.tmp"; mv "${slots}.tmp" "${slots}"
+  ssh "${box}" 'pkill -f "[f]ast-gate/run.py --tree" || true; mkdir -p ~/fast-gate; flock ~/fast-gate/lock true' || true
+}
+
 publish() {
   local sha=$1 stamp=$2 out=$3 parent=$4
   local copy index gitDirectory tree commit branch=gate-logs/${sha:0:12}/${stamp}/full-main
@@ -67,6 +82,7 @@ run() {
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
   out=full-gate/out/${sha:0:12}-${stamp}
   echo "$(date -u +%H:%M:%S) full gate of main ${sha} (tools ${tools}) on ${box}"
+  reclaim
   (heartbeat start "${sha}" > /dev/null 2>&1 &)
   ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" <<'BOX'
 set -euo pipefail
@@ -117,6 +133,7 @@ BOX
       final=$(ssh "${box}" "head -1 ~/${out}/status.txt")
       echo "$(date -u +%H:%M:%S) finished: ${final}"
       if [[ ${final} == green:* ]]; then echo "${sha}" > "${state}/last-green"; fi
+      lend
       # Explicitly 0: a bare return took the status of the green test above, so after every red run
       # (06:55Z and 08:30Z on Oct 8) set -e ended the loop and no main got a whole gate.
       return 0
@@ -134,6 +151,7 @@ while true; do
   if [ -n "${main}" ] && ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
     run "${main}" || echo "$(date -u +%H:%M:%S) run of ${main} failed (exit $?); trying again next minute"
   fi
+  lend
   idle=$((${idle:-0} + 1)); [ $((idle % 10)) -eq 0 ] && (heartbeat idle "${main}" > /dev/null 2>&1 &)
   sleep 60
 done
