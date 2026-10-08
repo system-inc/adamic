@@ -1,0 +1,42 @@
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/signature-id
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-id caught backend 0: exit 0 stdout "0\nstring\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-id caught backend 1: exit 0 stdout "0\nstring\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-id caught backend 2: exit 0 stdout "false\nstring\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/signature-value
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-value caught backend 0: exit 0 stdout "7\nundefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-value caught backend 1: exit 0 stdout "7\nundefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: signature-value caught backend 2: exit 0 stdout "7\nboolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/root-member
+    checked_views_object_primitive_tuple_mutants_test.go:97: root-member caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: root-member caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: root-member caught backend 2: exit 0 stdout "boolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/foreach-arity
+    checked_views_object_primitive_tuple_mutants_test.go:97: foreach-arity caught backend 0: exit 0 stdout "object\ndone\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: foreach-arity caught backend 1: exit 0 stdout "object\ndone\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: foreach-arity caught backend 2: exit 0 stdout "object\ndone\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-outer
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-outer caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-outer caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-outer caught backend 2: exit 0 stdout "boolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-shape
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-shape caught backend 0: exit 0 stdout "object\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-shape caught backend 1: exit 0 stdout "object\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-shape caught backend 2: exit 0 stdout "object\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-nested
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-nested caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-nested caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:97: out-nested caught backend 2: exit 0 stdout "boolean\n"
+--- PASS: TestCheckedViewObjectPrimitiveTupleMutants (8.69s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/signature-id (1.01s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/signature-value (0.96s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/root-member (0.94s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/foreach-arity (0.98s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-outer (1.71s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-shape (1.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-nested (1.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=21
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.705s

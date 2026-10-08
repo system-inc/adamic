@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: a cast the runtime can't check
+--- PASS: TestCheckedViewObjectPrimitiveOriginalPairs (16.83s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe (16.83s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.854s

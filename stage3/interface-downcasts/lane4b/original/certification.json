@@ -207,6 +207,34 @@
       "field": "parent",
       "candidate_reads": 1,
       "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "<element>",
+      "candidate_reads": 4,
+      "certificate": "../../tuples/certifications.json"
+    },
+    {
+      "type_id": 97913,
+      "type": "readonly IncrementalBuildInfoRoot[]",
+      "field": "<element>",
+      "candidate_reads": 1,
+      "certificate": "../../tuples/certifications.json"
+    },
+    {
+      "type_id": 97931,
+      "type": "readonly IncrementalBuildInfoEmitSignature[] | undefined",
+      "field": "forEach",
+      "candidate_reads": 1,
+      "certificate": "../../tuples/certifications.json"
+    },
+    {
+      "type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "outSignature",
+      "candidate_reads": 1,
+      "certificate": "../../tuples/certifications.json"
     }
   ],
   "fixtures": {
@@ -218,7 +246,6 @@
     "source-file-helpers-false.a": "39f2b9d54adb2b14604d7e2e1cca3017ad0960844bed0ce62507d36691eb335e",
     "source-file-helpers-good.a": "27d2a614685e2dcdedd96756deff1b834905b3909dfc595499d2c58cd7d95149",
     "source-file-kind-wrong.a": "de7039f0807800d13b1cf95e88a3bc5e2070228f009caa40a4030af62c574d18",
-    "source-file-uninitialized.a": "a056880e2f402b6be817a7a09cc8fae19cd8722f5f0b7c7005ecadb14fa522bb",
     "literal-boolean.a": "f7e5b6d4e1d210cf32bcc8748a71d16fe4e8ab05ae8ee32666d1156dbc323f3d",
     "literal-negative-wrong.a": "1003abff48e5a383b7cde44d2d9cad9fb9b897018bb84f21ddbe74a08b794d89",
     "literal-good.a": "e71f40e6ae4557a4d2ccd90625bdd425da0377590eeabb318f5f4030b70ae10e",
@@ -293,11 +320,14 @@
     "package-resolvedEntrypoints-wrong.a": "56d3d3a44b7e62211cbc326d3ef612fe15c93edbb7b6270b712679b3aa94d756",
     "package-versionPaths-good.a": "e31f371555aa6c9a30bca032b7baec1ad3c16cd138482fa6011944865c639720",
     "package-versionPaths-nested.a": "e8f32e20f72fe388abfc1c1199260026a4c0fccd22bbbbde6b93488276b6d0a9",
-    "package-versionPaths-wrong.a": "1146ba997cb38abdbcdcb176c36aea83c3e28196ad6376aa861826d1479153e2"
+    "package-versionPaths-wrong.a": "1146ba997cb38abdbcdcb176c36aea83c3e28196ad6376aa861826d1479153e2",
+    "source-file-uninitialized.ts": "a056880e2f402b6be817a7a09cc8fae19cd8722f5f0b7c7005ecadb14fa522bb"
   },
   "declaration_manifest": "declaration-manifest.json",
   "runtime_gate": "../resume/logs/oct13-final-touched.log",
   "shared_certificates": {
-    "../../lane7/original/certification.json": "09b4b039d393b2e9248a10c29d14aff81327d2c03808e41dea0d96cef9792f40"
+    "../../lane7/original/certification.json": "09b4b039d393b2e9248a10c29d14aff81327d2c03808e41dea0d96cef9792f40",
+    "../../tuples/candidate-pairs.json": "3a8146b74866befabf3960f2143f50418b95f5ab1f441a33ef15defdd9b16dc4",
+    "../../tuples/certifications.json": "1ba5eb007818121122868458bbfb5e83b2ad82343f20f6980706bfaba6c6eb92"
   }
 }

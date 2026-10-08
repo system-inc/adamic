@@ -1,0 +1,76 @@
+=== RUN   TestCheckedViewTupleLane4bCastFrontier
+    checked_views_tuples_frontiers_test.go:31: original source Node=string; retained compiler boundary: /tmp/adamic-gate/TestCheckedViewTupleLane4bCastFrontier4206403838/001/frontier.a:5:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestCheckedViewTupleLane4bCastFrontier (0.44s)
+=== RUN   TestCheckedViewTupleLane4bOutSignature
+=== RUN   TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-string
+=== RUN   TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-tuple
+=== RUN   TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-wrong
+--- PASS: TestCheckedViewTupleLane4bOutSignature (3.63s)
+    --- PASS: TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-string (1.23s)
+    --- PASS: TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-tuple (1.19s)
+    --- PASS: TestCheckedViewTupleLane4bOutSignature/lane4b-out-signature-wrong (1.20s)
+=== RUN   TestCheckedViewTupleOriginalRootIndex
+=== RUN   TestCheckedViewTupleOriginalRootIndex/root-index-tuple
+=== RUN   TestCheckedViewTupleOriginalRootIndex/root-index-scalar
+=== RUN   TestCheckedViewTupleOriginalRootIndex/root-index-bounds
+=== RUN   TestCheckedViewTupleOriginalRootIndex/root-index-required-missing
+--- PASS: TestCheckedViewTupleOriginalRootIndex (2.13s)
+    --- PASS: TestCheckedViewTupleOriginalRootIndex/root-index-tuple (0.54s)
+    --- PASS: TestCheckedViewTupleOriginalRootIndex/root-index-scalar (0.52s)
+    --- PASS: TestCheckedViewTupleOriginalRootIndex/root-index-bounds (0.56s)
+    --- PASS: TestCheckedViewTupleOriginalRootIndex/root-index-required-missing (0.52s)
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-good
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-empty
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-single
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-id-wrong
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-value-wrong
+--- PASS: TestCheckedViewTupleOriginalSignaturePositions (2.68s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-good (0.51s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-empty (0.52s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-single (0.54s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-id-wrong (0.53s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-value-wrong (0.57s)
+=== RUN   TestCheckedViewTupleOriginalOutSignature
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-tuple-good
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-string-good
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-undefined
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-helper-good
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-missing
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind-noread
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-wrong-position
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-helper-wrong
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-wrong-length
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-record-noread
+=== RUN   TestCheckedViewTupleOriginalOutSignature/emit-record
+--- PASS: TestCheckedViewTupleOriginalOutSignature (15.28s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-tuple-good (1.32s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-string-good (1.32s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-undefined (1.51s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-helper-good (1.16s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-missing (1.25s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind-noread (1.30s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind (1.22s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-wrong-position (1.26s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-helper-wrong (1.34s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-wrong-length (1.25s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-record-noread (1.20s)
+    --- PASS: TestCheckedViewTupleOriginalOutSignature/emit-record (1.17s)
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-tuple
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-scalar
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-undefined
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-wrong-kind
+=== RUN   TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-wrong-arity
+--- PASS: TestCheckedViewTupleOriginalSignatureForEach (2.84s)
+    --- PASS: TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-tuple (0.64s)
+    --- PASS: TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-scalar (0.56s)
+    --- PASS: TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-undefined (0.53s)
+    --- PASS: TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-wrong-kind (0.54s)
+    --- PASS: TestCheckedViewTupleOriginalSignatureForEach/signature-foreach-wrong-arity (0.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=59
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	27.024s

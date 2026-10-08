@@ -1,10 +1,10 @@
 {
-  "basis": "exact compiler refusals rechecked on ffe428ab; grouping is dependency inference, not runtime certification",
-  "integration_sha": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
-  "certified_pairs": 33,
-  "certified_reads": 158,
-  "remaining_pairs": 9,
-  "remaining_reads": 23,
+  "basis": "exact original refusals rechecked on 432d4913; owner grouping is dependency inference",
+  "integration_sha": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
+  "certified_pairs": 37,
+  "certified_reads": 165,
+  "remaining_pairs": 5,
+  "remaining_reads": 16,
   "groups": [
     {
       "dependency": "dictionary admission",
@@ -32,23 +32,6 @@
       ]
     },
     {
-      "dependency": "tuple admission and positional contract",
-      "pairs": 1,
-      "candidate_reads": 4,
-      "rows": [
-        {
-          "rank": 18,
-          "type_id": 97898,
-          "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
-          "field": "<element>",
-          "candidate_reads": 4
-        }
-      ],
-      "probes": [
-        "incremental-tuple-element-frontier"
-      ]
-    },
-    {
       "dependency": "callable member",
       "pairs": 1,
       "candidate_reads": 3,
@@ -63,49 +46,6 @@
       ],
       "probes": [
         "emit-helper-frontier"
-      ]
-    },
-    {
-      "dependency": "branded tuple array element",
-      "pairs": 2,
-      "candidate_reads": 2,
-      "rows": [
-        {
-          "rank": 38,
-          "type_id": 97913,
-          "type": "readonly IncrementalBuildInfoRoot[]",
-          "field": "<element>",
-          "candidate_reads": 1
-        },
-        {
-          "rank": 39,
-          "type_id": 97931,
-          "type": "readonly IncrementalBuildInfoEmitSignature[] | undefined",
-          "field": "forEach",
-          "candidate_reads": 1
-        }
-      ],
-      "probes": [
-        "incremental-root-frontier",
-        "incremental-signature-frontier",
-        "incremental-signature-each-frontier"
-      ]
-    },
-    {
-      "dependency": "tuple union member",
-      "pairs": 1,
-      "candidate_reads": 1,
-      "rows": [
-        {
-          "rank": 40,
-          "type_id": 97934,
-          "type": "IncrementalBundleEmitBuildInfo",
-          "field": "outSignature",
-          "candidate_reads": 1
-        }
-      ],
-      "probes": [
-        "incremental-out-signature-frontier"
       ]
     },
     {
@@ -133,6 +73,14 @@
         "incremental-multi-each-frontier",
         "incremental-union-each-frontier"
       ]
+    }
+  ],
+  "additional_frontiers": [
+    {
+      "type_id": 97898,
+      "frontier": "direct array-to-tuple cast still refused; original positional field contract is certified through admitted carrier",
+      "candidate_reads": 4,
+      "counted_as_remaining_pair": false
     }
   ]
 }

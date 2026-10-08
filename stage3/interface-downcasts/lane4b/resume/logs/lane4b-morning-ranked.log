@@ -1,0 +1,43 @@
+42 candidate pairs / 181 candidate reads; exact reachability unmeasured
+1 20 SourceFile externalModuleIndicator true | Node | undefined
+2 15 Diagnostic messageText string | DiagnosticMessageChain
+3 11 BindableStaticAccessExpression expression EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)
+4 10 LiteralType value string | number | PseudoBigInt
+5 10 JSDoc parent HasJSDoc
+6 10 CompilerOptions <dynamic-key> TsConfigSourceFile | CompilerOptionsValue
+7 9 BindableStaticPropertyAssignmentExpression left BindableStaticAccessExpression
+8 9 BindablePropertyAssignmentExpression left BindableAccessExpression
+9 7 JSDoc comment string | NodeArray<JSDocComment> | undefined
+10 6 JSDocTypedefTag comment string | NodeArray<JSDocComment> | undefined
+11 6 JSDocImportTag comment string | NodeArray<JSDocComment> | undefined
+12 6 DiagnosticRelatedInformation messageText string | DiagnosticMessageChain
+13 4 AutoGenerateInfo prefix string | GeneratedNamePart | undefined
+14 4 JSDocTemplateTag comment string | NodeArray<JSDocComment> | undefined
+15 4 JSDocCallbackTag comment string | NodeArray<JSDocComment> | undefined
+16 4 JSDocSeeTag comment string | NodeArray<JSDocComment> | undefined
+17 4 BindableAccessExpression expression EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)
+18 4 [fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature] <element> [] | EmitSignature | IncrementalBuildInfoFileId
+19 3 JSDocImplementsTag comment string | NodeArray<JSDocComment> | undefined
+20 3 JSDocAugmentsTag comment string | NodeArray<JSDocComment> | undefined
+21 3 EmitHelper text string | ((node: EmitHelperUniqueNameCallback) => string)
+22 3 JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag comment string | NodeArray<JSDocComment> | undefined
+23 2 JSDocTag comment string | NodeArray<JSDocComment> | undefined
+24 2 ConditionalType resolvedConstraintOfDistributive false | Type | undefined
+25 2 JSDocPropertyTag comment string | NodeArray<JSDocComment> | undefined
+26 2 JSDocOverloadTag comment string | NodeArray<JSDocComment> | undefined
+27 2 PackageJsonInfoContents resolvedEntrypoints false | string[] | undefined
+28 2 PackageJsonInfoContents versionPaths false | VersionPaths | undefined
+29 1 JSDoc | JSDocTypeLiteral parent Node | HasJSDoc
+30 1 JSDocEnumTag comment string | NodeArray<JSDocComment> | undefined
+31 1 JSDocParameterTag comment string | NodeArray<JSDocComment> | undefined
+32 1 JSDocPropertyLikeTag comment string | NodeArray<JSDocComment> | undefined
+33 1 DiagnosticWithLocation messageText string | DiagnosticMessageChain
+34 1 DiagnosticWithDetachedLocation messageText string | DiagnosticMessageChain
+35 1 JSDoc | undefined parent HasJSDoc
+36 1 BuildOptions <dynamic-key> CompilerOptionsValue
+37 1 JSDocImplementsTag | JSDocAugmentsTag comment string | NodeArray<JSDocComment> | undefined
+38 1 readonly IncrementalBuildInfoRoot[] <element> IncrementalBuildInfoRoot
+39 1 readonly IncrementalBuildInfoEmitSignature[] | undefined forEach (callbackfn: (value: IncrementalBuildInfoEmitSignature, index: number, array: readonly IncrementalBuildInfoEmitSignature[]) => void, thisArg?: any) => void
+40 1 IncrementalBundleEmitBuildInfo outSignature EmitSignature | undefined
+41 1 readonly IncrementalBundleEmitBuildInfoFileInfo[] forEach (callbackfn: (value: IncrementalBundleEmitBuildInfoFileInfo, index: number, array: readonly IncrementalBundleEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void
+42 1 readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[] forEach ((callbackfn: (value: IncrementalBundleEmitBuildInfoFileInfo, index: number, array: readonly IncrementalBundleEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void) | ((callbackfn: (value: IncrementalMultiFileEmitBuildInfoFileInfo, index: number, array: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void)

@@ -82,10 +82,36 @@ func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = lower.Lower(context.Background(), loaded)
-		refusal, ok := err.(*lower.Refused)
-		if !ok || refusal.What != "checked view read of field value with unsupported tuple union member contract" {
-			t.Fatalf("expected named tuple union refusal, got %v", err)
+		program, err := lower.Lower(context.Background(), loaded)
+		if err != nil {
+			t.Fatal(err)
+		}
+		// Integration now supplies a checked positional contract for this tuple.
+		// Retain both positions even when this producer selects the string arm.
+		complete := false
+		for _, contract := range program.ViewContracts {
+			if !contract.FixedTuple || len(contract.Tuple) != 2 || contract.Unsupported != "" {
+				continue
+			}
+			complete = true
+			for _, id := range contract.Tuple {
+				child := program.ViewContracts[id-1]
+				if child.Kind != ir.ViewScalar || child.Of != ir.Number {
+					t.Fatal("tuple position lost its number contract")
+				}
+			}
+		}
+		if !complete {
+			t.Fatal("supported tuple alternative lost its complete positional contract")
+		}
+		actual, binary := nativelyUncached(t, program)
+		for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			if diff := disagreement(run{stdout: []byte("string\n")}, got); diff != "" {
+				t.Fatal(diff)
+			}
+		}
+		if report := leaksUncached(t, program, binary); report != "" {
+			t.Fatal(report)
 		}
 	})
 	t.Run("long-message", func(t *testing.T) {

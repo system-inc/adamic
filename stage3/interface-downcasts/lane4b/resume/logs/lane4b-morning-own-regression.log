@@ -1,0 +1,522 @@
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7642-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7642-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7642-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7642-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7642-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7642-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8815-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8815-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8815-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8815-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8815-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8815-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8901-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8901-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8901-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8901-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8901-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8901-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7637-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7637-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7637-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7637-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7637-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7637-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8813-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8813-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8813-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8813-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8813-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8813-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8875-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8875-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8875-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8875-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8875-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8875-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8882-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8882-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8882-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8882-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8882-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8882-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8883-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8883-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8883-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8883-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8883-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8883-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/36586-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-36586-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/36586-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-36586-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/36586-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-36586-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7638-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7638-good.a: 7/7/12/22/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7638-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7638-wrong.a: 1/0/2/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/7638-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-7638-nested.a: 3/0/6/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8880-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8880-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8880-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8880-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8880-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8880-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8900-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8900-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8900-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8900-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8900-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8900-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8814-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8814-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8814-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8814-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8814-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8814-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8878-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8878-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8878-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8878-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8878-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8878-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8879-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8879-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8879-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8879-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/8879-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-8879-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/92175-good
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-92175-good.a: 7/7/15/25/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/92175-wrong
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-92175-wrong.a: 1/0/3/2/1/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: accept wrong member caught backend 1: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 0: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: skip outer check caught backend 1: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveCommentPairs/92175-nested
+    checked_views_object_primitive_comment_pairs_test.go:129: counts jsdoc-92175-nested.a: 3/0/7/4/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 0: exit 0 stdout "0\n"
+    checked_views_object_primitive_comment_pairs_test.go:147: drop nested check caught backend 1: exit 0 stdout "false\n"
+--- PASS: TestCheckedViewObjectPrimitiveCommentPairs (103.97s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7642-good (1.70s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7642-wrong (1.75s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7642-nested (2.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8815-good (2.36s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8815-wrong (2.94s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8815-nested (3.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8901-good (2.72s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8901-wrong (2.95s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8901-nested (2.99s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7637-good (2.85s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7637-wrong (3.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7637-nested (3.07s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8813-good (2.89s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8813-wrong (2.78s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8813-nested (2.59s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8875-good (2.80s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8875-wrong (2.90s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8875-nested (2.52s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8882-good (2.94s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8882-wrong (3.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8882-nested (2.87s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8883-good (3.27s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8883-wrong (3.40s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8883-nested (1.63s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/36586-good (1.63s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/36586-wrong (1.64s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/36586-nested (1.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7638-good (1.66s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7638-wrong (1.59s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/7638-nested (1.63s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8880-good (1.44s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8880-wrong (1.61s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8880-nested (1.40s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8900-good (1.48s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8900-wrong (1.66s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8900-nested (1.48s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8814-good (1.40s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8814-wrong (1.62s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8814-nested (1.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8878-good (1.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8878-wrong (1.66s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8878-nested (1.57s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8879-good (1.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8879-wrong (1.61s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/8879-nested (1.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/92175-good (1.62s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/92175-wrong (1.84s)
+    --- PASS: TestCheckedViewObjectPrimitiveCommentPairs/92175-nested (1.72s)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/bindable-static-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/bindable-static-good.a: 9/9/19/21/9/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/bindable-access-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/bindable-access-good.a: 9/9/19/21/9/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-parent-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/jsdoc-parent-good.a: 6/6/6/13/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-root-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/jsdoc-root-good.a: 6/6/8/16/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-union-parent-good
+    checked_views_object_primitive_overlap_counts_test.go:57: counts lane7/jsdoc-union-parent-good.a: 6/6/6/13/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+--- PASS: TestCheckedViewObjectPrimitiveOverlapCounts (6.80s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/bindable-static-good (1.71s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/bindable-access-good (1.72s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-parent-good (1.09s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-root-good (1.09s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-union-parent-good (1.19s)
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-good
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-resolvedEntrypoints-good.a: 9/9/8/20/7/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-wrong
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-resolvedEntrypoints-wrong.a: 2/0/2/2/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_package_pairs_test.go:146: accept wrong member caught backend 0: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: accept wrong member caught backend 1: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: skip outer check caught backend 0: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: skip outer check caught backend 1: exit 0 stdout "true\n"
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-nested
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-resolvedEntrypoints-nested.a: 3/0/3/2/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_package_pairs_test.go:146: drop nested or element check caught backend 0: exit 0 stdout "empty\n"
+    checked_views_object_primitive_package_pairs_test.go:146: drop nested or element check caught backend 1: exit 0 stdout "boolean\n"
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/versionPaths-good
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-versionPaths-good.a: 10/10/8/20/8/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/versionPaths-wrong
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-versionPaths-wrong.a: 2/0/2/2/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_package_pairs_test.go:146: accept wrong member caught backend 0: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: accept wrong member caught backend 1: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: skip outer check caught backend 0: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: skip outer check caught backend 1: exit 0 stdout "true\n"
+=== RUN   TestCheckedViewObjectPrimitivePackagePairs/versionPaths-nested
+    checked_views_object_primitive_package_pairs_test.go:128: counts package-versionPaths-nested.a: 4/0/3/2/4/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_package_pairs_test.go:146: drop nested or element check caught backend 0: exit 0 stdout "true\n"
+    checked_views_object_primitive_package_pairs_test.go:146: drop nested or element check caught backend 1: exit 0 stdout "false\n"
+--- PASS: TestCheckedViewObjectPrimitivePackagePairs (5.69s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-good (0.78s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-wrong (1.07s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/resolvedEntrypoints-nested (0.89s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/versionPaths-good (0.88s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/versionPaths-wrong (1.15s)
+    --- PASS: TestCheckedViewObjectPrimitivePackagePairs/versionPaths-nested (0.93s)
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-absent
+    checked_views_object_primitive_unions_test.go:82: optional policy rollback caught: exit 70 stdout ""
+    checked_views_object_primitive_unions_test.go:82: optional policy rollback caught: exit 70 stdout ""
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_object_primitive_unions_test.go:82: optional policy rollback caught: exit 70 stdout "ok\n"
+    checked_views_object_primitive_unions_test.go:82: optional policy rollback caught: exit 70 stdout "ok\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/required-missing
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "nested:0\n"
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "nested:false\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (comment-flags-wrong): exit 0 stdout "nested:0\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (comment-flags-wrong): exit 0 stdout "nested:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-boolean
+    checked_views_object_primitive_unions_test.go:103: outer wrong-member acceptance caught (comment-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:103: outer wrong-member acceptance caught (comment-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (comment-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (comment-boolean): exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-boolean
+    checked_views_object_primitive_unions_test.go:103: outer wrong-member acceptance caught (literal-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:103: outer wrong-member acceptance caught (literal-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (literal-boolean): exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (literal-boolean): exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "true:123\n"
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "42:123\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (literal-negative-wrong): exit 0 stdout "false:123\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (literal-negative-wrong): exit 0 stdout "42:123\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-false
+    checked_views_object_primitive_unions_test.go:130: wrong-member acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:130: wrong-member acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (node-indicator-false): exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (node-indicator-false): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (diagnostic-code-wrong): exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (diagnostic-code-wrong): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:160: wrong-shape acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (node-indicator-flags-wrong): exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:190: read check removal caught (node-indicator-flags-wrong): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+--- PASS: TestCheckedViewObjectPrimitiveSource (10.87s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-absent (0.55s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-receiver (0.57s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/required-missing (0.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-good (0.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.77s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.69s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-good (0.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-boolean (0.76s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-negative-wrong (0.78s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-text-wrong (0.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-false (0.74s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-boolean (0.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong (0.76s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong (0.73s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-good (0.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-wrong (0.47s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-good (0.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-wrong (0.46s)
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-true
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "true\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-flags-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "true:123\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "42:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "42:123\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-false
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-uninitialized
+    checked_views_object_primitive_unions_test.go:371: treat uninitialized optional slot as undefined caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: treat uninitialized optional slot as undefined caught: exit 0 stdout "absent\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-good
+    checked_views_object_primitive_unions_test.go:408: reject allowed absence caught: exit 70 stdout "true\n80\nabsent\n"
+    checked_views_object_primitive_unions_test.go:408: reject allowed absence caught: exit 70 stdout "true\n80\nabsent\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-false
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-kind-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-unread
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+    checked_views_object_primitive_unions_test.go:556: demanded-path omission caught by exact missing-field pin after successful execution
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe
+    checked_views_object_primitive_unions_test.go:513: uncertified original pair: a template interpolating a union with an object, an array, a map or a function in it
+--- PASS: TestCheckedViewObjectPrimitiveOriginalPairs (52.85s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-good (1.57s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-true (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-flags-wrong (1.73s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-good (1.27s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-boolean (1.52s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-code-wrong (1.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-good (1.19s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-boolean (1.36s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-code-wrong (1.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-good (1.25s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-boolean (1.51s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-code-wrong (1.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-good (1.27s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-boolean (1.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong (1.31s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-good (1.30s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean (1.49s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong (1.47s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-good (1.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-false (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-uninitialized (1.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-good (1.80s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-false (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-kind-wrong (1.59s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-good (1.22s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-boolean (1.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-code-wrong (1.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-unread (1.75s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier (2.63s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe (1.94s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe (0.35s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe (2.28s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe (2.35s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe (0.33s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=326
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	180.195s

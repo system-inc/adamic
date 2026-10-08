@@ -1,0 +1,48 @@
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: a field of type string | ((node: EmitHelperUniqueNameCallback) => string)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier
+    checked_views_object_primitive_frontiers_test.go:103: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier
+    checked_views_object_primitive_frontiers_test.go:103: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier
+    checked_views_object_primitive_frontiers_test.go:110: frontier changed; certify before claiming it: <nil>
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:110: frontier changed; certify before claiming it: <nil>
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:110: frontier changed; certify before claiming it: <nil>
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalBundleEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalMultiFileEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier
+    checked_views_object_primitive_frontiers_test.go:110: frontier changed; certify before claiming it: <nil>
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo
+--- FAIL: TestCheckedViewObjectPrimitiveRemainingFrontiers (11.06s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier (0.40s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier (0.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier (1.92s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier (2.12s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier (0.40s)
+    --- FAIL: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier (1.00s)
+    --- FAIL: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier (1.18s)
+    --- FAIL: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier (1.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier (0.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier (0.37s)
+    --- FAIL: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier (1.19s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier (0.41s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	11.071s
+FAIL

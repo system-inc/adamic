@@ -1,0 +1,112 @@
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts/fixes-graph
+    checked_views_object_primitive_counts_test.go:111: | stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a | 3 | 3 | 3 | 7 | 3 | 0 | 0 | 0 |
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple-unread
+    checked_views_object_primitive_counts_test.go:111: | stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a | 1 | 1 | 3 | 6 | 1 | 0 | 0 | 0 |
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple
+    checked_views_object_primitive_counts_test.go:111: | stage3/interface-downcasts/lane4b/fixtures/fixes-tuple.a | 1 | 1 | 3 | 5 | 1 | 0 | 0 | 0 |
+--- PASS: TestCheckedViewObjectPrimitiveFixCounts (0.41s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixCounts/fixes-graph (0.18s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple-unread (0.12s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple (0.11s)
+=== RUN   TestCheckedViewObjectPrimitiveFixes
+=== RUN   TestCheckedViewObjectPrimitiveFixes/graph
+=== RUN   TestCheckedViewObjectPrimitiveFixes/tuple-unread
+=== RUN   TestCheckedViewObjectPrimitiveFixes/tuple
+=== RUN   TestCheckedViewObjectPrimitiveFixes/long-message
+--- PASS: TestCheckedViewObjectPrimitiveFixes (1.67s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/graph (0.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/tuple-unread (0.41s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/tuple (0.41s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/long-message (0.39s)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier
+    checked_views_object_primitive_frontiers_test.go:120: blocked original consumer: a field of type string | ((node: EmitHelperUniqueNameCallback) => string)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier
+    checked_views_object_primitive_frontiers_test.go:115: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:106: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier
+    checked_views_object_primitive_frontiers_test.go:115: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier
+    checked_views_object_primitive_frontiers_test.go:69: counts incremental-root-frontier.a: 6/6/7/8/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:69: counts incremental-signature-frontier.a: 6/6/8/9/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:69: counts incremental-out-signature-frontier.a: 5/5/6/6/5/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier
+    checked_views_object_primitive_frontiers_test.go:120: blocked original consumer: an array of IncrementalBundleEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier
+    checked_views_object_primitive_frontiers_test.go:120: blocked original consumer: an array of IncrementalMultiFileEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier
+    checked_views_object_primitive_frontiers_test.go:69: counts incremental-signature-each-frontier.a: 8/8/9/12/8/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier
+    checked_views_object_primitive_frontiers_test.go:120: blocked original consumer: an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo
+--- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers (11.94s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier (0.48s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier (0.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier (1.97s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier (1.90s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier (0.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier (1.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier (1.47s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier (1.51s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier (0.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier (0.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier (1.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier (0.33s)
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/signature-id
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/signature-id.a: 2/0/6/5/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-id caught backend 0: exit 0 stdout "0\nstring\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-id caught backend 1: exit 0 stdout "0\nstring\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-id caught backend 2: exit 0 stdout "false\nstring\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/signature-value
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/signature-value.a: 3/1/5/6/3/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-value caught backend 0: exit 0 stdout "7\nundefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-value caught backend 1: exit 0 stdout "7\nundefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: signature-value caught backend 2: exit 0 stdout "7\nboolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/root-member
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/root-member.a: 2/0/5/5/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: root-member caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: root-member caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: root-member caught backend 2: exit 0 stdout "boolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/foreach-arity
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/foreach-arity.a: 5/0/10/8/5/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: foreach-arity caught backend 0: exit 0 stdout "object\ndone\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: foreach-arity caught backend 1: exit 0 stdout "object\ndone\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: foreach-arity caught backend 2: exit 0 stdout "object\ndone\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-outer
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/out-outer.a: 5/0/3/2/5/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-outer caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-outer caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-outer caught backend 2: exit 0 stdout "boolean\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-shape
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/out-shape.a: 2/0/5/3/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-shape caught backend 0: exit 0 stdout "object\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-shape caught backend 1: exit 0 stdout "object\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-shape caught backend 2: exit 0 stdout "object\n"
+=== RUN   TestCheckedViewObjectPrimitiveTupleMutants/out-nested
+    checked_views_object_primitive_tuple_mutants_test.go:50: counts tuple-mutants/out-nested.a: 2/0/9/6/2/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-nested caught backend 0: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-nested caught backend 1: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_tuple_mutants_test.go:98: out-nested caught backend 2: exit 0 stdout "boolean\n"
+--- PASS: TestCheckedViewObjectPrimitiveTupleMutants (9.08s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/signature-id (1.02s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/signature-value (1.07s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/root-member (1.05s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/foreach-arity (1.08s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-outer (1.60s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-shape (1.67s)
+    --- PASS: TestCheckedViewObjectPrimitiveTupleMutants/out-nested (1.59s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=48
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	23.118s

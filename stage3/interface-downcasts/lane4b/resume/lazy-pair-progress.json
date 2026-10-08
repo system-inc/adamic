@@ -1,14 +1,14 @@
 {
   "basis": "lazy static candidates; exact production reachability unmeasured",
-  "integration_sha": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
+  "integration_sha": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
   "source_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
   "pairs": 42,
   "candidate_reads": 181,
-  "completed_pairs": 33,
-  "completed_reads": 158,
+  "completed_pairs": 37,
+  "completed_reads": 165,
   "completion_basis": "standalone source oracle using complete original declarations; all recorded sites audited against pinned upstream; whole-tsc execution reachability unmeasured",
-  "remaining_candidate_pairs": 9,
-  "remaining_candidate_reads": 23,
+  "remaining_candidate_pairs": 5,
+  "remaining_candidate_reads": 16,
   "reduced_shape_candidate_pairs": 22,
   "reduced_shape_candidate_reads": 103,
   "candidate_pairs_without_shape_control": 20,
@@ -1731,7 +1731,7 @@
         }
       ],
       "rank": 18,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 8882,
@@ -2652,7 +2652,7 @@
         }
       ],
       "rank": 38,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 97931,
@@ -2696,7 +2696,7 @@
         }
       ],
       "rank": 39,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 97934,
@@ -2733,7 +2733,7 @@
         }
       ],
       "rank": 40,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 97935,

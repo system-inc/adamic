@@ -59,7 +59,7 @@ func objectPrimitiveOriginalCount(t *testing.T, program *ir.Program, fixture str
 // The complete integration counts update can fail on unrelated fixtures. This
 // focused updater changes only this lane's measured row, in registry order.
 func TestCheckedViewObjectPrimitiveFixCounts(t *testing.T) {
-	for _, name := range []string{"fixes-graph", "fixes-tuple-unread"} {
+	for _, name := range []string{"fixes-graph", "fixes-tuple-unread", "fixes-tuple"} {
 		t.Run(name, func(t *testing.T) {
 			objectPrimitiveFixCount(t, "stage3/interface-downcasts/lane4b/fixtures/"+name+".a")
 		})
@@ -93,6 +93,8 @@ func objectPrimitiveFixCount(t *testing.T, path string) {
 		anchor := "| stage3/interface-downcasts/readiness-number-uninitialized.a |"
 		if strings.Contains(path, "tuple-unread") {
 			anchor = "| stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a |"
+		} else if strings.HasSuffix(path, "/fixes-tuple.a") {
+			anchor = "| stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a |"
 		}
 		start := strings.Index(text, anchor)
 		if start < 0 {

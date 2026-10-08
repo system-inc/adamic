@@ -20,16 +20,12 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 		t.Skip("set ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS to prepare.cjs output")
 	}
 	expected := map[string]string{
-		"emit-helper-frontier":                "a field of type string | ((node: EmitHelperUniqueNameCallback) => string)",
-		"incremental-tuple-element-frontier":  "a cast the runtime can't check",
-		"build-options-key-frontier":          "a cast the runtime can't check",
-		"incremental-root-frontier":           "an array of IncrementalBuildInfoRoot",
-		"incremental-signature-frontier":      "an array of IncrementalBuildInfoEmitSignature",
-		"incremental-out-signature-frontier":  "checked view read of field outSignature with unsupported tuple union member contract",
-		"incremental-bundle-each-frontier":    "an array of IncrementalBundleEmitBuildInfoFileInfo",
-		"incremental-multi-each-frontier":     "an array of IncrementalMultiFileEmitBuildInfoFileInfo",
-		"incremental-signature-each-frontier": "an array of IncrementalBuildInfoEmitSignature",
-		"incremental-union-each-frontier":     "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+		"emit-helper-frontier":               "a field of type string | ((node: EmitHelperUniqueNameCallback) => string)",
+		"incremental-tuple-element-frontier": "a cast the runtime can't check",
+		"build-options-key-frontier":         "a cast the runtime can't check",
+		"incremental-bundle-each-frontier":   "an array of IncrementalBundleEmitBuildInfoFileInfo",
+		"incremental-multi-each-frontier":    "an array of IncrementalMultiFileEmitBuildInfoFileInfo",
+		"incremental-union-each-frontier":    "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
 	}
 	for _, probe := range []struct{ name, source string }{
 		{"emit-helper-frontier", "string\n"},
@@ -66,6 +62,22 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lower.Lower(context.Background(), loaded)
+			if probe.name == "incremental-root-frontier" || probe.name == "incremental-signature-frontier" || probe.name == "incremental-out-signature-frontier" || probe.name == "incremental-signature-each-frontier" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				objectPrimitiveOriginalCount(t, program, probe.name+".a")
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(run{stdout: []byte(probe.source)}, got); diff != "" {
+						t.Fatal("supported original tuple consumer: " + diff)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			if strings.HasPrefix(probe.name, "jsdoc-parent-") {
 				if err != nil {
 					t.Fatal(err)

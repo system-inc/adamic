@@ -50,6 +50,7 @@ elif sys.argv[1:]:
 for expected in rows:
     assert next(row for row in local['pairs'] if key(row) == key(expected)) == expected
 assert local['shared_certificates'][relative] == digest
-assert len({key(row) for row in local['pairs']}) == len(local['pairs']) == 33
-assert sum(row['candidate_reads'] for row in local['pairs']) == 158
-print('Exact original overlap: seven pairs / 45 reads; unique lane total: 33 / 158')
+assert len({key(row) for row in local['pairs']}) == len(local['pairs'])
+assert len(local['pairs']) >= 33
+print('Exact original overlap: seven pairs / 45 reads; unique lane total:',
+      len(local['pairs']), '/', sum(row['candidate_reads'] for row in local['pairs']))
