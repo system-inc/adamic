@@ -9,7 +9,8 @@ router, area-route.py, the one auto-area-merge trusts):
   cloud/land-*   integration, and the owner of the area the landing's tip commit names
   codex/*        the owner of the area integration's router sends the branch to; a held branch goes
                  to integration, who decides holds
-  devtools/*     developer tools
+  devtools/*     developer tools, except devtools/fast-gate: the gate's own tools branch, gated against main
+                 with the whole tools delta, reads red at darwin on every push and is checked by its canaries
 Integration hears every verdict, not only landings and areas, while the watcher's state directory holds a
 file named verdicts-to-integration. The message: green or red, the base it was gated against, the first
 failure's step and its package and test, the gate-logs ref, and the worker's session when the gate knew it.
@@ -146,6 +147,8 @@ def message(branch, sha, log):
 
 def main():
     branch, sha, log = sys.argv[1:4]
+    if branch == 'devtools/fast-gate':
+        return
     text = message(branch, sha, log)
     if text is None:
         return

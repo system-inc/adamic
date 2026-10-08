@@ -68,6 +68,10 @@ class VerdictTests(unittest.TestCase):
                          ['system_adamic_compiler', 'system_adamic_integration'])
         self.assertEqual(self.send('codex/compiler-x', 'void: box lacks wasmtime\n'), [])
 
+    def test_the_tools_branch_is_left_to_its_canaries(self):
+        self.assertEqual(self.send('devtools/fast-gate', self.red), [])
+        self.assertEqual([name for name, _ in self.send('devtools/gate-shards', self.red)], ['system_adamic_developer_tools'])
+
     def test_no_all_caps_word_survives(self):
         log = self.red.replace('TestOwnershipShapes', 'TestJSONShapes')
         self.assertIn('Testjsonshapes', self.send('codex/compiler-x', log)[0][1])
