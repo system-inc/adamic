@@ -36,7 +36,10 @@ func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) 
 	}
 	generic := false
 	for _, part := range object.Types() {
-		generic = generic || len(l.checker.GetTypeArguments(l.concrete(part))) != 0
+		// Only a type reference has type arguments; the checker dereferences nil for anything
+		// else, such as the string in a branded string & { __brand: void }.
+		part = l.concrete(part)
+		generic = generic || part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0
 	}
 	if !generic {
 		return 0, false

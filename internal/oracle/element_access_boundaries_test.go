@@ -12,6 +12,11 @@ var elementAccessBoundaries = []string{"nodearray", "paths", "template", "sorted
 
 func init() {
 	for _, name := range elementAccessBoundaries {
+		// The shared fixture list reads a non-lowering fixture as a NotYet stop. string_dictionary
+		// is refused (an index signature), which TestElementAccessCompilerAreaBoundaries pins.
+		if name == "string_dictionary" {
+			continue
+		}
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
