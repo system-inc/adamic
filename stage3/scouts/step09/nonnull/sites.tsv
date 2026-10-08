@@ -1,0 +1,1124 @@
+file	line	column	status	operand type	expression
+src/compiler/binder.ts	594	16	checked	undefined	undefined!
+src/compiler/binder.ts	595	19	checked	undefined	undefined!
+src/compiler/binder.ts	596	27	checked	undefined	undefined!
+src/compiler/binder.ts	597	18	checked	undefined	undefined!
+src/compiler/binder.ts	598	21	checked	undefined	undefined!
+src/compiler/binder.ts	599	31	checked	undefined	undefined!
+src/compiler/binder.ts	600	31	checked	undefined	undefined!
+src/compiler/binder.ts	601	25	checked	undefined	undefined!
+src/compiler/binder.ts	602	30	checked	undefined	undefined!
+src/compiler/binder.ts	603	24	checked	undefined	undefined!
+src/compiler/binder.ts	605	23	checked	undefined	undefined!
+src/compiler/binder.ts	891	38	checked	SymbolTable | undefined	container.symbol.exports!
+src/compiler/binder.ts	895	38	checked	SymbolTable | undefined	container.locals!
+src/compiler/binder.ts	917	42	checked	SymbolTable | undefined	container.symbol.exports!
+src/compiler/binder.ts	921	52	checked	SymbolTable | undefined	container.symbol.exports!
+src/compiler/binder.ts	927	38	checked	SymbolTable | undefined	container.locals!
+src/compiler/binder.ts	1748	35	checked	FlowNode | undefined	preSwitchCaseFlow!
+src/compiler/binder.ts	1754	84	checked	FlowNode | undefined	preSwitchCaseFlow!
+src/compiler/binder.ts	1754	139	checked	FlowNode | undefined	preSwitchCaseFlow!
+src/compiler/binder.ts	1768	23	checked	FlowNode | undefined	preSwitchCaseFlow!
+src/compiler/binder.ts	1959	53	checked	FlowLabel | undefined	currentTrueTarget!
+src/compiler/binder.ts	1959	73	checked	FlowLabel | undefined	currentFalseTarget!
+src/compiler/binder.ts	2205	37	checked	FlowLabel | undefined	currentTrueTarget!
+src/compiler/binder.ts	2205	57	checked	FlowLabel | undefined	currentFalseTarget!
+src/compiler/binder.ts	2281	38	checked	SymbolTable | undefined	container.symbol.exports!
+src/compiler/binder.ts	2293	38	checked	SymbolTable | undefined	container.symbol.members!
+src/compiler/binder.ts	2320	38	checked	SymbolTable | undefined	container.locals!
+src/compiler/binder.ts	2326	29	checked	SymbolTable | undefined	container.symbol.exports!
+src/compiler/binder.ts	2327	29	checked	SymbolTable | undefined	container.symbol.members!
+src/compiler/binder.ts	2333	29	checked	SymbolTable | undefined	file.locals!
+src/compiler/binder.ts	2371	32	checked	Symbol | undefined	declareSymbolAndAddToSymbolTable(node, SymbolFlags.ValueModule, SymbolFlags.ValueModuleExcludes)!
+src/compiler/binder.ts	2407	60	checked	__String | undefined	getDeclarationName(node)!
+src/compiler/binder.ts	2485	45	checked	undefined	undefined!
+src/compiler/binder.ts	2809	33	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/binder.ts	2814	33	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/binder.ts	2898	35	checked	SymbolTable | undefined	file.locals!
+src/compiler/binder.ts	3117	27	checked	SymbolTable | undefined	file.symbol.exports!
+src/compiler/binder.ts	3129	63	checked	__String | undefined	getDeclarationName(node)!
+src/compiler/binder.ts	3168	68	checked	__String | undefined	getDeclarationName(node)!
+src/compiler/binder.ts	3213	27	checked	SymbolTable | undefined	symbol.exports!
+src/compiler/binder.ts	3233	27	checked	SymbolTable | undefined	symbol.exports!
+src/compiler/binder.ts	3259	38	checked	SymbolTable | undefined	file.symbol.exports!
+src/compiler/binder.ts	3264	23	checked	SymbolTable | undefined	file.symbol.exports!
+src/compiler/binder.ts	3311	63	checked	SymbolTable | undefined	containingClass.symbol.exports!
+src/compiler/binder.ts	3311	97	checked	SymbolTable | undefined	containingClass.symbol.members!
+src/compiler/binder.ts	3325	35	checked	SymbolTable | undefined	thisContainer.symbol.exports!
+src/compiler/binder.ts	3412	39	checked	SymbolFlags | undefined	lookupSymbolForName(container, rootExpr.escapedText)?.flags!
+src/compiler/binder.ts	3445	13	checked	SymbolFlags | undefined	namespaceSymbol?.flags!
+src/compiler/binder.ts	3458	44	checked	SymbolTable | undefined	parent.exports!
+src/compiler/binder.ts	3483	39	checked	Expression | undefined	getAssignedExpandoInitializer(declaration)!
+src/compiler/binder.ts	3557	83	checked	Declaration | undefined	node!
+src/compiler/binder.ts	3557	123	checked	Declaration | undefined	node!
+src/compiler/binder.ts	3557	144	checked	Declaration | undefined	node!
+src/compiler/binder.ts	3631	30	checked	SymbolTable | undefined	symbol.exports!
+src/compiler/binder.ts	3636	63	checked	Declaration[] | undefined	symbolExport.declarations!
+src/compiler/binder.ts	3638	9	checked	SymbolTable | undefined	symbol.exports!
+src/compiler/binder.ts	3705	27	checked	SymbolTable | undefined	classDeclaration.symbol.members!
+src/compiler/binder.ts	3779	75	checked	__String | undefined	getDeclarationName(node)!
+src/compiler/builder.ts	339	46	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	341	68	checked	CompilerOptions | undefined	oldCompilerOptions!
+src/compiler/builder.ts	355	9	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	356	29	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	357	54	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	360	36	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	367	39	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	376	44	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	377	109	checked	CompilerOptions | undefined	oldCompilerOptions!
+src/compiler/builder.ts	378	112	checked	CompilerOptions | undefined	oldCompilerOptions!
+src/compiler/builder.ts	387	25	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	395	94	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	401	32	checked	SourceFile | undefined	newProgram.getSourceFileByPath(sourceFilePath)!
+src/compiler/builder.ts	403	17	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	407	21	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	418	37	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	422	25	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	440	37	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	484	9	checked	Readonly<ReusableBuilderProgramState> | undefined	oldState!
+src/compiler/builder.ts	544	42	checked	SourceFile | undefined	sourceFile!
+src/compiler/builder.ts	550	42	checked	SourceFile | undefined	sourceFile!
+src/compiler/builder.ts	590	75	checked	string | undefined	getTsBuildInfoEmitOutputFilePath(newProgram.getCompilerOptions())!
+src/compiler/builder.ts	626	77	checked	number | undefined	state.affectedFilesIndex!
+src/compiler/builder.ts	643	39	checked	Set<Path> | undefined	state.seenAffectedFiles!
+src/compiler/builder.ts	644	38	checked	number | undefined	state.affectedFilesIndex!
+src/compiler/builder.ts	667	42	checked	Path | undefined	state.currentChangedFilePath!
+src/compiler/builder.ts	715	23	checked	Map<Path, BuilderFileEmit> | undefined	state.affectedFilesPendingEmit!
+src/compiler/builder.ts	716	14	checked	Map<Path, BuilderFileEmit> | undefined	state.affectedFilesPendingEmit!
+src/compiler/builder.ts	760	13	checked	Map<Path, BuilderFileEmit> | undefined	state.affectedFilesPendingEmit!
+src/compiler/builder.ts	782	13	checked	Map<Path, readonly Diagnostic[]> | undefined	state.emitDiagnosticsPerFile!
+src/compiler/builder.ts	951	33	checked	Path | undefined	queue.pop()!
+src/compiler/builder.ts	965	47	checked	SourceFile | undefined	state.program.getSourceFileByPath(currentPath)!
+src/compiler/builder.ts	987	28	checked	ReadonlyManyToManyPathMap | undefined	state.referencedMap!
+src/compiler/builder.ts	1018	5	checked	ReadonlyManyToManyPathMap | undefined	state.referencedMap!
+src/compiler/builder.ts	1237	75	checked	string | undefined	getTsBuildInfoEmitOutputFilePath(state.compilerOptions)!
+src/compiler/builder.ts	1300	26	checked	SourceFile | undefined	state.program.getSourceFileByPath(key)!
+src/compiler/builder.ts	1334	28	checked	ReadonlySet<Path> | undefined	state.referencedMap!.getValues(key)!
+src/compiler/builder.ts	1334	28	checked	ReadonlyManyToManyPathMap | undefined	state.referencedMap!
+src/compiler/builder.ts	1347	62	checked	BuilderFileEmit | undefined	state.affectedFilesPendingEmit.get(path)!
+src/compiler/builder.ts	1409	22	checked	SourceFile | undefined	state.program.getSourceFile(path)!
+src/compiler/builder.ts	1410	14	checked	FileIncludeReason[] | undefined	state.program.getFileIncludeReasons().get(file.path)!
+src/compiler/builder.ts	1493	27	checked	readonly Diagnostic[] | undefined	state.emitDiagnosticsPerFile.get(key)!
+src/compiler/builder.ts	1680	22	checked	undefined	undefined!
+src/compiler/builder.ts	1689	18	checked	undefined	undefined!
+src/compiler/builder.ts	1793	46	flow-proven	Program	state.program!
+src/compiler/builder.ts	1847	13	checked	Set<Path> | undefined	state.seenAffectedFiles!
+src/compiler/builder.ts	1922	38	checked	FileInfo | undefined	state.fileInfos.get(file.resolvedPath)!
+src/compiler/builder.ts	1955	52	checked	WriteFileCallbackData | undefined	data!
+src/compiler/builder.ts	1961	47	checked	WriteFileCallbackData | undefined	data!
+src/compiler/builder.ts	2147	17	checked	Set<Path> | undefined	state.seenAffectedFiles!
+src/compiler/builder.ts	2148	17	checked	number | undefined	state.affectedFilesIndex!
+src/compiler/builder.ts	2297	34	checked	Map<Path, EmitSignature> | undefined	emitSignatures!
+src/compiler/builder.ts	2300	17	checked	Map<Path, EmitSignature> | undefined	emitSignatures!
+src/compiler/builder.ts	2304	26	checked	EmitSignature | undefined	emitSignatures!.get(key)!
+src/compiler/builder.ts	2304	26	checked	Map<Path, EmitSignature> | undefined	emitSignatures!
+src/compiler/builder.ts	2318	215	checked	BuilderFileEmit | undefined	fullEmitForOptions!
+src/compiler/builder.ts	2363	16	checked	Set<Path>[] | undefined	filePathsSetList!
+src/compiler/builder.ts	2457	16	checked	undefined	undefined!
+src/compiler/builderState.ts	244	30	checked	string | undefined	resolvedTypeReferenceDirective.resolvedFileName!
+src/compiler/builderState.ts	320	59	checked	Readonly<BuilderState> | undefined	oldState!
+src/compiler/builderState.ts	322	31	checked	Readonly<BuilderState> | undefined	oldState!
+src/compiler/builderState.ts	395	9	checked	FileInfo | undefined	state.fileInfos.get(path)!
+src/compiler/builderState.ts	418	21	checked	readonly SourceFile[] | undefined	sourceFiles!
+src/compiler/builderState.ts	442	22	checked	FileInfo | undefined	state.fileInfos.get(sourceFile.resolvedPath)!
+src/compiler/builderState.ts	481	26	checked	Path | undefined	queue.pop()!
+src/compiler/builderState.ts	511	22	checked	ReadonlyManyToManyPathMap | undefined	state.referencedMap!
+src/compiler/builderState.ts	613	33	checked	Path | undefined	queue.pop()!
+src/compiler/builderState.ts	615	43	checked	SourceFile | undefined	programOfThisState.getSourceFileByPath(currentPath)!
+src/compiler/checker.ts	1758	17	checked	ContextFlags | undefined	contextFlags!
+src/compiler/checker.ts	2017	30	checked	Node | undefined	node!
+src/compiler/checker.ts	2030	30	checked	Node | undefined	node!
+src/compiler/checker.ts	2863	26	checked	Declaration[] | undefined	moduleAugmentation.symbol.declarations!
+src/compiler/checker.ts	2868	39	checked	SymbolTable | undefined	moduleAugmentation.symbol.exports!
+src/compiler/checker.ts	2902	45	checked	Symbol | undefined	resolvedExports.get(key)!
+src/compiler/checker.ts	2972	43	checked	SymbolTable | undefined	constructorDeclaration.locals!
+src/compiler/checker.ts	3332	96	checked	Node | undefined	errorLocation!
+src/compiler/checker.ts	3335	78	checked	Node | undefined	errorLocation!
+src/compiler/checker.ts	3424	42	checked	TypeParameter | undefined	(getDeclaredTypeOfSymbol(classSymbol) as InterfaceType).thisType!
+src/compiler/checker.ts	3738	41	checked	TypeOnlyAliasDeclaration | undefined	getTypeOnlyAliasDeclaration(getSymbolOfDeclaration(node))!
+src/compiler/checker.ts	3754	29	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	3757	15	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	3904	44	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	3905	42	checked	Symbol | undefined	exportEqualsSymbol!
+src/compiler/checker.ts	4022	55	checked	Declaration[] | undefined	valueSymbol.declarations!
+src/compiler/checker.ts	4050	75	checked	Expression | undefined	(node as ImportDeclaration | ExportDeclaration | JSDocImportTag).moduleSpecifier!
+src/compiler/checker.ts	4051	30	checked	Symbol | undefined	resolveExternalModuleName(node, moduleSpecifier)!
+src/compiler/checker.ts	4472	19	checked	Symbol | undefined	resolveSymbol(getExportsOfModule(links.typeOnlyDeclaration.symbol.parent!).get(links.typeOnlyExportStarName || symbol.escapedName))!
+src/compiler/checker.ts	4472	52	checked	Symbol | undefined	links.typeOnlyDeclaration.symbol.parent!
+src/compiler/checker.ts	4686	22	checked	Symbol | undefined	symbol.parent!
+src/compiler/checker.ts	4890	57	checked	ResolvedModuleFull | undefined	resolvedModule!
+src/compiler/checker.ts	4893	130	checked	ResolvedModuleFull | undefined	resolvedModule!
+src/compiler/checker.ts	4997	85	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	5009	9	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	5011	13	checked	SymbolTable | undefined	merged.exports!
+src/compiler/checker.ts	5011	39	checked	SymbolTable | undefined	merged.exports!
+src/compiler/checker.ts	5011	79	checked	Symbol | undefined	merged.exports!.get(name)!
+src/compiler/checker.ts	5011	79	checked	SymbolTable | undefined	merged.exports!
+src/compiler/checker.ts	5045	87	checked	Symbol | undefined	moduleSymbol!
+src/compiler/checker.ts	5076	83	checked	Symbol | undefined	moduleSymbol!
+src/compiler/checker.ts	5109	16	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	5213	54	checked	Expression | undefined	exportNode.moduleSpecifier!
+src/compiler/checker.ts	5218	42	checked	ExportCollisionTracker | undefined	lookupTable.get(id)!
+src/compiler/checker.ts	5239	46	checked	Map<__String, ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }> | undefined	typeOnlyExportStarMap!
+src/compiler/checker.ts	5268	80	checked	Expression | undefined	(node as ExportDeclaration).moduleSpecifier!
+src/compiler/checker.ts	5287	29	checked	ExportCollisionTracker | undefined	lookupTable.get(id)!
+src/compiler/checker.ts	5297	21	checked	Map<__String, ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }> | undefined	typeOnlyExportStarMap!
+src/compiler/checker.ts	5355	106	checked	Symbol[] | undefined	results!
+src/compiler/checker.ts	5356	24	checked	Symbol[] | undefined	results!
+src/compiler/checker.ts	5458	80	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	5553	61	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5568	62	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5763	31	checked	SymbolTable[] | undefined	visitedSymbolTables!
+src/compiler/checker.ts	5768	13	checked	SymbolTable[] | undefined	visitedSymbolTables!
+src/compiler/checker.ts	5790	30	checked	Symbol | undefined	symbols.get(symbol!.escapedName)!
+src/compiler/checker.ts	5790	42	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5791	25	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5815	59	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5817	33	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	5910	30	checked	Symbol[] | undefined	symbols!
+src/compiler/checker.ts	6191	28	checked	Expression | ComputedPropertyName | QualifiedName | undefined	builder(symbol, meaning!, enclosingDeclaration, nodeFlags, internalNodeFlags)!
+src/compiler/checker.ts	6191	44	checked	SymbolFlags | undefined	meaning!
+src/compiler/checker.ts	6235	53	checked	SignatureDeclaration | undefined	sig!
+src/compiler/checker.ts	6342	56	checked	Node | undefined	context.enclosingDeclaration!
+src/compiler/checker.ts	6645	26	checked	undefined	undefined!
+src/compiler/checker.ts	6780	28	checked	undefined	undefined!
+src/compiler/checker.ts	6821	42	checked	Symbol | undefined	getParentOfSymbol(type.symbol)!
+src/compiler/checker.ts	6921	60	checked	TypeNode[] | undefined	typeArgumentNodes!
+src/compiler/checker.ts	6977	24	checked	Type | undefined	(type as UnionType).origin!
+src/compiler/checker.ts	6992	28	checked	undefined	undefined!
+src/compiler/checker.ts	7122	99	checked	TypeFlags | undefined	getConstraintOfTypeParameter(getConstraintTypeFromMappedType(type))?.flags!
+src/compiler/checker.ts	7153	87	checked	Type | undefined	getNameTypeFromMappedType(type)!
+src/compiler/checker.ts	7164	123	checked	TypeNode | undefined	type.declaration.typeParameter.constraint!
+src/compiler/checker.ts	7167	135	checked	TypeReferenceNode | undefined	newTypeVariable!
+src/compiler/checker.ts	7179	135	checked	TypeReferenceNode | undefined	newTypeVariable!
+src/compiler/checker.ts	7260	121	checked	DeclarationName | undefined	getNameOfDeclaration(declaration)!
+src/compiler/checker.ts	7275	127	checked	TypeReferenceNode | ArrayTypeNode | TupleTypeNode | undefined	(type as TypeReference & T).node!
+src/compiler/checker.ts	7314	29	checked	Map<string, number> | undefined	context.symbolDepth!
+src/compiler/checker.ts	7318	21	checked	Map<string, number> | undefined	context.symbolDepth!
+src/compiler/checker.ts	7336	21	checked	Map<string, number> | undefined	context.symbolDepth!
+src/compiler/checker.ts	7336	50	checked	number | undefined	depth!
+src/compiler/checker.ts	7466	28	checked	undefined	undefined!
+src/compiler/checker.ts	7485	44	checked	Symbol | undefined	getParentSymbolOfTypeParameter(outerTypeParameters[i])!
+src/compiler/checker.ts	7688	89	checked	DeclarationName | undefined	(propertySymbol.valueDeclaration! as NamedDeclaration).name!
+src/compiler/checker.ts	7688	90	checked	Declaration | undefined	propertySymbol.valueDeclaration!
+src/compiler/checker.ts	7694	49	checked	TypeElement | undefined	typeElements.pop()!
+src/compiler/checker.ts	7744	34	checked	ReverseMappedSymbol[] | undefined	context.reverseMappedStack!
+src/compiler/checker.ts	7744	62	checked	ReverseMappedSymbol[] | undefined	context.reverseMappedStack!
+src/compiler/checker.ts	7788	55	checked	Symbol | undefined	propertySymbol.parent!
+src/compiler/checker.ts	7813	25	checked	Symbol | undefined	propertySymbol.parent!
+src/compiler/checker.ts	7855	21	checked	ReverseMappedSymbol[] | undefined	context.reverseMappedStack!
+src/compiler/checker.ts	8484	44	checked	Symbol[] | undefined	parents!
+src/compiler/checker.ts	8489	41	checked	Symbol[] | undefined	parents!
+src/compiler/checker.ts	8491	64	checked	Symbol[] | undefined	parents!
+src/compiler/checker.ts	8497	62	checked	Symbol | undefined	parent.exports.get(InternalSymbolName.ExportEquals)!
+src/compiler/checker.ts	8568	13	checked	Set<number> | undefined	context.typeParameterSymbolList!
+src/compiler/checker.ts	8578	91	checked	TypeMapper | undefined	(nextSymbol as TransientSymbol).links.mapper!
+src/compiler/checker.ts	8619	44	checked	Declaration | undefined	getNonAugmentationDeclaration(symbol)!
+src/compiler/checker.ts	8794	46	checked	Symbol | undefined	getMembersOfSymbol(parent).get(symbol.escapedName)!
+src/compiler/checker.ts	8865	17	checked	Map<string, number> | undefined	context.typeParameterNamesByTextNextNameCount!
+src/compiler/checker.ts	8866	17	checked	Map<number, Identifier> | undefined	context.typeParameterNames!
+src/compiler/checker.ts	8867	17	checked	Set<string> | undefined	context.typeParameterNamesByText!
+src/compiler/checker.ts	9266	58	checked	Symbol | undefined	sym!
+src/compiler/checker.ts	9267	34	checked	Symbol | undefined	sym!
+src/compiler/checker.ts	9268	35	checked	Symbol | undefined	sym!
+src/compiler/checker.ts	9356	42	checked	Node | undefined	context.enclosingDeclaration!
+src/compiler/checker.ts	9366	26	checked	undefined	undefined!
+src/compiler/checker.ts	9487	77	checked	Expression | undefined	decl.moduleSpecifier!
+src/compiler/checker.ts	9817	84	checked	Expression | undefined	(node as ExportDeclaration).moduleSpecifier!
+src/compiler/checker.ts	9965	86	checked	boolean | undefined	isStatic!
+src/compiler/checker.ts	9978	63	checked	boolean | undefined	isStatic!
+src/compiler/checker.ts	10190	174	checked	Node | undefined	context.enclosingDeclaration!
+src/compiler/checker.ts	10212	40	checked	Symbol | undefined	props[0].parent!
+src/compiler/checker.ts	10455	56	checked	Expression | undefined	(node as VariableDeclaration).initializer!
+src/compiler/checker.ts	10457	49	checked	Expression | undefined	(node as VariableDeclaration).initializer!
+src/compiler/checker.ts	10831	49	checked	Symbol | undefined	getPropertyOfType(baseType, p.escapedName)!
+src/compiler/checker.ts	10832	70	checked	Symbol | undefined	getPropertyOfType(baseType, p.escapedName)!
+src/compiler/checker.ts	10833	70	checked	Type | undefined	getTypeOfPropertyOfType(baseType, p.escapedName)!
+src/compiler/checker.ts	11099	25	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11100	32	checked	string | undefined	context.remappedSymbolNames!.get(id)!
+src/compiler/checker.ts	11100	32	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11114	21	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11139	21	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11140	28	checked	string | undefined	context.remappedSymbolNames!.get(id)!
+src/compiler/checker.ts	11140	28	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11144	17	checked	Map<number, string> | undefined	context.remappedSymbolNames!
+src/compiler/checker.ts	11180	31	checked	TypePredicateNode | undefined	nodeBuilder.typePredicateToTypePredicateNode(typePredicate, enclosingDeclaration, nodeBuilderFlags)!
+src/compiler/checker.ts	11272	22	checked	Symbol | undefined	context.remappedSymbolReferences.get(getSymbolId(symbol))!
+src/compiler/checker.ts	11546	16	checked	boolean | undefined	resolutionResults.pop()!
+src/compiler/checker.ts	11550	16	checked	Node | undefined	findAncestor(getRootDeclaration(node), node => { switch (node.kind) { case SyntaxKind.VariableDeclaration: case SyntaxKind.VariableDeclarationList: case SyntaxKind.ImportSpecifier: case SyntaxKind.NamedImports: case SyntaxKind.NamespaceImport: case SyntaxKind.ImportClause: return false; default: return true; } })!
+src/compiler/checker.ts	11570	51	checked	Symbol | undefined	getParentOfSymbol(prototype)!
+src/compiler/checker.ts	11920	48	checked	Symbol | undefined	getterSignature.thisParameter!
+src/compiler/checker.ts	12023	42	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	12025	37	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	12100	53	checked	ConstructorDeclaration | undefined	getDeclaringConstructor(symbol)!
+src/compiler/checker.ts	12138	127	checked	Type[] | undefined	types!
+src/compiler/checker.ts	12148	37	checked	Type[] | undefined	sourceTypes!
+src/compiler/checker.ts	12253	13	checked	SymbolTable | undefined	(resolvedSymbol || symbol).exports!
+src/compiler/checker.ts	12254	40	checked	Symbol | undefined	members.get(name)!
+src/compiler/checker.ts	12821	54	checked	Symbol | undefined	symbol.exports!.get(InternalSymbolName.ExportEquals)!
+src/compiler/checker.ts	12821	54	checked	SymbolTable | undefined	symbol.exports!
+src/compiler/checker.ts	12851	85	checked	Declaration | undefined	getDeclarationOfAliasSymbol(symbol)!
+src/compiler/checker.ts	12859	115	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	12875	76	checked	Symbol | undefined	links.target!
+src/compiler/checker.ts	12880	91	checked	Symbol | undefined	links.target!
+src/compiler/checker.ts	12939	64	checked	Type | undefined	(symbol as TransientSymbol).links.type!
+src/compiler/checker.ts	13046	32	checked	Declaration | undefined	symbol.parent.valueDeclaration!
+src/compiler/checker.ts	13097	32	checked	Declaration | undefined	paramSymbol.valueDeclaration!
+src/compiler/checker.ts	13114	15	checked	Declaration | undefined	symbol.declarations?.find(decl => { if (decl.kind === SyntaxKind.InterfaceDeclaration) { return true; } if (decl.kind !== SyntaxKind.VariableDeclaration) { return false; } const initializer = (decl as VariableDeclaration).initializer; return !!initializer && (initializer.kind === SyntaxKind.FunctionExpression || initializer.kind === SyntaxKind.ArrowFunction); })!
+src/compiler/checker.ts	13323	30	checked	ExpressionWithTypeArguments | undefined	getBaseTypeNodeOfClass(type)!
+src/compiler/checker.ts	13328	46	checked	Type | undefined	originalBaseType!
+src/compiler/checker.ts	13405	40	checked	NodeArray<ExpressionWithTypeArguments> | undefined	getInterfaceBaseTypeNodes(declaration as InterfaceDeclaration)!
+src/compiler/checker.ts	13541	120	checked	Symbol | undefined	getParentOfSymbol(type.symbol)!
+src/compiler/checker.ts	13592	52	checked	Symbol | undefined	getParentOfSymbol(symbol)!
+src/compiler/checker.ts	13659	70	checked	NodeArray<TypeNode> | undefined	(node as TypeReferenceNode).typeArguments!
+src/compiler/checker.ts	14007	42	checked	SymbolTable | undefined	resolved!
+src/compiler/checker.ts	14008	40	checked	SymbolTable | undefined	resolved!
+src/compiler/checker.ts	14010	30	checked	SymbolTable | undefined	resolved!
+src/compiler/checker.ts	14042	32	checked	Symbol | undefined	getMergedSymbol(symbol.parent)!
+src/compiler/checker.ts	14059	150	checked	TypeParameter | undefined	target.thisType!
+src/compiler/checker.ts	14118	44	checked	TypeParameter[] | undefined	source.typeParameters!
+src/compiler/checker.ts	14118	69	checked	TypeParameter | undefined	source.thisType!
+src/compiler/checker.ts	14252	30	checked	ExpressionWithTypeArguments | undefined	getBaseTypeNodeOfClass(classType)!
+src/compiler/checker.ts	14410	36	checked	Type | undefined	tryGetTypeAtPosition(longest, i)!
+src/compiler/checker.ts	14491	89	checked	Type | undefined	getIndexTypeOfType(t, indexType)!
+src/compiler/checker.ts	14491	143	checked	IndexInfo | undefined	getIndexInfoOfType(t, indexType)!
+src/compiler/checker.ts	14598	99	checked	TypeMapper | undefined	type.mapper!
+src/compiler/checker.ts	14599	112	checked	TypeMapper | undefined	type.mapper!
+src/compiler/checker.ts	14600	122	checked	TypeMapper | undefined	type.mapper!
+src/compiler/checker.ts	14601	88	checked	TypeMapper | undefined	type.mapper!
+src/compiler/checker.ts	14851	65	checked	Type | undefined	existingProp.links.nameType!
+src/compiler/checker.ts	14940	39	checked	TypeNode | undefined	getConstraintDeclarationForMappedType(type)!
+src/compiler/checker.ts	15789	21	checked	Set<Node> | undefined	commonDeclarations!
+src/compiler/checker.ts	15952	24	checked	readonly Signature[] | undefined	(type as UnionType).arrayFallbackSignatures!
+src/compiler/checker.ts	15958	67	checked	TypeParameter[] | undefined	(isReadonlyArraySymbol(t.symbol.parent) ? globalReadonlyArrayType : globalArrayType).typeParameters!
+src/compiler/checker.ts	15958	172	checked	TypeMapper | undefined	(t as AnonymousType).mapper!
+src/compiler/checker.ts	15960	90	checked	Type | undefined	getTypeOfPropertyOfType(arrayType, memberName!)!
+src/compiler/checker.ts	15960	125	flow-proven	__String	memberName!
+src/compiler/checker.ts	16165	63	checked	readonly TypeParameter[] | undefined	typeParameters!
+src/compiler/checker.ts	16169	89	checked	readonly TypeParameter[] | undefined	typeParameters!
+src/compiler/checker.ts	16171	29	checked	readonly TypeParameter[] | undefined	typeParameters!
+src/compiler/checker.ts	16214	35	checked	Symbol | undefined	resolvedSymbol!
+src/compiler/checker.ts	16335	61	checked	ConciseBody | undefined	(declaration as FunctionLikeDeclaration).body!
+src/compiler/checker.ts	16350	28	checked	DeclarationName | undefined	(node as NamedDeclaration).name!
+src/compiler/checker.ts	16351	37	checked	DeclarationName | undefined	(node as NamedDeclaration).name!
+src/compiler/checker.ts	16428	119	checked	TypeMapper | undefined	signature.mapper!
+src/compiler/checker.ts	16437	66	checked	JSDocSignature | SignatureDeclaration | undefined	signature.declaration!
+src/compiler/checker.ts	16480	45	checked	JSDocSignature | SignatureDeclaration | undefined	signature.declaration!
+src/compiler/checker.ts	16524	40	checked	TypeNode | undefined	(declaration.parameters[0] as ParameterDeclaration).type!
+src/compiler/checker.ts	16597	33	checked	readonly Type[] | undefined	getTypeParametersForMapper(signature)!
+src/compiler/checker.ts	16608	65	checked	readonly TypeParameter[] | undefined	signature.typeParameters!
+src/compiler/checker.ts	16778	43	checked	NodeArray<TypeNode> | undefined	typeReference.typeArguments!
+src/compiler/checker.ts	16826	41	checked	TypeNode | undefined	(grandParent as MappedTypeNode).type!
+src/compiler/checker.ts	16831	62	checked	TypeNode | undefined	checkMappedType.type!
+src/compiler/checker.ts	16867	20	checked	TypeParameterDeclaration | undefined	getDeclarationOfKind<TypeParameterDeclaration>(typeParameter.symbol, SyntaxKind.TypeParameter)!
+src/compiler/checker.ts	16965	135	checked	TypeParameter[] | undefined	type.target.localTypeParameters!
+src/compiler/checker.ts	17036	32	checked	TypeParameter[] | undefined	links.typeParameters!
+src/compiler/checker.ts	17038	29	checked	Map<string, Type> | undefined	links.instantiations!
+src/compiler/checker.ts	17040	13	checked	Map<string, Type> | undefined	links.instantiations!
+src/compiler/checker.ts	17933	104	checked	readonly Type[] | undefined	typeArguments!
+src/compiler/checker.ts	17977	46	checked	Node | undefined	currentNode!
+src/compiler/checker.ts	18264	32	checked	Type | undefined	getBaseConstraintOfType(typeVariable)!
+src/compiler/checker.ts	18834	94	checked	Type | undefined	(type as UnionType).origin!
+src/compiler/checker.ts	19251	38	checked	Identifier | ElementAccessExpression | StringLiteral | NoSubstitutionTemplateLiteral | ... 8 more ... | undefined	accessNode!
+src/compiler/checker.ts	19343	89	checked	SymbolTable | undefined	globalThisSymbol.exports!
+src/compiler/checker.ts	19343	133	checked	Symbol | undefined	globalThisSymbol.exports!.get(propName)!
+src/compiler/checker.ts	19343	133	checked	SymbolTable | undefined	globalThisSymbol.exports!
+src/compiler/checker.ts	19889	118	checked	TypeMapper | undefined	mapper!
+src/compiler/checker.ts	20015	68	checked	EntityName | undefined	node.qualifier!
+src/compiler/checker.ts	20220	35	checked	Symbol | undefined	members.get(leftProp.escapedName)!
+src/compiler/checker.ts	20277	50	checked	Symbol | undefined	symbol!
+src/compiler/checker.ts	20374	24	checked	TypeParameter | undefined	getDeclaredTypeOfClassOrInterface(getSymbolOfDeclaration(parent as ClassLikeDeclaration | InterfaceDeclaration)).thisType!
+src/compiler/checker.ts	20380	20	checked	TypeParameter | undefined	getDeclaredTypeOfClassOrInterface(getSymbolOfNode(parent.parent.left)!.parent!).thisType!
+src/compiler/checker.ts	20380	54	checked	Symbol | undefined	getSymbolOfNode(parent.parent.left)!.parent!
+src/compiler/checker.ts	20380	54	checked	Symbol | undefined	getSymbolOfNode(parent.parent.left)!
+src/compiler/checker.ts	20386	20	checked	TypeParameter | undefined	getDeclaredTypeOfClassOrInterface(getSymbolOfNode(host.parent.left)!.parent!).thisType!
+src/compiler/checker.ts	20386	54	checked	Symbol | undefined	getSymbolOfNode(host.parent.left)!.parent!
+src/compiler/checker.ts	20386	54	checked	Symbol | undefined	getSymbolOfNode(host.parent.left)!
+src/compiler/checker.ts	20390	20	checked	TypeParameter | undefined	getDeclaredTypeOfClassOrInterface(getSymbolOfDeclaration(container)).thisType!
+src/compiler/checker.ts	20720	22	checked	Symbol | undefined	links.target!
+src/compiler/checker.ts	20740	72	checked	TypeReferenceNode | ArrayTypeNode | TupleTypeNode | undefined	(type as TypeReference).node!
+src/compiler/checker.ts	20742	13	checked	Declaration[] | undefined	type.symbol.declarations!
+src/compiler/checker.ts	20744	67	checked	Type | undefined	links.resolvedType!
+src/compiler/checker.ts	20745	59	checked	AnonymousType | GenericType | undefined	type.target!
+src/compiler/checker.ts	20758	140	checked	Declaration[] | undefined	type.symbol.declarations!
+src/compiler/checker.ts	20841	47	checked	Declaration[] | undefined	tp.symbol.declarations!
+src/compiler/checker.ts	20856	87	checked	TypeNode | undefined	(node as FunctionLikeDeclaration).type!
+src/compiler/checker.ts	20900	100	checked	TypeParameter | undefined	typeVariable!
+src/compiler/checker.ts	20901	72	checked	TypeParameter | undefined	typeVariable!
+src/compiler/checker.ts	20903	87	checked	TypeParameter | undefined	typeVariable!
+src/compiler/checker.ts	20906	68	checked	TypeParameter | undefined	typeVariable!
+src/compiler/checker.ts	20912	74	checked	TypeParameter | undefined	typeVariable!
+src/compiler/checker.ts	20996	26	checked	Map<string, Type> | undefined	root.instantiations!
+src/compiler/checker.ts	21007	17	checked	Map<string, Type> | undefined	root.instantiations!
+src/compiler/checker.ts	21435	36	checked	Diagnostic[] | undefined	resultObj.errors!
+src/compiler/checker.ts	21435	54	checked	Diagnostic[] | undefined	resultObj.errors!
+src/compiler/checker.ts	21488	29	checked	Declaration[] | undefined	target.symbol.declarations!
+src/compiler/checker.ts	21596	96	checked	Declaration[] | undefined	targetProp.declarations!
+src/compiler/checker.ts	21596	126	checked	Declaration[] | undefined	target.symbol.declarations!
+src/compiler/checker.ts	21944	17	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	21975	25	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22011	25	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22041	25	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22070	17	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22071	17	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22079	21	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22080	21	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22090	13	checked	ErrorReporter | undefined	errorReporter!
+src/compiler/checker.ts	22164	70	checked	Symbol | undefined	getParentOfSymbol(source)!
+src/compiler/checker.ts	22165	70	checked	Symbol | undefined	getParentOfSymbol(target)!
+src/compiler/checker.ts	22188	56	checked	EnumMember | undefined	getDeclarationOfKind(sourceProperty, SyntaxKind.EnumMember)!
+src/compiler/checker.ts	22189	56	checked	EnumMember | undefined	getDeclarationOfKind(targetProperty, SyntaxKind.EnumMember)!
+src/compiler/checker.ts	22441	77	checked	Symbol | undefined	links.target!
+src/compiler/checker.ts	22449	86	checked	Node | undefined	errorNode!
+src/compiler/checker.ts	22449	99	checked	Node | undefined	errorNode!
+src/compiler/checker.ts	22510	40	checked	[message: DiagnosticMessage, ...args: (string | number)[]] | undefined	stack.pop()!
+src/compiler/checker.ts	23034	50	checked	PropertyName | undefined	propDeclaration.name!
+src/compiler/checker.ts	23401	28	checked	((onlyUnreliable: boolean) => void) | undefined	originalHandler!
+src/compiler/checker.ts	23641	32	checked	TypeParameter[] | undefined	getSymbolLinks(source.aliasSymbol).typeParameters!
+src/compiler/checker.ts	23798	59	checked	Type | undefined	getNameTypeFromMappedType(target)!
+src/compiler/checker.ts	23809	37	checked	Type | undefined	filteredByApplicability!
+src/compiler/checker.ts	24413	66	checked	Declaration[] | undefined	unmatchedProperty.declarations!
+src/compiler/checker.ts	25087	64	checked	TypeParameter[] | undefined	getSymbolLinks(symbol).typeParameters!
+src/compiler/checker.ts	25180	29	checked	UnionOrIntersectionType | undefined	(prop as TransientSymbol).links.containingType!
+src/compiler/checker.ts	25194	95	checked	Symbol | undefined	getParentOfSymbol(prop)!
+src/compiler/checker.ts	25307	24	checked	TypeReferenceNode | ArrayTypeNode | TupleTypeNode | undefined	(type as TypeReference).node!
+src/compiler/checker.ts	25412	45	checked	readonly TypeParameter[] | undefined	source.typeParameters!
+src/compiler/checker.ts	25414	27	checked	readonly TypeParameter[] | undefined	source.typeParameters!
+src/compiler/checker.ts	25504	27	checked	Type | undefined	reduceLeft(types, (s, t) => isTypeStrictSubtypeOf(s, t) ? t : s)!
+src/compiler/checker.ts	25507	13	checked	Type | undefined	reduceLeft(types, (s, t) => isTypeSubtypeOf(s, t) ? t : s)!
+src/compiler/checker.ts	25512	16	checked	Type | undefined	reduceLeft(types, (s, t) => isTypeSubtypeOf(t, s) ? t : s)!
+src/compiler/checker.ts	25571	119	checked	TypeParameter[] | undefined	target.typeParameters!
+src/compiler/checker.ts	25571	192	checked	TypeParameter[] | undefined	target.typeParameters!
+src/compiler/checker.ts	25947	53	checked	WideningContext | undefined	context.parent!
+src/compiler/checker.ts	25949	64	checked	__String | undefined	context.propertyName!
+src/compiler/checker.ts	26802	36	checked	TypeParameter[] | undefined	getSymbolLinks(source.aliasSymbol).typeParameters!
+src/compiler/checker.ts	26806	57	checked	Type[] | undefined	targetTypes!
+src/compiler/checker.ts	27182	65	checked	Type | undefined	nakedTypeVariable!
+src/compiler/checker.ts	27425	56	checked	Type | undefined	getElementTypeOfSliceOfTupleType(source, startLength + impliedArity, endLength)!
+src/compiler/checker.ts	27439	56	checked	Type | undefined	getElementTypeOfSliceOfTupleType(source, startLength, endLength + impliedArity)!
+src/compiler/checker.ts	27584	16	checked	InferencePriority | undefined	inference.priority!
+src/compiler/checker.ts	27584	105	checked	Type[] | undefined	inference.contraCandidates!
+src/compiler/checker.ts	27584	153	checked	Type[] | undefined	inference.contraCandidates!
+src/compiler/checker.ts	27589	65	checked	Type[] | undefined	inference.candidates!
+src/compiler/checker.ts	27602	31	checked	InferencePriority | undefined	inference.priority!
+src/compiler/checker.ts	28358	78	checked	Expression | undefined	node.objectAssignmentInitializer!
+src/compiler/checker.ts	28392	41	checked	Expression | undefined	node.initializer!
+src/compiler/checker.ts	28424	37	checked	Expression | undefined	(node as VariableDeclaration).initializer!
+src/compiler/checker.ts	28961	24	checked	FlowNode[] | undefined	(flow as FlowLabel).antecedent!
+src/compiler/checker.ts	29083	25	checked	FlowNode[] | undefined	(flow as FlowLabel).antecedent!
+src/compiler/checker.ts	29084	32	checked	FlowNode[] | undefined	(flow as FlowLabel).antecedent!
+src/compiler/checker.ts	29114	32	checked	FlowNode | undefined	container.flowNode!
+src/compiler/checker.ts	29324	38	checked	FlowNode[] | undefined	flow.antecedent!
+src/compiler/checker.ts	29404	38	checked	FlowNode[] | undefined	flow.antecedent!
+src/compiler/checker.ts	29449	30	checked	FlowType | undefined	firstAntecedentType!
+src/compiler/checker.ts	29492	41	checked	Declaration | undefined	symbol.valueDeclaration!
+src/compiler/checker.ts	29726	33	checked	Symbol | undefined	symbol.parent!
+src/compiler/checker.ts	30155	95	checked	Type | undefined	predicate.type!
+src/compiler/checker.ts	30257	16	checked	Node | undefined	findAncestor(node.parent, node => isFunctionLike(node) && !getImmediatelyInvokedFunctionExpression(node) || node.kind === SyntaxKind.ModuleBlock || node.kind === SyntaxKind.SourceFile || node.kind === SyntaxKind.PropertyDeclaration)!
+src/compiler/checker.ts	30333	131	checked	Declaration | undefined	symbol.valueDeclaration!
+src/compiler/checker.ts	31111	177	checked	Declaration | undefined	declaration!
+src/compiler/checker.ts	31518	74	checked	TypeParameter | undefined	(getDeclaredTypeOfSymbol(symbol) as InterfaceType).thisType!
+src/compiler/checker.ts	31548	68	checked	TypeParameter | undefined	(getDeclaredTypeOfSymbol(symbol) as InterfaceType).thisType!
+src/compiler/checker.ts	31672	34	checked	SuperContainerOrFunctions | undefined	immediateContainer!
+src/compiler/checker.ts	32024	19	checked	ContextFlags | undefined	contextFlags!
+src/compiler/checker.ts	32623	91	checked	Expression | undefined	(node as JsxExpression).expression!
+src/compiler/checker.ts	32672	130	checked	JsxAttributeValue | undefined	(prop as JsxAttribute).initializer!
+src/compiler/checker.ts	32724	37	checked	ContextFlags | undefined	contextFlags!
+src/compiler/checker.ts	32881	52	checked	undefined	undefined!
+src/compiler/checker.ts	32883	50	checked	undefined	undefined!
+src/compiler/checker.ts	32903	56	checked	undefined	undefined!
+src/compiler/checker.ts	32924	53	checked	undefined	undefined!
+src/compiler/checker.ts	33091	79	checked	Signature | undefined	right!
+src/compiler/checker.ts	33091	149	checked	Signature | undefined	right!
+src/compiler/checker.ts	33118	36	checked	Type | undefined	tryGetTypeAtPosition(longest, i)!
+src/compiler/checker.ts	33271	31	checked	Scanner | undefined	scanner!
+src/compiler/checker.ts	33507	53	checked	Declaration | undefined	properties[i].declarations?.[0]!
+src/compiler/checker.ts	33868	47	checked	Expression | undefined	(attributeDecl.initializer as JsxExpression).expression!
+src/compiler/checker.ts	34072	56	checked	Node | undefined	location!
+src/compiler/checker.ts	34109	20	checked	undefined	undefined!
+src/compiler/checker.ts	34111	16	checked	Symbol | undefined	s!
+src/compiler/checker.ts	34123	76	checked	SymbolTable | undefined	jsxNamespace.exports!
+src/compiler/checker.ts	34148	42	checked	SymbolTable | undefined	jsxNamespace.exports!
+src/compiler/checker.ts	34153	42	checked	SymbolTable | undefined	jsxNamespace.exports!
+src/compiler/checker.ts	34451	28	checked	Declaration | undefined	symbol.valueDeclaration!
+src/compiler/checker.ts	34516	155	checked	InterfaceType | undefined	getDeclaringClass(prop)!
+src/compiler/checker.ts	34553	47	checked	ClassLikeDeclaration | undefined	getClassLikeDeclarationOfSymbol(getParentOfSymbol(prop)!)!
+src/compiler/checker.ts	34553	79	checked	Symbol | undefined	getParentOfSymbol(prop)!
+src/compiler/checker.ts	34556	143	checked	InterfaceType | undefined	getDeclaringClass(prop)!
+src/compiler/checker.ts	34595	77	checked	Type | undefined	getConstraintOfTypeParameter(containingType as TypeParameter)!
+src/compiler/checker.ts	34595	142	checked	Type | undefined	getBaseConstraintOfType(containingType as TypeParameter)!
+src/compiler/checker.ts	34958	25	checked	SymbolTable | undefined	globalThisSymbol.exports!
+src/compiler/checker.ts	34958	78	checked	Symbol | undefined	globalThisSymbol.exports!.get(right.escapedText)!
+src/compiler/checker.ts	34958	78	checked	SymbolTable | undefined	globalThisSymbol.exports!
+src/compiler/checker.ts	35076	99	checked	Symbol | undefined	prop!
+src/compiler/checker.ts	35395	9	checked	Symbol | undefined	(getCheckFlags(prop) & CheckFlags.Instantiated ? getSymbolLinks(prop).target : prop)!
+src/compiler/checker.ts	35623	29	checked	number | undefined	index!
+src/compiler/checker.ts	35790	48	checked	readonly Type[] | undefined	getTypeParametersForMapper(signature)!
+src/compiler/checker.ts	35882	66	checked	readonly TypeParameter[] | undefined	signature.typeParameters!
+src/compiler/checker.ts	35975	28	checked	NamedTupleMember | ParameterDeclaration | undefined	(arg as SyntheticExpression).tupleNameSource!
+src/compiler/checker.ts	35986	32	checked	readonly TypeParameter[] | undefined	signature.typeParameters!
+src/compiler/checker.ts	36755	67	checked	NodeArray<TypeNode> | undefined	(node as CallExpression | TaggedTemplateExpression | JsxOpeningLikeElement).typeArguments!
+src/compiler/checker.ts	36760	81	checked	NodeArray<TypeNode> | undefined	typeArguments!
+src/compiler/checker.ts	37016	63	checked	ClassLikeDeclaration | undefined	getContainingClass(node)!
+src/compiler/checker.ts	37108	90	checked	JSDocSignature | SignatureDeclaration | undefined	sig.declaration!
+src/compiler/checker.ts	37258	43	checked	ClassLikeDeclaration | undefined	getClassLikeDeclarationOfSymbol(declaration.parent.symbol)!
+src/compiler/checker.ts	37390	62	checked	Symbol | undefined	getSymbolLinks(apparentType.symbol).target!
+src/compiler/checker.ts	37554	93	checked	NodeArray<TypeNode> | undefined	node.typeArguments!
+src/compiler/checker.ts	37848	55	checked	NodeArray<Expression> | undefined	node.arguments!
+src/compiler/checker.ts	38035	33	checked	Symbol | undefined	resolveName(node.expression, node.expression.escapedText, SymbolFlags.Value, /*nameNotFoundMessage*/ undefined, /*isUse*/ true)!
+src/compiler/checker.ts	38050	26	checked	Declaration | undefined	getDeclarationOfKind(resolvedRequire, targetDeclarationKind)!
+src/compiler/checker.ts	38197	20	checked	Type | undefined	links.instantiationExpressionTypes.get(exprType.id)!
+src/compiler/checker.ts	38255	67	checked	NodeArray<TypeNode> | undefined	typeArguments!
+src/compiler/checker.ts	38571	41	checked	MinArgumentCountFlags | undefined	flags!
+src/compiler/checker.ts	38572	35	checked	MinArgumentCountFlags | undefined	flags!
+src/compiler/checker.ts	38674	37	checked	Symbol | undefined	signature.thisParameter!
+src/compiler/checker.ts	39434	59	checked	Declaration | undefined	func.symbol.valueDeclaration!
+src/compiler/checker.ts	39565	89	checked	ConciseBody | undefined	func.body!
+src/compiler/checker.ts	39660	99	checked	InferenceContext | undefined	inferenceContext!
+src/compiler/checker.ts	39663	109	checked	InferenceContext | undefined	inferenceContext!
+src/compiler/checker.ts	39678	95	checked	InferenceContext | undefined	inferenceContext!
+src/compiler/checker.ts	39823	32	checked	Symbol | undefined	getNodeLinks(node).resolvedSymbol!
+src/compiler/checker.ts	40356	54	checked	EqualsToken | undefined	prop.equalsToken!
+src/compiler/checker.ts	41367	29	checked	Expression | undefined	getEffectiveInitializer(declaration)!
+src/compiler/checker.ts	41406	86	checked	__String | undefined	getPropertyNameFromBindingElement(e)!
+src/compiler/checker.ts	41543	41	checked	InferenceContext | undefined	getInferenceContext(node)!
+src/compiler/checker.ts	41591	29	checked	InferenceContext | undefined	getInferenceContext(node)!
+src/compiler/checker.ts	41641	45	checked	TypeParameter[] | undefined	oldTypeParameters!
+src/compiler/checker.ts	41999	22	checked	SignatureDeclaration | undefined	getContainingFunction(node)!
+src/compiler/checker.ts	42356	30	checked	PropertyName | undefined	member.name!
+src/compiler/checker.ts	42539	54	checked	Block | undefined	node.body!
+src/compiler/checker.ts	42557	75	checked	Block | undefined	node.body!
+src/compiler/checker.ts	42564	53	checked	Block | undefined	node.body!
+src/compiler/checker.ts	42676	45	checked	NodeArray<TypeNode> | undefined	node.typeArguments!
+src/compiler/checker.ts	42693	21	checked	NodeArray<TypeNode> | undefined	node.typeArguments!
+src/compiler/checker.ts	42794	25	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	43368	22	flow-proven	Symbol	getSymbolOfDeclaration(node)!
+src/compiler/checker.ts	43383	25	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	43408	29	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/checker.ts	43525	30	checked	Type | undefined	getTypeOfPropertyOfType(type, "then" as __String)!
+src/compiler/checker.ts	43917	47	checked	SymbolTable | undefined	node.locals!
+src/compiler/checker.ts	44513	89	checked	PropertyName | undefined	member.name!
+src/compiler/checker.ts	44555	57	checked	NodeArray<TypeParameterDeclaration> | undefined	parent.typeParameters!
+src/compiler/checker.ts	44562	61	checked	NodeArray<TypeParameterDeclaration> | undefined	parent.typeParameters!
+src/compiler/checker.ts	44563	34	checked	NodeArray<TypeParameterDeclaration> | undefined	parent.typeParameters!
+src/compiler/checker.ts	44578	18	checked	SymbolFlags | undefined	getMergedSymbol(typeParameter.symbol).isReferenced!
+src/compiler/checker.ts	44608	179	checked	BindingName | undefined	declaration.name!
+src/compiler/checker.ts	44616	9	checked	SymbolTable | undefined	nodeWithLocals.locals!
+src/compiler/checker.ts	44619	101	checked	SymbolFlags | undefined	local.isReferenced!
+src/compiler/checker.ts	44677	126	checked	Identifier | undefined	first(unuseds).name!
+src/compiler/checker.ts	44682	79	checked	Identifier | undefined	unused.name!
+src/compiler/checker.ts	45028	41	checked	Node | undefined	getAncestor(localDeclarationSymbol.valueDeclaration, SyntaxKind.VariableDeclarationList)!
+src/compiler/checker.ts	46398	35	checked	TypeParameter[] | undefined	globalType.typeParameters!
+src/compiler/checker.ts	46398	66	checked	TypeMapper | undefined	mapper!
+src/compiler/checker.ts	46399	35	checked	TypeParameter[] | undefined	globalType.typeParameters!
+src/compiler/checker.ts	46399	66	checked	TypeMapper | undefined	mapper!
+src/compiler/checker.ts	46400	59	checked	TypeParameter[] | undefined	globalType.typeParameters!
+src/compiler/checker.ts	46400	90	checked	TypeMapper | undefined	mapper!
+src/compiler/checker.ts	46733	36	checked	SymbolTable | undefined	catchClause.locals!
+src/compiler/checker.ts	46925	68	checked	readonly TypeParameterDeclaration[] | undefined	typeParameterDeclarations!
+src/compiler/checker.ts	46931	25	checked	readonly TypeParameterDeclaration[] | undefined	typeParameterDeclarations!
+src/compiler/checker.ts	46972	59	checked	TypeParameter[] | undefined	type.localTypeParameters!
+src/compiler/checker.ts	47148	77	checked	readonly TypeParameter[] | undefined	constructor.typeParameters!
+src/compiler/checker.ts	47448	46	checked	ClassLikeDeclaration | undefined	getClassLikeDeclarationOfSymbol(type.symbol)!
+src/compiler/checker.ts	47501	61	checked	Symbol | undefined	(s as TransientSymbol).links.target!
+src/compiler/checker.ts	47553	42	checked	ClassLikeDeclaration | undefined	getClassLikeDeclarationOfSymbol(type.symbol)!
+src/compiler/checker.ts	47620	76	checked	ClassLikeDeclaration | undefined	getClassLikeDeclarationOfSymbol(type.symbol)!
+src/compiler/checker.ts	47943	29	checked	Expression | undefined	member.initializer!
+src/compiler/checker.ts	48015	32	checked	SymbolTable | undefined	rootSymbol.exports!
+src/compiler/checker.ts	48202	21	checked	number | undefined	symbol.declarations?.length!
+src/compiler/checker.ts	48729	31	checked	Symbol | undefined	resolveEntityName(moduleName, SymbolFlags.Value | SymbolFlags.Namespace)!
+src/compiler/checker.ts	48776	70	checked	Expression | undefined	node.moduleSpecifier!
+src/compiler/checker.ts	48999	29	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	49006	40	checked	SymbolTable | undefined	moduleSymbol.exports!
+src/compiler/checker.ts	49033	55	checked	Declaration[] | undefined	declarations!
+src/compiler/checker.ts	49446	39	checked	SignatureDeclaration | undefined	host!
+src/compiler/checker.ts	49595	43	checked	Node[] | undefined	links.potentialThisCollisions!
+src/compiler/checker.ts	49596	48	checked	Node[] | undefined	links.potentialNewTargetCollisions!
+src/compiler/checker.ts	49597	49	checked	Node[] | undefined	links.potentialWeakMapSetCollisions!
+src/compiler/checker.ts	49598	46	checked	Node[] | undefined	links.potentialReflectCollisions!
+src/compiler/checker.ts	49599	64	checked	BindingElement[] | undefined	links.potentialUnusedRenamedBindingElementsInTypes!
+src/compiler/checker.ts	49792	57	checked	SymbolTable | undefined	getSymbolOfDeclaration(location as ModuleDeclaration | SourceFile).exports!
+src/compiler/checker.ts	49795	37	checked	SymbolTable | undefined	getSymbolOfDeclaration(location as EnumDeclaration).exports!
+src/compiler/checker.ts	50148	28	checked	Symbol | undefined	symbolLinks.filteredIndexSymbolCache.get(nodeListId)!
+src/compiler/checker.ts	50239	28	checked	SymbolTable | undefined	getGlobalImportMetaExpressionType().members!
+src/compiler/checker.ts	50523	29	checked	Symbol | undefined	getSymbolOfNode(node.parent)!
+src/compiler/checker.ts	50530	22	checked	PropertyName | undefined	element.name!
+src/compiler/checker.ts	50573	31	checked	UnionOrIntersectionType | undefined	getSymbolLinks(symbol).containingType!
+src/compiler/checker.ts	50577	46	checked	Symbol | undefined	rightSpread!
+src/compiler/checker.ts	50626	58	checked	Symbol | undefined	symbol.exportSymbol!
+src/compiler/checker.ts	50711	20	checked	boolean | undefined	links.isDeclarationWithCollidingName!
+src/compiler/checker.ts	51191	20	checked	AccessorDeclaration | undefined	getParseTreeNode(accessor, isGetOrSetAccessorDeclaration)!
+src/compiler/checker.ts	51470	40	checked	readonly IndexInfo[] | undefined	infoList!
+src/compiler/checker.ts	51548	62	checked	Expression | undefined	specifier!
+src/compiler/checker.ts	51548	74	checked	Expression | undefined	specifier!
+src/compiler/checker.ts	51571	46	checked	SymbolTable | undefined	file.locals!
+src/compiler/checker.ts	51577	43	checked	SymbolTable | undefined	file.locals!
+src/compiler/checker.ts	51814	32	checked	NodeArray<ModifierLike> | NodeArray<Modifier> | undefined	(node as HasModifiers).modifiers!
+src/compiler/checker.ts	52065	55	checked	Decorator | undefined	firstDecorator!
+src/compiler/checker.ts	52190	43	checked	Node | undefined	lastStatic!
+src/compiler/checker.ts	52193	43	checked	Node | undefined	lastOverride!
+src/compiler/checker.ts	52196	43	checked	Node | undefined	lastAsync!
+src/compiler/checker.ts	52201	39	checked	Node | undefined	lastDeclare!
+src/compiler/checker.ts	52210	52	checked	Node | undefined	lastAsync!
+src/compiler/checker.ts	52620	36	checked	EqualsToken | undefined	prop.equalsToken!
+src/compiler/checker.ts	53585	21	checked	Symbol[] | undefined	ambientModulesCache!
+src/compiler/checker.ts	53826	36	checked	Declaration[] | undefined	s1.declarations!
+src/compiler/checker.ts	53826	57	checked	Declaration[] | undefined	s2.declarations!
+src/compiler/checker.ts	53847	24	checked	number | undefined	fileIndexMap!.get(s1)!
+src/compiler/checker.ts	53847	24	checked	Map<SourceFile, number> | undefined	fileIndexMap!
+src/compiler/checker.ts	53848	24	checked	number | undefined	fileIndexMap!.get(s2)!
+src/compiler/checker.ts	53848	24	checked	Map<SourceFile, number> | undefined	fileIndexMap!
+src/compiler/checker.ts	54128	44	checked	readonly (NamedTupleMember | ParameterDeclaration | undefined)[] | undefined	t1.labeledElementDeclarations!
+src/compiler/checker.ts	54128	79	checked	readonly (NamedTupleMember | ParameterDeclaration | undefined)[] | undefined	t2.labeledElementDeclarations!
+src/compiler/checker.ts	54154	36	checked	readonly Type[] | undefined	s1!
+src/compiler/checker.ts	54272	48	checked	((path: string) => string | undefined) | undefined	host.readFile!
+src/compiler/commandLineParser.ts	1874	72	checked	Set<string> | undefined	opt.deprecatedKeys!
+src/compiler/commandLineParser.ts	1945	17	checked	AlternateModeDiagnostics | undefined	diagnostics.alternateMode!
+src/compiler/commandLineParser.ts	2373	19	checked	undefined	undefined!
+src/compiler/commandLineParser.ts	2721	9	checked	readonly string[] | undefined	specs!
+src/compiler/commandLineParser.ts	2792	46	checked	CommandLineOption | undefined	optionsNameMap.get(name)!
+src/compiler/commandLineParser.ts	2792	121	checked	CommandLineOption | undefined	optionsNameMap.get(name)!
+src/compiler/commandLineParser.ts	2804	184	checked	GetCanonicalFileName | undefined	getCanonicalFileName!
+src/compiler/commandLineParser.ts	2807	199	checked	GetCanonicalFileName | undefined	getCanonicalFileName!
+src/compiler/commandLineParser.ts	2815	97	checked	string | undefined	getNameOfCompilerOptionValue(element, customTypeMap)!
+src/compiler/commandLineParser.ts	3420	47	checked	TsConfigSourceFile | undefined	sourceFile!
+src/compiler/commandLineParser.ts	3425	40	checked	TsConfigSourceFile | undefined	sourceFile!
+src/compiler/commandLineParser.ts	3490	54	checked	WatchOptions | undefined	result.watchOptions!
+src/compiler/commandLineParser.ts	3722	12	checked	ParsedTsconfig | undefined	extendedConfig!
+src/compiler/core.ts	521	16	checked	V | undefined	map.get(key)!
+src/compiler/core.ts	579	58	checked	K | undefined	previousKey!
+src/compiler/core.ts	1244	26	checked	T | undefined	initial!
+src/compiler/core.ts	1641	32	checked	TElement | TElement[] | undefined	multiMap.get(hash)!
+src/compiler/core.ts	1649	32	checked	TElement | TElement[] | undefined	multiMap.get(hash)!
+src/compiler/core.ts	1674	32	checked	TElement | TElement[] | undefined	multiMap.get(hash)!
+src/compiler/core.ts	1896	24	checked	undefined	undefined!
+src/compiler/core.ts	1916	16	checked	T | undefined	value!
+src/compiler/core.ts	2474	16	checked	U	lastResult!
+src/compiler/debug.ts	288	72	checked	((node: Node) => boolean) | undefined	test!
+src/compiler/debug.ts	301	98	checked	((node: Node) => boolean) | undefined	test!
+src/compiler/debug.ts	314	48	checked	Node | undefined	node!
+src/compiler/debug.ts	314	108	checked	((node: Node) => boolean) | undefined	test!
+src/compiler/debug.ts	328	98	checked	((node: Node) => boolean) | undefined	test!
+src/compiler/debug.ts	354	48	checked	Node | undefined	node!
+src/compiler/emitter.ts	507	21	checked	string | undefined	options.outFile!
+src/compiler/emitter.ts	915	38	checked	DiagnosticWithLocation[] | undefined	declarationTransform.diagnostics!
+src/compiler/emitter.ts	997	60	checked	SourceFile | Bundle | undefined	sourceFile!
+src/compiler/emitter.ts	1014	31	checked	SourceFile | Bundle | undefined	sourceFile!
+src/compiler/emitter.ts	1417	18	checked	EmitTextWriter | undefined	_writer!
+src/compiler/emitter.ts	4943	16	checked	string | undefined	tokenToString(node.kind)!
+src/compiler/emitter.ts	4952	29	checked	string | undefined	tokenToString(token)!
+src/compiler/emitter.ts	4954	16	checked	number | undefined	pos!
+src/compiler/emitter.ts	4954	27	checked	number | undefined	pos!
+src/compiler/emitter.ts	4954	34	checked	number | undefined	pos!
+src/compiler/emitter.ts	5053	33	checked	SourceFile | undefined	currentSourceFile!
+src/compiler/emitter.ts	5083	33	checked	SourceFile | undefined	currentSourceFile!
+src/compiler/emitter.ts	5127	33	checked	SourceFile | undefined	currentSourceFile!
+src/compiler/emitter.ts	5217	29	checked	SourceFile | undefined	currentSourceFile!
+src/compiler/emitter.ts	5271	36	checked	Identifier | NumericLiteral | PrivateIdentifier | BigIntLiteral | StringLiteralLike | JsxNamespacedName | undefined	(node as StringLiteral).textSourceNode!
+src/compiler/emitter.ts	5314	32	checked	TempFlags | undefined	privateNameTempFlagsStack.pop()!
+src/compiler/emitter.ts	5321	21	checked	TempFlags | undefined	tempFlagsStack.pop()!
+src/compiler/emitter.ts	5688	22	checked	Expression | undefined	getExternalModuleName(node)!
+src/compiler/emitter.ts	5913	33	checked	number[] | undefined	lineMap!
+src/compiler/emitter.ts	5973	69	checked	NodeArray<Node> | undefined	parentNodeArray!
+src/compiler/emitter.ts	6131	26	checked	{ nodePos: number; detachedCommentEndPos: number; }[] | undefined	detachedCommentsInfo!
+src/compiler/emitter.ts	6132	13	checked	{ nodePos: number; detachedCommentEndPos: number; }[] | undefined	detachedCommentsInfo!
+src/compiler/emitter.ts	6133	13	checked	{ nodePos: number; detachedCommentEndPos: number; }[] | undefined	detachedCommentsInfo!
+src/compiler/emitter.ts	6234	9	checked	SourceMapGenerator | undefined	sourceMapGenerator!
+src/compiler/emitter.ts	6308	32	checked	SourceMapGenerator | undefined	sourceMapGenerator!
+src/compiler/emitter.ts	6310	13	checked	SourceMapGenerator | undefined	sourceMapGenerator!
+src/compiler/emitter.ts	6367	16	checked	OrdinalParentheizerRuleSelector<Node> | undefined	parenthesizerRuleSelector!
+src/compiler/executeCommandLine.ts	110	25	checked	number | undefined	counts.get(key)!
+src/compiler/executeCommandLine.ts	654	35	checked	ParsedCommandLine | undefined	parseConfigFileWithSystem(configFileName, commandLineOptions, extendedConfigCache, commandLine.watchOptions, sys, reportDiagnostic)!
+src/compiler/executeCommandLine.ts	999	35	checked	((program: EmitAndSemanticDiagnosticsBuilderProgram) => void) | undefined	watchCompilerHost.afterProgramCreate!
+src/compiler/executeCommandLine.ts	1021	25	checked	string | undefined	configParseResult.options.configFilePath!
+src/compiler/executeCommandLine.ts	1152	57	checked	string | undefined	compilerOptions.generateTrace!
+src/compiler/expressionToTypeNode.ts	256	80	checked	TypeNode | undefined	visitNode(node.indexType, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	319	53	checked	TypeNode | undefined	visitNode(node.type, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	322	53	checked	TypeNode | undefined	visitNode(node.type, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	328	52	checked	TypeNode | undefined	visitNode(node.type, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	332	34	checked	Identifier | undefined	visitNode(isIdentifier(t.name) ? t.name : t.name.right, visitExistingNodeTreeSymbols, isIdentifier)!
+src/compiler/expressionToTypeNode.ts	354	35	checked	NodeArray<TypeNode> | undefined	node.typeArguments!
+src/compiler/expressionToTypeNode.ts	356	31	checked	NodeArray<TypeNode> | undefined	node.typeArguments!
+src/compiler/expressionToTypeNode.ts	543	35	checked	TypeNode | undefined	visitNode(node.checkType, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	546	36	checked	TypeNode | undefined	visitNode(node.extendsType, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	547	34	checked	TypeNode | undefined	visitNode(node.trueType, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	549	35	checked	TypeNode | undefined	visitNode(node.falseType, visitExistingNodeTreeSymbols, isTypeNode)!
+src/compiler/expressionToTypeNode.ts	766	108	checked	GetAccessorDeclaration | undefined	accessorDeclarations.getAccessor!
+src/compiler/expressionToTypeNode.ts	1198	71	checked	GetAccessorDeclaration | undefined	allAccessors.getAccessor!
+src/compiler/expressionToTypeNode.ts	1199	57	checked	SetAccessorDeclaration | undefined	allAccessors.setAccessor!
+src/compiler/factory/emitNode.ts	47	13	checked	Node[] | undefined	getOrCreateEmitNode(sourceFile).annotatedNodes!
+src/compiler/factory/nodeFactory.ts	1215	23	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	1309	23	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	2234	21	checked	TypeNode | undefined	type!
+src/compiler/factory/nodeFactory.ts	3565	30	checked	TokenFlags | undefined	templateFlags!
+src/compiler/factory/nodeFactory.ts	3574	30	checked	TokenFlags | undefined	templateFlags!
+src/compiler/factory/nodeFactory.ts	6071	33	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6072	32	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6074	24	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6077	24	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6079	32	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6080	40	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6081	39	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6082	32	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6084	28	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6087	24	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6088	36	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6089	35	checked	undefined	undefined!
+src/compiler/factory/nodeFactory.ts	6100	28	checked	RedirectInfo | undefined	this.redirectInfo!
+src/compiler/factory/nodeFactory.ts	6103	21	checked	RedirectInfo | undefined	this.redirectInfo!
+src/compiler/factory/nodeFactory.ts	6108	28	checked	RedirectInfo | undefined	this.redirectInfo!
+src/compiler/factory/nodeFactory.ts	6111	21	checked	RedirectInfo | undefined	this.redirectInfo!
+src/compiler/factory/nodeFactory.ts	6120	49	checked	RedirectInfo | undefined	source.redirectInfo!
+src/compiler/factory/nodeFactory.ts	6756	15	checked	Expression | undefined	reduceLeft(expressions, factory.createComma)!
+src/compiler/factory/nodeFactory.ts	7488	93	checked	(SourceMapRange | undefined)[] | undefined	destEmitNode.tokenSourceMapRanges!
+src/compiler/factory/utilities.ts	381	33	checked	Block | undefined	getAccessor.body!
+src/compiler/factory/utilities.ts	396	33	checked	Block | undefined	setAccessor.body!
+src/compiler/factory/utilities.ts	451	29	checked	Block | undefined	method.body!
+src/compiler/factory/utilities.ts	1396	38	checked	undefined	undefined!
+src/compiler/factory/utilities.ts	1476	60	checked	undefined	undefined!
+src/compiler/factory/utilities.ts	1479	43	checked	undefined	undefined!
+src/compiler/factory/utilities.ts	1560	119	checked	((name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string) | undefined	generateName!
+src/compiler/factory/utilities.ts	1600	46	checked	((name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string) | undefined	generateName!
+src/compiler/factory/utilities.ts	1601	46	checked	((name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string) | undefined	generateName!
+src/compiler/moduleNameResolver.ts	119	5	checked	((s: string) => void) | undefined	host.trace!
+src/compiler/moduleNameResolver.ts	144	66	checked	undefined	undefined!
+src/compiler/moduleNameResolver.ts	699	49	checked	string | undefined	containingFile!
+src/compiler/moduleNameResolver.ts	1140	43	checked	[specifier: string, mode: ResolutionMode] | undefined	memoizedReverseKeys.get(key)!
+src/compiler/moduleNameResolver.ts	1313	9	checked	PackageJsonInfoCache | undefined	packageJsonInfoCache!
+src/compiler/moduleNameResolver.ts	1576	31	checked	string | undefined	getPathsBasePath(state.compilerOptions, state.host)!
+src/compiler/moduleNameResolver.ts	2545	101	checked	boolean | undefined	onlyRecordFailuresForPackageFile!
+src/compiler/moduleSpecifiers.ts	597	96	checked	string | undefined	baseUrl!
+src/compiler/moduleSpecifiers.ts	1154	95	checked	string | undefined	host.readFile(packageJsonPath)!
+src/compiler/moduleSpecifiers.ts	1190	40	checked	NodeModulePathParts | undefined	getNodeModulePathParts(path)!
+src/compiler/moduleSpecifiers.ts	1256	136	checked	string | undefined	host.readFile!(packageJsonPath)!
+src/compiler/moduleSpecifiers.ts	1256	136	checked	((path: string) => string | undefined) | undefined	host.readFile!
+src/compiler/moduleSpecifiers.ts	1306	117	checked	VersionPaths | undefined	versionPaths!
+src/compiler/moduleSpecifiers.ts	1384	16	checked	string | undefined	tryGetRealFileNameForNonJsDeclarationFileName(fileName)!
+src/compiler/parser.ts	1279	25	checked	Node | NodeArray<Node> | undefined	queue.pop()!
+src/compiler/parser.ts	1280	24	checked	Node | undefined	parents.pop()!
+src/compiler/parser.ts	1789	22	checked	undefined	undefined!
+src/compiler/parser.ts	1790	27	checked	undefined	undefined!
+src/compiler/parser.ts	1792	22	checked	undefined	undefined!
+src/compiler/parser.ts	1793	27	checked	undefined	undefined!
+src/compiler/parser.ts	1795	28	checked	undefined	undefined!
+src/compiler/parser.ts	1796	28	checked	undefined	undefined!
+src/compiler/parser.ts	1798	23	checked	undefined	undefined!
+src/compiler/parser.ts	2542	123	checked	string | undefined	tokenToString(t)!
+src/compiler/parser.ts	2621	66	checked	DiagnosticMessage | undefined	diagnosticMessage!
+src/compiler/parser.ts	3443	110	checked	string | undefined	tokenToString(token())!
+src/compiler/parser.ts	3459	99	checked	string | undefined	tokenToString(token())!
+src/compiler/parser.ts	3901	17	checked	Identifier | undefined	name!
+src/compiler/parser.ts	3915	72	checked	undefined	undefined!
+src/compiler/parser.ts	7481	29	checked	NodeArray<ModifierLike> | undefined	modifiers!
+src/compiler/parser.ts	7550	16	checked	undefined	undefined!
+src/compiler/parser.ts	8112	33	checked	NodeArray<ModifierLike> | undefined	modifiers!
+src/compiler/parser.ts	10114	44	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/parser.ts	10224	44	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/parser.ts	10267	48	checked	JSDocArray | undefined	child.jsDoc!
+src/compiler/parser.ts	10497	28	checked	undefined	undefined!
+src/compiler/parser.ts	10499	23	checked	undefined	undefined!
+src/compiler/parser.ts	10625	5	checked	PragmaMap | undefined	context.pragmas!
+src/compiler/parser.ts	10705	16	checked	RegExp | undefined	namedArgRegExCache.get(name)!
+src/compiler/parser.ts	10719	26	checked	PragmaKindFlags | undefined	pragma.kind!
+src/compiler/parser.ts	10771	22	checked	PragmaKindFlags | undefined	pragma.kind!
+src/compiler/program.ts	471	60	checked	((path: string) => string) | undefined	system.realpath!
+src/compiler/program.ts	670	84	checked	number | undefined	diagnostic.start!
+src/compiler/program.ts	784	44	checked	number | undefined	start!
+src/compiler/program.ts	794	55	checked	number | undefined	diagnostic.start!
+src/compiler/program.ts	794	74	checked	number | undefined	diagnostic.length!
+src/compiler/program.ts	801	65	checked	number | undefined	start!
+src/compiler/program.ts	802	52	checked	number | undefined	start!
+src/compiler/program.ts	802	60	checked	number | undefined	length!
+src/compiler/program.ts	1282	46	checked	readonly (ResolvedProjectReference | undefined)[] | undefined	program!.getResolvedProjectReferences()!
+src/compiler/program.ts	1282	46	checked	Program | undefined	program!
+src/compiler/program.ts	1311	25	checked	readonly ProjectReference[] | undefined	oldResolvedRef.commandLine.projectReferences!
+src/compiler/program.ts	1516	112	checked	CompilerOptions | undefined	_options!
+src/compiler/program.ts	1520	29	checked	undefined	undefined!
+src/compiler/program.ts	1521	27	checked	undefined	undefined!
+src/compiler/program.ts	1609	13	checked	((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]) | undefined	host.resolveModuleNames!
+src/compiler/program.ts	1654	13	checked	((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined	host.resolveTypeReferenceDirectives!
+src/compiler/program.ts	1849	21	checked	((oldSourceFile: SourceFile, oldOptions: CompilerOptions, hasSourceFileByPath: boolean, newSourceFileByResolvedPath: SourceFile | undefined) => void) | undefined	host.onReleaseOldSourceFile!
+src/compiler/program.ts	1849	87	checked	Program | undefined	oldProgram!
+src/compiler/program.ts	1861	38	checked	readonly ProjectReference[] | undefined	parent?.commandLine.projectReferences!
+src/compiler/program.ts	1861	87	checked	readonly ProjectReference[] | undefined	oldProgram!.getProjectReferences()!
+src/compiler/program.ts	1861	87	checked	Program | undefined	oldProgram!
+src/compiler/program.ts	1864	21	checked	((configFileName: string, oldResolvedRef: ResolvedProjectReference | undefined, optionOptions: CompilerOptions) => void) | undefined	host.onReleaseParsedCommandLine!
+src/compiler/program.ts	1864	82	checked	Program | undefined	oldProgram!
+src/compiler/program.ts	1906	47	checked	string[] | undefined	automaticTypeDirectiveNames!
+src/compiler/program.ts	2023	44	checked	Map<string, boolean> | undefined	packageMap!
+src/compiler/program.ts	2023	139	checked	Map<string, boolean> | undefined	packageMap!
+src/compiler/program.ts	2244	92	checked	SourceFileOrUndefined	containingSourceFile!
+src/compiler/program.ts	2293	30	checked	SourceFileOrUndefined	containingSourceFile!
+src/compiler/program.ts	2299	55	checked	SourceFileOrUndefined	containingSourceFile!
+src/compiler/program.ts	2312	37	checked	Resolution[] | undefined	result!
+src/compiler/program.ts	2315	59	checked	number[] | undefined	unknownEntryIndices!
+src/compiler/program.ts	2321	13	checked	Program | undefined	oldProgram!
+src/compiler/program.ts	2322	13	checked	Program | undefined	oldProgram!
+src/compiler/program.ts	2324	32	checked	readonly ProjectReference[] | undefined	(parent ? parent.commandLine.projectReferences : projectReferences)!
+src/compiler/program.ts	2339	48	checked	ResolvedProjectReference | undefined	getResolvedProjectReferenceByPath(parent.sourceFile.path)!
+src/compiler/program.ts	2851	31	checked	undefined	undefined!
+src/compiler/program.ts	2973	66	checked	number | undefined	start!
+src/compiler/program.ts	3160	44	checked	NodeArray<ModifierLike> | undefined	(parent as VariableStatement).modifiers!
+src/compiler/program.ts	3463	102	checked	SourceFile | undefined	getSourceFileByPath(reason.file)!
+src/compiler/program.ts	3648	79	checked	SourceFile | undefined	file!
+src/compiler/program.ts	3653	17	checked	SourceFile[] | undefined	processingOtherFiles!
+src/compiler/program.ts	3677	38	checked	Map<string, SourceFile> | undefined	filesByNameIgnoreCase!
+src/compiler/program.ts	3682	21	checked	Map<string, SourceFile> | undefined	filesByNameIgnoreCase!
+src/compiler/program.ts	3698	17	checked	SourceFile[] | undefined	processingDefaultLibFiles!
+src/compiler/program.ts	3701	17	checked	SourceFile[] | undefined	processingOtherFiles!
+src/compiler/program.ts	3817	31	checked	string | undefined	resolvedTypeReferenceDirective.resolvedFileName!
+src/compiler/program.ts	4058	25	checked	Map<Path, ResolvedRefAndSource> | undefined	mapOutputFileToResolvedRef!
+src/compiler/program.ts	4064	17	checked	Map<Path, ResolvedRefAndOutputDts> | undefined	mapSourceFileToResolvedRef!
+src/compiler/program.ts	4220	216	checked	Node | undefined	firstNonAmbientExternalModuleSourceFile.externalModuleIndicator!
+src/compiler/program.ts	4230	220	checked	Node | undefined	firstNonAmbientExternalModuleSourceFile.externalModuleIndicator!
+src/compiler/program.ts	4593	29	checked	readonly ProjectReference[] | undefined	(parent ? parent.commandLine.projectReferences : projectReferences)!
+src/compiler/program.ts	4624	100	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4663	87	checked	string | undefined	option2!
+src/compiler/program.ts	4663	97	checked	string | undefined	option3!
+src/compiler/program.ts	4673	102	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4700	96	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4703	92	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4742	96	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4745	92	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/program.ts	4920	25	checked	Set<Path> | undefined	setOfDeclarationDirectories!
+src/compiler/program.ts	4926	29	checked	Set<Path> | undefined	setOfDeclarationDirectories!
+src/compiler/program.ts	4984	13	checked	Set<Path> | undefined	setOfDeclarationDirectories!
+src/compiler/program.ts	5120	34	checked	((s: string) => void) | ((s: string) => void) | undefined	host.trace!
+src/compiler/programDiagnostics.ts	157	62	checked	DiagnosticCollection | undefined	computedDiagnostics!
+src/compiler/programDiagnostics.ts	162	32	checked	DiagnosticCollection | undefined	computedDiagnostics!
+src/compiler/programDiagnostics.ts	172	32	checked	DiagnosticCollection | undefined	computedDiagnostics!
+src/compiler/programDiagnostics.ts	174	68	checked	DiagnosticCollection | undefined	computedDiagnostics!
+src/compiler/programDiagnostics.ts	180	17	checked	DiagnosticCollection | undefined	computedDiagnostics!
+src/compiler/programDiagnostics.ts	202	13	checked	string | undefined	suggestion!
+src/compiler/programDiagnostics.ts	248	46	checked	DiagnosticMessageChain[] | undefined	cachedChain.fileIncludeReasonDetails.next!
+src/compiler/programDiagnostics.ts	248	98	checked	FileIncludeReason[] | undefined	reasons!
+src/compiler/programDiagnostics.ts	253	50	checked	DiagnosticMessageChain[] | undefined	cachedChain.fileIncludeReasonDetails.next!
+src/compiler/programDiagnostics.ts	253	94	checked	DiagnosticMessageChain[] | undefined	fileIncludeReasons!
+src/compiler/programDiagnostics.ts	256	53	checked	DiagnosticMessageChain[] | undefined	cachedChain.fileIncludeReasonDetails.next!
+src/compiler/programDiagnostics.ts	256	105	checked	FileIncludeReason[] | undefined	reasons!
+src/compiler/programDiagnostics.ts	256	123	checked	DiagnosticMessageChain[] | undefined	fileIncludeReasons!
+src/compiler/programDiagnostics.ts	318	20	checked	DiagnosticMessageChain | undefined	cachedChain!.fileIncludeReasonDetails!
+src/compiler/programDiagnostics.ts	318	20	checked	FileReasonToChainCache | undefined	cachedChain!
+src/compiler/programDiagnostics.ts	388	65	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/programDiagnostics.ts	410	122	checked	string[] | undefined	options.lib!
+src/compiler/resolutionCache.ts	598	47	checked	(() => string) | undefined	resolutionHost.getCurrentDirectory!
+src/compiler/resolutionCache.ts	795	58	checked	readonly string[] | undefined	newFile.packageJsonLocations!
+src/compiler/resolutionCache.ts	799	25	checked	FileWatcherOfAffectingLocation | undefined	fileWatchesOfAffectingLocations.get(existing[i])!
+src/compiler/resolutionCache.ts	802	83	checked	readonly string[] | undefined	newFile.packageJsonLocations!
+src/compiler/resolutionCache.ts	808	50	checked	FileWatcherOfAffectingLocation | undefined	fileWatchesOfAffectingLocations.get(location)!
+src/compiler/resolutionCache.ts	873	61	checked	ModeAwareCache<T> | undefined	perFileCache.set(path, createModeAwareCache()).get(path)!
+src/compiler/resolutionCache.ts	918	72	checked	T | undefined	resolution!
+src/compiler/resolutionCache.ts	1266	30	checked	((path: string) => string) | undefined	resolutionHost.realpath!
+src/compiler/resolutionCache.ts	1281	44	checked	PackageDirWatcher | undefined	packageDirWatcher!
+src/compiler/resolutionCache.ts	1321	63	checked	string | undefined	packageDir!
+src/compiler/resolutionCache.ts	1355	43	checked	PackageDirWatcher | undefined	packageDirWatchers.get(packageDirPath)!
+src/compiler/resolutionCache.ts	1356	36	checked	DirPathToWatcherOfPackageDirWatcher | undefined	packageDirWatcher.dirPathToWatcher.get(dirPath)!
+src/compiler/resolutionCache.ts	1362	42	checked	number | undefined	dirPathToSymlinkPackageRefCount.get(dirPath)!
+src/compiler/resolutionCache.ts	1385	13	checked	Set<Path> | undefined	resolution.files!
+src/compiler/resolutionCache.ts	1411	33	checked	FileWatcherOfAffectingLocation | undefined	fileWatchesOfAffectingLocations.get(affectingLocation)!
+src/compiler/resolutionCache.ts	1418	28	checked	DirectoryWatchesOfFailedLookup | undefined	directoryWatchesOfFailedLookups.get(dirPath)!
+src/compiler/resolutionCache.ts	1585	62	checked	Set<string> | undefined	affectingPathChecksForFile!
+src/compiler/resolutionCache.ts	1623	89	checked	Set<string> | undefined	affectingPathChecks!
+src/compiler/scanner.ts	390	12	checked	ScriptTarget | undefined	languageVersion!
+src/compiler/scanner.ts	396	12	checked	ScriptTarget | undefined	languageVersion!
+src/compiler/scanner.ts	801	21	checked	RegExpExecArray | null	shebangTriviaRegex.exec(text)!
+src/compiler/scanner.ts	935	86	checked	T | undefined	state!
+src/compiler/scanner.ts	941	85	checked	T | undefined	state!
+src/compiler/scanner.ts	1034	16	checked	string | undefined	textInitial!
+src/compiler/scanner.ts	3995	52	checked	number | undefined	start!
+src/compiler/scanner.ts	4025	22	checked	undefined	undefined!
+src/compiler/scanner.ts	4036	12	checked	number | undefined	s.codePointAt(i)!
+src/compiler/scanner.ts	4097	24	checked	undefined	undefined!
+src/compiler/sourcemap.ts	559	25	checked	undefined	undefined!
+src/compiler/sys.ts	171	29	checked	Partial<Levels> | undefined	customLevels!
+src/compiler/sys.ts	432	46	checked	Date | undefined	fileTimestamps.get(filePath)!
+src/compiler/sys.ts	728	66	checked	string | undefined	fileName!
+src/compiler/sys.ts	738	79	checked	string | undefined	fileName!
+src/compiler/sys.ts	1033	105	checked	undefined	undefined!
+src/compiler/sys.ts	1152	43	checked	undefined	undefined!
+src/compiler/sys.ts	1303	44	checked	string | undefined	lastDirectoryPartWithDirectorySeparator!
+src/compiler/sys.ts	1685	46	checked	string | undefined	(remappedPaths.has(url) ? remappedPaths : remappedPaths.set(url, `external${externalFileCounter}.js`)).get(url)!
+src/compiler/sys.ts	1949	26	checked	typeof import("crypto") | undefined	_crypto!
+src/compiler/sys.ts	1963	12	checked	System | undefined	sys!
+src/compiler/tracing.ts	205	73	checked	Node | undefined	node!
+src/compiler/tracing.ts	206	71	checked	Node | undefined	node!
+src/compiler/tracing.ts	220	27	checked	string | undefined	legend[legend.length - 1].typesPath!
+src/compiler/transformer.ts	274	32	checked	EmitResolver | undefined	resolver!
+src/compiler/transformer.ts	275	28	checked	EmitHost | undefined	host!
+src/compiler/transformer.ts	494	50	checked	undefined	undefined!
+src/compiler/transformer.ts	495	50	checked	undefined	undefined!
+src/compiler/transformer.ts	496	40	checked	undefined	undefined!
+src/compiler/transformer.ts	594	43	checked	undefined	undefined!
+src/compiler/transformer.ts	654	54	checked	undefined	undefined!
+src/compiler/transformer.ts	655	59	checked	undefined	undefined!
+src/compiler/transformer.ts	656	54	checked	undefined	undefined!
+src/compiler/transformer.ts	657	59	checked	undefined	undefined!
+src/compiler/transformer.ts	658	32	checked	undefined	undefined!
+src/compiler/transformer.ts	659	26	checked	undefined	undefined!
+src/compiler/transformers/classFields.ts	859	43	checked	Block | undefined	node.body!
+src/compiler/transformers/classFields.ts	3303	53	checked	number | undefined	declaration.id!
+src/compiler/transformers/declarations.ts	358	191	checked	string | undefined	symbolAccessibilityResult.errorSymbolName!
+src/compiler/transformers/declarations.ts	358	235	checked	string | undefined	symbolAccessibilityResult.errorModuleName!
+src/compiler/transformers/declarations.ts	361	156	checked	string | undefined	symbolAccessibilityResult.errorSymbolName!
+src/compiler/transformers/declarations.ts	361	200	checked	string | undefined	symbolAccessibilityResult.errorModuleName!
+src/compiler/transformers/declarations.ts	379	45	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	380	47	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	380	120	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	395	59	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	401	59	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	407	59	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	414	63	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	417	63	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	424	59	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	443	59	checked	Declaration | ComputedPropertyName | PrivateIdentifier | BigIntLiteral | ObjectBindingPattern | ArrayBindingPattern | JsxNamespacedName | undefined	(errorNameNode || errorFallbackNode)!
+src/compiler/transformers/declarations.ts	472	62	checked	undefined	undefined!
+src/compiler/transformers/declarations.ts	506	70	checked	string | undefined	getOutputPathsFor(node, host, /*forceDtsPaths*/ true).declarationFilePath!
+src/compiler/transformers/declarations.ts	540	66	checked	string | undefined	getOutputPathsFor(node, host, /*forceDtsPaths*/ true).declarationFilePath!
+src/compiler/transformers/declarations.ts	654	48	checked	GetSymbolAccessibilityDiagnostic | undefined	oldDiag!
+src/compiler/transformers/declarations.ts	671	53	checked	CanHaveLiteralInitializer | undefined	getParseTreeNode(node, canHaveLiteralInitializer)!
+src/compiler/transformers/declarations.ts	717	48	flow-proven	GetSymbolAccessibilityDiagnostic	oldDiag!
+src/compiler/transformers/declarations.ts	836	28	checked	undefined	undefined!
+src/compiler/transformers/declarations.ts	969	23	checked	LateVisibilityPaintedStatement | undefined	lateMarkedStatements!.shift()!
+src/compiler/transformers/declarations.ts	969	23	checked	LateVisibilityPaintedStatement[] | undefined	lateMarkedStatements!
+src/compiler/transformers/declarations.ts	1465	40	checked	Symbol | undefined	props[0].parent!
+src/compiler/transformers/declarations.ts	1498	99	checked	Identifier | undefined	input.name!
+src/compiler/transformers/declarations.ts	1583	50	checked	Identifier | NamespaceDeclaration | JSDocNamespaceDeclaration | undefined	inner!
+src/compiler/transformers/declarations.ts	1687	25	checked	ClassDeclaration | undefined	cleanup(factory.updateClassDeclaration( input, modifiers, input.name, typeParameters, heritageClauses, members, ))!
+src/compiler/transformers/declarations.ts	1810	48	checked	GetSymbolAccessibilityDiagnostic | undefined	oldDiag!
+src/compiler/transformers/declarations/diagnostics.ts	351	24	checked	DeclarationName | undefined	(node as NamedDeclaration).name!
+src/compiler/transformers/destructuring.ts	178	46	checked	Expression[] | undefined	expressions!
+src/compiler/transformers/destructuring.ts	198	20	checked	BindingOrAssignmentElementTarget | undefined	getTargetOfBindingOrAssignmentElement(element)!
+src/compiler/transformers/destructuring.ts	345	27	checked	BindingOrAssignmentElementTarget | undefined	getTargetOfBindingOrAssignmentElement(element)!
+src/compiler/transformers/destructuring.ts	367	89	checked	Expression | undefined	value!
+src/compiler/transformers/destructuring.ts	370	88	checked	Expression | undefined	value!
+src/compiler/transformers/destructuring.ts	373	63	checked	Expression | undefined	value!
+src/compiler/transformers/destructuring.ts	402	34	checked	Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | BigIntLiteral | undefined	getPropertyNameOfBindingOrAssignmentElement(element)!
+src/compiler/transformers/destructuring.ts	406	22	checked	BindingOrAssignmentElementTarget | undefined	getTargetOfBindingOrAssignmentElement(element)!
+src/compiler/transformers/es2015.ts	542	29	checked	undefined	undefined!
+src/compiler/transformers/es2015.ts	543	23	checked	undefined	undefined!
+src/compiler/transformers/es2015.ts	544	44	checked	undefined	undefined!
+src/compiler/transformers/es2015.ts	806	13	checked	Jump | undefined	convertedLoopState.allowedNonLabeledJumps!
+src/compiler/transformers/es2015.ts	831	13	checked	Jump | undefined	convertedLoopState.nonLocalJumps!
+src/compiler/transformers/es2015.ts	900	34	checked	Jump | undefined	convertedLoopState.allowedNonLabeledJumps!
+src/compiler/transformers/es2015.ts	907	25	checked	Jump | undefined	convertedLoopState.nonLocalJumps!
+src/compiler/transformers/es2015.ts	911	25	checked	Jump | undefined	convertedLoopState.nonLocalJumps!
+src/compiler/transformers/es2015.ts	936	67	checked	Expression | undefined	expr!
+src/compiler/transformers/es2015.ts	939	71	checked	Expression | undefined	expr!
+src/compiler/transformers/es2015.ts	2556	22	checked	ConciseBody | undefined	node.body!
+src/compiler/transformers/es2015.ts	2936	9	checked	Map<string, boolean> | undefined	convertedLoopState!.labels!
+src/compiler/transformers/es2015.ts	2936	9	checked	ConvertedLoopState | undefined	convertedLoopState!
+src/compiler/transformers/es2015.ts	2940	9	checked	Map<string, boolean> | undefined	convertedLoopState!.labels!
+src/compiler/transformers/es2015.ts	2940	9	checked	ConvertedLoopState | undefined	convertedLoopState!
+src/compiler/transformers/es2015.ts	3412	17	checked	Identifier[] | undefined	state.hoistedLocalVariables!
+src/compiler/transformers/es2015.ts	3943	32	checked	Jump | undefined	state.nonLocalJumps!
+src/compiler/transformers/es2015.ts	3969	17	checked	Jump | undefined	state.nonLocalJumps!
+src/compiler/transformers/es2015.ts	3972	21	checked	Jump | undefined	outerState.nonLocalJumps!
+src/compiler/transformers/es2015.ts	3986	17	checked	Jump | undefined	state.nonLocalJumps!
+src/compiler/transformers/es2015.ts	4000	37	checked	Map<string, string> | undefined	state.labeledNonLocalBreaks!
+src/compiler/transformers/es2015.ts	4001	37	checked	Map<string, string> | undefined	state.labeledNonLocalContinues!
+src/compiler/transformers/es2015.ts	4108	116	checked	boolean | undefined	node.multiLine!
+src/compiler/transformers/es2015.ts	4112	98	checked	boolean | undefined	node.multiLine!
+src/compiler/transformers/es2015.ts	4116	107	checked	boolean | undefined	node.multiLine!
+src/compiler/transformers/es2015.ts	4396	50	checked	Expression | undefined	variable.initializer!
+src/compiler/transformers/es2015.ts	4452	35	checked	Statement | undefined	elementAt(funcStatements, classBodyEnd)!
+src/compiler/transformers/es2015.ts	4615	102	checked	NodeArray<Expression> | undefined	node.arguments!
+src/compiler/transformers/es2015.ts	5042	44	checked	Block | undefined	constructor.body!
+src/compiler/transformers/es2017.ts	318	31	checked	VariableDeclaration | undefined	node.variableDeclaration!
+src/compiler/transformers/es2017.ts	355	19	checked	Expression | undefined	visitVariableDeclarationListWithCollidingNames(node.initializer, /*hasReceiver*/ true)!
+src/compiler/transformers/es2017.ts	367	19	checked	Expression | undefined	visitVariableDeclarationListWithCollidingNames(node.initializer, /*hasReceiver*/ true)!
+src/compiler/transformers/es2017.ts	375	29	checked	ForInitializer | undefined	node.initializer!
+src/compiler/transformers/es2017.ts	628	17	checked	Expression | undefined	node.initializer!
+src/compiler/transformers/es2018.ts	232	29	checked	undefined	undefined!
+src/compiler/transformers/es2018.ts	233	44	checked	undefined	undefined!
+src/compiler/transformers/es2018.ts	1174	45	checked	Block | undefined	node.body!
+src/compiler/transformers/es2018.ts	1174	68	checked	Block | undefined	node.body!
+src/compiler/transformers/es2018.ts	1204	43	checked	Block | undefined	node.body!
+src/compiler/transformers/esDecorators.ts	375	143	checked	LexicalEnvironmentStackEntry | undefined	top!
+src/compiler/transformers/esnext.ts	99	22	checked	undefined	undefined!
+src/compiler/transformers/esnext.ts	100	26	checked	undefined	undefined!
+src/compiler/transformers/generators.ts	331	20	checked	undefined	undefined!
+src/compiler/transformers/generators.ts	564	56	checked	Block | undefined	node.body!
+src/compiler/transformers/generators.ts	1044	44	checked	Expression | undefined	node.expression!
+src/compiler/transformers/generators.ts	1045	65	checked	Expression | undefined	expression!
+src/compiler/transformers/generators.ts	1265	33	checked	NodeArray<Expression> | undefined	node.arguments!
+src/compiler/transformers/generators.ts	1416	57	checked	number | undefined	elseLabel!
+src/compiler/transformers/generators.ts	1420	31	checked	number | undefined	elseLabel!
+src/compiler/transformers/generators.ts	2021	33	checked	VariableDeclaration | undefined	node.catchClause.variableDeclaration!
+src/compiler/transformers/generators.ts	2141	23	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2142	9	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2143	9	checked	number[] | undefined	blockOffsets!
+src/compiler/transformers/generators.ts	2145	9	checked	CodeBlock[] | undefined	blockStack!
+src/compiler/transformers/generators.ts	2156	23	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2157	9	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2158	9	checked	number[] | undefined	blockOffsets!
+src/compiler/transformers/generators.ts	2159	9	checked	CodeBlock[] | undefined	blocks!
+src/compiler/transformers/generators.ts	2160	9	checked	CodeBlock[] | undefined	blockStack!
+src/compiler/transformers/generators.ts	2445	37	checked	CodeBlock[] | undefined	blockStack!
+src/compiler/transformers/generators.ts	2735	9	checked	(OperationArguments | undefined)[] | undefined	operationArguments!
+src/compiler/transformers/generators.ts	2736	9	checked	(TextRange | undefined)[] | undefined	operationLocations!
+src/compiler/transformers/generators.ts	2983	33	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2983	57	checked	number[] | undefined	blockOffsets!
+src/compiler/transformers/generators.ts	2985	37	checked	BlockAction[] | undefined	blockActions!
+src/compiler/transformers/generators.ts	2997	54	checked	ExceptionBlock | undefined	currentExceptionBlock!
+src/compiler/transformers/generators.ts	3001	53	checked	ExceptionBlock[] | undefined	exceptionBlockStack!
+src/compiler/transformers/generators.ts	3013	29	checked	WithBlock[] | undefined	withBlockStack!
+src/compiler/transformers/generators.ts	3039	24	checked	OpCode[] | undefined	operations!
+src/compiler/transformers/generators.ts	3047	22	checked	OperationArguments | undefined	operationArguments![operationIndex]!
+src/compiler/transformers/generators.ts	3047	22	checked	(OperationArguments | undefined)[] | undefined	operationArguments!
+src/compiler/transformers/generators.ts	3052	26	checked	(TextRange | undefined)[] | undefined	operationLocations!
+src/compiler/transformers/jsx.ts	133	15	checked	string | undefined	currentFileState.importSpecifier!
+src/compiler/transformers/jsx.ts	134	15	checked	string | undefined	getJSXRuntimeImport(currentFileState.importSpecifier, compilerOptions)!
+src/compiler/transformers/jsx.ts	205	28	checked	undefined	undefined!
+src/compiler/transformers/jsx.ts	392	17	checked	string | undefined	compilerOptions.reactNamespace!
+src/compiler/transformers/jsx.ts	436	13	checked	string | undefined	compilerOptions.reactNamespace!
+src/compiler/transformers/jsx.ts	679	66	checked	Expression | undefined	expression!
+src/compiler/transformers/legacyDecorators.ts	742	22	checked	PropertyName | undefined	member.name!
+src/compiler/transformers/legacyDecorators.ts	833	53	checked	number | undefined	declaration.id!
+src/compiler/transformers/module/esnextAnd2015.ts	159	53	checked	CallExpression | undefined	importsAndRequiresToRewriteOrShim.shift()!
+src/compiler/transformers/module/esnextAnd2015.ts	360	13	checked	Expression | undefined	updatedModuleSpecifier!
+src/compiler/transformers/module/module.ts	255	29	checked	undefined	undefined!
+src/compiler/transformers/module/module.ts	256	29	checked	undefined	undefined!
+src/compiler/transformers/module/module.ts	607	22	checked	Identifier | undefined	getLocalNameForExternalImport(factory, node, currentSourceFile)!
+src/compiler/transformers/module/module.ts	814	21	checked	CallExpression[] | undefined	importsAndRequiresToRewriteOrShim!
+src/compiler/transformers/module/module.ts	2266	33	checked	undefined	undefined!
+src/compiler/transformers/module/module.ts	2267	33	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	265	29	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	266	22	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	267	26	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	268	25	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	270	41	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	399	36	checked	Identifier | undefined	addExportStarIfNeeded(statements)!
+src/compiler/transformers/module/system.ts	600	44	checked	Identifier | undefined	getLocalNameForExternalImport(factory, entry, currentSourceFile)!
+src/compiler/transformers/module/system.ts	756	38	checked	Identifier | undefined	getLocalNameForExternalImport(factory, node, currentSourceFile)!
+src/compiler/transformers/module/system.ts	775	34	checked	Identifier | undefined	getLocalNameForExternalImport(factory, node, currentSourceFile)!
+src/compiler/transformers/module/system.ts	1139	125	checked	Identifier | undefined	decl.name!
+src/compiler/transformers/module/system.ts	1784	33	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	1785	26	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	1786	30	checked	undefined	undefined!
+src/compiler/transformers/module/system.ts	1787	29	checked	undefined	undefined!
+src/compiler/transformers/taggedTemplate.ts	50	46	checked	undefined	undefined!
+src/compiler/transformers/taggedTemplate.ts	102	12	checked	TokenFlags | undefined	template.templateFlags!
+src/compiler/transformers/ts.ts	313	29	checked	undefined	undefined!
+src/compiler/transformers/ts.ts	1217	22	checked	PropertyName | undefined	member.name!
+src/compiler/transformers/ts.ts	1242	22	checked	PropertyName | undefined	member.name!
+src/compiler/transformers/ts.ts	2202	37	checked	ModuleDeclaration | undefined	getInnerMostModuleDeclarationFromDottedModule(node)!
+src/compiler/transformers/ts.ts	2248	13	checked	ModuleBody | undefined	moduleDeclaration.body!
+src/compiler/transformers/utilities.ts	175	118	checked	NamedImportBindings | undefined	node.importClause.namedBindings!
+src/compiler/transformers/utilities.ts	229	44	checked	NamedExportBindings | undefined	(node as ExportDeclaration).exportClause!
+src/compiler/transformers/utilities.ts	345	22	checked	Identifier | undefined	node.name!
+src/compiler/tsbuildPublic.ts	195	29	checked	T | undefined	newValue!
+src/compiler/tsbuildPublic.ts	297	61	checked	((path: string) => Date | undefined) | undefined	system.getModifiedTime!
+src/compiler/tsbuildPublic.ts	298	69	checked	((path: string, time: Date) => void) | undefined	system.setModifiedTime!
+src/compiler/tsbuildPublic.ts	299	51	checked	((path: string) => void) | undefined	system.deleteFile!
+src/compiler/tsbuildPublic.ts	598	51	checked	Diagnostic | undefined	diagnostic!
+src/compiler/tsbuildPublic.ts	765	34	checked	((fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined) | undefined	getSourceFileWithCache!
+src/compiler/tsbuildPublic.ts	1100	48	checked	T | undefined	program!
+src/compiler/tsbuildPublic.ts	1126	78	checked	Date | undefined	modifiedTime!
+src/compiler/tsbuildPublic.ts	1128	45	checked	Map<Path, Date> | undefined	getOutputTimeStampMap(state, projectPath)!
+src/compiler/tsbuildPublic.ts	1239	60	checked	ConfigFileSpecs | undefined	config.options.configFile!.configFileSpecs!
+src/compiler/tsbuildPublic.ts	1239	60	checked	TsConfigSourceFile | undefined	config.options.configFile!
+src/compiler/tsbuildPublic.ts	1243	17	checked	ConfigFileSpecs | undefined	config.options.configFile!.configFileSpecs!
+src/compiler/tsbuildPublic.ts	1243	17	checked	TsConfigSourceFile | undefined	config.options.configFile!
+src/compiler/tsbuildPublic.ts	1481	36	checked	ParsedCommandLine | undefined	parseConfigFile(state, resolvedRef, resolvedRefPath)!
+src/compiler/tsbuildPublic.ts	1513	27	checked	string | undefined	getTsBuildInfoEmitOutputFilePath(project.options)!
+src/compiler/tsbuildPublic.ts	1615	39	checked	undefined	undefined!
+src/compiler/tsbuildPublic.ts	1733	71	checked	Date | undefined	(refStatus as Status.UpToDate).newestInputFileTime!
+src/compiler/tsbuildPublic.ts	1738	65	checked	BuildInfoCacheEntry | undefined	state.buildInfoCache.get(resolvedPath)!
+src/compiler/tsbuildPublic.ts	1765	63	checked	string | undefined	project.options.configFilePath!
+src/compiler/tsbuildPublic.ts	1769	42	checked	TsConfigSourceFile | undefined	project.options.configFile!
+src/compiler/tsbuildPublic.ts	1794	26	checked	BuildInfoCacheEntry | undefined	state.buildInfoCache.get(resolvedRefPath)!
+src/compiler/tsbuildPublic.ts	1825	27	checked	string | undefined	getTsBuildInfoEmitOutputFilePath(proj.options)!
+src/compiler/tsbuildPublic.ts	1831	78	checked	string | undefined	proj.options.configFilePath!
+src/compiler/tsbuildPublic.ts	1833	13	checked	BuildInfoCacheEntry | undefined	getBuildInfoCacheEntry(state, buildInfoPath, projectPath)!
+src/compiler/tsbuildPublic.ts	1850	53	checked	string | undefined	proj.options.configFilePath!
+src/compiler/tsbuildPublic.ts	1853	41	checked	BuildInfoCacheEntry | undefined	getBuildInfoCacheEntry(state, buildInfoPath, projectPath)!
+src/compiler/tsbuildPublic.ts	1857	17	checked	Set<Path> | undefined	modifiedOutputs!
+src/compiler/tsbuildPublic.ts	1864	40	checked	Set<Path> | undefined	modifiedOutputs!
+src/compiler/tsbuildPublic.ts	1881	113	checked	string | undefined	proj.options.configFilePath!
+src/compiler/utilities.ts	1251	34	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/utilities.ts	2333	12	checked	Node | undefined	findAncestor(node.parent, current => isBlockScope(current, current.parent))!
+src/compiler/utilities.ts	3533	58	checked	Node | undefined	parent!
+src/compiler/utilities.ts	3533	67	checked	Node | undefined	grandparent!
+src/compiler/utilities.ts	3544	55	checked	Node | undefined	parent!
+src/compiler/utilities.ts	3544	64	checked	Node | undefined	grandparent!
+src/compiler/utilities.ts	3545	56	checked	Node | undefined	parent!
+src/compiler/utilities.ts	3556	119	checked	Node | undefined	parent!
+src/compiler/utilities.ts	3558	142	checked	Node | undefined	parent!
+src/compiler/utilities.ts	3562	122	checked	Node | undefined	parent!
+src/compiler/utilities.ts	4661	79	checked	Expression | JsxAttributeValue | undefined	hostNode.initializer!
+src/compiler/utilities.ts	4662	66	checked	JSDocArray | undefined	hostNode.initializer.jsDoc!
+src/compiler/utilities.ts	4668	70	checked	JSDocArray | undefined	node.jsDoc!
+src/compiler/utilities.ts	6924	82	checked	NodeArray<JSDocTag> | undefined	tag.parent.tags!
+src/compiler/utilities.ts	6924	125	checked	NodeArray<JSDocTag> | undefined	tag.parent.tags!
+src/compiler/utilities.ts	7618	78	checked	Declaration[] | undefined	symbol.declarations!
+src/compiler/utilities.ts	7911	35	checked	string | undefined	tokenToString(token)!
+src/compiler/utilities.ts	8225	44	checked	U | undefined	(newMap as Map<K, U>).get?.(key)!
+src/compiler/utilities.ts	8514	19	checked	undefined	undefined!
+src/compiler/utilities.ts	8527	19	checked	undefined	undefined!
+src/compiler/utilities.ts	8539	19	checked	undefined	undefined!
+src/compiler/utilities.ts	8806	25	checked	DiagnosticRelatedInformation[] | undefined	d2.relatedInformation!
+src/compiler/utilities.ts	8912	42	checked	DiagnosticMessageChain[] | undefined	c1[i].next!
+src/compiler/utilities.ts	8912	55	checked	DiagnosticMessageChain[] | undefined	c2[i].next!
+src/compiler/utilities.ts	10103	45	checked	SourceFile | undefined	sourceFile!
+src/compiler/utilities.ts	10736	31	checked	JSDocArray | undefined	child.jsDoc!
+src/compiler/utilities.ts	11713	72	checked	SymbolTable | undefined	getSymbolOfDeclaration(container).members!
+src/compiler/utilities.ts	11733	45	checked	SymbolTable | undefined	getSymbolOfDeclaration(grandparent as ClassLikeDeclaration | InterfaceDeclaration).members!
+src/compiler/utilities.ts	11868	13	checked	SymbolFlags | undefined	result.isReferenced!
+src/compiler/utilities.ts	12365	38	checked	undefined	undefined!
+src/compiler/utilitiesPublic.ts	342	20	checked	string | undefined	targetToLibMap.get(target)!
+src/compiler/utilitiesPublic.ts	749	55	checked	string | undefined	fileContents!
+src/compiler/visitorPublic.ts	714	31	checked	Block | undefined	node.body!
+src/compiler/visitorPublic.ts	723	31	checked	Block | undefined	node.body!
+src/compiler/visitorPublic.ts	734	31	checked	Block | undefined	node.body!
+src/compiler/visitorPublic.ts	744	31	checked	Block | undefined	node.body!
+src/compiler/watch.ts	139	26	checked	undefined	undefined!
+src/compiler/watch.ts	224	48	checked	undefined	undefined!
+src/compiler/watch.ts	250	60	checked	SourceFile | undefined	diagnosticForFileName.file!
+src/compiler/watch.ts	250	89	checked	number | undefined	diagnosticForFileName.start!
+src/compiler/watch.ts	309	104	checked	ReportFileInError | undefined	fileInError!
+src/compiler/watch.ts	309	130	checked	ReportFileInError | undefined	file!
+src/compiler/watch.ts	326	48	checked	ReportFileInError | undefined	file!
+src/compiler/watch.ts	389	41	checked	readonly string[] | undefined	file.packageJsonLocations!
+src/compiler/watch.ts	400	41	checked	readonly string[] | undefined	file.packageJsonLocations!
+src/compiler/watch.ts	423	27	checked	readonly string[] | undefined	configFile.configFileSpecs.validatedFilesSpecBeforeSubstitution!
+src/compiler/watch.ts	442	27	checked	readonly string[] | undefined	configFile.configFileSpecs.validatedIncludeSpecsBeforeSubstitution!
+src/compiler/watch.ts	492	13	checked	string | undefined	(referenceLocation.packageId && packageIdToString(referenceLocation.packageId))!
+src/compiler/watch.ts	544	151	checked	string[] | undefined	options.lib!
+src/compiler/watch.ts	747	88	checked	((s: string) => void) | undefined	host.trace!
+src/compiler/watch.ts	764	49	checked	((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined	host.writeFile!
+src/compiler/watch.ts	765	21	checked	((path: string) => void) | undefined	host.createDirectory!
+src/compiler/watch.ts	766	21	checked	((path: string) => boolean) | undefined	host.directoryExists!
+src/compiler/watch.ts	884	17	checked	((diagnostic: Diagnostic, newLine: string, options: CompilerOptions, errorCount?: number | undefined) => void) | undefined	result.onWatchStatusChange!
+src/compiler/watchPublic.ts	373	22	checked	CompilerOptions | undefined	options!
+src/compiler/watchPublic.ts	493	72	checked	CompilerOptions | undefined	compilerOptions!
+src/compiler/watchPublic.ts	505	49	checked	CompilerOptions | undefined	compilerOptions!
+src/compiler/watchPublic.ts	579	48	checked	undefined	undefined!
+src/compiler/watchPublic.ts	583	42	checked	undefined	undefined!
+src/compiler/watchPublic.ts	587	31	checked	undefined	undefined!
+src/compiler/watchPublic.ts	598	26	checked	undefined	undefined!
+src/compiler/watchPublic.ts	663	34	checked	WriteFileCallback | undefined	originalWriteFile!
+src/compiler/watchPublic.ts	675	52	checked	string | undefined	configFile!
+src/compiler/watchPublic.ts	857	9	checked	((timeoutId: any) => void) | undefined	host.clearTimeout!
+src/compiler/watchPublic.ts	927	53	checked	ConfigFileSpecs | undefined	compilerOptions.configFile!.configFileSpecs!
+src/compiler/watchPublic.ts	927	53	checked	TsConfigSourceFile | undefined	compilerOptions.configFile!
+src/compiler/watchPublic.ts	932	17	checked	ConfigFileSpecs | undefined	compilerOptions.configFile!.configFileSpecs!
+src/compiler/watchPublic.ts	932	17	checked	TsConfigSourceFile | undefined	compilerOptions.configFile!
+src/compiler/watchPublic.ts	933	17	checked	Diagnostic[] | undefined	configFileParsingDiagnostics!
+src/compiler/watchPublic.ts	961	13	checked	ParsedCommandLine | undefined	getParsedCommandLineOfConfigFile( configFileName, optionsToExtendForConfigFile, parseConfigFileHost, extendedConfigCache ||= new Map(), watchOptionsToExtend, extraFileExtensions, )!
+src/compiler/watchPublic.ts	993	21	checked	ConfigFileSpecs | undefined	config.parsedCommandLine.options.configFile!.configFileSpecs!
+src/compiler/watchPublic.ts	993	21	checked	TsConfigSourceFile | undefined	config.parsedCommandLine.options.configFile!
+src/compiler/watchPublic.ts	1039	9	checked	Map<Path, ParsedConfig> | undefined	parsedConfigs!
+src/compiler/watchPublic.ts	1093	13	checked	FileWatcher | undefined	missingFilesMap.get(missingFilePath)!
+src/compiler/watchUtilities.ts	169	28	checked	((path: string, extensions?: readonly string[] | undefined, exclude?: readonly string[] | undefined, include?: readonly string[] | undefined, depth?: number | undefined) => string[]) | undefined	host.readDirectory!
+src/compiler/watchUtilities.ts	170	30	checked	((path: string) => string[]) | undefined	host.getDirectories!
+src/compiler/watchUtilities.ts	221	16	checked	((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined	host.writeFile!
+src/compiler/watchUtilities.ts	233	89	checked	((path: string) => boolean) | undefined	host.directoryExists!
+src/compiler/watchUtilities.ts	248	9	checked	((path: string) => void) | undefined	host.createDirectory!
+src/compiler/watchUtilities.ts	257	16	checked	((path: string) => string[]) | undefined	host.getDirectories!
+src/compiler/watchUtilities.ts	267	16	checked	((path: string, extensions?: readonly string[] | undefined, exclude?: readonly string[] | undefined, include?: readonly string[] | undefined, depth?: number | undefined) => string[]) | undefined	host.readDirectory!
+src/compiler/watchUtilities.ts	283	28	checked	((path: string, extensions?: readonly string[] | undefined, exclude?: readonly string[] | undefined, include?: readonly string[] | undefined, depth?: number | undefined) => string[]) | undefined	host.readDirectory!
+src/compiler/watchUtilities.ts	284	30	checked	((path: string) => string[]) | undefined	host.getDirectories!
+src/compiler/watchUtilities.ts	606	41	checked	ConfigFileSpecs | undefined	options.configFile!.configFileSpecs!
+src/compiler/watchUtilities.ts	606	41	checked	TsConfigSourceFile | undefined	options.configFile!
+src/compiler/watchUtilities.ts	768	25	checked	WatchFactory<X, Y> | undefined	triggerInvokingFactory!
+src/compiler/watchUtilities.ts	788	25	checked	WatchFactory<X, Y> | undefined	triggerInvokingFactory!
