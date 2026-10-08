@@ -345,7 +345,7 @@ export class Parser {
         this.node(id).text = text;
         return id;
     }
-    primary(): number {
+    primary(allowImport = true): number {
         const pos = this.scanner.fullStart;
         switch(this.kind()) {
             case 'NumericLiteral':
@@ -388,7 +388,9 @@ export class Parser {
                     this.node(id).operator = 'NewKeyword';
                     return id;
                 }
-                const target = this.suffix(this.primary(), false);
+                // Go parseNewExpressionOrNewDotTarget calls parsePrimaryExpression,
+                // which does not admit the import expressions handled by call-expression parsing.
+                const target = this.suffix(this.primary(false), false);
                 const children =
                     this.node(target).kind === 'ExpressionWithTypeArguments'
                         ? this.node(target).children.slice()
@@ -409,6 +411,9 @@ export class Parser {
                 return id;
             }
             case 'ImportKeyword': {
+                if(!allowImport) {
+                    return this.missingIdentifier(1109, 'Expression expected.');
+                }
                 if(this.peek() === 'DotToken') {
                     this.next();
                     this.next();

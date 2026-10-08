@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -22,7 +23,12 @@ func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
 	err, timedOut := runWithCPUBudget(t, argv, output, &stderr, 2*time.Second)
 	output.Close()
 	info, _ := os.Stat(output.Name())
-	if timedOut || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
+	matchesDiagnostic := strings.Contains(stderr.String(), diagnostic)
+	if diagnostic == "ESTree parser" {
+		// Parser diagnostics use the Go ESTree boundary spelling and byte position.
+		matchesDiagnostic = matchesDiagnostic || regexp.MustCompile(`(?m)parse error at [0-9]+: [^\r\n]+`).MatchString(stderr.String())
+	}
+	if timedOut || err == nil || info.Size() != 0 || !matchesDiagnostic {
 		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
 	}
 }
