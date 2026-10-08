@@ -18,6 +18,11 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Kind != ast.KindFunctionDeclaration {
 			continue
 		}
+		// Overload signatures have no body and no runtime value. As at module scope,
+		// the implementation alone is bound; its signature proves every overload.
+		if node.Body() == nil && l.censusImplementation(node) != nil {
+			continue
+		}
 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
@@ -138,7 +143,64 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 	if l.result.Locals[local].Function != l.functionIndex {
 		return nil, true, l.notYet(node, "a first-class nested function reference from another nested function")
 	}
+	// Calls reach nestedOverloadCall first; a value would need an adapter per overload.
+	if err := l.overloadedValue(node); err != nil {
+		return nil, true, err
+	}
 	return ir.Read{Local: local, Of: ir.Closure}, true, nil
+}
+
+// nestedOverloadCall calls a nested implementation behind overload signatures.
+// The checker resolves the call against an overload, so arguments are fitted to
+// the implementation's own parameters and the result gets the module-scope
+// overload result check. Without it a narrower promised result (a Map where the
+// implementation may return undefined) would be read with no check at all.
+func (l *lowering) nestedOverloadCall(call *ast.CallExpression) (ir.Expression, bool, error) {
+	callee := ast.SkipParentheses(call.Expression)
+	if !ast.IsIdentifier(callee) {
+		return nil, false, nil
+	}
+	local, ok := l.locals[l.symbol(callee)]
+	if !ok || l.result.Locals[local].NestedFunction == 0 {
+		return nil, false, nil
+	}
+	symbol := l.symbol(callee)
+	overloaded := false
+	for _, declaration := range symbol.Declarations {
+		overloaded = overloaded || (declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil)
+	}
+	if !overloaded {
+		return nil, false, nil
+	}
+	implementation := l.result.Locals[local].NestedFunction - 1
+	var closure ir.Expression = ir.ClosureSelf{}
+	direct := 0
+	if sibling := l.nestedSibling(callee); sibling >= 0 {
+		direct = sibling + 1
+	} else if l.result.Locals[local].Function != l.functionIndex {
+		return nil, true, l.notYet(callee, "a first-class nested function reference from another nested function")
+	} else {
+		closure = ir.Read{Local: local, Of: ir.Closure}
+	}
+	parameters := l.result.Functions[implementation].Parameters
+	if len(call.Arguments.Nodes) != len(parameters) {
+		return nil, true, l.notYet(call.AsNode(), "an overloaded nested call whose argument count differs from its implementation")
+	}
+	arguments := []ir.Expression{}
+	for index, argument := range call.Arguments.Nodes {
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		takes := l.result.Locals[parameters[index]].Type
+		value = fit(value, takes)
+		if value.Type() != takes {
+			return nil, true, l.notYet(argument, "an overload argument with a different implementation representation")
+		}
+		arguments = append(arguments, value)
+	}
+	value, err := l.censusOverloadResult(call, ir.CallClosure{Closure: closure, Direct: direct, Arguments: arguments, Returns: l.result.Functions[implementation].Returns})
+	return value, true, err
 }
 
 // A destructuring initializer keeps its source evaluation order; only the cells
