@@ -37,8 +37,7 @@ export class Rules {
         return answer?.value ?? panic(answer?.reason ?? 'typed rule without checker');
     }
     skip(index: number): number { return this.context.unwrap(index); }
-    add(rule: string, id: string, message: string, index: number): Diagnostic {
-        const node = this.parser.node(index);
+    add(rule: string, id: string, message: string, node: ParseNode): Diagnostic {
         const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
         this.findings.push(finding); return finding;
     }
@@ -73,7 +72,7 @@ export class NoArrayDelete {
         const arrays = parts.map((id) => facts.type(id).array || facts.type(id).tuple >= 0);
         const underlying = (root.flags & 268435456) !== 0 ? arrays.some((array) => array) : arrays.every((array) => array);
         if(!underlying) { return; }
-        const finding = this.rules.add('no-array-delete', 'noArrayDelete', arrayDeleteMessage, index);
+        const finding = this.rules.add('no-array-delete', 'noArrayDelete', arrayDeleteMessage, node);
         const repairs: Repair[] = [];
         const scanner = this.rules.scanner;
         for(let at = 0; at < 3; at++) {
