@@ -218,7 +218,7 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
-	output, err := childguard.CombinedOutput(command, childguard.Options{})
+	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
 		t.Fatalf("Go cohere: %v\n%s", err, output)
 	}
@@ -242,7 +242,7 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	}
 	prettierPath := filepath.Join(scratch, "prettier.json")
 	command = bounded(t, "node", "testdata/library.mjs", library, casesPath, prettierPath)
-	output, err = childguard.CombinedOutput(command, childguard.Options{})
+	output, err = childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
 		t.Fatalf("Prettier: %v\n%s", err, output)
 	}

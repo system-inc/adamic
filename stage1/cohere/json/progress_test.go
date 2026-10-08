@@ -9,6 +9,12 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
+// jsonGuard is json's one policy for every child it runs: childguard's 30-minute first output and
+// 60-minute ceiling, and a 5-minute stall, json's proven policy before childguard. The slowest isolated
+// ASan case takes about 24 s on an idle 5-core box and about 4x that under load, so the 2-minute
+// default would leave 1.25x headroom on a loaded gate box.
+var jsonGuard = childguard.Options{Stall: 5 * time.Minute}
+
 func TestProgressGuard(t *testing.T) {
 	t.Parallel()
 	policy := childguard.Options{FirstOutput: 500 * time.Millisecond, Stall: 200 * time.Millisecond, Ceiling: 5 * time.Second}

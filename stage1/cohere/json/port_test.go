@@ -58,7 +58,7 @@ func executeResult(environment []string, name string, arguments ...string) (run,
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, childguard.Options{})
+	err := childguard.Run(command, jsonGuard)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, err
@@ -408,7 +408,7 @@ func buildGoDriver(t *testing.T) string {
 	binary := filepath.Join(directory, "go-cohere")
 	command := bounded(t, "go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
 	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 		t.Fatalf("Go driver: %v\n%s", err, output)
 	}
 	return binary

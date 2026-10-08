@@ -23,7 +23,7 @@ var repositoryJSONPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclud
 
 func gitCorpus(root string, arguments ...string) ([]byte, error) {
 	command := exec.Command("git", append([]string{"-C", root}, arguments...)...)
-	output, err := childguard.CombinedOutput(command, childguard.Options{})
+	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
 		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
 	}
