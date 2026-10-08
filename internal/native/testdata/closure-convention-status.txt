@@ -257,3 +257,23 @@ loops-only witness are committed.
 
 Exact scratch 33bf53ac: waiting for the parser worker's published branch as
 requested. No reconstruction substitutes for that exact tree.
+
+Exact published scratch refusal completed
+
+Fetched publication be7bdb8b and checked out unchanged 33bf53ac in a detached,
+never-pushed worktree. Original compiler builds; exact witness builds, exits 0,
+empty stderr and prints 9 against Node 1. Applied the saved enforcement-only
+patch, leaving its erroneous calls and buffer-slot binding unreconciled.
+Enforced Go compiler builds; native Build exits 1 under -Werror:
+array.c:202:72: error: too many arguments to function call, expected 2, have 3.
+Runtime compilation stops first. Independently compiling its exact emitted C
+against the same header also exits 1, at the witness constructor:
+controlling expression type 'adamic_counted_code_function *' not compatible
+with any generic association type. The plain constructor rejects a counted
+function; no missing host declaration or erased pointer cast causes this result.
+Full errors, original/enforced C, exact patch, hashes and replay commands are
+committed in closure-convention-evidence/exact-parser-* files.
+The exact replay requirement is now covered; historical pending statements above
+are superseded. Parser byte identity and the full taste21 acceptance remain open.
+Literal C/binary cmp both exit 1; parser-literal-cmp.log records byte locations
+and all four artifact hashes. No performance parity is claimed.
