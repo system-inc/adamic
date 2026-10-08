@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -13,8 +14,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
@@ -43,32 +46,67 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 }
 func oracle(t *testing.T) string {
 	t.Helper()
+	start := time.Now()
+	defer func() { t.Logf("build Go helper oracle wall %.6fs", time.Since(start).Seconds()) }()
 	root, _ := filepath.Abs("../../../../cohere")
 	side, _ := filepath.Abs("testdata/oracle.go")
 	catalog, _ := filepath.Abs("testdata/catalog.go")
 	descriptors, _ := filepath.Abs("testdata/descriptors.go")
 	virtual := filepath.Join(root, "adamic_helper_oracle.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
+	// Inputs: Name=helper-Go-oracle; Files=oracle.go, catalog.go,
+	// descriptors.go and pinned cohere/TypeScript dependencies; Flags=-overlay;
+	// Toolchain=Go. Product outputs are shared before parallel units.
+	directory := t.TempDir()
+	product := func(dir string) error {
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		command := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "go-oracle"), virtual, filepath.Join(root, "adamic_helper_descriptors.go"))
+		command.Dir = root
+		output, err := childguard.CombinedOutput(command, childguard.Options{})
+		if err != nil || len(output) != 0 {
+			return fmt.Errorf("Go oracle build: %v: %s", err, output)
+		}
+		return nil
+	}
+	if err := product(directory); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "go-oracle")
-	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual, filepath.Join(root, "adamic_helper_descriptors.go"))
+	binary := filepath.Join(directory, "go-oracle")
 	return binary
 }
 func build(t *testing.T, directory string) string {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
+	start := time.Now()
+	defer func() { t.Logf("build native helper %s wall %.6fs", directory, time.Since(start).Seconds()) }()
+	buildDirectory := t.TempDir()
+	binary := filepath.Join(buildDirectory, "helpers")
+	// Inputs: Name=helper-sanitized-native; Files=directory/main.ts and all
+	// transitive imports, compiler sources and native runtime; Flags=Sanitize;
+	// Toolchain=Go and clang. No package-local build cache.
+	product := func(dir string) error {
+		stage := time.Now()
+		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if err != nil {
+			return err
+		}
+		ir, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		source := native.C(ir)
+		if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(source), 0644); err != nil {
+			return err
+		}
+		t.Logf("build lowered helper program wall %.6fs", time.Since(stage).Seconds())
+		stage = time.Now()
+		err = native.Build(source, filepath.Join(dir, "helpers"), native.Options{Sanitize: true})
+		t.Logf("build sanitized helper binary wall %.6fs", time.Since(stage).Seconds())
+		return err
 	}
-	ir, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "helpers")
-	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+	if err := product(buildDirectory); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -111,41 +149,59 @@ func compare(t *testing.T, got, want []byte) {
 	}
 	t.Fatalf("output size: got %d Go %d", len(got), len(want))
 }
+
+const testHelperMutantsShards = 4
+
+// ADAMIC_TEST_SHARD=i/n selects units locally; unset runs all. The gate can
+// select shard-NNN directly. Every unit keeps the entire case corpus and original
+// sanitizer/leak checks. Build inputs are shared until internal/buildcache lands.
 func TestHelperMutants(t *testing.T) {
 	cases := fixture(t)
 	catalog, _ := filepath.Abs("testdata/catalog.json")
 	want := run(t, "", oracle(t), cases)
-	for _, m := range []struct{ file, old, new string }{{"options_json.ts", "if(char.charCodeAt(0) < 32)", "if(false)"}, {"option_schema.ts", "matched !== 1", "matched === 0"}, {"policy_message.ts", "text = text.split(`{{${name}}}`).join(value);", "text = text;"}, {"strict_options.ts", "if(field < 0) { return false; }", "if(field < 0) { continue; }"}} {
-		t.Run(m.file, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"main.ts", "options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == m.file {
-					if strings.Count(string(data), m.old) != 1 {
-						t.Fatal("mutant anchor changed")
-					}
-					data = []byte(strings.Replace(string(data), m.old, m.new, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), data, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			got := run(t, "", build(t, directory), cases, catalog)
-			if bytes.Equal(got, want) {
-				t.Fatal("compiled mutant survived")
-			}
-			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-			for i := 0; i < len(a) && i < len(b); i++ {
-				if a[i] != b[i] {
-					t.Logf("compiled semantic mutant caught at output line %d: got %q, Go %q", i+1, a[i], b[i])
-					break
-				}
-			}
-		})
+	mutants := []struct{ file, old, new string }{{"options_json.ts", "if(char.charCodeAt(0) < 32)", "if(false)"}, {"option_schema.ts", "matched !== 1", "matched === 0"}, {"policy_message.ts", "text = text.split(`{{${name}}}`).join(value);", "text = text;"}, {"strict_options.ts", "if(field < 0) { return false; }", "if(field < 0) { continue; }"}}
+	ids := make([]string, len(mutants))
+	binaries := make([]string, len(mutants))
+	for i, m := range mutants {
+		ids[i] = m.file
 	}
+	checkHelperMutantUnion(t, ids, cases)
+	start := time.Now()
+	if _, err := native.RuntimeLibrary("", native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("build sanitized helper runtime archive wall %.6fs", time.Since(start).Seconds())
+	for i, m := range mutants {
+		t.Logf("build inputs: mutant %d %s", i, m.file)
+		directory := t.TempDir()
+		for _, file := range []string{"main.ts", "options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"} {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if file == m.file {
+				if strings.Count(string(data), m.old) != 1 {
+					t.Fatal("mutant anchor changed")
+				}
+				data = []byte(strings.Replace(string(data), m.old, m.new, 1))
+			}
+			if err := os.WriteFile(filepath.Join(directory, file), data, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		binaries[i] = build(t, directory)
+	}
+	runHelperMutantShards(t, ids, func(t *testing.T, i int) {
+		got := run(t, "", binaries[i], cases, catalog)
+		requireHelperMutantKilled(t, got, want)
+		a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+		for i := 0; i < len(a) && i < len(b); i++ {
+			if a[i] != b[i] {
+				t.Logf("compiled semantic mutant caught at output line %d: got %q, Go %q", i+1, a[i], b[i])
+				break
+			}
+		}
+	})
 }
 
 func fixture(t *testing.T) string {
@@ -251,4 +307,142 @@ func TestKnownGapsAreExplicit(t *testing.T) {
 	want := []byte("NotYet: unsupported schema keyword pattern\nNotYet: custom or unsupported Go option type\nNotYet: Unicode fold for untagged option keys\nvalid\n")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog), want)
 	compare(t, run(t, "", build(t, "."), path, catalog), want)
+}
+
+func checkHelperMutantUnion(t *testing.T, ids []string, cases string) {
+	t.Helper()
+	if len(ids) != testHelperMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(ids), testHelperMutantsShards)
+	}
+	data, err := os.ReadFile(cases)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var corpus struct{ Cases []json.RawMessage }
+	if err := json.Unmarshal(data, &corpus); err != nil {
+		t.Fatal(err)
+	}
+	expected := map[string]bool{}
+	for _, id := range ids {
+		for row := range corpus.Cases {
+			key := fmt.Sprintf("%s/case-%06d", id, row)
+			if id == "" || expected[key] {
+				t.Fatalf("repeated or empty unsplit case %q", key)
+			}
+			expected[key] = true
+		}
+	}
+	actual := map[string]bool{}
+	count := 0
+	for shard := range ids {
+		for index, id := range ids {
+			if index != shard {
+				continue
+			}
+			for row := range corpus.Cases {
+				key := fmt.Sprintf("%s/case-%06d", id, row)
+				if actual[key] || !expected[key] {
+					t.Fatalf("repeated or unexpected shard case %q", key)
+				}
+				actual[key] = true
+				count++
+			}
+		}
+	}
+	if count != len(expected) || count != testHelperMutantsShards*len(corpus.Cases) {
+		t.Fatalf("union count %d differs from unsplit %d", count, len(expected))
+	}
+	for id := range expected {
+		if !actual[id] {
+			t.Fatalf("missing shard case %q", id)
+		}
+	}
+	t.Logf("union: %d mutants x %d cases = %d unique IDs across %d shards", len(ids), len(corpus.Cases), count, len(ids))
+}
+
+func runHelperMutantShards(t *testing.T, ids []string, check func(*testing.T, int)) {
+	t.Helper()
+	if len(ids) != testHelperMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(ids), testHelperMutantsShards)
+	}
+	selected, count := -1, 1
+	if value := os.Getenv("ADAMIC_TEST_SHARD"); value != "" {
+		parts := strings.Split(value, "/")
+		if len(parts) != 2 {
+			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		}
+		var err error
+		selected, err = strconv.Atoi(parts[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		count, err = strconv.Atoi(parts[1])
+		if err != nil || count < 1 || selected < 0 || selected >= count {
+			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		}
+	}
+	for i, id := range ids {
+		if selected >= 0 && i%count != selected {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			start := time.Now()
+			defer func() {
+				if elapsed := time.Since(start); elapsed > 30*time.Second {
+					t.Errorf("invalid test unit: %s exceeds 30s", elapsed)
+				}
+			}()
+			t.Logf("mutant %s; entire corpus", id)
+			check(t, i)
+		})
+	}
+}
+
+func requireHelperMutantKilled(t *testing.T, got, want []byte) {
+	t.Helper()
+	if bytes.Equal(got, want) {
+		t.Fatal("compiled mutant survived")
+	}
+}
+
+// Prepared oracle-equal output plants a surviving mutant in exactly one unit.
+// Each subprocess uses the gate's exact -run selector and the real fatal check.
+func TestHelperMutantShardCatchesSurvivor(t *testing.T) {
+	ids := []string{"options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"}
+	if os.Getenv("ADAMIC_HELPER_SURVIVOR_PROBE") == "1" {
+		runHelperMutantShards(t, ids, func(t *testing.T, i int) {
+			got := []byte("killed")
+			if i == 2 {
+				got = []byte("oracle")
+			}
+			requireHelperMutantKilled(t, got, []byte("oracle"))
+		})
+		return
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := range ids {
+		name := fmt.Sprintf("shard-%03d", i)
+		command := exec.Command(executable, "-test.run=^TestHelperMutantShardCatchesSurvivor$/^"+name+"$", "-test.v")
+		for _, value := range os.Environ() {
+			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_HELPER_SURVIVOR_PROBE=") {
+				command.Env = append(command.Env, value)
+			}
+		}
+		command.Env = append(command.Env, "ADAMIC_HELPER_SURVIVOR_PROBE=1")
+		output, err := command.CombinedOutput()
+		if (err != nil) != (i == 2) {
+			t.Fatalf("%s unexpected result: %v: %s", name, err, output)
+		}
+		if !bytes.Contains(output, []byte(name)) {
+			t.Fatalf("missing shard name: %s", output)
+		}
+		if err != nil && !bytes.Contains(output, []byte("compiled mutant survived")) {
+			t.Fatalf("wrong failure: %s", output)
+		}
+		t.Logf("%s: planted survivor caught=%v", name, err != nil)
+	}
 }
