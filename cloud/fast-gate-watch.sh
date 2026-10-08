@@ -6,8 +6,10 @@
 #
 # It polls origin every 15 s. Branch tips it sees on its first poll are the backlog and are left
 # alone; every tip that appears or moves after that is gated once (a sha already gated under another
-# branch isn't gated again), workers' codex/* branches first, then area/*, then devtools/*, at most
-# two at a time, one per slot on the box. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
+# branch isn't gated again), two at a time, one per slot on the box. The queue is by priority, decided
+# when a gate starts: what integration is landing first (area/*, and any branch named in the state
+# directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
+# codex/*, newest first within each, and only a branch's newest tip. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
 # like any other, with the branch and, when an ai.db reply names the branch, the worker's session.
 set -uo pipefail
 
@@ -34,8 +36,7 @@ while true; do
     # New or moved tips, queued by kind: workers' branches first.
     comm -13 "${state}/seen" "${state}/now.tmp" | while read -r branch sha; do
       grep -qx "${sha}" "${state}/gated" && continue
-      case ${branch} in codex/*) rank=1 ;; area/*) rank=2 ;; *) rank=3 ;; esac
-      echo "${rank} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "0 $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
       echo "$(date -u +%H:%M:%S) queued ${branch} ${sha}"
     done
     mv "${state}/now.tmp" "${state}/seen"
@@ -48,17 +49,16 @@ while true; do
     rm "${file}"
   done
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
-    # Lowest rank first, newest first within a rank. An area's gate is long (an area holds many
-    # changes), so at most one runs at a time and a worker's push always has a slot within reach.
-    areas=$(cat "${state}"/running/* 2>/dev/null | grep -c '^area/' || true)
-    if [ "${areas}" -ge 1 ]; then
-      next=$(sort -k1,1n -k2,2nr "${state}/queue" | grep -v '^2 ' | head -1)
-    else
-      next=$(sort -k1,1n -k2,2nr "${state}/queue" | head -1)
-    fi
+    touch "${state}/priority"
+    next=$(while read -r rank queued branch sha; do
+      if [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
+      elif [[ ${branch} == devtools/* ]]; then rank=2
+      else rank=3; fi
+      echo "${rank} ${queued} ${branch} ${sha}"
+    done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
     [ -n "${next}" ] || break
-    grep -vxF "${next}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
-    read -r _ _ branch sha <<< "${next}"
+    read -r _ queued branch sha <<< "${next}"
+    grep -v " ${queued} ${branch} ${sha}\$" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     grep -qx "${sha}" "${state}/gated" && continue
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
