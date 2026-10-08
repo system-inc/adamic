@@ -117,6 +117,8 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 		{"diagnostic", "Diagnostic", "skippedOn", "keyof CompilerOptions | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
 		{"bundle-pending", "IncrementalBundleEmitBuildInfo", "pendingEmit", "IncrementalBuildInfoBundlePendingEmit | undefined", []string{"number", "false", "undefined", "wrong", "wrong-string", "null", "missing"}},
 		{"resolved", "Resolved", "originalPath", "string | true | undefined", []string{"string", "true", "undefined", "wrong", "wrong-number", "null", "missing"}},
+		{"graph-circular", "FlowGraphNode", "circular", "\"circularity\" | boolean", []string{"true", "false", "circularity", "wrong", "wrong-string", "undefined", "null", "missing"}},
+		{"watch-version", "FilePresentOnHost | FilePresenceUnknownOnHost", "version", "string | false", []string{"string", "false", "wrong", "wrong-number", "undefined", "null", "missing"}},
 		{"package-peer", "PackageJsonInfoContents", "peerDependencies", "string | false | undefined", []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"}},
 		{"reusable-file", "ReusableDiagnosticRelatedInformation", "file", "string | false | undefined", []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"}},
 		{"reusable-skipped", "ReusableDiagnostic", "skippedOn", "keyof CompilerOptions | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
@@ -149,6 +151,14 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 				if group.name == "bundle-pending" && variant == "number" {
 					text = "1\n"
 				}
+				if group.name == "graph-circular" {
+					if variant == "circularity" {
+						text = "circularity\n"
+					}
+					if variant == "wrong" {
+						text = "42\n"
+					}
+				}
 				if diff := disagreement(run{stdout: []byte(text)}, onNode(t, file)); diff != "" {
 					t.Fatal("Node: " + diff)
 				}
@@ -161,6 +171,12 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					rootName = "StringLiteralType"
 					if variant == "number" {
 						rootName = "NumberLiteralType"
+					}
+				}
+				if group.name == "watch-version" {
+					rootName = "FilePresentOnHost"
+					if variant == "false" {
+						rootName = "FilePresenceUnknownOnHost"
 					}
 				}
 				root := false
@@ -183,11 +199,14 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					label = "value?." + group.field
 				}
 				want := run{stdout: []byte(text)}
-				if strings.HasPrefix(variant, "wrong") || variant == "null" || group.name == "literal-union" && (variant == "undefined" || variant == "missing") {
+				if strings.HasPrefix(variant, "wrong") || variant == "null" || (group.name == "literal-union" || group.name == "graph-circular" || group.name == "watch-version") && (variant == "undefined" || variant == "missing") {
 					found := map[string]string{"wrong-number": "number", "wrong-string": "string", "wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
+					if group.name == "graph-circular" && variant == "wrong" {
+						found = "number"
+					}
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
 				}
-				if (group.name == "literal-union" || group.name == "bundle-pending" || group.name == "package-peer" || group.name == "reusable-file") && variant == "missing" {
+				if (group.name == "literal-union" || group.name == "bundle-pending" || group.name == "package-peer" || group.name == "reusable-file" || group.name == "builder-signature" || group.name == "graph-circular" || group.name == "watch-version") && variant == "missing" {
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -204,13 +223,19 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 						t.Fatal(report)
 					}
 				}
-				if variant == "undefined" && group.name != "literal-union" {
+				if variant == "undefined" && group.name != "literal-union" && group.name != "graph-circular" && group.name != "watch-version" {
 					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links" || group.name == "bundle-pending", "undefined\n")
 				}
 				if group.name == "literal-union" && variant == "number" {
 					assertPrimitiveFirstMemberMutant(t, program, group.field, false, "42\n")
 				}
-				if variant == "wrong-number" || variant == "wrong" {
+				if group.name == "watch-version" && variant == "false" {
+					assertPrimitiveFirstMemberMutant(t, program, group.field, false, "false\n")
+				}
+				if group.name == "graph-circular" && variant == "circularity" {
+					assertPrimitiveBooleanFirstMember(t, program, group.field, "circularity\n")
+				}
+				if variant == "wrong-number" || variant == "wrong" || variant == "wrong-string" {
 					if count := skipPrimitiveMemberChecks(program, group.field); count != 1 {
 						t.Fatalf("want one primitive check mutation, got %d", count)
 					}
@@ -368,4 +393,50 @@ func skipPrimitiveMemberChecks(program *ir.Program, field string) int {
 		program.Functions[i].Body = rewriteUnionTargetStatements(program.Functions[i].Body, rewrite)
 	}
 	return count
+}
+
+func assertPrimitiveBooleanFirstMember(t *testing.T, program *ir.Program, field, expected string) {
+	t.Helper()
+	if count := dropLane4NamedHelperView(program, field, ir.Box{Value: ir.BooleanConstant{Value: true}}); count != 1 {
+		t.Fatalf("want one boolean-first mutation, got %d", count)
+	}
+	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 0 || string(got.stdout) != "true\n" {
+			t.Fatalf("boolean-first mutant must execute valid code: stdout %q stderr %q", got.stdout, got.stderr)
+		}
+		if disagreement(run{stdout: []byte(expected)}, got) == "" {
+			t.Fatal("boolean-first mutant escaped Node control")
+		}
+		t.Log("boolean-first member substitution caught by Node control")
+	}
+}
+
+func TestCheckedViewOriginalBuilderSignatureReceiverGap(t *testing.T) {
+	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
+	if directory == "" {
+		t.Skip("set original declarations")
+	}
+	verifyUnionTargetDeclarations(t, directory)
+	for _, variant := range []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"} {
+		t.Run(variant, func(t *testing.T) {
+			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/builder-signature-" + variant + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			bound := strings.Replace(string(input), "'original-tsc-builder'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(directory, "compiler/builder.d.ts"))), 1)
+			file := filepath.Join(t.TempDir(), "primitive.a")
+			if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
+				t.Fatal(err)
+			}
+			text := map[string]string{"string": "word-built", "false": "false", "undefined": "undefined", "wrong": "true", "wrong-number": "42", "null": "null", "missing": "undefined"}[variant] + "\n"
+			if diff := disagreement(run{stdout: []byte(text)}, onNode(t, file)); diff != "" {
+				t.Fatal("Node: " + diff)
+			}
+			_, err = lowered(t, file)
+			if err == nil || !strings.Contains(err.Error(), "field child with unsupported compound intersection payload contract") {
+				t.Fatalf("original intersection receiver guard: %v", err)
+			}
+			t.Log("original primitive selector component exists; intersection receiver remains lane 7")
+		})
+	}
 }

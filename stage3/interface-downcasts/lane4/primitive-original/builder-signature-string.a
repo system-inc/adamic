@@ -1,0 +1,8 @@
+import type { IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo } from 'original-tsc-builder';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo; }
+function helper(value: IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo): void { console.log(String(value.signature)); }
+const raw = {kind: 'box' as const, child: {signature: 'word'.concat('-built')}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

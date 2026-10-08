@@ -1,8 +1,8 @@
-Certified twelve original primitive pairs, 89 candidate reads, including full original private Resolved.
-Commit: this checkpoint on codex/views-mixed-unions-2, after 076295ed.
-Checks: original + nullish oracle PASS 299.401s; exact member mutants PASS 61.710s; JavaScript package PASS 1.563s; vet passed.
-Mutants: 30 backend kills of actual-value member-check removal and 24 of untested first-member substitution.
-Uncovered: remaining private receivers, arrays/tuples and dictionary element selectors; no exact tsc reachability claim.
+Certified fourteen original primitive pairs, 91 candidate reads, including private graph and watch receivers.
+Commit: this checkpoint on codex/views-mixed-unions-2, after a4df9433.
+Checks: private receiver oracle PASS 47.782s; extra exact-member mutants PASS 14.800s; vet passed; prior twelve-group suite PASS 299.401s.
+Mutants: cumulative 42 backend kills of actual-value member-check removal and 28 of untested first-member substitution.
+Uncovered: intersection receivers, primitive arrays and shared dictionary alternatives; candidate counts only.
 
 | Original pair | Candidate reads | Status |
 | --- | ---: | --- |
@@ -139,3 +139,36 @@ remaining, including lane 7's branded intersection 1 / 1. Nonbrand remaining is
 16 / 49. These are candidate counts; object-plus-primitive rows remain owned by
 lane 4b and dictionary rows overlap lane 6. Continue through the remaining
 private receivers; October 13, 17:00 MDT remains the estimate.
+
+Private receiver batch certifies FlowGraphNode.circular (one read) and the
+FilePresentOnHost | FilePresenceUnknownOnHost.version helper (one read).
+Complete private interfaces and dependencies are printed from pristine original
+source, hash-pinned, and field sets checked. Both backends match Node for every
+member, including circularity versus boolean and string versus false. Named
+wrong-kind, wrong-literal, missing and null refusals are pinned. Actual-value
+member-check removal and first-member mutants fail in both backends.
+
+Builder signature has two candidate reads but reaches an unsupported compound
+intersection receiver at child. Seven Node controls and named compiler refusals
+are pinned; no certification credit, lane 7 owns that receiver.
+
+Stock checker inspection corrects two tuple positions / four candidate reads:
+[number, string][0] is number and [1] is string. The old whole-index union
+classification was a false positive. See tuple-candidate-corrections.json and
+measure-tuple-candidates.cjs; this reclassification earns no certification credit.
+Lane 1 should reconcile this correction into its census.
+
+| Candidate scope | Pairs | Reads |
+| --- | ---: | ---: |
+| Raw original column certified | 48 | 642 |
+| Raw original column remaining | 15 | 48 |
+| Corrected column remaining | 13 | 44 |
+| Primitive array indexes, owned | 4 | 9 |
+| Rich dictionaries, shared selector component | 3 | 14 |
+| Object alternatives, lane 4b | 4 | 18 |
+| Intersection receivers, lane 7 | 2 | 3 |
+
+The dictionary handoff subset CompilerOptions and BuildOptions is two pairs /
+eleven reads within the three / fourteen above. Exact whole-tsc reachability
+still waits for a checker-clean program. __String is delivered; October 13,
+17:00 MDT remains the mixed-primitive estimate, including shared components.

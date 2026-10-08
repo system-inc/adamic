@@ -1713,3 +1713,12 @@ runtime kind exists but a finite literal member rejects it. Resolved.originalPat
 false versus its true-only member exposed the mismatch. No check is removed.
 Complete original Resolved is printed from its private source interface and
 hash-pinned separately; all five fields, including PackageId, are retained.
+
+### Lane 4 private primitive receiver certification
+
+Owned primitive-original/prepare.cjs now prints complete original FlowGraphNode,
+FlowGraphEdge and watch presence interfaces, retaining dependencies and hashing
+the generated declarations. No new production hook in this batch. Builder
+signature receiver intersection remains lane 7, with a named refusal pin.
+Owned measure-tuple-candidates.cjs verifies two scalar tuple census corrections
+for lane 1: two pairs / four candidate reads, no certification credit.

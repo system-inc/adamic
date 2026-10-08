@@ -159,12 +159,41 @@
       "messageText",
       "start"
     ],
+    "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo": [
+      "affectsGlobalScope",
+      "impliedFormat",
+      "signature",
+      "version"
+    ],
     "Resolved": [
       "extension",
       "originalPath",
       "packageId",
       "path",
       "resolvedUsingTsExtension"
+    ],
+    "FlowGraphNode": [
+      "circular",
+      "edges",
+      "endLane",
+      "flowNode",
+      "id",
+      "lane",
+      "level",
+      "text"
+    ],
+    "FlowGraphEdge": [
+      "source",
+      "target"
+    ],
+    "FilePresentOnHost": [
+      "fileWatcher",
+      "sourceFile",
+      "version"
+    ],
+    "FilePresenceUnknownOnHost": [
+      "fileWatcher",
+      "version"
     ],
     "StringLiteralType | NumberLiteralType": [
       "aliasSymbol",
@@ -181,6 +210,10 @@
       "symbol",
       "value",
       "widened"
+    ],
+    "FilePresentOnHost | FilePresenceUnknownOnHost": [
+      "fileWatcher",
+      "version"
     ]
   },
   "pairs": [
@@ -425,6 +458,31 @@
       "state": "certified original declarations and read syntax"
     },
     {
+      "receiver_type_id": 97892,
+      "type": "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+      "field": "signature",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2232,
+        "column": 18
+      },
+      "original_fields": [
+        "affectsGlobalScope",
+        "impliedFormat",
+        "signature",
+        "version"
+      ],
+      "state": "blocked at compound intersection receiver; lane 7"
+    },
+    {
       "receiver_type_id": 37515,
       "type": "PackageJsonInfoContents",
       "field": "peerDependencies",
@@ -534,6 +592,56 @@
       "state": "certified original declarations and read syntax"
     },
     {
+      "receiver_type_id": 100911,
+      "type": "FilePresentOnHost | FilePresenceUnknownOnHost",
+      "field": "version",
+      "declared_types": [
+        "string | false"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 816,
+        "column": 13
+      },
+      "original_fields": [
+        "fileWatcher",
+        "version"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 7186,
+      "type": "FlowGraphNode",
+      "field": "circular",
+      "declared_types": [
+        "boolean | \"circularity\""
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 949,
+        "column": 55
+      },
+      "original_fields": [
+        "circular",
+        "edges",
+        "endLane",
+        "flowNode",
+        "id",
+        "lane",
+        "level",
+        "text"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
       "receiver_type_id": 97180,
       "type": "ReusableDiagnostic",
       "field": "skippedOn",
@@ -594,10 +702,12 @@
       "state": "certified original declarations and read syntax"
     }
   ],
-  "private_sha256": "bf8bece5e314150719489996e4a20f18aca874ec42a526f694fa5b2ffa690393",
+  "private_sha256": "5cdab3af2839cda74bd6aeba6d2116fc0c8e0af1df9e661a184a75beaefa51e6",
   "private_source_sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
-  "certified_pairs": 12,
-  "certified_reads": 89,
-  "remaining_nonbrand_pairs": 16,
-  "remaining_nonbrand_reads": 49
+  "certified_pairs": 14,
+  "certified_reads": 91,
+  "remaining_nonbrand_pairs": 14,
+  "remaining_nonbrand_reads": 47,
+  "corrected_remaining_nonbrand_pairs": 12,
+  "corrected_remaining_nonbrand_reads": 43
 }
