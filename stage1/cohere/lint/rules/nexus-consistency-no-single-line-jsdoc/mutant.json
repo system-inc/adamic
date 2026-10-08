@@ -1,5 +1,6 @@
 {
-  "name": "JSDoc replacement text corrupted",
-  "from": "`// ${description}`",
-  "to": "`// MUTANT ${description}`"
+  "name": "empty JSX comment anchor dropped",
+  "file": "comment_anchors.a",
+  "from": "this.anchors[node.pos + 1] = true;",
+  "to": "this.anchors[node.pos + 1] = false;"
 }
