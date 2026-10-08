@@ -17,6 +17,7 @@ the run ends.
 """
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -186,7 +187,9 @@ class Gate:
                 for name in ("package.json", "package-lock.json"):
                     with open(os.path.join(self.arguments.tree, directory, name), "rb") as source, open(os.path.join(staging, name), "wb") as target:
                         target.write(source.read())
-                process = subprocess.run(["npm", "ci", "--ignore-scripts", "--no-audit", "--no-fund"], cwd=staging, capture_output=True, text=True)
+                process = subprocess.run(["node", self.npmCli(), "ci", "--ignore-scripts", "--no-audit", "--no-fund", "--install-strategy=hoisted",
+                                          "--registry=https://registry.npmjs.org", "--cache", os.path.join(staging, ".npm-cache")],
+                                         cwd=staging, capture_output=True, text=True, env=dict(os.environ, npm_config_update_notifier="false"))
                 if process.returncode != 0:
                     self.fail("setup", "npm ci for %s failed:\n%s" % (directory, (process.stdout + process.stderr)[-4000:]))
                     return False
@@ -205,6 +208,29 @@ class Gate:
                 os.symlink(os.path.join(cache, "node_modules"), link)
             self.result.setdefault("npm", {})[directory] = {"lockfile_sha256": key, "seconds": round(time.monotonic() - started, 1)}
         return True
+
+    def npmCli(self):
+        """The box has Node but no npm, so the npm that setup pins (cloud/markdown-width/npm-bootstrap.json,
+        from the tools checkout) is fetched once, its sha512 integrity checked, and kept by that hash."""
+        with open(os.path.join(self.arguments.tools, "cloud/markdown-width/npm-bootstrap.json")) as handle:
+            pin = json.load(handle)
+        home = os.path.join(os.path.expanduser("~/fast-gate/npm"), "npm-" + hashlib.sha256(pin["integrity"].encode()).hexdigest()[:16])
+        cli = os.path.join(home, "package/bin/npm-cli.js")
+        if not os.path.exists(cli):
+            staging = home + ".staging-%d" % os.getpid()
+            os.makedirs(staging)
+            archive = os.path.join(staging, "npm.tgz")
+            subprocess.run(["curl", "-fsSL", pin["url"], "-o", archive], check=True)
+            with open(archive, "rb") as handle:
+                algorithm, expected = pin["integrity"].split("-", 1)
+                if algorithm != "sha512" or base64.b64encode(hashlib.sha512(handle.read()).digest()).decode() != expected:
+                    raise ValueError("npm bootstrap integrity mismatch for %s" % pin["url"])
+            subprocess.run(["tar", "--no-same-owner", "-xzf", archive, "-C", staging], check=True)
+            try:
+                os.rename(staging, home)
+            except OSError:
+                pass  # another gate published the same pinned npm first
+        return cli
 
     def guarded(self, stage, target, *arguments):
         """A thread whose any exception (a process that can't start for want of file descriptors, a
