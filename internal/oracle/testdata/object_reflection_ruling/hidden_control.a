@@ -1,0 +1,4 @@
+function count(value: { x: number }): number { return Object.entries(value).length; }
+const actual = {x: 1};
+console.log('before');
+console.log(String(count(actual)));

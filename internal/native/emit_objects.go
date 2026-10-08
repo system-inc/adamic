@@ -224,6 +224,10 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	}
 	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	// Reflection must distinguish equally sized boolean and number slots.
+	for _, fieldType := range fieldTypes {
+		key += fmt.Sprintf("|%d", fieldType)
+	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -258,6 +262,19 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
+	}
+	if len(fieldTypes) > 0 {
+		kinds := []string{}
+		for _, kind := range fieldTypes {
+			kinds = append(kinds, fmt.Sprint(int(kind)))
+		}
+		e.declarations = append(e.declarations, fmt.Sprintf("static const int %s_reflection_types[] = {%s};", name, strings.Join(kinds, ", ")))
+		lengths := []string{}
+		for _, fieldName := range fieldNames {
+			lengths = append(lengths, fmt.Sprint(len(fieldName)))
+		}
+		e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s_reflection_lengths[] = {%s};", name, strings.Join(lengths, ", ")),
+			fmt.Sprintf("static const adamic_reflection_layout %s_reflection_layout = {%s_reflection_types, %s_reflection_lengths};", name, name, name))
 	}
 	return name
 }

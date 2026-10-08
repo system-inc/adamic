@@ -1,0 +1,4 @@
+const target = {x: 1};
+const source: Record<string, number> = {x: 2};
+Object.assign(target, source);
+console.log(String(target.x));

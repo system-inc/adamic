@@ -1,0 +1,2 @@
+const entries = Object.entries({x: 'value'});
+for (const pair of entries) { console.log(String(Object.entries(pair).length)); }

@@ -51,6 +51,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString(objectReflectionRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -699,6 +700,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "String.fromCharCode(" + codes + ")"
 	case ir.ObjectCall:
+		if expression.Reflection != nil {
+			return e.checkedObjectCall(expression)
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {

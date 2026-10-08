@@ -13,6 +13,9 @@ type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
+	// ReflectionChecks counts inserted Object.entries and Object.assign checks.
+	ReflectionChecks int
+
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 

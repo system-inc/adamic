@@ -1,0 +1,5 @@
+function show(value: { first: number }): void {
+ for (const entry of Object.entries(value)) { console.log(entry[0] + ':' + String(entry[1])); }
+}
+const actual = {first: 1, '10': 10, '2': 2, '01': 3, '4294967294': 4, '4294967295': 5, '-0': 6, '0': 0};
+show(actual);

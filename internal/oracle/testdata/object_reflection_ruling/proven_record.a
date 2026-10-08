@@ -1,0 +1,2 @@
+const values: Record<string, number> = {first: 1, '10': 10, '2': 2};
+for (const entry of Object.entries(values)) { console.log(entry[0] + ':' + String(entry[1])); }

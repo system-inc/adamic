@@ -69,8 +69,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.reflectionIndexSignatureAllowed(node)) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		if err := l.reflectionIndexAccess(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindTypePredicate {

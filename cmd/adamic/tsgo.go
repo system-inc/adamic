@@ -56,6 +56,9 @@ func build(path, output string, arguments []string) int {
 	if program == nil {
 		return code
 	}
+	if program.ReflectionChecks > 0 {
+		fmt.Fprintf(os.Stderr, "adamic: checks: object reflection %d\n", program.ReflectionChecks)
+	}
 	var err error
 	if native.UsesTSGo(program) {
 		if archive == "" {

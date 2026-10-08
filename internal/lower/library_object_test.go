@@ -19,9 +19,8 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 		{`Object.assign({value:1}, {value:'wrong'});`, "intersection result"},
 		{`Object.assign({value:1}, {value:2}, {value:3}, {value:4}, {value:5});`, "result is any"},
 		{`Object.assign({value:1});`, "result is any"},
-		{`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.assign({value:1},view);`, "widened source"},
+		{`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.assign({value:1},view);`, "unproven shape"},
 		{`Object.values({number:1, text:'wrong'});`, "homogeneous"},
-		{`Object.entries({number:1, text:'wrong'});`, "homogeneous"},
 		{`Object.hasOwn({value:1}, 'notDeclared');`, "declared public field"},
 	} {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {
@@ -49,6 +48,13 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, source)
+			if strings.Contains(source, "Object.entries") {
+				var refused *Refused
+				if !errors.As(err, &refused) {
+					t.Fatalf("want ruled .a refusal, got %v", err)
+				}
+				return
+			}
 			var notYet *NotYet
 			if !errors.As(err, &notYet) {
 				t.Fatalf("got %v, want NotYet", err)
