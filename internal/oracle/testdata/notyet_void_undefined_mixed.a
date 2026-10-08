@@ -1,0 +1,9 @@
+interface Trace {
+    readonly pop: () => number | void;
+}
+function run(trace: Trace | undefined): void {
+    trace?.pop();
+}
+const trace: Trace = { pop: (): number => 42 };
+run(trace);
+run(undefined);

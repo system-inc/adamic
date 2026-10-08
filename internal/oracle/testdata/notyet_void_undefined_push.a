@@ -16,3 +16,13 @@ const trace: Trace = {
 };
 run(trace);
 run(undefined);
+
+interface Counter {
+    readonly read: () => number;
+}
+function observe(counter: Counter | undefined): void {
+    console.log(typeof counter?.read());
+}
+const counter: Counter = { read: (): number => 42 };
+observe(counter);
+observe(undefined);

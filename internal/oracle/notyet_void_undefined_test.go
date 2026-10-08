@@ -9,6 +9,10 @@ import (
 )
 
 func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/notyet_void_undefined_mixed.a", false, false})
 	for _, path := range []string{
 		"internal/oracle/testdata/notyet_void_undefined_push.a",
 		"internal/oracle/testdata/notyet_void_undefined_pop.a",

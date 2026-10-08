@@ -14,3 +14,9 @@ console.log(lookup(resolver, 1));
 console.log(lookup(resolver, { position: 2 }));
 console.log(lookup(resolver, undefined));
 console.log(lookup(undefined, 4));
+
+function direct(resolve: Resolver | undefined): string {
+    return resolve?.resolve(4, `:${5}`) ?? 'no resolver';
+}
+console.log(direct(resolver));
+console.log(direct(undefined));

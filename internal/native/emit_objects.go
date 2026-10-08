@@ -262,19 +262,10 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	return name
 }
 
-// dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (a union) can't be
-// passed to a function value either (lower's callClosure says not yet), so no call through an
-// interface reaches it with one, and it's left out of its class's table.
+// Union arguments are counted boxes passed in adamic_value.reference. Union
+// results remain unsupported by callClosure and stay out of the method table.
 func (e *emitter) dispatchable(function int) bool {
-	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
-	for index, parameter := range method.Parameters {
-		if index > 0 && slotless(e.program.Locals[parameter].Type) {
-			return false
-		}
-	}
-	return !slotless(method.Returns)
+	return e.program.Functions[function].Returns != ir.Union
 }
 
 // methodThunk declares, once, the adamic_method that calls a class's method: this from the object,

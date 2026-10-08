@@ -1138,7 +1138,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does
 		// not retain a source signature to prove its required arguments or ABI.
@@ -1169,19 +1169,21 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
 		}
 	}
-	// Each argument is made what the function value takes: a number or undefined where it takes
-	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	// Fit arguments to their proven slots. A Union is a counted box whose pointer
+	// fits adamic_value.reference, provided the parameter also takes a Union.
+	boxedParameters := make([]bool, len(arguments))
+	if len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
 			if index < len(arguments) {
 				if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
 					arguments[index] = fit(arguments[index], takes)
+					boxedParameters[index] = takes == ir.Union
 				}
 			}
 		}
 	}
-	for _, argument := range arguments {
-		if censusCallableSlotless(argument.Type()) {
+	for index, argument := range arguments {
+		if censusCallableSlotless(argument.Type()) && !boxedParameters[index] {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
