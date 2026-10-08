@@ -1,0 +1,18 @@
+interface NodeArray<T> extends ReadonlyArray<T> {
+    readonly pos: number;
+    readonly end: number;
+    readonly hasTrailingComma: boolean;
+    transformFlags: number;
+}
+interface Statement { readonly kind: number; }
+const find = (statements: NodeArray<Statement>): number => {
+    for (const statement of statements) {
+        if (statement.kind === 2) {
+            return statement.kind;
+        }
+    }
+    return 0;
+};
+console.log(`${find(Object.assign([{ kind: 1 }, { kind: 2 }], {
+    pos: 7, end: 19, hasTrailingComma: false, transformFlags: 0,
+}))}`);

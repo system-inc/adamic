@@ -1,0 +1,119 @@
+where,expression,type,symbol
+src/compiler/core.ts:333:21,iter,Iterable<T>,Iterable
+src/compiler/core.ts:438:21,iter,Iterable<T>,Iterable
+src/compiler/core.ts:510:21,iter,Iterable<T>,Iterable
+src/compiler/core.ts:2173:29,candidates,Iterable<T>,Iterable
+src/compiler/utilities.ts:3595:33,parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/utilities.ts:5244:30,clauses,NodeArray<HeritageClause>,NodeArray
+src/compiler/utilities.ts:10127:29,sourceFile.statements,NodeArray<Statement>,NodeArray
+src/compiler/utilities.ts:10736:31,child.jsDoc!,JSDocArray,JSDocArray
+src/compiler/utilities.ts:11428:28,expr.templateSpans,NodeArray<TemplateSpan>,NodeArray
+src/compiler/utilities.ts:11457:26,members,NodeArray<ClassElement>,NodeArray
+src/compiler/factory/nodeFactory.ts:7311:25,children,MutableNodeArray<Node>,MutableNodeArray
+src/compiler/factory/utilities.ts:1710:29,node.elements,NodeArray<Expression>,NodeArray
+src/compiler/parser.ts:10114:44,node.jsDoc!,JSDocArray,JSDocArray
+src/compiler/parser.ts:10124:32,array,NodeArray<Node>,NodeArray
+src/compiler/parser.ts:10224:44,node.jsDoc!,JSDocArray,JSDocArray
+src/compiler/parser.ts:10267:48,child.jsDoc!,JSDocArray,JSDocArray
+src/compiler/parser.ts:10297:36,array,NodeArray<Node>,NodeArray
+src/compiler/binder.ts:432:37,statements,NodeArray<Statement>,NodeArray
+src/compiler/binder.ts:1296:36,expr.arguments,NodeArray<Expression>,NodeArray
+src/compiler/binder.ts:1823:29,(node as ArrayLiteralExpression).elements,NodeArray<Expression>,NodeArray
+src/compiler/binder.ts:1833:29,(node as ObjectLiteralExpression).properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/binder.ts:2061:33,name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/binder.ts:2809:33,node.jsDoc!,JSDocArray,JSDocArray
+src/compiler/binder.ts:2814:33,node.jsDoc!,JSDocArray,JSDocArray
+src/compiler/binder.ts:2824:37,statements,NodeArray<Statement>,NodeArray
+src/compiler/moduleSpecifiers.ts:800:25,runtimeDependencyFields,"readonly [""dependencies"", ""peerDependencies"", ""optionalDependencies""]",
+src/compiler/checker.ts:11771:39,pattern.elements,NodeArray<BindingElement>,NodeArray
+src/compiler/checker.ts:13449:40,baseTypeNodes,NodeArray<ExpressionWithTypeArguments>,NodeArray
+src/compiler/checker.ts:13551:46,(declaration as EnumDeclaration).members,NodeArray<EnumMember>,NodeArray
+src/compiler/checker.ts:15779:30,symbols,Iterable<Symbol>,Iterable
+src/compiler/checker.ts:21550:29,iterator,ElaborationIterator,IterableIterator
+src/compiler/checker.ts:21679:28,node.properties,NodeArray<JsxAttributeLike>,NodeArray
+src/compiler/checker.ts:21861:28,node.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/checker.ts:28080:36,expression.arguments,NodeArray<Expression>,NodeArray
+src/compiler/checker.ts:28466:34,switchStatement.caseBlock.clauses,NodeArray<CaseOrDefaultClause>,NodeArray
+src/compiler/checker.ts:28480:30,switchStatement.caseBlock.clauses,NodeArray<CaseOrDefaultClause>,NodeArray
+src/compiler/checker.ts:29248:47,node.arguments,NodeArray<Expression>,NodeArray
+src/compiler/checker.ts:33555:28,node.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/checker.ts:33562:34,node.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/checker.ts:33840:41,attributes.properties,NodeArray<JsxAttributeLike>,NodeArray
+src/compiler/checker.ts:33962:29,node.children,NodeArray<JsxChild>,NodeArray
+src/compiler/checker.ts:37008:35,node.arguments,NodeArray<Expression>,NodeArray
+src/compiler/checker.ts:38742:31,pattern.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/checker.ts:41285:28,node.templateSpans,NodeArray<TemplateSpan>,NodeArray
+src/compiler/checker.ts:41390:25,pattern.elements,NodeArray<BindingElement>,NodeArray
+src/compiler/checker.ts:42104:31,pattern.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/checker.ts:42242:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:42327:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:42353:30,node.members,NodeArray<TypeElement>,NodeArray
+src/compiler/checker.ts:42881:25,node.elements,NodeArray<TypeNode | NamedTupleMember>,NodeArray
+src/compiler/checker.ts:43023:28,node.templateSpans,NodeArray<TemplateLiteralTypeSpan>,NodeArray
+src/compiler/checker.ts:44206:32,node.modifiers,NodeArray<ModifierLike>,NodeArray
+src/compiler/checker.ts:44238:26,node.typeParameters,NodeArray<TypeParameterDeclaration>,NodeArray
+src/compiler/checker.ts:44497:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:44942:34,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:47233:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:47414:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:47764:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/checker.ts:47891:34,node.members,NodeArray<EnumMember>,NodeArray
+src/compiler/checker.ts:48275:36,(node as VariableStatement).declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/checker.ts:51814:32,(node as HasModifiers).modifiers!,NodeArray<ModifierLike> | NodeArray<Modifier>,
+src/compiler/checker.ts:52540:42,node.heritageClauses,NodeArray<HeritageClause>,NodeArray
+src/compiler/checker.ts:52600:28,node.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/checker.ts:52717:28,node.attributes.properties,NodeArray<JsxAttributeLike>,NodeArray
+src/compiler/checker.ts:53209:35,elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/checker.ts:53226:35,elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/checker.ts:53486:28,file.statements,NodeArray<Statement>,NodeArray
+src/compiler/transformers/utilities.ts:194:24,sourceFile.statements,NodeArray<Statement>,NodeArray
+src/compiler/transformers/utilities.ts:357:31,decl.name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/taggedTemplate.ts:68:36,template.templateSpans,NodeArray<TemplateSpan>,NodeArray
+src/compiler/transformers/classFields.ts:1724:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/classFields.ts:2103:34,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/classFields.ts:2122:38,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/legacyDecorators.ts:174:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/esDecorators.ts:604:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/es2017.ts:578:35,name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/es2017.ts:616:35,name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/es2017.ts:640:35,name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/es2017.ts:708:33,node.parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/transformers/es2018.ts:976:33,node.parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/transformers/es2018.ts:1148:33,node.parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/transformers/es2018.ts:1244:33,node.parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/transformers/esnext.ts:587:32,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/esnext.ts:625:35,node.name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/jsx.ts:271:28,node.attributes.properties,NodeArray<JsxAttributeLike>,NodeArray
+src/compiler/transformers/es2015.ts:1557:33,original.statements,NodeArray<Statement>,NodeArray
+src/compiler/transformers/es2015.ts:1691:33,original.statements,NodeArray<Statement>,NodeArray
+src/compiler/transformers/es2015.ts:1909:33,node.parameters,NodeArray<ParameterDeclaration>,NodeArray
+src/compiler/transformers/es2015.ts:2255:30,node.members,NodeArray<ClassElement>,NodeArray
+src/compiler/transformers/es2015.ts:3415:39,node.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/es2015.ts:4052:35,name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/es2015.ts:4806:28,node.templateSpans,NodeArray<TemplateSpan>,NodeArray
+src/compiler/transformers/generators.ts:737:36,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/generators.ts:918:28,node.elements,NodeArray<Expression>,NodeArray
+src/compiler/transformers/module/module.ts:846:32,node.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/transformers/module/module.ts:873:32,node.elements,NodeArray<Expression>,NodeArray
+src/compiler/transformers/module/module.ts:1827:36,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/module/module.ts:1983:49,namedBindings.elements,NodeArray<ImportSpecifier>,NodeArray
+src/compiler/transformers/module/module.ts:2038:28,node.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/module/module.ts:2060:35,decl.name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/module/system.ts:647:49,entry.exportClause.elements,NodeArray<ExportSpecifier>,NodeArray
+src/compiler/transformers/module/system.ts:880:36,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/module/system.ts:899:36,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/module/system.ts:924:35,node.name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/module/system.ts:1035:49,namedBindings.elements,NodeArray<ImportSpecifier>,NodeArray
+src/compiler/transformers/module/system.ts:1079:28,node.declarationList.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/module/system.ts:1104:35,decl.name.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/transformers/module/system.ts:1373:36,node.declarations,NodeArray<VariableDeclaration>,NodeArray
+src/compiler/transformers/declarations.ts:1625:48,pattern.elements,NodeArray<BindingElement> | NodeArray<ArrayBindingElement>,
+src/compiler/emitter.ts:2062:38,helpers,SortedReadonlyArray<EmitHelper>,SortedReadonlyArray
+src/compiler/emitter.ts:3505:33,body.statements,NodeArray<Statement>,NodeArray
+src/compiler/program.ts:3202:40,modifiers,NodeArray<ModifierLike>,NodeArray
+src/compiler/program.ts:3348:28,file.statements,NodeArray<Statement>,NodeArray
+src/compiler/builderState.ts:522:33,sourceFile.statements,NodeArray<Statement>,NodeArray
+src/compiler/expressionToTypeNode.ts:987:31,arrayLiteral.elements,NodeArray<Expression>,NodeArray
+src/compiler/expressionToTypeNode.ts:1006:31,arrayLiteral.elements,NodeArray<Expression>,NodeArray
+src/compiler/expressionToTypeNode.ts:1026:28,objectLiteral.properties,NodeArray<ObjectLiteralElementLike>,NodeArray
+src/compiler/expressionToTypeNode.ts:1066:28,objectLiteral.properties,NodeArray<ObjectLiteralElementLike>,NodeArray

@@ -1,0 +1,21 @@
+interface NodeArray<T> extends ReadonlyArray<T> {
+    readonly pos: number;
+    readonly end: number;
+    readonly hasTrailingComma: boolean;
+    transformFlags: number;
+}
+interface Expression { readonly narrowable: boolean; }
+interface Call { readonly arguments: NodeArray<Expression>; }
+const hasNarrowableArgument = (expr: Call): boolean => {
+    if (expr.arguments) {
+        for (const argument of expr.arguments) {
+            if (argument.narrowable) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+console.log(`${hasNarrowableArgument({ arguments: Object.assign([{ narrowable: false }, { narrowable: true }], {
+    pos: 3, end: 11, hasTrailingComma: false, transformFlags: 0,
+}) })}`);
