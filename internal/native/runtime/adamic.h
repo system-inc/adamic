@@ -572,6 +572,8 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 // to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
+#include "string_wellformed.h"
+
 static inline double adamic_string_length(const adamic_string *string) {
 	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
 }

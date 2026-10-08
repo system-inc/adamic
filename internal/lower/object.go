@@ -1355,6 +1355,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
 	}
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
+		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}

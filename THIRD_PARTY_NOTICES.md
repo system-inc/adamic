@@ -49,6 +49,11 @@ IN THE SOFTWARE.
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
   - Object sealing and extensibility (`runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - positioned String affixes (`internal/lower/library_string.go`, after
+    src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
+  - String well-formed Unicode (`runtime/string_wellformed.c`, after
+    src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
+    adapted to canonical WTF-8 storage);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
