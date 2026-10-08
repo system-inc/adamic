@@ -19,6 +19,8 @@ func ScalarWriteContracts(program *Program, written ViewContractID) []ViewContra
 			return false
 		}
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
+		source = optionalNominalObjectSlot(program, source)
+		target = optionalNominalObjectSlot(program, target)
 		if source.Kind == ViewUndefined {
 			return target.Kind == ViewUndefined || target.Undefined
 		}
@@ -89,4 +91,18 @@ func ScalarWriteContracts(program *Program, written ViewContractID) []ViewContra
 		}
 	}
 	return accepted
+}
+
+// Class/undefined reference slots have one physical representation. Preserve
+// undefined admission while comparing the complete private class descriptors.
+func optionalNominalObjectSlot(program *Program, contract ViewContract) ViewContract {
+	if contract.Kind != ViewNullable || contract.Of != Object || contract.Null || contract.Element == 0 {
+		return contract
+	}
+	present := program.ViewContracts[contract.Element-1]
+	if present.Kind != ViewObject || present.NominalClass == 0 || present.Unsupported != "" {
+		return contract
+	}
+	present.Undefined = present.Undefined || contract.Undefined
+	return present
 }

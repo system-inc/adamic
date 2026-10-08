@@ -11,6 +11,14 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('optional-mutable-late-helper', 'internal/lower/class.go', 'write.WriteContract = writeContract', 'write.WriteContract = 0', '^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$'),
+ ('optional-mutable-slot', 'internal/ir/view_writes.go', 'present.Undefined = present.Undefined || contract.Undefined', 'present.Undefined = false', '^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$'),
+ ('optional-mutable-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalMutableNominalMutants$/^producer$'),
+ ('optional-mutable-js-producer', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewOptionalMutableNominalMutants$/^producer$'),
+ ('optional-mutable-native-write', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalMutableNominalMutants$/^write$'),
+ ('optional-mutable-js-write', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewOptionalMutableNominalMutants$/^write$'),
+ ('optional-mutable-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalMutableNominalMutants$/^read$'),
+ ('optional-mutable-js-read', 'internal/javascript/view_nominal_reads.go', '"((value) => (" + strings.Join', '"((value) => (true || " + strings.Join', '^TestCheckedViewOptionalMutableNominalMutants$/^read$'),
  ('nullable-elements-storage', 'internal/ir/view_maps_nominal.go', 'return from.NominalClass != 0 && to.NominalClass != 0', 'return false && from.NominalClass != 0 && to.NominalClass != 0', '^TestCheckedViewMapCertificates$/entry-nominal-elements-.*-widen$'),
  ('nullable-elements-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalArrayMutants$/.*-read$'),
  ('nullable-elements-js-read', 'internal/javascript/view_nominal_reads.go', '"((value) => (" + strings.Join', '"((value) => (true || " + strings.Join', '^TestCheckedViewNullableNominalArrayMutants$/.*-read$'),

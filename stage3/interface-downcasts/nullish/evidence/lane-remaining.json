@@ -73,6 +73,11 @@
       "family": "nullable class elements in reference arrays",
       "scope": "finite data classes unioned with null, undefined, or both; indexed/callback/loop reads, source-alias push/index stores, readonly Map array widening with original nonnullable constructor writes preserved",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "optional mutable class reference fields",
+      "scope": "finite direct class/undefined optional members, absent reads and present slot writes, helper and generic writes, retained helper certificates before later view activation, original narrower slots refuse widened undefined writes; adding absent slots through escaped aliases remains outside this scope",
+      "production_reaching_view_counts": "unmeasured"
     }
   ]
 }

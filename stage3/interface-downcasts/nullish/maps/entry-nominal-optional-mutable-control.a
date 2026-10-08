@@ -1,0 +1,9 @@
+class Named{readonly count:number=7;}
+interface Entry{child?:Named|undefined}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Entry>}
+const fake={count:7};const item={child:new Named() as Named|undefined};const empty:Entry={};const source=new Map<string,Entry>([['key',item],['empty',empty]]);const raw={kind:'box',value:source};const base:Base=raw;
+function assign(entry:Entry,value:Named|undefined):void{entry.child=value;}
+function assignGeneric<T extends Named|undefined>(entry:Entry,value:T):void{entry.child=value;}
+function read(node:Target):void{node.value.forEach(entry=>{const child=entry.child;console.log(child===undefined?'missing':String(child.count));});}
+read(base as Target);assign(item,undefined);read(base as Target);console.log(Object.keys(item).join(','));console.log(String(Object.hasOwn(item,'child')));assignGeneric(item,undefined);read(base as Target);assignGeneric(item,new Named());read(base as Target);

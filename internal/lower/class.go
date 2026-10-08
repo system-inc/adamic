@@ -462,6 +462,13 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	// Helpers can lower before a later view activates this field name. Keep the
+	// complete class source certificate so backend write checks cannot fall back
+	// to a physical object tag when that helper receives a viewed allocation.
+	if writeContract != 0 && rawValue.Type() == ir.Object && isClassInstance(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(valueNode)))) {
+		write.WriteContract = writeContract
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
 	if l.result.OptionalViewFields[write.Name] {
 		if writeContract == 0 {
 			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")

@@ -287,3 +287,78 @@ func TestCheckedViewNullableNominalArrayMutants(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewOptionalMutableNominalMutants(t *testing.T) {
+	t.Run("narrow-slot", func(t *testing.T) {
+		program, path := interfaceFixture(t, "nullish/maps/entry-nominal-optional-mutable-narrow")
+		truth := onNode(t, path)
+		native, _ := nativelyUncached(t, program)
+		for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "field write failed:") || !strings.Contains(string(got.stderr), "child") {
+				t.Fatalf("narrow original slot admitted undefined: %#v", got)
+			}
+		}
+		t.Logf("Node=%q; actual nonnullable slot rejects widened helper write", truth.stdout)
+	})
+	for _, site := range []string{"read", "producer", "write"} {
+		t.Run(site, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-optional-mutable-"+site)
+			truth := onNode(t, path)
+			fake, item := -1, -1
+			for i, local := range program.Locals {
+				if local.Name == "fake" {
+					fake = i
+				}
+				if local.Name == "item" {
+					item = i
+				}
+			}
+			if fake < 0 || item < 0 {
+				t.Fatal("missing locals")
+			}
+			changed := false
+			for i, statement := range program.Main {
+				if site == "write" {
+					if store, ok := statement.(ir.SetProperty); ok && store.Name == "child" && !store.Define {
+						store.Value = ir.Read{Local: fake, Of: ir.Object}
+						program.Main[i] = store
+						changed = true
+					}
+					continue
+				}
+				if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "source" {
+					if site == "producer" {
+						creation, ok := declaration.Value.(ir.MapNew)
+						if !ok {
+							t.Fatal("missing Map")
+						}
+						creation.Entries[0][1] = ir.ObjectLiteral{Fields: []ir.Field{{Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}}}
+						declaration.Value = creation
+						program.Main[i] = declaration
+					} else {
+						mutation := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
+						remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+						program.Main = append(program.Main[:i+1], mutation)
+						program.Main = append(program.Main, remaining...)
+					}
+					changed = true
+					break
+				}
+			}
+			if !changed {
+				t.Fatal("mutation missed")
+			}
+			native, _ := nativelyUncached(t, program)
+			expected := "Map nominal producer failed:"
+			if site == "read" {
+				expected = "field read failed:"
+			}
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("optional mutable class lookalike ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; optional mutable lookalike caught at %s", truth.stdout, site)
+		})
+	}
+}

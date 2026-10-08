@@ -963,3 +963,47 @@ Scoped vet passed. The undefined-only source-widening mutant was tightened to
 write undefined, which the target permits, isolating the source guard; all three
 restored source mutants passed in 1.625s and both backend source-write bypasses
 were killed again. The complete repository gate was not run.
+
+### Optional mutable nominal references, October 8
+
+Finite structural entry descriptors now admit optional mutable class/undefined
+members. Their complete private class descriptors compare through the shared
+reference representation while preserving undefined admission. Existing writes
+continue to consult the actual object's constructor slot contract. Missing fields
+remain absent; a write to an existing slot changes its payload and readiness.
+Four Node controls cover producer, read and write use, absent entries, helper and
+generic writes, and a present slot changed to undefined: keys still print `child`
+and hasOwn prints `true`. Three payload mutants isolate fake class identity at
+producer, read and write. A fourth source program passes a tagged viewed object
+with a narrower actual class slot into a nullable helper; Node runs on, while
+both backends must stop at the incompatible slot write.
+
+The narrowed helper probe initially ran on. Its source certificate was computed
+and discarded while lowering the helper before a later view activated the field
+name. Class source certificates now remain on those writes, so backend activation
+uses the complete declared source type rather than a physical object tag. This
+uses existing write metadata and shared flow, with no second flow graph.
+
+Eight implementation counterfactuals remove either backend producer/read/write
+check, erase undefined admission from slot comparison, or discard the helper's
+early source certificate. Each is killed by behavior. Positive controls alone
+initially failed to kill the undefined-admission counterfactual; those survivor
+logs are retained. The initial ordinary narrowing fixture met the existing static
+mutable-invariance refusal, so the final mutant uses an admitted tagged view.
+Initial reflection controls hit existing Object.keys/in refusals; the supported
+plain-literal reflection control is held to Node. Evidence is under
+`evidence/optional-mutable-*`.
+
+Escaped aliases still cannot add an absent property without a declared physical
+slot; nullable class/null source-slot conversions and recursive nominal witnesses
+remain outside this group. Required primitive brands and broader callable
+conventions are unchanged. The conservative inventory remains 2,018 pairs /
+9,101 reads; exact production reaching-view discharge is unmeasured.
+
+Optional mutable validation: the final restored scoped uncached oracle
+(`Map|Nullish|NullableSelection|JSONArray|ArrayJSONStorage|NominalArray|
+MutableNominal|OptionalNominal|NullableNominal|JSONStringify|
+OptionalMutableNominal|TestArrayHoles(Milestone|Refusals)$`) passed in 306.628s.
+Touched packages (`View|Map|Contract|Callable|Tuple|JSON|Generic|Class`, inherited
+Phantom exclusion) passed: IR 0.048s, lower 12.862s, native 49.381s, JavaScript
+1.276s. Scoped vet passed. The complete repository gate was not run.

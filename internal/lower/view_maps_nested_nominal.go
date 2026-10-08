@@ -67,12 +67,20 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 	}
 	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
-		if field.Flags&ast.SymbolFlagsOptional != 0 && !l.checker.IsReadonlySymbol(field) {
-			return 0
-		}
 		child := l.mapEntrySlot(node, l.concrete(l.checker.GetTypeOfSymbol(field)))
 		if child == 0 {
 			return 0
+		}
+		if field.Flags&ast.SymbolFlagsOptional != 0 && !l.checker.IsReadonlySymbol(field) {
+			// Present class/undefined slots share the checked source-write adapter.
+			// Other optional aggregate storage still needs its own conversion proof.
+			descriptor := l.result.ViewContracts[child-1]
+			if descriptor.Kind == ir.ViewNullable && descriptor.Element != 0 {
+				descriptor = l.result.ViewContracts[descriptor.Element-1]
+			}
+			if l.result.ViewContracts[child-1].Of != ir.Object || descriptor.NominalClass == 0 {
+				return 0
+			}
 		}
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
 		if ir.HasMapNominalWitness(l.result, child) && l.result.ViewContracts[child-1].Of == ir.Object && !l.checker.IsReadonlySymbol(field) {
