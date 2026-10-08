@@ -1419,6 +1419,18 @@ census files it under array contracts. Fixtures are `lane2/ranked5-*.a`, held by
 TestCheckedViewRanked5ArrayContracts and TestCheckedViewRanked5UnionCastFrontier;
 the report is `lane2/RANKED5_ARRAYS_REPORT.md`.
 
+### Lane 2 sixth ranked arrays
+
+The sixth ranked group (ResolvedType.callSignatures, TemplateLiteralType.texts,
+TupleType.labeledElementDeclarations, ClassDeclaration.members, HasJSDoc.jsDoc,
+JsxAttributes.properties, and the `ClassDeclaration | ClassExpression` members
+read) changed one lane 2 runtime line: `adamic_view_array_at` names a present NULL
+reference `undefined`, as the JavaScript backend and the earlier array-undefined
+pin do. The union cast is a pinned frontier like FunctionLikeDeclaration's, and a
+JSDocArray built with its own jsDocCache field is a pinned NotYet. Fixtures are
+`lane2/ranked6-*.a`, held by TestCheckedViewRanked6ArrayContracts and
+TestCheckedViewRanked6Frontiers; the report is `lane2/RANKED6_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
