@@ -19,13 +19,12 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
-	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
-	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+	ast.KindAwaitExpression:  {"await", "0.1 has no async; it arrives with the concurrency model"},
+	ast.KindYieldExpression:  {"yield (generators)", "build an array, or call a function per item"},
+	ast.KindDecorator:        {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
+	ast.KindWithStatement:    {"with", "name the object you mean"},
+	ast.KindVoidExpression:   {"the void operator", "evaluate the expression as a statement"},
+	ast.KindExportAssignment: {"export default", "export by name: one name for one thing"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.

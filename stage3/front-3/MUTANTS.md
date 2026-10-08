@@ -992,3 +992,16 @@ These controls run against the continued front-3 compiler through test-only Go o
 | 20 method | wide-name-omitted | stdout | item20/method/wide-name-omitted.log |
 
 The added method_presence_wide_union.a probe makes wide-name-omitted fail on the current unsupported union ABI: Node prints wide union true, the mutant native build prints wide union false, both exit0. The original optional-boolean Wide method now has a supported slot, so it alone would not exercise this descriptor branch. The unmodified added probe passes Node/native/JavaScript/release/leak checks. The two memoize probes retain their original source Node output and cycle-capable refusal boundary.
+
+## Continued item 22
+
+All six debugger controls were rerun through Go source overlays with ADAMIC_GATE_UNCACHED=1. Raw logs and results are in item22/. The first attempt lacked the toolchain environment and is not evidence; the sourced-environment rerun below is the evidence.
+
+| Mutant | Catcher | Result |
+| --- | --- | --- |
+| trap-artifact | debugger emitted a trap or breakpoint call | caught |
+| trap-oracle | exit codes differ | caught |
+| javascript-dropped | JavaScript kept 0 debugger statements | caught |
+| lowering-dropped | JavaScript kept 0 debugger statements | caught |
+| debugger-refused | refuses debugger | caught |
+| flow-instruction | debugger changed the flow: 2 instructions | caught |

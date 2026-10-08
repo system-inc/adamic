@@ -1,0 +1,44 @@
+[
+  {
+    "name": "trap-artifact",
+    "status": "caught",
+    "test": "TestDebuggerNativeEmitsNothing",
+    "catcher": "debugger emitted a trap or breakpoint call",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/trap-artifact.log"
+  },
+  {
+    "name": "trap-oracle",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail",
+    "catcher": "exit codes differ",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/trap-oracle.log"
+  },
+  {
+    "name": "javascript-dropped",
+    "status": "caught",
+    "test": "TestDebuggerNativeEmitsNothing",
+    "catcher": "JavaScript kept 0 debugger statements",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/javascript-dropped.log"
+  },
+  {
+    "name": "lowering-dropped",
+    "status": "caught",
+    "test": "TestDebuggerNativeEmitsNothing",
+    "catcher": "JavaScript kept 0 debugger statements",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/lowering-dropped.log"
+  },
+  {
+    "name": "debugger-refused",
+    "status": "caught",
+    "test": "TestDebuggerNativeEmitsNothing",
+    "catcher": "refuses debugger",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/debugger-refused.log"
+  },
+  {
+    "name": "flow-instruction",
+    "status": "caught",
+    "test": "TestDebuggerHasNoFlowInstruction",
+    "catcher": "debugger changed the flow: 2 instructions",
+    "log": "/tmp/stage3-front-3-22-mutants-valid/flow-instruction.log"
+  }
+]
