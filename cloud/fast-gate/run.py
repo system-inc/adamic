@@ -160,13 +160,14 @@ def main():
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
+    signal.signal(signal.SIGTERM, gate.stop)
     try:
         gate.run()
     except BaseException:
         gate.fail("runner", traceback.format_exc())
     finally:
         gate.finish()
-    sys.exit(0 if gate.failure is None else 1)
+    sys.exit(0 if gate.failure is None and not gate.stopped else 1)
 
 
 class Gate:
@@ -174,6 +175,9 @@ class Gate:
         self.arguments = arguments
         self.started = time.monotonic()
         self.failure = None
+        self.stopped = None
+        self.stopThread = None
+        self.killedByStop = set()
         self.lock = threading.Lock()
         self.processes = []
         self.steps = {}
@@ -203,6 +207,24 @@ class Gate:
         }
         self.kind = "full" if arguments.full else "fast"
         self.status("running: %s gate of %s against %s" % (self.kind, arguments.sha, arguments.base))
+
+    def stop(self, signum=None, frame=None):
+        # The signal can interrupt code holding self.lock; drain in another thread.
+        if self.stopped:
+            return
+        reason = os.environ.get("ADAMIC_FAST_GATE_STOP_REASON", "stopped")
+        try:
+            with open(self.arguments.out + ".stop-reason") as handle:
+                reason = handle.read().strip() or reason
+        except OSError:
+            pass
+        self.stopped = {"reason": reason, "at_seconds": round(time.monotonic() - self.started, 1)}
+        def drain():
+            with self.lock:
+                self.killedByStop.update(id(p) for p in self.processes if p.poll() is None)
+                self.killSessions()
+        self.stopThread = threading.Thread(target=drain)
+        self.stopThread.start()
 
     def run(self):
         tree = self.arguments.tree
@@ -900,6 +922,7 @@ class Gate:
         self.watchers.append(watch)
         slots = threading.Semaphore(self.arguments.parallel)
         queue = TestQueue(self.arguments.parallel)
+        self.result["test_outcomes"] = []
         self.result["test_starts"] = []
         self.testStartDetails = {}
         self.testsStarted = started
@@ -953,6 +976,7 @@ class Gate:
             self.result.setdefault("split_tests", {})[importPath] = len(names)
             with self.lock:
                 tally["planned"] += len(names)
+                self.result["test_outcomes"].extend({"package": importPath, "test": name, "status": "not run"} for name in names)
             ready = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
@@ -973,7 +997,7 @@ class Gate:
         def buildWorker():
             while True:
                 with self.lock:
-                    if not remaining or (self.failure is not None and not self.complete):
+                    if not remaining or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
                         return
                     package = remaining.pop(0)
                 try:
@@ -991,7 +1015,7 @@ class Gate:
                     return
                 package, name, seconds, permits, command = item
                 try:
-                    if self.failure is not None and not self.complete:
+                    if getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
                         return
                     if permits == 4:
                         command = ["-test.parallel=8" if part == "-test.parallel=2" else part for part in command]
@@ -1034,7 +1058,11 @@ class Gate:
         if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
             # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
             environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-        if self.stream("tests", command, log, self.packageDirectories[importPath], environment) == 0:
+        code = self.stream("tests", command, log, self.packageDirectories[importPath], environment)
+        with self.lock:
+            row = next(row for row in self.result["test_outcomes"] if row["package"] == importPath and row["test"] == name)
+            row["status"] = "not run" if code is None else ("passed" if code == 0 else "failed")
+        if code == 0:
             with self.lock:
                 tally["passed"] += 1
 
@@ -1088,12 +1116,18 @@ class Gate:
         event fails the gate. Returns the exit code, or None if the gate failed."""
         stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (name, threading.get_ident()))
         stderr = open(stderrPath, "w")
-        process = self.spawn(command, subprocess.PIPE, stderr, directory, environment)
+        try:
+            process = self.spawn(command, subprocess.PIPE, stderr, directory, environment)
+        except BaseException:
+            stderr.close()
+            raise
         output = {}
         for line in process.stdout:
             if log is not None:
                 with self.lock:
                     log.write(line)
+            if id(process) in getattr(self, "killedByStop", set()):
+                continue
             for watch in self.watchers:
                 watch(line)
             if "gate-sample: " in line:
@@ -1126,7 +1160,10 @@ class Gate:
                 text = "".join(output.get(key, [])) or "".join(output.get((event.get("Package"), None), []))
                 self.fail(name, "%s %s\n%s" % (event.get("Package"), event.get("Test") or "(package)", text[-4000:]))
         code = process.wait()
+        process.stdout.close()
         stderr.close()
+        if id(process) in getattr(self, "killedByStop", set()):
+            return None
         if code != 0 and self.failure is None:
             with open(stderrPath) as handle:
                 self.fail(name, "%s exited %d\n%s" % (" ".join(command[:4]), code, handle.read()[-4000:]))
@@ -1168,7 +1205,7 @@ class Gate:
 
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
-            if self.failure is not None and not self.arguments.full and not self.complete:
+            if getattr(self, "stopped", None) or (self.failure is not None and not self.arguments.full and not self.complete):
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
             variables = dict(os.environ, **gateEnvironment)
@@ -1194,7 +1231,7 @@ class Gate:
 
     def fail(self, step, detail):
         with self.lock:
-            if self.failure is not None:
+            if self.failure is not None or getattr(self, "stopped", None):
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
             print("FIRST FAILURE (%s, at %.1f s):\n%s" % (step, self.failure["after_seconds"], detail), flush=True)
@@ -1242,13 +1279,15 @@ class Gate:
             handle.write(line + "\n")
 
     def finish(self):
+        if getattr(self, "stopThread", None):
+            self.stopThread.join()
         with self.lock:
             self.killSessions()
         wall = round(time.monotonic() - self.started, 1)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
-        if unfinished and self.failure is None:
+        if unfinished and self.failure is None and not getattr(self, "stopped", None):
             self.fail(unfinished[0], "planned stages without a recorded exit 0: %s (exits %s)" % (", ".join(unfinished), self.exits))
-        green = self.failure is None and not unfinished
+        green = self.failure is None and not unfinished and not getattr(self, "stopped", None)
         self.result.update({
             "wall_seconds": wall,
             "steps_seconds": self.steps,
@@ -1264,6 +1303,11 @@ class Gate:
             "stages_exit": self.exits,
             "finished": True,
         })
+        if getattr(self, "stopped", None):
+            self.result["stopped"] = self.stopped
+        outcomes = self.result.get("test_outcomes", [])
+        self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
+                                               for status in ("passed", "failed", "not run")}
         with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
@@ -1280,10 +1324,15 @@ class Gate:
                 steps += "; a-check exempt by ruling: %d .a files (fast.json a_check_exempt)" % len(self.result["a_check_exempt"])
             if self.result.get("unchecked_a_files") and "a_check" not in self.result:
                 steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
-        if green:
+        if getattr(self, "stopped", None) and self.failure is None:
+            self.status("void: stopped before a verdict: " + self.stopped["reason"])
+        elif green:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:
             self.status("red: %s %s gate, first failure at %s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
+        if getattr(self, "stopped", None) and self.failure is not None:
+            with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
+                handle.write("stopped: " + self.stopped["reason"] + "\n")
         with open(os.path.join(self.arguments.out, "status.txt")) as handle:
             print(handle.read(), end="", flush=True)
 

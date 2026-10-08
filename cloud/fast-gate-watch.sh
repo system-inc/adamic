@@ -68,6 +68,7 @@ voidCause() {
   [ -n "${said}" ] && { echo "${said}"; return; }
   grep -qE '^(green|red):' "${log}" 2>/dev/null || { echo "no verdict"; return; }
   grep -qE '^red:' "${log}" || return 0
+  grep -q '^stopped: ' "${log}" && return 0
   grep -oE 'creating work dir|Connection reset by|kex_exchange_identification|ssh: connect to host|Connection refused|index\.lock.: File exists|No space left on device' "${log}" | head -1
 }
 
@@ -111,11 +112,12 @@ countVoid() {
 # Worker and canary gates share slot selection and launch. Canary logs are separate
 # even when a queued worker has main's sha, and carry the tools version they test.
 dispatch() {
-  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6
-  local whole=""
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 started whole=""
+  started=$(date -u +%s)
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
   ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   local pid=$!
+  echo "${started}" > "${state}/running-started/${pid}"
   echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/${pid}"
   if slotReserved "${branch}" "${box}" "${slot}"; then
     echo "${box}" > "${state}/reserved-running/${pid}"
@@ -157,6 +159,59 @@ slotReserved() {
     fi
   done < "${state}/slots"
   return 1
+}
+# Both tips must match the same reservation glob on the running gate's slot.
+sameReservedFamily() {
+  local older=$1 newer=$2 box=$3 slot=$4 b c glob
+  while read -r b c glob; do
+    [ "${b}" = "${box}" ] && [ "${c}" = "${slot}" ] || continue
+    if [ -n "${glob}" ]; then
+      [[ ${older} == ${glob} && ${newer} == ${glob} ]] && return 0
+    elif [ "${b}" = server ] && [ "${c}" = B ]; then
+      while read -r glob; do
+        [ -n "${glob}" ] && [[ ${older} == ${glob} && ${newer} == ${glob} ]] && return 0
+      done < "${state}/first-step-globs.poll"
+    fi
+  done < "${state}/slots"
+  return 1
+}
+stopStaleRed() {
+  local file pid branch sha slot box rest log failure started class queued newer newerSha reason
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/reserved-running/${pid}" ] || continue
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2>/dev/null || continue
+    read -r branch sha slot box rest < "${file}"
+    reservedBranch "${branch}" && slotReserved "${branch}" "${box}" "${slot}" || continue
+    log=${state}/logs/${sha:0:12}.log
+    failure=$(sed -nE 's/^FIRST FAILURE \((.*), at ([0-9.]+) s\):.*/\1 at \2 s/p' "${log}" 2>/dev/null | head -1)
+    [ -n "${failure}" ] || continue
+    # Older watcher versions have only the pid file; its mtime records dispatch.
+    started=$(cat "${state}/running-started/${pid}" 2>/dev/null ||
+      python3 -c 'import os, sys; print(int(os.stat(sys.argv[1]).st_mtime))' "${file}") || continue
+    while read -r class queued newer newerSha; do
+      [ "${newerSha}" != "${sha}" ] && [ "${queued}" -gt "${started}" ] || continue
+      reservedBranch "${newer}" && sameReservedFamily "${branch}" "${newer}" "${box}" "${slot}" || continue
+      reason="superseded by ${newer} ${newerSha}"
+      # A sibling of the out directory survives SSH's environment boundary. Write before signaling.
+      if ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${reason}")" <<'STOP'
+set -eu
+sha=$1 reason=$2
+for out in ~/fast-gate/out/"${sha:0:12}"-*; do
+  [ -d "${out}" ] || continue
+  printf '%s\n' "${reason}" > "${out}.stop-reason"
+done
+pkill -TERM -f "run.py .*--sha ${sha}"
+STOP
+      then
+        touch "${state}/stopped-running/${pid}"
+        echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${reason}, red since ${failure}"
+      fi
+      break
+    done < "${state}/queue"
+  done
 }
 usableSlots() {
   local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation
@@ -222,7 +277,7 @@ tips() {
 [ -s "${state}/seen" ] || tips > "${state}/seen"
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -254,10 +309,11 @@ while true; do
     done
     mv "${state}/now.tmp" "${state}/seen"
   fi
+  stopStaleRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    rm -f "${state}/reserved-running/$(basename "${file}")"
+    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
     if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi

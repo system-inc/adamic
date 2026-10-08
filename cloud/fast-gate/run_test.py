@@ -8,6 +8,7 @@ all-pass case proves the harness can go green at all. Run: python3 -m unittest c
 """
 
 import io
+import shutil
 import json
 import os
 import subprocess
@@ -583,6 +584,116 @@ class LongestFirst(unittest.TestCase):
             gate, commands, _ = self.split(parallel=1, broken=broken, complete=True)
             self.assertEqual(len(commands), 0 if broken == "build" else 3)
             self.assertEqual(gate.exits["tests"], 1)
+
+
+class StopTests(unittest.TestCase):
+    setUp = FailClosed.setUp
+
+    def stopped(self, failed, sibling=True):
+        self.addCleanup(shutil.rmtree, self.directory)
+        arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=self.tree,
+            sha=self.sha, base=self.sha, full=False, complete=True, branch="area/test",
+            branch_source="", session="", session_source="")
+        gate = run.Gate(arguments)
+        gate.packageDirectories = {"p": self.tree}
+        gate.result["test_outcomes"] = [{"package": "p", "test": name, "status": "not run"}
+                                        for name in ("TestPassed", "TestFailed", "TestKilled", "TestPending")]
+        tally = {"passed": 0}
+        passed = [sys.executable, "-c", 'import json; print(json.dumps({"Package":"p","Test":"TestPassed","Action":"pass"}))']
+        gate.slotted(passed, io.StringIO(), "p", "TestPassed", tally)
+        if failed:
+            command = [sys.executable, "-c", 'import json; print(json.dumps({"Package":"p","Test":"TestFailed","Action":"fail"})); raise SystemExit(1)']
+            gate.slotted(command, io.StringIO(), "p", "TestFailed", tally)
+        ready = os.path.join(self.tree, "ready")
+        command = [sys.executable, "-c", 'import pathlib,time; pathlib.Path(%r).touch(); time.sleep(60)' % ready]
+        thread = gate.guarded("tests", gate.slotted, command, io.StringIO(), "p", "TestKilled", tally)
+        thread.start()
+        self.addCleanup(thread.join, 5)
+        deadline = time.monotonic() + 5
+        while not os.path.exists(ready) and time.monotonic() < deadline:
+            time.sleep(.01)
+        self.assertTrue(os.path.exists(ready))
+        reason = "superseded by area/new " + "b" * 40
+        if sibling:
+            with open(self.tree + ".stop-reason", "w") as handle:
+                handle.write(reason)
+            self.addCleanup(os.unlink, self.tree + ".stop-reason")
+        previous = signal.signal(signal.SIGTERM, gate.stop)
+        try:
+            with mock.patch.dict(os.environ, {"ADAMIC_FAST_GATE_STOP_REASON": reason}):
+                os.kill(os.getpid(), signal.SIGTERM)
+                thread.join(5)
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+        self.assertFalse(thread.is_alive())
+        before = len(gate.processes)
+        with self.assertRaises(SystemExit):
+            gate.spawn([sys.executable, "-c", "raise SystemExit(0)"], subprocess.PIPE)
+        self.assertEqual(len(gate.processes), before)
+        gate.finish()
+        with open(os.path.join(self.tree, "fast.json")) as handle:
+            result = json.load(handle)
+        with open(os.path.join(self.tree, "status.txt")) as handle:
+            status = handle.read()
+        self.assertEqual(result["stopped"]["reason"], reason)
+        self.assertEqual(result["planned_test_counts"], {"passed": 1, "failed": int(failed), "not run": 3-int(failed)})
+        self.assertEqual(result["failed_tests"], ["p TestFailed"] if failed else [])
+        if failed:
+            self.assertTrue(status.startswith("red:"))
+            self.assertIn("stopped: " + reason, status)
+            self.assertEqual(result["failure"]["detail"], "p TestFailed\n")
+        else:
+            self.assertEqual(status.strip(), "void: stopped before a verdict: " + reason)
+
+    def test_sigterm_mid_tests_preserves_red_and_marks_killed_not_run(self):
+        self.stopped(True)
+
+    def test_sigterm_before_failure_is_void(self):
+        self.stopped(False, sibling=False)
+
+
+class StoppedPublish(unittest.TestCase):
+    def test_stopped_remote_run_still_publishes(self):
+        with tempfile.TemporaryDirectory() as root:
+            cloud = os.path.join(root, "cloud")
+            os.mkdir(cloud)
+            shutil.copy(os.path.join(os.path.dirname(__file__), "../fast-gate.sh"), cloud)
+            with open(os.path.join(cloud, "fast-gate-classify.sh"), "w") as handle:
+                handle.write('gateBase() { echo "main ' + 'a'*40 + '"; }\nclassify() { echo B; }\n')
+            bindir = os.path.join(root, "bin")
+            os.mkdir(bindir)
+            fixture = os.path.join(root, "fixture")
+            os.mkdir(fixture)
+            with open(os.path.join(fixture, "status.txt"), "w") as handle:
+                handle.write("red: first failure at tests\nstopped: superseded by newer\n")
+            with open(os.path.join(fixture, "fast.json"), "w") as handle:
+                json.dump({"stopped": {"reason": "superseded by newer", "at_seconds": 174}}, handle)
+            scripts = {
+                "ssh": "cat >/dev/null; exit 1\n",
+                "scp": 'cp -R "$PUBLISH_FIXTURE" "$4"\n',
+                "git": '''case "$*" in
+*rev-parse*--absolute-git-dir*) echo "$PUBLISH_ROOT" ;;
+*rev-parse*) printf '%040d\\n' 1 ;;
+*write-tree*|*commit-tree*) printf '%040d\\n' 2 ;;
+*push*) printf '%s\\n' "$*" > "$PUBLISH_ROOT/pushed" ;;
+esac
+''',
+            }
+            for name, body in scripts.items():
+                path = os.path.join(bindir, name)
+                with open(path, "w") as handle:
+                    handle.write("#!/bin/bash\n" + body)
+                os.chmod(path, 0o755)
+            env = dict(os.environ, PATH=bindir + ":" + os.environ["PATH"], PUBLISH_ROOT=root,
+                       PUBLISH_FIXTURE=fixture, TMPDIR=root, ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN="1")
+            result = realRun(["bash", os.path.join(cloud, "fast-gate.sh"), "b"*40,
+                              "--branch", "codex/test", "--session", "test"], env=env,
+                             capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertIn("published gate-logs/" + "b"*12, result.stdout)
+            self.assertIn("stopped: superseded by newer", result.stdout)
+            with open(os.path.join(root, "pushed")) as handle:
+                self.assertIn("refs/heads/gate-logs/" + "b"*12, handle.read())
 
 
 if __name__ == "__main__":
