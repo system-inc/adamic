@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 	"unicode/utf8"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
 )
 
@@ -216,7 +218,7 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
-	output, err := command.CombinedOutput()
+	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		t.Fatalf("Go cohere: %v\n%s", err, output)
 	}
@@ -240,7 +242,7 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	}
 	prettierPath := filepath.Join(scratch, "prettier.json")
 	command = bounded(t, "node", "testdata/library.mjs", library, casesPath, prettierPath)
-	output, err = command.CombinedOutput()
+	output, err = childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		t.Fatalf("Prettier: %v\n%s", err, output)
 	}
@@ -259,10 +261,9 @@ func writeJSON(t *testing.T, path string, value any) {
 	}
 }
 
-func bounded(t *testing.T, name string, arguments ...string) *progressCommand {
+func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	command := newProgressCommand(jsonProgressPolicy, name, arguments...)
-	t.Cleanup(command.cancel)
+	command := exec.Command(name, arguments...)
 	return command
 }
 

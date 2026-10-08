@@ -5,10 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type repositoryJSON struct {
@@ -19,8 +22,8 @@ type repositoryJSON struct {
 var repositoryJSONPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclude,glob)**/.git/**"}
 
 func gitCorpus(root string, arguments ...string) ([]byte, error) {
-	command := newProgressCommand(jsonProgressPolicy, "git", append([]string{"-C", root}, arguments...)...)
-	output, err := command.CombinedOutput()
+	command := exec.Command("git", append([]string{"-C", root}, arguments...)...)
+	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
 	}
