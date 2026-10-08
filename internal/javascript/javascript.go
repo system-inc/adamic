@@ -482,7 +482,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			break
 		}
 		if statement.Define || statement.Uninitialized {
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, statement.Value.Type())
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -745,6 +745,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.StringConstant:
 		return quote(e.program.Strings[expression.Index])
 	case ir.Read:
+		if expression.Unset && e.program.Locals[expression.Local].Global && !e.program.Locals[expression.Local].Hoisted {
+			return fmt.Sprintf("(%s_declared ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+		}
 		if expression.Readiness != "" {
 			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
@@ -864,7 +867,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		unready := []string{}
 		for _, field := range expression.Fields {
-			if field.Uninitialized {
+			if field.Uninitialized && !field.Unset {
 				unready = append(unready, quote(field.Name))
 			}
 		}
@@ -887,6 +890,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return object
 	case ir.Property:
+		if expression.Unset && expression.View != "" {
+			return fmt.Sprintf("adamicPlaceholderViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.UnsetType, quote(expression.ViewType), e.values(expression.ViewAllowed), expression.Optional, expression.Absent)
+		}
 		if expression.View != "" {
 			expected := expression.ViewType
 			if expected == "" {
@@ -978,6 +984,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.IsUndefined:
 		return "(" + e.value(expression.Value) + " === undefined)"
 	case ir.Unwrap:
+		if expression.Proven {
+			return e.value(expression.Value)
+		}
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
@@ -1004,6 +1013,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
+		if expression.Checked {
+			return fmt.Sprintf("adamicPlaceholderNarrow(%s, %d, %s)", e.value(expression.Value), expression.To.Present(), quote(expression.Message))
+		}
 		return e.value(expression.Value)
 	case ir.ArrayIsArray:
 		return "Array.isArray(" + e.value(expression.Value) + ")"

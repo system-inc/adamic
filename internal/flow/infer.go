@@ -353,6 +353,9 @@ func (n *inference) value(expression ir.Expression) shape {
 		return n.value(expression.Value)
 	case ir.Narrow:
 		return n.value(expression.Value)
+	case ir.PlaceholderUse:
+		// A checked use forwards the value; it cannot create a reference or a write.
+		return n.value(expression.Value)
 	case ir.Unwrap:
 		return n.value(expression.Value)
 	case ir.CheckedCast:

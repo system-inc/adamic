@@ -273,7 +273,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("}")
 		}
 		if e.fieldReadinessNeeded(statement.Name) {
-			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
+			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized || statement.Unset)
 		}
 		if records {
 			e.line("}")
