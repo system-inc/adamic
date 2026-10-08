@@ -1,0 +1,19 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.070s)
+v24.19.0
+setup: node ready (0.104s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.989s)
+
+added 3 packages in 1s
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.878s
+setup: markdown dependencies ready (2.081s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (22.144s)
+setup: go build ready (501.018s)
+setup: test binaries deferred (use --warm-tests) (502.191s)
+setup: build cache warm (502.193s)
+setup: build-flags commit=b68b2fe1af2dd6ad369ad8dfbfedf66be5a42861 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.91 0.34 0.13 2/152 1526 load-after=11.38 11.44 5.84 7/188 5951
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (502.296s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.STmdpu

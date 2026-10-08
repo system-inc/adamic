@@ -1,0 +1,11 @@
+=== RUN   TestClockNonNullableCheckedRepresentation
+=== RUN   TestClockNonNullableCheckedRepresentation/string
+    representation_clock_nonnullable_t_test.go:66: got 0, false; want 3
+=== RUN   TestClockNonNullableCheckedRepresentation/object
+    representation_clock_nonnullable_t_test.go:66: got 0, false; want 4
+--- FAIL: TestClockNonNullableCheckedRepresentation (0.05s)
+    --- FAIL: TestClockNonNullableCheckedRepresentation/string (0.00s)
+    --- FAIL: TestClockNonNullableCheckedRepresentation/object (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.067s
+FAIL

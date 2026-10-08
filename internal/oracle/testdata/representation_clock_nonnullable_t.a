@@ -1,0 +1,4 @@
+function keep<T>(value: NonNullable<T>): NonNullable<T> { return value; }
+const node = { name: 'node' };
+console.log(keep<string | undefined>('text'));
+console.log(`${keep<{ readonly name: string } | undefined>(node) === node}`);

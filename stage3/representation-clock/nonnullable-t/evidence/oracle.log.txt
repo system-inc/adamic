@@ -1,0 +1,34 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestClockNonNullableSource
+    representation_clock_nonnullable_t_test.go:30: gate cache node miss
+--- PASS: TestClockNonNullableSource (0.21s)
+=== RUN   TestClockNonNullableMutant
+=== RUN   TestClockNonNullableMutant/clock-nonnullable-t-drop-object-return
+    representation_clock_nonnullable_t_test.go:74: gate cache node miss
+    representation_clock_nonnullable_t_test.go:77: Node text/true; sanitized mutant text/false, no leaks
+--- PASS: TestClockNonNullableMutant (1.19s)
+    --- PASS: TestClockNonNullableMutant/clock-nonnullable-t-drop-object-return (1.19s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t_concrete.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t_concrete.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t_concrete.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/representation_clock_nonnullable_t.a:1:10: stage 0 can't lower a function returning NonNullable<T> yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t_concrete.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:587: gate cache native miss
+    oracle_test.go:580: gate cache native miss
+    oracle_test.go:594: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_nonnullable_t_concrete.a (0.38s)
+PASS
+gate cache: native hits=1 misses=2
+gate cache: node hits=1 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.806s

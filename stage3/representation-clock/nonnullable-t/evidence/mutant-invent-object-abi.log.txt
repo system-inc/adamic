@@ -1,0 +1,6 @@
+=== RUN   TestClockNonNullableCheckedRepresentation
+    representation_clock_nonnullable_t_test.go:56: isolated T & {} acquired storage 4
+--- FAIL: TestClockNonNullableCheckedRepresentation (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL
