@@ -63,8 +63,9 @@ static bool collection_reference(int type) {
 	return type != 1 && type != 2 && type != 7;
 }
 
-static adamic_value collection_next(adamic_closure *self, adamic_value *arguments) {
+static adamic_value collection_next(adamic_closure *self, adamic_value *arguments, size_t argument_count) {
 	(void)arguments;
+	(void)argument_count;
 	adamic_object *state = self->cells[0]->value.reference;
 	adamic_map_iterator *iterator = state->slots[0].reference;
 	int part = (int)state->slots[1].number;

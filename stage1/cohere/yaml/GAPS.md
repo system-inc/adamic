@@ -3,7 +3,7 @@
 The complete Adamic YAML formatting slice is implemented at Go cohere's default options.
 Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
 Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
-Thirty successful wrong-output port mutants are caught; eleven compiler refusals have proving programs; the former runtime bug has a parity regression test.
+Thirty successful wrong-output port mutants are caught; nine compiler refusals have proving programs; the former runtime bug has a parity regression test.
 Final throughput: native 11,504, source Node 13,819, Go 15,190 texts/s; native is 4.10 times its original baseline.
 
 ## Main integration follow-up
@@ -294,7 +294,7 @@ Additional compiler gap programs, held by `TestLexerGaps`:
 | Program | Node stdout | Observed `lower.NotYet` | Workaround |
 | --- | --- | --- | --- |
 | [stringFallback.ts](gaps/stringFallback.ts) | one space | `a BinaryExpression with a string and a string` | Explicit empty-string comparison |
-| [valuePresence.ts](gaps/valuePresence.ts) | `false` | `a PrefixUnaryExpression on a value` | Explicit undefined comparison |
+| [valuePresence.ts](gaps/valuePresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Direct optional-object truthiness restored in scalar block-line iteration |
 | [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | `a BinaryExpression with a value and a boolean` | Separate presence and value branches |
 | [multiplePush.ts](gaps/multiplePush.ts) | `2` | `push with other than one value` | Push one value per call |
 
@@ -419,7 +419,7 @@ closed gap requires updating the workaround.
 | --- | --- | --- | --- |
 | [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | `a PrefixUnaryExpression on a number` | Increment in a separate statement |
 | [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | `a BinaryExpression with a number and a number` | Assign before reading the result |
-| [stringPresence.ts](gaps/stringPresence.ts) | `false` | `a PrefixUnaryExpression on a string` | Compare the character sentinel with the empty string |
+| [stringPresence.ts](gaps/stringPresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Lexer sentinel tests use native string truthiness and negation |
 
 Labels and logical assignment operators are explicit 0.1 refusals, not newly
 observed language gaps. The port uses ordinary loop control and assignments.
@@ -552,3 +552,46 @@ Adamic gap claims or proving programs. No file-formatting driver,
 Adamic corpus comparison, native sanitizers, Go/Node/native texts-per-second
 measurements, three port mutants, filtered Adamic oracle or full repository
 gate was run. This audit must not be treated as a merge-ready YAML port.
+
+## String presence: closed on the compiler area
+
+`TestClosedStringPresenceGap` keeps the original proving program and requires
+`false` from source Node, native ASan/UBSan/LeakSanitizer and emitted JavaScript.
+`git log -S censusBooleanCondition -- internal/lower` identifies
+`cdddfee346e70a5cba3e982f808b9ebe426a6dfb` as the ToBoolean/negation change.
+The lexer now tests its empty-string sentinels directly or with `!`.
+Numeric code-unit scanning is retained as an optimization, and `member` keeps
+its explicit nonempty boolean operand because mixed string/boolean `&&` is
+outside this gap (see `valueConjunction.ts`).
+
+String closure validation: `ADAMIC_YAML_LIBRARY=/tmp/area-gaps-yaml-library
+go test -v ./stage1/cohere/yaml -run
+'^(TestClosedStringPresenceGap|TestLexerMatchesGo|TestLexerMutants)$' -count=1
+-timeout 30m` passed (35.223s). The 8,732 complete/chunked cases from 36
+repository files agree byte-for-byte with Go, source Node, both backends and
+yaml 2.9.0, including sanitizer/leak checks. Five existing lexer mutants
+(keep chomping, tab whitespace, BOM splitting, cached NUL, numeric whitespace)
+execute successfully with wrong bytes and are caught on native and Node.
+Changing the closed fixture from a nonempty to an empty string made its
+normal Node `true` output fail the expected `false` check; it was restored.
+
+## Value presence: closed on compiler area
+
+`cdddfee346e70a5cba3e982f808b9ebe426a6dfb` (Lower unary findings 85 to 0
+and overload signatures 191 to 0) lowers unary value truthiness. The original
+`gaps/valuePresence.ts` is retained as `TestClosedValuePresenceGap`, matching
+Node's `false` in both backends with ASan/UBSan and leak detection.
+Scalar block-line iteration now tests indexed optional objects directly with
+`!line` and `line`, retiring its explicit undefined-comparison workaround.
+Each BlockLine object is truthy; an absent array element is undefined.
+
+Value closure validation: `ADAMIC_YAML_LIBRARY=/tmp/area-gaps-yaml-library
+go test -v ./stage1/cohere/yaml -run
+'^(TestClosedValuePresenceGap|TestScalarsMatchGo|TestScalarMutants)$' -count=1
+-timeout 30m` passed (33.009s). Across 36 repository files and 9,272 cases,
+8,419,050 scalar answer bytes agree on Go, native, source Node, emitted
+JavaScript and yaml 2.9.0; sanitizer/leak checks pass. The existing escaped-LF,
+strip-chomping and flow-folding mutants execute normally with wrong bytes and
+are caught on native and Node. Removing the item from the gap fixture's array
+made its normal Node `true` output fail the expected `false` check; it was
+restored. No full YAML package or formatter corpus was run.

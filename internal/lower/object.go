@@ -69,11 +69,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
+			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if slotless(value.Type()) {
+			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -462,7 +462,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
 				// alias write may have restored undefined, just as for a narrowed variable.
-				if slotless(stored) {
+				if censusFieldSlotless(stored) {
 					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
@@ -480,13 +480,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if slotless(of) {
+		if censusFieldSlotless(of) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
-		if of == ir.MaybeNumber {
+		if of.IsMaybe() {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}), nil
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -505,9 +505,9 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		return property
 	}
 	property.Absent = true
-	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.MaybeNumber && property.Of == ir.Number {
-		property.Of = ir.MaybeNumber
-		return fit(property, ir.Number)
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
+		property.Of = declared
+		return fit(property, declared.Present())
 	}
 	return property
 }
@@ -517,12 +517,15 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 // holds only the object's own fields, and reading hasOwnProperty as one of them panics: the field
 // the checker proved is not there.
 func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+	return l.hasOwnPropertyArguments(node, receiver, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) hasOwnPropertyArguments(node *ast.Node, receiver *ast.Node, arguments []*ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	symbol := l.checker.GetSymbolAtLocation(callee)
 	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 		return nil, false, nil
 	}
-	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "hasOwnProperty with other than one argument")
 	}
@@ -572,6 +575,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.userMethodCall(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.libraryEmptyMap(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryMethodCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -761,11 +770,14 @@ var numberFunctions = map[string][]ir.Type{
 
 // numberCall lowers Number.parseInt, parseFloat, isNaN, isFinite, isInteger and isSafeInteger.
 func (l *lowering) numberCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.numberCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) numberCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	takes, isKnown := numberFunctions[name]
 	if !isKnown {
 		return nil, true, l.notYet(node, "Number."+name)
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	optional := 0
 	if name == "parseInt" {
 		optional = 1
@@ -1066,6 +1078,10 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // arrayMethod lowers array.push(value) and array.join(separator).
 func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.arrayMethodArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	if created := ast.SkipParentheses(receiver); name == "fill" && created.Kind == ast.KindNewExpression && l.isLibraryGlobal(created.AsNewExpression().Expression, "Array") {
 		return l.newArrayFilled(node, created)
 	}
@@ -1081,11 +1097,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return l.arraySort(node, array, element)
 	}
 	if name == "map" {
-		arguments := node.AsCallExpression().Arguments.Nodes
+		arguments := written
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "map with other than one callback")
 		}
-		callback, err := l.expression(arguments[0])
+		callback, known, err := l.libraryMapCallback(arguments[0], receiver, element)
+		if !known {
+			callback, err = l.expression(arguments[0])
+		}
 		if err != nil {
 			return nil, true, err
 		}
@@ -1110,7 +1129,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return nil, true, l.notYet(node, "concat on an array of arrays")
 	}
 	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -1189,7 +1208,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 			if argument.Type() != ir.Array {
 				return nil, true, l.notYet(node, "concat with a value that isn't an array (JavaScript appends it)")
 			}
-			if other, err := l.elementType(node.AsCallExpression().Arguments.Nodes[index]); err != nil || other != element {
+			if other, err := l.elementType(written[index]); err != nil || other != element {
 				return nil, true, l.notYet(node, "concat of arrays of different elements")
 			}
 		}
@@ -1202,7 +1221,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	}
 	separator := ir.Expression(ir.StringConstant{Index: l.constant(",")})
 	if len(arguments) == 1 {
-		arguments[0] = l.orDefault(node.AsCallExpression().Arguments.Nodes[0], arguments[0], ",")
+		arguments[0] = l.orDefault(written[0], arguments[0], ",")
 		if arguments[0].Type() != ir.String {
 			return nil, true, l.notYet(node, "join with a separator that isn't a string")
 		}
@@ -1496,11 +1515,14 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
+		if target, isFunction := l.functions[symbol]; isFunction {
+			return l.functionValue(property, target)
+		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if slotless(of) {
+	if censusFieldSlotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -1721,6 +1743,10 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 // stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a
 // number, evaluated in order.
 func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+	return l.stringFromCodesArguments(node, codePoints, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) stringFromCodesArguments(node *ast.Node, codePoints bool, written []*ast.Node) (ir.Expression, bool, error) {
 	lowered := ir.StringFromCodes{CodePoints: codePoints}
 	if hasSpread(node) {
 		spread, err := l.spreadNumbers(node)
@@ -1730,7 +1756,7 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 		lowered.Spread = spread
 		return lowered, true, nil
 	}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, "a spread argument to String."+node.AsCallExpression().Expression.Name().Text())
 		}
@@ -1909,6 +1935,9 @@ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type
 			return true
 		}
 		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
+		if l.censusNeverRestSignature(targetSignatures[0]) {
+			targetParameters = nil
+		}
 		for index := range valueParameters {
 			if index < len(targetParameters) && l.tupleWhereArrayGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1) {
 				return true

@@ -58,10 +58,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/04_jsx_runtime.a:6:12: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "05_this_type.a",
@@ -106,10 +103,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/07_compact.a:11:27: stage 0 can't lower a PrefixUnaryExpression on a number | undefined yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/07_compact.a:12:17: stage 0 can't lower a BinaryExpression as a statement yet"}
   },
   {
     "file": "08_for_each.a",
@@ -170,10 +164,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/11_build_info_pending.a:7:12: stage 0 can't lower a narrowed boolean | undefined field; copy the field into a local and narrow that local instead yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/11_build_info_pending.a:7:12: stage 0 can't lower a BinaryExpression with a boolean and a boolean yet"}
   },
   {
     "file": "12_symbol_links.a",
@@ -186,10 +177,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/12_symbol_links.a:10:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/12_symbol_links.a:12:16: stage 0 can't lower a BinaryExpression with a value and a value yet"}
   },
   {
     "file": "13_void_callback.a",
@@ -299,10 +287,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/19_deprecated_flags.a:7:17: stage 0 can't lower a PrefixUnaryExpression on a number yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "20_jsdoc_terminate.a",
@@ -334,10 +319,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/21_truthy_loops.a:31:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "22_assignment_once.a",
@@ -393,9 +375,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/24_proportional_conditions.a:34:16: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   }
 ]

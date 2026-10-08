@@ -38,6 +38,15 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
+	{"internal/oracle/testdata/string_views_holders.a", true, false},
+	{"internal/oracle/testdata/string_views_throw.a", true, false},
+	{"internal/oracle/testdata/string_views_loops.a", true, false},
+	{"internal/oracle/testdata/string_views_policy.a", true, false},
+	{"internal/oracle/testdata/string_views_methods.a", true, false},
+	{"internal/oracle/testdata/string_views_characters.a", true, false},
+	{"internal/oracle/testdata/string_views_calls.a", true, false},
+	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
@@ -96,6 +105,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	{"internal/oracle/testdata/input_spread_local.a", true, false},
+	{"internal/oracle/testdata/input_spread_ordinary.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
