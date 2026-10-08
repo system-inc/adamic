@@ -99,6 +99,9 @@ func run() int {
 				fmt.Printf("--- %s stderr:\n%s", way.name, way.run.Stderr)
 			}
 		}
+		if outcome.Verdict == fuzz.Flaked {
+			fmt.Println(indent(outcome.Detail))
+		}
 		if outcome.Verdict == fuzz.Finding {
 			return 1
 		}
@@ -130,8 +133,11 @@ func run() int {
 				if outcome.Verdict != fuzz.Agreed {
 					reasons[string(outcome.Verdict)+": "+outcome.Key]++
 				}
-				if *verbose || outcome.Verdict == fuzz.Finding {
+				if *verbose || outcome.Verdict == fuzz.Finding || outcome.Verdict == fuzz.Flaked {
 					fmt.Printf("seed %d: %s %s\n", programSeed, outcome.Verdict, outcome.Key)
+				}
+				if outcome.Verdict == fuzz.Flaked {
+					fmt.Printf("seed %d:\n%s\n", programSeed, indent(outcome.Detail))
 				}
 				mutex.Unlock()
 				if outcome.Verdict != fuzz.Finding {
@@ -157,7 +163,7 @@ func run() int {
 	group.Wait()
 
 	fmt.Printf("\n%d programs from seed %d in %s on %s\n", *count, *seed, time.Since(started).Round(time.Second), checkout.Root)
-	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
+	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Finding, fuzz.Flaked, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
 		fmt.Printf("  %-8s %d\n", verdict, verdicts[verdict])
 	}
 	var keys []string
