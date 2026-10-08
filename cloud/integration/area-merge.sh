@@ -115,29 +115,18 @@ else
 fi
 git -C "$worktree" submodule update -q --init --recursive --depth 1
 
-# Main merges into the area first, inside this locked and tested run (@system_adamic, October 7).
-# Busy areas are always mid-merge, so merge-back.sh, which leaves a locked area alone, never caught
-# them up, and a break arriving with main stayed invisible until a whole stack gate found it. The
-# fast tests below then judge main's arrival too, against the area tip as the base. A conflict with
-# main refuses the run, naming its files; the area's owner merges main by hand, keeping both sides'
-# intent, and runs this again.
-git fetch -q origin "+refs/heads/main:refs/remotes/origin/main"
-mainTip=$(git rev-parse --verify refs/remotes/origin/main)
-tookMain=""
-if ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
-	if ! git -C "$worktree" merge -q --no-ff -m "Merge main ${mainTip:0:8} into area/$area" "$mainTip"; then
-		echo "conflict merging main ${mainTip:0:8} into area/$area ${areaTip:0:8}; merge main into the area by hand, keeping both sides' intent, then run this again:"
-		git -C "$worktree" diff --name-only --diff-filter=U
-		git -C "$worktree" merge --abort
-		exit 3
-	fi
-	git -C "$worktree" submodule update -q --init --recursive --depth 1
-	tookMain=" with main ${mainTip:0:8} merged in first"
-	echo "merged main ${mainTip:0:8} into the area first ($(git rev-list --count "${areaTip}..${mainTip}") commits the area lacked)"
-fi
-
-if ! git -C "$worktree" merge -q --no-ff -m "Merge $branch at ${sha:0:8} into area/$area" "$sha"; then
-	echo "conflict merging $branch ${sha:0:8} into area/$area ${areaTip:0:8}:"
+# mergeAndPublish merges one commit into the area's worktree, judges the result against the area tip
+# (the fast tests, the stage 3 lane, test262 filters), and publishes it to the area if it's green. It
+# runs in a subshell so its exits are its return code and the lock's EXIT trap stays the script's; it
+# writes the commit it built to $mergedRecord.
+# usage (from a plain command, so errexit holds inside): ( set -e; mergeAndPublish <sha> <label> <message> <conflict advice> )
+mergeAndPublish() (
+sha=$1
+branch=$2
+message=$3
+conflictAdvice=$4
+if ! git -C "$worktree" merge -q --no-ff -m "$message" "$sha"; then
+	echo "conflict merging $branch ${sha:0:8} into area/$area ${areaTip:0:8}; ${conflictAdvice}:"
 	git -C "$worktree" diff --name-only --diff-filter=U
 	git -C "$worktree" merge --abort
 	exit 3
@@ -323,6 +312,7 @@ PROGRAM
 # A failure the area tip already has on this machine (macOS's last-bit Math, no detect_leaks) is
 # named but doesn't hold the merge. Only a failure the merge brings does.
 merged=$(git rev-parse HEAD)
+printf '%s\n' "$merged" >"$mergedRecord"
 if [ "${#packages[@]}" -gt 0 ] || [ "$compiler" = yes ] || [ -n "$oraclePattern" ]; then
 	echo "ran: go test on ${packages[*]:-no packages}$([ "$compiler" = yes ] && echo ', internal/oracle whole')$([ -n "$oraclePattern" ] && echo ', internal/oracle on the changed fixtures')"
 	runTests merged
@@ -338,7 +328,7 @@ if [ "${#packages[@]}" -gt 0 ] || [ "$compiler" = yes ] || [ -n "$oraclePattern"
 		comm -23 "$logs/merged-failures.txt" "$logs/base-excusable.txt" >"$logs/new-failures.txt"
 		echo "already failing on area/$area ${areaTip:0:8} here, not held against the merge: $(comm -12 "$logs/merged-failures.txt" "$logs/base-excusable.txt" | wc -l | tr -d ' ') tests ($logs/base-failures.txt)"
 		if [ -s "$logs/new-failures.txt" ]; then
-			echo "new failures from the merge${tookMain}$([ -n "$tookMain" ] && echo ' (some may have come with main; run main alone to tell)'):"
+			echo "new failures from merging $branch:"
 			sed 's/^/  /' "$logs/new-failures.txt"
 			status=1
 		fi
@@ -417,7 +407,7 @@ fi
 # failed, so try again; anything else means the area moved, and the merge has to be redone on it.
 for attempt in 1 2 3; do
 	if git push -q origin "${merged}:refs/heads/area/$area"; then
-		echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}${tookMain}; logs in $logs"
+		echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}; logs in $logs"
 		exit 0
 	fi
 	remoteTip=$(git ls-remote origin "refs/heads/area/$area" 2>/dev/null | cut -f1) || remoteTip=""
@@ -429,3 +419,32 @@ for attempt in 1 2 3; do
 done
 echo "origin refused the push three times and never showed area/$area moved from ${areaTip:0:8} (origin last said: ${remoteTip:-nothing, unreadable}): an origin error, not a moved area. The tested merge is ${merged}; push it as a fast-forward of ${areaTip:0:8} once origin answers"
 exit 1
+)
+
+mergedRecord=$(mktemp)
+# Main merges into the area as its own transaction, gated and published before the worker branch
+# (@system_adamic, October 7; round 71's angel). A main catch-up, and a conflict with main resolved by
+# hand, is published the moment it's green, so a worker that fails afterwards can't throw it away and
+# the next run doesn't meet the same conflict again. A conflict with main refuses the run, naming its
+# files; the area's owner merges main by hand, keeping both sides' intent, and runs this again.
+git fetch -q origin "+refs/heads/main:refs/remotes/origin/main"
+mainTip=$(git rev-parse --verify refs/remotes/origin/main)
+if ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
+	echo "taking main ${mainTip:0:8} first, as its own transaction ($(git rev-list --count "${areaTip}..${mainTip}") commits the area lacks)"
+	set +e
+	(set -e; mergeAndPublish "$mainTip" "main" "Merge main ${mainTip:0:8} into area/$area" "merge main into the area by hand, keeping both sides' intent, then run this again")
+	taken=$?
+	set -e
+	if [ "$taken" -ne 0 ]; then
+		echo "main ${mainTip:0:8} is not in area/$area, so $branch ${sha:0:8} wasn't merged either"
+		exit "$taken"
+	fi
+	areaTip=$(cat "$mergedRecord")
+	git -C "$worktree" switch -q --detach "$areaTip"
+	git -C "$worktree" submodule update -q --init --recursive --depth 1
+fi
+set +e
+(set -e; mergeAndPublish "$sha" "$branch" "Merge $branch at ${sha:0:8} into area/$area" "$branch conflicts with the area; merge the area into it and run this again")
+landed=$?
+set -e
+exit "$landed"
