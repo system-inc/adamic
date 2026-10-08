@@ -1,0 +1,7 @@
+[codex/namespaces-tsc 6a80eb29] Lower direct local const enum reads with lexical initialization proof
+ 10 files changed, 188 insertions(+), 2 deletions(-)
+ create mode 100644 internal/lower/enums_local.go
+ create mode 100644 stage3/namespaces/debug-groups/LOCAL_CONST_ENUMS.md
+ create mode 100644 stage3/namespaces/debug-groups/local_const_enums.a
+ create mode 100644 stage3/namespaces/debug-groups/local_const_enums.json
+ create mode 100644 stage3/namespaces/debug-groups/local_const_enums.results.json

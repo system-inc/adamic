@@ -1,0 +1,5 @@
+--- FAIL: TestNamespaceNestedReceiver (0.05s)
+    namespaces_test.go:211: /tmp/adamic-gate/TestNamespaceNestedReceiver1176458145/001/main.a:3:5: Adamic 0.1 refuses this in a namespace function; qualified and detached calls have different receivers; pass state explicitly
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.067s
+FAIL

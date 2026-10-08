@@ -1,0 +1,9 @@
+[codex/namespaces-tsc 1df9157b] Lower overloads only when their concrete contracts match the implementation
+ 12 files changed, 260 insertions(+), 1 deletion(-)
+ create mode 100644 internal/lower/namespaces_overloads.go
+ create mode 100644 internal/oracle/namespaces_overloads_test.go
+ create mode 100644 stage3/namespaces/debug-groups/OVERLOADS.md
+ create mode 100644 stage3/namespaces/debug-groups/identical-overloads.a
+ create mode 100644 stage3/namespaces/debug-groups/overload_contract.a
+ create mode 100644 stage3/namespaces/debug-groups/overload_contract.json
+ create mode 100644 stage3/namespaces/debug-groups/overload_contract.results.json

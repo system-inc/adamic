@@ -1,0 +1,6 @@
+--- FAIL: TestDebugUnknownAssertionBoundaries (0.04s)
+    --- FAIL: TestDebugUnknownAssertionBoundaries/empty_generic_assertion (0.04s)
+        namespaces_test.go:178: Debug assertion boundary lost: /tmp/adamic-gate/TestDebugUnknownAssertionBoundariesempty_generic_assertion2747936917/001/main.a:1:93: stage 0 can't lower a value of type unknown yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL

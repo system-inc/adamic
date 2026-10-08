@@ -1,0 +1,5 @@
+--- FAIL: TestDebugLocalConstEnums (0.08s)
+    namespaces_test.go:200: local enum boundary lost: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.106s
+FAIL

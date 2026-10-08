@@ -1,0 +1,364 @@
+=== RUN   TestNamespaceIdenticalOverloadMutant
+    namespaces_overloads_test.go:37: gate cache node miss
+    namespaces_overloads_test.go:41: gate cache node miss
+    namespaces_overloads_test.go:44: wrong overload implementation caught by Node in both backends
+--- PASS: TestNamespaceIdenticalOverloadMutant (0.53s)
+=== RUN   TestNamespaceSemanticMutants
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_function
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_function
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_constant
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_constant
+=== RUN   TestNamespaceSemanticMutants/wrong_namespace_enum
+=== PAUSE TestNamespaceSemanticMutants/wrong_namespace_enum
+=== RUN   TestNamespaceSemanticMutants/wrong_body_order
+=== PAUSE TestNamespaceSemanticMutants/wrong_body_order
+=== RUN   TestNamespaceSemanticMutants/wrong_exported_state
+=== PAUSE TestNamespaceSemanticMutants/wrong_exported_state
+=== RUN   TestNamespaceSemanticMutants/wrong_debug_initialization
+=== PAUSE TestNamespaceSemanticMutants/wrong_debug_initialization
+=== RUN   TestNamespaceSemanticMutants/drop_returned_assignment
+=== PAUSE TestNamespaceSemanticMutants/drop_returned_assignment
+=== RUN   TestNamespaceSemanticMutants/wrong_factory_binding
+=== PAUSE TestNamespaceSemanticMutants/wrong_factory_binding
+=== CONT  TestNamespaceSemanticMutants/drop_returned_assignment
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_function
+=== CONT  TestNamespaceSemanticMutants/wrong_debug_initialization
+=== CONT  TestNamespaceSemanticMutants/wrong_exported_state
+=== CONT  TestNamespaceSemanticMutants/wrong_body_order
+=== NAME  TestNamespaceSemanticMutants/wrong_debug_initialization
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_body_order
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_debug_initialization
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_namespace_enum
+=== NAME  TestNamespaceSemanticMutants/drop_returned_assignment
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_exported_state
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_body_order
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_constant
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_function
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_exported_state
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_factory_binding
+=== NAME  TestNamespaceSemanticMutants/drop_returned_assignment
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_function
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_namespace_enum
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_factory_binding
+    namespaces_test.go:195: gate cache node miss
+=== NAME  TestNamespaceSemanticMutants/wrong_namespace_enum
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_constant
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_factory_binding
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+--- PASS: TestNamespaceSemanticMutants (0.00s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_debug_initialization (0.52s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_body_order (0.71s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_exported_state (0.76s)
+    --- PASS: TestNamespaceSemanticMutants/drop_returned_assignment (0.78s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_function (0.87s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_namespace_enum (0.60s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_constant (0.46s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_factory_binding (0.44s)
+=== RUN   TestNamespaceStateMutants
+=== RUN   TestNamespaceStateMutants/lose_assignment
+    namespaces_test.go:262: gate cache node miss
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/lose_hoisting
+    namespaces_test.go:262: gate cache node hit
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/skip_ready_check
+    namespaces_test.go:257: gate cache node miss
+    namespaces_test.go:260: caught by checked JavaScript exit comparison
+--- PASS: TestNamespaceStateMutants (0.88s)
+    --- PASS: TestNamespaceStateMutants/lose_assignment (0.34s)
+    --- PASS: TestNamespaceStateMutants/lose_hoisting (0.23s)
+    --- PASS: TestNamespaceStateMutants/skip_ready_check (0.31s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+    oracle_test.go:729: gate cache node hit
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+    oracle_test.go:729: gate cache node miss
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a
+    oracle_test.go:583: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+    oracle_test.go:729: gate cache node miss
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+    oracle_test.go:729: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+    oracle_test.go:576: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a
+    oracle_test.go:583: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a
+    oracle_test.go:583: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+    oracle_test.go:569: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a
+    oracle_test.go:583: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a
+    oracle_test.go:583: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/identical-overloads.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-identity.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unready.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/BuilderState.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-initialization.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-class.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.log.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/callable-namespace-unknown-before.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/IncrementalParser.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-callable-namespace.a (0.87s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-qualified-receiver.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/local_const_enums.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/native-namespace-object-receiver.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/BinaryExpressionState.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/Parser.JSDocParser.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/ReactNames.a (0.87s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/JsxNames.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/debug-groups/namespace-class-unknown-before.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespaces/shapes/Debug.a (0.83s)
+PASS
+gate cache: native hits=17 misses=40
+gate cache: node hits=3 misses=50
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.190s

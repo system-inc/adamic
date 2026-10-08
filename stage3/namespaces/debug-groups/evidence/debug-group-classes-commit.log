@@ -1,0 +1,7 @@
+[codex/namespaces-tsc 3e18dad6] Lower namespace classes with ordered constructor readiness
+ 12 files changed, 79 insertions(+), 5 deletions(-)
+ create mode 100644 stage3/namespaces/debug-groups/CLASSES.md
+ create mode 100644 stage3/namespaces/debug-groups/namespace-class-initialization.a
+ create mode 100644 stage3/namespaces/debug-groups/namespace-class-unknown-before.a
+ create mode 100644 stage3/namespaces/debug-groups/namespace-class-unready.a
+ create mode 100644 stage3/namespaces/debug-groups/native-namespace-class.a

@@ -1,0 +1,5 @@
+--- FAIL: TestCallableNamespaceBoundaries (0.13s)
+    namespaces_test.go:238: Load: /tmp/adamic-gate/TestCallableNamespaceBoundaries3274728793/004/main.a:1:76: error TS2630: Cannot assign to 'first' because it is a function.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.807s
+FAIL

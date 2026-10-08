@@ -1,0 +1,110 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "compiler_commit": "5249bfbc973800b377b0c39bd2335ad4e7fe7a0a",
+  "main_commit": "f4efdd2369311d1420aa53fdf5c1a55bdda811d4",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "debug_NotYet_before": 13,
+  "debug_NotYet_after": 10,
+  "reading_Debug_before": 55,
+  "reading_Debug_after": 0,
+  "totals": {
+    "Refused": 4781,
+    "NotYet": 1413,
+    "panic": 3,
+    "SkippedDependency": 3
+  },
+  "remaining_debug": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/visitorPublic.ts:1805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:113:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:169:49",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:169:49: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:113:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:170:22",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:170:22: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:113:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:189:56",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:189:56: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:113:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:190:14",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:190:14: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/utilities.ts:10768:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:251:45",
+      "reason": "a generic function as a value",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:251:45: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/utilities.ts:11116:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:255:37",
+      "reason": "a value of type T | null | undefined",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:255:37: stage 0 can't lower a value of type T | null | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/transformers/destructuring.ts:615:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:281:5",
+      "reason": "a function without a body",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:281:5: stage 0 can't lower a function without a body yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/utilities.ts:12064:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:365:29",
+      "reason": "a value of type unknown",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:365:29: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/namespaces-debug-adapted/src/compiler/utilities.ts:8133:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:273:33",
+      "reason": "a value of type never",
+      "text": "/tmp/namespaces-debug-adapted/src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet"
+    }
+  ],
+  "source_files": 79,
+  "seconds": 186.05
+}

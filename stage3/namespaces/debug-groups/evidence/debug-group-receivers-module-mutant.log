@@ -1,0 +1,5 @@
+--- FAIL: TestNamespaceReceiverImportedEscape (0.09s)
+    namespaces_receivers_test.go:30: imported receiver escape lost: /tmp/adamic-gate/TestNamespaceReceiverImportedEscape376046480/001/values.a:1:70: stage 0 can't lower a function with a this parameter used as a value; pass the receiver explicitly or use an arrow yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.123s
+FAIL

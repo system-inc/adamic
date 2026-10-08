@@ -4,17 +4,21 @@ Decision for Kirk, October 6, 2026: a sound qualified-name subset exists, and
 this branch implements it. Admit a single module-scope declaration, nested
 namespaces, interfaces/type aliases, ordinary or generic functions, exported
 constants, mutable exports, private var and uninitialized singleton state,
-namespace enums, and ordered executable bodies. Namespace functions
-can be called, detached and compared by identity. Names can coexist with an
+namespace enums, namespace classes, identical concrete overload contracts,
+and ordered executable bodies. Qualified function/namespace merges lower
+fixed properties, direct calls and canonical identity comparisons. Namespace
+functions without receiver dependence can be detached; receiver-dependent
+functions require proved qualified calls and matching live export reads. Names can coexist with an
 interface or type alias of the same spelling. Type-only namespaces erase.
 
 The namespace object's identity, reflection, escape and mutation are outside
-this subset. Reopening, function/class/enum merging, ambient namespaces,
-namespace classes and non-flat destructured namespace bindings are `NotYet`,
+this subset. Reopening, class/enum merging, ambient namespaces, callable-container
+observations and non-flat destructured namespace bindings are `NotYet`,
 with an alternative using a file module or private state behind fixed exported
 functions. Initialization calls follow known callees; premature namespace reads
-are NotYet and unresolved callees retain runtime namespace readiness checks. A namespace function using `this` is refused: qualified and
-detached calls have different receivers; pass state explicitly.
+are NotYet and unresolved callees retain runtime namespace readiness checks. A named detached receiver-dependent call is refused; receiver
+identity, unknown function-value edges and writes through this stay NotYet.
+Nested object methods bind their own receiver and use ordinary method lowering.
 
 This supersedes the blanket namespace refusal in [0.1](0.1.md), alongside the
 [parameter-property decision](parameter-properties.md). The loader and tsconfig
@@ -32,18 +36,20 @@ runtime declarations in the survey, including nested ones. An eleventh,
 | BuilderState | builderState.ts:100 | 25 functions, three interfaces; merges with an interface of the same name. Its namespace structure fits the subset. |
 | JsxNames | checker.ts:54223 | Ten exported string constants. The wrapper fits; their branded casts are an independent obligation. |
 | ReactNames | checker.ts:54236 | One exported string constant, likewise branded. |
-| Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; its class, overloads and runtime merging remain; calls use reachability checks. |
-| Debug.log | debug.ts:137 | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership. |
+| Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state, class scope, qualified callable merging and identical concrete overloads are covered. Computed cache observation, generic callable values, nullable generic storage and actual assertion contracts remain; calls use reachability checks. |
+| Debug.log | debug.ts:137 | Four functions merged into the callable `log`; fixed qualified properties, direct calls, canonical identity and proved receiver reads lower; an escaping/reflected callable object still needs a runtime container. |
 | BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset. |
-| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; binding value types and overloads remain; calls use reachability checks. |
+| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; binding value types, differing overload contracts and original bodies remain; calls use reachability checks. |
 | Parser.JSDocParser | parser.ts:8790 | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations. |
-| IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain. |
+| IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; identical concrete overload shapes now lower; original parameter contracts and function bodies remain. |
 | tracingEnabled | tracing.ts:37 | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification. |
 
-Observed: five of the ten declaration-shape probes lower, with external types
+Observed: nine of the ten declaration-shape probes lower, with external types
 and function bodies normalized as described below. This does not prove their
 original function bodies compile, their casts are sound, or TypeScript runs.
-Parser, IncrementalParser, Debug and tracing retain explicit blockers. Rewriting them into modules may work after an
+tracingEnabled retains its escaped-container blocker. Original Parser,
+IncrementalParser and Debug bodies retain independent obligations. Rewriting
+these into modules may work after an
 explicit porting review; it is not an unconditional behavior-preserving rewrite.
 
 ## Why qualification is sound
@@ -78,7 +84,8 @@ unknown. Calls check the callee before argument effects; simple writes evaluate
 the right side before their final write check. Direct known premature reads stay
 NotYet. Partial namespace containers still have no representation: an unresolved
 read while the body is incomplete stops loudly, even if some exports have been
-assigned. Neither container escape nor callable/class merging is admitted.
+assigned. Container escape and class merging stay outside the subset; qualified
+callable merging does not observe a container.
 
 Node fixtures exercise private mutable state, nested generic functions,
 same-spelled constants/functions, type/value name coexistence, detached function
@@ -149,7 +156,8 @@ objects cannot be aliased to write through a structural view.
 The Debug-state fixture checks inside/outside numeric writes, compound updates,
 increment, optional built-string replacement and narrowing, and boolean state.
 Changing an outside write from 3 to 30 is caught by Node stdout. This admits the
-state portion of Debug; its class and callable log merge remain separate limits.
+state portion of Debug. Class scope and qualified callable log merging are
+admitted by the later proofs below; full bodies retain independent limits.
 
 ## Stage 3: escaped tracing object remains NotYet
 
@@ -166,21 +174,18 @@ The escape-guard mutant removes only the container observation guard. The
 regression must lose the explicit reason and fail before C emission; the later
 unbound-name NotYet is not mistaken for runtime object support.
 
-## Stage 3: callable and constructor merges remain NotYet
+## Stage 3: callable and constructor merge boundaries
 
-Debug.log's function/namespace merge requires one callable object whose attached
-functions preserve identity and receivers. Class merging similarly needs one
-constructor with staged static properties. The flattened singleton bindings do
-not prove those behaviors, so each form has its own explicit NotYet reason.
-A class declaration inside a namespace also remains NotYet until constructor
-registration and namespace initialization are proven. `debug_log.a`,
-`class_merge.a` and `debug_class.a` retain those independent shapes.
+Class/namespace merging still requires one constructor with staged properties
+and retains its named NotYet boundary (`class_merge.a`). Qualified
+function/namespace merging and classes declared inside namespaces now lower
+under the later proofs below. The original debug_log.a and debug_class.a
+refusal shapes remain historical cuts; their former blanket boundaries were
+replaced by callable-container observation limits and class readiness checks.
+The earlier diagnostic mutants are recorded as historical refusal evidence,
+not proof of a real callable runtime container.
 
-Removing the function-merge or class-merge branch is caught by the regression
-requiring its specific reason. These are diagnostic guard mutants, not evidence
-that native callable namespace objects work.
-
-## Ten declaration shapes, checked again on October 7
+## Ten declaration shapes, checked again on October 8
 
 `stage3/namespaces/shape-census.cjs` uses stock npm TypeScript 6.0.3 on the pinned
 source. Its committed census records source hashes, locations, member-kind
@@ -200,19 +205,20 @@ not adapted original compiler implementations.
 | ReactNames | Lowers | Original branded casts untested |
 | BinaryExpressionState | Lowers | Original callable types and bodies untested |
 | Parser.JSDocParser | Lowers | Original bodies and surrounding parser state untested |
-| Parser | NotYet | Bodyless overload signature after safe initializer calls |
-| IncrementalParser | NotYet | Two overload signatures without bodies |
-| Debug | NotYet | Namespace class; overloads and log merge also remain |
-| Debug.log | NotYet | Callable namespace object |
+| Parser | Lowers | Original types, differing overloads and bodies untested |
+| IncrementalParser | Lowers | Original overload contracts and bodies untested |
+| Debug | Lowers | Original cache observation, assertions, generic values and bodies untested |
+| Debug.log | Lowers | Qualified subset; callable-container escape remains NotYet |
 | tracingEnabled | NotYet | Escaped runtime container |
 
 Parser also has a flat destructured var factory binding, now admitted, and 18 bodyless overload
 signatures. The isolation deliberately retains them; normalizing those away
-would overstate progress. IncrementalParser's enum now lowers in the cut-down
-runtime fixture, but that is weaker than its complete declaration shape.
+would overstate progress. Identical concrete overload contracts now lower
+without removing signatures from the inputs. This remains weaker than the
+original parameter/result contracts and executable bodies.
 The day 3 proof of unchanged parser.ts running natively is **not achieved**.
 
-Regressions live in `TestTscNamespaceDeclarationShapes`. All five accepted
+Regressions live in `TestTscNamespaceDeclarationShapes`. All nine accepted
 shapes are also oracle fixtures. The [validation report](../stage3/namespaces/REPORT.md) records commands,
 outputs, commits, mutants and the setup retry.
 
@@ -317,17 +323,18 @@ located NotYet. The [component report](../stage3/namespaces/CALL_GRAPH.md) recor
 exact timings, sources, diagnostics, mutants, commands and the unchanged matrix.
 
 Parser and IncrementalParser declaration-shape tests now require the same
-bodyless-overload outcome as the module-level implementation capability. This
-branch still returns the existing bodyless-function NotYet; integrations that
-admit checked overloads must also lower these namespace shapes. Namespace regular
+bodyless-overload outcome as the module-level implementation capability. Identical
+concrete overloads are now admitted for both module and namespace scope;
+differing contracts retain the bodyless-function NotYet. Namespace regular
 enum initialization has its own reachability pin, independent of the module
 analysis, so the early-enum refusal survives integration of module ready checks.
 
 
 The October 7 paired meter's 55 `reading Debug` NotYet sites measure as zero on
 this branch across the same 79-source-file adapted input. This is a latent
-measurement on a checker-rejected program. Thirteen other NotYet sites remain
-inside debug.ts; the production whole-file build still fails its dependency
+measurement on a checker-rejected program. The subsequent grouped
+unit reduces thirteen other NotYet sites to ten (two local enum declarations
+and the callable merge cleared); the production whole-file build still fails its dependency
 checker errors. The component report includes the exact remaining-site ledger,
 raw findings and failed production build. Existing post-initialization and
 unresolved-before-initialization Debug reads remain held to Node.
@@ -388,7 +395,7 @@ properties remain NotYet with a named missing-container reason. Class merging
 and namespace reopening retain their earlier limits. The exact front24
 callable declaration probe and expanded calls, properties, identity and
 receiver fixture match Node in both backends. The normalized Debug.log shape
-now lowers; Debug's complete normalized shape still reaches bodyless overloads.
+now lowers; Debug's complete normalized shape now lowers after the identical-overload step.
 See `debug-groups/CALLABLE.md`.
 
 Debug's generic self-reference used as stackCrawlMark (debug.ts:251:45) still
@@ -433,3 +440,11 @@ or define a bottom-argument convention that evaluates a diverging argument
 and never fabricates a parameter value. The real helper observes/serializes
 its impossible argument, so zero storage is not a sound fallback. Evidence:
 `debug-groups/NEVER_PARAMETER.md`.
+
+The final grouped Debug ledger is ten NotYet sites: four namespace-object cache
+observations, two unknown assertion parameters, one generic function value,
+one nullable generic parameter, one differing overload and one never parameter.
+The three exact front24 namespace probes match Node in both backends. The
+original twelve-slice matrix stays six Compiles, three NotYet and three Refused.
+[Grouped report, exact sources, counts and all mutants](../stage3/namespaces/debug-groups/REPORT.md)
+records the final measurement and each pushed group.

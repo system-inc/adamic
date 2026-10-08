@@ -1,0 +1,6 @@
+--- FAIL: TestDebugUnknownAssertionBoundaries (0.05s)
+    --- FAIL: TestDebugUnknownAssertionBoundaries/unknown_condition (0.05s)
+        namespaces_test.go:178: Debug assertion boundary lost: /tmp/adamic-gate/TestDebugUnknownAssertionBoundariesunknown_condition338137220/001/main.a:1:80: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed expression to true); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.059s
+FAIL

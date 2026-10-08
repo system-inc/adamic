@@ -1,0 +1,7 @@
+[codex/namespaces-tsc df66a0c7] Lower qualified callable namespaces with canonical identities and receivers
+ 12 files changed, 219 insertions(+), 6 deletions(-)
+ create mode 100644 internal/lower/namespaces_callable.go
+ create mode 100644 stage3/namespaces/debug-groups/CALLABLE.md
+ create mode 100644 stage3/namespaces/debug-groups/callable-namespace-identity.a
+ create mode 100644 stage3/namespaces/debug-groups/callable-namespace-unknown-before.a
+ create mode 100644 stage3/namespaces/debug-groups/native-callable-namespace.a

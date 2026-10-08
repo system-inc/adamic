@@ -1,0 +1,10 @@
+[codex/namespaces-tsc cda5f0f1] Prove qualified namespace receivers and separate nested method scopes
+ 14 files changed, 306 insertions(+), 5 deletions(-)
+ create mode 100644 internal/lower/namespaces_receivers.go
+ create mode 100644 internal/lower/namespaces_receivers_test.go
+ create mode 100644 stage3/namespaces/debug-groups/RECEIVERS.md
+ create mode 100644 stage3/namespaces/debug-groups/namespace-detached-receiver.a
+ create mode 100644 stage3/namespaces/debug-groups/namespace-detached-receiver.json
+ create mode 100644 stage3/namespaces/debug-groups/namespace-detached-receiver.results.json
+ create mode 100644 stage3/namespaces/debug-groups/namespace-qualified-receiver.a
+ create mode 100644 stage3/namespaces/debug-groups/native-namespace-object-receiver.a

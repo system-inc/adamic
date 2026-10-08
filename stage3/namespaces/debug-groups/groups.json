@@ -1,0 +1,112 @@
+[
+  {
+    "group": "Object/cache observation",
+    "original_Debug_sites": 4,
+    "commit": "8bb1382cca49df7d6ea1ebd686aba5a394192c9f",
+    "moved": "0; explicit container boundary kept",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Unknown assertions",
+    "original_Debug_sites": 2,
+    "commit": "f18f5ea28cb0aef6955aa0074cc0563ebace04c2",
+    "moved": "0; postcondition boundaries kept",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Local const enums",
+    "original_Debug_sites": 2,
+    "commit": "6a80eb29403cacba3fde7df0ad9bba9b525b9e06",
+    "moved": "2 original Debug sites cleared",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Receiver scopes",
+    "original_Debug_sites": 0,
+    "commit": "cda5f0f1f4b29c65fb1ae0bbdb909a109b927327",
+    "moved": "front24 receiver probe 0 to 1",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Namespace classes",
+    "original_Debug_sites": 0,
+    "commit": "3e18dad604475bd20438ece54f40dd2818ac3ffb",
+    "moved": "front24 accepted probes 1 to 2",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Callable namespaces",
+    "original_Debug_sites": 1,
+    "commit": "df66a0c723318faf5f165ef45c9c65111ea5e87a",
+    "moved": "1 original Debug site cleared; front24 accepted probes 2 to 3",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Generic function value",
+    "original_Debug_sites": 1,
+    "commit": "aa5815530e9af447cd2cef40457b962e52d6ff9c",
+    "moved": "0; polymorphic value boundary kept",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Nullable generic",
+    "original_Debug_sites": 1,
+    "commit": "7bc31a70ef12632988383d2410eadf8ac1eb100d",
+    "moved": "0; absence-tag boundary kept",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Overload contracts",
+    "original_Debug_sites": 1,
+    "commit": "1df9157b43884e7fac22514cb4fffe12ecc033c0",
+    "moved": "real site retained; normalized shapes 6 to 9",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  },
+  {
+    "group": "Never parameter",
+    "original_Debug_sites": 1,
+    "commit": "5249bfbc973800b377b0c39bd2335ad4e7fe7a0a",
+    "moved": "0; bottom ABI boundary kept",
+    "original_12_counts": {
+      "Compiles": 6,
+      "NotYet": 3,
+      "Refused": 3
+    }
+  }
+]

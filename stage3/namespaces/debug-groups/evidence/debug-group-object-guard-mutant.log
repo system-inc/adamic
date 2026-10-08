@@ -1,0 +1,5 @@
+--- FAIL: TestDebugNamespaceObservationBoundary (0.07s)
+    namespaces_test.go:164: Debug container boundary lost: /tmp/adamic-gate/TestDebugNamespaceObservationBoundary1851868586/001/main.a:8:26: stage 0 can't lower reading Debug yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.084s
+FAIL

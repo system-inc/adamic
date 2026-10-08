@@ -1,0 +1,60 @@
+{
+  "source_commit": "5d777de3",
+  "compiler_commit": "5249bfbc973800b377b0c39bd2335ad4e7fe7a0a",
+  "probes": [
+    {
+      "probe": "native-namespace-object-receiver",
+      "node": {
+        "stdout": "receiver declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "native": {
+        "stdout": "receiver declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "javascript": {
+        "stdout": "receiver declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      }
+    },
+    {
+      "probe": "native-namespace-class",
+      "node": {
+        "stdout": "class declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "native": {
+        "stdout": "class declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "javascript": {
+        "stdout": "class declaration loaded\n",
+        "stderr": "",
+        "exit": 0
+      }
+    },
+    {
+      "probe": "native-callable-namespace",
+      "node": {
+        "stdout": "callable namespace loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "native": {
+        "stdout": "callable namespace loaded\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "javascript": {
+        "stdout": "callable namespace loaded\n",
+        "stderr": "",
+        "exit": 0
+      }
+    }
+  ]
+}
