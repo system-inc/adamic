@@ -1,0 +1,11 @@
+# Reviewable conditional-statement proposal
+
+Three raw root sites: binder.ts:1080:30, binder.ts:1081:30, checker.ts:49552:9. Production coverage is zero until the dispatch is authorized and applied. Both binder examples still reproduce after the checked non-null merge.
+
+The assigned kinds are now dispatched by expressionStatement in internal/lower/statements.go, not by the owned assignment function. `git log --glob='refs/remotes/origin/codex/notyet-*' -- internal/lower/statements.go` identifies c2d177c7 from the void-value worker as an edit of this function. The user's territory limit says another worker's lower function stays theirs. No production function was edited for this proposal.
+
+PROPOSED.patch adds only a two-line ConditionalExpression dispatch there, with the implementation in a new assignment_conditional.go helper. It evaluates the condition once, executes only the selected statement arm, allows void calls, nested conditionals and discarded undefined, and retains ordinary assignment lowering for assignment arms. No representation choice or runtime C helper is needed. Delete/yield are excluded because they remain explicit refusals.
+
+The .a fixture is tested through a Go build overlay against source Node in both backends, release native, ASan/UBSan and LeakSanitizer. Oracle passes 0.834s. Double-condition and wrong-arm mutants each fail on Node stdout and are restored; no build-error kills. The isolated proposal count refresh passes 0.146s and records allocations/frees 7/7, retains/releases 2/10, peak 5. Production counts remain unchanged. `git apply --check PROPOSED.patch` passes against the current branch.
+
+Commands: `ADAMIC_GATE_UNCACHED=1 go test -overlay /tmp/conditional-overlay.json ./internal/oracle -run TestNativeAgreesWithNode/stage3/notyet-binary/conditional-proposal/conditional.a -count=1 -timeout 15m`; `python /tmp/conditional-proposal-mutants.py`; `go test -overlay /tmp/conditional-counts-overlay.json ./internal/oracle -run TestCountsAreRecorded/fixtures/stage3/notyet-binary/conditional-proposal/conditional.a -count=1 -timeout 15m -args -update-counts`. All output is attached. Applying the proposal still requires production fixture registration, the normal counts refresh and after replays; these are not claimed complete.

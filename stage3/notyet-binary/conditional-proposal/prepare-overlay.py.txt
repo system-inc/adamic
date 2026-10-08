@@ -1,0 +1,56 @@
+from pathlib import Path
+import json,difflib
+root=Path('/workspace/adamic');p=root/'stage3/notyet-binary/conditional-proposal';p.mkdir(exist_ok=True)
+helper='''package lower
+import (
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/ir"
+)
+// A discarded conditional still evaluates its condition once and only its chosen arm.
+func (l *lowering) assignmentConditionalStatement(node *ast.Node) ([]ir.Statement,error) {
+ conditional := node.AsConditionalExpression()
+ condition,err := l.condition(conditional.Condition)
+ if err != nil { return nil,err }
+ yes,err := l.assignmentDiscardedBranch(conditional.WhenTrue)
+ if err != nil { return nil,err }
+ no,err := l.assignmentDiscardedBranch(conditional.WhenFalse)
+ if err != nil { return nil,err }
+ return []ir.Statement{ir.If{Condition:condition,Then:yes,Else:no}},nil
+}
+func (l *lowering) assignmentDiscardedBranch(node *ast.Node) ([]ir.Statement,error) {
+ node=ast.SkipParentheses(node)
+ switch node.Kind {
+ case ast.KindConditionalExpression: return l.assignmentConditionalStatement(node)
+ case ast.KindCallExpression,ast.KindBinaryExpression,ast.KindPrefixUnaryExpression,ast.KindPostfixUnaryExpression: return l.expressionStatement(node)
+ }
+ value,err := l.expression(node)
+ if err != nil { return nil,err }
+ return []ir.Statement{ir.Evaluate{Value:value}},nil
+}
+'''
+(p/'assignment_conditional.go.txt').write_text(helper)
+source=(root/'internal/lower/statements.go').read_text();needle='\tswitch expression.Kind {\n';assert source.count(needle)==1
+changed=source.replace(needle,needle+'\tcase ast.KindConditionalExpression:\n\t\treturn l.assignmentConditionalStatement(expression)\n')
+(p/'statements.go.txt').write_text(changed)
+patch=''.join(difflib.unified_diff(source.splitlines(True),changed.splitlines(True),fromfile='a/internal/lower/statements.go',tofile='b/internal/lower/statements.go'))
+patch+=''.join(difflib.unified_diff([],helper.splitlines(True),fromfile='/dev/null',tofile='b/internal/lower/assignment_conditional.go'))
+(p/'PROPOSED.patch').write_text(patch)
+fixture='''let tests = 0;
+let yes = 0;
+let no = 0;
+function condition(flag: boolean): boolean { tests += 1; return flag; }
+function chosen(): void { yes += 1; }
+function other(): void { no += 1; }
+function run(flag: boolean): void { condition(flag) ? chosen() : other(); }
+const arrow = (flag: boolean): void => condition(flag) ? chosen() : undefined;
+run(true); run(false); arrow(true); arrow(false);
+console.log(`${tests}:${yes}:${no}`);
+let value = 0;
+true ? value = 7 : value = 8;
+console.log(`${value}`);
+'''
+(p/'conditional.a').write_text(fixture)
+registry=(root/'internal/oracle/binary_mixed_test.go').read_text()+'\nfunc init(){fixtures=append(fixtures,struct { path string; lowers bool; checked bool }{"stage3/notyet-binary/conditional-proposal/conditional.a",true,false})}\n'
+(p/'registry.go.txt').write_text(registry)
+replace={str(root/'internal/lower/statements.go'):str(p/'statements.go.txt'),str(root/'internal/lower/assignment_conditional.go'):str(p/'assignment_conditional.go.txt'),str(root/'internal/oracle/binary_mixed_test.go'):str(p/'registry.go.txt')}
+Path('/tmp/conditional-overlay.json').write_text(json.dumps({'Replace':replace}))

@@ -1,0 +1,11 @@
+from pathlib import Path
+import os,subprocess
+p=Path('stage3/notyet-binary/conditional-proposal/assignment_conditional.go.txt');original=p.read_text()
+for name,before,after in [('double-condition','return []ir.Statement{ir.If{Condition:condition,Then:yes,Else:no}}','return []ir.Statement{ir.Evaluate{Value:condition},ir.If{Condition:condition,Then:yes,Else:no}}'),('wrong-arm','Then:yes,Else:no','Then:no,Else:yes')]:
+ try:
+  assert original.count(before)==1;p.write_text(original.replace(before,after))
+  path=Path('/tmp/conditional-proposal-mutant-'+name+'.log')
+  with path.open('w') as f:r=subprocess.run(['go','test','-overlay','/tmp/conditional-overlay.json','./internal/oracle','-run','TestNativeAgreesWithNode/stage3/notyet-binary/conditional-proposal/conditional.a','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  text=path.read_text();assert r.returncode and 'stdout differs' in text and '[build failed]' not in text,(name,text)
+  print(name,'caught by Node stdout',flush=True)
+ finally:p.write_text(original)

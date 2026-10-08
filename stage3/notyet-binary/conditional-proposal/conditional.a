@@ -1,0 +1,13 @@
+let tests = 0;
+let yes = 0;
+let no = 0;
+function condition(flag: boolean): boolean { tests += 1; return flag; }
+function chosen(): void { yes += 1; }
+function other(): void { no += 1; }
+function run(flag: boolean): void { condition(flag) ? chosen() : other(); }
+const arrow = (flag: boolean): void => condition(flag) ? chosen() : undefined;
+run(true); run(false); arrow(true); arrow(false);
+console.log(`${tests}:${yes}:${no}`);
+let value = 0;
+true ? value = 7 : value = 8;
+console.log(`${value}`);

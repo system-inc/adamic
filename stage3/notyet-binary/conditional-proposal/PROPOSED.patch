@@ -1,0 +1,40 @@
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -110,6 +110,8 @@
+ 		return statements, err
+ 	}
+ 	switch expression.Kind {
++	case ast.KindConditionalExpression:
++		return l.assignmentConditionalStatement(expression)
+ 	case ast.KindCallExpression:
+ 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+ 			return l.superStatement(expression)
+--- /dev/null
++++ b/internal/lower/assignment_conditional.go
+@@ -0,0 +1,26 @@
++package lower
++import (
++ "github.com/microsoft/TypeScript/tsc/shim/ast"
++ "github.com/system-inc/adamic/internal/ir"
++)
++// A discarded conditional still evaluates its condition once and only its chosen arm.
++func (l *lowering) assignmentConditionalStatement(node *ast.Node) ([]ir.Statement,error) {
++ conditional := node.AsConditionalExpression()
++ condition,err := l.condition(conditional.Condition)
++ if err != nil { return nil,err }
++ yes,err := l.assignmentDiscardedBranch(conditional.WhenTrue)
++ if err != nil { return nil,err }
++ no,err := l.assignmentDiscardedBranch(conditional.WhenFalse)
++ if err != nil { return nil,err }
++ return []ir.Statement{ir.If{Condition:condition,Then:yes,Else:no}},nil
++}
++func (l *lowering) assignmentDiscardedBranch(node *ast.Node) ([]ir.Statement,error) {
++ node=ast.SkipParentheses(node)
++ switch node.Kind {
++ case ast.KindConditionalExpression: return l.assignmentConditionalStatement(node)
++ case ast.KindCallExpression,ast.KindBinaryExpression,ast.KindPrefixUnaryExpression,ast.KindPostfixUnaryExpression: return l.expressionStatement(node)
++ }
++ value,err := l.expression(node)
++ if err != nil { return nil,err }
++ return []ir.Statement{ir.Evaluate{Value:value}},nil
++}
