@@ -1,0 +1,3 @@
+function visitBindingElement(elem: { readonly value: number }): number;
+function visitBindingElement(elem: { readonly value: 7 }): number { return Number(elem.value); }
+console.log(`${visitBindingElement({ value: 8 })}`);

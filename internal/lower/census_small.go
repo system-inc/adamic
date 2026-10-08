@@ -210,6 +210,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			}
 			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
 		}
+		if (givenRest || takesRest || implementation.Parent.Kind != ast.KindSourceFile) && l.censusOverloadStorageDiffers(given, takes, map[[2]*checker.Type]bool{}) {
+			return l.notYet(parameter, label+" with a nested or rest parameter requiring another field representation")
+		}
 	}
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
@@ -267,6 +270,32 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 		overload := resolved.Declaration()
 		implementation := l.censusImplementation(overload)
 		if implementation != nil && overload.Body() == nil {
+			invoked, direct := value.(ir.Call)
+			if !direct {
+				return nil, l.notYet(call.AsNode(), "overload arguments outside a direct implementation call")
+			}
+			for index, argument := range invoked.Arguments {
+				if len(implementation.TypeParameters()) != 0 {
+					break
+				}
+				if index >= len(implementation.Parameters()) || index >= len(call.Arguments.Nodes) {
+					break
+				}
+				written := call.Arguments.Nodes[index]
+				given := l.checker.GetContextualType(written, checker.ContextFlagsNone)
+				if given == nil {
+					given = l.checker.GetTypeAtLocation(written)
+				}
+				takes, _, _, err := l.censusOverloadParameter(implementation.Parameters(), index)
+				if err != nil {
+					return nil, err
+				}
+				invoked.Arguments[index], err = l.censusOverloadArgument(written, argument, given, takes)
+				if err != nil {
+					return nil, err
+				}
+			}
+			value = invoked
 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
 				return l.predicateOverloadResult(call, value, implementation, overload)
 			}
@@ -405,4 +434,67 @@ func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
 		parameter = l.checker.GetElementTypeOfArrayType(parameter)
 	}
 	return parameter.Flags()&checker.TypeFlagsNever != 0
+}
+
+// A readonly view is a sound type relation, but it can still change a stored
+// field from a scalar to a boxed union. The implementation reads its own layout.
+func (l *lowering) censusOverloadStorageDiffers(source, target *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	source, target = l.concrete(source), l.concrete(target)
+	if source == nil || target == nil || source == target || visited[[2]*checker.Type{source, target}] {
+		return false
+	}
+	visited[[2]*checker.Type{source, target}] = true
+	from, fromKnown := l.representation(source)
+	to, toKnown := l.representation(target)
+	if !fromKnown || !toKnown {
+		return true
+	}
+	if from != to {
+		return true
+	}
+	if from == ir.Array && l.checker.IsArrayType(source) && l.checker.IsArrayType(target) {
+		return l.censusOverloadStorageDiffers(l.checker.GetElementTypeOfArrayType(source), l.checker.GetElementTypeOfArrayType(target), visited)
+	}
+	if from != ir.Object {
+		return false
+	}
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		given := l.checker.GetPropertyOfType(source, property.Name)
+		if given != nil && l.censusOverloadStorageDiffers(l.checker.GetTypeOfSymbol(given), l.checker.GetTypeOfSymbol(property), visited) {
+			return true
+		}
+	}
+	return false
+}
+
+// Re-layout only an object being allocated at this call. Copying or changing an
+// existing object would break identity or the representation its aliases read.
+func (l *lowering) censusOverloadArgument(where *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if !l.censusOverloadStorageDiffers(source, target, map[[2]*checker.Type]bool{}) {
+		return value, nil
+	}
+	to, known := l.representation(target)
+	if known && value.Type() != ir.Object && to != ir.Object && value.Type() != ir.Array && to != ir.Array {
+		converted := fit(value, to)
+		if converted.Type() == to {
+			return converted, nil
+		}
+	}
+	literal, fresh := value.(ir.ObjectLiteral)
+	if !fresh || literal.Spread != nil || literal.Class != 0 || to != ir.Object {
+		return nil, l.notYet(where, "an overload argument requiring another field representation; pass a fresh object literal")
+	}
+	for index, field := range literal.Fields {
+		takes := l.checker.GetPropertyOfType(target, field.Name)
+		given := l.checker.GetPropertyOfType(source, field.Name)
+		if takes == nil || given == nil {
+			continue
+		}
+		converted, err := l.censusOverloadArgument(where, field.Value, l.checker.GetTypeOfSymbol(given), l.checker.GetTypeOfSymbol(takes))
+		if err != nil {
+			return nil, err
+		}
+		literal.Fields[index].Value = converted
+	}
+	return literal, nil
 }

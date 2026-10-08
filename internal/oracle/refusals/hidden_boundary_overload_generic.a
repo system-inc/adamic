@@ -1,0 +1,5 @@
+interface Node { readonly kind: number; }
+interface BindingElement extends Node { readonly value: number; }
+function visitBindingElement<T extends Node>(elem: T): T;
+function visitBindingElement(elem: BindingElement): BindingElement { return elem; }
+console.log(`${visitBindingElement({ kind: 0 }).kind}`);
