@@ -1,8 +1,8 @@
-Built: merged census 24a2b287, host blockers b788e96e, front-3 28a10122, current main ce0750f2, and library dependencies for exact host fixture 24; acceptance remains partial. Pre-enforcement release parser best of five: main 48c05d09 9.347 ms, merged 10.137 ms.
-Commits: census merge bf1a3823; host merge 14856bbf; front-3 merge ec485eab; current main merge 28443efc. All are pushed to codex/closure-convention; this host fixture checkpoint follows them. The explicitly requested warning is also pushed to codex/arguments-length as fa48dc2d.
-Commands and outputs: uncached host/replacement Node gate 38.225s, full flow 195.888s, recorded counts 160.115s excluding only blocked taste 21, all passed; host24 agrees in both backends. weak_parent 253/302 and typeof_dispatch 6/16 remain main's counts.
-Mutants: generated and runtime drop-count rejected by clang under -Werror; excess-count and unused-runtime literal mutants caught by pins; five callback, 31 filesystem, nested-reference and switch mutants caught by their Node/backend checks.
-Not covered: parser C and binary identity FAIL; hardware instructions/cycles unavailable; taste 21 blocks the complete gate; host fixture 24 now agrees with Node in both backends; four external process/parallel runtime call sites remain unintegrated.
+Built: three-way closure reconciliation, exact host24, typedef-derived definitions, no erased virtual function pointers, and parser count regressions. Parser C/binary identity to main 48c05d09 still FAIL; current release best of five main 10.208 ms versus branch 10.854 ms.
+Commits: census bf1a3823, host 14856bbf, front-3 ec485eab, main 28443efc, host24 9b6b451c, ABI enforcement 2b98fb26, all pushed on codex/closure-convention. Warning fa48dc2d is pushed on codex/arguments-length. This follow-up removes the obsolete count slot and pins the clean wrong-slot miscompile.
+Commands and outputs: full native 156.042s, full IR 1.248s/lower 37.162s, class/nested/host24 Node gate 32.880s, non-null/union Node gate 16.829s, and touched-package go vet pass. Count-bearing regressions pass release, ASan/UBSan, JavaScript and leak checks.
+Mutants: swapped definition/call, incompatible function-pointer cast, void-erased constructor and generated/runtime drop-count all fail compilation; clean wrong-slot 9-versus-1 fails only Node stdout comparison in release and sanitized builds. Prior excess-count, callback, filesystem and inheritance mutants remain caught.
+Not covered: exact unpublished parser scratch 33bf53ac replay, parser byte identity, hardware instructions/cycles, blocked taste 21 full gate, and four external process/parallel runtime sites. A reconstruction verifies 64 of 77 front25 compiler-file postimages; 13 essential postimages remain unavailable, so no exact replay claim.
 
 One convention
 
@@ -166,3 +166,49 @@ set. Requested a bundle or complete compiler tree from the parser worker.
 Wrong-order and cast mutants are observed C compiler failures here, not claimed
 as the requested exact scratch replay. Earlier parser byte-identity failure and
 best-five numbers predate this enforcement change; a fresh identity check follows.
+
+Post-enforcement validation and legacy slot removal
+
+The IR previously retained ArgumentCountSlot as a misleading name for the end
+of fixed/rest storage. It is now FixedArgumentSlots, with no numeric count word
+reserved. Rest offsets and emitted C are unchanged; parser C cmp passes against
+2b98fb26's output. Legacy code that reads Program.ArgumentCountSlot no longer
+builds against this IR. The actual count remains the separate typed parameter.
+
+TestArgumentsLengthWrongSlotMutant replaces the actual binding with
+arguments[0].number in the exact parser probe. It compiles, prints 9, exits 0,
+and writes no stderr under release and ASan/UBSan. Source Node prints 1.
+Both runs are caught only by stdout comparison, reproducing the reported silent
+miscompile as a proving mutant; this is not claimed as the exact scratch replay.
+
+Full IR initially found an unapproved direct Call.Function read in non_null.go.
+Checked-union synthetic-load recognition now uses CallTargets and requires one
+checked helper candidate. It preserves the terminal nullish check and never
+peels a multi-target virtual call. The existing closed-world reader guard,
+non-null and checked-union fixtures pass; no allowlist exception was added.
+Full IR/lower and touched-package go vet then pass (see saved logs).
+
+Fresh release parser identity (same -O2 flags, pinned main 48c05d09):
+C main 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9
+C branch 4e1ecc52120c88b612992fbfb53b9ac80cd3078226ad8522ba34dcf6635b253d
+binary main db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e
+binary branch 8dd60d220fb73218f2665f0b6cc2e3e399541cf05271b8013e34a7e994cea83d
+Both comparisons are false. New typedef-derived declarations and virtual-table
+identities add differences to the already documented merged host/method changes.
+This is an acceptance failure, not a byte-identity or performance parity claim.
+Best-five runs alternate the two release binaries on the idle box with identical
+--manifest, --count and --whole flags: main 10.208 ms, branch 10.854 ms; every
+run prints 10523, exits 0, empty stderr. CPU PMU instructions and cycles remain
+unmeasured: perf_event_open returns ENOENT (errno 2) for each event.
+
+Exact replay investigation: front5's compiler patch matches all 64 old blob
+hashes against compiler/stage3-front-2 860a0d5e. Its compiler files apply in a
+fresh detached worktree. Later saved patches reconstruct 64 of 77 front25
+compiler postimages with matching Git hashes; 13 remain unavailable, including
+emit_functions.go fc6b74df -> 6d27d8b6, IR, lowering and JavaScript files.
+No invented conflict resolutions or discovery stubs are substituted. A separate
+host-only merge attempt cannot replay the parser's resolver: its object.go hunk
+lacks the expected CallbackType context. That disposable merge is aborted.
+Need the parser worker's unpublished scratch bundle or complete compiler tree
+to perform the exact requested C refusal build. Published branch evidence and
+our four C compiler error mutants are not a substitute for this requirement.

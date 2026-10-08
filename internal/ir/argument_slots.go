@@ -38,7 +38,7 @@ func (p *Program) PrepareArgumentSlots() {
 			}
 		}
 	}
-	p.ArgumentCountSlot = fixed + len(p.RestArgumentSlots)
+	p.FixedArgumentSlots = fixed
 }
 
 type ArgumentLayout struct {

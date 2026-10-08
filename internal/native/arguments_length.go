@@ -7,8 +7,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// closureArguments keeps the legacy two-argument ABI. Optional slots and rest
-// tails are prepared here; no count is needed to bind them in the callee.
+// closureArguments pads fixed slots and collects rest tails at the caller.
+// The actual count travels separately through the selected typed convention.
 func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
 	if len(call.Spread) != 0 {
 		packed := e.packCallArguments(call.Arguments, call.Spread)
@@ -47,7 +47,7 @@ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, coun
 	}
 	// Extra actual arguments are evaluated, but only parameter slots are kept.
 	// The original source remains available while collecting each rest tail.
-	base := e.program.ArgumentCountSlot - len(e.program.RestArgumentSlots)
+	base := e.program.FixedArgumentSlots
 	entries := []string{}
 	for index, slot := range slots[:min(base, len(slots))] {
 		entries = append(entries, fmt.Sprintf("[%d] = %s", index, slot))

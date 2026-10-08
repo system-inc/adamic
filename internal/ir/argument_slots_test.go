@@ -23,7 +23,7 @@ func TestArgumentLayouts(t *testing.T) {
 		t.Fatalf("mixed fixed/rest layout: %+v", rest)
 	}
 	reader := p.ClosureArgumentLayout(CallClosure{FunctionType: 3})
-	if !reader.Count || p.ArgumentCountSlot <= p.RestArgumentSlots[rest.Rest[0]] {
+	if !reader.Count || p.RestArgumentSlots[rest.Rest[0]] < p.FixedArgumentSlots {
 		t.Fatalf("reader layout: %+v", reader)
 	}
 	if p.ClosureArgumentLayout(CallClosure{FunctionType: 4}).Count {

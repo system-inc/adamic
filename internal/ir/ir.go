@@ -40,9 +40,9 @@ type Program struct {
 
 	// FunctionTypeTargets is the closed-world set for each checker function type.
 	FunctionTypeTargets map[int][]int
-	// Packed calls reserve these slots only when a candidate needs them.
-	ArgumentCountSlot int
-	RestArgumentSlots map[RestArguments]int
+	// Packed calls reserve fixed words and separate rest tails, never a count word.
+	FixedArgumentSlots int
+	RestArgumentSlots  map[RestArguments]int
 
 	// Main is what the program does, in order.
 	Main []Statement

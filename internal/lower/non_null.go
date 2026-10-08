@@ -24,7 +24,8 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 		case ir.Narrow:
 			value = narrowed.Value
 		case ir.Call:
-			if !l.result.Functions[narrowed.Function].CheckedUnionNarrow || len(narrowed.Arguments) != 1 {
+			targets := l.result.CallTargets(narrowed)
+			if len(targets) != 1 || !l.result.Functions[targets[0]].CheckedUnionNarrow || len(narrowed.Arguments) != 1 {
 				goto stored
 			}
 			value = narrowed.Arguments[0]
