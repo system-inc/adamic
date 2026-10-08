@@ -172,7 +172,10 @@ export class Linter {
                     panic('invalid fix range');
                 }
                 if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
-                    panic('nonprogressing fix');
+                    this.rejected.push(`rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`);
+                    previous = finding.editEnd;
+                    winner = finding.rule;
+                    continue;
                 }
                 applied.push(finding);
                 previous = finding.editEnd;
