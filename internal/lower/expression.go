@@ -63,6 +63,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.clockNullableString(proven) {
+			return ir.String, true
+		}
 		if l.includesNull(proven) {
 			// A nullable match result uses NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
@@ -552,7 +555,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
-		return l.combine(node, binary.OperatorToken.Kind, left, right)
+		value, err := l.combine(node, binary.OperatorToken.Kind, left, right)
+		return l.clockStringNullObservation(node, value), err
 	case ast.KindTaggedTemplateExpression:
 		return l.stringRawTemplate(node)
 	case ast.KindTemplateExpression:

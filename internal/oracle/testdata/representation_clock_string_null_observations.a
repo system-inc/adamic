@@ -1,0 +1,23 @@
+let calls = 0;
+function fallback(): string {
+    calls++;
+    return 'fallback';
+}
+function lazy(value: string | null): void {
+    console.log(`${value ?? fallback()}:${calls}`);
+}
+lazy('text');
+lazy('');
+lazy(null);
+const holder: { value: string | null } = { value: 'text' };
+function clear(): void { holder.value = null; }
+if (holder.value !== null) {
+    clear();
+    console.log(`${typeof holder.value}:${holder.value === null}:${holder.value ?? 'fallback'}`);
+    console.log(`${null === holder.value}:${holder.value !== null}:${null !== holder.value}:${holder.value === undefined}`);
+}
+function compare(value: string | null): void {
+    console.log(`${value === null}:${null === value}:${value !== null}:${null !== value}:${value === undefined}:${undefined === value}`);
+}
+compare('');
+compare(null);

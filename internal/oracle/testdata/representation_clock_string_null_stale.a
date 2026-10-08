@@ -1,0 +1,6 @@
+const slot: { value: string | null } = { value: 'text' };
+function clear(): void { slot.value = null; }
+if (slot.value !== null) {
+    clear();
+    console.log(`${slot.value.length}`);
+}

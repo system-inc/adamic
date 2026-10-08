@@ -1,0 +1,8 @@
+=== RUN   TestClockStringNullRepresentation
+=== RUN   TestClockStringNullRepresentation/present-literals
+    representation_clock_string_null_test.go:44: admission for 'text' | '' = true, want false
+--- FAIL: TestClockStringNullRepresentation (0.04s)
+    --- FAIL: TestClockStringNullRepresentation/present-literals (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.052s
+FAIL

@@ -1,0 +1,175 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestClockStringNullTypeofMutant
+=== RUN   TestClockStringNullTypeofMutant/clock-string-null-typeof-undefined
+    representation_clock_string_null_test.go:37: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+    representation_clock_string_null_test.go:54: Node "string:false:text\nstring:false:\nobject:true:fallback\n"; mutant "string:false:text\nstring:false:\nundefined:true:fallback\n"
+--- PASS: TestClockStringNullTypeofMutant (0.08s)
+    --- PASS: TestClockStringNullTypeofMutant/clock-string-null-typeof-undefined (0.08s)
+=== RUN   TestTypeOfNullMutant
+=== PAUSE TestTypeOfNullMutant
+=== RUN   TestTypeOfNullSlotPresenceMutant
+=== PAUSE TestTypeOfNullSlotPresenceMutant
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTypeOfNullSlotPresenceMutant
+=== CONT  TestTypeOfNullMutant
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== RUN   TestTypeOfNullMutant/typeof_null.a
+=== PAUSE TestTypeOfNullMutant/typeof_null.a
+=== RUN   TestTypeOfNullMutant/typeof_null_compare.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_compare.a
+=== RUN   TestTypeOfNullMutant/typeof_null_switch.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_switch.a
+=== RUN   TestTypeOfNullMutant/typeof_null_slots.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_slots.a
+=== RUN   TestTypeOfNullMutant/typeof_null_roll.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_roll.a
+=== CONT  TestTypeOfNullMutant/typeof_null.a
+=== CONT  TestTypeOfNullMutant/typeof_null_slots.a
+=== CONT  TestTypeOfNullMutant/typeof_null_switch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== CONT  TestTypeOfNullMutant/typeof_null_compare.a
+=== NAME  TestTypeOfNullMutant/typeof_null_switch.a
+    typeof_null_test.go:46: gate cache node miss
+=== NAME  TestTypeOfNullMutant/typeof_null.a
+    typeof_null_test.go:46: gate cache node miss
+=== NAME  TestTypeOfNullSlotPresenceMutant
+    typeof_null_test.go:121: gate cache node miss
+=== NAME  TestTypeOfNullMutant/typeof_null_compare.a
+    typeof_null_test.go:46: gate cache node miss
+=== NAME  TestTypeOfNullMutant/typeof_null_switch.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null_slots.a
+    typeof_null_test.go:46: gate cache node hit
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null_compare.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null_switch.a
+    oracle_test.go:594: gate cache native hit
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal object\ncalled once\ncall object\nslot object\nslot object\nstring\nnumber\nundefined\n"; mutant "literal wrong\ncalled once\ncall wrong\nslot wrong\nslot object\nstring\nnumber\nundefined\n"
+=== CONT  TestTypeOfNullMutant/typeof_null_roll.a
+=== NAME  TestTypeOfNullMutant/typeof_null.a
+    oracle_test.go:594: gate cache native hit
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal: object\nvariable: object\nfunction: object\nvalues: number boolean string undefined\n"; mutant "literal: undefined\nvariable: undefined\nfunction: undefined\nvalues: number boolean string undefined\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== NAME  TestTypeOfNullMutant/typeof_null_slots.a
+    oracle_test.go:594: gate cache native hit
+    typeof_null_test.go:61: caught 11 restored observations: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: undefined false\nmissing slot\nindex: undefined false\nmissing slot\nrelative: undefined undefined\nmap: undefined object undefined\npop: undefined undefined\ngeneric: undefined\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== NAME  TestTypeOfNullSlotPresenceMutant
+    typeof_null_test.go:139: caught: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: object true\nobject slot\nindex: undefined true\nobject slot\nrelative: object object\nmap: object object object\npop: object object\ngeneric: object\n"
+--- PASS: TestTypeOfNullSlotPresenceMutant (0.51s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== NAME  TestTypeOfNullMutant/typeof_null_roll.a
+    typeof_null_test.go:46: gate cache node miss
+=== NAME  TestTypeOfNullMutant/typeof_null_compare.a
+    oracle_test.go:594: gate cache native hit
+    typeof_null_test.go:61: caught 9 restored observations: Node "literal: true true\nslot: object true true true\nobject branch\nslot: object true true true\nobject branch\nfield: object true\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"; mutant "literal: false false\nslot: undefined false false false\nwrong branch\nslot: object true true true\nobject branch\nfield: undefined false\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null_roll.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestTypeOfNullMutant/typeof_null_roll.a
+    oracle_test.go:594: gate cache native hit
+    typeof_null_test.go:61: caught 1 restored observations: Node "opsRoll null object null\n"; mutant "opsRoll null undefined null\n"
+--- PASS: TestTypeOfNullMutant (0.01s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_switch.a (0.44s)
+    --- PASS: TestTypeOfNullMutant/typeof_null.a (0.44s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_slots.a (0.49s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_compare.a (0.48s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_roll.a (0.41s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:580: gate cache native miss
+    oracle_test.go:594: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a (0.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a (0.41s)
+PASS
+gate cache: native hits=20 misses=15
+gate cache: node hits=13 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.362s

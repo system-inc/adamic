@@ -1,0 +1,20 @@
+=== RUN   TestClockStringNullRepresentation
+=== RUN   TestClockStringNullRepresentation/nullable-string
+=== RUN   TestClockStringNullRepresentation/nullable-literals
+=== RUN   TestClockStringNullRepresentation/three-state
+=== RUN   TestClockStringNullRepresentation/nullable-number
+=== RUN   TestClockStringNullRepresentation/mixed-nullable
+=== RUN   TestClockStringNullRepresentation/nullable-object
+=== RUN   TestClockStringNullRepresentation/present-only
+=== RUN   TestClockStringNullRepresentation/present-literals
+--- PASS: TestClockStringNullRepresentation (0.29s)
+    --- PASS: TestClockStringNullRepresentation/nullable-string (0.04s)
+    --- PASS: TestClockStringNullRepresentation/nullable-literals (0.04s)
+    --- PASS: TestClockStringNullRepresentation/three-state (0.03s)
+    --- PASS: TestClockStringNullRepresentation/nullable-number (0.04s)
+    --- PASS: TestClockStringNullRepresentation/mixed-nullable (0.03s)
+    --- PASS: TestClockStringNullRepresentation/nullable-object (0.04s)
+    --- PASS: TestClockStringNullRepresentation/present-only (0.04s)
+    --- PASS: TestClockStringNullRepresentation/present-literals (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.304s

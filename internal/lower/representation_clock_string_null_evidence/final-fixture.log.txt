@@ -1,0 +1,46 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestClockStringNullTypeofMutant
+=== RUN   TestClockStringNullTypeofMutant/clock-string-null-typeof-undefined
+    representation_clock_string_null_test.go:37: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+    representation_clock_string_null_test.go:54: Node "string:false:text\nstring:false:\nobject:true:fallback\n"; mutant "string:false:text\nstring:false:\nundefined:true:fallback\n"
+--- PASS: TestClockStringNullTypeofMutant (0.07s)
+    --- PASS: TestClockStringNullTypeofMutant/clock-string-null-typeof-undefined (0.07s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+    oracle_test.go:594: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null.a (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_stale.a (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a (0.08s)
+PASS
+gate cache: native hits=10 misses=0
+gate cache: node hits=7 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.179s

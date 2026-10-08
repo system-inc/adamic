@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native hit
+    oracle_test.go:761: stdout differs
+        node:   exit 0, stdout "text:0\n:0\nfallback:1\nobject:true:fallback\ntrue:false:false:false\nfalse:false:true:true:false:false\ntrue:true:false:false:false:false\n", stderr ""
+        native: exit 0, stdout "text:0\n:0\nfallback:1\nobject:false:fallback\nfalse:true:true:false\nfalse:false:true:true:false:false\ntrue:true:false:false:false:false\n", stderr ""
+    oracle_test.go:767: JavaScript backend: stdout differs
+        node:    exit 0, stdout "text:0\n:0\nfallback:1\nobject:true:fallback\ntrue:false:false:false\nfalse:false:true:true:false:false\ntrue:true:false:false:false:false\n", stderr ""
+        backend: exit 0, stdout "text:0\n:0\nfallback:1\nobject:false:fallback\nfalse:true:true:false\nfalse:false:true:true:false:false\ntrue:true:false:false:false:false\n", stderr ""
+    oracle_test.go:594: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_string_null_observations.a (0.08s)
+FAIL
+gate cache: native hits=3 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.107s
+FAIL

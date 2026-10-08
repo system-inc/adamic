@@ -1,0 +1,8 @@
+=== RUN   TestClockStringNullRepresentation
+=== RUN   TestClockStringNullRepresentation/three-state
+    representation_clock_string_null_test.go:44: admission for string | null | undefined = true, want false
+--- FAIL: TestClockStringNullRepresentation (0.04s)
+    --- FAIL: TestClockStringNullRepresentation/three-state (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.052s
+FAIL
