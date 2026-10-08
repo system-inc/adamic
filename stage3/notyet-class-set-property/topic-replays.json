@@ -1,0 +1,498 @@
+[
+  {
+    "site": "method-core",
+    "where": "src/compiler/core.ts:1544:5",
+    "reason": "replacing a represented method at runtime",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:1543:17",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1544:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1545:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1546:12",
+        "reason": "reading map"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-method-core.log"
+  },
+  {
+    "site": "method-sys",
+    "where": "src/compiler/sys.ts:1382:5",
+    "reason": "replacing a represented method at runtime",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/sys.ts:1382:34",
+        "reason": "a function value taking boolean | undefined"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-method-sys.log"
+  },
+  {
+    "site": "array-tracing",
+    "where": "src/compiler/tracing.ts:164:9",
+    "reason": "assigning a field of a value",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tracing.ts:162:9",
+        "reason": "reading Debug"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-array-tracing.log"
+  },
+  {
+    "site": "array-core",
+    "where": "src/compiler/core.ts:307:5",
+    "reason": "assigning a field of a value",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:302:15",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:307:5",
+        "reason": "assigning a field of a value"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-array-core.log"
+  },
+  {
+    "site": "node-parser",
+    "where": "src/compiler/parser.ts:1341:5",
+    "reason": "storing true | Node | undefined in a field",
+    "exit": 1,
+    "findings": [],
+    "log": "/tmp/adamic-topic-replay-node-parser.log"
+  },
+  {
+    "site": "node-utilities",
+    "where": "src/compiler/utilities.ts:8987:17",
+    "reason": "storing true | Node | undefined in a field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8987:48",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8998:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-node-utilities.log"
+  },
+  {
+    "site": "false-type",
+    "where": "src/compiler/checker.ts:15245:9",
+    "reason": "storing false | Type in a field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:15220:20",
+        "reason": "a BinaryExpression with a union of differently held members and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:15237:17",
+        "reason": "a BinaryExpression with a value and a boolean"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-false-type.log"
+  },
+  {
+    "site": "path",
+    "where": "src/compiler/builder.ts:668:13",
+    "reason": "storing Path | undefined in a field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/builder.ts:642:13",
+        "reason": "a value as a condition"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:675:25",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:676:13",
+        "reason": "reading nextKey"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:683:33",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:684:13",
+        "reason": "reading compilerOptions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:687:31",
+        "reason": "reading BuilderState"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:694:40",
+        "reason": "reading nextKey"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:696:13",
+        "reason": "a PrefixUnaryExpression on a value"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-path.log"
+  },
+  {
+    "site": "false-symbol",
+    "where": "src/compiler/checker.ts:34075:13",
+    "reason": "storing false | Symbol in a field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34055:22",
+        "reason": "a BinaryExpression with a value and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34056:23",
+        "reason": "reading file"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34057:13",
+        "reason": "reading links"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34060:13",
+        "reason": "reading links"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34063:102",
+        "reason": "reading file"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34064:14",
+        "reason": "reading runtimeImportSpecifier"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34071:56",
+        "reason": "reading file"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34072:43",
+        "reason": "reading specifier"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34073:24",
+        "reason": "reading mod"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34074:13",
+        "reason": "reading links"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:34077:16",
+        "reason": "reading result"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-false-symbol.log"
+  },
+  {
+    "site": "scalar",
+    "where": "src/compiler/factory/emitNode.ts:242:5",
+    "reason": "storing string | number in a field",
+    "exit": 1,
+    "findings": [],
+    "log": "/tmp/adamic-topic-replay-scalar.log"
+  },
+  {
+    "site": "false-array",
+    "where": "src/compiler/moduleNameResolver.ts:2277:12",
+    "reason": "storing false | string[] | undefined in a field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2235:9",
+        "reason": "a PrefixUnaryExpression on a boolean | undefined"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/moduleNameResolver.ts:2242:74",
+        "reason": "a boolean | undefined as a condition"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2244:72",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2245:5",
+        "reason": "reading loadPackageJsonMainState"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2246:5",
+        "reason": "reading loadPackageJsonMainState"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2248:9",
+        "reason": "reading extensions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:926:59",
+        "reason": "a value of type T | undefined"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2256:54",
+        "reason": "a value of type object | undefined"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2277:59",
+        "reason": "a BinaryExpression with a value and a boolean"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-false-array.log"
+  },
+  {
+    "site": "any",
+    "where": "src/compiler/tsbuildPublic.ts:2080:5",
+    "reason": "storing any in a field",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2080:5",
+        "reason": "storing any in a field"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2083:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2291:114",
+        "reason": "a parameter that isn't a plain name"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:609:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:610:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:614:24",
+        "reason": "an array of ResolvedConfigFileName"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/tsbuildPublic.ts:618:12",
+        "reason": "a value as a condition"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:622:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:660:68",
+        "reason": "a function returning ResolvedConfigFileName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "a Map of ResolvedConfigFilePath"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:666:29",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:672:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/utilities.ts:8215:13",
+        "reason": "a method in object destructuring"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/utilities.ts:8217:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:674:55",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:675:53",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:676:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:677:51",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:678:59",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:679:61",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:680:54",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:681:56",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:682:68",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:688:13",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:692:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:703:13",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:709:13",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:715:13",
+        "reason": "reading currentProjects"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:719:31",
+        "reason": "reading buildOrder"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:656:12",
+        "reason": "a BinaryExpression with a union of differently held members and a union of differently held members"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1208:9",
+        "reason": "a PrefixUnaryExpression on a number"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1212:47",
+        "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1347:9",
+        "reason": "a PrefixUnaryExpression on a value"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:1348:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2090:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/tsbuildPublic.ts:2092:16",
+        "reason": "a number as a condition"
+      },
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/tsbuildPublic.ts:778:1",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)"
+      }
+    ],
+    "log": "/tmp/adamic-topic-replay-any.log"
+  }
+]

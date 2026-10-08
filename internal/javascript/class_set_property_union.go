@@ -12,10 +12,6 @@ func (e *emitter) unionFieldKind(call ir.NumberCall) string {
 		test = "Array.isArray(v)"
 	case ir.Map:
 		test = "(v instanceof Map || v instanceof Set)"
-	default:
-		if to.IsTypedArray() {
-			test = "ArrayBuffer.isView(v)"
-		}
 	}
 	return "((v) => " + test + ")(" + value + ")"
 }

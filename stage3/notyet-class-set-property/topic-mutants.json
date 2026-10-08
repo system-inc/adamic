@@ -1,0 +1,112 @@
+[
+  {
+    "mutant": "structural-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-structural-slot.log"
+  },
+  {
+    "mutant": "own-method-native",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-own-method-native.log"
+  },
+  {
+    "mutant": "own-method-javascript",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-own-method-javascript.log"
+  },
+  {
+    "mutant": "literal-write",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-literal-write.log"
+  },
+  {
+    "mutant": "array-clear",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-array-clear.log"
+  },
+  {
+    "mutant": "array-decrement",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-array-decrement.log"
+  },
+  {
+    "mutant": "array-empty-range",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-array-empty-range.log"
+  },
+  {
+    "mutant": "array-receiver-once",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-array-receiver-once.log"
+  },
+  {
+    "mutant": "union-storage",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-union-storage.log"
+  },
+  {
+    "mutant": "union-literal-fit",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-union-literal-fit.log"
+  },
+  {
+    "mutant": "union-write-fit",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-union-write-fit.log"
+  },
+  {
+    "mutant": "union-narrow-check",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-union-narrow-check.log"
+  },
+  {
+    "mutant": "union-array-tag",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-union-array-tag.log"
+  },
+  {
+    "mutant": "runtime-retain",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-runtime-retain.log"
+  },
+  {
+    "mutant": "runtime-scalar-stop",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-runtime-scalar-stop.log"
+  },
+  {
+    "mutant": "runtime-foreign-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-runtime-foreign-slot.log"
+  },
+  {
+    "mutant": "undefined-write",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-undefined-write.log"
+  },
+  {
+    "mutant": "intersection-agreement",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-intersection-agreement.log"
+  },
+  {
+    "mutant": "accessor-own-method",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-accessor-own-method.log"
+  },
+  {
+    "mutant": "shape-type",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-shape-type.log"
+  },
+  {
+    "mutant": "dynamic-length-accepted",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-dynamic-length-accepted.log"
+  },
+  {
+    "mutant": "any-accepted",
+    "exit": 1,
+    "log": "/tmp/adamic-topic-mutant-any-accepted.log"
+  }
+]

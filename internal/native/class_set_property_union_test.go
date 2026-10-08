@@ -18,8 +18,7 @@ int main(int argc, char **argv) {
  (void)argc;
  static const char *const names[] = {"unrepresented"};
  static const bool references[] = {false};
- static const adamic_field_kind kinds[] = {255};
- static const adamic_shape shape = {1, names, references, NULL, kinds};
+ static const adamic_shape shape = {1, names, references, NULL};
  adamic_object *object = adamic_object_new(&shape);
  object->slots[0].number = 42;
  if (strcmp(argv[1], "scalar") == 0) adamic_union_runtime_field(object, &object->slots[0]);
@@ -33,7 +32,7 @@ int main(int argc, char **argv) {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ name, message string }{
-		{"scalar", "union field has an invalid storage kind"},
+		{"scalar", "union scalar field needs runtime/shape-field-kinds 17b5a053"},
 		{"foreign", "union field slot has no owning layout"},
 		{"valid", ""},
 	} {

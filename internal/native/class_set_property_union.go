@@ -79,10 +79,6 @@ func (e *emitter) unionFieldKind(call ir.NumberCall) string {
 		kind = "adamic_kind_array"
 	case ir.Map:
 		kind = "adamic_kind_map"
-	default:
-		if to.IsTypedArray() {
-			kind = "adamic_kind_typed_array"
-		}
 	}
 	return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && %s->kind == %s)", value, value, kind))
 }

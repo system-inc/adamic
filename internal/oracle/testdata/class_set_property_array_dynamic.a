@@ -1,0 +1,4 @@
+const items = ['held'.repeat(2), 'tail'];
+const saved = 1;
+items.length = saved;
+console.log(items.join(','));

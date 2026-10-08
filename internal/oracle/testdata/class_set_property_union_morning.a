@@ -1,0 +1,22 @@
+interface SymbolRecord { readonly name: string; }
+interface Links { symbol: false | SymbolRecord; entries: false | string[] | undefined; }
+function show(links: Links): void {
+ const symbol = links.symbol;
+ const entries = links.entries;
+ console.log(symbol === false ? 'false' : symbol.name);
+ if (entries === undefined) console.log('undefined');
+ else if (entries === false) console.log('false');
+ else console.log(entries.join(','));
+ if (links.entries !== undefined && links.entries !== false) console.log(links.entries.join(':'));
+ if (links.symbol !== false) console.log(links.symbol.name);
+}
+const links: Links = { symbol: false, entries: undefined };
+show(links);
+links.symbol = { name: 'owned'.repeat(2) };
+links.entries = ['first'.repeat(2), 'last'];
+show(links);
+links.symbol = false;
+links.entries = false;
+show(links);
+links.entries = undefined;
+show(links);

@@ -1,3 +1,67 @@
+Built a topic-only branch on main 6998ebc24ae353193cb1495d3d51308131a4b5c7, retaining only my eight non-merge commits and adding morning union coverage and a dynamic-length refusal control.
+Commits carried: 7fcfd775, d7be3de1, 659cac36, c1464903, 20f2087f, 541255f2, 295b8027, 7753bb27; the final topic adaptation is the branch tip.
+Checks: 17 topic fixture cases, focused lower/native/flow/IR checks, JavaScript package build and required counts refresh pass; no whole package or full gate run.
+Mutants: all 22 targeted mutants fail fixture assertions or sanitizer/oracle comparisons; each restored; runner and measured results accompany this report.
+Uncovered: six dynamic/compound array lengths need a checked no-holes proof; branded Path needs checked views; any remains a ruling refusal; runtime scalar views await 17b5a053 on main.
+
+This section supersedes the historical report below for codex/notyet-class-set-property-topic. The branch has no merge commits above main and contains no runtime-owner commit, compiler-area merge, checked non-null merge or census-tool commit. Main was fetched before creating this branch. Toolchain setup from the earlier session remains installed: setup total 880.607s; nproc 5; every Go invocation sourced /workspace/adamic-tools/env.sh (GOPROXY=https://proxy.golang.org|direct).
+
+The morning input is codex/stage3-notyet-table e8c283b5, stage3/notyet-table/rerun-0730/after/roots.csv: 38 sites in nine relevant kinds. Counts below associate sites with a rule, not a claim that every site lowered. Twelve representative sites were replayed with the 9a1f14c5 replay tool, built as an untracked scratch overlay against this branch and removed afterward. No worker history or measurement hook lands in production. Replay returns 0 when the old finding still matches, 1 when it is absent. Measurement is on the same checker-rejected adapted entry project as before and does not prove whole-compiler compilation. Failed statement boundaries can hide later sites.
+
+| Morning kind | Census sites | Result and limit |
+| --- | ---: | --- |
+| replacing a represented method at runtime | 17 | Lowered literal and structural own-slot replacement. Inherited/class/library replacements remain refused or guarded. core:1544/1545 are echoes of the earlier uncheckable cast at 1543; sys:1382 reaches a function value taking boolean/undefined at 1382:34. No claim that all 17 complete. |
+| assigning a field of a value | 11 | Five clearing/decrement forms covered (checker:1974, core:312, sourcemap:316, tracing:164/171). Six dynamic or compound forms skipped pending a checked no-holes proof (checker:8129/8132, core:307, emitNode:308, parser:2283, sys:234). core:307 still reproduces; tracing replay encounters reading Debug first. |
+| storing true / Node / undefined | 3 | Lowered boxed owned fields. parser:1341 has no selected-unit findings. utilities:8987 reaches the RHS binary at 8987:48 and direct case declaration at 8998:13. |
+| storing false / Type | 2 | Lowered boxed boolean/object fields; checker replay reaches binaries at 15220:20 and 15237:17. |
+| storing Path / undefined | 1 | Skipped branded-string checked views. builder:668 is hidden inside the failed statement at 642, a value-as-condition refusal; its missing old signature is not evidence that Path lowered. |
+| storing false / Symbol | 1 | Lowered storage rule, covered by SymbolRecord reduction. checker:34075 is behind failed bindings, including reading links at 34074. |
+| storing string / number | 1 | Lowered owned scalar boxes; emitNode:242 has no selected-unit findings. |
+| storing false / string[] / undefined | 1 | Lowered boxed array ownership and checked narrowed tag, covered by the new morning fixture. moduleNameResolver:2277 reaches the RHS binary at 2277:59; earlier optional-boolean/structural-call stops remain. |
+| storing any | 1 | Refused for a ruling; tsbuildPublic:2080 reproduces storing any in a field. |
+
+The new morning fixture is held to Node in JavaScript, sanitized native (ASan/UBSan), release native and ownership/leak checks. Seventeen registered topic cases pass: thirteen lower (three intentional guard-firing controls compare the two backends), four pin compile-time refusals. The new dynamic-array refusal has a separate Node control. Existing narrowed-union and inherited-method guard fixtures remain checks of deliberate refusals, not proof of JavaScript acceptance of those invalidating aliases.
+
+Runtime dependency: runtime/shape-field-kinds 17b5a053 is not an ancestor of main, so its owner commit was not carried. The separate class_set_property_union.c retains adamic_union_slot_owner; reference slots retain through shape->references, generated scalar layouts use exact emitted shape identity, and unknown runtime scalar layouts panic with the dependency name. No name matching exists. RegExp/stat/iterator scalar-view source fixtures remain committed but their registrations are deferred, the counted stat test skips with the dependency name, and their count rows are removed. Re-enable these only after shape kinds land on main; the wrong-kind debug mutant is deferred with that dependency. Separate runtime helpers requiring owner review: adamic_union_slot_owner and adamic_union_runtime_field in internal/native/runtime/class_set_property_union.c.
+
+Minimal compatibility hooks replace the compiler-area slotless helper locally: boxed union literal initialization, field reads and setProperty stores are allowed; MaybeBoolean slots remain refused. Typed-array tag support is deferred because main has no typed-array IR. The counts refresh changes only topic rows and library_string_raw, whose retains/releases move 50/84 to 54/88 through the restored owned union-read hook; allocations/frees remain 45/45.
+
+Commands and observations (all test output written to logs):
+
+- go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/class_set_property' -count=1 -v: PASS, 17 cases, 6.531s; /tmp/adamic-topic-final-oracle-fixtures.log.
+- go test ./internal/oracle -run '^TestClassSetProperty' -count=1: PASS, 1.389s; /tmp/adamic-topic-final-boundaries.log (shape stat dependency skipped).
+- go test ./internal/lower ./internal/native ./internal/flow ./internal/ir ./internal/javascript -run '^(TestClassSetProperty|TestUnionRuntimeFieldGuards|TestCallTargetReaders|TestCallTargetsIncludeEveryDescendant|TestClosureTargetsBoundOnlyProvenValues)' -count=1: PASS; lower 0.271s, native 1.113s, flow 1.797s, IR 8.279s; JavaScript has no Go test files and is exercised by the oracle; /tmp/adamic-topic-final-packages.log.
+- go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts: PASS, 45.088s; /tmp/adamic-topic-counts.log.
+- python3 /tmp/adamic-topic-mutants.py and /tmp/adamic-topic-boundary-mutants.py: 22 fixture failures, no build-failure substitutes; combined reproducible runner topic-mutants.py and results topic-mutants.json.
+- Scratch replay overlay: python3 .topic-census-tool/make_overlay.py /workspace/adamic /tmp/adamic-topic-replay-overlay; go build -buildvcs=false -overlay=/tmp/adamic-topic-replay-overlay/overlay.json -o /tmp/adamic-topic-replay ./.topic-census-tool/replay/worker. Twelve runs recorded in topic-replays.json; command list in topic-replays.py. Tool scratch files removed before commit.
+
+| Mutant | What caught it |
+| --- | --- |
+| structural-slot | structural_method cannot lower (exit 1) |
+| own-method-native | inherited_method backend guard disagreement (exit 1) |
+| own-method-javascript | inherited_method backend guard disagreement (exit 1) |
+| literal-write | literal_method cannot lower (exit 1) |
+| array-clear | array_length Node output disagreement (exit 1) |
+| array-decrement | array_length Node output disagreement (exit 1) |
+| array-empty-range | array_length RangeError/output disagreement (exit 1) |
+| array-receiver-once | array_length extra receiver evaluation (exit 1) |
+| union-storage | union_morning cannot lower (exit 1) |
+| union-literal-fit | union_morning UBSan invalid boolean and oracle disagreement (exit 1) |
+| union-write-fit | union_morning ASan heap-buffer-overflow (exit 1) |
+| union-narrow-check | union_narrow missing panic/backend disagreement (exit 1) |
+| union-array-tag | union_morning wrong object tag panic (exit 1) |
+| runtime-retain | union ownership/sanitizer disagreement (exit 1) |
+| runtime-scalar-stop | TestUnionRuntimeFieldGuards requires named scalar panic 70 (exit 1) |
+| runtime-foreign-slot | TestUnionRuntimeFieldGuards requires named foreign-slot panic 70 (exit 1) |
+| undefined-write | undefined_frozen missing frozen-write panic (exit 1) |
+| intersection-agreement | TestClassSetPropertyIntersectionSlotAgreement rejects mismatched slots (exit 1) |
+| accessor-own-method | accessor_method_guard backend guard disagreement (exit 1) |
+| shape-type | union_views number/boolean layout conflation (exit 1) |
+| dynamic-length-accepted | TestClassSetPropertyDynamicLengthBoundary requires NotYet (exit 1) |
+| any-accepted | TestClassSetPropertyAnyBoundary requires storing any NotYet (exit 1) |
+
+Historical report for the former compiler-area-based branch follows; its merges and proofs are not part of the topic branch dependency claim.
+
 Built own-slot method replacement, owned mixed-union fields, array length removal, consistently held intersections and undefined fields.
 Commits: 08b76587, 5475f479, 863babed, ecfead29, d0464e43; main landing merge 4249054a; requested non-null merge b6415dda includes c41c0e06.
 Checks: Node, JavaScript, native ASan/UBSan and release, ownership/leaks, focused lower/native/flow/IR checks pass; counts refreshed; no full package or full gate run.

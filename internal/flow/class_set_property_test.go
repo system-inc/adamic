@@ -8,7 +8,7 @@ import (
 // These source controls pin compile-time stops and therefore have no IR graph.
 func classSetPropertyRefusalFixture(path string) bool {
 	switch filepath.Base(path) {
-	case "class_set_property_any.a", "class_set_property_method.a", "class_set_property_intersection_boundary.a":
+	case "class_set_property_array_dynamic.a", "class_set_property_any.a", "class_set_property_method.a", "class_set_property_intersection_boundary.a":
 		return true
 	}
 	return false
