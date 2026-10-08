@@ -1,5 +1,5 @@
 Built: merged the fixture base and reduced the parser assertion to an extension-policy fixture; the namespace and enum prerequisite replay is retained on a local held branch.
-Commits: delivery fixture-base merge 4f03163bc; parser proof d5c9a8f8c; held namespace candidate c1e42e612; remote remains 2c7d9fd2 until delivery validation finishes.
+Commits: delivery fixture-base merge 4f03163bc; parser proof d5c9a8f8c; held namespace candidate c1e42e612; delivery validated at 8bf45dadc; final report-only commit carries the push.
 Commands and outputs: delivery lower 51.294s, IR 31.647s, flow 163.247s, JavaScript has no tests; filtered oracle 2.470s; counts refresh 80.483s, all pass. The held namespace candidate fails flow and counts on the two refusals below.
 Mutants: three parser fixture/policy mutants, six debugger mutants, two empty-array checks, three Source boundary/output mutants, and three census audit mutants on each comparator are caught; individual logs are retained.
 Not covered: a complete native parser or scanner build, checked views, runtime graph-region ownership, and unresolved namespace admissions.
@@ -108,3 +108,9 @@ and environment adoption. This compiler stack still refuses those cycles and
 has no graph-region runtime. The topic's optional-closure admission alone cannot
 establish its ownership proof, so it is skipped with that runtime dependency.
 Checked-view-dependent topics remain skipped as ruled.
+
+Delivery catalog: `bash verify/catalog/check.sh 8bf45dadc --jobs 2` validates 11 applicable entries; five remain the catalog's recorded nonapplicable entries. Entry 2's initial control build ran out of disk, then `bash verify/catalog/check.sh 8bf45dadc --entry 2 --jobs 1` passes its control and mutant. No undo patch drifted. All compiler changes in the delivery were checked at 8bf45dadc; the final commit adds reports and logs only.
+
+Exact delivery commands: `go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript`; filtered oracle patterns in the retained delivery-oracle log; `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`; the two catalog commands above. Additional scanner-boundary test and its production overlay mutant pass and fail respectively, as expected.
+
+The method-values resolution remains blocked by automatic approval review, which rejected a multi-file native closure ABI rewrite as unverified. No rejected code was applied. See METHOD-VALUES-PROPOSAL.md for the concrete counted-dispatch, packed-slot and ownership resolution. Other accepted topics beyond the prepared candidates still require replay and validation; they are not claimed delivered here.
