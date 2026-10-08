@@ -15,10 +15,20 @@ runs=${STAGE3_METER_RUNS:-$repository/stage3/meter/runs}
 mkdir -p "$runs"
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 run=$(mktemp -d "$runs/$stamp.XXXXXX")
+finish_progress() {
+    local status=$?
+    trap - EXIT
+    python3 "$repository/stage3/meter/progress.py" "$repository" "$run" --meter-exit "$status" > "$run/progress.log" 2>&1 || {
+        cat "$run/progress.log" >&2
+        exit 1
+    }
+    exit "$status"
+}
+trap finish_progress EXIT
 scratch=$(mktemp -d "${TMPDIR:-/tmp}/stage3-meter.XXXXXX")
 printf 'run: %s\n' "$run"
 git fetch origin main:refs/remotes/origin/main area/stage3:refs/remotes/origin/area/stage3 > "$run/fetch.log" 2>&1
-main_commit=$(git rev-parse origin/main)
+main_commit=$(git rev-parse "${STAGE3_METER_MAIN_REF:-origin/main}^{commit}")
 area_commit=$(git rev-parse origin/area/stage3)
 checkout_commit=$(git rev-parse HEAD)
 python3 - "$run/compiler-mode.json" "$compiler_mode" "$checkout_commit" "$main_commit" "$area_commit" <<'PYTHON'

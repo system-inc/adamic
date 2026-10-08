@@ -90,10 +90,12 @@ class CompilerSelectionTests(unittest.TestCase):
                         GIT_TERMINAL_PROMPT='0', TMPDIR=str(self.root), GOWORK='off')
         self.env.pop('STAGE3_METER_COMPILER', None)
         self.env.pop('STAGE3_METER_RUNS', None)
+        self.env.pop('STAGE3_METER_MAIN_REF', None)
         self.command('git', 'init', '-b', 'main')
         source = Path(__file__).resolve().parent
-        for name in ('report.py', 'owners.json'):
+        for name in ('report.py', 'owners.json', 'progress.py'):
             self.write('stage3/meter/' + name, (source / name).read_text())
+        self.write('stage3/progress.json', (source.parent / 'progress.json').read_text())
         script = Path(os.environ.get('METER_SCRIPT_UNDER_TEST', source / 'twice-daily.sh'))
         self.write('stage3/meter/twice-daily.sh', script.read_text())
         self.write('go.mod', 'module meterprobe\n\ngo 1.21\n')
@@ -147,6 +149,9 @@ class CompilerSelectionTests(unittest.TestCase):
         self.command('bash', 'stage3/meter/twice-daily.sh')
         run, = (self.repository / 'stage3/meter/runs').iterdir()
         report = json.loads((run / 'report.json').read_text())
+        progress = json.loads((run / 'progress.json').read_text())
+        self.assertEqual(progress, json.loads((self.repository / 'stage3/progress.json').read_text()))
+        self.assertFalse(any(progress['milestones'].values()))
         for label in ('main', 'area'):
             tree = report['trees'][label]
             self.assertEqual(tree['tree_commit'], self.main if label == 'main' else self.area)
@@ -166,6 +171,7 @@ class CompilerSelectionTests(unittest.TestCase):
         self.assertIn('Both measured with Adamic ' + self.checkout, (run / 'report.md').read_text())
 
     def test_per_ref_builds_and_runs_each_pinned_compiler(self):
+        self.env['STAGE3_METER_MAIN_REF'] = self.main
         run, result = self.measure('per-ref')
         self.assertEqual(result['compiler_mode'], 'per-ref')
         self.assertEqual(result['adamic_commit'], self.area)
@@ -208,6 +214,18 @@ class CompilerSelectionTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn('invalid STAGE3_METER_COMPILER', (self.root / 'invalid.log').read_text())
         self.assertFalse((self.repository / 'stage3/meter/runs').exists())
+
+    def test_failed_run_still_writes_progress(self):
+        self.env['STAGE3_METER_MAIN_REF'] = 'f' * 40
+        with (self.root / 'failed.log').open('w') as log:
+            result = subprocess.run(['bash', 'stage3/meter/twice-daily.sh'], cwd=self.repository,
+                                    env=self.env, stdout=log, stderr=log, timeout=120)
+        self.assertNotEqual(result.returncode, 0)
+        run, = (self.repository / 'stage3/meter/runs').iterdir()
+        progress = json.loads((run / 'progress.json').read_text())
+        self.assertEqual(progress['last_meter_exit'], result.returncode)
+        self.assertEqual(progress, json.loads((self.repository / 'stage3/progress.json').read_text()))
+        self.assertFalse(any(progress['milestones'].values()))
 
 
 if __name__ == '__main__':

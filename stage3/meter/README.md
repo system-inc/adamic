@@ -118,6 +118,64 @@ repository/toolchain paths:
 
 This unit does not install cron or send messages to @system_adamic.
 
+## Milestone progress
+
+The meter owns `stage3/progress.json`. Its EXIT handler writes that file and an
+identical `runs/<run>/progress.json` snapshot, including after a failed meter
+command. Commit the latest progress file together with its run report. The
+meter does not commit or push automatically. The existing report's first two
+lines stay unchanged; checker or lowering counts never imply a native milestone.
+
+`STAGE3_METER_MAIN_REF=<commit>` pins the main source and, in per-ref mode, its
+compiler to a specific commit after fetching. The default remains origin/main.
+For the step 12 baseline:
+
+```sh
+STAGE3_METER_MAIN_REF=45487a80 STAGE3_METER_COMPILER=per-ref \
+  STAGE3_METER_RUNS=$PWD/stage3/meter/runs \
+  bash stage3/meter/twice-daily.sh > meter.log 2>&1
+```
+
+A run can supply `milestones.json`, keyed by milestone. Each proof record must
+contain every field named by progress.json's `evidence_required`: full compiler
+and source commit SHAs, its repository-relative `run_directory`, and equal
+`node_sha256` and `native_sha256`. `node_output` and `native_output` name the
+complete retained output files relative to that run. The writer recomputes both
+hashes from every byte. `comparison` is `{"exit": 0, "log": "comparison.log"}`.
+`mutant` names `output` and a `comparison` with exit 1 and a retained log. Its
+output must have the same length as native output and differ in exactly one byte.
+Equal hashes without that caught native-output mutant keep the milestone false.
+
+To name another run, use `{"run_directory": "stage3/...", "evidence_file":
+"milestones.json"}`; the named file supplies the same milestone's proof record.
+Paths cannot escape their run or the repository. Unknown evidence requirements
+fail loudly. `progress-inputs.json` registers existing observations when this
+meter run supplies no new proof. Its scanner entry currently names the failed
+combined-records-library build; the first nonempty build diagnostic and that run
+are retained as the false milestone's reason. A Node-only mutant or a small
+native control cannot stand in for scanner native output.
+
+Missing or incomplete new evidence preserves an already true milestone and its
+prior proof. Only an explicit `status: "regression"` in this run's milestones
+can reset it: that record must retain both complete outputs and their matching
+declared hashes, compiler/source SHAs, and a comparison with exit 1 proving the
+outputs differ. Old registered build failures never reset a proved milestone.
+A current explicit regression can instead retain a native build-failure report,
+its first-stop log, and compiler/source SHAs; failed emission needs no invented
+native output. The existing scanner observation uses compiler dbd7a7c8, as its
+named run records; it is not a new scanner measurement on the meter's compiler.
+
+```sh
+python3 -m unittest discover -s stage3/meter -p 'progress_test.py' > progress-tests.log 2>&1
+python3 stage3/meter/progress_mutant.py SCRATCH_DIRECTORY > progress-mutant.log 2>&1
+```
+
+The synthetic complete-proof fixture flips scanner_native; removing only its
+mutant keeps it false. The scratch writer mutant accepts equal hashes alone and
+must fail precisely the missing-mutant assertion. Output proofs establish only
+the milestone their producer names; the meter does not infer corpus coverage or
+compiler provenance from a checker census.
+
 Validate report accounting with:
 
 ```sh
@@ -168,3 +226,28 @@ Planting an imported type error must change the entry to fail and block lowering
 A scratch overlay mutant that leaves Program.Files restricted to the entry root
 must fail this test's reach count (one source instead of two). Compiler-selection
 probes exercise the entry command wiring in both default and per-ref modes.
+
+The root target is 79/79, including adaptation-created roots. The report separately
+prints original tsc root counts and checker results, and names `src/compiler/hostErrors.ts`
+as created by adaptation 47 (`47-host-errors`). Original tsc roots include the
+normal upstream-generated `diagnosticInformationMap.generated.ts` (77 checked-in
+sources plus that generated root). Keep `ADAPTATION_ROOTS` in
+`report.py` current when an adaptation adds another compiler root.
+
+The provenance fixture and its mutant run with:
+
+```sh
+python3 -m unittest discover -s stage3/meter -p report_test.py > roots-test.log 2>&1
+python3 stage3/meter/roots_mutant.py roots-mutant-witness.log > roots-mutant.log 2>&1
+```
+
+Entry validation compares canonical paths, accepting equivalent temporary-tree
+symlinks while still rejecting a different root and incomplete imported reach.
+
+```sh
+python3 stage3/meter/entry_roots_mutant.py entry-mutant-witness.log > entry-mutant.log 2>&1
+```
+
+Commit every named proof output and comparison/mutant log with its run. The
+repository ignores `*.log`, so force-add retained evidence logs when publishing.
+Keep raw census and latent JSONL (including gzip files) excluded.

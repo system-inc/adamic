@@ -100,6 +100,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
+        self.assertIn('Stage 3 meter stamp: main main-sha', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
@@ -107,6 +108,21 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
         self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
                          ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4'])
+
+    def test_adaptation_created_root_keeps_total_and_tsc_counts_separate(self):
+        helper = self.tree / 'src/compiler/hostErrors.ts'
+        helper.write_text('')
+        self.records.insert(-1, {'roots': [str(helper)], 'kind': 'accepted'})
+        self.records[-1]['roots'].append(str(helper))
+        result = self.render()
+        self.assertEqual(result['totals']['source_files'], 5)
+        self.assertEqual(result['roots']['target'], 79)
+        self.assertEqual(result['roots']['tsc_original'], 4)
+        self.assertEqual(result['roots']['tsc_own_file'], 4)
+        self.assertEqual(result['roots']['adaptation_created'],
+                         [{'file': 'src/compiler/hostErrors.ts', 'adaptation': '47-host-errors'}])
+        self.assertIn('src/compiler/hostErrors.ts (adaptation 47-host-errors)',
+                      (self.run / 'report.md').read_text())
 
     def test_malformed_diagnostic_is_rejected(self):
         self.records[0]['diagnostics'] = ['unexpected diagnostic encoding']

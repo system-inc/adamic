@@ -77,13 +77,19 @@ def lowering_summary(records, expected, measurement):
     }
 
 
+def entry_root_matches(record, entry):
+    roots = record.get('roots')
+    return (isinstance(roots, list) and len(roots) == 1 and isinstance(roots[0], str)
+            and Path(roots[0]).resolve() == entry)
+
+
 def entry_summary(tree, run):
     entry = (tree / 'src/tsc/tsc.ts').resolve()
     if not entry.is_file():
         raise ValueError(f'tsc entry missing: {entry}')
     records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
     # A single file produces its ordinary per-file and aggregate observations.
-    if len(records) != 2 or any(record.get('roots') != [str(entry)] for record in records):
+    if len(records) != 2 or any(not entry_root_matches(record, entry) for record in records):
         raise ValueError('invalid tsc entry census roots or coverage')
     comparable = [{key: value for key, value in record.items() if key != 'seconds'} for record in records]
     if comparable[0] != comparable[1]:
@@ -96,7 +102,7 @@ def entry_summary(tree, run):
     if (checked and diagnostics) or (not checked and not diagnostics):
         raise ValueError('tsc entry checker outcome disagrees with diagnostics')
     latent = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
-    if not latent or latent[0].get('roots') != [str(entry)]:
+    if not latent or not entry_root_matches(latent[0], entry):
         raise ValueError('invalid tsc entry lowering roots')
     header = latent[0]
     if header.get('checker_rejected') != (not checked) or sorted(header.get('diagnostics', [])) != sorted(diagnostics):
@@ -184,6 +190,33 @@ def unowned_table(trees):
     return ordered, lines
 
 
+ADAPTATION_ROOTS = {'src/compiler/hostErrors.ts': '47-host-errors'}
+ROOT_TARGET = 79
+
+
+def root_inventory(files):
+    sources = [row for row in files if row['source']]
+    created = [dict(file=row['file'], adaptation=ADAPTATION_ROOTS[row['file']])
+               for row in sources if row['file'] in ADAPTATION_ROOTS]
+    upstream = [row for row in sources if row['file'] not in ADAPTATION_ROOTS]
+    return {'target': ROOT_TARGET, 'total': len(sources), 'tsc_original': len(upstream),
+            'adaptation_created': created,
+            'tsc_whole_program': sum(row['checker_whole_program'] for row in upstream),
+            'tsc_own_file': sum(row['checker_own_file'] for row in upstream)}
+
+
+def root_lines(trees):
+    lines = ['Roots (target 79/79): ' + '; '.join(
+        f"{label}: {tree['roots']['total']} total, {tree['roots']['tsc_original']} tsc original"
+        for label, tree in trees.items())]
+    for label, tree in trees.items():
+        roots = tree['roots']
+        lines.append(f"Tsc original roots, {label}: whole program {roots['tsc_whole_program']}/{roots['tsc_original']}; own file {roots['tsc_own_file']}/{roots['tsc_original']}.")
+        for row in roots['adaptation_created']:
+            lines.append(f"Adaptation-created root, {label}: {row['file']} (adaptation {row['adaptation']}).")
+    return lines
+
+
 def report(tree, run, stamp, compiler_commit=None):
     compiler = tree / 'src/compiler'
     expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}
@@ -253,6 +286,7 @@ def report(tree, run, stamp, compiler_commit=None):
         'unlocated_diagnostics': len(unlocated),
         'external_diagnostics': len(external),
         'files': files,
+        'roots': root_inventory(files),
         'totals': totals,
         'whole_program': {key: value for key, value in whole.items() if key != 'diagnostics'},
         'whole_program_diagnostics': len(whole.get('diagnostics', [])),
@@ -262,6 +296,7 @@ def report(tree, run, stamp, compiler_commit=None):
              f"Own file: {totals['checker_own_file']}/{totals['source_files']}", '',
              f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Lowering |',
              '| --- | --- | --- | --- |']
+    lines[3:3] = root_lines({'tree': result}) + ['']
     for row in files:
         lowering = 'pass' if row['lowering'] else 'fail' if row['lowering_attempted'] else 'blocked'
         lines.append(f"| {row['file']} | {'pass' if row['checker'] else 'fail'} | {'pass' if row['checker_own_file'] else 'fail'} | {lowering} |")
@@ -310,13 +345,14 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
                                         for label, tree in trees.items()))
     lines.append('tsc entry diagnostics: ' + '; '.join(f"{label}: {tree['tsc_entry']['whole_program_diagnostics']}"
                                                     for label, tree in trees.items()))
+    lines += root_lines(trees)
     if mode == 'single':
         compilers = f"Both measured with Adamic {result['adamic_commit']} and ordinary stage 0 options."
     else:
         compilers = (f"Main measured with Adamic {trees['main']['adamic_commit']}; "
                      f"area measured with Adamic {trees['area']['adamic_commit']}. "
                      'Each compiler is built from its pinned ref with ordinary stage 0 options.')
-    lines += ['', f'Stage 3 meter {stamp}', '',
+    lines += ['', f'Stage 3 meter {stamp}: main {main_commit[:8]}', '',
               f'Main: origin/main at {main_commit}. Area: origin/area/stage3 at {area_commit}.',
               compilers, '',
               '| File | Main whole program | Main own file | Area whole program | Area own file |',

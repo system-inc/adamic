@@ -61,6 +61,25 @@ class EntryReportTests(unittest.TestCase):
         self.assertEqual(result['lowering_census']['totals']['NotYet'], 1)
         self.assertEqual(result['lowering_census']['top_reasons'][0]['owner'], '01a113e3-a058')
 
+    def test_equivalent_symlink_entry_roots_are_accepted(self):
+        alias = Path(self.scratch.name) / 'alias'
+        alias.symlink_to(self.tree, target_is_directory=True)
+        for diagnostics in ([], ['error TS2318: missing global']):
+            with self.subTest(diagnostics=diagnostics):
+                write_entry(self.tree, self.run, diagnostics=diagnostics,
+                            sources=[self.entry, self.dependency])
+                for name in ('census.jsonl', 'latent.jsonl'):
+                    path = self.run / name
+                    rows = [json.loads(line) for line in path.read_text().splitlines()]
+                    for row in rows:
+                        if 'roots' in row:
+                            row['roots'] = [str(alias / 'src/tsc/tsc.ts')]
+                    path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+                result = entry_summary(alias, self.run)
+                self.assertEqual(result['checker_whole_program'], not diagnostics)
+                if not diagnostics:
+                    self.assertEqual(result['lowering_census']['source_files'], 2)
+
     def test_wrong_root_is_rejected(self):
         write_entry(self.tree, self.run)
         path = self.run / 'census.jsonl'
