@@ -1,0 +1,217 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "kind": "KindModuleDeclaration",
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "JsxNames",
+      "top": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54224:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54224:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54224:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54224:18: stage 0 can't lower a value of type __String yet",
+      "start": 3144964,
+      "end": 3145007
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54225:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54225:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54225:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54225:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145007,
+      "end": 3145078
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54226:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54226:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54226:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54226:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145078,
+      "end": 3145139
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54227:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54227:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54227:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54227:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145139,
+      "end": 3145239
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54228:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54228:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54228:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54228:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145239,
+      "end": 3145375
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54229:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54229:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54229:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54229:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145375,
+      "end": 3145426
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54230:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54230:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54230:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54230:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145426,
+      "end": 3145485
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54231:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54231:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54231:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54231:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145485,
+      "end": 3145560
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54232:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54232:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54232:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54232:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145560,
+      "end": 3145645
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54233:18",
+      "reason": "a value of type __String",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54233:18: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54223:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54233:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/checker.ts:54233:18: stage 0 can't lower a value of type __String yet",
+      "start": 3145645,
+      "end": 3145730
+    }
+  ]
+}

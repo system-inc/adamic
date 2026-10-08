@@ -263,8 +263,10 @@ Each numbered program is executable on source Node and covered by a test:
   expression prints `value` on source Node, native and the JavaScript backend,
   with sanitizer/leak checks. Production map now supplies a capturing function
   expression to each, rather than duplicating traversal in an explicit loop.
-- `gaps/12_conditional_empty_array.ts`: Node prints `0`; the inferred empty arm
-  is NotYet, `an array of never`. Production empties have explicit array types.
+- `gaps/12_conditional_empty_array.ts`: Node prints `0`. The inferred empty arm was
+  NotYet, `an array of never`; closed by compiler/area-stack (views slice 1, Oct 8), it
+  lowers and is held to Node in the probe table's lowering form. Production empties
+  still have explicit array types.
 - `gaps/13_array_growth.ts`: Node prints `1`. Native AND the JavaScript backend
   compile but exit70 with empty stdout and the complete stderr below. The
   separate array-growth test records this discrepancy as a gap observation.

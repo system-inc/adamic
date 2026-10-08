@@ -21,8 +21,6 @@ func TestLexerGaps(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, gap := range []struct{ file, output, diagnostic string }{
-		{"prefixIncrement.ts", "1\n", "a PrefixUnaryExpression on a number"},
-		{"emptyAlternative.ts", "1\n", "an array of never"},
 		{"multiplePush.ts", "2\n", "push with other than one value"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
@@ -86,6 +84,8 @@ func TestClosedLexerGaps(t *testing.T) {
 		{"negativeCase.ts", "1\n"},
 		{"stringFallback.ts", " \n"},
 		{"valueConjunction.ts", "true\n"},
+		{"prefixIncrement.ts", "1\n"},
+		{"emptyAlternative.ts", "1\n"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
 			closedGap(t, filepath.Join("gaps", gap.file), gap.output)

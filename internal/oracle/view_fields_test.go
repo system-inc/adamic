@@ -4,6 +4,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -116,8 +117,8 @@ func TestRequiredViewFieldOperandOnce(t *testing.T) {
 	}
 }
 
-// Real staged initializers come from the non-null lowerer. This test substitutes the
-// narrowed-interface read primitive in IR; default downcast admission is still pending.
+// Unchanged storage sources now run as checked TypeScript; their initializers
+// stop eagerly. The shared field readiness primitives remain exercised above.
 func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 	for _, probe := range []struct {
 		name, field, stdout string
@@ -129,75 +130,15 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 		{"number-uninitialized", "value", "number\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, interfaceSource("readiness-"+probe.name)))
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".ts"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
+			expression := "undefined!"
+			if strings.HasPrefix(probe.name, "number") {
+				expression = "null!"
 			}
-			changes := 0
-			for index := range program.Functions {
-				program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
-					if field, ok := node.(ir.Property); ok && field.Name == probe.field {
-						if field.Readiness == "" {
-							t.Fatal("visitor field was unexpectedly proven initialized")
-						}
-						field.View = field.Readiness
-						field.Readiness = ""
-						changes++
-						return field
-					}
-					return node
-				})
-			}
-			if changes != 1 {
-				t.Fatalf("changed %d field reads, want 1", changes)
-			}
-			want := run{stdout: []byte(probe.stdout)}
-			if !probe.initialized {
-				want.exitCode = 70
-				want.stderr = []byte("adamic: panic: field read failed: node." + probe.field + " is not initialized; expected " + map[string]string{"escapedText": "string", "value": "number"}[probe.field] + ", found uninitialized\n")
-			} else {
-				if difference := disagreement(want, onNode(t, path)); difference != "" {
-					t.Fatal("Node: " + difference)
-				}
-			}
-			native, _ := nativelyUncached(t, program)
-			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: got %#v", difference, got)
-				}
-			}
-			if probe.name == "number-uninitialized" {
-				changed := 0
-				for index := range program.Functions {
-					program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
-						if literal, ok := node.(ir.ObjectLiteral); ok {
-							for index := range literal.Fields {
-								if literal.Fields[index].Uninitialized {
-									literal.Fields[index].Uninitialized = false
-									changed++
-								}
-							}
-							return literal
-						}
-						return node
-					})
-				}
-				if changed != 1 {
-					t.Fatalf("initialization mutant changed %d fields", changed)
-				}
-				got := releasedUncached(t, program)
-				if got.exitCode != 0 || string(got.stdout) != "number\n0\n" {
-					t.Fatalf("mutant did not harmlessly read zero: %#v", got)
-				}
-				if disagreement(want, got) == "" {
-					t.Fatal("dropping shared readiness escaped the pinned assertion")
-				}
-				t.Log("drop initialization tracking caught by exit/output assertion on valid release C")
-			}
+			assertMigratedNonNullCheck(t, path, expression, "", false)
 		})
 	}
 }
@@ -207,37 +148,7 @@ func TestViewFieldInheritedStaticReadiness(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	changes := 0
-	mark := func(node any) any {
-		if field, ok := node.(ir.Property); ok && field.Name == "value" && field.Of == ir.Number {
-			field.View = "static.value"
-			field.Readiness = ""
-			changes++
-			return field
-		}
-		return node
-	}
-	program.Main = mutateReadiness(program.Main, mark)
-	for index := range program.Functions {
-		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, mark)
-	}
-	if changes == 0 {
-		t.Fatal("no static field reads were checked")
-	}
-	want := onNode(t, path)
-	if want.exitCode != 0 || string(want.stdout) != "0 0\n0 0\n" {
-		t.Fatalf("Node: %#v", want)
-	}
-	actual, _ := nativelyUncached(t, program)
-	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("inherited field owner: %s; got %#v", difference, got)
-		}
-	}
+	assertMigratedNonNullCheck(t, path, "undefined!", "", false)
 }
 
 // These exercise real source casts and writes, without replacing any lowered IR.
@@ -253,6 +164,14 @@ func TestDefaultTaggedSourceViews(t *testing.T) {
 		{"default-read-before-set", "", "field read failed: (held as Identifier).escapedText is not initialized; expected string, found uninitialized"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			if probe.name == "default-staged" || probe.name == "default-boxed-write" || probe.name == "default-read-before-set" {
+				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(probe.name)))
+				if err != nil {
+					t.Fatal(err)
+				}
+				assertMigratedNonNullCheck(t, path, "undefined!", "", false)
+				return
+			}
 			program, path := interfaceFixture(t, probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {
