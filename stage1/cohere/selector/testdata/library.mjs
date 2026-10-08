@@ -1,8 +1,8 @@
 // Independent oracle: the exact upstream release cohere follows.
 import { createRequire } from 'node:module';
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
-const [directory, mode, root, destination, testTexts] = process.argv.slice(2);
+const [directory, mode, root, destination, testTexts, fileList] = process.argv.slice(2);
 const require = createRequire(join(directory, 'package.json'));
 if(require('postcss-selector-parser/package.json').version !== '2.2.3') {
     throw new Error('expected postcss-selector-parser 2.2.3');
@@ -80,29 +80,20 @@ if(mode === 'corpus') {
             }
         });
     }
-    function walk(path) {
-        for(const entry of readdirSync(path, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-            if(entry.name === '.git' || entry.name === 'node_modules') continue;
-            const file = join(path, entry.name);
-            if(entry.isDirectory()) {
-                walk(file);
-                continue;
-            }
-            if(!entry.name.endsWith('.css')) continue;
-            files++;
-            const expectedError = expectedCSSErrors.has(relative(root, file).split('\\').join('/'));
-            try {
-                extract(readFileSync(file, 'utf8'), file);
-                if(expectedError) throw new Error(`expected CSS error became parseable: ${file}`);
-            }
-            catch(error) {
-                if(error.name !== 'CssSyntaxError' || !expectedError) throw error;
-                expectedErrors++;
-                console.log(`expected CSS error: ${file}: ${error.reason}`);
-            }
+    if(!fileList) throw new Error('corpus requires an explicit Git-selected file list');
+    for(const file of JSON.parse(readFileSync(fileList, 'utf8'))) {
+        files++;
+        const expectedError = expectedCSSErrors.has(relative(root, file).split('\\').join('/'));
+        try {
+            extract(readFileSync(file, 'utf8'), file);
+            if(expectedError) throw new Error(`expected CSS error became parseable: ${file}`);
+        }
+        catch(error) {
+            if(error.name !== 'CssSyntaxError' || !expectedError) throw error;
+            expectedErrors++;
+            console.log(`expected CSS error: ${file}: ${error.reason}`);
         }
     }
-    walk(root);
     const fileSelectors = selectors.length;
     let candidates = 0,
         invalidSnippets = 0;
