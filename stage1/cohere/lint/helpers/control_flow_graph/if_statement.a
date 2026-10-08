@@ -1,0 +1,23 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function ifStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    let after = b.newBlock();
+    let thenEntry = b.newBlock();
+    let elseEntry = after;
+    if ((b.ast.maybe(needNode(stmt).ElseStatement) !== undefined)) {
+        elseEntry = b.newBlock();
+    }
+    b.condition(b.ast.maybe(needNode(stmt).Expression), thenEntry, elseEntry);
+    b.enter(thenEntry);
+    b.statement(b.ast.maybe(needNode(stmt).ThenStatement));
+    b.link(b.cur, after);
+    if ((b.ast.maybe(needNode(stmt).ElseStatement) !== undefined)) {
+        b.enter(elseEntry);
+        b.statement(b.ast.maybe(needNode(stmt).ElseStatement));
+        b.link(b.cur, after);
+    }
+    b.enter(after);
+}

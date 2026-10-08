@@ -1,0 +1,27 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function IsRoot(node: AstNode | undefined): boolean {
+    switch (needNode(node).Kind) {
+        case 'SourceFile':
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+        case 'ClassStaticBlockDeclaration':
+        {
+            return true;
+            break;
+        }
+        case 'PropertyDeclaration':
+        {
+            return (needNode(node).Initializer !== -1);
+            break;
+        }
+    }
+    return false;
+}

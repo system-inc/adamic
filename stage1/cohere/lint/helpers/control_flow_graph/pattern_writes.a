@@ -1,0 +1,41 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function patternWrites(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    switch (needNode(node).Kind) {
+        case 'Identifier':
+        {
+            b.write(node);
+            break;
+        }
+        case 'ParenthesizedExpression':
+        {
+            b.patternWrites(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'NonNullExpression':
+        {
+            b.patternWrites(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'AsExpression':
+        {
+            b.patternWrites(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'SatisfiesExpression':
+        {
+            b.patternWrites(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'TypeAssertionExpression':
+        {
+            b.patternWrites(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function linkWithCycleBarrier(b: Builder, from: BlockIndex, to: BlockIndex, barrier: boolean): number {
+    if (((from === -1) || (to === -1))) {
+        return -1;
+    }
+    let index = (b.block(from).Successors).length;
+    b.appendSuccessor(from, to);
+    b.setCycleBarrier(from, index, barrier);
+    if (b.block(from).Reachable) {
+        b.block(to).hasIncoming = true;
+    }
+    return index;
+}

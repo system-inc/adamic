@@ -1,0 +1,14 @@
+import { emptyNodes, needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function typeParameters(b: Builder, node: AstNode | undefined): void {
+    for (const typeParam of (b.ast.list(needNode(node).TypeParameters) ?? emptyNodes)) {
+        let param = typeParam;
+        if ((param === undefined)) {
+            continue;
+        }
+        b.expr(b.ast.maybe(needNode(param).Constraint));
+        b.expr(b.ast.maybe(needNode(param).DefaultType));
+    }
+}

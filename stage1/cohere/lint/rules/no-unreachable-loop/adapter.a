@@ -1,0 +1,124 @@
+import { panic } from 'adamic';
+import { AstArena,NodeIndex } from '../../helpers/control_flow_graph/ast.a';
+import type { AstNode } from '../../helpers/control_flow_graph/ast.a';
+import type { RuleContext } from '../../context.ts';
+class NodeRecord {
+ index: NodeIndex = -1;
+ Parent: NodeIndex = -1;
+ Left: NodeIndex = -1;
+ Right: NodeIndex = -1;
+ Expression: NodeIndex = -1;
+ Operand: NodeIndex = -1;
+ Name: NodeIndex = -1;
+ Body: NodeIndex = -1;
+ Type: NodeIndex = -1;
+ Initializer: NodeIndex = -1;
+ Condition: NodeIndex = -1;
+ Incrementor: NodeIndex = -1;
+ Statement: NodeIndex = -1;
+ ThenStatement: NodeIndex = -1;
+ ElseStatement: NodeIndex = -1;
+ TryBlock: NodeIndex = -1;
+ FinallyBlock: NodeIndex = -1;
+ CatchClause: NodeIndex = -1;
+ VariableDeclaration: NodeIndex = -1;
+ Block: NodeIndex = -1;
+ Label: NodeIndex = -1;
+ CaseBlock: NodeIndex = -1;
+ DeclarationList: NodeIndex = -1;
+ WhenTrue: NodeIndex = -1;
+ WhenFalse: NodeIndex = -1;
+ ArgumentExpression: NodeIndex = -1;
+ Tag: NodeIndex = -1;
+ Template: NodeIndex = -1;
+ Constraint: NodeIndex = -1;
+ DefaultType: NodeIndex = -1;
+ PropertyName: NodeIndex = -1;
+ ObjectAssignmentInitializer: NodeIndex = -1;
+ DotDotDotToken: NodeIndex = -1;
+ OperatorToken: NodeIndex = -1;
+ Statements: readonly NodeIndex[] | undefined = undefined;
+ Parameters: readonly NodeIndex[] | undefined = undefined;
+ Arguments: readonly NodeIndex[] | undefined = undefined;
+ Declarations: readonly NodeIndex[] | undefined = undefined;
+ Elements: readonly NodeIndex[] | undefined = undefined;
+ Properties: readonly NodeIndex[] | undefined = undefined;
+ Clauses: readonly NodeIndex[] | undefined = undefined;
+ Members: readonly NodeIndex[] | undefined = undefined;
+ Types: readonly NodeIndex[] | undefined = undefined;
+ HeritageClauses: readonly NodeIndex[] | undefined = undefined;
+ TypeArguments: readonly NodeIndex[] | undefined = undefined;
+ TypeParameters: readonly NodeIndex[] | undefined = undefined;
+ Decorators: readonly NodeIndex[] | undefined = undefined;
+ children: readonly NodeIndex[] | undefined = undefined;
+ Kind='';Text='';Operator='';isStatement=false;optionalChain=false;outermostChain=false;optionalRoot=false;functionLike=false;jsxTag=false;
+}
+
+function child(children: readonly NodeIndex[],position: number): NodeIndex {return children[position] ?? -1;}
+function assignment(context: RuleContext,children: readonly NodeIndex[]): NodeIndex {
+ if(children.length<2)return -1;const last=child(children,children.length-1);const previous=child(children,children.length-2);const gap=context.source.slice(context.node(previous).end,context.start(last));return gap.includes('=')?last:-1;
+}
+export function fromContext(context: RuleContext): AstArena {
+ const records: AstNode[]=[];
+ for(let index=0;index<context.parser.nodes.length;index++){
+ const parsed=context.node(index);const node=new NodeRecord();node.index=index;node.Parent=context.parent(index);node.Kind=parsed.kind;node.Text=parsed.text;node.Operator=parsed.operator;
+ const children: NodeIndex[]=parsed.children.slice();node.children=children;
+ node.isStatement=parsed.kind.endsWith('Statement')||['Block','VariableStatement','FunctionDeclaration','ClassDeclaration','ImportDeclaration','ExportDeclaration'].includes(parsed.kind);
+ node.functionLike=context.functionLike(index);node.Decorators=context.children(index,'Decorator');
+ node.optionalRoot=context.has(index,'QuestionDotToken');node.optionalChain=parsed.optional;
+ const parent=context.parent(index);node.outermostChain=parsed.optional&&(parent<0||!context.node(parent).optional||child(context.node(parent).children,0)!==index);
+ const first=child(children,0);const last=child(children,children.length-1);
+ switch(parsed.kind){
+ case 'SourceFile':node.Statements=children.filter((c)=>context.kind(c)!=='EndOfFileToken');break;
+ case 'Block':case 'ModuleBlock':node.Statements=children;break;
+ case 'IfStatement':node.Expression=first;node.ThenStatement=child(children,1);node.ElseStatement=child(children,2);break;
+ case 'WhileStatement':node.Expression=first;node.Statement=child(children,1);break;
+ case 'DoStatement':node.Statement=first;node.Expression=child(children,1);break;
+ case 'ForInStatement':case 'ForOfStatement':{const start=context.kind(first)==='AwaitKeyword'?1:0;node.Initializer=child(children,start);node.Expression=child(children,start+1);node.Statement=last;break;}
+ case 'ForStatement':{
+ node.Statement=last;let slot=0;context.scanAt(parsed.pos);let token=context.scanAt(context.scanEnd());
+ if(token==='AwaitKeyword'){slot++;token=context.scanAt(context.scanEnd());}
+ if(token!=='OpenParenToken')panic('CFG for header opening');token=context.scanAt(context.scanEnd());
+ if(token!=='SemicolonToken'){node.Initializer=child(children,slot);slot++;context.scanAt(context.node(node.Initializer).end);}
+ if(context.scanKind()!=='SemicolonToken')panic('CFG initializer separator');token=context.scanAt(context.scanEnd());
+ if(token!=='SemicolonToken'){node.Condition=child(children,slot);slot++;context.scanAt(context.node(node.Condition).end);}
+ if(context.scanKind()!=='SemicolonToken')panic('CFG condition separator');token=context.scanAt(context.scanEnd());
+ if(token!=='CloseParenToken')node.Incrementor=child(children,slot);break;
+ }
+ case 'SwitchStatement':node.Expression=first;node.CaseBlock=child(children,1);break;
+ case 'CaseBlock':node.Clauses=children;break;
+ case 'CaseClause':node.Expression=first;node.Statements=children.slice(1);break;
+ case 'DefaultClause':node.Statements=children;break;
+ case 'TryStatement':node.TryBlock=first;for(let i=1;i<children.length;i++){const c=child(children,i);if(context.kind(c)==='CatchClause')node.CatchClause=c;else node.FinallyBlock=c;}break;
+ case 'CatchClause':node.Block=last;if(first!==last)node.VariableDeclaration=first;break;
+ case 'LabeledStatement':node.Label=first;node.Statement=child(children,1);break;
+ case 'BreakStatement':case 'ContinueStatement':node.Label=first;break;
+ case 'WithStatement':node.Expression=first;node.Statement=child(children,1);break;
+ case 'ReturnStatement':case 'ThrowStatement':case 'ExpressionStatement':case 'ParenthesizedExpression':case 'NonNullExpression':case 'AsExpression':case 'SatisfiesExpression':case 'TypeAssertionExpression':case 'ComputedPropertyName':case 'Decorator':case 'SpreadElement':case 'SpreadAssignment':case 'YieldExpression':node.Expression=first;break;
+ case 'BinaryExpression':node.Left=first;node.OperatorToken=child(children,1);node.Right=child(children,2);break;
+ case 'ConditionalExpression':node.Condition=first;node.WhenTrue=child(children,2);node.WhenFalse=child(children,4);break;
+ case 'PrefixUnaryExpression':case 'PostfixUnaryExpression':node.Operand=first;break;
+ case 'PropertyAccessExpression':node.Expression=first;node.Name=last;break;
+ case 'ElementAccessExpression':node.Expression=first;node.ArgumentExpression=last;break;
+ case 'CallExpression':case 'NewExpression':node.Expression=first;node.Arguments=context.arguments(index);node.TypeArguments=children.slice(1,children.length-(parsed.list<0?0:parsed.list)).filter((c)=>context.kind(c)!=='QuestionDotToken');break;
+ case 'VariableStatement':node.DeclarationList=first;break;
+ case 'VariableDeclarationList':node.Declarations=children;break;
+ case 'VariableDeclaration':case 'Parameter':case 'BindingElement':{
+ node.Name=first;node.Initializer=assignment(context,children);node.Type=children.length>1&&child(children,1)!==node.Initializer?child(children,1):-1;
+ if(context.kind(first)==='DotDotDotToken'){node.DotDotDotToken=first;node.Name=child(children,1);}break;
+ }
+ case 'ObjectBindingPattern':case 'ArrayBindingPattern':case 'ArrayLiteralExpression':node.Elements=children;break;
+ case 'ObjectLiteralExpression':node.Properties=children;break;
+ case 'PropertyAssignment':node.Name=first;node.Initializer=last;break;
+ case 'ShorthandPropertyAssignment':node.Name=first;node.ObjectAssignmentInitializer=first!==last?last:-1;break;
+ case 'ClassStaticBlockDeclaration':node.Body=first;break;
+ case 'ClassDeclaration':case 'ClassExpression':node.Name=context.name(index);node.Members=context.members(index);node.HeritageClauses=context.children(index,'HeritageClause');node.TypeParameters=context.children(index,'TypeParameter');break;
+ case 'HeritageClause':node.Types=children;break;
+ case 'PropertyDeclaration':node.Name=context.name(index);node.Initializer=assignment(context,children);break;
+ default:break;
+ }
+ if(node.functionLike){node.Name=context.name(index);node.Parameters=context.children(index,'Parameter');node.TypeParameters=context.children(index,'TypeParameter');if(last>=0&&last!==node.Name&&context.kind(last)!=='Parameter')node.Body=last;}
+ records.push(node);
+ }
+ return new AstArena(records);
+}

@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function Current(b: Builder): BlockIndex {
+    return b.cur;
+}

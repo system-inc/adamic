@@ -1,0 +1,34 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function forInOfStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    b.expr(b.ast.maybe(needNode(stmt).Expression));
+    let head = b.newBlock();
+    b.link(b.cur, head);
+    b.enter(head);
+    let after = b.newBlock();
+    b.link(head, after);
+    let body = b.newBlock();
+    b.link(head, body);
+    b.pushJump(node, after, head, node);
+    b.enter(body);
+    if ((b.ast.maybe(needNode(stmt).Initializer) !== undefined)) {
+        if ((needNode(b.ast.maybe(needNode(stmt).Initializer)).Kind === 'VariableDeclarationList')) {
+            let declList = b.ast.maybe(needNode(stmt).Initializer);
+            if (((declList !== undefined) && (b.ast.list(needNode(declList).Declarations) !== undefined))) {
+                for (const decl of needList(b.ast.list(needNode(declList).Declarations))) {
+                    b.patternBind(b.ast.maybe(needNode(decl).Name));
+                }
+            }
+        } else {
+            b.patternBind(b.ast.maybe(needNode(stmt).Initializer));
+        }
+    }
+    b.statement(b.ast.maybe(needNode(stmt).Statement));
+    b.loop(node);
+    b.link(b.cur, head);
+    b.popJump();
+    b.enter(after);
+}

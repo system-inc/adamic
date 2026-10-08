@@ -1,0 +1,127 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { isThrowableIdentifier } from './is_throwable_identifier.a';
+export function patternBind(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    switch (needNode(node).Kind) {
+        case 'Identifier':
+        {
+            b.read(node);
+            if (isThrowableIdentifier(b.ast, node)) {
+                b.firstThrowableFork();
+            }
+            b.write(node);
+            break;
+        }
+        case 'OmittedExpression':
+        {
+            break;
+        }
+        case 'ParenthesizedExpression':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'NonNullExpression':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'AsExpression':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'SatisfiesExpression':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'TypeAssertionExpression':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'ObjectBindingPattern':
+        case 'ArrayBindingPattern':
+        {
+            let pattern = node;
+            if ((b.ast.list(needNode(pattern).Elements) === undefined)) {
+                return;
+            }
+            for (const element of needList(b.ast.list(needNode(pattern).Elements))) {
+                let binding = element;
+                if ((binding === undefined)) {
+                    continue;
+                }
+                if (((b.ast.maybe(needNode(binding).PropertyName) !== undefined) && (needNode(b.ast.maybe(needNode(binding).PropertyName)).Kind === 'ComputedPropertyName'))) {
+                    b.expr(b.ast.maybe(needNode(b.ast.maybe(needNode(binding).PropertyName)).Expression));
+                }
+                b.bindWithDefault(b.ast.maybe(needNode(binding).Name), b.ast.maybe(needNode(binding).Initializer));
+            }
+            break;
+        }
+        case 'ObjectLiteralExpression':
+        {
+            for (const property of needList(b.ast.list(needNode(node).Properties))) {
+                switch (property.Kind) {
+                    case 'PropertyAssignment':
+                    {
+                        let assignment = property;
+                        {
+                            let name = b.ast.maybe(needNode(assignment).Name);
+                            if (((name !== undefined) && (needNode(name).Kind === 'ComputedPropertyName'))) {
+                                b.expr(b.ast.maybe(needNode(name).Expression));
+                            }
+                        }
+                        b.patternBind(b.ast.maybe(needNode(assignment).Initializer));
+                        break;
+                    }
+                    case 'ShorthandPropertyAssignment':
+                    {
+                        let shorthand = property;
+                        b.bindWithDefault(b.ast.maybe(needNode(shorthand).Name), b.ast.maybe(needNode(shorthand).ObjectAssignmentInitializer));
+                        break;
+                    }
+                    case 'SpreadAssignment':
+                    {
+                        b.patternBind(b.ast.maybe(needNode(property).Expression));
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        case 'ArrayLiteralExpression':
+        {
+            for (const element of needList(b.ast.list(needNode(node).Elements))) {
+                b.patternBind(element);
+            }
+            break;
+        }
+        case 'SpreadElement':
+        {
+            b.patternBind(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'BinaryExpression':
+        {
+            let binary = node;
+            if ((needNode(b.ast.maybe(needNode(binary).OperatorToken)).Kind === 'EqualsToken')) {
+                b.bindWithDefault(b.ast.maybe(needNode(binary).Left), b.ast.maybe(needNode(binary).Right));
+                return;
+            }
+            b.expr(node);
+            break;
+        }
+        default:
+        {
+            b.expr(node);
+            break;
+        }
+    }
+}

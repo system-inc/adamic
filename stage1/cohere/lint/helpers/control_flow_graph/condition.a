@@ -1,0 +1,96 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex, whenFalse: BlockIndex): void {
+    if ((node === undefined)) {
+        b.link(b.cur, whenTrue);
+        b.link(b.cur, whenFalse);
+        return;
+    }
+    switch (needNode(node).Kind) {
+        case 'ParenthesizedExpression':
+        {
+            if ((b.hooks.Expression !== undefined)) {
+                b.hooks.Expression(b, node);
+            }
+            b.condition(b.ast.maybe(needNode(node).Expression), whenTrue, whenFalse);
+            break;
+        }
+        case 'PrefixUnaryExpression':
+        {
+            let unary = node;
+            if ((needNode(unary).Operator !== 'ExclamationToken')) {
+                b.expr(node);
+                b.link(b.cur, whenTrue);
+                b.link(b.cur, whenFalse);
+                return;
+            }
+            if ((b.hooks.Expression !== undefined)) {
+                b.hooks.Expression(b, node);
+            }
+            b.condition(b.ast.maybe(needNode(unary).Operand), whenFalse, whenTrue);
+            break;
+        }
+        case 'BinaryExpression':
+        {
+            let binary = node;
+            let operator = needNode(b.ast.maybe(needNode(binary).OperatorToken)).Kind;
+            if ((((operator !== 'AmpersandAmpersandToken') && (operator !== 'BarBarToken')) && (operator !== 'QuestionQuestionToken'))) {
+                b.expr(node);
+                b.link(b.cur, whenTrue);
+                b.link(b.cur, whenFalse);
+                return;
+            }
+            if ((b.hooks.Expression !== undefined)) {
+                b.hooks.Expression(b, node);
+            }
+            let right = b.newBlock();
+            switch (operator) {
+                case 'AmpersandAmpersandToken':
+                {
+                    b.condition(b.ast.maybe(needNode(binary).Left), right, whenFalse);
+                    break;
+                }
+                case 'BarBarToken':
+                {
+                    b.condition(b.ast.maybe(needNode(binary).Left), whenTrue, right);
+                    break;
+                }
+                case 'QuestionQuestionToken':
+                {
+                    b.expr(b.ast.maybe(needNode(binary).Left));
+                    b.link(b.cur, whenTrue);
+                    b.link(b.cur, whenFalse);
+                    b.link(b.cur, right);
+                    break;
+                }
+            }
+            b.enter(right);
+            b.condition(b.ast.maybe(needNode(binary).Right), whenTrue, whenFalse);
+            break;
+        }
+        case 'ConditionalExpression':
+        {
+            if ((b.hooks.Expression !== undefined)) {
+                b.hooks.Expression(b, node);
+            }
+            let conditional = node;
+            let trueEntry = b.newBlock();
+            let falseEntry = b.newBlock();
+            b.condition(b.ast.maybe(needNode(conditional).Condition), trueEntry, falseEntry);
+            b.enter(trueEntry);
+            b.condition(b.ast.maybe(needNode(conditional).WhenTrue), whenTrue, whenFalse);
+            b.enter(falseEntry);
+            b.condition(b.ast.maybe(needNode(conditional).WhenFalse), whenTrue, whenFalse);
+            break;
+        }
+        default:
+        {
+            b.expr(node);
+            b.link(b.cur, whenTrue);
+            b.link(b.cur, whenFalse);
+            break;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+package control_flow_graph
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "reflect"
+ "strings"
+ "sync"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+)
+var adamicCaptureLock sync.Mutex
+func adamicWrite(record any) { path:=os.Getenv("ADAMIC_CFG_CAPTURE");if path==""{return}; adamicCaptureLock.Lock();defer adamicCaptureLock.Unlock();f,e:=os.OpenFile(filepath.Join(path,fmt.Sprintf("%d.jsonl",os.Getpid())),os.O_CREATE|os.O_APPEND|os.O_WRONLY,0644);if e!=nil{panic(e)};defer f.Close();if e=json.NewEncoder(f).Encode(record);e!=nil{panic(e)} }
+func adamicSnapshot(root *ast.Node)([]map[string]any,map[*ast.Node]int) {
+ source:=root;for source.Parent!=nil{source=source.Parent}; nodes:=[]*ast.Node{}; ids:=map[*ast.Node]int{}
+ var add func(*ast.Node);add=func(n *ast.Node){if n==nil{return};if _,ok:=ids[n];ok{return};ids[n]=len(nodes);nodes=append(nodes,n);n.ForEachChild(func(c *ast.Node)bool{add(c);return false})};add(source)
+ id:=func(n *ast.Node)int{if n==nil{return -1};v,ok:=ids[n];if !ok{panic("AST field missing from traversal")};return v}
+ list:=func(ns []*ast.Node)[]int{r:=[]int{};for _,n:=range ns{r=append(r,id(n))};return r}
+ out:=[]map[string]any{}
+ for _,n:=range nodes {
+  kind:=strings.TrimPrefix(n.Kind.String(),"Kind")
+  m:=map[string]any{"index":id(n),"Parent":id(n.Parent),"Kind":kind,"Text":"","Operator":"", "isStatement":ast.IsStatement(n),"optionalChain":ast.IsOptionalChain(n),"outermostChain":ast.IsOptionalChain(n)&&ast.IsOutermostOptionalChain(n),"optionalRoot":ast.IsOptionalChainRoot(n),"functionLike":ast.IsFunctionLikeDeclaration(n),"jsxTag":n.Parent!=nil&&ast.IsJsxTagName(n)}
+  children:=[]*ast.Node{};n.ForEachChild(func(c *ast.Node)bool{children=append(children,c);return false});m["children"]=list(children)
+  m["Name"]=id(n.Name());m["Body"]=id(n.Body());m["Type"]=id(n.Type());if n.FunctionLikeData()!=nil{m["Parameters"]=list(n.Parameters())};switch n.Kind{case ast.KindCallExpression,ast.KindNewExpression,ast.KindTaggedTemplateExpression,ast.KindTypeReference,ast.KindExpressionWithTypeArguments,ast.KindImportType,ast.KindTypeQuery,ast.KindJsxOpeningElement,ast.KindJsxSelfClosingElement:m["TypeArguments"]=list(n.TypeArguments())};if n.FunctionLikeData()!=nil||n.ClassLikeData()!=nil||n.Kind==ast.KindInterfaceDeclaration||n.Kind==ast.KindTypeAliasDeclaration{m["TypeParameters"]=list(n.TypeParameters())};m["Decorators"]=list(n.Decorators())
+  switch n.Kind {case ast.KindIdentifier,ast.KindNumericLiteral,ast.KindBigIntLiteral,ast.KindStringLiteral,ast.KindNoSubstitutionTemplateLiteral:m["Text"]=n.Text()}
+  method:="As"+kind
+  switch n.Kind {case ast.KindParameter:method="AsParameterDeclaration";case ast.KindTypeParameter:method="AsTypeParameterDeclaration";case ast.KindForInStatement,ast.KindForOfStatement:method="AsForInOrOfStatement";case ast.KindCaseClause,ast.KindDefaultClause:method="AsCaseOrDefaultClause";case ast.KindObjectBindingPattern,ast.KindArrayBindingPattern:method="AsBindingPattern";case ast.KindConstructor:method="AsConstructorDeclaration";case ast.KindGetAccessor:method="AsGetAccessorDeclaration";case ast.KindSetAccessor:method="AsSetAccessorDeclaration";case ast.KindTypeAssertionExpression:method="AsTypeAssertion"}
+  rv:=reflect.ValueOf(n).MethodByName(method)
+  if rv.IsValid() {
+   data:=rv.Call(nil)[0];if data.Kind()==reflect.Pointer&&!data.IsNil(){data=data.Elem();if data.Kind()==reflect.Struct {
+    for _,field:=range strings.Fields("Body Expression Operand Left Right Initializer Condition Incrementor Statement ThenStatement ElseStatement TryBlock FinallyBlock CatchClause VariableDeclaration Block Label CaseBlock DeclarationList WhenTrue WhenFalse ArgumentExpression Tag Template Constraint DefaultType PropertyName ObjectAssignmentInitializer DotDotDotToken OperatorToken"){
+     v:=data.FieldByName(field);if v.IsValid()&&v.CanInterface(){if child,ok:=v.Interface().(*ast.Node);ok{m[field]=id(child)}}
+    }
+    for _,field:=range strings.Fields("Statements Arguments Declarations Elements Properties Clauses Members Types HeritageClauses") {
+     v:=data.FieldByName(field);if v.IsValid()&&v.CanInterface(){if nl,ok:=v.Interface().(*ast.NodeList);ok&&nl!=nil{m[field]=list(nl.Nodes)}}
+    }
+    v:=data.FieldByName("Operator");if v.IsValid()&&v.CanInterface(){if op,ok:=v.Interface().(ast.Kind);ok{m["Operator"]=strings.TrimPrefix(op.String(),"Kind")}}
+   }}
+  }
+  if n.Kind==ast.KindClassDeclaration||n.Kind==ast.KindClassExpression{c:=n.ClassLikeData();if c.Members!=nil{m["Members"]=list(c.Members.Nodes)};if c.HeritageClauses!=nil{m["HeritageClauses"]=list(c.HeritageClauses.Nodes)}}
+  m["rootOwner"]=id(RootOf(n));m["rootFlag"]=IsRoot(n);m["alwaysTruthy"]=isAlwaysTruthyTest(n);m["destructuring"]=isDestructuringTarget(n);m["throwable"]=isThrowableIdentifier(n);m["labels"]=labelsOf(n);m["normalized"]=normalizeBigIntLiteral(m["Text"].(string));out=append(out,m)
+ }
+ return out,ids
+}
+func Build[E any](root *ast.Node,hooks Hooks[E])*Graph[E] {
+ if os.Getenv("ADAMIC_CFG_CAPTURE")==""{return adamicOriginalBuild(root,hooks)}
+ nodes,ids:=adamicSnapshot(root);trace:=[]any{};eventID:=0
+ wrap:=func(kind string, original func(*Builder[E],*ast.Node))func(*Builder[E],*ast.Node){if original==nil{return nil};return func(b *Builder[E],n *ast.Node){block:=b.Current();before:=len(block.Events);idx:=-1;if n!=nil{idx=ids[n]};entry:=[]any{kind,idx,block.Index(),block.Reachable,[]int{}};trace=append(trace,entry);original(b,n);emits:=[]int{};for i:=before;i<len(block.Events);i++{emits=append(emits,eventID);eventID++};entry[4]=emits}}
+ wrapped:=Hooks[E]{Expression:wrap("Expression",hooks.Expression),Read:wrap("Read",hooks.Read),Write:wrap("Write",hooks.Write),Statement:wrap("Statement",hooks.Statement),Loop:wrap("Loop",hooks.Loop)}
+ graph:=adamicOriginalBuild(root,wrapped);blocks:=[]any{};events:=0
+ for _,block:=range graph.Blocks {successors:=[]int{};for _,s:=range block.Successors{successors=append(successors,s.Index())};predecessors:=[]int{};for _,p:=range graph.Blocks{for _,s:=range p.Successors{if s==block{predecessors=append(predecessors,p.Index())}}};blocks=append(blocks,[]any{block.Index(),block.Reachable,block.hasIncoming,block.final,block.thrown,successors,predecessors,block.cycleBarrier,len(block.Events)});events+=len(block.Events)}
+ indexes:=func(bs []*Block[E])[]int{r:=[]int{};for _,b:=range bs{r=append(r,b.Index())};return r}
+ mask:=[]bool{hooks.Expression!=nil,hooks.Read!=nil,hooks.Write!=nil,hooks.Statement!=nil,hooks.Loop!=nil}
+ adamicWrite(map[string]any{"op":"build","nodes":nodes,"root":ids[root],"mask":mask,"trace":trace,"blocks":blocks,"finals":indexes(graph.FinalBlocks),"thrown":indexes(graph.ThrownBlocks),"end":graph.EndReachable,"events":events})
+ return graph
+}
+func IndexRoots(sourceFile *ast.Node)[]RootSummary { roots:=adamicOriginalIndexRoots(sourceFile);if os.Getenv("ADAMIC_CFG_CAPTURE")!=""{nodes,ids:=adamicSnapshot(sourceFile);summaries:=[]any{};for _,r:=range roots{loops:=[]string{};for _,k:=range r.Loops{loops=append(loops,strings.TrimPrefix(k.String(),"Kind"))};summaries=append(summaries,[]any{ids[r.Node],r.BareReturn,loops})};adamicWrite(map[string]any{"op":"roots","nodes":nodes,"root":ids[sourceFile],"summaries":summaries})};return roots }
+
+func AnalyzePaths[E any](graph *Graph[E])*PathAnalysis[E] {a:=adamicOriginalAnalyzePaths(graph);if os.Getenv("ADAMIC_CFG_CAPTURE")!="" {blocks:=[]any{};finals:=[]int{};thrown:=[]int{};queries:=[]any{};if graph!=nil{for _,b:=range graph.Blocks{succ:=[]int{};for _,s:=range b.Successors{if s==nil{succ=append(succ,-1)}else{succ=append(succ,s.Index())}};blocks=append(blocks,[]any{b.Index(),b.Reachable,succ,b.cycleBarrier});distance,present:=a.ShortestPathFromStart(b);queries=append(queries,[]any{a.IsCyclic(b),a.IsOnEveryFinalPath(b),a.IsExit(b),distance,present})};for _,b:=range graph.FinalBlocks{finals=append(finals,b.Index())};for _,b:=range graph.ThrownBlocks{thrown=append(thrown,b.Index())}};distance,present:=a.ShortestExitPathFromStart();adamicWrite(map[string]any{"op":"paths","blocks":blocks,"finals":finals,"thrown":thrown,"queries":queries,"distance":distance,"present":present,"single":a.HasSingleFinalPath()})};return a}

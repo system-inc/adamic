@@ -1,0 +1,21 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function conditionalExpression(b: Builder, node: AstNode | undefined): void {
+    let cond = node;
+    b.expr(b.ast.maybe(needNode(cond).Condition));
+    let testEnd = b.cur;
+    let join = b.newBlock();
+    let whenTrue = b.newBlock();
+    b.link(testEnd, whenTrue);
+    b.enter(whenTrue);
+    b.expr(b.ast.maybe(needNode(cond).WhenTrue));
+    b.link(b.cur, join);
+    let whenFalse = b.newBlock();
+    b.link(testEnd, whenFalse);
+    b.enter(whenFalse);
+    b.expr(b.ast.maybe(needNode(cond).WhenFalse));
+    b.link(b.cur, join);
+    b.enter(join);
+}

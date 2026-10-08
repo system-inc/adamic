@@ -1,0 +1,2 @@
+import { BlockArena,BlockIndex } from './arena.a';
+export function finalizePredecessors(arena: BlockArena): void {for(let i=0;i<arena.length;i++){const empty: BlockIndex[]=[];arena.read(i).Predecessors=empty;}for(let i=0;i<arena.length;i++)for(const successor of arena.read(i).Successors)if(successor!==-1)arena.read(successor).Predecessors.push(i);}

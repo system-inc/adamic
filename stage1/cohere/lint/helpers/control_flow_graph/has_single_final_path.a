@@ -1,0 +1,3 @@
+import { PathAnalysis,pathCyclic,pathOnEveryFinal,pathExit } from './path_analysis.a';
+import { BlockIndex } from './arena.a';
+export function HasSingleFinalPath(a: PathAnalysis): boolean { return a.finalPaths===1; }

@@ -1,0 +1,124 @@
+import { emptyNodes, needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function statement(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    b.reachedStatement(node);
+    switch (needNode(node).Kind) {
+        case 'Block':
+        {
+            b.statements(b.ast.list(needNode(node).Statements));
+            break;
+        }
+        case 'VariableStatement':
+        {
+            b.variableDeclarationList(b.ast.maybe(needNode(node).DeclarationList));
+            break;
+        }
+        case 'ExpressionStatement':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'IfStatement':
+        {
+            b.ifStatement(node);
+            break;
+        }
+        case 'WhileStatement':
+        {
+            b.whileStatement(node);
+            break;
+        }
+        case 'DoStatement':
+        {
+            b.doStatement(node);
+            break;
+        }
+        case 'ForStatement':
+        {
+            b.forStatement(node);
+            break;
+        }
+        case 'ForInStatement':
+        case 'ForOfStatement':
+        {
+            b.forInOfStatement(node);
+            break;
+        }
+        case 'SwitchStatement':
+        {
+            b.switchStatement(node);
+            break;
+        }
+        case 'TryStatement':
+        {
+            b.tryStatement(node);
+            break;
+        }
+        case 'LabeledStatement':
+        {
+            b.labeledStatement(node);
+            break;
+        }
+        case 'ReturnStatement':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            b.makeReturn();
+            break;
+        }
+        case 'ThrowStatement':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            b.makeThrow();
+            break;
+        }
+        case 'BreakStatement':
+        {
+            b.makeBreak(b.ast.maybe(needNode(node).Label));
+            break;
+        }
+        case 'ContinueStatement':
+        {
+            b.makeContinue(b.ast.maybe(needNode(node).Label));
+            break;
+        }
+        case 'WithStatement':
+        {
+            let withNode = node;
+            b.expr(b.ast.maybe(needNode(withNode).Expression));
+            b.statement(b.ast.maybe(needNode(withNode).Statement));
+            break;
+        }
+        case 'EmptyStatement':
+        case 'DebuggerStatement':
+        case 'ImportDeclaration':
+        case 'ImportEqualsDeclaration':
+        case 'FunctionDeclaration':
+        {
+            break;
+        }
+        case 'ClassDeclaration':
+        {
+            b.classLike(node);
+            break;
+        }
+        case 'ExportAssignment':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'ExportDeclaration':
+        {
+            break;
+        }
+        default:
+        {
+            for (const child of b.ast.list(needNode(node).children) ?? emptyNodes) b.visitUnknown(child);
+            break;
+        }
+    }
+}

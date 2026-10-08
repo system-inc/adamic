@@ -1,0 +1,10 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function throwTarget(f: TryFrame): BlockIndex {
+    if (((f.position === 'try') && (f.catchEntry !== -1))) {
+        return f.catchEntry;
+    }
+    return f.finallyEntry;
+}

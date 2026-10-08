@@ -1,0 +1,53 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { IsAssignmentOperator } from './is_assignment_operator.a';
+import { IsLogicalOrCoalescingAssignmentOperator } from './is_logical_or_coalescing_assignment_operator.a';
+import { isDestructuringTarget } from './is_destructuring_target.a';
+export function binaryExpression(b: Builder, node: AstNode | undefined): void {
+    let binary = node;
+    let operator = needNode(b.ast.maybe(needNode(binary).OperatorToken)).Kind;
+    if ((((operator === 'AmpersandAmpersandToken') || (operator === 'BarBarToken')) || (operator === 'QuestionQuestionToken'))) {
+        b.expr(b.ast.maybe(needNode(binary).Left));
+        let join = b.newBlock();
+        b.link(b.cur, join);
+        let right = b.newBlock();
+        b.link(b.cur, right);
+        b.enter(right);
+        b.expr(b.ast.maybe(needNode(binary).Right));
+        b.link(b.cur, join);
+        b.enter(join);
+    }
+    else if (IsLogicalOrCoalescingAssignmentOperator(operator)) {
+        b.patternReads(b.ast.maybe(needNode(binary).Left));
+        let join = b.newBlock();
+        b.link(b.cur, join);
+        let right = b.newBlock();
+        b.link(b.cur, right);
+        b.enter(right);
+        b.expr(b.ast.maybe(needNode(binary).Right));
+        b.patternWrites(b.ast.maybe(needNode(binary).Left));
+        b.link(b.cur, join);
+        b.enter(join);
+    }
+    else if ((operator === 'EqualsToken')) {
+        if (isDestructuringTarget(b.ast, b.ast.maybe(needNode(binary).Left))) {
+            b.expr(b.ast.maybe(needNode(binary).Right));
+            b.patternBind(b.ast.maybe(needNode(binary).Left));
+            return;
+        }
+        b.patternReads(b.ast.maybe(needNode(binary).Left));
+        b.expr(b.ast.maybe(needNode(binary).Right));
+        b.patternWrites(b.ast.maybe(needNode(binary).Left));
+    }
+    else if (IsAssignmentOperator(operator)) {
+        b.patternReads(b.ast.maybe(needNode(binary).Left));
+        b.expr(b.ast.maybe(needNode(binary).Right));
+        b.patternWrites(b.ast.maybe(needNode(binary).Left));
+    }
+    else {
+        b.expr(b.ast.maybe(needNode(binary).Left));
+        b.expr(b.ast.maybe(needNode(binary).Right));
+    }
+}

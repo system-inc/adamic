@@ -1,0 +1,10 @@
+import { AstArena } from './ast.a';
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { SkipParentheses } from './skip_parentheses.a';
+export function isDestructuringTarget(ast: AstArena, node: AstNode | undefined): boolean {
+    node = SkipParentheses(ast,node);
+    return ((node !== undefined) && (((needNode(node).Kind === 'ObjectLiteralExpression') || (needNode(node).Kind === 'ArrayLiteralExpression'))));
+}

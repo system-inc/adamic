@@ -1,0 +1,25 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { isAlwaysTruthyTest } from './is_always_truthy_test.a';
+export function doStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    let body = b.newBlock();
+    b.link(b.cur, body);
+    let test = b.newBlock();
+    let after = b.newBlock();
+    b.pushJump(node, after, test, undefined);
+    b.enter(body);
+    b.statement(b.ast.maybe(needNode(stmt).Statement));
+    b.link(b.cur, test);
+    b.popJump();
+    b.enter(test);
+    b.expr(b.ast.maybe(needNode(stmt).Expression));
+    b.loop(node);
+    b.link(b.cur, body);
+    if (!isAlwaysTruthyTest(b.ast, b.ast.maybe(needNode(stmt).Expression))) {
+        b.link(b.cur, after);
+    }
+    b.enter(after);
+}

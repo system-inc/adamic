@@ -1,0 +1,11 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function markFinal(b: Builder, blk: BlockIndex): void {
+    if ((((blk === -1) || !b.block(blk).Reachable) || b.block(blk).final)) {
+        return;
+    }
+    b.block(blk).final = true;
+    b.finals = append(b.finals, blk);
+}

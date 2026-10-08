@@ -1,0 +1,12 @@
+import { panic } from 'adamic';
+import { BlockIndex } from './arena.a';
+import { PathAnalysis, pathCyclic, pathFinal, pathThrown } from './path_analysis.a';
+export function countCyclePaths(p: PathAnalysis,index: BlockIndex,barrierStart: number): boolean {
+ const active=p.active[index] ?? panic('active index');p.graph.arena.read(index);
+ if(active>=0){let end=p.path.length;if(barrierStart>active)end=barrierStart;for(let i=active+1;i<end;i++)p.add(p.path[i] ?? panic('cycle path'),pathCyclic);return false;}
+ if(p.cycleKnown[index] ?? panic('cycle known'))return p.cycleEnd[index] ?? panic('cycle end');
+ p.active[index]=p.path.length;p.path.push(index);let hasPath=false;const block=p.graph.arena.read(index);
+ let traverse=(p.flag(index)&pathThrown)===0;if(!traverse){for(const successor of block.Successors)if(successor!==-1&&p.graph.arena.read(successor).Reachable){traverse=true;break;}}
+ if(traverse){hasPath=(p.flag(index)&pathFinal)!==0;let hasSuccessor=false;for(let i=0;i<block.Successors.length;i++){const successor=block.Successors[i] ?? panic('successor');if(successor===-1||!p.graph.arena.read(successor).Reachable)continue;hasSuccessor=true;let nextBarrier=barrierStart;if(block.cycleBarrier!==undefined && (block.cycleBarrier[i] ?? false))nextBarrier=p.path.length;if(countCyclePaths(p,successor,nextBarrier))hasPath=true;}if(!hasSuccessor&&(p.flag(index)&pathThrown)===0)hasPath=true;}
+ p.path.pop();p.active[index]=-1;if(hasPath||!block.Reachable){p.cycleKnown[index]=true;p.cycleEnd[index]=hasPath;}else p.cycleKnown[index]=false;return hasPath;
+}

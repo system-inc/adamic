@@ -1,0 +1,13 @@
+import { Graph } from './builder.a';
+import { BlockArena } from './arena.a';
+import { PathAnalysis,pathThrown,pathExit,pathFinal } from './path_analysis.a';
+import { newCyclePaths } from './new_cycle_paths.a';
+import { findShortestPaths } from './find_shortest_paths.a';
+import { findFinalPathDominators } from './find_final_path_dominators.a';
+export function AnalyzePaths(graph: Graph | undefined): PathAnalysis {
+ if(graph===undefined){const arena=new BlockArena();const empty: import('./arena.a').BlockIndex[]=[];return new PathAnalysis(new Graph(arena,empty,empty,false));}
+ const a=new PathAnalysis(graph);if(a.graph.arena.length===0)return a;
+ for(const block of a.graph.ThrownBlocks){if(block!==-1 && a.graph.arena.read(block).Reachable){a.add(block,pathThrown|pathExit);a.hasExit=true;}}
+ for(const block of a.graph.FinalBlocks){if(block!==-1 && a.graph.arena.read(block).Reachable){a.add(block,pathExit);a.hasExit=true;if((a.flag(block)&pathThrown)!==0)continue;a.add(block,pathFinal);a.hasFinal=true;}}
+ newCyclePaths(a);a.countToEnd(0);a.finalPaths=a.countFinalPaths(0);findShortestPaths(a);findFinalPathDominators(a);return a;
+}

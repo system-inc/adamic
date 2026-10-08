@@ -1,0 +1,12 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function statements(b: Builder, list: readonly AstNode[] | undefined): void {
+    if ((list === undefined)) {
+        return;
+    }
+    for (const stmt of needList(list)) {
+        b.statement(stmt);
+    }
+}

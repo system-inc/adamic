@@ -1,0 +1,83 @@
+import { emptyNodes, needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { IsRoot } from './is_root.a';
+import { isThrowableIdentifier } from './is_throwable_identifier.a';
+export function expr(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    if ((b.hooks.Expression !== undefined)) {
+        b.hooks.Expression(b, node);
+    }
+    switch (needNode(node).Kind) {
+        case 'Identifier':
+        {
+            b.read(node);
+            if (isThrowableIdentifier(b.ast, node)) {
+                b.firstThrowableFork();
+            }
+            break;
+        }
+        case 'ParenthesizedExpression':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'BinaryExpression':
+        {
+            b.binaryExpression(node);
+            break;
+        }
+        case 'ConditionalExpression':
+        {
+            b.conditionalExpression(node);
+            break;
+        }
+        case 'PrefixUnaryExpression':
+        {
+            let unary = node;
+            if (((needNode(unary).Operator === 'PlusPlusToken') || (needNode(unary).Operator === 'MinusMinusToken'))) {
+                b.updateExpression(b.ast.maybe(needNode(unary).Operand));
+                return;
+            }
+            b.expr(b.ast.maybe(needNode(unary).Operand));
+            break;
+        }
+        case 'PostfixUnaryExpression':
+        {
+            b.updateExpression(b.ast.maybe(needNode(node).Operand));
+            break;
+        }
+        case 'PropertyAccessExpression':
+        case 'ElementAccessExpression':
+        case 'CallExpression':
+        case 'NewExpression':
+        case 'TaggedTemplateExpression':
+        {
+            b.accessOrCall(node);
+            break;
+        }
+        case 'YieldExpression':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            b.makeYield();
+            break;
+        }
+        case 'ClassExpression':
+        {
+            b.classLike(node);
+            break;
+        }
+        default:
+        {
+            if (IsRoot(node)) {
+                b.nestedFunction(node);
+                return;
+            }
+            for (const child of b.ast.list(needNode(node).children) ?? emptyNodes) b.visitUnknown(child);
+            break;
+        }
+    }
+}

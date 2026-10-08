@@ -1,0 +1,14 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { IsOptionalChainRoot } from './is_optional_chain_root.a';
+export function forkOptionalChain(b: Builder, node: AstNode | undefined): void {
+    if ((((b.chainJoins).length === 0) || !IsOptionalChainRoot(node))) {
+        return;
+    }
+    b.link(b.cur, at(b.chainJoins, ((b.chainJoins).length - 1)));
+    let next = b.newBlock();
+    b.link(b.cur, next);
+    b.enter(next);
+}

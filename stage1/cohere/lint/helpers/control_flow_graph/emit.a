@@ -1,0 +1,4 @@
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export interface EventLocation { readonly block: BlockIndex; readonly index: number; }
+export function Emit(b: Builder,event: number): EventLocation { const index=b.block(b.cur).Events.length;b.block(b.cur).Events.push(event);return {block:b.cur,index:index}; }

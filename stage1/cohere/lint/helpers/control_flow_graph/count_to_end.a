@@ -1,0 +1,4 @@
+import { BlockIndex } from './arena.a';
+import { PathAnalysis } from './path_analysis.a';
+import { countCyclePaths } from './count_cycle_paths.a';
+export function countToEnd(a: PathAnalysis,index: BlockIndex): boolean { return countCyclePaths(a,index,-1); }

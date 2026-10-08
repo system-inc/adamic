@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function setCycleBarrier(b: Builder, from: BlockIndex, index: number, barrier: boolean): void {
+    if(from === -1 || index < 0) return; const block = b.block(from); if(block.cycleBarrier === undefined) { if(!barrier) return; const empty: boolean[] = []; block.cycleBarrier = empty; } const barriers = block.cycleBarrier; while(barriers.length < block.Successors.length) barriers.push(false); if(index >= barriers.length) panic('invalid cycle barrier index'); barriers[index] = barrier;
+}

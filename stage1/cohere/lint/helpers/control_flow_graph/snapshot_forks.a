@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function snapshotForks(b: Builder): boolean[] {
+    const result: boolean[] = []; for(const frame of b.tryStack) result.push(frame.thrownForked); return result;
+}

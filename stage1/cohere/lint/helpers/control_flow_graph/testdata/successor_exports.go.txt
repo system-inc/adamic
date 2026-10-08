@@ -1,8 +1,0 @@
-package control_flow_graph
-func AdamicSuccessorProbe() (int, int, bool) {
- b := &Builder[int]{}
- block := b.newBlock()
- block.index = 7
- b.appendSuccessor(block, block)
- return len(block.Successors), block.Successors[0].Index(), block.Successors[0] == block
-}

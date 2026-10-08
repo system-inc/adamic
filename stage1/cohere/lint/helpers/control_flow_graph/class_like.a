@@ -1,0 +1,28 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function classLike(b: Builder, node: AstNode | undefined): void {
+    let classNode = node;
+    if ((classNode === undefined)) {
+        return;
+    }
+    b.decorators(node);
+    b.typeParameters(node);
+    if ((classNode.HeritageClauses !== undefined)) {
+        for (const clause of needList(b.ast.list(classNode.HeritageClauses))) {
+            let heritage = clause;
+            if (((heritage === undefined) || (b.ast.list(needNode(heritage).Types) === undefined))) {
+                continue;
+            }
+            for (const typeNode of needList(b.ast.list(needNode(heritage).Types))) {
+                b.expr(typeNode);
+            }
+        }
+    }
+    if ((classNode.Members !== undefined)) {
+        for (const member of needList(b.ast.list(classNode.Members))) {
+            b.memberHeader(member);
+        }
+    }
+}

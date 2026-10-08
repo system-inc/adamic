@@ -1,0 +1,13 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function throwFrame(b: Builder): number {
+    for (let i = ((b.tryStack).length - 1); (i >= 0); i--) {
+        let f = at(b.tryStack, i);
+        if (((f.position === 'try') || ((f.hasFinally && (f.position === 'catch'))))) {
+            return i;
+        }
+    }
+    return -1;
+}

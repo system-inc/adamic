@@ -1,0 +1,68 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { IsOptionalChain } from './is_optional_chain.a';
+import { IsOutermostOptionalChain } from './is_outermost_optional_chain.a';
+export function accessOrCall(b: Builder, node: AstNode | undefined): void {
+    let outermost = (IsOptionalChain(node) && IsOutermostOptionalChain(node));
+    if (outermost) {
+        b.chainJoins = append(b.chainJoins, b.newBlock());
+    }
+    switch (needNode(node).Kind) {
+        case 'PropertyAccessExpression':
+        {
+            b.expr(b.ast.maybe(needNode(node).Expression));
+            b.forkOptionalChain(node);
+            break;
+        }
+        case 'ElementAccessExpression':
+        {
+            let access = node;
+            b.expr(b.ast.maybe(needNode(access).Expression));
+            b.forkOptionalChain(node);
+            b.expr(b.ast.maybe(needNode(access).ArgumentExpression));
+            break;
+        }
+        case 'CallExpression':
+        {
+            let call = node;
+            b.expr(b.ast.maybe(needNode(call).Expression));
+            b.forkOptionalChain(node);
+            b.typeArguments(node);
+            if ((b.ast.list(needNode(call).Arguments) !== undefined)) {
+                for (const arg of needList(b.ast.list(needNode(call).Arguments))) {
+                    b.expr(arg);
+                }
+            }
+            break;
+        }
+        case 'NewExpression':
+        {
+            let newExpr = node;
+            b.expr(b.ast.maybe(needNode(newExpr).Expression));
+            b.typeArguments(node);
+            if ((b.ast.list(needNode(newExpr).Arguments) !== undefined)) {
+                for (const arg of needList(b.ast.list(needNode(newExpr).Arguments))) {
+                    b.expr(arg);
+                }
+            }
+            break;
+        }
+        case 'TaggedTemplateExpression':
+        {
+            let tagged = node;
+            b.expr(b.ast.maybe(needNode(tagged).Tag));
+            b.typeArguments(node);
+            b.expr(b.ast.maybe(needNode(tagged).Template));
+            break;
+        }
+    }
+    b.firstThrowableFork();
+    if (outermost) {
+        let join = at(b.chainJoins, ((b.chainJoins).length - 1));
+        b.chainJoins = b.chainJoins.slice(0, ((b.chainJoins).length - 1));
+        b.link(b.cur, join);
+        b.enter(join);
+    }
+}

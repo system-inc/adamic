@@ -1,0 +1,27 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function makeBreak(b: Builder, label: AstNode | undefined): void {
+    if (!b.block(b.cur).Reachable) {
+        return;
+    }
+    let name = "";
+    if ((label !== undefined)) {
+        name = needNode(label).Text;
+    }
+    for (let i = ((b.jumps).length - 1); (i >= 0); i--) {
+        let target = at(b.jumps, i);
+        if ((name === "")) {
+            if (!target.breakable) {
+                continue;
+            }
+        } else if (!target.labels.includes(name)) {
+            continue;
+        }
+        at(b.jumps, i).broken = true;
+        b.link(b.cur, target.breakTo);
+        break;
+    }
+    b.makeUnreachable();
+}

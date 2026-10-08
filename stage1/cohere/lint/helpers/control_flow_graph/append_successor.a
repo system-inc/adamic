@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+import type { Builder } from './builder.a';
+import { BlockIndex } from './arena.a';
+export function appendSuccessor(b: Builder, from: BlockIndex, to: BlockIndex): void {
+    b.block(to); b.block(from).Successors.push(to); b.block(to).Predecessors.push(from);
+}

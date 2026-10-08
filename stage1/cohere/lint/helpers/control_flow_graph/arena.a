@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+export const enum BlockIndex { None = -1, First = 0 }
+export interface Block {
+    readonly index: BlockIndex;
+    Events: number[];
+    Successors: BlockIndex[];
+    Predecessors: BlockIndex[];
+    Reachable: boolean;
+    hasIncoming: boolean;
+    final: boolean;
+    thrown: boolean;
+    cycleBarrier: boolean[] | undefined;
+}
+export class BlockArena {
+    private alive = true;
+    private blocks: Block[] = [];
+    get length(): number { if(!this.alive) panic('freed CFG arena'); return this.blocks.length; }
+    allocate(): BlockIndex {
+        const index: BlockIndex = this.length;
+        this.blocks.push({index: index, Events: [], Successors: [], Predecessors: [], Reachable: false, hasIncoming: false, final: false, thrown: false, cycleBarrier: undefined});
+        return index;
+    }
+    read(index: BlockIndex): Block {
+        if(!this.alive) panic('freed CFG arena');
+        if(index < 0 || index >= this.blocks.length || index !== Math.floor(index)) panic('CFG block index out of range');
+        return this.blocks[index] ?? panic('missing CFG block');
+    }
+    dispose(): void { this.blocks = []; this.alive = false; }
+}

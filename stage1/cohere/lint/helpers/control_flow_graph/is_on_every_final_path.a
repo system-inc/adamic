@@ -1,0 +1,3 @@
+import { PathAnalysis,pathCyclic,pathOnEveryFinal,pathExit } from './path_analysis.a';
+import { BlockIndex } from './arena.a';
+export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex): boolean { if(block===-1)return false;return (a.flag(block)&pathOnEveryFinal)!==0; }

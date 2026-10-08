@@ -1,0 +1,21 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { BlockIndex } from './arena.a';
+import { throwTarget } from './throw_target.a';
+export function makeThrow(b: Builder): void {
+    if (!b.block(b.cur).Reachable) {
+        return;
+    }
+    {
+        let i = b.throwFrame();
+        if ((i >= 0)) {
+            let frame = at(b.tryStack, i);
+            frame.thrownAny = true;
+            b.link(b.cur, throwTarget(frame));
+        } else {
+            b.markThrown(b.cur);
+        }
+    }
+    b.makeUnreachable();
+}

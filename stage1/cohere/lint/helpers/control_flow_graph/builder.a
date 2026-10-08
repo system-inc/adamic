@@ -1,0 +1,136 @@
+import { finalizePredecessors } from './finalize_predecessors.a';
+import { panic } from 'adamic';
+import { BlockArena, BlockIndex } from './arena.a';
+import type { Block } from './arena.a';
+import type { AstNode } from './ast.a';
+import { AstArena } from './ast.a';
+import { parameter } from './parameter.a';
+import { Current } from './current.a';
+import { Emit } from './emit.a';
+import type { EventLocation } from './emit.a';
+import { newBlock } from './new_block.a';
+import { markFinal } from './mark_final.a';
+import { markThrown } from './mark_thrown.a';
+import { link } from './link.a';
+import { linkWithCycleBarrier } from './link_with_cycle_barrier.a';
+import { appendSuccessor } from './append_successor.a';
+import { setCycleBarrier } from './set_cycle_barrier.a';
+import { enter } from './enter.a';
+import { makeUnreachable } from './make_unreachable.a';
+import { enterDisconnected } from './enter_disconnected.a';
+import { read } from './read.a';
+import { write } from './write.a';
+import { reachedStatement } from './reached_statement.a';
+import { loop } from './loop.a';
+import { throwFrame } from './throw_frame.a';
+import { returnFrame } from './return_frame.a';
+import { firstThrowableFork } from './first_throwable_fork.a';
+import { snapshotForks } from './snapshot_forks.a';
+import { restoreForks } from './restore_forks.a';
+import { expr } from './expr.a';
+import { condition } from './condition.a';
+import { visitUnknown } from './visit_unknown.a';
+import { binaryExpression } from './binary_expression.a';
+import { conditionalExpression } from './conditional_expression.a';
+import { updateExpression } from './update_expression.a';
+import { accessOrCall } from './access_or_call.a';
+import { forkOptionalChain } from './fork_optional_chain.a';
+import { typeArguments } from './type_arguments.a';
+import { typeParameters } from './type_parameters.a';
+import { nestedFunction } from './nested_function.a';
+import { classLike } from './class_like.a';
+import { memberHeader } from './member_header.a';
+import { decorators } from './decorators.a';
+import { patternReads } from './pattern_reads.a';
+import { patternWrites } from './pattern_writes.a';
+import { patternBind } from './pattern_bind.a';
+import { bindWithDefault } from './bind_with_default.a';
+import { statements } from './statements.a';
+import { statement } from './statement.a';
+import { variableDeclarationList } from './variable_declaration_list.a';
+import { variableDeclaration } from './variable_declaration.a';
+import { ifStatement } from './if_statement.a';
+import { whileStatement } from './while_statement.a';
+import { doStatement } from './do_statement.a';
+import { forStatement } from './for_statement.a';
+import { forInOfStatement } from './for_in_of_statement.a';
+import { switchStatement } from './switch_statement.a';
+import { tryStatement } from './try_statement.a';
+import { labeledStatement } from './labeled_statement.a';
+import { pushJump } from './push_jump.a';
+import { popJump } from './pop_jump.a';
+import { makeBreak } from './make_break.a';
+import { makeContinue } from './make_continue.a';
+import { makeReturn } from './make_return.a';
+import { makeThrow } from './make_throw.a';
+import { makeYield } from './make_yield.a';
+export interface Hooks { Expression: ((b: Builder, node: AstNode | undefined) => void) | undefined; Read: ((b: Builder, node: AstNode | undefined) => void) | undefined; Write: ((b: Builder, node: AstNode | undefined) => void) | undefined; Statement: ((b: Builder, node: AstNode | undefined) => void) | undefined; Loop: ((b: Builder, node: AstNode | undefined) => void) | undefined; }
+export interface TryFrame { position: string; hasFinally: boolean; catchEntry: BlockIndex; finallyEntry: BlockIndex; thrownForked: boolean; thrownAny: boolean; implicit: BlockIndex[]; returnedAny: boolean; }
+export interface JumpTarget { labels: string[]; breakTo: BlockIndex; continueTo: BlockIndex; loop: AstNode | undefined; breakable: boolean; broken: boolean; }
+export class Graph { readonly arena: BlockArena; readonly FinalBlocks: BlockIndex[]; readonly ThrownBlocks: BlockIndex[]; readonly EndReachable: boolean; constructor(arena: BlockArena, finals: BlockIndex[], thrown: BlockIndex[], end: boolean) { this.arena=arena; this.FinalBlocks=finals; this.ThrownBlocks=thrown; this.EndReachable=end; finalizePredecessors(arena); } }
+export class Builder {
+ readonly ast: AstArena; readonly arena = new BlockArena(); readonly hooks: Hooks;
+ cur: BlockIndex = -1; finals: BlockIndex[] = []; thrown: BlockIndex[] = [];
+ jumps: JumpTarget[] = []; tryStack: TryFrame[] = []; chainJoins: BlockIndex[] = [];
+ constructor(ast: AstArena, hooks: Hooks) { this.ast=ast; this.hooks=hooks; }
+ block(index: BlockIndex): Block { return this.arena.read(index); }
+    parameter(node: AstNode | undefined): void { parameter(this, node); }
+    Current(): BlockIndex { return Current(this); }
+    Emit(event: number): EventLocation { return Emit(this, event); }
+    newBlock(): BlockIndex { return newBlock(this); }
+    markFinal(blk: BlockIndex): void { markFinal(this, blk); }
+    markThrown(blk: BlockIndex): void { markThrown(this, blk); }
+    link(from: BlockIndex, to: BlockIndex): void { link(this, from, to); }
+    linkWithCycleBarrier(from: BlockIndex, to: BlockIndex, barrier: boolean): number { return linkWithCycleBarrier(this, from, to, barrier); }
+    appendSuccessor(from: BlockIndex, to: BlockIndex): void { appendSuccessor(this, from, to); }
+    setCycleBarrier(from: BlockIndex, index: number, barrier: boolean): void { setCycleBarrier(this, from, index, barrier); }
+    enter(blk: BlockIndex): void { enter(this, blk); }
+    makeUnreachable(): void { makeUnreachable(this); }
+    enterDisconnected(blk: BlockIndex): void { enterDisconnected(this, blk); }
+    read(node: AstNode | undefined): void { read(this, node); }
+    write(node: AstNode | undefined): void { write(this, node); }
+    reachedStatement(node: AstNode | undefined): void { reachedStatement(this, node); }
+    loop(node: AstNode | undefined): void { loop(this, node); }
+    throwFrame(): number { return throwFrame(this); }
+    returnFrame(): number { return returnFrame(this); }
+    firstThrowableFork(): void { firstThrowableFork(this); }
+    snapshotForks(): (boolean)[] { return snapshotForks(this); }
+    restoreForks(snapshot: (boolean)[]): void { restoreForks(this, snapshot); }
+    expr(node: AstNode | undefined): void { expr(this, node); }
+    condition(node: AstNode | undefined, whenTrue: BlockIndex, whenFalse: BlockIndex): void { condition(this, node, whenTrue, whenFalse); }
+    visitUnknown(node: AstNode | undefined): void { visitUnknown(this, node); }
+    binaryExpression(node: AstNode | undefined): void { binaryExpression(this, node); }
+    conditionalExpression(node: AstNode | undefined): void { conditionalExpression(this, node); }
+    updateExpression(operand: AstNode | undefined): void { updateExpression(this, operand); }
+    accessOrCall(node: AstNode | undefined): void { accessOrCall(this, node); }
+    forkOptionalChain(node: AstNode | undefined): void { forkOptionalChain(this, node); }
+    typeArguments(node: AstNode | undefined): void { typeArguments(this, node); }
+    typeParameters(node: AstNode | undefined): void { typeParameters(this, node); }
+    nestedFunction(node: AstNode | undefined): void { nestedFunction(this, node); }
+    classLike(node: AstNode | undefined): void { classLike(this, node); }
+    memberHeader(node: AstNode | undefined): void { memberHeader(this, node); }
+    decorators(node: AstNode | undefined): void { decorators(this, node); }
+    patternReads(node: AstNode | undefined): void { patternReads(this, node); }
+    patternWrites(node: AstNode | undefined): void { patternWrites(this, node); }
+    patternBind(node: AstNode | undefined): void { patternBind(this, node); }
+    bindWithDefault(target: AstNode | undefined, fallback: AstNode | undefined): void { bindWithDefault(this, target, fallback); }
+    statements(list: readonly AstNode[] | undefined): void { statements(this, list); }
+    statement(node: AstNode | undefined): void { statement(this, node); }
+    variableDeclarationList(list: AstNode | undefined): void { variableDeclarationList(this, list); }
+    variableDeclaration(node: AstNode | undefined): void { variableDeclaration(this, node); }
+    ifStatement(node: AstNode | undefined): void { ifStatement(this, node); }
+    whileStatement(node: AstNode | undefined): void { whileStatement(this, node); }
+    doStatement(node: AstNode | undefined): void { doStatement(this, node); }
+    forStatement(node: AstNode | undefined): void { forStatement(this, node); }
+    forInOfStatement(node: AstNode | undefined): void { forInOfStatement(this, node); }
+    switchStatement(node: AstNode | undefined): void { switchStatement(this, node); }
+    tryStatement(node: AstNode | undefined): void { tryStatement(this, node); }
+    labeledStatement(node: AstNode | undefined): void { labeledStatement(this, node); }
+    pushJump(node: AstNode | undefined, breakTo: BlockIndex, continueTo: BlockIndex, loop: AstNode | undefined): void { pushJump(this, node, breakTo, continueTo, loop); }
+    popJump(): void { popJump(this); }
+    makeBreak(label: AstNode | undefined): void { makeBreak(this, label); }
+    makeContinue(label: AstNode | undefined): void { makeContinue(this, label); }
+    makeReturn(): void { makeReturn(this); }
+    makeThrow(): void { makeThrow(this); }
+    makeYield(): void { makeYield(this); }
+}
