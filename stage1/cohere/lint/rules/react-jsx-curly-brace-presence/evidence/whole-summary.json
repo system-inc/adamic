@@ -1,0 +1,29 @@
+{
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/adamic-gate/jsx-curly-typescript",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/adamic-gate/jsx-curly-whole-profile-m2c02zvs",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/adamic-gate/jsx-curly-whole-profile-m2c02zvs"
+  },
+  "nproc": "5",
+  "load_before": "0.89 1.68 1.52 1/144 18940",
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status": "",
+  "command": "go test ./stage1/cohere/lint -count=1 -json -timeout=60m",
+  "wall_seconds": 1157.958468295,
+  "exit_code": 1,
+  "load_after": "1.71 2.42 2.10 1/144 81668",
+  "counts": {
+    "pass": 112,
+    "fail": 2,
+    "skip": 1
+  },
+  "failures": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}

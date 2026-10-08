@@ -1,0 +1,12 @@
+import type {RuleContext} from '../../context.ts';
+import {parametersOf} from './parameters_of.a';
+import {isRestParameter} from './is_rest_parameter.a';
+import {mentionsRef} from './mentions_ref.a';
+export function hasValidComponentParameters(context:RuleContext,index:number):boolean {
+    const parameters=parametersOf(context,index);
+    if(parameters.length===0){return true;}
+    if(parameters.length===1){return !isRestParameter(context,parameters[0] ?? -1);}
+    if(parameters.length!==2 || isRestParameter(context,parameters[0] ?? -1)){return false;}
+    const second=context.name(parameters[1] ?? -1);
+    return second>=0 && context.kind(second)==='Identifier' && mentionsRef(context.node(second).text);
+}

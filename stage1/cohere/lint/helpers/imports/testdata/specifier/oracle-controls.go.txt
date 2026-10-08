@@ -1,0 +1,22 @@
+package imports
+import (
+ "testing"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+)
+func TestWave15SpecifierControls(t *testing.T) {
+ f := ast.NewNodeFactory(ast.NodeFactoryHooks{})
+ SpecifierNode(nil)
+ SpecifierNode(f.NewIdentifier("other"))
+ SpecifierNode(f.NewImportDeclaration(nil,nil,nil,nil))
+ SpecifierNode(f.NewImportDeclaration(nil,nil,f.NewIdentifier("computed"),nil))
+ for _, nodes := range [][]*ast.Node{nil, {}, {nil}, {f.NewIdentifier("first")}, {f.NewIdentifier("first"),f.NewIdentifier("second")}} {
+  SpecifierNode(f.NewCallExpression(f.NewIdentifier("notImport"),nil,nil,f.NewNodeList(nodes),0))
+ }
+ SpecifierNode(f.NewCallExpression(f.NewIdentifier("empty"),nil,nil,nil,0))
+ call := f.NewCallExpression(f.NewIdentifier("alias"),nil,nil,f.NewNodeList([]*ast.Node{nil}),0)
+ call.AsCallExpression().Arguments.Nodes[0] = call
+ if SpecifierNode(call) != call { t.Fatal("call alias lost") }
+ declaration := f.NewImportDeclaration(nil,nil,nil,nil)
+ declaration.AsImportDeclaration().ModuleSpecifier = declaration
+ if SpecifierNode(declaration) != declaration { t.Fatal("import alias lost") }
+}

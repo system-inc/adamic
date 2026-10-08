@@ -1,0 +1,7 @@
+foo.hasOwnProperty('x');
+foo['isPrototypeOf'](bar);
+foo?.propertyIsEnumerable('x');
+(foo?.hasOwnProperty)('x');
+foo[`hasOwnProperty`]('x');
+foo[method]('x');
+Object.prototype.hasOwnProperty.call(foo, 'x');

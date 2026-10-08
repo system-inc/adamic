@@ -1,0 +1,11 @@
+import { panic } from 'adamic';
+import type { AnalysisNode } from './model.a';
+export function typeReferenceName(nodes: readonly AnalysisNode[], index: number): string {
+    if (index < 0) { return ''; }
+    const node = nodes[index] ?? panic('missing AST node');
+    if (!node.typeReference) { return ''; }
+    if (node.typeName < 0) { return ''; }
+    const name = nodes[node.typeName] ?? panic('missing type name');
+    if (!name.identifier) { return ''; }
+    return name.text;
+}

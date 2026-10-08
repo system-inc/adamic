@@ -1,0 +1,17 @@
+{
+    readonly = true;
+    readonly();
+    readonly.value;
+    readonly
+}
+{
+    readonly
+    class C {}
+}
+{
+    readonly
+    function f() {}
+}
+{
+    readonly class D {}
+}

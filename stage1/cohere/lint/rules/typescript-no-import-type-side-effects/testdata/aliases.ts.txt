@@ -1,0 +1,3 @@
+import { type A as AA, type B as BB } from 'mod';
+import   {   type   C   }   from 'mod';
+import {type default as D, type 'a' as X} from 'mod';

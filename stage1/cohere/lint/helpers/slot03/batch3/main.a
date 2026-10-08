@@ -1,0 +1,15 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { parameterNodes } from './parameter_nodes.a';
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus')); if(input.kind === 'Error') { panic(input.message); }
+const json=new OptionsJson(input.text); const root=json.parse(); if(root < 0) { panic(json.error); }
+for(const item of json.node(json.field(root, 'parameters')).children) {
+    const present = json.node(json.field(item, 'present')).text === 'true';
+    const nodes: number[] = [];
+    for(const child of json.node(json.field(item, 'nodes')).children) { nodes.push(json.node(child).number); }
+    const result = parameterNodes(present, nodes);
+    console.log(result.join(','));
+    if(result.length > 0) { result[0] = -1; }
+    console.log(nodes.join(','));
+    console.log(parameterNodes(present, nodes).join(','));
+}

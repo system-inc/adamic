@@ -1,0 +1,9 @@
+import type { CoreArena } from './nodes.a';
+import { idDenylistIsImportOptionsObject } from './id_denylist_is_import_options_object.a';
+export function idDenylistIsImportAttributeKey(arena: CoreArena, index: number): boolean {
+    const parent = arena.node(index).parent; if(parent < 0) { return false; } const node = arena.node(parent);
+    if(node.kind === 'ImportAttribute') { return node.name === index; }
+    if((node.kind !== 'PropertyAssignment' && node.kind !== 'ShorthandPropertyAssignment') || node.name !== index) { return false; }
+    const object = node.parent;
+    return object >= 0 && arena.node(object).kind === 'ObjectLiteralExpression' && idDenylistIsImportOptionsObject(arena, object);
+}

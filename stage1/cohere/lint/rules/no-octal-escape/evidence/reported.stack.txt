@@ -1,0 +1,9 @@
+panic: invalid corpus /workspace/scratch/octal-oracle/original.ts: [Octal escape sequences are not allowed. Use the syntax '\x01'.]; source="' \\01'"
+
+goroutine 1 [running]:
+main.collect({0x26640e3087c0, 0x2b}, {0x26640e3de510, 0x6}, {0x26640e3b7200, 0x7, 0x8}, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe
+main.run({0x26640e3087c0?, 0x26640e2c59c0?}, 0x0, 0x26640e2c59c0, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595

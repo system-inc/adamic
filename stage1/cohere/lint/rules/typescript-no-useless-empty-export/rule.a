@@ -1,0 +1,42 @@
+import type { RuleContext } from '../../context.ts';
+import { IsExported } from '../../helpers/module/is_exported.a';
+import { exportNodeView } from '../../helpers/module/node_view.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        if(context.parser.path.endsWith('.d.ts')) { return; }
+        const empty: number[] = [];
+        let module = false;
+        for(const statement of context.node(index).children) {
+            if(this.empty(statement)) { empty.push(statement); }
+            else if(this.module(statement)) { module = true; }
+        }
+        if(!module) { return; }
+        for(const statement of empty) {
+            context.report(statement, '@typescript-eslint/no-useless-empty-export', 'uselessEmptyExport', message, 'fix', '', '');
+        }
+    }
+    empty(index: number): boolean {
+        const context = this.context;
+        if(context.kind(index) !== 'ExportDeclaration') { return false; }
+        if(context.has(index, 'StringLiteral')) { return false; }
+        for(const child of context.node(index).children) {
+            if(context.kind(child) === 'NamedExports') { return context.node(child).children.length === 0; }
+        }
+        return false;
+    }
+    module(index: number): boolean {
+        const context = this.context;
+        switch(context.kind(index)) {
+            case 'ImportDeclaration':
+            case 'ExportDeclaration': return true;
+            case 'ExportAssignment': return context.node(index).semantic !== '1';
+            case 'ImportEqualsDeclaration': return context.has(index, 'ExternalModuleReference');
+        }
+        return IsExported(exportNodeView(context.parser, index));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

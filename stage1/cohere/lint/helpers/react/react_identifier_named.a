@@ -1,0 +1,18 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './nodes.a';
+
+// Go react.isIdentifierNamed skips only parentheses, not assertions or non-null.
+// A nil expression faults in Go SkipParentheses; refuse it explicitly here.
+export function isIdentifierNamed(nodes: readonly HelperNode[], expression: number, name: string): boolean {
+    let current = expression;
+    let remaining = nodes.length;
+    while(true) {
+        const node = nodes[current] ?? panic('missing helper AST expression');
+        if(node.kind !== 'ParenthesizedExpression') {
+            return node.kind === 'Identifier' && node.text === name;
+        }
+        if(remaining === 0) { panic('cyclic parenthesized helper AST'); }
+        remaining--;
+        current = node.expression;
+    }
+}

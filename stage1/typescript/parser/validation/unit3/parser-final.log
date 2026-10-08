@@ -1,0 +1,1240 @@
+=== RUN   TestIncompleteCheckerAgrees
+    checker_incomplete_test.go:72: Node cut: 1672865 input bytes, 8519744 output bytes, 753.125674ms, <nil>
+    checker_incomplete_test.go:73: cut deadline: 30s
+    checker_incomplete_test.go:72: native cut: 1672865 input bytes, 8519744 output bytes, 1.689222922s, <nil>
+    checker_incomplete_test.go:73: cut deadline: 30s
+    checker_incomplete_test.go:88: four-native concurrency worker 0: 1.894002565s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 3: 1.900635322s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 1: 1.978237322s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 2: 1.996447098s, <nil>
+    checker_incomplete_test.go:72: Node duplicate: 3151776 input bytes, 15681672 output bytes, 1.049887771s, <nil>
+    checker_incomplete_test.go:73: duplicate deadline: 50s
+    checker_incomplete_test.go:72: native duplicate: 3151776 input bytes, 15681672 output bytes, 3.088295222s, <nil>
+    checker_incomplete_test.go:73: duplicate deadline: 50s
+--- PASS: TestIncompleteCheckerAgrees (19.83s)
+=== RUN   TestContextualNamesAgree
+=== RUN   TestContextualNamesAgree/abstract.ts.txt
+=== RUN   TestContextualNamesAgree/accessor.ts.txt
+=== RUN   TestContextualNamesAgree/as.ts.txt
+=== RUN   TestContextualNamesAgree/async.ts.txt
+=== RUN   TestContextualNamesAgree/declare.ts.txt
+=== RUN   TestContextualNamesAgree/get.ts.txt
+=== RUN   TestContextualNamesAgree/global.ts.txt
+=== RUN   TestContextualNamesAgree/module.ts.txt
+=== RUN   TestContextualNamesAgree/namespace.ts.txt
+=== RUN   TestContextualNamesAgree/of.ts.txt
+=== RUN   TestContextualNamesAgree/override.ts.txt
+=== RUN   TestContextualNamesAgree/private.ts.txt
+=== RUN   TestContextualNamesAgree/protected.ts.txt
+=== RUN   TestContextualNamesAgree/public.ts.txt
+=== RUN   TestContextualNamesAgree/readonly.ts.txt
+=== RUN   TestContextualNamesAgree/satisfies.ts.txt
+=== RUN   TestContextualNamesAgree/set.ts.txt
+=== RUN   TestContextualNamesAgree/static.ts.txt
+=== RUN   TestContextualNamesAgree/type.ts.txt
+--- PASS: TestContextualNamesAgree (13.44s)
+    --- PASS: TestContextualNamesAgree/abstract.ts.txt (0.16s)
+    --- PASS: TestContextualNamesAgree/accessor.ts.txt (0.13s)
+    --- PASS: TestContextualNamesAgree/as.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/async.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/declare.ts.txt (0.13s)
+    --- PASS: TestContextualNamesAgree/get.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/global.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/module.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/namespace.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/of.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/override.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/private.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/protected.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/public.ts.txt (0.14s)
+    --- PASS: TestContextualNamesAgree/readonly.ts.txt (0.16s)
+    --- PASS: TestContextualNamesAgree/satisfies.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/set.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/static.ts.txt (0.15s)
+    --- PASS: TestContextualNamesAgree/type.ts.txt (0.16s)
+=== RUN   TestStrongAstParentGap
+--- PASS: TestStrongAstParentGap (0.10s)
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.10s)
+=== RUN   TestClassMethodInterfaceGap
+    gaps_test.go:84: Node prints 1; Adamic reports: /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet
+--- PASS: TestClassMethodInterfaceGap (0.10s)
+=== RUN   TestOptionalFunctionValueGap
+--- PASS: TestOptionalFunctionValueGap (0.09s)
+=== RUN   TestConditionalEmptyArrayGap
+--- PASS: TestConditionalEmptyArrayGap (0.09s)
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (11.73s)
+=== RUN   TestTypeOnlyImportCycleCompiles
+--- PASS: TestTypeOnlyImportCycleCompiles (0.30s)
+=== RUN   TestIncompleteRecoveryCasesAgree
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-qualified-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt
+--- PASS: TestIncompleteRecoveryCasesAgree (14.99s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt (0.17s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-qualified-type-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt (0.14s)
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2, edit stride 13, 255 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82, edit stride 652, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builder.ts: 13258 tokens, cutoff stride 52, edit stride 415, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts: 897 tokens, cutoff stride 4, edit stride 29, 287 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts: 3027 tokens, cutoff stride 12, edit stride 95, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts: 54 tokens, cutoff stride 1, edit stride 2, 109 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: 348866 tokens, cutoff stride 1363, edit stride 10903, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts: 21716 tokens, cutoff stride 85, edit stride 679, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/core.ts: 16280 tokens, cutoff stride 64, edit stride 509, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts: 152 tokens, cutoff stride 1, edit stride 5, 215 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts: 8417 tokens, cutoff stride 33, edit stride 264, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts: 34258 tokens, cutoff stride 134, edit stride 1071, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts: 7535 tokens, cutoff stride 30, edit stride 236, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts: 8846 tokens, cutoff stride 35, edit stride 277, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts: 383 tokens, cutoff stride 2, edit stride 12, 256 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts: 4468 tokens, cutoff stride 18, edit stride 140, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts: 1739 tokens, cutoff stride 7, edit stride 55, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts: 304 tokens, cutoff stride 2, edit stride 10, 215 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts: 875 tokens, cutoff stride 4, edit stride 28, 283 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts: 41990 tokens, cutoff stride 165, edit stride 1313, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts: 5698 tokens, cutoff stride 23, edit stride 179, 312 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts: 2612 tokens, cutoff stride 11, edit stride 82, 302 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts: 8619 tokens, cutoff stride 34, edit stride 270, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts: 295 tokens, cutoff stride 2, edit stride 10, 208 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts: 21374 tokens, cutoff stride 84, edit stride 668, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts: 8795 tokens, cutoff stride 35, edit stride 275, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts: 62538 tokens, cutoff stride 245, edit stride 1955, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/path.ts: 4515 tokens, cutoff stride 18, edit stride 142, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/performance.ts: 794 tokens, cutoff stride 4, edit stride 25, 263 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts: 354 tokens, cutoff stride 2, edit stride 12, 238 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/program.ts: 29758 tokens, cutoff stride 117, edit stride 930, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts: 2272 tokens, cutoff stride 9, edit stride 71, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts: 8686 tokens, cutoff stride 34, edit stride 272, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts: 30606 tokens, cutoff stride 120, edit stride 957, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts: 2488 tokens, cutoff stride 10, edit stride 78, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts: 4186 tokens, cutoff stride 17, edit stride 131, 311 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts: 1094 tokens, cutoff stride 5, edit stride 35, 283 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts: 10285 tokens, cutoff stride 41, edit stride 322, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts: 2114 tokens, cutoff stride 9, edit stride 67, 299 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts: 3095 tokens, cutoff stride 13, edit stride 97, 303 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts: 14941 tokens, cutoff stride 59, edit stride 467, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts: 529 tokens, cutoff stride 3, edit stride 17, 241 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts: 4022 tokens, cutoff stride 16, edit stride 126, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts: 10719 tokens, cutoff stride 42, edit stride 335, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts: 3178 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts: 21458 tokens, cutoff stride 84, edit stride 671, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts: 553 tokens, cutoff stride 3, edit stride 18, 247 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts: 5298 tokens, cutoff stride 21, edit stride 166, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts: 7191 tokens, cutoff stride 29, edit stride 225, 312 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts: 225 tokens, cutoff stride 1, edit stride 8, 284 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts: 1634 tokens, cutoff stride 7, edit stride 52, 298 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts: 439 tokens, cutoff stride 2, edit stride 14, 284 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts: 12395 tokens, cutoff stride 49, edit stride 388, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts: 3172 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts: 11650 tokens, cutoff stride 46, edit stride 365, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts: 4759 tokens, cutoff stride 19, edit stride 149, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts: 3160 tokens, cutoff stride 13, edit stride 99, 308 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts: 2110 tokens, cutoff stride 9, edit stride 66, 299 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts: 489 tokens, cutoff stride 2, edit stride 16, 307 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts: 10653 tokens, cutoff stride 42, edit stride 333, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts: 7651 tokens, cutoff stride 30, edit stride 240, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts: 2001 tokens, cutoff stride 8, edit stride 63, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts: 581 tokens, cutoff stride 3, edit stride 19, 256 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts: 11283 tokens, cutoff stride 45, edit stride 353, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts: 2806 tokens, cutoff stride 11, edit stride 88, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts: 4325 tokens, cutoff stride 17, edit stride 136, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts: 405 tokens, cutoff stride 2, edit stride 13, 267 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts: 14511 tokens, cutoff stride 57, edit stride 454, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/types.ts: 47956 tokens, cutoff stride 188, edit stride 1499, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts: 63996 tokens, cutoff stride 250, edit stride 2000, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts: 12829 tokens, cutoff stride 51, edit stride 401, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts: 12454 tokens, cutoff stride 49, edit stride 390, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watch.ts: 5744 tokens, cutoff stride 23, edit stride 180, 314 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts: 6248 tokens, cutoff stride 25, edit stride 196, 314 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts: 4444 tokens, cutoff stride 18, edit stride 139, 311 inputs
+    incomplete_test.go:88: planned all 77 compiler files: 22497 inputs; each Go/Node/native parse and print has a 10s + 10s per started MiB deadline
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builder.ts: 13258 tokens, cutoff stride 52
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts: 897 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts: 3027 tokens, cutoff stride 12
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts: 54 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: 348866 tokens, cutoff stride 1363
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts: 21716 tokens, cutoff stride 85
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/core.ts: 16280 tokens, cutoff stride 64
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts: 152 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts: 8417 tokens, cutoff stride 33
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts: 34258 tokens, cutoff stride 134
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts: 7535 tokens, cutoff stride 30
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts: 8846 tokens, cutoff stride 35
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts: 383 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts: 4468 tokens, cutoff stride 18
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts: 1739 tokens, cutoff stride 7
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts: 304 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts: 875 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts: 41990 tokens, cutoff stride 165
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts: 5698 tokens, cutoff stride 23
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts: 2612 tokens, cutoff stride 11
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts: 8619 tokens, cutoff stride 34
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts: 295 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts: 21374 tokens, cutoff stride 84
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts: 8795 tokens, cutoff stride 35
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts: 62538 tokens, cutoff stride 245
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/path.ts: 4515 tokens, cutoff stride 18
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/performance.ts: 794 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts: 354 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/program.ts: 29758 tokens, cutoff stride 117
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts: 2272 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts: 8686 tokens, cutoff stride 34
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts: 30606 tokens, cutoff stride 120
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts: 2488 tokens, cutoff stride 10
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts: 4186 tokens, cutoff stride 17
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts: 1094 tokens, cutoff stride 5
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts: 10285 tokens, cutoff stride 41
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts: 2114 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts: 3095 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts: 14941 tokens, cutoff stride 59
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts: 529 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts: 4022 tokens, cutoff stride 16
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts: 10719 tokens, cutoff stride 42
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts: 3178 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts: 21458 tokens, cutoff stride 84
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts: 553 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts: 5298 tokens, cutoff stride 21
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts: 7191 tokens, cutoff stride 29
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts: 225 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts: 1634 tokens, cutoff stride 7
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts: 439 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts: 12395 tokens, cutoff stride 49
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts: 3172 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts: 11650 tokens, cutoff stride 46
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts: 4759 tokens, cutoff stride 19
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts: 3160 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts: 2110 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts: 489 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts: 10653 tokens, cutoff stride 42
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts: 7651 tokens, cutoff stride 30
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts: 2001 tokens, cutoff stride 8
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts: 581 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts: 11283 tokens, cutoff stride 45
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts: 2806 tokens, cutoff stride 11
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts: 4325 tokens, cutoff stride 17
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts: 405 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts: 14511 tokens, cutoff stride 57
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/types.ts: 47956 tokens, cutoff stride 188
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts: 63996 tokens, cutoff stride 250
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts: 12829 tokens, cutoff stride 51
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts: 12454 tokens, cutoff stride 49
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watch.ts: 5744 tokens, cutoff stride 23
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts: 6248 tokens, cutoff stride 25
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts: 4444 tokens, cutoff stride 18
+    incomplete_test.go:211: checked 64 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1408 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1600 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1792 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1920 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2048 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2240 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2688 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2752 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3072 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3136 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3200 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3264 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3392 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3456 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3584 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3648 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3712 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3904 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4096 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4224 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4288 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4544 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4608 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4928 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5120 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5184 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5440 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5504 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5696 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6080 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6400 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6464 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6528 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6592 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6656 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6720 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6784 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6848 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6912 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6976 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7040 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7104 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7168 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7232 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7296 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7360 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7424 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7488 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7552 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7616 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7680 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7744 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7808 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7872 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7936 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8000 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8064 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9408 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9600 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9792 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9920 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10048 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10240 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10688 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10752 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11072 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11136 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11200 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11264 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11392 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11456 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11584 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11648 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11712 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11904 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12096 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12224 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12288 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12544 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12608 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12928 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13120 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13184 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13440 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13504 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13696 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14080 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14400 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14464 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14528 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14592 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14656 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14720 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14784 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14848 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14912 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14976 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15040 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15104 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15168 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15232 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15296 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15360 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15424 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15488 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15552 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15616 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15680 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15744 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15808 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15872 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15936 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16000 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16064 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17408 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17600 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17792 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17920 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18048 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18240 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18688 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18752 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19072 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19136 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19200 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19264 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19392 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19456 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19584 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19648 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19712 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19904 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20096 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20224 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20288 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20544 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20608 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20928 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21120 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21184 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21440 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21504 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21696 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22080 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22400 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22464 of 22497 scheduled inputs
+    incomplete_test.go:220: slowest go parse and print: 524.322334ms; input /workspace/scratch/parser-unit3/package-final/01945-checker.ts-remove-272576.ts
+    incomplete_test.go:220: slowest Node parse and print: 1.865130712s; input /workspace/scratch/parser-unit3/package-final/01952-checker.ts-duplicate-305285.ts
+    incomplete_test.go:220: slowest native parse and print: 4.65363413s; input /workspace/scratch/parser-unit3/package-final/01958-checker.ts-duplicate-337994.ts
+    incomplete_test.go:229: 77 compiler files, 22497 incomplete inputs: Go, Node and sanitized native identical
+--- PASS: TestIncompleteCompilerAgrees (2734.29s)
+=== RUN   TestJsxMutants
+=== RUN   TestJsxMutants/text_payload
+=== PAUSE TestJsxMutants/text_payload
+=== RUN   TestJsxMutants/whitespace_flag
+=== PAUSE TestJsxMutants/whitespace_flag
+=== RUN   TestJsxMutants/namespace_kind
+=== PAUSE TestJsxMutants/namespace_kind
+=== RUN   TestJsxMutants/self_closing_kind
+=== PAUSE TestJsxMutants/self_closing_kind
+=== RUN   TestJsxMutants/type_argument_comma
+=== PAUSE TestJsxMutants/type_argument_comma
+=== RUN   TestJsxMutants/attribute_list
+=== PAUSE TestJsxMutants/attribute_list
+=== RUN   TestJsxMutants/expression_kind
+=== PAUSE TestJsxMutants/expression_kind
+=== RUN   TestJsxMutants/child_order
+=== PAUSE TestJsxMutants/child_order
+=== RUN   TestJsxMutants/text_start
+=== PAUSE TestJsxMutants/text_start
+=== CONT  TestJsxMutants/text_payload
+=== CONT  TestJsxMutants/attribute_list
+=== CONT  TestJsxMutants/child_order
+=== CONT  TestJsxMutants/expression_kind
+=== CONT  TestJsxMutants/self_closing_kind
+=== NAME  TestJsxMutants/attribute_list
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/type_argument_comma
+=== NAME  TestJsxMutants/child_order
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+=== CONT  TestJsxMutants/namespace_kind
+=== NAME  TestJsxMutants/text_payload
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== CONT  TestJsxMutants/whitespace_flag
+=== NAME  TestJsxMutants/expression_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/text_start
+=== NAME  TestJsxMutants/self_closing_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+=== NAME  TestJsxMutants/type_argument_comma
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+=== NAME  TestJsxMutants/whitespace_flag
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+=== NAME  TestJsxMutants/namespace_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+=== NAME  TestJsxMutants/text_start
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+--- PASS: TestJsxMutants (10.86s)
+    --- PASS: TestJsxMutants/attribute_list (12.04s)
+    --- PASS: TestJsxMutants/child_order (12.21s)
+    --- PASS: TestJsxMutants/text_payload (12.82s)
+    --- PASS: TestJsxMutants/expression_kind (23.57s)
+    --- PASS: TestJsxMutants/self_closing_kind (23.83s)
+    --- PASS: TestJsxMutants/type_argument_comma (12.13s)
+    --- PASS: TestJsxMutants/whitespace_flag (22.33s)
+    --- PASS: TestJsxMutants/namespace_kind (23.09s)
+    --- PASS: TestJsxMutants/text_start (11.94s)
+=== RUN   TestJsxMemberNameRejection
+    jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/adamic-gate/TestJsxMemberNameRejection1478089344/001/dashed-member.tsx
+    jsx_rejection_test.go:72: Node compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+    jsx_rejection_test.go:72: native compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+--- PASS: TestJsxMemberNameRejection (21.21s)
+=== RUN   TestJsxNameBoundaryRejections
+    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped tag: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped namespace: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped attribute: Go diagnoses; Node/native refuse identically
+=== RUN   TestJsxNameBoundaryRejections/private_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+=== RUN   TestJsxNameBoundaryRejections/escaped_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+--- PASS: TestJsxNameBoundaryRejections (32.62s)
+    --- PASS: TestJsxNameBoundaryRejections/private_name_accepted (10.46s)
+    --- PASS: TestJsxNameBoundaryRejections/escaped_name_accepted (10.37s)
+=== RUN   TestJsxScannerMutants
+=== RUN   TestJsxScannerMutants/raw_attribute_value
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+=== RUN   TestJsxScannerMutants/JSX_name_payload
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+--- PASS: TestJsxScannerMutants (33.61s)
+    --- PASS: TestJsxScannerMutants/raw_attribute_value (10.90s)
+    --- PASS: TestJsxScannerMutants/JSX_name_payload (10.73s)
+=== RUN   TestJsxNode
+    jsx_test.go:88: all 13 Go JSX AST kinds covered
+    jsx_test.go:93: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNode (0.75s)
+=== RUN   TestJsxNative
+    jsx_test.go:108: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes
+    jsx_test.go:108: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNative (14.18s)
+=== RUN   TestLintCases
+=== RUN   TestLintCases/constructor_public_object_binding.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=393
+=== RUN   TestLintCases/decorated_async_promise_executor.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=529
+=== RUN   TestLintCases/decorated_class_expression.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=338
+=== RUN   TestLintCases/decorated_parameter.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=454
+=== RUN   TestLintCases/interface_missing_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=185
+=== RUN   TestLintCases/interface_missing_close_brace.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=294
+=== RUN   TestLintCases/interface_unclosed_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/jsx_closing_tag_in_ts.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=551
+=== RUN   TestLintCases/jsx_self_closing_in_ts.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=428
+=== RUN   TestLintCases/method_missing_type_parameter_close.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/method_stray_type_parameter_angle.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=294
+=== RUN   TestLintCases/method_stray_type_parameter_angle_with_parameter.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/method_unclosed_type_parameters.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/nextjs_interface_constructor_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=356
+=== RUN   TestLintCases/nextjs_jsx_anchor_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=340
+=== RUN   TestLintCases/nextjs_jsx_boolean_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=304
+=== RUN   TestLintCases/nextjs_jsx_font_link.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=341
+=== RUN   TestLintCases/nextjs_jsx_nested_head.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=456
+=== RUN   TestLintCases/nextjs_jsx_paired_image.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=443
+=== RUN   TestLintCases/nextjs_jsx_script_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=342
+=== RUN   TestLintCases/nextjs_jsx_script_single_quote.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=346
+=== RUN   TestLintCases/nextjs_type_constructor_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=427
+=== RUN   TestLintCases/octal_escape.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=364
+=== RUN   TestLintCases/octal_literal.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=352
+=== RUN   TestLintCases/wave08_computed_key_colon_before_bracket.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=401
+=== RUN   TestLintCases/wave08_computed_key_missing_bracket.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=393
+=== RUN   TestLintCases/wave08_jsx_self_closing_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave08_jsx_text_child.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=377
+=== RUN   TestLintCases/wave08_legacy_octal_bigint.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_long.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_short.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_jsx_class_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=351
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute_braces.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=375
+=== RUN   TestLintCases/wave13_jsx_multiline_element_braces.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=409
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_object.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=432
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_string.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=312
+=== RUN   TestLintCases/wave13_jsx_void_arrow_callback.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=534
+=== RUN   TestLintCases/wave13_octal_bigint.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave13_octal_long_fraction.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave13_octal_short_fraction.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_top_level_await_new.ts
+    lint_cases_test.go:209: listed=true, oracle bytes=304
+=== RUN   TestLintCases/wave15_octal_literal_decimal_tail.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=469
+=== RUN   TestLintCases/wave16-interface-missing-body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=185
+=== RUN   TestLintCases/wave16-interface-unclosed-body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave16-jsx-fragment.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=341
+=== RUN   TestLintCases/wave16-jsx-provider-object-value.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=476
+=== RUN   TestLintCases/wave16-jsx-unresolved-tag.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=234
+=== RUN   TestLintCases/wave16-method-incomplete-generic.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/wave16-method-stray-generic-angle.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave21_jsx_component_return.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=347
+=== RUN   TestLintCases/wave21_jsx_element_then_call.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=453
+=== RUN   TestLintCases/wave21_jsx_provider_object_value.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=478
+=== RUN   TestLintCases/wave21_jsx_qualified_fragment.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=322
+=== RUN   TestLintCases/wave21_jsx_quoted_style.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=344
+=== RUN   TestLintCases/wave21_jsx_self_closing_then_call.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=345
+=== RUN   TestLintCases/wave21_yield_label.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=325
+=== RUN   TestLintCases/yield_keyword_label.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=327
+--- PASS: TestLintCases (19.21s)
+    --- PASS: TestLintCases/constructor_public_object_binding.ts (0.16s)
+    --- PASS: TestLintCases/decorated_async_promise_executor.ts (0.16s)
+    --- PASS: TestLintCases/decorated_class_expression.ts (0.16s)
+    --- PASS: TestLintCases/decorated_parameter.ts (0.14s)
+    --- PASS: TestLintCases/interface_missing_body.ts (0.16s)
+    --- PASS: TestLintCases/interface_missing_close_brace.ts (0.15s)
+    --- PASS: TestLintCases/interface_unclosed_body.ts (0.15s)
+    --- PASS: TestLintCases/jsx_closing_tag_in_ts.ts (0.14s)
+    --- PASS: TestLintCases/jsx_self_closing_in_ts.ts (0.13s)
+    --- PASS: TestLintCases/method_missing_type_parameter_close.ts (0.15s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle.ts (0.13s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle_with_parameter.ts (0.14s)
+    --- PASS: TestLintCases/method_unclosed_type_parameters.ts (0.14s)
+    --- PASS: TestLintCases/nextjs_interface_constructor_body.ts (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_anchor_attribute.tsx (0.15s)
+    --- PASS: TestLintCases/nextjs_jsx_boolean_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_font_link.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_nested_head.tsx (0.14s)
+    --- PASS: TestLintCases/nextjs_jsx_paired_image.tsx (0.14s)
+    --- PASS: TestLintCases/nextjs_jsx_script_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_script_single_quote.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_type_constructor_body.ts (0.14s)
+    --- PASS: TestLintCases/octal_escape.ts (0.13s)
+    --- PASS: TestLintCases/octal_literal.ts (0.16s)
+    --- PASS: TestLintCases/wave08_computed_key_colon_before_bracket.ts (0.13s)
+    --- PASS: TestLintCases/wave08_computed_key_missing_bracket.ts (0.13s)
+    --- PASS: TestLintCases/wave08_jsx_self_closing_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/wave08_jsx_text_child.tsx (0.13s)
+    --- PASS: TestLintCases/wave08_legacy_octal_bigint.ts (0.15s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_long.ts (0.14s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_short.ts (0.16s)
+    --- PASS: TestLintCases/wave13_jsx_class_attribute.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute.tsx (0.15s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute_braces.tsx (0.15s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_element_braces.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_object.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_string.tsx (0.15s)
+    --- PASS: TestLintCases/wave13_jsx_void_arrow_callback.tsx (0.13s)
+    --- PASS: TestLintCases/wave13_octal_bigint.ts (0.15s)
+    --- PASS: TestLintCases/wave13_octal_long_fraction.ts (0.15s)
+    --- PASS: TestLintCases/wave13_octal_short_fraction.ts (0.13s)
+    --- PASS: TestLintCases/wave13_top_level_await_new.ts (0.14s)
+    --- PASS: TestLintCases/wave15_octal_literal_decimal_tail.ts (0.13s)
+    --- PASS: TestLintCases/wave16-interface-missing-body.ts (0.13s)
+    --- PASS: TestLintCases/wave16-interface-unclosed-body.ts (0.13s)
+    --- PASS: TestLintCases/wave16-jsx-fragment.tsx (0.13s)
+    --- PASS: TestLintCases/wave16-jsx-provider-object-value.tsx (0.14s)
+    --- PASS: TestLintCases/wave16-jsx-unresolved-tag.tsx (0.13s)
+    --- PASS: TestLintCases/wave16-method-incomplete-generic.ts (0.15s)
+    --- PASS: TestLintCases/wave16-method-stray-generic-angle.ts (0.15s)
+    --- PASS: TestLintCases/wave21_jsx_component_return.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_element_then_call.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_provider_object_value.tsx (0.15s)
+    --- PASS: TestLintCases/wave21_jsx_qualified_fragment.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_quoted_style.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_self_closing_then_call.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_yield_label.ts (0.14s)
+    --- PASS: TestLintCases/yield_keyword_label.ts (0.14s)
+=== RUN   TestLintCasesControls
+    lint_cases_test.go:240: Node healthy precedence mutant rejected: unlisted mismatch precedence.ts: {Line:5 Port:3 BinaryExpression 0 5 0 0 -1 0 0				 TypeScriptGo:3 Identifier 0 1 0 0 -1 0 0		a		}
+    lint_cases_test.go:256: Node listed gap repaired by healthy parser rejected: listed case now matches precedence.ts: remove its .expected.json sidecar
+    lint_cases_test.go:240: sanitized native healthy precedence mutant rejected: unlisted mismatch precedence.ts: {Line:5 Port:3 BinaryExpression 0 5 0 0 -1 0 0				 TypeScriptGo:3 Identifier 0 1 0 0 -1 0 0		a		}
+    lint_cases_test.go:256: sanitized native listed gap repaired by healthy parser rejected: listed case now matches precedence.ts: remove its .expected.json sidecar
+--- PASS: TestLintCasesControls (21.59s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:212: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:221: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:221: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:231: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:231: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:242: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:242: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (42.61s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:295: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (20.66s)
+=== RUN   TestPerformance
+    performance_test.go:45: machine: linux/amd64 logical processors=5
+    performance_test.go:61: machine /proc/cpuinfo: model name	: AMD EPYC 9V74 80-Core Processor
+    performance_test.go:61: machine /sys/fs/cgroup/cpu.max: 400000 100000
+    performance_test.go:61: machine /sys/fs/cgroup/memory.max: 17179869184
+    performance_test.go:61: machine /proc/loadavg: 1.44 4.31 6.58 1/218 1185645
+    performance_test.go:116: sample=1 side=Go nodes=557010 seconds=0.188221328 nodes/s=2959335 load=1.44 4.31 6.58 1/218 1185668
+    performance_test.go:116: sample=1 side=Node nodes=557010 seconds=0.785421288 nodes/s=709186 load=1.44 4.31 6.58 1/218 1185675
+    performance_test.go:116: sample=1 side=native nodes=557010 seconds=0.844306953 nodes/s=659725 load=1.44 4.31 6.58 1/218 1185676
+    performance_test.go:116: sample=2 side=Node nodes=557010 seconds=0.777987237 nodes/s=715963 load=1.41 4.26 6.55 1/218 1185683
+    performance_test.go:116: sample=2 side=native nodes=557010 seconds=0.850071350 nodes/s=655251 load=1.41 4.26 6.55 1/218 1185684
+    performance_test.go:116: sample=2 side=Go nodes=557010 seconds=0.178008718 nodes/s=3129116 load=1.41 4.26 6.55 3/218 1185691
+    performance_test.go:116: sample=3 side=native nodes=557010 seconds=0.856585545 nodes/s=650268 load=1.41 4.26 6.55 3/218 1185692
+    performance_test.go:116: sample=3 side=Go nodes=557010 seconds=0.175641233 nodes/s=3171294 load=1.41 4.26 6.55 1/218 1185700
+    performance_test.go:116: sample=3 side=Node nodes=557010 seconds=0.771777626 nodes/s=721723 load=1.41 4.26 6.55 1/218 1185707
+    performance_test.go:116: sample=4 side=Go nodes=557010 seconds=0.168656174 nodes/s=3302636 load=1.41 4.26 6.55 1/218 1185714
+    performance_test.go:116: sample=4 side=Node nodes=557010 seconds=0.753273187 nodes/s=739453 load=1.41 4.26 6.55 2/218 1185721
+    performance_test.go:116: sample=4 side=native nodes=557010 seconds=0.896232921 nodes/s=621501 load=1.41 4.26 6.55 1/218 1185722
+    performance_test.go:116: sample=5 side=Node nodes=557010 seconds=0.802838389 nodes/s=693801 load=1.37 4.20 6.52 1/218 1185729
+    performance_test.go:116: sample=5 side=native nodes=557010 seconds=0.861570936 nodes/s=646505 load=1.37 4.20 6.52 1/218 1185730
+    performance_test.go:116: sample=5 side=Go nodes=557010 seconds=0.159832443 nodes/s=3484962 load=1.37 4.20 6.52 1/218 1185737
+    performance_test.go:120: BEST side=Go files=77 nodes=557010 seconds=0.159832443 nodes/s=3484962
+    performance_test.go:120: BEST side=Node files=77 nodes=557010 seconds=0.753273187 nodes/s=739453
+    performance_test.go:120: BEST side=native files=77 nodes=557010 seconds=0.844306953 nodes/s=659725
+    performance_test.go:122: native/Go time ratio 5.282x; native/Node time ratio 1.121x
+    performance_test.go:136: artifacts: /workspace/scratch/parser-unit3/release-final
+--- PASS: TestPerformance (14.72s)
+=== RUN   TestWholePerformance
+    performance_test.go:42: Node preflight: 44766682 identical whole-tree bytes
+    performance_test.go:42: release native preflight: 44766682 identical whole-tree bytes
+    performance_test.go:45: machine: linux/amd64 logical processors=5
+    performance_test.go:61: machine /proc/cpuinfo: model name	: AMD EPYC 9V74 80-Core Processor
+    performance_test.go:61: machine /sys/fs/cgroup/cpu.max: 400000 100000
+    performance_test.go:61: machine /sys/fs/cgroup/memory.max: 17179869184
+    performance_test.go:61: machine /proc/loadavg: 1.31 4.10 6.46 2/216 1185788
+    performance_test.go:116: sample=1 side=Go nodes=887803 seconds=0.167531517 nodes/s=5299319 load=1.31 4.10 6.46 1/216 1185811
+    performance_test.go:116: sample=1 side=Node nodes=887803 seconds=0.825530321 nodes/s=1075434 load=1.31 4.10 6.46 3/216 1185818
+    performance_test.go:116: sample=1 side=native nodes=887803 seconds=0.921765230 nodes/s=963155 load=1.31 4.10 6.46 3/215 1185819
+    performance_test.go:116: sample=2 side=Node nodes=887803 seconds=0.814610852 nodes/s=1089849 load=1.37 4.06 6.44 1/215 1185826
+    performance_test.go:116: sample=2 side=native nodes=887803 seconds=0.886399722 nodes/s=1001583 load=1.37 4.06 6.44 1/215 1185827
+    performance_test.go:116: sample=2 side=Go nodes=887803 seconds=0.174105624 nodes/s=5099221 load=1.37 4.06 6.44 1/215 1185835
+    performance_test.go:116: sample=3 side=native nodes=887803 seconds=0.927430968 nodes/s=957271 load=1.37 4.06 6.44 3/215 1185836
+    performance_test.go:116: sample=3 side=Go nodes=887803 seconds=0.163123930 nodes/s=5442506 load=1.37 4.06 6.44 1/215 1185844
+    performance_test.go:116: sample=3 side=Node nodes=887803 seconds=0.820413687 nodes/s=1082141 load=1.37 4.06 6.44 4/215 1185851
+    performance_test.go:116: sample=4 side=Go nodes=887803 seconds=0.185581190 nodes/s=4783906 load=1.37 4.06 6.44 2/215 1185858
+    performance_test.go:116: sample=4 side=Node nodes=887803 seconds=0.879949505 nodes/s=1008925 load=1.37 4.06 6.44 2/215 1185865
+    performance_test.go:116: sample=4 side=native nodes=887803 seconds=0.933713850 nodes/s=950830 load=1.34 4.01 6.41 5/215 1185875
+    performance_test.go:116: sample=5 side=Node nodes=887803 seconds=0.822458606 nodes/s=1079450 load=1.34 4.01 6.41 1/215 1185882
+    performance_test.go:116: sample=5 side=native nodes=887803 seconds=0.896903967 nodes/s=989853 load=1.34 4.01 6.41 1/215 1185883
+    performance_test.go:116: sample=5 side=Go nodes=887803 seconds=0.173314051 nodes/s=5122510 load=1.34 4.01 6.41 1/215 1185890
+    performance_test.go:120: BEST side=Go files=77 nodes=887803 seconds=0.163123930 nodes/s=5442506
+    performance_test.go:120: BEST side=Node files=77 nodes=887803 seconds=0.814610852 nodes/s=1089849
+    performance_test.go:120: BEST side=native files=77 nodes=887803 seconds=0.886399722 nodes/s=1001583
+    performance_test.go:122: native/Go time ratio 5.434x; native/Node time ratio 1.088x
+    performance_test.go:136: artifacts: /workspace/scratch/parser-unit3/release-final
+--- PASS: TestWholePerformance (20.58s)
+=== RUN   TestNodeCountCheckCatchesMutant
+    performance_test.go:182: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+    performance_test.go:182: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+--- PASS: TestNodeCountCheckCatchesMutant (21.67s)
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (39.78s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/unconditional-declare
+    recovery_test.go:192: Node:  line 1: port "diagnostic 1109 14 1 1\tExpression expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 164 0 0 -1 0 0				
+        1 Block 0 69 0 0 -1 0 0				
+        2 ExpressionStatement 1 21 0 0 -1 0 0				
+        3 BinaryExpression 1 20 0 0 -1 0 0				
+    recovery_test.go:192: native:  line 1: port "diagnostic 1109 14 1 1\tExpression expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 164 0 0 -1 0 0				
+        1 Block 0 69 0 0 -1 0 0				
+        2 ExpressionStatement 1 21 0 0 -1 0 0				
+        3 BinaryExpression 1 20 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/scanner-error-hook
+    recovery_test.go:192: Node:  line 1: port "file", Go "diagnostic 1002 23 0 1\tUnterminated string literal."
+        Go context:
+        diagnostic 1002 23 0 1	Unterminated string literal.
+        file
+        0 SourceFile 0 23 0 0 -1 0 0				
+        1 VariableStatement 0 23 0 0 -1 0 0				
+        2 VariableDeclarationList 0 23 0 0 -1 0 0				2
+    recovery_test.go:192: native:  line 1: port "file", Go "diagnostic 1002 23 0 1\tUnterminated string literal."
+        Go context:
+        diagnostic 1002 23 0 1	Unterminated string literal.
+        file
+        0 SourceFile 0 23 0 0 -1 0 0				
+        1 VariableStatement 0 23 0 0 -1 0 0				
+        2 VariableDeclarationList 0 23 0 0 -1 0 0				2
+=== RUN   TestRecoveryMutants/reserved-token-switch
+    recovery_test.go:192: Node:  line 1: port "file", Go "diagnostic 1389 6 6 1\t'return' is not allowed as a variable declaration name."
+        Go context:
+        diagnostic 1389 6 6 1	'return' is not allowed as a variable declaration name.
+        diagnostic 1109 13 1 1	Expression expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 5 0 0 -1 0 0				
+    recovery_test.go:192: native:  line 1: port "file", Go "diagnostic 1389 6 6 1\t'return' is not allowed as a variable declaration name."
+        Go context:
+        diagnostic 1389 6 6 1	'return' is not allowed as a variable declaration name.
+        diagnostic 1109 13 1 1	Expression expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 5 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/octal-suggestion
+    recovery_test.go:192: Node:  line 1: port "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax 'wrong\\u005cx53'.", Go "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax '\\u005cx53'."
+        Go context:
+        diagnostic 1487 11 4 1	Octal escape sequences are not allowed. Use the syntax '\u005cx53'.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+    recovery_test.go:192: native:  line 1: port "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax 'wrong\\u005cx53'.", Go "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax '\\u005cx53'."
+        Go context:
+        diagnostic 1487 11 4 1	Octal escape sequences are not allowed. Use the syntax '\u005cx53'.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:192: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:192: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/stranded-export
+    recovery_test.go:192: Node:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+    recovery_test.go:192: native:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:192: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:192: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:184: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:184: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+=== RUN   TestRecoveryMutants/speculative-roots
+    recovery_test.go:192: Node:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+    recovery_test.go:192: native:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+--- PASS: TestRecoveryMutants (97.88s)
+    --- PASS: TestRecoveryMutants/unconditional-declare (10.24s)
+    --- PASS: TestRecoveryMutants/scanner-error-hook (10.75s)
+    --- PASS: TestRecoveryMutants/reserved-token-switch (10.34s)
+    --- PASS: TestRecoveryMutants/octal-suggestion (10.20s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (10.33s)
+    --- PASS: TestRecoveryMutants/stranded-export (10.20s)
+    --- PASS: TestRecoveryMutants/generic-child (10.59s)
+    --- PASS: TestRecoveryMutants/eof-loop (14.20s)
+    --- PASS: TestRecoveryMutants/speculative-roots (10.49s)
+=== RUN   TestRecoveredLintCasesAgree
+    recovery_test.go:277: all eight original source/style combinations match real cohere findings and proposed repairs
+--- PASS: TestRecoveredLintCasesAgree (42.02s)
+=== RUN   TestEveryTypeNodeKindAgrees
+    type_kinds_test.go:45: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes
+--- PASS: TestEveryTypeNodeKindAgrees (10.59s)
+=== RUN   TestWholeGeneratedAgrees
+    whole_generated_test.go:71: 68 generated whole files, 93323 identical bytes
+--- PASS: TestWholeGeneratedAgrees (10.64s)
+=== RUN   TestObsoleteImportAttributesAgrees
+    whole_generated_test.go:90: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes
+--- PASS: TestObsoleteImportAttributesAgrees (11.23s)
+=== RUN   TestWholeMutants
+=== RUN   TestWholeMutants/for-of_becomes_for-in
+    whole_mutants_test.go:38: Node caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+=== RUN   TestWholeMutants/type-only_import_phase_lost
+    whole_mutants_test.go:38: Node caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+    whole_mutants_test.go:38: native caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+=== RUN   TestWholeMutants/keyof_becomes_readonly
+    whole_mutants_test.go:38: Node caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+--- PASS: TestWholeMutants (42.99s)
+    --- PASS: TestWholeMutants/for-of_becomes_for-in (10.64s)
+    --- PASS: TestWholeMutants/type-only_import_phase_lost (10.38s)
+    --- PASS: TestWholeMutants/keyof_becomes_readonly (10.83s)
+=== RUN   TestWholeCountCheckCatchesMutant
+    whole_mutants_test.go:65: Node: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+    whole_mutants_test.go:65: native: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+--- PASS: TestWholeCountCheckCatchesMutant (11.77s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (24.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	3396.417s

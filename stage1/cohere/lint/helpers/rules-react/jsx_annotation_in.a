@@ -1,0 +1,21 @@
+export interface Annotation { readonly name: string; readonly found: boolean; }
+export function jsxAnnotationIn(text: string): Annotation {
+    const space = ' \t\r\n\f\v';
+    let offset = 0;
+    while (true) {
+        const index = text.indexOf('@jsx', offset);
+        if (index < 0) { return {name: '', found: false}; }
+        const start = index + 4;
+        let begin = start;
+        while (begin < text.length && space.includes(text[begin] ?? '')) { begin++; }
+        if (begin > start && begin < text.length) {
+            let end = begin;
+            while (end < text.length && !space.includes(text[end] ?? '')) { end++; }
+            let name = text.slice(begin, end);
+            const dot = name.indexOf('.');
+            if (dot >= 0) { name = name.slice(0, dot); }
+            if (name.length > 0) { return {name, found: true}; }
+        }
+        offset = start;
+    }
+}

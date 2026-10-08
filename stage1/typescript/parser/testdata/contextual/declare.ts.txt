@@ -1,0 +1,17 @@
+{
+    declare = true;
+    declare();
+    declare.value;
+    declare
+}
+{
+    declare
+    class C {}
+}
+{
+    declare
+    function f() {}
+}
+{
+    declare class D {}
+}

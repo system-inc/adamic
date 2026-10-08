@@ -1,0 +1,8 @@
+import type { CoreArena } from './nodes.a';
+import { bodyDefinitelyExits } from './body_definitely_exits.a';
+export function tryStatementExits(arena: CoreArena, index: number): boolean {
+    const node = arena.node(index);
+    if(node.finallyBlock >= 0 && bodyDefinitelyExits(arena, node.finallyBlock)) { return true; }
+    if(!bodyDefinitelyExits(arena, node.tryBlock)) { return false; }
+    return node.catchBlock < 0 || bodyDefinitelyExits(arena, node.catchBlock);
+}

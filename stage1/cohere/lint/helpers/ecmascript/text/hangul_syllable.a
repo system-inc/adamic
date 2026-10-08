@@ -1,0 +1,1 @@
+export function hangulSyllable(c: number): boolean { return c >= 44032 && c <= 55203; }

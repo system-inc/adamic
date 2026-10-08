@@ -1,0 +1,12 @@
+// Non-owning indexes preserve AST identity without creating reference cycles.
+// The adapter supplies decoded Identifier text and exact named AST fields.
+export interface HelperNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly name: number;
+    readonly importClause: number;
+    readonly namedBindings: number;
+    readonly propertyName: number;
+    readonly elements: readonly number[];
+}

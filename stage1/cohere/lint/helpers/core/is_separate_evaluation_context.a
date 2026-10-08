@@ -1,0 +1,4 @@
+import type { CoreArena } from './nodes.a';
+export function isSeparateEvaluationContext(arena: CoreArena, index: number): boolean {
+    return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'ClassDeclaration', 'ClassExpression', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration'].includes(arena.node(index).kind);
+}
