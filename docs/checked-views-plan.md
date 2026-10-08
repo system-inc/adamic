@@ -1111,3 +1111,20 @@ Cast-only original bindable witness admits in both backends; demanded read pins
 the named representation-conversion refusal. This pair remains uncertified.
 Existing intersection oracle checks are included in validation. No change to
 view_lazy.go or shared contract acceptance is included.
+
+Object plus primitive lane, next original batch (October 8):
+New owned .a witnesses in lane4b/original use complete upstream
+DiagnosticRelatedInformation, AutoGenerateInfo/GeneratedNamePart, ConditionalType/Type,
+DiagnosticWithLocation and DiagnosticWithDetachedLocation. Owned *-probe.a files
+record uncertified higher-ranked intersection, metadata-array and dictionary
+frontiers. No production or shared-hook changes are added in this batch.
+
+Dictionary handoff from ce4eeaa4 GROUP4.md is accepted: lane 4b owns object/array
+member selection inside CompilerOptionsValue and the TsConfigSourceFile
+alternative, with descendants retained as lazy checked reads. Lane 6 owns lookup,
+absence and enumeration; lane 4 owns scalar/nullish selection. Original candidate
+rows CompilerOptions dynamic-key (10, rank 6) and BuildOptions dynamic-key (1,
+rank 36) are already in our 42/181 inventory; they are not added or certified
+again. Owned resume/dictionary-member-handoff.json records this split and counts.
+Full dynamic lookup validation awaits lane 6's hooks in views-integration,
+currently ba59427c locally; no dictionary branch was merged.

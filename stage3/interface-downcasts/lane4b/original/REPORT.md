@@ -136,3 +136,78 @@ One initial original run exposed an unread control containing an unused reader;
 the cast-only control now contains no read. A subsequent rebuild failure during
 removal of an unnecessary draft helper was corrected before this final gate;
 neither failure was counted as a mutant kill.
+
+October 8, five-pair original witness batch
+
+Built: original DiagnosticRelatedInformation, AutoGenerateInfo, ConditionalType and both location diagnostic variants, plus five higher-ranked frontier witnesses.
+Commits: follows 166cf410; implementation tip is the commit containing this batch.
+Checks: uncached selected regression gate passed, oracle 73.194s; final complete original suite passed 53.297s; vet and diff checks passed.
+Mutants: outer omission, wrong member, nested type acceptance and transitive omission caught in both release backends; optional string uses its outer wrong-member mutant plus nested omission.
+Uncovered: 34 candidate pairs / 122 candidate reads remain; no whole-tsc execution or exact reachability claim.
+
+Five new standalone original field-contract pairs carry 14 candidate reads:
+DiagnosticRelatedInformation.messageText (6), AutoGenerateInfo.prefix (4),
+ConditionalType.resolvedConstraintOfDistributive (2),
+DiagnosticWithLocation.messageText (1), and
+DiagnosticWithDetachedLocation.messageText (1). Together with prior witnesses:
+8 certified pairs / 59 attached candidate reads. The original targets and
+member types are imported in full. prepare.cjs audits the 34 highest-ranked
+rows against pristine pinned upstream site texts and hashes all declarations;
+this broader audit does not certify the unsupported rows. The oracle asserts
+complete inherited field sets for every new target and its object member.
+
+The diagnostic variants hold both valid alternatives and boolean/nested code
+refusals. AutoGenerateInfo holds plain string, nested prefix, missing outer
+property, missing nested optional prefix and explicit undefined. GeneratedNamePart
+is complete; its unread node union stays deferred. ConditionalType holds false,
+Type flags, missing property, and wrong true/flags; the true poison is boxed
+through an actual runtime union producer so the omitted-check mutant can run.
+Every wrong read pins exit 70, expression, expected declared type and found type.
+
+Independent release mutant outputs, native / JavaScript, each exit 0:
+- Diagnostic variants: accept wrong member or omit outer check prints wrong /
+  wrong; accept wrong nested code or omit its check prints chain:0 / chain:false.
+- AutoGenerateInfo: wrong-member acceptance and outer omission print wrong /
+  wrong; nested check omission prints undefined / false. A draft nested type
+  mutation broke the static optional-string conversion, so it was discarded and
+  is not a kill. The required wrong-shape acceptance is independently held at
+  the union member.
+- ConditionalType: false-literal relaxation and outer omission print true /
+  true; wrong flags acceptance or nested omission prints 0 / false. The first
+  unboxed true omission mutant crashed; that was not counted. The final boxed
+  input executes normally and independently fails only the refusal pin.
+
+Uncertified higher-ranked frontiers are checked against source Node before
+lowering: JSDoc.parent (10) and both bindable left fields (9 each) retain named
+read-stage representation-conversion refusals. Original JSDoc.comment (7) is
+NotYet at the union field. Original CompilerOptions dynamic-key (10) reaches an
+up-front unchecked-cast refusal in this direct probe; that is a remaining lazy
+admission gap, not compliant runtime checking and not certification. These
+frontiers remain in the remaining counts. Previously recorded 11-read bindable
+expression is also uncertified. All 35 original cases, including 7 frontiers,
+passed their positive/refusal pins in the final complete original suite.
+
+Dictionary member handoff is accepted from ce4eeaa4 GROUP4.md. Object/array and
+TsConfigSourceFile member selection belong here; lookup, absence and enumeration
+belong to lane 6 and scalar/nullish selection to lane 4. CompilerOptions dynamic
+reads (10, rank 6) and BuildOptions dynamic reads (1, rank 36) already exist in
+our inventory and are not added twice. resume/dictionary-member-handoff.json
+retains the original rows, scope and counts. Container-only certification by
+lane 6 does not credit either element pair. The newer integration tip discovered
+during validation is 267fd75b; it will be merged after this batch is pushed.
+
+Commands (full output retained in batch-*.log):
+
+```
+node stage3/interface-downcasts/lane4b/original/prepare.cjs /tmp/object-primitive-upstream /tmp/object-primitive-original-declarations
+ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS=/tmp/object-primitive-original-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestCheckedViewObjectPrimitive|TestViewIntersection|TestCheckedViewLane4HelperReads|TestCheckedViewMixedSelection|TestLazyView|TestCheckedViewArrays' -count=1 -v -timeout 10m
+ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS=/tmp/object-primitive-original-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewObjectPrimitiveOriginalPairs$' -count=1 -v -timeout 10m
+go vet ./internal/lower ./internal/native ./internal/javascript ./internal/oracle
+git diff --check
+```
+
+Native/JS package-local tests did not match; both emitters ran in the oracle.
+Original suite was explicitly enabled, no original cases skipped; opt-in whole
+compiler census was not run. No production hook is added in this batch.
+Working whole-family target remains October 13, 2026, 23:00 UTC, now including
+the explicitly accepted dictionary-member scope within the existing candidates.

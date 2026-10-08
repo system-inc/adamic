@@ -20,6 +20,36 @@
       "type": "LiteralType",
       "field": "value",
       "candidate_reads": 10
+    },
+    {
+      "type_id": 9762,
+      "type": "DiagnosticRelatedInformation",
+      "field": "messageText",
+      "candidate_reads": 6
+    },
+    {
+      "type_id": 7615,
+      "type": "AutoGenerateInfo",
+      "field": "prefix",
+      "candidate_reads": 4
+    },
+    {
+      "type_id": 8617,
+      "type": "ConditionalType",
+      "field": "resolvedConstraintOfDistributive",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 9760,
+      "type": "DiagnosticWithLocation",
+      "field": "messageText",
+      "candidate_reads": 1
+    },
+    {
+      "type_id": 11106,
+      "type": "DiagnosticWithDetachedLocation",
+      "field": "messageText",
+      "candidate_reads": 1
     }
   ],
   "fixtures": {
@@ -35,8 +65,23 @@
     "literal-boolean.a": "f7e5b6d4e1d210cf32bcc8748a71d16fe4e8ab05ae8ee32666d1156dbc323f3d",
     "literal-negative-wrong.a": "1003abff48e5a383b7cde44d2d9cad9fb9b897018bb84f21ddbe74a08b794d89",
     "literal-good.a": "e71f40e6ae4557a4d2ccd90625bdd425da0377590eeabb318f5f4030b70ae10e",
-    "literal-text-wrong.a": "541181808c1e536a8c0d46de188bec3ada58404d926e62c8f02c624d49b40751"
+    "literal-text-wrong.a": "541181808c1e536a8c0d46de188bec3ada58404d926e62c8f02c624d49b40751",
+    "related-boolean.a": "771d905813439f9b2792621847001dda2f43c074fdd4ee1bb676a9d120ea2526",
+    "related-good.a": "959f4af03fe4a8e68c5efde3b72aeafc48bad0166fc00fb66575bda3a60d8bc8",
+    "related-code-wrong.a": "7313d232839c27d70d83d06bfac4def49df3845bf14aa0d872f71f70ecea2177",
+    "generated-good.a": "69b78e99a57b858986daad29d09e494414089be7d11d6807a9bba736befd9d5e",
+    "generated-prefix-wrong.a": "3e546f6b14421088cc5fd1309bdc0ce09952476809373bef2e63e3bdbcdbbd74",
+    "generated-boolean.a": "0aca3331cc6f9e7fe814a4167073724b6247e612536250a1fb63a05dc1f5e7cd",
+    "conditional-flags-wrong.a": "32dfb4207279999f9bacd5761b925c0a5297e33de2204130e030db45fb6c5b58",
+    "conditional-true.a": "55e0e7eb453de796318c820a721ad046c58bfd47b60789aa8897c4377360f452",
+    "conditional-good.a": "4ad8e272ea37923168049b0379c3098a7477bfa6fbcbd041532b96280c15ab37",
+    "location-good.a": "761a8db6e6d307276a8e4b457294966657459677476dac2e4a0206f7c5f55221",
+    "location-boolean.a": "9d057b2653ccbcdfa834880d3df1c817a13889eb58bef60908c79429235ecf1f",
+    "location-code-wrong.a": "e776bb5b70ceedb4e3351a76d187f44c784e878d05e6a97fcdd403b74f3aedb0",
+    "detached-boolean.a": "f89a49812f4da292bf26cef32a2952faf5244e32b0248810e8173bccda24b51a",
+    "detached-code-wrong.a": "0c564663c84705e39360323bb5b656f73cd8551626ef2435b4c670291d34d5da",
+    "detached-good.a": "2f9621bc7bef2fd346a4c4029d2cc272f328a379542041cbd1d8404eed40551d"
   },
   "declaration_manifest": "declaration-manifest.json",
-  "runtime_gate": "logs/production-gate.log"
+  "runtime_gate": "logs/batch-original-final.log"
 }
