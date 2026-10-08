@@ -12,6 +12,12 @@ export function listTerminator(kind: string, context: string, lineBreak: boolean
         return true;
     }
     switch(context) {
+        case 'heritageClauses':
+            return kind === 'OpenBraceToken' || kind === 'CloseBraceToken';
+        case 'heritage':
+            return kind === 'OpenBraceToken' || kind === 'ExtendsKeyword' || kind === 'ImplementsKeyword';
+        case 'indexParameters':
+            return kind === 'CloseBracketToken';
         case 'source':
             return false;
         case 'block':
@@ -76,6 +82,11 @@ export function listDiagnostic(kind: string, context: string): ListDiagnosticInt
             return { code: 1180, message: 'Property destructuring pattern expected.' };
         case 'bindingArray':
             return { code: 1181, message: 'Array element destructuring pattern expected.' };
+        case 'heritageClauses':
+            return { code: 1172, message: "'extends' or 'implements' expected." };
+        case 'heritage':
+            return { code: 1109, message: 'Expression expected.' };
+        case 'indexParameters':
         case 'parameters':
             if(kind.endsWith('Keyword')) {
                 return { code: 1390, message: `'${tokenSpelling(kind)}' is not allowed as a parameter name.` };

@@ -1,6 +1,6 @@
 // Speculation saves and restores scanner state without building a tree.
 import type { Scanner } from '../scanner/scanner.ts';
-import { isModifierKind, precedence, isReservedKind, bindingStart } from './grammar.ts';
+import { isModifierKind, precedence, isReservedKind, bindingStart, propertyNameStart } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -261,7 +261,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             state.restore();
             return true;
         }
-        if(kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0) {
+        if((kind(scanner) === 'EqualsGreaterThanToken' || kind(scanner) === 'OpenBraceToken') && (scanner.flags & 1) === 0) {
             result = true;
         }
         else if(kind(scanner) === 'ColonToken' && (allowReturn || typed)) {
@@ -613,11 +613,7 @@ export function typeMemberAhead(scanner: Scanner): boolean {
         state.restore();
         return true;
     }
-    if(
-        kind(scanner) === 'Identifier' ||
-        kind(scanner).endsWith('Keyword') ||
-        ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind(scanner))
-    ) {
+    if(propertyNameStart(kind(scanner))) {
         identifier = true;
         state.next();
     }
@@ -671,7 +667,7 @@ export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
             state.next();
         }
         const follow =
-            kind(scanner) === 'Identifier' ||
+            propertyNameStart(kind(scanner)) ||
             kind(scanner).endsWith('Keyword') ||
             [
                 'OpenBracketToken',
@@ -698,6 +694,108 @@ export function nextIdentifierSameLine(scanner: Scanner): boolean {
     const state = new Speculation(scanner);
     scanner.scan();
     const result = bindingStart(kind(scanner)) && (scanner.flags & 1) === 0;
+    state.restore();
+    return result;
+}
+
+export function classMemberAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    let id = '';
+    let result = kind(scanner) === 'AtToken';
+    while(!result && isModifierKind(kind(scanner))) {
+        id = kind(scanner);
+        result = [
+            'PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'StaticKeyword',
+            'ReadonlyKeyword', 'OverrideKeyword', 'AccessorKeyword',
+        ].includes(id);
+        state.next();
+    }
+    if(!result && kind(scanner) === 'AsteriskToken') {
+        result = true;
+    }
+    if(!result && propertyNameStart(kind(scanner))) {
+        id = kind(scanner);
+        state.next();
+    }
+    result = result || kind(scanner) === 'OpenBracketToken';
+    if(!result && id !== '') {
+        result =
+            !id.endsWith('Keyword') || id === 'GetKeyword' || id === 'SetKeyword' ||
+            [
+                'OpenParenToken', 'LessThanToken', 'ExclamationToken', 'ColonToken',
+                'EqualsToken', 'QuestionToken', 'SemicolonToken', 'CloseBraceToken', 'EndOfFile',
+            ].includes(kind(scanner)) || (scanner.flags & 1) !== 0;
+    }
+    state.restore();
+    return result;
+}
+
+export function accessorAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    state.next();
+    const next = kind(scanner);
+    const result = next === 'OpenBracketToken' || propertyNameStart(next);
+    state.restore();
+    return result;
+}
+
+// 0 rules out an arrow, 1 commits to recovery, 2 requires a parsed signature.
+export function arrowHeadKind(scanner: Scanner): number {
+    if(
+        kind(scanner) !== 'EqualsGreaterThanToken' && kind(scanner) !== 'OpenParenToken' &&
+        kind(scanner) !== 'LessThanToken' && kind(scanner) !== 'AsyncKeyword'
+    ) {
+        return 0;
+    }
+    const state = new Speculation(scanner);
+    if(kind(scanner) === 'EqualsGreaterThanToken') {
+        return 1;
+    }
+    if(kind(scanner) === 'AsyncKeyword') {
+        state.next();
+        if((scanner.flags & 1) !== 0) {
+            state.restore();
+            return 0;
+        }
+    }
+    const first = kind(scanner);
+    state.next();
+    const second = kind(scanner);
+    let result = 0;
+    if(first === 'LessThanToken') {
+        result = bindingStart(second) || second === 'ConstKeyword' ? 2 : 0;
+    }
+    else if(first === 'OpenParenToken') {
+        if(second === 'CloseParenToken') {
+            state.next();
+            result = ['EqualsGreaterThanToken', 'ColonToken', 'OpenBraceToken'].includes(kind(scanner)) ? 1 : 0;
+        }
+        else if(second === 'DotDotDotToken') {
+            result = 1;
+        }
+        else if(second === 'OpenBracketToken' || second === 'OpenBraceToken') {
+            result = 2;
+        }
+        else {
+            state.next();
+            const third = kind(scanner);
+            if(isModifierKind(second) && second !== 'AsyncKeyword' && bindingStart(third) && third !== 'AsKeyword') {
+                result = 1;
+            }
+            else if(bindingStart(second) || second === 'ThisKeyword') {
+                if(third === 'ColonToken') {
+                    result = 1;
+                }
+                else if(third === 'QuestionToken') {
+                    state.next();
+                    result = ['ColonToken', 'CommaToken', 'EqualsToken', 'CloseParenToken'].includes(kind(scanner)) ? 1 : 0;
+                }
+                else if(['CommaToken', 'EqualsToken', 'CloseParenToken'].includes(third)) {
+                    result = 2;
+                }
+            }
+        }
+    }
     state.restore();
     return result;
 }

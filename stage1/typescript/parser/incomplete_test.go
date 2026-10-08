@@ -158,13 +158,12 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		return data, err
 	}
 	var cursor atomic.Int64
-	var stopped atomic.Bool
 	var workers sync.WaitGroup
 	for worker := 0; worker < 4; worker++ {
 		workers.Add(1)
 		go func() {
 			defer workers.Done()
-			for !stopped.Load() {
+			for {
 				index := int(cursor.Add(1)) - 1
 				if index >= len(jobs) {
 					return
@@ -173,13 +172,11 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 				func() {
 					path := filepath.Join(artifacts, fmt.Sprintf("%05d-%s-%s-%d.ts", job.position, filepath.Base(job.sourcePath), job.mode, job.index))
 					if err := os.WriteFile(path, job.input, 0644); err != nil {
-						stopped.Store(true)
 						t.Error(err)
 						return
 					}
 					want, err := measure(len(job.input), "go", path, oracle, path, "--whole", "--recovery")
 					if err != nil {
-						stopped.Store(true)
 						t.Errorf("Go %s: %v; saved input %s", job.sourcePath, err, path)
 						return
 					}
@@ -202,13 +199,11 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 					}
 					count := checked.Add(1)
 					if failed {
-						stopped.Store(true)
 						return
 					}
 					for _, suffix := range []string{"", ".go.stdout", ".go.stderr", ".Node.stdout", ".Node.stderr", ".native.stdout", ".native.stderr"} {
 						if err := os.Remove(path + suffix); err != nil {
 							t.Error(err)
-							stopped.Store(true)
 							return
 						}
 					}
@@ -225,7 +220,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		t.Logf("slowest %s parse and print: %s; input %s", label, sample.duration, sample.path)
 	}
 	if t.Failed() {
-		t.Fatalf("comparison stopped after checking %d inputs; failures retained", checked.Load())
+		t.Fatalf("comparison completed after checking %d inputs; failures retained", checked.Load())
 	}
 
 	if start != 0 {

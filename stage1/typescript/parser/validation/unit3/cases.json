@@ -1,0 +1,896 @@
+{
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "discovery": {
+    "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_RECOVERY_ARTIFACTS=/workspace/scratch/parser-unit3/incomplete go test ./stage1/typescript/parser -run ^TestIncompleteCompilerAgrees$ -count=1 -v -failfast=false -timeout=6h",
+    "inputs": 22497,
+    "seconds": 3102.873,
+    "failures": 70,
+    "first_previous_failure": "corePublic.ts-cut-37",
+    "previous_failure_fixed": true
+  },
+  "repairs": {
+    "heritage": "Parse a delimited heritage list, stop at EOF, preserve repeated clauses, and recover invalid elements through expressions.",
+    "class_members": "Use the oracle member lookahead, modifier lookahead, and outer-list recovery so a bad member cannot loop.",
+    "type_members": "Parse modifiers and index parameters as lists and accept a reversed return-type separator with the oracle diagnostic.",
+    "arrows": "Distinguish definite recovery from ambiguous heads; parse ambiguous signatures speculatively and recover a body missing its opening brace.",
+    "type_arguments": "Use delimited type argument recovery and reject unclosed expression speculation.",
+    "assignments": "Only a left-hand-side expression starts an assignment.",
+    "names": "Use type-name diagnostics for missing import qualifiers, identifier diagnostics after typeof, and allow a dotted type after a missing name.",
+    "blocks": "A following equals token receives diagnostic 2809 and is consumed.",
+    "decorators": "Parse decorated class expressions or create a MissingDeclaration with a zero-width expression diagnostic.",
+    "function_names": "Reserved function keywords cannot serve as function-expression names.",
+    "property_names": "Share the full property-name predicate, including private identifiers, across members, modifiers, and accessors."
+  },
+  "focused_fixtures": 29,
+  "discovered_failures": [
+    {
+      "input": "02761-corePublic.ts-remove-26.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "remove",
+      "token": 26,
+      "bytes": 1317,
+      "sha256": "193f595c5c57bb352018ed9af68d98e910fe42b1e98dd4e1140ed72199a58b66",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 637 1 1\\t']' expected.\", Go \"diagnostic 1005 637 1 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 637 1 1\\t']' expected.\", Go \"diagnostic 1005 637 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "02768-corePublic.ts-duplicate-41.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "duplicate",
+      "token": 41,
+      "bytes": 1320,
+      "sha256": "699d55f8f01ea2d47525e01996f4b17a6f5ae736ed275b1bc19137c319b0e00c",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 714 1 1\\t'{' expected.\", Go \"diagnostic 1005 714 1 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 714 1 1\\t'{' expected.\", Go \"diagnostic 1005 714 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "02773-corePublic.ts-remove-56.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "remove",
+      "token": 56,
+      "bytes": 1317,
+      "sha256": "8be1de7f6feeea9bf67af220d40a2e9807eaae13b6d09c060fbe477ef886676a",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 801 1 1\\t'{' expected.\", Go \"diagnostic 1005 801 1 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 801 1 1\\t'{' expected.\", Go \"diagnostic 1005 801 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "02777-corePublic.ts-remove-66.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "remove",
+      "token": 66,
+      "bytes": 1309,
+      "sha256": "8e35fbf3b147ed2b56420ea9a4da00312100457036064d59ba689a1b1d47e167",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 960 4 1\\t',' expected.\", Go \"diagnostic 1005 972 1 1\\t',' expected.\"",
+        "native": "line 2: port \"diagnostic 1005 960 4 1\\t',' expected.\", Go \"diagnostic 1005 972 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "02778-corePublic.ts-duplicate-66.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "duplicate",
+      "token": 66,
+      "bytes": 1328,
+      "sha256": "060303f709b1593378fc8fb73afed8787d34a28a1b29d619a9931a31dd46ccf2",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 979 4 1\\t',' expected.\", Go \"diagnostic 1005 991 1 1\\t',' expected.\"",
+        "native": "line 2: port \"diagnostic 1005 979 4 1\\t',' expected.\", Go \"diagnostic 1005 991 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "02792-corePublic.ts-duplicate-101.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "duplicate",
+      "token": 101,
+      "bytes": 1320,
+      "sha256": "73512be32c57e2fb65463ddf2abd3d3bd43a98f126b85a28e5424173982f6cf4",
+      "observations": {
+        "Node": "line 85: port \"1 ExpressionStatement 1099 1128 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 1099 1101 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 85: port \"1 ExpressionStatement 1099 1128 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 1099 1101 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "02795-corePublic.ts-remove-111.ts",
+      "source": "src/compiler/corePublic.ts",
+      "edit": "remove",
+      "token": 111,
+      "bytes": 1317,
+      "sha256": "8c272bcee9d8bff1d0cbbec98117c6891ebb1dafd4abe9d9525e6e1b6af0d8b7",
+      "observations": {
+        "Node": "line 109: port \"1 ExpressionStatement 1169 1200 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 1169 1170 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 109: port \"1 ExpressionStatement 1169 1200 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 1169 1170 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "03114-debug.ts-duplicate-5809.ts",
+      "source": "src/compiler/debug.ts",
+      "edit": "duplicate",
+      "token": 5809,
+      "bytes": 56595,
+      "sha256": "43516549c8f97a2ae3dd5300c44d19e5af30ecacfdf6ad7ee696576547e0ab34",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "03429-emitter.ts-remove-21421.ts",
+      "source": "src/compiler/emitter.ts",
+      "edit": "remove",
+      "token": 21421,
+      "bytes": 273336,
+      "sha256": "e5e2d491f482ec437edefba55f170506b6a8caf9df6d57de6d6d3945a3ace02c",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 172052 1 1\\t';' expected.\", Go \"diagnostic 1005 172052 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 172052 1 1\\t';' expected.\", Go \"diagnostic 1005 172052 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "03438-emitter.ts-duplicate-25705.ts",
+      "source": "src/compiler/emitter.ts",
+      "edit": "duplicate",
+      "token": 25705,
+      "bytes": 273340,
+      "sha256": "5b2c5b155481b2f2184bca197ed267995fc7f1b569dd3de964dda6174ef6fd4c",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 204454 1 1\\t')' expected.\", Go \"diagnostic 1005 204454 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 204454 1 1\\t')' expected.\", Go \"diagnostic 1005 204454 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "04351-emitHelpers.ts-cut-162.ts",
+      "source": "src/compiler/factory/emitHelpers.ts",
+      "edit": "cut",
+      "token": 162,
+      "bytes": 1921,
+      "sha256": "9802ef428d463d6352608875a1104089297a417e8504b0ebbe057e83997bb54a",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 1921 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 1921 0 1\\t'}' expected.\"",
+        "native": "line 1: port \"diagnostic 1003 1921 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 1921 0 1\\t'}' expected.\""
+      }
+    },
+    {
+      "input": "04593-emitHelpers.ts-remove-141.ts",
+      "source": "src/compiler/factory/emitHelpers.ts",
+      "edit": "remove",
+      "token": 141,
+      "bytes": 69093,
+      "sha256": "7280f9a0ff438c83531352fc3416eea83c2dd09baf6a53ab4badc2a0a6f1f112",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 1741 7 1\\t';' expected.\", Go \"file\"",
+        "native": "line 1: port \"diagnostic 1005 1741 7 1\\t';' expected.\", Go \"file\""
+      }
+    },
+    {
+      "input": "04948-emitNode.ts-remove-1211.ts",
+      "source": "src/compiler/factory/emitNode.ts",
+      "edit": "remove",
+      "token": 1211,
+      "bytes": 12717,
+      "sha256": "bcf1d3b6bc70a04e6e220381d2812f2784f18498d75a28946ebf6ffca59b6148",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 9205 1 1\\t';' expected.\", Go \"diagnostic 1005 9205 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 9205 1 1\\t';' expected.\", Go \"diagnostic 1005 9205 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "05128-nodeChildren.ts-duplicate-31.ts",
+      "source": "src/compiler/factory/nodeChildren.ts",
+      "edit": "duplicate",
+      "token": 31,
+      "bytes": 2242,
+      "sha256": "01b45514f8031c4b8e8f43304b40b10366f254d06095f70e972e977493c8c0d4",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 230 4 1\\t'>' expected.\", Go \"diagnostic 1005 224 1 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 230 4 1\\t'>' expected.\", Go \"diagnostic 1005 224 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "05484-nodeFactory.ts-cut-2970.ts",
+      "source": "src/compiler/factory/nodeFactory.ts",
+      "edit": "cut",
+      "token": 2970,
+      "bytes": 31500,
+      "sha256": "77b67fd6dac43030845a21ecd84de1c16a0dbe63ec76838134a66ae9c4ff496f",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 31500 0 1\\t'}' expected.\", Go \"diagnostic 1005 31500 0 1\\t'(' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 31500 0 1\\t'}' expected.\", Go \"diagnostic 1005 31500 0 1\\t'(' expected.\""
+      }
+    },
+    {
+      "input": "05724-nodeFactory.ts-duplicate-1314.ts",
+      "source": "src/compiler/factory/nodeFactory.ts",
+      "edit": "duplicate",
+      "token": 1314,
+      "bytes": 334932,
+      "sha256": "a87c772f7496ade885fce9679ea6c7a41dd181856f195eeb16fe475e970b4323",
+      "observations": {
+        "Node": "line 1263: port \"7 ArrowFunction 13434 13522 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 TypeAssertionExpression 13434 13522 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 1263: port \"7 ArrowFunction 13434 13522 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 TypeAssertionExpression 13434 13522 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "05726-nodeFactory.ts-duplicate-2627.ts",
+      "source": "src/compiler/factory/nodeFactory.ts",
+      "edit": "duplicate",
+      "token": 2627,
+      "bytes": 334934,
+      "sha256": "73160711540a1c5abd2a5821ee833029a83a0eb6778946dd19bb5b4bccccd52f",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 28650 20 1\\t',' expected.\", Go \"diagnostic 1005 28650 20 1\\t'(' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 28650 20 1\\t',' expected.\", Go \"diagnostic 1005 28650 20 1\\t'(' expected.\""
+      }
+    },
+    {
+      "input": "07498-moduleSpecifiers.ts-remove-276.ts",
+      "source": "src/compiler/moduleSpecifiers.ts",
+      "edit": "remove",
+      "token": 276,
+      "bytes": 79618,
+      "sha256": "944576432731900e4bc2a561f60c4e9cf82d792fbc6aa2dcf1feda57df5cd77b",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1109 3352 3 1\\tExpression expected.\", Go \"diagnostic 1005 3352 3 1\\t'{' expected.\"",
+        "native": "line 1: port \"diagnostic 1109 3352 3 1\\tExpression expected.\", Go \"diagnostic 1005 3352 3 1\\t'{' expected.\""
+      }
+    },
+    {
+      "input": "07837-parser.ts-duplicate-19551.ts",
+      "source": "src/compiler/parser.ts",
+      "edit": "duplicate",
+      "token": 19551,
+      "bytes": 539687,
+      "sha256": "7c1baf88d6dd94249e3cd61c11ed2985d34ed0f011da7661d8eabc3eed3f0135",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 132105 1 1\\t'?' expected.\", Go \"diagnostic 1005 132191 1 1\\t'=>' expected.\"",
+        "native": "line 2: port \"diagnostic 1005 132105 1 1\\t'?' expected.\", Go \"diagnostic 1005 132191 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "09631-resolutionCache.ts-duplicate-5713.ts",
+      "source": "src/compiler/resolutionCache.ts",
+      "edit": "duplicate",
+      "token": 5713,
+      "bytes": 82038,
+      "sha256": "eb39d6660acbe683ac1603b5de2be681ce04a12e583dd96d33c7e9ee24092bec",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 54148 1 1\\t')' expected.\", Go \"diagnostic 1005 54148 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 54148 1 1\\t')' expected.\", Go \"diagnostic 1005 54148 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "09950-scanner.ts-remove-20098.ts",
+      "source": "src/compiler/scanner.ts",
+      "edit": "remove",
+      "token": 20098,
+      "bytes": 219152,
+      "sha256": "676e03c2d3b6b6c01a7f30a629b1429cc172cc87fa03dcf48e8ae564fda7f478",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1128 120185 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 120185 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\"",
+        "native": "line 1: port \"diagnostic 1128 120185 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 120185 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\""
+      }
+    },
+    {
+      "input": "09978-semver.ts-cut-60.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "cut",
+      "token": 60,
+      "bytes": 1962,
+      "sha256": "7868fb43dfb1b67191c087b16ecb0670e35cfd02fb6ce948c3d7615849ed7344",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 1962 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 1962 0 1\\t'}' expected.\"",
+        "native": "line 1: port \"diagnostic 1003 1962 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 1962 0 1\\t'}' expected.\""
+      }
+    },
+    {
+      "input": "09983-semver.ts-cut-110.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "cut",
+      "token": 110,
+      "bytes": 2200,
+      "sha256": "2791f5216c7976a14f32913eb6296053b61219908bf4345b8ee3278bc02d3e61",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 2200 0 1\\t'}' expected.\", Go \"diagnostic 1005 2200 0 1\\t'(' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 2200 0 1\\t'}' expected.\", Go \"diagnostic 1005 2200 0 1\\t'(' expected.\""
+      }
+    },
+    {
+      "input": "10088-semver.ts-cut-1160.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "cut",
+      "token": 1160,
+      "bytes": 9300,
+      "sha256": "c151167c0ea55c255d6a5ee507957ee70f8013ee5ebabef64469d96365d45e3f",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 9300 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 9300 0 1\\t'}' expected.\"",
+        "native": "line 1: port \"diagnostic 1003 9300 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 9300 0 1\\t'}' expected.\""
+      }
+    },
+    {
+      "input": "10231-semver.ts-remove-391.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "remove",
+      "token": 391,
+      "bytes": 17932,
+      "sha256": "64b582d0e23ef850ca5c01c4f0033a24bb6e312a4cc4e859612f2e9c97b94d81",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "10232-semver.ts-duplicate-391.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "duplicate",
+      "token": 391,
+      "bytes": 17935,
+      "sha256": "520a9778648040f70a93f60e10c54388d9b08717e520bddc25971925adc8a411",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "signal: killed"
+      }
+    },
+    {
+      "input": "10251-semver.ts-remove-1171.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "remove",
+      "token": 1171,
+      "bytes": 17932,
+      "sha256": "c0052b9635b01cc0d3d121bb8c8d8498d2aeb3fb16a48f3598f07b16b5c327a9",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 9366 4 1\\t';' expected.\", Go \"diagnostic 1068 9549 6 1\\tUnexpected token. A constructor, method, accessor, or property was expected.\"",
+        "native": "line 1: port \"diagnostic 1005 9366 4 1\\t';' expected.\", Go \"diagnostic 1068 9549 6 1\\tUnexpected token. A constructor, method, accessor, or property was expected.\""
+      }
+    },
+    {
+      "input": "10252-semver.ts-duplicate-1171.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "duplicate",
+      "token": 1171,
+      "bytes": 17935,
+      "sha256": "52d2033b5df7f479e48a9f0bd9f525b7d0304f200d9551021d54d6d9bd6812c9",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "10253-semver.ts-remove-1249.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "remove",
+      "token": 1249,
+      "bytes": 17927,
+      "sha256": "666124f934417978324ccb92b4d83d591056c72678ca43815373295e2966a531",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 9981 17 1\\t';' expected.\", Go \"diagnostic 1128 10025 1 1\\tDeclaration or statement expected.\"",
+        "native": "line 2: port \"diagnostic 1005 9981 17 1\\t';' expected.\", Go \"diagnostic 1128 10025 1 1\\tDeclaration or statement expected.\""
+      }
+    },
+    {
+      "input": "10254-semver.ts-duplicate-1249.ts",
+      "source": "src/compiler/semver.ts",
+      "edit": "duplicate",
+      "token": 1249,
+      "bytes": 17940,
+      "sha256": "dfa8126a0eaa0a9d180589f65a598b88a6f9af6c8f473fdf546406272f7d945c",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "11102-sys.ts-cut-9143.ts",
+      "source": "src/compiler/sys.ts",
+      "edit": "cut",
+      "token": 9143,
+      "bytes": 77304,
+      "sha256": "504a97d7c4e7ab924e418eaa9fb395ead4c0fe7e26b45c61c767cedeb018cb1f",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 77304 0 1\\tIdentifier expected.\", Go \"diagnostic 1110 77304 0 1\\tType expected.\"",
+        "native": "line 1: port \"diagnostic 1003 77304 0 1\\tIdentifier expected.\", Go \"diagnostic 1110 77304 0 1\\tType expected.\""
+      }
+    },
+    {
+      "input": "11176-sys.ts-remove-7407.ts",
+      "source": "src/compiler/sys.ts",
+      "edit": "remove",
+      "token": 7407,
+      "bytes": 86130,
+      "sha256": "679c85a00c2d8bc6b2bde02647a70c0acaf5c124f236bf27df4623d1e929c120",
+      "observations": {
+        "Node": "line 3: port \"diagnostic 1005 63259 2 1\\t';' expected.\", Go \"diagnostic 1005 63259 2 1\\t':' expected.\"",
+        "native": "line 3: port \"diagnostic 1005 63259 2 1\\t';' expected.\", Go \"diagnostic 1005 63259 2 1\\t':' expected.\""
+      }
+    },
+    {
+      "input": "11203-tracing.ts-cut-81.ts",
+      "source": "src/compiler/tracing.ts",
+      "edit": "cut",
+      "token": 81,
+      "bytes": 909,
+      "sha256": "0b58218f2419be5bd88aec2ae4d93476cb081b225fda2a7711d1e9b4d6e8ba12",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1110 909 0 1\\tType expected.\", Go \"diagnostic 1003 909 0 1\\tIdentifier expected.\"",
+        "native": "line 1: port \"diagnostic 1110 909 0 1\\tType expected.\", Go \"diagnostic 1003 909 0 1\\tIdentifier expected.\""
+      }
+    },
+    {
+      "input": "11434-tracing.ts-duplicate-135.ts",
+      "source": "src/compiler/tracing.ts",
+      "edit": "duplicate",
+      "token": 135,
+      "bytes": 15035,
+      "sha256": "85abcea68ce76bea0c5ed65a10a89a815d0e2adeb0d906a67d51d0f482be28ce",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 1281 6 1\\t']' expected.\", Go \"diagnostic 1005 1281 6 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 1281 6 1\\t']' expected.\", Go \"diagnostic 1005 1281 6 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "11455-tracing.ts-remove-872.ts",
+      "source": "src/compiler/tracing.ts",
+      "edit": "remove",
+      "token": 872,
+      "bytes": 15023,
+      "sha256": "d38d5a7a34bff8c085665431e5ad8c5accaa6fef062975baea2ab6c78b0c8794",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1128 6189 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 6189 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\"",
+        "native": "line 1: port \"diagnostic 1128 6189 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 6189 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\""
+      }
+    },
+    {
+      "input": "11594-transformer.ts-cut-1313.ts",
+      "source": "src/compiler/transformer.ts",
+      "edit": "cut",
+      "token": 1313,
+      "bytes": 11191,
+      "sha256": "0c5377a9467c2d28344c1c9d98668cad8bc62b489910fda83896c30b95419ca1",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 11191 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 11191 0 1\\t'}' expected.\"",
+        "native": "line 1: port \"diagnostic 1003 11191 0 1\\tIdentifier expected.\", Go \"diagnostic 1005 11191 0 1\\t'}' expected.\""
+      }
+    },
+    {
+      "input": "11746-transformer.ts-remove-680.ts",
+      "source": "src/compiler/transformer.ts",
+      "edit": "remove",
+      "token": 680,
+      "bytes": 29743,
+      "sha256": "11d32269f1b216676b8a50f7e7fc9d79bf72d9ecfd38e96b317a9bd9ae5e6385",
+      "observations": {
+        "Node": "line 3: port \"file\", Go \"diagnostic 1005 5727 1 1\\t';' expected.\"",
+        "native": "line 3: port \"file\", Go \"diagnostic 1005 5727 1 1\\t';' expected.\""
+      }
+    },
+    {
+      "input": "11770-transformer.ts-remove-1844.ts",
+      "source": "src/compiler/transformer.ts",
+      "edit": "remove",
+      "token": 1844,
+      "bytes": 29753,
+      "sha256": "4bd50e8b4b01e846e562b286263a958ca33f7d696c4107426aa3cf38a58b7375",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 15846 1 1\\t';' expected.\", Go \"diagnostic 1005 15846 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 15846 1 1\\t';' expected.\", Go \"diagnostic 1005 15846 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "12112-classFields.ts-remove-14478.ts",
+      "source": "src/compiler/transformers/classFields.ts",
+      "edit": "remove",
+      "token": 14478,
+      "bytes": 156321,
+      "sha256": "ee3894b54ad80101a6be02231122177523859a6c764bb0065e6250d721e23a78",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1128 152282 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 152282 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\"",
+        "native": "line 1: port \"diagnostic 1128 152282 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 152282 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\""
+      }
+    },
+    {
+      "input": "12308-classThis.ts-duplicate-137.ts",
+      "source": "src/compiler/transformers/classThis.ts",
+      "edit": "duplicate",
+      "token": 137,
+      "bytes": 5506,
+      "sha256": "9e3e1d442469d701907c840dbe1e7eed6c0197f2c78a6285bc22cfc8ef443536",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 1880 4 1\\t',' expected.\", Go \"diagnostic 1109 1939 1 1\\tExpression expected.\"",
+        "native": "line 2: port \"diagnostic 1005 1880 4 1\\t',' expected.\", Go \"diagnostic 1109 1939 1 1\\tExpression expected.\""
+      }
+    },
+    {
+      "input": "12310-classThis.ts-duplicate-154.ts",
+      "source": "src/compiler/transformers/classThis.ts",
+      "edit": "duplicate",
+      "token": 154,
+      "bytes": 5506,
+      "sha256": "cb853315c6b95f58dcd1234654dc909830407f06123975cfc4377eeec1bbacf6",
+      "observations": {
+        "Node": "line 3: port \"diagnostic 1005 2059 10 1\\t',' expected.\", Go \"diagnostic 1005 2159 1 1\\t',' expected.\"",
+        "native": "line 3: port \"diagnostic 1005 2059 10 1\\t',' expected.\", Go \"diagnostic 1005 2159 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "12312-classThis.ts-duplicate-171.ts",
+      "source": "src/compiler/transformers/classThis.ts",
+      "edit": "duplicate",
+      "token": 171,
+      "bytes": 5509,
+      "sha256": "4aa429f7a557ae9052a77ee4d71cdafc3517ef4b9ac2dbf0798cf5cb93498d38",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1131 2141 4 1\\tProperty or signature expected.\", Go \"diagnostic 1005 2146 4 1\\t',' expected.\"",
+        "native": "line 2: port \"diagnostic 1131 2141 4 1\\tProperty or signature expected.\", Go \"diagnostic 1005 2146 4 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "13240-destructuring.ts-remove-201.ts",
+      "source": "src/compiler/transformers/destructuring.ts",
+      "edit": "remove",
+      "token": 201,
+      "bytes": 30717,
+      "sha256": "2739149f759fcc8bee9132d1f4979acee105a8aa0ba6e189e50a2a7e8efde7cf",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 2347 2 1\\t';' expected.\", Go \"diagnostic 1005 2347 2 1\\t':' expected.\"",
+        "native": "line 2: port \"diagnostic 1005 2347 2 1\\t';' expected.\", Go \"diagnostic 1005 2347 2 1\\t':' expected.\""
+      }
+    },
+    {
+      "input": "14136-es2017.ts-remove-1329.ts",
+      "source": "src/compiler/transformers/es2017.ts",
+      "edit": "remove",
+      "token": 1329,
+      "bytes": 49965,
+      "sha256": "0a7461a12fc002415d5377e8d11a554a38ad4195ce8cd65cdb5dd5441533293e",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 11738 11 1\\t',' expected.\", Go \"diagnostic 1005 11738 11 1\\t')' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 11738 11 1\\t',' expected.\", Go \"diagnostic 1005 11738 11 1\\t')' expected.\""
+      }
+    },
+    {
+      "input": "17409-impliedNodeFormatDependent.ts-cut-362.ts",
+      "source": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "edit": "cut",
+      "token": 362,
+      "bytes": 2920,
+      "sha256": "e23659f86863b50d87dc5c6b69ac1a5004a185fa2aa145c65ca7aa7364b14d6b",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1110 2920 0 1\\tType expected.\", Go \"diagnostic 1003 2920 0 1\\tIdentifier expected.\"",
+        "native": "line 1: port \"diagnostic 1110 2920 0 1\\tType expected.\", Go \"diagnostic 1003 2920 0 1\\tIdentifier expected.\""
+      }
+    },
+    {
+      "input": "17843-module.ts-remove-8992.ts",
+      "source": "src/compiler/transformers/module/module.ts",
+      "edit": "remove",
+      "token": 8992,
+      "bytes": 111458,
+      "sha256": "2d053342667a2117028617e69af8c7cd516d09d2c9b71eefdf8d475599b47be1",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 94569 1 1\\t';' expected.\", Go \"diagnostic 1005 94569 1 1\\t'=>' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 94569 1 1\\t';' expected.\", Go \"diagnostic 1005 94569 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "18702-taggedTemplate.ts-remove-191.ts",
+      "source": "src/compiler/transformers/taggedTemplate.ts",
+      "edit": "remove",
+      "token": 191,
+      "bytes": 5423,
+      "sha256": "e1b4e1b465c0db3ab448a1a05d5dfd6245b728a2f6c3a02b39ac6e257de6c162",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1128 1745 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 1745 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\"",
+        "native": "line 1: port \"diagnostic 1128 1745 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 1745 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\""
+      }
+    },
+    {
+      "input": "19664-utilities.ts-remove-2041.ts",
+      "source": "src/compiler/transformers/utilities.ts",
+      "edit": "remove",
+      "token": 2041,
+      "bytes": 35617,
+      "sha256": "812c7903d537bd2e8edb4ea74cd1589d072d279e78bf406038aa8384b4dc7fe4",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "19665-utilities.ts-duplicate-2041.ts",
+      "source": "src/compiler/transformers/utilities.ts",
+      "edit": "duplicate",
+      "token": 2041,
+      "bytes": 35620,
+      "sha256": "f8039914b92704e44326fcfae86e823d410eacef9b9b7f32a38d867d8332e78f",
+      "observations": {
+        "Node": "timeout after 20s: context deadline exceeded",
+        "native": "timeout after 20s: context deadline exceeded"
+      }
+    },
+    {
+      "input": "19667-utilities.ts-duplicate-2177.ts",
+      "source": "src/compiler/transformers/utilities.ts",
+      "edit": "duplicate",
+      "token": 2177,
+      "bytes": 35628,
+      "sha256": "4c7163caf3beb3e7b69d5585e2b1307c3d71e8ae7214c5d65b5b4e20eddb94d2",
+      "observations": {
+        "Node": "line 5: port \"diagnostic 1005 17812 1 1\\t',' expected.\", Go \"diagnostic 1109 17812 0 1\\tExpression expected.\"",
+        "native": "line 5: port \"diagnostic 1005 17812 1 1\\t',' expected.\", Go \"diagnostic 1109 17812 0 1\\tExpression expected.\""
+      }
+    },
+    {
+      "input": "19913-tsbuild.ts-remove-79.ts",
+      "source": "src/compiler/tsbuild.ts",
+      "edit": "remove",
+      "token": 79,
+      "bytes": 5316,
+      "sha256": "9f4b9df476352b53f71c21f90448a2dcaa1ac194b7eab419035bb8bd5e8c0d1e",
+      "observations": {
+        "Node": "line 57: port \"1 TypeAliasDeclaration 1045 1210 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 57: port \"1 TypeAliasDeclaration 1045 1210 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "19923-tsbuild.ts-remove-144.ts",
+      "source": "src/compiler/tsbuild.ts",
+      "edit": "remove",
+      "token": 144,
+      "bytes": 5304,
+      "sha256": "0559987887f2205c869d488e0e9b7126995cc56275e3833c69156844f1703dd8",
+      "observations": {
+        "Node": "line 136: port \"4 PropertySignature 2008 2023 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 2008 2039 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 136: port \"4 PropertySignature 2008 2023 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 2008 2039 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "19941-tsbuild.ts-remove-261.ts",
+      "source": "src/compiler/tsbuild.ts",
+      "edit": "remove",
+      "token": 261,
+      "bytes": 5321,
+      "sha256": "a3a6f2af1055e77bdc1dd37d575e06b63c5eb13bb99b618040860249ff04552e",
+      "observations": {
+        "Node": "line 237: port \"3 TypeAliasDeclaration 3671 3704 0 0 -1 0 0\\t\\t\\t\\t\", Go \"3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 237: port \"3 TypeAliasDeclaration 3671 3704 0 0 -1 0 0\\t\\t\\t\\t\", Go \"3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "19951-tsbuild.ts-remove-326.ts",
+      "source": "src/compiler/tsbuild.ts",
+      "edit": "remove",
+      "token": 326,
+      "bytes": 5304,
+      "sha256": "6aa01a3a91d98f6c6d9079ba879c3648dbbe27ff61eab993949d162888c14f47",
+      "observations": {
+        "Node": "line 287: port \"4 PropertySignature 4518 4533 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 4518 4557 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 287: port \"4 PropertySignature 4518 4533 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 4518 4557 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "20247-tsbuildPublic.ts-duplicate-5903.ts",
+      "source": "src/compiler/tsbuildPublic.ts",
+      "edit": "duplicate",
+      "token": 5903,
+      "bytes": 114411,
+      "sha256": "52036ba19a3444bbf8ce1e204cae0d14abfd48542882c9f54534d5aa5201516a",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1128 46968 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 46968 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\"",
+        "native": "line 1: port \"diagnostic 1128 46968 1 1\\tDeclaration or statement expected.\", Go \"diagnostic 2809 46968 1 1\\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.\""
+      }
+    },
+    {
+      "input": "20546-types.ts-remove-4498.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "remove",
+      "token": 4498,
+      "bytes": 487836,
+      "sha256": "ae3f47d9a43504c2a89600e22b91131b8fbd0449e26e65852ab3d9020e920a18",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1110 51826 1 1\\tType expected.\", Go \"diagnostic 1005 51826 1 1\\t'>' expected.\"",
+        "native": "line 1: port \"diagnostic 1110 51826 1 1\\tType expected.\", Go \"diagnostic 1005 51826 1 1\\t'>' expected.\""
+      }
+    },
+    {
+      "input": "20548-types.ts-remove-5997.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "remove",
+      "token": 5997,
+      "bytes": 487819,
+      "sha256": "c1bdfada336e31a457a714a1353d8128c1752d5dccf7e0d19f878aab603341d0",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1003 69316 1 1\\tIdentifier expected.\", Go \"diagnostic 1109 69316 1 1\\tExpression expected.\"",
+        "native": "line 1: port \"diagnostic 1003 69316 1 1\\tIdentifier expected.\", Go \"diagnostic 1109 69316 1 1\\tExpression expected.\""
+      }
+    },
+    {
+      "input": "20549-types.ts-duplicate-5997.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "duplicate",
+      "token": 5997,
+      "bytes": 487874,
+      "sha256": "69590b46f112d11d3148a16f94b0591df7bcd1607cac7d2effaf462a05d8d94b",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 69344 27 1\\t'{' expected.\", Go \"diagnostic 1005 69344 27 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 69344 27 1\\t'{' expected.\", Go \"diagnostic 1005 69344 27 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "20551-types.ts-duplicate-7496.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "duplicate",
+      "token": 7496,
+      "bytes": 487855,
+      "sha256": "6ccba6c4c5ff839c0c83e1842bb2b7eda26d31e3c40bfec6e1e929f77e5504b5",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 84389 4 1\\t';' expected.\", Go \"file\"",
+        "native": "line 1: port \"diagnostic 1005 84389 4 1\\t';' expected.\", Go \"file\""
+      }
+    },
+    {
+      "input": "20555-types.ts-duplicate-10494.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "duplicate",
+      "token": 10494,
+      "bytes": 487854,
+      "sha256": "753ba79ebd1038c28e8aa2a491af875af3dbc5f60527b7455a92cdec7d732097",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 116368 22 1\\t'{' expected.\", Go \"file\"",
+        "native": "line 1: port \"diagnostic 1005 116368 22 1\\t'{' expected.\", Go \"file\""
+      }
+    },
+    {
+      "input": "20559-types.ts-duplicate-13492.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "duplicate",
+      "token": 13492,
+      "bytes": 487855,
+      "sha256": "a9bc8cc89825c62595db8667a34187da7207a8f1dfab7a8461a62cfbaf0e0414",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 141281 4 1\\t';' expected.\", Go \"file\"",
+        "native": "line 1: port \"diagnostic 1005 141281 4 1\\t';' expected.\", Go \"file\""
+      }
+    },
+    {
+      "input": "20572-types.ts-remove-23985.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "remove",
+      "token": 23985,
+      "bytes": 487845,
+      "sha256": "64cdb8dcc07e7f306ee8fcddfd44b1de71a1eff21bd4334e7319d1c803d8b2ef",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 262858 5 1\\t'{' expected.\", Go \"diagnostic 1005 262858 5 1\\t',' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 262858 5 1\\t'{' expected.\", Go \"diagnostic 1005 262858 5 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "20602-types.ts-remove-46470.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "remove",
+      "token": 46470,
+      "bytes": 487831,
+      "sha256": "b9790fae6440908e1b01b5f5294797a6603823a79f6392a194061ba7d09632d2",
+      "observations": {
+        "Node": "line 41980: port \"4 PropertySignature 471814 471838 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 471814 471855 0 0 -1 0 0\\t\\t\\t\\t\"",
+        "native": "line 41980: port \"4 PropertySignature 471814 471838 0 0 -1 0 0\\t\\t\\t\\t\", Go \"4 PropertySignature 471814 471855 0 0 -1 0 0\\t\\t\\t\\t\""
+      }
+    },
+    {
+      "input": "20603-types.ts-duplicate-46470.ts",
+      "source": "src/compiler/types.ts",
+      "edit": "duplicate",
+      "token": 46470,
+      "bytes": 487862,
+      "sha256": "cb8b58de2f227846ead4b6d30450ebd369c63e341214e91170a4020427b8a9e8",
+      "observations": {
+        "Node": "line 12: port \"diagnostic 1005 472154 4 1\\t',' expected.\", Go \"diagnostic 1005 472169 1 1\\t',' expected.\"",
+        "native": "line 12: port \"diagnostic 1005 472154 4 1\\t',' expected.\", Go \"diagnostic 1005 472169 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "21528-visitorPublic.ts-duplicate-6241.ts",
+      "source": "src/compiler/visitorPublic.ts",
+      "edit": "duplicate",
+      "token": 6241,
+      "bytes": 88050,
+      "sha256": "0722e454a47ba8cab79cb59cb58df13051d9945eab0e43ea08c4a38eb2f61c4f",
+      "observations": {
+        "Node": "line 4: port \"diagnostic 1005 47847 1 1\\t';' expected.\", Go \"diagnostic 1005 47847 1 1\\t'=>' expected.\"",
+        "native": "line 4: port \"diagnostic 1005 47847 1 1\\t';' expected.\", Go \"diagnostic 1005 47847 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "21534-visitorPublic.ts-duplicate-7411.ts",
+      "source": "src/compiler/visitorPublic.ts",
+      "edit": "duplicate",
+      "token": 7411,
+      "bytes": 88057,
+      "sha256": "2be96bbbd626557fcf9dfefeb4ea9b8ff5de73f57b03d5842d704bae6de8bf51",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 55421 37 1\\t'(' expected.\", Go \"diagnostic 1005 55412 8 1\\t'(' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 55421 37 1\\t'(' expected.\", Go \"diagnostic 1005 55412 8 1\\t'(' expected.\""
+      }
+    },
+    {
+      "input": "21538-visitorPublic.ts-duplicate-8191.ts",
+      "source": "src/compiler/visitorPublic.ts",
+      "edit": "duplicate",
+      "token": 8191,
+      "bytes": 88057,
+      "sha256": "4dddc02a447b58a67a3cafbbfdad4e5cad5bb766da9630ee689b37b80de945be",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1005 60397 33 1\\t'(' expected.\", Go \"diagnostic 1005 60388 8 1\\t'(' expected.\"",
+        "native": "line 1: port \"diagnostic 1005 60397 33 1\\t'(' expected.\", Go \"diagnostic 1005 60388 8 1\\t'(' expected.\""
+      }
+    },
+    {
+      "input": "21546-visitorPublic.ts-duplicate-9751.ts",
+      "source": "src/compiler/visitorPublic.ts",
+      "edit": "duplicate",
+      "token": 9751,
+      "bytes": 88050,
+      "sha256": "de7bd19c5f6ffd9723949e69974ee1ed0beab06e1443cb9120c2d90c3f4e2122",
+      "observations": {
+        "Node": "line 4: port \"diagnostic 1005 70460 1 1\\t';' expected.\", Go \"diagnostic 1005 70460 1 1\\t'=>' expected.\"",
+        "native": "line 4: port \"diagnostic 1005 70460 1 1\\t';' expected.\", Go \"diagnostic 1005 70460 1 1\\t'=>' expected.\""
+      }
+    },
+    {
+      "input": "22131-watchPublic.ts-remove-785.ts",
+      "source": "src/compiler/watchPublic.ts",
+      "edit": "remove",
+      "token": 785,
+      "bytes": 60844,
+      "sha256": "10407a59996fe19d5747087b70f5d3f7ab2d84ef1bc384cd01023f9751ae1af9",
+      "observations": {
+        "Node": "line 2: port \"diagnostic 1005 7187 1 1\\t'{' expected.\", Go \"diagnostic 1005 7187 1 1\\t',' expected.\"",
+        "native": "line 2: port \"diagnostic 1005 7187 1 1\\t'{' expected.\", Go \"diagnostic 1005 7187 1 1\\t',' expected.\""
+      }
+    },
+    {
+      "input": "22466-watchUtilities.ts-remove-2225.ts",
+      "source": "src/compiler/watchUtilities.ts",
+      "edit": "remove",
+      "token": 2225,
+      "bytes": 34757,
+      "sha256": "e1feae59b9ab2ad3860cad7035ac114920673c36a087ac8967b8bb74bd5764de",
+      "observations": {
+        "Node": "line 1: port \"diagnostic 1110 18230 1 1\\tType expected.\", Go \"diagnostic 1005 18230 1 1\\t'>' expected.\"",
+        "native": "line 1: port \"diagnostic 1110 18230 1 1\\tType expected.\", Go \"diagnostic 1005 18230 1 1\\t'>' expected.\""
+      }
+    }
+  ],
+  "final_commands": {
+    "parser_package": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_PARSER_BENCH=1 ADAMIC_PARSER_ARTIFACTS=/workspace/scratch/parser-unit3/release-final ADAMIC_RECOVERY_ARTIFACTS=/workspace/scratch/parser-unit3/package-final go test ./stage1/typescript/parser -count=1 -v -failfast=false -timeout=6h",
+    "lint": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -run ^TestRulesAgree$ -count=1 -v -parallel=1 -timeout=60m",
+    "vet": "go vet ./stage1/typescript/parser ./stage1/cohere/lint"
+  },
+  "preflight": {
+    "seconds": 183.56,
+    "result": "PASS"
+  },
+  "source_sha256": {
+    "parser.ts": "5f082f7e1ea5db6f4c6a01a8759a30710804ce5ebbbe9795fb7bfc21797eb7d2",
+    "grammar.ts": "c45dbe12869ea033a59b9759860e4e161dcf7416f04c1cf2aef52571f7c91324",
+    "lookahead.ts": "f6172245086a0470c380666a0eeb3be654b57ef79e70992162f10c2b684f28c7",
+    "recovery.ts": "8ea9d0873ab866453878aba1c85e4fcce9d4e2ab75d54a9fa3d39e63c1bb5f8f",
+    "statements.ts": "bf589bf17d9ca27c15e53be20ed0c3f32373250c8574c228b5bc87c356b3cd56",
+    "incomplete_test.go": "cfd973aced53d3bca2c576c81110be6f74247c9e5d7889dbdf954cb131459dd5",
+    "incomplete_recovery_test.go": "edbb2e3d3edd24416d567a6fc83ca69bb151dcab145a00f47fdaa79c2cc01256",
+    "recovery_test.go": "6405aa742bd392c808e0667d16cb0b8e61bb70c368d33bdfcc34175860f76b6b"
+  },
+  "lint_cases": {
+    "total": 58,
+    "removed_sidecars": [
+      "testdata/lint_cases/decorated_async_promise_executor.expected.json",
+      "testdata/lint_cases/decorated_class_expression.expected.json"
+    ],
+    "expected_different": [
+      "testdata/lint_cases/wave13_top_level_await_new.ts"
+    ]
+  }
+}

@@ -198,6 +198,7 @@ export function isExpressionKind(kind: string): boolean {
 export function propertyNameStart(kind: string): boolean {
     return (
         kind === 'Identifier' ||
+        kind === 'PrivateIdentifier' ||
         kind.endsWith('Keyword') ||
         ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind)
     );
@@ -224,4 +225,52 @@ export function expressionTokenStart(kind: string, disallowIn: boolean): boolean
 
 export function parameterTokenStart(kind: string): boolean {
     return isModifierKind(kind) || parameterKinds.includes(kind);
+}
+
+export function leftHandSideKind(kind: string): boolean {
+    switch(kind) {
+        case 'PropertyAccessExpression':
+        case 'ElementAccessExpression':
+        case 'NewExpression':
+        case 'CallExpression':
+        case 'JsxElement':
+        case 'JsxSelfClosingElement':
+        case 'JsxFragment':
+        case 'TaggedTemplateExpression':
+        case 'ArrayLiteralExpression':
+        case 'ParenthesizedExpression':
+        case 'ObjectLiteralExpression':
+        case 'ClassExpression':
+        case 'FunctionExpression':
+        case 'Identifier':
+        case 'PrivateIdentifier':
+        case 'RegularExpressionLiteral':
+        case 'NumericLiteral':
+        case 'BigIntLiteral':
+        case 'StringLiteral':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'TemplateExpression':
+        case 'FalseKeyword':
+        case 'NullKeyword':
+        case 'ThisKeyword':
+        case 'TrueKeyword':
+        case 'SuperKeyword':
+        case 'NonNullExpression':
+        case 'ExpressionWithTypeArguments':
+        case 'MetaProperty':
+        case 'ImportKeyword':
+        case 'MissingDeclaration':
+            return true;
+        default:
+            return false;
+    }
+}
+
+export function heritageTokenStart(kind: string): boolean {
+    return kind !== 'ImplementsKeyword' && (bindingStart(kind) || [
+        'ThisKeyword', 'SuperKeyword', 'NullKeyword', 'TrueKeyword', 'FalseKeyword',
+        'NumericLiteral', 'BigIntLiteral', 'StringLiteral', 'NoSubstitutionTemplateLiteral',
+        'TemplateHead', 'OpenParenToken', 'OpenBracketToken', 'FunctionKeyword',
+        'ClassKeyword', 'NewKeyword', 'SlashToken', 'SlashEqualsToken',
+    ].includes(kind));
 }
