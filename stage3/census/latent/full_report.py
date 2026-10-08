@@ -131,7 +131,7 @@ def audit_same_checker(baseline, full):
 
 def write_csv(path, fields, rows):
     with path.open('w',newline='') as output:
-        writer=csv.DictWriter(output,fieldnames=fields);writer.writeheader()
+        writer=csv.DictWriter(output,fieldnames=fields,lineterminator='\n');writer.writeheader()
         writer.writerows({key:row.get(key,'') for key in fields} for row in rows)
 
 
