@@ -1,0 +1,22 @@
+import { panic } from 'adamic';
+let getterCalls = 0;
+let setterCalls = 0;
+class Holder {
+ value = 1;
+ get item(): number | undefined { getterCalls += 1; return this.value; }
+ set item(value: number | undefined) { setterCalls += 1; this.value = value ?? 0; }
+}
+let holder = new Holder();
+let receiverCalls = 0;
+let indexCalls = 0;
+let rightCalls = 0;
+function receiver(): {item:number | undefined} { receiverCalls += 1; return holder; }
+function index(): number { indexCalls += 1; return 0; }
+function right(): number { rightCalls += 1; holder.item = 32; return 2; }
+function update(): void {
+ const held = receiver();
+ const old = held.item ?? panic('missing');
+ held.item = old | right();
+}
+update();
+console.log(`${holder.item}:${receiverCalls}:${indexCalls}:${rightCalls}:${getterCalls}:${setterCalls}`);

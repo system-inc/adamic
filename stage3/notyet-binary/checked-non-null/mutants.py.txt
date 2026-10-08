@@ -1,0 +1,19 @@
+from pathlib import Path
+import os,subprocess
+p=Path('internal/lower/assignment_non_null.go');original=p.read_text()
+mutants=[
+ ('double-receiver','body = append(body, ir.Declare{Local: local, Value: value})','if name == "update_array" || name == "update_object" { body = append(body, ir.Evaluate{Value:value}) }\n body = append(body, ir.Declare{Local: local, Value: value})','TestNonNullAssignmentCompatibility'),
+ ('double-index','body = append(body, ir.Declare{Local: local, Value: value})','if name == "update_index" { body = append(body, ir.Evaluate{Value:value}) }\n body = append(body, ir.Declare{Local: local, Value: value})','TestNonNullAssignmentCompatibility'),
+ ('double-current','old := hold("update_current", checked)','body = append(body,ir.Evaluate{Value:checked})\n old := hold("update_current", checked)','TestNonNullAssignmentCompatibility'),
+ ('right-before-current','if operator == ast.KindPlusToken {','late := body[len(body)-1]; body = body[:len(body)-1]; right = hold("early_right", right); body = append(body,late)\n if operator == ast.KindPlusToken {','TestNonNullAssignmentCompatibility|TestNonNullAssignmentChecksBeforeRight'),
+ ('skip-presence-check','old := hold("update_current", checked)','if value,ok := checked.(ir.Coalesce); ok && value.Panic != nil { value.Panic=nil; if value.Of==ir.Number {value.Fallback=ir.NumberConstant{Value:0}} else {value.Fallback=ir.StringConstant{Index:l.constant("")}}; checked=value }\n old := hold("update_current", checked)','TestNonNullAssignmentChecksBeforeRight'),
+]
+for name,before,after,tests in mutants:
+ try:
+  assert original.count(before)==1,(name,original.count(before));p.write_text(original.replace(before,after))
+  log=Path('/tmp/assignment-nonnull-mutant-'+name+'.log')
+  with log.open('w') as f:r=subprocess.run(['go','test','./internal/oracle','-run',tests,'-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  text=log.read_text();expected='want checked target to stop before right' if name=='skip-presence-check' else 'stdout differs'
+  assert r.returncode and expected in text and '[build failed]' not in text and 'Lower:' not in text and 'clang failed' not in text,(name,text)
+  print(name,'caught by',expected,flush=True)
+ finally:p.write_text(original)

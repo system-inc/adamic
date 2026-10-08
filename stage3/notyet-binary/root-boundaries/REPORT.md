@@ -8,7 +8,7 @@ Replay builder.ts:2169:17 still reproduces this stop. The selected unit previous
 
 ## Preserved design refusals
 
-Nine NonNullExpression assignment targets, one DeleteExpression statement and one YieldExpression statement are explicitly refused before lowering in `internal/lower/refusals.go`: non-null assertions must be replaced with narrowing or `?? panic`, object shapes are fixed (use a Map for removal), and suspended generator frames require ownership/cancellation rules. The census is measured on a checker-rejected entry-root program and can attempt these refused bodies. Its replays reproduce their old NotYet labels, but that does not authorize changing the accepted language. These eleven sites remain for a language ruling; zero newly covered.
+Nine NonNullExpression assignment targets, one DeleteExpression statement and one YieldExpression statement are explicitly refused before lowering in `internal/lower/refusals.go`: non-null assertions must be replaced with narrowing or `?? panic`, object shapes are fixed (use a Map for removal), and suspended generator frames require ownership/cancellation rules. The census is measured on a checker-rejected entry-root program and can attempt these refused bodies. Its replays reproduce their old NotYet labels, but that does not authorize changing the accepted language. At that report commit these eleven sites remained for a language ruling. The subsequent explicitly requested c41c0e06 merge admits checked assertions in .ts while .a retains its refusal; see ../checked-non-null/REPORT.md for the seven represented target shapes and two Uint16 boundaries. Delete and yield remain refused.
 
 ## Boxed null
 

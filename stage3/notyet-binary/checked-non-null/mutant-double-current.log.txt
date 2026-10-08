@@ -1,0 +1,9 @@
+--- FAIL: TestNonNullAssignmentCompatibility (3.02s)
+    --- FAIL: TestNonNullAssignmentCompatibility/field_number_accessor (0.39s)
+        assignment_non_null_test.go:46: stdout differs
+FAIL
+gate cache: native hits=0 misses=23
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.034s
+FAIL

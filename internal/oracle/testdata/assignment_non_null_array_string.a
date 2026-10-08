@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+let holder: string[] = [['old'].join('')];
+let receiverCalls = 0;
+let indexCalls = 0;
+let rightCalls = 0;
+function receiver(): string[] { receiverCalls += 1; return holder; }
+function index(): number { indexCalls += 1; return 0; }
+function right(): string | undefined { rightCalls += 1; holder[0] = ['changed'].join(''); return rightCalls % 2 === 0 ? undefined : ['right'].join(''); }
+function update(): void {
+ const held = receiver();
+ const position = index();
+ const old = held[position] ?? panic('missing');
+ held[position] = old + right();
+}
+update(); update();
+console.log(`${holder[0]}:${receiverCalls}:${indexCalls}:${rightCalls}`);

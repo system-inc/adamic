@@ -1,0 +1,20 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 656658,
+      "body_end": 657015,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getTypeAliasForTypeLiteral",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": []
+}

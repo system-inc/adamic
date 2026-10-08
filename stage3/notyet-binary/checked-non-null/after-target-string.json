@@ -1,0 +1,20 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/debug.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1198:13",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 55870,
+      "body_end": 55926,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "writeLane",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:113:1",
+      "depth": 2
+    }
+  ],
+  "findings": []
+}

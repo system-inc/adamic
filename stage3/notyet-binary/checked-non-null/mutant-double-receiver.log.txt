@@ -1,0 +1,23 @@
+--- FAIL: TestNonNullAssignmentCompatibility (3.30s)
+    --- FAIL: TestNonNullAssignmentCompatibility/array_number (0.44s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/array_string (0.40s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/field_number (0.38s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/field_string (0.40s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/uint8array (0.42s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/int32array (0.40s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/float64array (0.43s)
+        assignment_non_null_test.go:46: stdout differs
+    --- FAIL: TestNonNullAssignmentCompatibility/field_number_accessor (0.42s)
+        assignment_non_null_test.go:46: stdout differs
+FAIL
+gate cache: native hits=0 misses=16
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.309s
+FAIL

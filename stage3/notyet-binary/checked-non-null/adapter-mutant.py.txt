@@ -1,0 +1,12 @@
+from pathlib import Path
+import subprocess,os
+p=Path('internal/native/class_accessors.go');original=p.read_text();needle='if input == ir.MaybeNumber {\n\t\t\t\traw = fmt.Sprintf';assert original.count(needle)==1
+try:
+ changed=original.replace(needle,'if input == ir.MaybeNumber {\n\t\t\t\traw = fmt.Sprintf')
+ before='raw = fmt.Sprintf("(type == %d ? (adamic_maybe_number){true, value.number} : %s)", ir.Number, raw)';assert changed.count(before)==1
+ changed=changed.replace(before,'raw = "(adamic_maybe_number){true, 0}"')
+ p.write_text(changed)
+ with open('/tmp/assignment-nonnull-mutant-adapter.log','w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestNonNullAssignmentCompatibility/field_number_accessor','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+ log=Path('/tmp/assignment-nonnull-mutant-adapter.log').read_text();assert r.returncode and 'stdout differs' in log and 'clang failed' not in log and '[build failed]' not in log,log
+ print('wrong optional-number setter unpack caught by Node stdout',flush=True)
+finally:p.write_text(original)

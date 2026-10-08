@@ -1,0 +1,9 @@
+from pathlib import Path
+import subprocess,concurrent.futures
+sites=[('debug-one','debug.ts:1145:21'),('debug-two','debug.ts:1148:21'),('field','transformers/es2015.ts:3972:21'),('string','debug.ts:1199:17'),('uint16-one','utilities.ts:10502:9'),('uint16-two','utilities.ts:10504:23')]
+def replay(site):
+ name,where=site
+ with open('/tmp/assignment-nonnull-after-'+name+'.json','w') as f,open('/tmp/assignment-nonnull-after-'+name+'.log','w') as e:
+  r=subprocess.run(['go','run','./stage3/census/latent/replay','-project','/tmp/notyet-binary-adapted/src/tsc/tsc.ts','-where','/tmp/notyet-binary-adapted/src/compiler/'+where,'-kind','NotYet','-reason','assigning to a NonNullExpression'],stdout=f,stderr=e)
+ print(name,r.returncode,flush=True)
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(replay,sites))

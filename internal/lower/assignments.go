@@ -16,6 +16,12 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if target.Kind == ast.KindNonNullExpression {
+		if !isCompound {
+			return nil, l.notYet(target, "a non-null assignment target without a read")
+		}
+		return l.assignmentNonNullUpdate(node, target, operator, binary.Right)
+	}
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
