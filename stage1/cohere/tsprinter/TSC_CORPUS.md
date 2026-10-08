@@ -148,3 +148,41 @@ tsc outcome pin; `/tmp/tsprinter-tsc-upstream-compatibility.log` records both re
 That package run was stopped after the failure, before restarting the corrected whole package.
 No compiler/runtime language gap blocked these four repairs. Unsupported printer families and the
 one Go full-file parse refusal remain outside this increment's accepted-fragment claim.
+
+
+## Main merge at 679af4df
+
+Merge commit `de3fbba16c7bf8d474cf43191eaf71eb765fa8ff` has parents `eb3750d1` and main `679af4df`.
+This is a merge, not a rebase. The two conflicts in `expressions_test.go` and
+`statements_test.go` retain `printerCorpusFiles`. Integration's `cfa787fc2` exclusion
+helper, its excluded-file census and both repository-wide walks are removed.
+Its missing/empty-directory guarantee remains through `trackedRootFiles`: every named
+root fails by name when missing or without tracked `.ts` files. The tsc corpus remains
+an intentional 300-file root. The per-root table above is unchanged: **883 files**.
+The printer and shared parser code are unchanged from `eb3750d1`.
+
+`git merge-tree --write-tree HEAD 42caf641` exited 0 with no conflicts. The generated
+merge tree `093a554e87a83f9ec4d1c0598054d87e4a10c2eb` retains the yield helper and its call.
+This checks Git merge compatibility; the recovery branch is not part of this merge commit.
+
+Both inputs were set: `ADAMIC_TYPESCRIPT_SOURCE` at `050880ce` and
+`ADAMIC_TS_PRETTIER` at Prettier 3.9.6. Reruns:
+
+- `go test -json -count=1 -parallel=4 -timeout 30m ./stage1/cohere/tsprinter`:
+  **45 pass, 0 fail, 0 skip**, including subtests; all 12 top-level tests and 29 existing
+  mutants passed. Package time **918.209s**, command wall time
+  **920.283s**. Log: `/tmp/tsprinter-tsc-merge-package.jsonl`.
+- `go test -json -count=1 -timeout 30m -run '^(TestYieldLookaheadAgrees|TestCompilerExpressionsAgree|TestGeneratedExpressionsAgree)$' ./stage1/typescript/parser`:
+  **3 pass, 0 fail, 0 skip**, **40.621s**. This holds 17 yield
+  cases, 77 compiler files and 1,676 generated expressions. Log:
+  `/tmp/tsprinter-tsc-merge-parser.jsonl`.
+- `go vet ./stage1/cohere/tsprinter ./stage1/typescript/parser`: exit 0;
+  `/tmp/tsprinter-tsc-merge-vet.log`. gofmt output is empty in
+  `/tmp/tsprinter-tsc-merge-gofmt.log`.
+
+No skipped test names. `nproc`: 5; CPU quota: 4. Load before:
+3.67 / 2.45 / 2.25; after: 2.75 / 3.38 / 2.75. Setup succeeded: Go 0.027s,
+Node 0.029s, submodules 0.095s, markdown 0.099s, clang 0.215s, build 35.235s,
+cache 35.341s, done 35.368s; `/tmp/tsprinter-tsc-refresh-setup.log`.
+[results/tsc-main-merge-validation.json](results/tsc-main-merge-validation.json)
+retains the counts, root census and merge evidence.
