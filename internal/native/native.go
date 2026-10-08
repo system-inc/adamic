@@ -27,15 +27,15 @@ func cString(value string) string {
 	var builder strings.Builder
 	builder.WriteByte('"')
 	for index := 0; index < len(value); index++ {
-		character := value[index]
+		octet := value[index]
 		switch {
-		case character == '"' || character == '\\' || character == '?':
+		case octet == '"' || octet == '\\' || octet == '?':
 			builder.WriteByte('\\')
-			builder.WriteByte(character)
-		case character >= 0x20 && character < 0x7f:
-			builder.WriteByte(character)
+			builder.WriteByte(octet)
+		case octet >= 0x20 && octet < 0x7f:
+			builder.WriteByte(octet)
 		default:
-			fmt.Fprintf(&builder, "\\%03o", character)
+			fmt.Fprintf(&builder, "\\%03o", octet)
 		}
 	}
 	builder.WriteByte('"')
