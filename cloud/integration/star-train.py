@@ -8,7 +8,7 @@ slice n onto slice n-1's candidate. A candidate's name carries its source and ba
 candidate above it and nothing is ever force-pushed; the superseded ones go on the watcher's skip list.
 
 The bottom candidate lands itself: when its own whole gate (full-main on its sha) is green and main's newest whole gate on the
-current main is green or explained (main-reds.tsv, rows starting OPEN don't count), this runs
+current main (or on the tree main moved past only by record commits) is green or explained (main-reds.tsv, rows starting OPEN don't count), this runs
 push-main.sh, whose checks are the verdict (deferred tests, records, base still main). Integration
 stays on reds and conflicts. One run per invocation; launchd runs it every minute.
 
@@ -80,6 +80,35 @@ def explained(reference):
     return False
 
 
+def recordsOnly(older, newer):
+    # True when newer's tree differs from older's only in record paths: the velocity row push-main
+    # commits on every landing, meter runs and stage 3's progress record, the same paths push-main
+    # lets a landing ride over (@system_adamic, October 7).
+    changed = git("diff", "--name-only", older, newer).split()
+    return all(path == "documentation/velocity/landings.csv" or path == "stage3/progress.json"
+               or path.startswith("stage3/meter/runs/") for path in changed)
+
+
+def mainConfirmation(sha):
+    # Main's whole gate: its own newest finished record, or, when main moved past a gated tree only by
+    # record commits, that tree's record. A slice that landed on its own full gate leaves main one
+    # velocity commit past it, and that record is main's confirmation too (--full-gate, @system_adamic,
+    # October 8), so the next slice doesn't wait a whole gate for a row in a table no test reads.
+    seen, frontier = set(), [sha]
+    while frontier:
+        current = frontier.pop(0)
+        if current in seen:
+            continue
+        seen.add(current)
+        for name in reversed(sorted(remoteHeads(f"gate-logs/{current[:12]}/*/full-main"))):
+            git("fetch", "-q", "origin", f"+refs/heads/{name}:refs/remotes/origin/{name}")
+            status = git("show", f"origin/{name}:status.txt", check=False).split("\n")[0]
+            if status.startswith(("green", "red")):
+                return name, status
+        frontier += [parent for parent in git("rev-list", "--parents", "-n", "1", current).split()[1:] if recordsOnly(parent, current)]
+    return newestLog(sha, "full-main")
+
+
 def appendOnce(path, line):
     existing = open(path).read().split("\n") if os.path.exists(path) else []
     if line not in existing:
@@ -105,6 +134,16 @@ for number, (slug, source, owner) in enumerate(slices(), start=1):
     if subprocess.run(["git", "merge-base", "--is-ancestor", sourceSha, base]).returncode == 0:
         continue  # already landed, or carried by the slice below
     name = f"cloud/land-train-{number}-{slug}-{sourceSha[:8]}-{base[:8]}"
+    if name not in trainHeads:
+        # When a slice lands, main moves to its velocity commit, a row in a table no test reads. The
+        # candidate above, built on the landed slice, keeps its gates: push-main lands it over a main
+        # that moved only by records, so it isn't rebuilt and gated whole again.
+        for other, otherSha in trainHeads.items():
+            if other.startswith(f"cloud/land-train-{number}-{slug}-{sourceSha[:8]}-"):
+                otherBase = git("rev-parse", f"{otherSha}^1")
+                if subprocess.run(["git", "merge-base", "--is-ancestor", otherBase, base]).returncode == 0 and recordsOnly(otherBase, base):
+                    name = other
+                    break
     if name in trainHeads:
         candidate = trainHeads[name]
     else:
@@ -158,7 +197,7 @@ reference, status = newestLog(candidate, "full-main")
 if not status.startswith("green"):
     sys.exit(0)
 
-mainLog, mainStatus = newestLog(main, "full-main")
+mainLog, mainStatus = mainConfirmation(main)
 if not mainLog or mainStatus.startswith("running") or not (mainStatus.startswith("green") or explained(mainLog)):
     log(f"waiting: {name} is green, main {main[:8]}'s whole gate is {mainStatus.split(':')[0] or 'not started'}")
     sys.exit(0)
@@ -173,7 +212,7 @@ with open(os.path.join(state, f"push-{candidate[:12]}.log"), "w") as handle:
 if pushed.returncode == 0:
     landed = [line for line in pushed.stdout.splitlines() if line.startswith("Pushed main")]
     log(f"landed {name}")
-    tell(f"landed-{candidate}", "system_adamic", f"Train landed slice {number} ({slug}) by itself: {landed[0][:400] if landed else candidate[:12]}. Main's whole gate on the new main runs before the next slice lands.")
+    tell(f"landed-{candidate}", "system_adamic", f"Train landed slice {number} ({slug}) by itself: {landed[0][:400] if landed else candidate[:12]}. Its whole gate is main's confirmation, so the next slice lands on its own record.")
     tell(f"landed-{candidate}", owner, f"Your slice {number} ({slug}) landed: {landed[0][:300] if landed else candidate[:12]}.")
 else:
     refusal = (pushed.stderr.strip() or pushed.stdout.strip()).splitlines()[-1:]
