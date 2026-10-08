@@ -19,7 +19,8 @@ func main() {
 	var report *load.ProjectOptionReport
 	var err error
 	if os.Args[1] == "--production" {
-		_, err = load.Load(os.Args[2:])
+		var loaded *load.Program
+		loaded, err = load.Load(os.Args[2:])
 		var rejected *load.CheckError
 		if errors.As(err, &rejected) {
 			siteMessages := make(map[string]bool)
@@ -27,6 +28,15 @@ func main() {
 				siteMessages[site.Message] = true
 			}
 			report = &load.ProjectOptionReport{ProjectErrors: []string{}, Sites: rejected.OptionSites}
+			remainingMessages := make(map[string]bool)
+			for _, message := range rejected.Diagnostics {
+				remainingMessages[message] = true
+			}
+			for _, site := range rejected.OptionSites {
+				if remainingMessages[site.Message] {
+					report.RemainingSites = append(report.RemainingSites, site)
+				}
+			}
 			for _, message := range rejected.Diagnostics {
 				if !siteMessages[message] {
 					report.ProjectErrors = append(report.ProjectErrors, message)
@@ -34,7 +44,7 @@ func main() {
 			}
 			err = nil
 		} else if err == nil {
-			report = &load.ProjectOptionReport{ProjectErrors: []string{}, Sites: []load.OptionSite{}}
+			report = &load.ProjectOptionReport{ProjectErrors: []string{}, Sites: loaded.OptionSites()}
 		}
 	} else if len(os.Args) == 2 {
 		report, err = load.AuditProjectOptions(context.Background(), os.Args[1])

@@ -36,8 +36,10 @@ type Program struct {
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
-	compiler *compiler.Program
-	fs       *sourceFS
+	compiler       *compiler.Program
+	projectOptions bool
+	optionSites    []OptionSite
+	fs             *sourceFS
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
@@ -163,7 +165,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		fs.nodeTypes = true
 		checkRoots = append(checkRoots, currentDirectory.ResolveFile(index))
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
 		if program == nil {
@@ -171,7 +173,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 	}
 
-	loaded := &Program{compiler: program, fs: fs}
+	loaded := &Program{compiler: program, fs: fs, projectOptions: project != ""}
 	var sites []OptionSite
 	if project == "" {
 		for _, file := range program.GetSourceFiles() {
@@ -201,9 +203,12 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 				return nil, fmt.Errorf("load: separate checker ownership is not implemented for %s (project %s)", loaded.FileName(file), owner)
 			}
 		}
-		report, err := AuditProjectOptions(context.Background(), project)
-		if err != nil {
-			return nil, err
+		report := &ProjectOptionReport{}
+		if !alreadyStricter(options) {
+			report, err = AuditProjectOptions(context.Background(), project)
+			if err != nil {
+				return nil, err
+			}
 		}
 		loadedFiles := make(map[string]bool)
 		for _, file := range program.GetSourceFiles() {
@@ -215,8 +220,16 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 	}
+	loaded.optionSites = sites
 	diagnostics := loaded.diagnostics(context.Background())
 	for _, site := range sites {
+		// Every successfully lowered project indexed read requiring presence is
+		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
+		// before emission. For a joint optional/index site the recorded ancestor
+		// also forces the read guard through its permissive contextual type.
+		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes") {
+			continue
+		}
 		diagnostics = append(diagnostics, site.Message)
 	}
 	if len(diagnostics) > 0 {
@@ -359,3 +372,17 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, 
 
 // CompilerProgram exposes the checked program to public checker and lint adapters.
 func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
+
+// UsesProjectOptions reports whether source types come from a project tsconfig.
+// Mixed ownership is refused, so this fact holds for every own source file.
+func (p *Program) UsesProjectOptions() bool { return p.projectOptions }
+
+// RequiresIndexedPresenceChecks reports a project whose indexed-read types omit
+// the absence introduced by Adamic's stricter option.
+func (p *Program) RequiresIndexedPresenceChecks() bool {
+	return p.projectOptions && p.compiler.Options().NoUncheckedIndexedAccess != core.TSTrue
+}
+
+// OptionSites returns the option audit sites; an accepted load still needs
+// lowering to emit their checks or explicitly refuse their representation.
+func (p *Program) OptionSites() []OptionSite { return append([]OptionSite(nil), p.optionSites...) }
