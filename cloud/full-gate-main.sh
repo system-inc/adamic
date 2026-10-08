@@ -84,8 +84,19 @@ publish() {
   echo "${commit}"
 }
 
+# A request's run stops the moment its candidate leaves the requests file (integration's train drops superseded
+# slices, @system_adamic, Oct 8 23:13Z): a superseded candidate's verdict, red triage included, is spent, and its box
+# goes to the bottom unfinished line.
+requestDropped() {
+  [ -f "${requests}" ] && ! grep -qx "$1" "${requests}"
+}
+stopRemote() {
+  local sha=$1
+  [[ ${sha} =~ ^[0-9a-f]{40}$ ]] || return 1
+  ssh "${box}" "pkill -TERM -f 'run.py .*--sha ${sha}'" || true
+}
 run() {
-  local sha=$1 tools stamp out status previous="" parent=""
+  local sha=$1 origin=${2:-main} tools stamp out status previous="" parent="" stopping=""
   tools=$(git -C "${here}" rev-parse HEAD)
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
   out=full-gate/out/${sha:0:12}-${stamp}
@@ -245,6 +256,11 @@ BOX
   while true; do
     sleep 30
     beats=$((beats + 1)); [ $((beats % 20)) -eq 0 ] && (heartbeat running "${sha}" > /dev/null 2>&1 &)
+    if [ "${origin}" = request ] && [ -z "${stopping}" ] && requestDropped "${sha}"; then
+      echo "$(date -u +%H:%M:%S) stopping ${sha}: it left the requests file (superseded); ${box} goes to the next request"
+      stopRemote "${sha}"
+      stopping=yes
+    fi
     status=$(ssh "${box}" "head -1 ~/${out}/status.txt" 2>/dev/null || true)
     if [ -n "${status}" ] && [ "${status}" != "${previous}" ]; then
       parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
@@ -256,7 +272,11 @@ BOX
         else
           range="no green full gate recorded yet, so no range to bisect"
         fi
-        (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
+        if [ "${origin}" = request ]; then
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
+        else
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
+        fi
       fi
       previous=${status}
     fi
@@ -381,7 +401,7 @@ while true; do
     fi
   elif request=$(nextRequest); then
     echo "$(date -u +%H:%M:%S) the star's request ${request} takes ${box} between mains"
-    run "${request}" || echo "$(date -u +%H:%M:%S) run of ${request} failed (exit $?); trying again next minute"
+    run "${request}" request || echo "$(date -u +%H:%M:%S) run of ${request} failed (exit $?); trying again next minute"
     dropRequest "${request}"
     release "${request}"
   fi

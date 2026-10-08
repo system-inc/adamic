@@ -123,6 +123,20 @@ class FullGateLoopTests(unittest.TestCase):
         subprocess.run(['bash', '-c', command % (self.work / 'cloud' / 'full-gate-main.sh', 'lend; lend')], env=environment, check=True)
         self.assertEqual((self.state / 'slots').read_text(), 'workshop B\nthreadripper B\nthreadripper S\nthreadripper S\n')
 
+    def test_a_request_that_left_the_file_is_dropped_and_stopped_by_its_exact_sha(self):
+        (self.state / 'requests').write_text(self.code + '\n')
+        self.assertEqual(self.call('requestDropped %s' % self.code)[0], 1)
+        self.assertEqual(self.call('requestDropped %s' % self.changed)[0], 0)
+        bin = Path(self.tmp.name) / 'bin'
+        bin.mkdir()
+        (bin / 'ssh').write_text('#!/bin/bash\nprintf "%%s\\n" "$*" >> %s\n' % (Path(self.tmp.name) / 'ssh-calls'))
+        (bin / 'ssh').chmod(0o755)
+        environment = dict(os.environ, PATH=str(bin) + ':' + os.environ['PATH'], ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state))
+        for sha, code in (('', 1), ('abc', 1), (self.changed, 0)):
+            result = subprocess.run(['bash', '-c', 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=threadripper; stopRemote "%s"' % (self.work / 'cloud' / 'full-gate-main.sh', sha)], env=environment)
+            self.assertEqual(result.returncode, code, sha)
+        self.assertEqual((Path(self.tmp.name) / 'ssh-calls').read_text(), "threadripper pkill -TERM -f 'run.py .*--sha %s'\n" % self.changed)
+
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
         self.assertEqual(self.call('recordOnly %s %s' % (self.records, self.changed))[0], 1)
