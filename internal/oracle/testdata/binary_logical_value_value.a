@@ -1,0 +1,21 @@
+interface Item { readonly label: string; }
+let calls = 0;
+function right(): Item { calls += 1; return { label: `right${calls}` }; }
+function choose(left: Item | undefined): void {
+    const and = left && right();
+    console.log(`and:${and?.label}:${calls}`);
+    const or = left || right();
+    console.log(`or:${or.label}:${calls}:${or === left}`);
+}
+choose(undefined);
+choose({ label: ['left', 'built'].join('/') });
+function cross(left: (() => number) | undefined): Item | undefined { return left && right(); }
+console.log(`cross:${cross(undefined)?.label}:${cross(() => 1)?.label}`);
+function make(label: string): Item { return { label }; }
+function owned(): Item { return make(['owned', 'left'].join('/')) || right(); }
+console.log(owned().label);
+function throws(): Item { throw new Error('right failed'); }
+try {
+    const item = make(['held', 'throw'].join('/')) && throws();
+    console.log(item.label);
+} catch (error) { if (error instanceof Error) { console.log(error.message); } }

@@ -769,7 +769,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Panic != nil {
 			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
 		}
-		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
+		operator := "??"
+		if expression.Logical == ir.And {
+			operator = "&&"
+		} else if expression.Logical == ir.Or {
+			operator = "||"
+		}
+		return "(" + e.value(expression.Value) + " " + operator + " " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
 	case ir.ArrayJoin:

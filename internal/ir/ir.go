@@ -464,6 +464,10 @@ type (
 		Fallback Expression
 		Panic    Expression
 		Of       Type
+
+		// Logical selects by ToBoolean instead of presence: Or keeps a truthy Value,
+		// And keeps a falsy Value. Both preserve that operand, including undefined.
+		Logical Operator
 	}
 
 	// StringLength is string.length, in UTF-16 code units.

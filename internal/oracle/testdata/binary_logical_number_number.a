@@ -1,0 +1,11 @@
+let calls = 0;
+function right(): number { calls += 1; return 17; }
+function choose(left: number): void {
+    const and = left && right();
+    console.log(`and:${and}:${1 / and}:${calls}`);
+    const or = left || right();
+    console.log(`or:${or}:${calls}`);
+}
+for (const value of [0, -0, NaN, Infinity, -Infinity, -3, 2]) { choose(value); }
+function maybe(left: number | undefined): number | undefined { return left && right(); }
+console.log(`maybe:${maybe(undefined)}:${maybe(0)}:${maybe(NaN)}:${maybe(2)}`);

@@ -1,0 +1,9 @@
+let calls = 0;
+function right(flag: boolean): boolean { calls += 1; return flag; }
+function choose(left: number, flag: boolean): void {
+    const and = left && right(flag);
+    console.log(`and:${and}:${typeof and}:${calls}`);
+    const or = left || right(flag);
+    console.log(`or:${or}:${typeof or}:${calls}`);
+}
+for (const value of [0, -0, NaN, Infinity, -3, 2]) { choose(value, false); choose(value, true); }

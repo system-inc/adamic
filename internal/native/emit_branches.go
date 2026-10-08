@@ -143,7 +143,15 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}
 	// What's present is made what ?? makes: text ?? count boxes a present number into the union.
-	unwrapped, fresh := converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
+	from := coalesce.Value.Type().Present()
+	if coalesce.Logical != 0 {
+		from, unwrapped = coalesce.Value.Type(), value
+		present = censusTruthiness(from, value)
+		if coalesce.Logical == ir.And {
+			present = "!(" + present + ")"
+		}
+	}
+	unwrapped, fresh := converted(from, coalesce.Of, unwrapped)
 	if coalesce.Panic != nil {
 		text, message, _ := e.aside(coalesce.Panic)
 		e.line("if (!(%s)) {", present)
@@ -159,9 +167,10 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	result := e.temporary()
 	e.line("%s %s;", cType(coalesce.Of), result)
 	e.line("if (%s) {", present)
-	if coalesce.Of.IsReference() && !fresh && e.taken(unwrapped) {
+	if coalesce.Logical == 0 && coalesce.Of.IsReference() && !fresh && e.taken(unwrapped) {
 		// The value the statement owns is passed on as what ?? makes; when it isn't there it's
-		// undefined, and there was nothing to let go of.
+		// undefined, and there was nothing to let go of. Logical selection keeps the
+		// original temporary: an unselected empty string or boxed zero still owns memory.
 		e.line("\t%s = %s;", result, unwrapped)
 	} else if coalesce.Of.IsReference() && !fresh {
 		e.line("\t%s = %s;", result, retained(unwrapped))

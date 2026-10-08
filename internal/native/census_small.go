@@ -7,8 +7,13 @@ import (
 
 func (e *emitter) censusToBoolean(argument ir.Expression) string {
 	value := e.snapshot(argument.Type(), e.value(argument))
+	return e.snapshot(ir.Boolean, censusTruthiness(argument.Type(), value))
+}
+
+// censusTruthiness tests an already evaluated value without conversion callbacks.
+func censusTruthiness(of ir.Type, value string) string {
 	result := ""
-	switch argument.Type() {
+	switch of {
 	case ir.Boolean:
 		result = value
 	case ir.Number:
@@ -24,5 +29,5 @@ func (e *emitter) censusToBoolean(argument ir.Expression) string {
 	default:
 		result = "(" + value + " != NULL)"
 	}
-	return e.snapshot(ir.Boolean, result)
+	return result
 }

@@ -1,0 +1,24 @@
+let calls = 0;
+function right(): string { calls += 1; return ['right', `${calls}`].join('/'); }
+function choose(left: string | number | boolean | undefined): void {
+    const and = left && right();
+    console.log(`and:${and}:${typeof and}:${calls}`);
+    const or = left || right();
+    console.log(`or:${or}:${typeof or}:${calls}`);
+}
+choose(undefined);
+choose(0);
+choose(-0);
+choose(NaN);
+choose(false);
+choose(true);
+choose([''].join(''));
+choose(['left', 'built'].join('/'));
+choose(3);
+function chooseText(left: string): string { return left || right(); }
+console.log(chooseText([''].join('')));
+console.log(chooseText(['text', 'built'].join('/')));
+function freshZero(): number | string { return 0; }
+function freshEmpty(): string { return [''].join(''); }
+console.log(`${freshZero() || right()}`);
+console.log(freshEmpty() || right());

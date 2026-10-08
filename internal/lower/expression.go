@@ -808,6 +808,10 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return value, nil
 	}
 
+	if value, handled, err := l.mixedLogical(node, operator, left, right); handled {
+		return value, err
+	}
+
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 

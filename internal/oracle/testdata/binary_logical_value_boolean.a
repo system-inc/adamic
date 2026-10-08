@@ -1,0 +1,13 @@
+interface Item { readonly label: string; }
+let calls = 0;
+function right(value: boolean): boolean { calls += 1; return value; }
+function choose(left: Item | undefined, flag: boolean): void {
+    const and = left && right(flag);
+    console.log(`and:${and}:${calls}`);
+    const or = left || right(flag);
+    console.log(`or:${typeof or}:${or === left}:${or === flag}:${calls}`);
+}
+choose(undefined, false);
+choose(undefined, true);
+choose({ label: ['item', 'built'].join('/') }, false);
+choose({ label: ['item', 'built'].join('/') }, true);

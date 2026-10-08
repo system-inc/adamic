@@ -1,0 +1,14 @@
+interface Item { readonly label: string; }
+let calls = 0;
+function right(): Item { calls += 1; return { label: `item${calls}` }; }
+function choose(flag: boolean): void {
+    const and = flag && right();
+    console.log(`and:${typeof and}:${and === false}:${calls}`);
+    const or = flag || right();
+    console.log(`or:${typeof or}:${or === true}:${calls}`);
+}
+choose(false);
+choose(true);
+function owned(flag: boolean): Item | false { return flag && { label: ['owned', 'right'].join('/') }; }
+const item = owned(true);
+if (item !== false) { console.log(item.label); }
