@@ -1,0 +1,357 @@
+diff --cc internal/flow/build.go
+index cbf4764a9,032615dfe..000000000
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@@ -85,6 -80,9 +85,12 @@@ type jump struct 
+  // tracked reports whether a local is a value the graph follows: one only its own function writes.
+  func (b *builder) tracked(local int) bool {
+  	declared := b.program.Locals[local]
+++<<<<<<< HEAD
+++=======
++ 	// A store within an operand has neither a single unconditional definition
++ 	// nor a statement boundary. Treat its local as externally mutable until
++ 	// the graph splits expression effects into their own instructions.
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
+  }
+  
+diff --cc internal/fresh/fresh.go
+index f89bca775,1e5f2a95c..000000000
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@@ -1938,33 -1908,21 +1967,53 @@@ func mutable(valueType ir.Type) bool 
+  	return valueType.IsReference() && valueType != ir.String
+  }
+  
+++<<<<<<< HEAD
+ +// expressionEffect interprets only effects that lowering admits inside expressions.
+ +func (a *analysis) expressionEffect(statement ir.Statement) {
+ +	switch statement := statement.(type) {
+ +	case ir.Assign:
+ +		a.define(statement.Local, a.value(statement.Value))
+ +	case ir.Declare:
+ +		a.define(statement.Local, a.value(statement.Value))
+ +	case ir.Evaluate:
+ +		a.value(statement.Value)
+ +	case ir.WriteLine:
+ +		a.value(statement.Value)
+ +	case ir.Panic:
+ +		a.value(statement.Message)
+ +	case ir.SetProperty:
+ +		holder := a.value(statement.Object)
+ +		held := a.value(statement.Value)
+ +		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+ +	case ir.SetIndex:
+ +		holder := a.value(statement.Array)
+ +		a.value(statement.Index)
+ +		held := a.value(statement.Value)
+ +		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+ +	case ir.Block:
+ +		for _, inner := range statement.Body {
+ +			a.expressionEffect(inner)
+ +		}
+ +	default:
+ +		a.unknown(statement)
+ +	}
+++=======
++ func (a *analysis) assignmentOperands(expression ir.AssignmentValue, fitted ir.Expression) (value, value) {
++ 	raw := expression.Value
++ 	if raw == nil {
++ 		raw = fitted
++ 	}
++ 	held := a.value(raw)
++ 	stored := held
++ 	if fitted.Type() == ir.Weak && raw.Type() != ir.Weak {
++ 		stored = value{}
++ 		for object := range held.strong {
++ 			stored.addWeak(object)
++ 		}
++ 		for object := range held.weak {
++ 			stored.addWeak(object)
++ 		}
++ 	}
++ 	return held, stored
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  }
+diff --cc internal/ir/ir.go
+index 5e2cce436,ff443b2f5..000000000
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@@ -10,16 -10,8 +10,21 @@@ import "fmt
+  
+  // Program is one compiled Adamic program.
+  type Program struct {
+++<<<<<<< HEAD
+ +	// UninitializedFields records the field names whose readiness can be observed.
+ +	UninitializedFields map[string]bool
+ +	// PredicateChecks counts overload-result directions, per emitted call site.
+ +	// Unobservable is included in Proven: no narrowed read consumes that region.
+ +	PredicateChecks PredicateCheckCounts
+ +
+ +	// CheckedFields conservatively checks these field names at every object read.
+ +	CheckedFields map[string]bool
+ +	NonNullChecks NonNullCheckCounts
+ +
+++=======
++ 	// AssignmentValues requires ownership plans that account for stores within operands.
++ 	AssignmentValues bool
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  	// Source is the entry file's base name, as written, for the header of what the backends emit.
+  	Source string
+  
+@@@ -257,20 -183,10 +262,23 @@@ type Local struct 
+  
+  	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
+  	Captured bool
+ +	// Preallocated cells exist before their source initializer executes.
+ +	Preallocated bool
+ +	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+ +	EnvironmentCell bool
+ +	// NestedFunction is the named declaration this binding holds, plus one.
+ +	NestedFunction int
+ +
+ +	// Ready is the readiness local index plus one for a switch lexical binding.
+ +	// Its storage exists at switch entry, but its declaration initializes it later.
+ +	Ready int
+ +
+ +	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+ +	ExpressionAssigned bool
+  
++ 	// ExpressionAssigned can change between two operands of the same statement.
++ 	ExpressionAssigned bool
++ 
+  	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
+  	// for the whole call, so the function neither retains it on entry nor releases it on the way out
+  	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
+diff --cc internal/lower/assignment_value.go
+index 510fba7c7,3d250db16..000000000
+--- a/internal/lower/assignment_value.go
++++ b/internal/lower/assignment_value.go
+@@@ -5,34 -5,95 +5,128 @@@ import 
+  	"github.com/system-inc/adamic/internal/ir"
+  )
+  
+++<<<<<<< HEAD
+ +// assignmentValue keeps the assignment visible to write analysis and reads its
+ +// stored value immediately. A local has no setter that could replace that value.
+ +func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
+ +	target := ast.SkipParentheses(node.AsBinaryExpression().Left)
+ +	if !ast.IsIdentifier(target) {
+ +		return nil, l.notYet(target, "an assignment value to a member")
+ +	}
+ +	body, err := l.assignment(node)
+ +	if err != nil {
+ +		return nil, err
+ +	}
+ +	local, known := l.local(target)
+ +	if !known {
+ +		return nil, l.notYet(target, "an assignment value to this binding")
+ +	}
+ +	l.result.Locals[local].ExpressionAssigned = true
+ +	result, err := l.typeOf(node)
+ +	if err != nil {
+ +		return nil, err
+ +	}
+ +	var value ir.Expression = ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
+ +	if value.Type() == ir.Union && result != ir.Union {
+ +		value = ir.Narrow{Value: value, To: result}
+ +	} else {
+ +		value = fit(value, result)
+ +	}
+ +	if value.Type() != result {
+ +		return nil, l.notYet(node, "an assignment result with different storage")
+ +	}
+ +	return ir.Effects{Body: body, Result: value}, nil
+++=======
++ func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
++ 	l.result.AssignmentValues = true
++ 	stores, err := l.assignment(node)
++ 	if err != nil {
++ 		return nil, err
++ 	}
++ 	if len(stores) != 1 {
++ 		return nil, l.notYet(node, "an assignment value without a single represented store")
++ 	}
++ 	switch store := stores[0].(type) {
++ 	case ir.Assign:
++ 		l.result.Locals[store.Local].ExpressionAssigned = true
++ 	case ir.SetProperty, ir.SetIndex:
++ 	default:
++ 		return nil, l.notYet(node, "an assignment value through an accessor or destructuring target")
++ 	}
++ 	assignment := ir.AssignmentValue{Store: stores[0]}
++ 	var stored ir.Expression
++ 	switch store := stores[0].(type) {
++ 	case ir.Assign:
++ 		stored = store.Value
++ 	case ir.SetProperty:
++ 		stored = store.Value
++ 	case ir.SetIndex:
++ 		stored = store.Value
++ 	}
++ 	of, err := l.typeOf(node)
++ 	if err != nil {
++ 		if assignmentStoresUndefined(stored) {
++ 			// This is the existing Undefined constant, whose IR Type is Object
++ 			// and whose native value is NULL, not an allocated object.
++ 			of = (ir.Undefined{}).Type()
++ 		} else {
++ 			return nil, err
++ 		}
++ 	}
++ 	for stored.Type() != of {
++ 		switch fitted := stored.(type) {
++ 		case ir.Box:
++ 			stored = fitted.Value
++ 		case ir.MaybeOf:
++ 			if fitted.Value == nil {
++ 				stored = ir.Undefined{Of: of}
++ 				goto projected
++ 			}
++ 			stored = fitted.Value
++ 		case ir.Undefined:
++ 			stored = ir.Undefined{Of: of}
++ 		case ir.Null:
++ 			stored = ir.Null{Of: of}
++ 		case ir.WeakOf:
++ 			stored = fitted.Value
++ 		default:
++ 			goto projected
++ 		}
++ 		if stored == nil {
++ 			break
++ 		}
++ 	}
++ projected:
++ 	if stored != nil {
++ 		assignment.Value = stored
++ 	}
++ 	value := ir.Expression(assignment)
++ 	if value.Type() == of {
++ 		return value, nil
++ 	}
++ 	if value.Type() == ir.Union {
++ 		return ir.Narrow{Value: value, To: of}, nil
++ 	}
++ 	value = fit(value, of)
++ 	if value.Type() != of {
++ 		return nil, l.notYet(node, "an assignment result requiring another representation")
++ 	}
++ 	return value, nil
++ }
++ 
++ // Admit only an existing constant-undefined store. A checker type alone does not
++ // justify manufacturing an object representation for an arbitrary expression.
++ func assignmentStoresUndefined(value ir.Expression) bool {
++ 	switch value := value.(type) {
++ 	case ir.Undefined:
++ 		return true
++ 	case ir.MaybeOf:
++ 		return value.Value == nil
++ 	case ir.Box:
++ 		return assignmentStoresUndefined(value.Value)
++ 	case ir.WeakOf:
++ 		return assignmentStoresUndefined(value.Value)
++ 	}
++ 	return false
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  }
+diff --cc internal/lower/expression.go
+index 1d41e7200,17df0e331..000000000
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@@ -609,18 -532,9 +609,24 @@@ func (l *lowering) enumNeverValue(node 
+  		return ir.TypeOf{Value: operand, Null: null}, nil
+  	case ast.KindBinaryExpression:
+  		binary := node.AsBinaryExpression()
+++<<<<<<< HEAD
+ +		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {
+ +			return l.assignmentValue(node)
+ +		}
+ +		if binary.OperatorToken.Kind == ast.KindCommaToken {
+ +			return l.comma(node)
+ +		}
+ +		if logicalAssignment(binary.OperatorToken.Kind) {
+ +			return l.logicalAssignment(node)
+ +		}
+ +		if binary.OperatorToken.Kind == ast.KindInKeyword {
+ +			return l.inProperty(node)
+ +		}
+++=======
++ 		if binary.OperatorToken.Kind == ast.KindEqualsToken {
++ 			return l.assignmentValue(node)
++ 		}
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+  			return l.coalesce(node)
+  		}
+diff --cc internal/oracle/counts.md
+index 59112703b,978671265..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -400,19 -391,49 +400,65 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/regexp_search.a | 25 | 25 | 22 | 31 | 9 | 0 |
+  | internal/oracle/testdata/regexp_unicode.a | 108 | 108 | 101 | 88 | 21 | 0 |
+  | internal/oracle/testdata/regexp_split_pair_pattern.a | 40 | 40 | 48 | 78 | 18 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/native-arguments-length-value.a | 3 | 3 | 2 | 7 | 3 | 0 |
+ +| internal/oracle/testdata/arguments_length_no_reader.a | 30 | 30 | 18 | 55 | 10 | 0 |
+ +| internal/oracle/testdata/arguments_length_unrelated_type.a | 4 | 4 | 5 | 13 | 4 | 0 |
+ +| internal/oracle/testdata/arguments_length.a | 38 | 38 | 3 | 42 | 5 | 0 |
+ +| internal/oracle/testdata/arguments_length_value.a | 33 | 33 | 30 | 70 | 8 | 0 |
+ +| internal/oracle/testdata/arguments_length_value_count.a | 11 | 11 | 7 | 23 | 7 | 0 |
+ +| internal/oracle/testdata/arguments_length_spread.a | 69 | 69 | 26 | 94 | 15 | 0 |
+ +| internal/oracle/testdata/arguments_length_extended.a | 64 | 64 | 20 | 83 | 15 | 0 |
+ +| internal/oracle/testdata/arguments_length_static_constructor.a | 10 | 10 | 5 | 16 | 9 | 0 |
+ +| internal/oracle/testdata/arguments_length_method.a | 49 | 47 | 11 | 59 | 9 | 2 |
+ +| internal/oracle/testdata/arguments_length_static.a | 10 | 10 | 1 | 13 | 4 | 0 |
+ +| internal/oracle/testdata/arguments_length_reduce_left.a | 17 | 17 | 20 | 42 | 5 | 0 |
+ +| internal/oracle/testdata/arguments_length_callbacks.a | 40 | 40 | 15 | 60 | 12 | 0 |
+++=======
++ | internal/oracle/testdata/assignment_value_undefined.a | 4 | 4 | 2 | 9 | 2 | 0 |
++ | internal/oracle/testdata/assignment_value_accessor.a | 14 | 14 | 13 | 24 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_weak.a | 18 | 18 | 30 | 49 | 12 | 0 |
++ | internal/oracle/testdata/assignment_value_typed_index_float64array.a | 13 | 13 | 3 | 17 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_typed_index_int32array.a | 13 | 13 | 3 | 17 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_typed_index_uint8array.a | 13 | 13 | 3 | 17 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_order.a | 35 | 35 | 24 | 52 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_local_number.a | 6 | 6 | 0 | 6 | 2 | 0 |
++ | internal/oracle/testdata/assignment_value_local_boolean.a | 3 | 3 | 0 | 3 | 1 | 0 |
++ | internal/oracle/testdata/assignment_value_local_maybe_number.a | 6 | 6 | 0 | 6 | 2 | 0 |
++ | internal/oracle/testdata/assignment_value_local_maybe_boolean.a | 3 | 3 | 0 | 3 | 1 | 0 |
++ | internal/oracle/testdata/assignment_value_local_string.a | 8 | 8 | 16 | 21 | 4 | 0 |
++ | internal/oracle/testdata/assignment_value_local_object.a | 8 | 8 | 16 | 19 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_local_array.a | 11 | 11 | 15 | 21 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_local_map.a | 11 | 11 | 18 | 24 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_local_closure.a | 10 | 10 | 13 | 20 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_local_union.a | 9 | 9 | 15 | 23 | 4 | 0 |
++ | internal/oracle/testdata/assignment_value_local_uint8.a | 14 | 14 | 7 | 24 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_local_int32.a | 14 | 14 | 7 | 24 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_local_float64.a | 14 | 14 | 7 | 24 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_field_number.a | 9 | 9 | 3 | 13 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_field_boolean.a | 6 | 6 | 3 | 10 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_field_maybe_number.a | 9 | 9 | 3 | 13 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_field_maybe_boolean.a | 6 | 6 | 3 | 10 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_field_string.a | 11 | 11 | 19 | 26 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_field_object.a | 11 | 11 | 19 | 24 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_field_array.a | 14 | 14 | 18 | 26 | 7 | 0 |
++ | internal/oracle/testdata/assignment_value_field_map.a | 14 | 14 | 21 | 29 | 7 | 0 |
++ | internal/oracle/testdata/assignment_value_field_closure.a | 13 | 13 | 16 | 25 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_field_uint8.a | 17 | 17 | 10 | 29 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_field_int32.a | 17 | 17 | 10 | 29 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_field_float64.a | 17 | 17 | 10 | 29 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_element_number.a | 9 | 9 | 3 | 13 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_element_boolean.a | 6 | 6 | 3 | 10 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_element_maybe_number.a | 9 | 9 | 3 | 13 | 3 | 0 |
++ | internal/oracle/testdata/assignment_value_element_string.a | 11 | 11 | 21 | 28 | 5 | 0 |
++ | internal/oracle/testdata/assignment_value_element_object.a | 11 | 11 | 21 | 26 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_element_array.a | 14 | 14 | 20 | 28 | 7 | 0 |
++ | internal/oracle/testdata/assignment_value_element_map.a | 14 | 14 | 23 | 31 | 7 | 0 |
++ | internal/oracle/testdata/assignment_value_element_closure.a | 13 | 13 | 18 | 27 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_element_uint8.a | 17 | 17 | 12 | 31 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_element_int32.a | 17 | 17 | 12 | 31 | 6 | 0 |
++ | internal/oracle/testdata/assignment_value_element_float64.a | 17 | 17 | 12 | 31 | 6 | 0 |
+++>>>>>>> c1b2c9f9e (Lower plain assignment values through represented stores)
+  | internal/oracle/testdata/binary_logical_value_value.a | 29 | 29 | 26 | 40 | 7 | 0 |
+  | internal/oracle/testdata/binary_logical_value_boolean.a | 22 | 22 | 12 | 28 | 5 | 0 |
+  | internal/oracle/testdata/binary_logical_boolean_value.a | 17 | 17 | 11 | 24 | 4 | 0 |

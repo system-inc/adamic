@@ -1,0 +1,137 @@
+diff --cc internal/lower/regexp.go
+index 64326817c,e0f890762..000000000
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@@ -188,7 -191,60 +191,64 @@@ func (l *lowering) regexBuiltin(node *a
+  	}
+  	if name == "replace" || name == "replaceAll" {
+  		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
+++<<<<<<< HEAD
+ +			return l.regexReplacement(node, value, arguments, name, args[1])
+++=======
++ 			signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(args[1]), checker.SignatureKindCall)
++ 			if len(signatures) != 1 || len(signatures[0].Parameters()) > 1 {
++ 				return nil, true, l.notYet(node, "regex replacement callback taking captures, offset or input")
++ 			}
++ 			if returned := l.checker.GetReturnTypeOfSignature(signatures[0]); l.includesUndefined(returned) || returned.Flags()&checker.TypeFlagsNull != 0 {
++ 				return nil, true, l.notYet(node, "regex replacement callback with an optional result")
++ 			}
++ 			if returns, known := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); !known || returns != ir.String {
++ 				return nil, true, l.notYet(node, "regex replacement callback with a non-string result")
++ 			}
++ 			if len(signatures[0].Parameters()) == 1 {
++ 				parameter := signatures[0].Parameters()[0]
++ 				if takes, known := l.representation(l.checker.GetTypeOfSymbol(parameter)); !known || takes != ir.String || !l.checker.IsTypeAssignableTo(l.checker.GetStringType(), l.checker.GetTypeOfSymbol(parameter)) {
++ 					return nil, true, l.notYet(node, "regex replacement callback with a non-string match parameter")
++ 				}
++ 			}
++ 			b := l.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
++ 			input, regex, callback := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
++ 			global := b.declare("global", ir.Property{Object: regex, Name: "global", Of: ir.Boolean})
++ 			if name == "replaceAll" {
++ 				// Reuse the existing intrinsic's non-global TypeError path.
++ 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(global)}, Then: []ir.Statement{ir.Evaluate{Value: ir.RegExpCall{Value: input, Method: "replaceAll", Arguments: []ir.Expression{regex, ir.StringConstant{Index: l.constant("")}}, Returns: ir.String}}}})
++ 			}
++ 			b.body = append(b.body, ir.If{Condition: b.read(global), Then: []ir.Statement{ir.SetProperty{Object: regex, Name: "lastIndex", Value: ir.NumberConstant{Value: 0}, Site: l.writeSite(args[0])}}})
++ 			matches := b.declare("matches", ir.ArrayLiteral{Element: ir.Array})
++ 			match := b.local("match", ir.Array)
++ 			whole := ir.ArrayIndex{Array: b.read(match), Index: ir.NumberConstant{Value: 0}, Element: ir.String}
++ 			last := ir.Property{Object: regex, Name: "lastIndex", Of: ir.Number}
++ 			point := ir.Coalesce{Value: ir.StringCall{Value: input, Method: "codePointAt", Arguments: []ir.Expression{last}}, Fallback: ir.NumberConstant{Value: 0}, Of: ir.Number}
++ 			unicode := ir.Binary{Operator: ir.Or, Left: ir.Property{Object: regex, Name: "unicode", Of: ir.Boolean}, Right: ir.Property{Object: regex, Name: "unicodeSets", Of: ir.Boolean}}
++ 			step := ir.Conditional{Condition: ir.Binary{Operator: ir.And, Left: unicode, Right: ir.Binary{Operator: ir.GreaterOrEqual, Left: point, Right: ir.NumberConstant{Value: 65536}}}, WhenTrue: ir.NumberConstant{Value: 2}, WhenNot: ir.NumberConstant{Value: 1}}
++ 			// RegExp @@replace collects every match before calling user code.
++ 			b.body = append(b.body, ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
++ 				ir.Declare{Local: match, Value: ir.RegExpCall{Value: regex, Method: "exec", Arguments: []ir.Expression{input}, Returns: ir.Array}},
++ 				ir.If{Condition: ir.IsNull{Value: b.read(match)}, Then: []ir.Statement{ir.Break{}}},
++ 				ir.Evaluate{Value: ir.ArrayPush{Array: b.read(matches), Value: b.read(match), Element: ir.Array, Site: l.writeSite(node)}},
++ 				ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(global)}, Then: []ir.Statement{ir.Break{}}},
++ 				ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: ir.StringLength{Value: whole}, Right: ir.NumberConstant{Value: 0}}, Then: []ir.Statement{ir.SetProperty{Object: regex, Name: "lastIndex", Value: ir.Binary{Operator: ir.Add, Left: last, Right: step}, Site: l.writeSite(args[0])}}},
++ 			}})
++ 			text := b.declare("text", ir.StringConstant{Index: l.constant("")})
++ 			previous := b.declare("previous", ir.NumberConstant{Value: 0})
++ 			item := b.local("replacement_match", ir.Array)
++ 			matched := ir.ArrayIndex{Array: b.read(item), Index: ir.NumberConstant{Value: 0}, Element: ir.String}
++ 			position := ir.RegExpProperty{Array: b.read(item), Name: "index", Of: ir.Number}
++ 			call := ir.CallClosure{Closure: callback, Returns: ir.String}
++ 			if len(signatures[0].Parameters()) == 1 {
++ 				call.Arguments = []ir.Expression{matched}
++ 			}
++ 			b.body = append(b.body, ir.ForOf{Iterable: b.read(matches), Local: item, Element: ir.Array, Body: []ir.Statement{
++ 				ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{b.read(text), ir.StringCall{Value: input, Method: "slice", Arguments: []ir.Expression{b.read(previous), position}}, call}}},
++ 				ir.Assign{Local: previous, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.StringLength{Value: matched}}},
++ 			}})
++ 			result := ir.Concat{Parts: []ir.Expression{b.read(text), ir.StringCall{Value: input, Method: "slice", Arguments: []ir.Expression{b.read(previous)}}}}
++ 			return b.finish("regex_replace_callback", result), true, nil
+++>>>>>>> 7865fefb4 (Lower regex replacement callbacks that take the full match)
+  		}
+  		if len(arguments) != 2 || arguments[1].Type() != ir.String {
+  			return nil, true, l.notYet(node, "regex replacement other than a string")
+diff --cc internal/oracle/counts.md
+index 3cae1636d,848da05c8..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -639,59 -566,7 +639,63 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/e4eec87_f2_union_narrow_call.a | 1 | 0 | 3 | 3 | 1 | 0 |
+  | internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a | 2 | 1 | 4 | 5 | 2 | 0 |
+  | internal/oracle/testdata/narrowed_union_valid.a | 9 | 9 | 13 | 23 | 3 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/nested_minimal.a | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/nested_captures.a | 22 | 22 | 8 | 22 | 7 | 0 |
+ +| internal/oracle/testdata/nested_hoisting.a | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/nested_mutual.a | 10 | 10 | 46 | 52 | 5 | 0 |
+ +| internal/oracle/testdata/nested_returned.a | 21 | 21 | 10 | 29 | 11 | 0 |
+ +| internal/oracle/testdata/nested_array.a | 17 | 17 | 17 | 27 | 9 | 0 |
+ +| internal/oracle/testdata/nested_three_levels.a | 8 | 8 | 7 | 13 | 7 | 0 |
+ +| internal/oracle/testdata/nested_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_tdz_write.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_weak.a | 4 | 4 | 5 | 10 | 4 | 0 |
+ +| internal/oracle/testdata/nested_destructured.a | 13 | 13 | 7 | 17 | 6 | 0 |
+ +| internal/oracle/testdata/nested_destructured_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_mixed.a | 7 | 7 | 9 | 12 | 5 | 0 |
+ +| internal/oracle/testdata/nested_pattern_parameter.a | 6 | 6 | 5 | 10 | 5 | 0 |
+ +| internal/oracle/testdata/nested_owned_parameter.a | 10 | 10 | 14 | 23 | 7 | 0 |
+ +| internal/oracle/testdata/nested_generic_capture.a | 14 | 14 | 22 | 29 | 5 | 0 |
+ +| internal/oracle/testdata/nested_assignment_return.a | 7 | 7 | 8 | 9 | 5 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_unused.a | 4 | 4 | 3 | 6 | 4 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_unreachable.a | 5 | 5 | 4 | 8 | 4 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_escaped.a | 4 | 4 | 6 | 10 | 4 | 0 |
+ +| internal/oracle/testdata/nested_callback_recursive.a | 29 | 29 | 31 | 41 | 14 | 0 |
+ +| internal/oracle/testdata/nested_callback_escaped.a | 16 | 16 | 13 | 19 | 8 | 0 |
+ +| internal/oracle/testdata/nested_callback_levels.a | 9 | 9 | 8 | 12 | 4 | 0 |
+ +| internal/oracle/testdata/nested_callback_late_capture.a | 9 | 9 | 8 | 12 | 5 | 0 |
+ +| internal/oracle/testdata/node_buffer_encodings.a | 164 | 164 | 109 | 245 | 4 | 0 |
+ +| internal/oracle/testdata/node_buffer_utf8.a | 197461 | 197461 | 28 | 197475 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_utf16.a | 327796 | 327796 | 27 | 327812 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_bom.a | 25 | 25 | 21 | 37 | 3 | 0 |
+ +| internal/oracle/testdata/node_buffer_writes.a | 30 | 30 | 22 | 56 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_crypto.a | 169 | 169 | 72 | 192 | 10 | 0 |
+ +| internal/oracle/testdata/node_buffer_random.a | 140591 | 140591 | 1027 | 141106 | 4 | 0 |
+ +| internal/oracle/testdata/node_buffer_finalized.a | 4 | 2 | 4 | 6 | 3 | 0 |
+ +| internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |
+ +| internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/omitted_scanner.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_scanner_required.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_scanner_explicit.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_number.a | 32 | 32 | 28 | 65 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_string.a | 32 | 32 | 38 | 75 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_boolean.a | 33 | 33 | 32 | 71 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_object.a | 33 | 33 | 38 | 76 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_defaults.a | 28 | 28 | 19 | 49 | 8 | 0 |
+ +| internal/oracle/testdata/omitted_methods.a | 8 | 8 | 10 | 21 | 4 | 0 |
+ +| internal/oracle/testdata/omitted_reader.a | 2 | 2 | 2 | 6 | 2 | 0 |
+ +| internal/oracle/testdata/omitted_reader_direct.a | 2 | 1 | 1 | 3 | 1 | 1 |
+ +| internal/oracle/testdata/omitted_reader_override.a | 2 | 2 | 1 | 5 | 2 | 0 |
+ +| internal/oracle/testdata/omitted_reader_string.a | 2 | 2 | 5 | 8 | 2 | 0 |
+++=======
++ | internal/oracle/testdata/notyet_library_regex_callback.a | 156 | 156 | 218 | 275 | 17 | 0 |
+++>>>>>>> 7865fefb4 (Lower regex replacement callbacks that take the full match)
+  | internal/oracle/testdata/optional_widening_class.a | 3 | 3 | 2 | 7 | 3 | 0 |
+  | internal/oracle/testdata/optional_widening_fresh.a | 3 | 3 | 2 | 8 | 3 | 0 |
+  | internal/oracle/testdata/optional_widening_declared.a | 6 | 6 | 2 | 12 | 4 | 0 |

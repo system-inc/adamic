@@ -1,0 +1,120 @@
+diff --cc internal/lower/iteration_origin.go
+index 0fa454537,b9730a83d..000000000
+--- a/internal/lower/iteration_origin.go
++++ b/internal/lower/iteration_origin.go
+@@@ -382,9 -382,9 +382,15 @@@ func (l *lowering) genericIteratorFacto
+  	return l.iterationReturnsClass(body, iterator, source, 0)
+  }
+  
+++<<<<<<< HEAD
+ +// A returned receiver keeps its dynamic subclass, even when the result annotation names
+ +// the base. Follow local aliases too; they do not make this an exact base instance.
+ +func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+++=======
++ // A receiver-returning factory preserves the source's dynamic identity. Only refine
++ // the result when every explicit return is this (or a local alias), not a new iterator.
++ func (l *lowering) iterationFactoryReturnsReceiver(member *ast.Symbol) bool {
+++>>>>>>> 08209c7d2 (Preserve iterator receiver types and virtual protocol dispatch)
+  	var receiver func(*ast.Node, int) bool
+  	receiver = func(node *ast.Node, depth int) bool {
+  		if node == nil || depth > 16 {
+@@@ -402,57 -402,43 +408,99 @@@
+  		}
+  		return false
+  	}
+++<<<<<<< HEAD
+ +	for _, root := range l.checker.GetRootSymbols(member) {
+ +		for _, declaration := range root.Declarations {
+ +			if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
+ +				continue
+ +			}
+ +			found := false
+ +			var visit ast.Visitor
+ +			visit = func(node *ast.Node) bool {
+ +				if ast.IsFunctionLike(node) {
+ +					return false
+ +				}
+ +				if node.Kind == ast.KindReturnStatement && receiver(node.AsReturnStatement().Expression, 0) {
+ +					found = true
+ +					return true
+ +				}
+ +				return node.ForEachChild(visit)
+ +			}
+ +			declaration.Body().ForEachChild(visit)
+ +			if found {
+ +				return true
+ +			}
+ +		}
+ +	}
+ +	return false
+ +}
+ +
+ +// Unknown receiver origins matter only when a declared descendant can change the
+ +// protocol. A factory returning a base receiver remains sound in a closed class tree.
+ +func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+ +	class := l.classNodeFor(iterator)
+ +	if class == nil {
+ +		return false
+ +	}
+ +	changed := false
+ +	var visit ast.Visitor
+ +	visit = func(node *ast.Node) bool {
+ +		if node.Kind == ast.KindClassDeclaration && node.Name() != nil && node != class {
+ +			shape := l.checker.GetTypeAtLocation(node.Name())
+ +			if l.classView(shape, class) != nil {
+ +				actualNext := l.checker.GetPropertyOfType(shape, "next")
+ +				actualClose := l.checker.GetPropertyOfType(shape, "return")
+ +				if actualNext == nil || !l.sameMemberOrigin(actualNext, next) || (actualClose != nil) != (close != nil) || (close != nil && !l.sameMemberOrigin(actualClose, close)) {
+ +					changed = true
+ +					return true
+ +				}
+ +			}
+ +		}
+ +		return node.ForEachChild(visit)
+ +	}
+ +	for _, module := range modules {
+ +		module.AsNode().ForEachChild(visit)
+ +	}
+ +	return changed
+++=======
++ 	roots := l.checker.GetRootSymbols(member)
++ 	if len(roots) != 1 || len(roots[0].Declarations) != 1 {
++ 		return false
++ 	}
++ 	declaration := roots[0].Declarations[0]
++ 	if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
++ 		return false
++ 	}
++ 	found, sound := false, true
++ 	var visit ast.Visitor
++ 	visit = func(node *ast.Node) bool {
++ 		if ast.IsFunctionLike(node) {
++ 			return false
++ 		}
++ 		if node.Kind == ast.KindReturnStatement {
++ 			found = true
++ 			sound = sound && receiver(node.AsReturnStatement().Expression, 0)
++ 			return false
++ 		}
++ 		return node.ForEachChild(visit)
++ 	}
++ 	declaration.Body().ForEachChild(visit)
++ 	return found && sound
++ }
++ 
++ // Class overrides retain their protocol ABI and method slot. Structural views and
++ // literal/arrow conventions still need the existing origin proof.
++ func (l *lowering) iterationConventionFits(actual, expected *ast.Symbol, shape, view *checker.Type) bool {
++ 	if memberConvention(actual) == memberConvention(expected) {
++ 		return true
++ 	}
++ 	if actual == nil || expected == nil || !isClassInstance(shape) || !isClassInstance(view) {
++ 		return false
++ 	}
++ 	actualOwner, expectedOwner := memberConvention(actual), memberConvention(expected)
++ 	if actualOwner == nil || expectedOwner == nil || actualOwner.Kind != ast.KindClassDeclaration || expectedOwner.Kind != ast.KindClassDeclaration {
++ 		return false
++ 	}
++ 	return l.nominalAncestor(shape, view, map[[2]*checker.Type]bool{})
+++>>>>>>> 08209c7d2 (Preserve iterator receiver types and virtual protocol dispatch)
+  }

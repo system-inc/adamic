@@ -1,0 +1,453 @@
+diff --cc internal/lower/enum_initialization.go
+index 60e4ec9b9,40edf1897..000000000
+--- a/internal/lower/enum_initialization.go
++++ b/internal/lower/enum_initialization.go
+@@@ -2,134 -2,17 +2,138 @@@ package lowe
+  
+  import (
+  	"github.com/microsoft/TypeScript/tsc/shim/ast"
+- 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+- 	"github.com/system-inc/adamic/internal/load"
+  )
+  
+- // Regular enum declarations emit a hoisted var in JavaScript. A call before that var's assignment
+- // can observe undefined, not a lexical TDZ. Until that failure participates in native exception
+- // cleanup, refuse such reads rather than emit a different error or dereference NULL.
++ // Enum declarations are validated before registration. Initialization reachability
++ // is shared with namespaces in namespaceInitialization, which runs once afterward.
+  func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
+- 	pending := 0
+  	for _, module := range modules {
+++<<<<<<< HEAD
+ +		for _, statement := range module.Statements.Nodes {
+ +			if statement.Kind == ast.KindEnumDeclaration && !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+ +				pending++
+ +			}
+ +		}
+ +	}
+ +	if pending == 0 {
+ +		return nil
+ +	}
+ +	initialized := map[*ast.Node]bool{}
+ +	var visit func(*ast.Node, map[*ast.Node]bool, bool) error
+ +	visit = func(node *ast.Node, visiting map[*ast.Node]bool, execute bool) error {
+ +		if node == nil || ast.IsTypeNode(node) || visiting[node] {
+ +			return nil
+ +		}
+ +		visiting[node] = true
+ +		defer delete(visiting, node)
+ +		if ast.IsFunctionLike(node) && !execute {
+ +			return nil
+ +		}
+ +		if declaration := l.enumObject(node); declaration != nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) && !initialized[declaration] {
+ +			return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+ +		}
+ +		// A callback argument is conservatively executed. Following named aliases and property
+ +		// initializers covers calls whose syntax does not directly name a function declaration.
+ +		callable := func(callee *ast.Node) *ast.Node {
+ +			seen := map[*ast.Symbol]bool{}
+ +			for callee != nil {
+ +				callee = ast.SkipParentheses(callee)
+ +				if ast.IsFunctionLike(callee) {
+ +					return callee
+ +				}
+ +				symbol := l.symbol(callee)
+ +				if symbol == nil || seen[symbol] {
+ +					return nil
+ +				}
+ +				seen[symbol] = true
+ +				declaration := symbol.ValueDeclaration
+ +				if declaration == nil {
+ +					return nil
+ +				}
+ +				if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+ +					return nil
+ +				}
+ +				if declaration.Kind == ast.KindPropertyAssignment && !l.checker.IsReadonlySymbol(symbol) {
+ +					return nil
+ +				}
+ +				if ast.IsFunctionLike(declaration) && declaration.Body() == nil && !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
+ +					return nil
+ +				}
+ +				if declaration.Kind == ast.KindVariableDeclaration || declaration.Kind == ast.KindPropertyAssignment {
+ +					callee = declaration.Initializer()
+ +					continue
+ +				}
+ +				return declaration
+ +			}
+ +			return nil
+ +		}
+ +		if execute && !ast.IsFunctionLike(node) {
+ +			if declaration := callable(node); declaration != nil && ast.IsFunctionLike(declaration) {
+ +				if err := visit(declaration, visiting, true); err != nil {
+ +					return err
+ +				}
+ +			} else if len(l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)) > 0 {
+ +				return l.notYet(node, "a callback whose body is unknown before enum initialization; declare enums before executable module code")
+ +			}
+ +		}
+ +		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
+ +			declaration := callable(node.Expression())
+ +			if declaration != nil && ast.IsFunctionLike(declaration) {
+ +				if err := visit(declaration, visiting, true); err != nil {
+ +					return err
+ +				}
+ +			} else if declaration == nil || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
+ +				return l.notYet(node, "an indirect call or class construction before enum initialization; declare enums before executable module code")
+ +			}
+ +			for _, argument := range node.Arguments() {
+ +				if err := visit(argument, visiting, true); err != nil {
+ +					return err
+ +				}
+ +			}
+ +		}
+ +		var found error
+ +		node.ForEachChild(func(child *ast.Node) bool {
+ +			if found == nil {
+ +				found = visit(child, visiting, false)
+ +			}
+ +			return found != nil
+ +		})
+ +		return found
+ +	}
+ +	for _, module := range modules {
+ +		for _, statement := range module.Statements.Nodes {
+ +			if statement.Kind == ast.KindEnumDeclaration {
+ +				initialized[statement] = true
+ +				if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+ +					pending--
+ +				}
+ +				continue
+ +			}
+ +			if pending == 0 {
+ +				continue
+ +			}
+ +			if statement.Kind == ast.KindFunctionDeclaration {
+ +				continue
+ +			}
+ +			if statement.Kind == ast.KindClassDeclaration {
+ +				for _, member := range statement.AsClassDeclaration().Members.Nodes {
+ +					if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) || member.Kind == ast.KindClassStaticBlockDeclaration {
+ +						if err := visit(member, map[*ast.Node]bool{}, false); err != nil {
+ +							return err
+ +						}
+ +					}
+ +				}
+ +				continue
+ +			}
+ +			if err := visit(statement, map[*ast.Node]bool{}, false); err != nil {
+ +				return err
+++=======
++ 		for _, statement := range namespaceDeclarations(module.Statements.Nodes) {
++ 			if statement.Kind == ast.KindEnumDeclaration {
++ 				if _, err := l.enumFields(statement); err != nil {
++ 					return err
++ 				}
+++>>>>>>> e0a9d0258 (Share namespace and enum initialization reachability)
+  			}
+  		}
+  	}
+diff --cc internal/lower/namespaces.go
+index d50c8262f,192303f19..000000000
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@@ -253,6 -232,30 +253,33 @@@ func (l *lowering) namespaceInitializat
+  		if node == nil || ast.IsTypeNode(node) || ast.IsFunctionLike(node) {
+  			return nil
+  		}
+++<<<<<<< HEAD
+++=======
++ 		if branch := l.literalCallableBranch(node); branch != nil {
++ 			return visit(branch)
++ 		}
++ 		if ast.IsClassLike(node) {
++ 			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
++ 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
++ 					for _, element := range clause.AsHeritageClause().Types.Nodes {
++ 						if err := visit(element.AsExpressionWithTypeArguments().Expression); err != nil {
++ 							return err
++ 						}
++ 					}
++ 				}
++ 			}
++ 			// Instance fields and constructor bodies execute at new, not at the
++ 			// declaration. Unknown construction keeps the checks in those bodies.
++ 			for _, member := range node.AsClassDeclaration().Members.Nodes {
++ 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
++ 					if err := visit(member); err != nil {
++ 						return err
++ 					}
++ 				}
++ 			}
++ 			return nil
++ 		}
+++>>>>>>> e0a9d0258 (Share namespace and enum initialization reachability)
+  		if node.Kind == ast.KindModuleDeclaration {
+  			for _, statement := range namespaceStatements(node) {
+  				if err := visit(statement); err != nil {
+@@@ -260,18 -263,35 +287,22 @@@
+  				}
+  			}
+  			initialized[node] = true
+ +			if namespaceRuntime(node) {
+ +				pending--
+ +			}
+  			return nil
+  		}
++ 		// The enum object exists while its own member assignments execute.
++ 		if node.Kind == ast.KindEnumDeclaration {
++ 			initialized[node] = true
++ 		}
+  		if l.namespaceValueNode(node) {
+ -			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+ -				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+ -			}
+  			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+ -				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+ +				return l.notYet(node, "a namespace read before runtime initialization; put namespaces before executable module code")
+  			}
+  		}
+ -		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
+ -			if target := l.namespaceCallable(node.Expression()); target != nil {
+ -				if err := checkCall(target); err != nil {
+ -					return err
+ -				}
+ -			}
+ -			// Library operations may invoke callbacks. A known callback participates in
+ -			// the same graph; unknown values retain checks in their eventual bodies.
+ -			for _, argument := range node.Arguments() {
+ -				if target := l.namespaceCallable(argument); target != nil {
+ -					if err := checkCall(target); err != nil {
+ -						return err
+ -					}
+ -				}
+ -			}
+ +		if pending > 0 && (node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression) {
+ +			return l.notYet(node, "a call before all runtime namespaces are initialized; put namespaces before executable module code")
+  		}
+  		var found error
+  		node.ForEachChild(func(child *ast.Node) bool { found = visit(child); return found != nil })
+@@@ -286,3 -309,192 +317,195 @@@
+  	}
+  	return nil
+  }
+++<<<<<<< HEAD
+++=======
++ 
++ // Mutable aliases, parameters and virtual methods are unresolved edges. Only
++ // direct functions and immutable initializer chains identify a single body.
++ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
++ 	seen := map[*ast.Symbol]bool{}
++ 	for callee != nil {
++ 		callee = ast.SkipParentheses(callee)
++ 		if branch := l.literalCallableBranch(callee); branch != nil {
++ 			callee = branch
++ 			continue
++ 		}
++ 		if callee.Kind == ast.KindArrowFunction || callee.Kind == ast.KindFunctionExpression {
++ 			return callee
++ 		}
++ 		symbol := l.symbol(callee)
++ 		if symbol == nil || seen[symbol] || symbol.ValueDeclaration == nil {
++ 			return nil
++ 		}
++ 		seen[symbol] = true
++ 		declaration := symbol.ValueDeclaration
++ 		switch declaration.Kind {
++ 		case ast.KindClassDeclaration:
++ 			return declaration
++ 		case ast.KindFunctionDeclaration:
++ 			if declaration.Body() != nil {
++ 				return declaration
++ 			}
++ 			return nil
++ 		case ast.KindVariableDeclaration:
++ 			if declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
++ 				return nil
++ 			}
++ 			callee = declaration.Initializer()
++ 		case ast.KindPropertyAssignment:
++ 			if !l.checker.IsReadonlySymbol(symbol) {
++ 				return nil
++ 			}
++ 			callee = declaration.Initializer()
++ 		default:
++ 			return nil
++ 		}
++ 	}
++ 	return nil
++ }
++ 
++ // A generated boolean starts false before module evaluation and becomes true
++ // only after the namespace body completes. Checks use ordinary IR and the
++ // namespace-property TypeError, rather than reading native zero export storage.
++ func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int {
++ 	symbol := l.symbol(declaration.Name())
++ 	if local, found := l.locals[symbol]; found {
++ 		return local
++ 	}
++ 	if l.locals == nil {
++ 		l.locals = map[*ast.Symbol]int{}
++ 	}
++ 	local := len(l.result.Locals)
++ 	l.locals[symbol] = local
++ 	l.result.Locals = append(l.result.Locals, ir.Local{Name: declaration.Name().Text(), Type: ir.Boolean, Global: true, Function: -1})
++ 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})
++ 	return local
++ }
++ 
++ func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expression {
++ 	checks := []ir.Expression{}
++ 	for node != nil && ast.SkipParentheses(node).Kind == ast.KindPropertyAccessExpression {
++ 		node = ast.SkipParentheses(node)
++ 		member := node.Name().Text()
++ 		setting := writing
++ 		writing = false
++ 		node = ast.SkipParentheses(node.Expression())
++ 		if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
++ 			b := l.libraryArrayBuilder([]ir.Expression{ir.Read{Local: l.namespaceReadyLocal(declaration), Of: ir.Boolean}})
++ 			message := "TypeError: Cannot read properties of undefined (reading '" + member + "')"
++ 			if setting {
++ 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
++ 			}
++ 			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
++ 			// The outer container is read first in Outer.Inner.member.
++ 			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
++ 		}
++ 	}
++ 	return checks
++ }
++ 
++ func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
++ 	checks := l.namespaceReadyReads(node, false)
++ 	if len(checks) == 0 {
++ 		return value
++ 	}
++ 	b := l.libraryArrayBuilder(append(checks, value))
++ 	return b.finish("namespace_read", b.read(b.parameters[len(checks)]))
++ }
++ 
++ // Put readiness operands before the original arguments. This keeps the callee
++ // read before argument side effects, even for void and generic direct calls.
++ func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Expression {
++ 	checks := l.namespaceReadyReads(node, false)
++ 	if len(checks) == 0 {
++ 		return value
++ 	}
++ 	call := value.(ir.Call)
++ 	b := l.libraryArrayBuilder(append(checks, call.Arguments...))
++ 	call.Arguments = nil
++ 	for _, parameter := range b.parameters[len(checks):] {
++ 		call.Arguments = append(call.Arguments, b.read(parameter))
++ 	}
++ 	if call.Returns != ir.Type(0) {
++ 		return b.finish("namespace_call", call)
++ 	}
++ 	b.body = append(b.body, ir.Evaluate{Value: call}, ir.Return{})
++ 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "namespace_call", Parameters: b.parameters, Returns: ir.Type(0), Body: b.body})
++ 	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: ir.Type(0)}
++ }
++ 
++ // namespaceVariable identifies direct singleton storage, excluding function-local var.
++ func namespaceVariable(list *ast.Node) bool {
++ 	return list.Parent != nil && list.Parent.Parent != nil && list.Parent.Parent.Kind == ast.KindModuleBlock
++ }
++ 
++ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
++ 	hoisted := []ir.Statement{}
++ 	for _, statement := range namespaceStatements(node) {
++ 		if statement.Kind != ast.KindVariableStatement {
++ 			continue
++ 		}
++ 		list := statement.AsVariableStatement().DeclarationList
++ 		if list.Flags&ast.NodeFlagsBlockScoped != 0 {
++ 			continue
++ 		}
++ 		for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
++ 			names := []*ast.Node{declaration.Name()}
++ 			if !ast.IsIdentifier(declaration.Name()) {
++ 				if !namespaceObjectBindings(declaration.Name()) {
++ 					return nil, l.notYet(declaration.Name(), "destructuring inside a namespace; only flat object var bindings are hoisted")
++ 				}
++ 				names = nil
++ 				for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
++ 					names = append(names, binding.Name())
++ 				}
++ 			}
++ 			for _, name := range names {
++ 				local, err := l.declareLocal(name)
++ 				if err != nil {
++ 					return nil, err
++ 				}
++ 				var value ir.Expression
++ 				if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
++ 					value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
++ 				}
++ 				hoisted = append(hoisted, ir.Declare{Local: local, Value: value})
++ 			}
++ 		}
++ 	}
++ 	body, err := l.statements(namespaceStatements(node))
++ 	if err != nil {
++ 		return nil, err
++ 	}
++ 	if namespaceRuntime(node) {
++ 		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
++ 	}
++ 	return append(hoisted, body...), nil
++ }
++ 
++ // The parser's factory destructuring declares symbols on the renamed identifiers,
++ // not on the ObjectBindingPattern. Other binding forms retain their own NotYet.
++ func namespaceObjectBindings(pattern *ast.Node) bool {
++ 	if pattern.Kind != ast.KindObjectBindingPattern {
++ 		return false
++ 	}
++ 	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
++ 		declared := binding.AsBindingElement()
++ 		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
++ 			return false
++ 		}
++ 		if declared.PropertyName != nil && !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
++ 			return false
++ 		}
++ 	}
++ 	return true
++ }
++ 
++ func (l *lowering) namespaceReadyStatements(node *ast.Node, writing bool) []ir.Statement {
++ 	statements := []ir.Statement{}
++ 	for _, check := range l.namespaceReadyReads(node, writing) {
++ 		statements = append(statements, ir.Evaluate{Value: check})
++ 	}
++ 	return statements
++ }
+++>>>>>>> e0a9d0258 (Share namespace and enum initialization reachability)
+diff --cc internal/lower/refusals.go
+index f259ebec2,f0265469d..000000000
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@@ -83,15 -68,10 +83,22 @@@ func (l *lowering) refuse(module *ast.S
+  		if found != nil {
+  			return true
+  		}
+++<<<<<<< HEAD
+ +		if node.Kind == ast.KindTypePredicate {
+ +			found = l.predicateRefusal(node)
+ +			return found != nil
+ +		}
+ +		if err := l.nodeLibraryRefusal(node); err != nil {
+ +			found = err
+ +			return true
+ +		}
+ +		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+++=======
++ 		if branch := l.literalCallableBranch(node); branch != nil {
++ 			return visit(branch)
++ 		}
++ 		if refused, isRefused := refusals[node.Kind]; isRefused {
+++>>>>>>> e0a9d0258 (Share namespace and enum initialization reachability)
+  			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+  			return true
+  		}
+* Unmerged path internal/lower/namespaces_call_graph.go

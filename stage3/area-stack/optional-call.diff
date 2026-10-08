@@ -1,0 +1,295 @@
+diff --cc internal/ir/ir.go
+index a7f924b82,690e64383..000000000
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@@ -693,13 -579,11 +693,21 @@@ type 
+  
+  	// CallClosure calls a function value. Returns is its result type, 0 for void.
+  	CallClosure struct {
+++<<<<<<< HEAD
+ +		// Direct identifies canonical sibling code sharing Closure as its environment.
+ +		Direct       int
+ +		Closure      Expression
+ +		Arguments    []Expression
+ +		Spread       []bool
+ +		FunctionType int
+ +		Returns      Type
+++=======
++ 		// Optional tests the callee before evaluating arguments.
++ 		Optional  bool
++ 		Closure   Expression
++ 		Arguments []Expression
++ 		Returns   Type
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  	}
+  
+  	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
+diff --cc internal/javascript/javascript.go
+index ff8bbe46e,323196150..000000000
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@@ -64,11 -54,7 +64,15 @@@ func JavaScriptWith(program *ir.Program
+  	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
+  	// object.name(...) through an interface: the object's own function value, or else its class's
+  	// method (on the prototype its constructor gave it), called with the object as this.
+++<<<<<<< HEAD
+ +	if counted {
+ +		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const fn = object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+ +	} else {
+ +		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } return { code: (closure, values) => object[name](object, ...values) }; };\n")
+ +	}
+++=======
++ 	builder.WriteString("const adamicCallee = (object, name, optional = false) => { const callee = object[name]; if (optional && callee == null) return callee; return Object.hasOwn(object, name) ? callee : { code: (closure, values) => callee(object, ...values) }; };\n")
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+  	// The array and the callback are each evaluated once, in that order, before the first call.
+  	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+@@@ -1085,16 -833,10 +1089,21 @@@ func (e *emitter) value(expression ir.E
+  		for _, local := range e.program.Functions[expression.Function].Environment {
+  			cells = append(cells, e.cell(local))
+  		}
+ -		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
+ +		target := e.program.Functions[expression.Function]
+ +		if target.NestedParent > 0 {
+ +			if identity := e.program.Functions[target.NestedParent-1].FrameIdentity; identity > 0 {
+ +				return fmt.Sprintf("adamicCanonical(%s, %s, [%s])", e.cell(identity-1), functionName(e.program, expression.Function), strings.Join(cells, ", "))
+ +			}
+ +		}
+ +		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
+  	case ir.CallClosure:
+++<<<<<<< HEAD
+ +		if expression.Direct > 0 {
+ +			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
+++=======
++ 		if expression.Optional {
++ 			return e.optionalClosureCall(expression)
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  		}
+  		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
+  			if property.Optional {
+diff --cc internal/lower/expression.go
+index ce4d1f6f4,ee23bcb90..000000000
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@@ -462,18 -386,9 +462,24 @@@ func (l *lowering) value(node *ast.Node
+  
+  func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+  	node = ast.SkipParentheses(node)
+++<<<<<<< HEAD
+ +	if value, handled, err := l.typedArrayExpression(node); handled {
+ +		return value, err
+ +	}
+ +	if value, known, err := l.namespaceExpression(node); known {
+ +		return value, err
+ +	}
+ +	if value, known, err := l.libraryMethodValue(node); known {
+ +		return value, err
+ +	}
+ +	if l.isArgumentsLength(node) {
+ +		return l.readArgumentsCount(), nil
+ +	}
+++=======
++ 	if value, handled, err := l.lowerOptionalCall(node, false); handled {
++ 		return value, err
++ 	}
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  	if value, known, err := l.enumExpression(node); known {
+  		return value, err
+  	}
+diff --cc internal/lower/lower_test.go
+index f3143fc87,6572a5bad..000000000
+--- a/internal/lower/lower_test.go
++++ b/internal/lower/lower_test.go
+@@@ -78,7 -89,6 +78,10 @@@ func TestWhatStageZeroCannotLowerIsRefu
+  		{"a tuple given to a function value taking an array", "const pair: [number, number] = [3, 4];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(`${measure(pair)}`);\n", "main.a:3:24: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
+  		{"tuples where arrays of arrays go", "type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst rows: readonly (readonly number[])[] = pairs;\n", "main.a:3:46: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
+  		{"a callback taking arrays given tuples", "type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(pairs.map(measure).join(','));\n", "main.a:4:23: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
+++<<<<<<< HEAD
+ +		{"a function value called through ?.", "const steps: (() => void)[] = [];\nconst step = steps[0];\nstep?.();\n", "main.a:3:1: stage 0 can't lower a call through ?. (an optional call) yet"},
+++=======
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  		{"a generic function as a value", "function same<Item>(item: Item): Item {\n\treturn item;\n}\nconst copy: (value: number) => number = same;\n", "main.a:4:41: stage 0 can't lower a generic function as a value yet"},
+  		{"a try around repeat", "function line(count: number): string {\n\ttry {\n\t\treturn '-'.repeat(count);\n\t} catch {\n\t\treturn '';\n\t}\n}\nconsole.log(line(3));\n", "main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
+  		{"a try around a call that reaches toFixed", "function shown(value: number, digits: number): string {\n\treturn value.toFixed(digits);\n}\nfunction safe(value: number): string {\n\ttry {\n\t\treturn shown(value, 2);\n\t} finally {\n\t\tconsole.log('done');\n\t}\n}\nconsole.log(safe(1));\n", "main.a:5:2: stage 0 can't lower a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
+diff --cc internal/native/emit_functions.go
+index 568a2b677,c8fa8c4a3..000000000
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@@ -298,59 -216,39 +298,80 @@@ func (e *emitter) callThrough(expressio
+  			// Keep the interface adapter's borrowed-input convention and the same
+  			// exception and result handling, but call its proven method directly.
+  			method = e.methodThunk(function)
+ +			exactCount = e.program.PackedCountNeeded(function)
+  		} else {
+  			method = e.temporary()
+++<<<<<<< HEAD
+ +			if e.program.ClosureConventionNeeded() {
+ +				e.line("adamic_method_entry %s = {0};", method)
+ +			} else {
+ +				e.line("adamic_method %s = NULL;", method)
+ +			}
+ +			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+ +		}
+ +	}
+ +	packed, count := e.closureArguments(expression)
+ +	call := e.packedClosureCall(expression, closure, packed, count)
+ +	if expression.Direct > 0 {
+ +		target := expression.Direct - 1
+ +		extra := ""
+ +		if e.program.PackedCountNeeded(target) {
+ +			extra = ", " + count
+ +		}
+ +		call = fmt.Sprintf("%s(%s, %s%s)", e.functionName(target), closure, packed, extra)
+++=======
++ 			e.line("adamic_method %s = NULL;", method)
++ 			lookup := "adamic_object_callee"
++ 			if expression.Optional {
++ 				lookup = "adamic_object_optional_callee"
++ 			}
++ 			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s))", lookup, receiver, cString(property.Name), e.cache(), method))
++ 		}
++ 	}
++ 	if expression.Optional {
++ 		return e.optionalClosureCall(expression, closure, receiver, method)
++ 	}
++ 	return e.invokeClosure(expression, closure, receiver, method)
++ }
++ 
++ func (e *emitter) invokeClosure(expression ir.CallClosure, closure, receiver, method string) string {
++ 	arguments := []string{}
++ 	for _, argument := range expression.Arguments {
++ 		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  	}
+ -	packed := "NULL"
+ -	if len(arguments) > 0 {
+ -		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
+ -	}
+ -	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+  	if receiver != "" {
+  		if closure == "" {
+ -			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+ +			if exactCount {
+ +				if closure == "" {
+ +					call = fmt.Sprintf("%s(%s, %s, %s)", method, receiver, packed, count)
+ +				}
+ +			} else if e.program.ClosureConventionNeeded() && closure != "" {
+ +				call = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+ +			} else {
+ +				call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+ +			}
+  		} else {
+ -			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+ +			methodCall := fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+ +			if e.program.ClosureReceiversNeeded() {
+ +				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+ +				if e.program.PackedCountNeededFromCall(expression) {
+ +					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
+ +				} else if e.program.ClosureConventionNeeded() {
+ +					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+ +				}
+ +			}
+ +			if e.program.ClosureConventionNeeded() {
+ +				if e.program.PackedCountNeededFromCall(expression) {
+ +					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
+ +				} else {
+ +					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+ +				}
+ +			}
+ +			call = fmt.Sprintf("(%s != NULL ? %s : %s)", closure, call, methodCall)
+  		}
+  	}
+ +
+  	if expression.Returns == 0 {
+  		e.line("%s;", call)
+  		e.closureThrown()
+diff --cc internal/native/runtime/adamic.h
+index 15277a8b9,ff77d3610..000000000
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@@ -308,7 -203,9 +308,13 @@@ struct adamic_methods 
+  // adamic_object_callee finds what object.name(...) calls, where the object is seen through an
+  // interface: its own field of that name, a function value, which it returns; or else its class's
+  // method of that name, which it puts in *method, returning NULL. The checker proved one is there.
+++<<<<<<< HEAD
+ +adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
+++=======
++ adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
++ // Optional calls also admit a missing field or method.
++ adamic_closure *adamic_object_optional_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  
+  // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
+  // stored in a field belongs to the object.
+diff --cc internal/oracle/counts.md
+index 7e8c87669,2c49695fa..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -633,59 -488,11 +633,67 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/e4eec87_f2_union_narrow_call.a | 1 | 0 | 3 | 3 | 1 | 0 |
+  | internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a | 2 | 1 | 4 | 5 | 2 | 0 |
+  | internal/oracle/testdata/narrowed_union_valid.a | 9 | 9 | 13 | 23 | 3 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/nested_minimal.a | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/nested_captures.a | 22 | 22 | 8 | 22 | 7 | 0 |
+ +| internal/oracle/testdata/nested_hoisting.a | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/nested_mutual.a | 10 | 10 | 46 | 52 | 5 | 0 |
+ +| internal/oracle/testdata/nested_returned.a | 21 | 21 | 10 | 29 | 11 | 0 |
+ +| internal/oracle/testdata/nested_array.a | 17 | 17 | 17 | 27 | 9 | 0 |
+ +| internal/oracle/testdata/nested_three_levels.a | 8 | 8 | 7 | 13 | 7 | 0 |
+ +| internal/oracle/testdata/nested_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_tdz_write.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_weak.a | 4 | 4 | 5 | 10 | 4 | 0 |
+ +| internal/oracle/testdata/nested_destructured.a | 13 | 13 | 7 | 17 | 6 | 0 |
+ +| internal/oracle/testdata/nested_destructured_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+ +| internal/oracle/testdata/nested_mixed.a | 7 | 7 | 9 | 12 | 5 | 0 |
+ +| internal/oracle/testdata/nested_pattern_parameter.a | 6 | 6 | 5 | 10 | 5 | 0 |
+ +| internal/oracle/testdata/nested_owned_parameter.a | 10 | 10 | 14 | 23 | 7 | 0 |
+ +| internal/oracle/testdata/nested_generic_capture.a | 14 | 14 | 22 | 29 | 5 | 0 |
+ +| internal/oracle/testdata/nested_assignment_return.a | 7 | 7 | 8 | 9 | 5 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_unused.a | 4 | 4 | 3 | 6 | 4 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_unreachable.a | 5 | 5 | 4 | 8 | 4 | 0 |
+ +| internal/oracle/testdata/nested_reduced_parameter_escaped.a | 4 | 4 | 6 | 10 | 4 | 0 |
+ +| internal/oracle/testdata/nested_callback_recursive.a | 29 | 29 | 31 | 41 | 14 | 0 |
+ +| internal/oracle/testdata/nested_callback_escaped.a | 16 | 16 | 13 | 19 | 8 | 0 |
+ +| internal/oracle/testdata/nested_callback_levels.a | 9 | 9 | 8 | 12 | 4 | 0 |
+ +| internal/oracle/testdata/nested_callback_late_capture.a | 9 | 9 | 8 | 12 | 5 | 0 |
+ +| internal/oracle/testdata/node_buffer_encodings.a | 164 | 164 | 109 | 245 | 4 | 0 |
+ +| internal/oracle/testdata/node_buffer_utf8.a | 197461 | 197461 | 28 | 197475 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_utf16.a | 327796 | 327796 | 27 | 327812 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_bom.a | 25 | 25 | 21 | 37 | 3 | 0 |
+ +| internal/oracle/testdata/node_buffer_writes.a | 30 | 30 | 22 | 56 | 6 | 0 |
+ +| internal/oracle/testdata/node_buffer_crypto.a | 169 | 169 | 72 | 192 | 10 | 0 |
+ +| internal/oracle/testdata/node_buffer_random.a | 140591 | 140591 | 1027 | 141106 | 4 | 0 |
+ +| internal/oracle/testdata/node_buffer_finalized.a | 4 | 2 | 4 | 6 | 3 | 0 |
+ +| internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |
+ +| internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |
+ +| internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| internal/oracle/testdata/omitted_scanner.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_scanner_required.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_scanner_explicit.a | 6 | 6 | 9 | 12 | 6 | 0 |
+ +| internal/oracle/testdata/omitted_number.a | 32 | 32 | 28 | 65 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_string.a | 32 | 32 | 38 | 75 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_boolean.a | 33 | 33 | 32 | 71 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_object.a | 33 | 33 | 38 | 76 | 5 | 0 |
+ +| internal/oracle/testdata/omitted_defaults.a | 28 | 28 | 19 | 49 | 8 | 0 |
+ +| internal/oracle/testdata/omitted_methods.a | 8 | 8 | 10 | 21 | 4 | 0 |
+ +| internal/oracle/testdata/omitted_reader.a | 2 | 2 | 2 | 6 | 2 | 0 |
+ +| internal/oracle/testdata/omitted_reader_direct.a | 2 | 1 | 1 | 3 | 1 | 1 |
+ +| internal/oracle/testdata/omitted_reader_override.a | 2 | 2 | 1 | 5 | 2 | 0 |
+ +| internal/oracle/testdata/omitted_reader_string.a | 2 | 2 | 5 | 8 | 2 | 0 |
+++=======
++ | internal/oracle/testdata/optional_call_locals.a | 14 | 14 | 24 | 28 | 5 | 0 |
++ | internal/oracle/testdata/optional_call_exports.a | 27 | 27 | 15 | 28 | 5 | 0 |
++ | internal/oracle/testdata/optional_call_values.a | 22 | 22 | 9 | 27 | 6 | 0 |
++ | internal/oracle/testdata/optional_call_receiver.a | 17 | 17 | 22 | 37 | 6 | 0 |
++ | internal/oracle/testdata/optional_call_collections.a | 106 | 106 | 114 | 179 | 9 | 0 |
+++>>>>>>> b4f2cd0e8 (Lower optional calls with saved callees and guarded arguments)
+  | internal/oracle/testdata/optional_widening_class.a | 3 | 3 | 2 | 7 | 3 | 0 |
+  | internal/oracle/testdata/optional_widening_fresh.a | 3 | 3 | 2 | 8 | 3 | 0 |
+  | internal/oracle/testdata/optional_widening_declared.a | 6 | 6 | 2 | 12 | 4 | 0 |

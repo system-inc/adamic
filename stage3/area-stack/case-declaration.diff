@@ -1,0 +1,310 @@
+diff --cc internal/javascript/javascript.go
+index b23d25c8c,f627c796b..000000000
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@@ -280,13 -214,9 +280,19 @@@ func (e *emitter) cellName(local int) s
+  	return e.name(local) + "_cell"
+  }
+  
+++<<<<<<< HEAD
+ +// ready reads the same captured readiness cell as the binding it guards.
+ +func (e *emitter) ready(local int) string {
+ +	if binding := e.program.Locals[local].Ready; binding != 0 {
+ +		return e.variable(binding - 1)
+ +	}
+ +	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+ +		return e.cell(local) + ".ready"
+++=======
++ func (e *emitter) readiness(local int) string {
++ 	if flag := e.program.Locals[local].Ready; flag != 0 {
++ 		return e.variable(flag - 1)
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  	}
+  	return readyName(local)
+  }
+@@@ -458,7 -356,7 +464,11 @@@ func (e *emitter) statement(at *ir.Stat
+  			// After the value, as JavaScript does: the right side runs, then the write throws.
+  			temporary := e.temporary()
+  			e.line("const %s = %s;", temporary, value)
+++<<<<<<< HEAD
+ +			e.line("if (!%s) adamicUnready(%s);", e.ready(statement.Local), quote(e.program.Locals[statement.Local].Name))
+++=======
++ 			e.line("if (!%s) adamicUnready(%s);", e.readiness(statement.Local), quote(e.program.Locals[statement.Local].Name))
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  			value = temporary
+  		}
+  		e.line("%s = %s;", e.variable(statement.Local), value)
+@@@ -738,30 -592,10 +748,34 @@@ func (e *emitter) value(expression ir.E
+  	case ir.StringConstant:
+  		return quote(e.program.Strings[expression.Index])
+  	case ir.Read:
+ +		if expression.Readiness != "" {
+ +			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
+ +			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
+ +		}
+  		if expression.Checked {
+++<<<<<<< HEAD
+ +			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+++=======
++ 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.readiness(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  		}
+  		return e.variable(expression.Local)
+ +	case ir.Truthy:
+ +		return "!!(" + e.value(expression.Value) + ")"
+ +	case ir.Void:
+ +		return "(void " + e.value(expression.Value) + ")"
+ +	case ir.Comma:
+ +		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+ +	case ir.Effects:
+ +		return e.effects(expression)
+ +	case ir.LogicalAssignment:
+ +		return e.logicalAssignment(expression)
+ +	case ir.Logical:
+ +		operator := "&&"
+ +		if expression.KeepTruthy {
+ +			operator = "||"
+ +		}
+ +		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
+  	case ir.Unary:
+  		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
+  		return "(" + operator + e.value(expression.Operand) + ")"
+diff --cc internal/lower/locals.go
+index 69e036c2f,63a3e0155..000000000
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@@ -82,9 -52,9 +82,9 @@@ func (l *lowering) variables(list *ast.
+  		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+  			l.result.Locals[local].ConstantClosure = closure.Function + 1
+  		}
+ -		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+ +		statements = append(statements, l.initializeLocal(local, fit(value, l.result.Locals[local].Type))...)
+  	}
+- 	return statements, nil
++ 	return l.initializeSwitchBindings(statements), nil
+  }
+  
+  // skipped reports whether an element of an array binding pattern is a hole, as in const [, b]: the
+@@@ -206,9 -168,10 +206,13 @@@ func (l *lowering) touch(local int) 
+  	}
+  }
+  
+ -// checked reports whether touching a local must be checked against the temporal dead zone: a
+ -// global reached from a function or a cyclic module body may precede its declaration.
+ +// checked guards switch lexical bindings, captured cells, and globals reached before initialization.
+  func (l *lowering) checked(local int) bool {
+++<<<<<<< HEAD
+ +	return l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+++=======
++ 	return l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules))
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  }
+  
+  func (l *lowering) constant(value string) int {
+diff --cc internal/lower/object.go
+index 15733ff1b,6ab3371d0..000000000
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@@ -1070,17 -988,22 +1070,36 @@@ func (l *lowering) switchStatement(nod
+  	if err != nil {
+  		return nil, err
+  	}
+++<<<<<<< HEAD
+ +	storage, err := l.switchBindings(statement.CaseBlock)
+ +	if err != nil {
+ +		return nil, err
+ +	}
+ +	original := value
+ +	held := -1
+ +	if len(storage) > 0 {
+ +		// The discriminant runs outside the case block's lexical environment.
+ +		held = len(l.result.Locals)
+ +		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
+ +		value = ir.Read{Local: held, Of: value.Type()}
+++=======
++ 	bindings, err := l.switchBindings(statement.CaseBlock)
++ 	if err != nil {
++ 		return nil, err
++ 	}
++ 	var scrutinee []ir.Statement
++ 	if len(bindings) != 0 {
++ 		local := len(l.result.Locals)
++ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
++ 		scrutinee = []ir.Statement{ir.Declare{Local: local, Value: value}}
++ 		value = ir.Read{Local: local, Of: value.Type()}
++ 	}
++ 	finish := func(body []ir.Statement) []ir.Statement {
++ 		if len(bindings) == 0 {
++ 			return body
++ 		}
++ 		return []ir.Statement{ir.Block{Body: append(scrutinee, ir.Block{Body: append(bindings, body...)})}}
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  	}
+  	lowered := ir.Switch{Value: value}
+  	groups := []switchGroup{}
+@@@ -1144,25 -1073,17 +1163,38 @@@
+  	if len(tests) > 0 || defaultPending {
+  		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+  	}
+ +	result := []ir.Statement{lowered}
+  	if checkedDefault {
+++<<<<<<< HEAD
+ +		result = l.fallthroughSwitch(value, groups, neverCheck)
+ +	} else {
+ +		for index, group := range groups {
+ +			if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+ +				result = l.fallthroughSwitch(value, groups, nil)
+ +				break
+ +			}
+ +		}
+ +	}
+ +	result = append(prefix, result...)
+ +	if held >= 0 {
+ +		body := []ir.Statement{ir.Declare{Local: held, Value: original}}
+ +		body = append(body, storage...)
+ +		body = append(body, result...)
+ +		result = []ir.Statement{ir.Block{Body: body}}
+ +	}
+ +	return result, nil
+++=======
++ 		return finish(append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...)), nil
++ 	}
++ 	for index, group := range groups {
++ 		// A default with tests must also have one body, rather than sharing statement
++ 		// addresses between two branches (flow instrumentation identifies those addresses).
++ 		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
++ 			return finish(append(prefix, l.fallthroughSwitch(value, groups, nil)...)), nil
++ 		}
++ 	}
++ 	return finish(append(prefix, lowered)), nil
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  }
+  
+  // arrayMethod lowers array.push(value) and array.join(separator).
+diff --cc internal/native/emit_locals.go
+index 4638a92cc,0e9ca10c6..000000000
+--- a/internal/native/emit_locals.go
++++ b/internal/native/emit_locals.go
+@@@ -60,24 -60,13 +60,32 @@@ func (e *emitter) store(local int, valu
+  }
+  
+  // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+ -func (e *emitter) checkReady(local int) {
+ +func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
+ +
+ +func (e *emitter) localReady(local int) string {
+ +	if binding := e.program.Locals[local].Ready; binding != 0 {
+ +		return e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
+ +	}
+ +	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+ +		return e.cellReference(local) + "->ready"
+ +	}
+ +	return readyName(local)
+ +}
+ +
+ +func (e *emitter) checkReadyRead(local int, expression string) {
+  	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
+++<<<<<<< HEAD
+ +	if expression != "" {
+ +		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
+ +	}
+ +	e.line("if (!%s) {", e.localReady(local))
+++=======
++ 	ready := readyName(local)
++ 	if flag := e.program.Locals[local].Ready; flag != 0 {
++ 		ready = e.read(ir.Read{Local: flag - 1, Of: ir.Boolean})
++ 	}
++ 	e.line("if (!%s) {", ready)
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  	e.line("\tstatic const char message[] = %s;", cString(message))
+  	e.line("\tadamic_panic(message, sizeof message - 1);")
+  	e.line("}")
+@@@ -91,9 -80,6 +99,12 @@@ func (e *emitter) read(read ir.Read) st
+  	if read.Checked {
+  		e.checkReady(read.Local)
+  	}
+++<<<<<<< HEAD
+ +	if read.Readiness != "" {
+ +		e.checkReadyRead(read.Local, read.Readiness)
+ +	}
+++=======
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  	if e.program.Locals[read.Local].Counter {
+  		// Read as the double it stands for, which every value it can hold is exactly.
+  		return "((double)" + name + ")"
+diff --cc internal/oracle/counts.md
+index cc1681eba,3327be1a9..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -780,24 -592,13 +780,34 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/regexp_cycle_collections.a | 31 | 31 | 85 | 89 | 23 | 0 |
+  | internal/oracle/testdata/regexp_cycle_closures.a | 11 | 11 | 25 | 26 | 10 | 0 |
+  | internal/oracle/testdata/regexp_cycle_weak.a | 4 | 4 | 12 | 14 | 4 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/regexp_replace/argument_guard.a | 6 | 0 | 5 | 0 | 6 | 0 |
+ +| internal/oracle/testdata/regexp_replace/group_guard.a | 7 | 0 | 7 | 0 | 7 | 0 |
+ +| internal/oracle/testdata/regexp_replace/callback.a | 290 | 290 | 244 | 291 | 37 | 0 |
+ +| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 11 | 14 | 11 | 0 |
+ +| internal/oracle/testdata/regexp_replace/arguments.a | 14 | 14 | 18 | 21 | 12 | 0 |
+ +| internal/oracle/testdata/scanner_nested_overload.a | 1 | 1 | 2 | 3 | 1 | 0 |
+ +| stage3/drivers/scanner/probes/nested-sibling-callback.a | 3 | 3 | 3 | 4 | 3 | 0 |
+ +| stage3/drivers/scanner/probes/nested-generic-sibling-call.a | 5 | 5 | 1 | 6 | 5 | 0 |
+ +| stage3/drivers/scanner/probes/nested-ancestor-call.a | 6 | 6 | 4 | 7 | 6 | 0 |
+ +| internal/oracle/testdata/nested_reference_identity.a | 31 | 31 | 71 | 73 | 18 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/scanner.a | 0 | 0 | 3 | 3 | 0 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/shared.a | 34 | 34 | 25 | 48 | 22 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/neighbors.a | 18 | 18 | 20 | 35 | 4 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/fallthrough.a | 65 | 65 | 35 | 82 | 11 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 8 | 5 | 7 | 8 | 5 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 3 | 3 | 3 | 5 | 2 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 3 | 0 | 3 | 1 | 3 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 5 | 1 | 3 | 2 | 5 | 0 |
+++=======
++ | internal/oracle/testdata/switch_case_binder_372.a | 2 | 2 | 8 | 9 | 1 | 0 |
++ | internal/oracle/testdata/switch_case_binder_731.a | 6 | 6 | 8 | 12 | 4 | 0 |
++ | internal/oracle/testdata/switch_case_scope.a | 55 | 55 | 73 | 94 | 19 | 0 |
++ | internal/oracle/testdata/switch_case_read_tdz.a | 3 | 0 | 4 | 1 | 3 | 0 |
++ | internal/oracle/testdata/switch_case_write_tdz.a | 3 | 0 | 4 | 1 | 3 | 0 |
++ | internal/oracle/testdata/switch_case_capture_tdz.a | 3 | 0 | 5 | 2 | 3 | 0 |
++ | internal/oracle/testdata/switch_case_reentry_tdz.a | 8 | 4 | 10 | 9 | 5 | 0 |
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  | internal/oracle/testdata/93122fa_s1.a | 1 | 1 | 8 | 9 | 1 | 0 |
+  | internal/oracle/testdata/93122fa_s2.a | 1 | 1 | 3 | 4 | 1 | 0 |
+  | internal/oracle/testdata/switch_empty_neighbors.a | 28 | 28 | 34 | 56 | 3 | 0 |
+diff --cc internal/oracle/switch_case_declaration_test.go
+index 1dbc2b78b,96aab940c..000000000
+--- a/internal/oracle/switch_case_declaration_test.go
++++ b/internal/oracle/switch_case_declaration_test.go
+@@@ -11,24 -6,12 +11,32 @@@ import 
+  )
+  
+  func init() {
+++<<<<<<< HEAD
+ +	for _, name := range []string{"scanner.a", "shared.a", "neighbors.a", "fallthrough.a", "dead_zone.a", "dead_zone_direct.a", "dead_zone_initializer.a", "dead_zone_write.a"} {
+++=======
++ 	for _, name := range []string{"switch_case_binder_372.a", "switch_case_binder_731.a", "switch_case_scope.a", "switch_case_read_tdz.a", "switch_case_write_tdz.a", "switch_case_capture_tdz.a", "switch_case_reentry_tdz.a"} {
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+  		fixtures = append(fixtures, struct {
+  			path    string
+  			lowers  bool
+  			checked bool
+++<<<<<<< HEAD
+ +		}{"internal/oracle/testdata/switch_case_declarations/" + name, true, false})
+++=======
++ 		}{"internal/oracle/testdata/" + name, true, false})
+++>>>>>>> e101af4f6 (Lower direct case declarations in the whole switch scope)
+ +	}
+ +}
+ +
+ +func TestSwitchCaseDeadZoneStop(t *testing.T) {
+ +	t.Parallel()
+ +	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/dead_zone.a"))
+ +	if err != nil {
+ +		t.Fatal(err)
+ +	}
+ +	truth := onNode(t, path)
+ +	if truth.exitCode != 70 || string(truth.stdout) != "value1\nbefore\n" || string(truth.stderr) != "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" {
+ +		t.Fatalf("Node dead-zone stop: %+v", truth)
+  	}
+  }
+  
