@@ -1,0 +1,8 @@
+FIRST FAILURE (tests, at 46.5 s):
+github.com/system-inc/adamic/internal/oracle TestClosureMergeRefusals/stage3/fixtures/taste/refused/21_truthy_loops.a
+=== RUN   TestClosureMergeRefusals/stage3/fixtures/taste/refused/21_truthy_loops.a
+=== PAUSE TestClosureMergeRefusals/stage3/fixtures/taste/refused/21_truthy_loops.a
+=== CONT  TestClosureMergeRefusals/stage3/fixtures/taste/refused/21_truthy_loops.a
+    closure_merge_refusals_test.go:45: want pinned refusal (temporary=true), got /home/ahra/fast-gate/tree/stage3/fixtures/taste/refused/21_truthy_loops.a:31:13: Adamic 0.1 refuses checked view read of field flags with unsupported union contract; prove or implement the union contract before reading this field
+--- FAIL: TestClosureMergeRefusals/stage3/fixtures/taste/refused/21_truthy_loops.a (0.71s)
+
