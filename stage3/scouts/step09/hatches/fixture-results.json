@@ -1,0 +1,71 @@
+[
+  {
+    "file": "fixtures/01_sorted_brand.a",
+    "node": {
+      "exit": 0,
+      "stdout": "1\n3\n0\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/01_sorted_brand.a:8:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "stage0": "Refused",
+    "mutant": {
+      "change": "seed a nonempty purportedly sorted array",
+      "node": {
+        "exit": 0,
+        "stdout": "2\n0\n0,1\n",
+        "stderr": ""
+      },
+      "caughtBy": "original Node stdout/stderr/exit comparison; native mutation not claimed"
+    }
+  },
+  {
+    "file": "fixtures/02_config_descriptor.a",
+    "node": {
+      "exit": 0,
+      "stdout": "target\nfalse\nfalse\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/02_config_descriptor.a:8:9: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\n"
+    },
+    "stage0": "Refused",
+    "mutant": {
+      "change": "make configFile enumerable",
+      "node": {
+        "exit": 0,
+        "stdout": "target,configFile\ntrue\nfalse\n",
+        "stderr": ""
+      },
+      "caughtBy": "original Node stdout/stderr/exit comparison; native mutation not claimed"
+    }
+  },
+  {
+    "file": "fixtures/03_empty_assertion.a",
+    "node": {
+      "exit": 0,
+      "stdout": "string\nnot-a-number\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/03_empty_assertion.a:4:42: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+    },
+    "stage0": "Refused",
+    "mutant": {
+      "change": "replace empty assertion with an actual runtime check",
+      "node": {
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Error: proof missing\n"
+      },
+      "caughtBy": "original Node stdout/stderr/exit comparison; native mutation not claimed"
+    }
+  }
+]

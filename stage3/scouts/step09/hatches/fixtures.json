@@ -1,0 +1,5 @@
+[
+ {"file":"fixtures/01_sorted_brand.a","before":"return [] as any as SortedArray<T>;","after":"return [0] as any as SortedArray<T>;","mutation":"seed a nonempty purportedly sorted array"},
+ {"file":"fixtures/02_config_descriptor.a","before":"enumerable: false","after":"enumerable: true","mutation":"make configFile enumerable"},
+ {"file":"fixtures/03_empty_assertion.a","before":"export function type(_value: unknown) {}","after":"export function type(_value: unknown) { if (typeof _value !== \"number\") { throw new Error(\"proof missing\"); } }","mutation":"replace empty assertion with an actual runtime check"}
+]

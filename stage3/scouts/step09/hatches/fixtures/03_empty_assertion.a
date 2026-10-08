@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:365
+// Refused hatch: Debug.type's generic assertion overload has an empty implementation.
+// Namespace wrapper removed to isolate the claim from unrelated namespace refusal.
+export function type<T>(value: unknown): asserts value is T;
+export function type(_value: unknown) {}
+let value: number | string = "not-a-number";
+type<number>(value);
+console.log(`${typeof value}`);
+console.log(`${value}`);

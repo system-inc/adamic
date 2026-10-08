@@ -1,0 +1,108 @@
+// Scratch-only access to the unchanged production predicate proof. No IR is emitted.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"strings"
+)
+
+type HatchPredicateResult struct {
+	Location   string `json:"location"`
+	Status     string `json:"status"`
+	Diagnostic string `json:"diagnostic"`
+}
+
+func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPredicateResult {
+	files := program.Files()
+	if len(files) == 0 {
+		return nil
+	}
+	checker, release := program.Checker(ctx, files[0])
+	defer release()
+	l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	l.noteInheritance(files)
+	results := []HatchPredicateResult{}
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindTypePredicate {
+				result := HatchPredicateResult{Location: program.Where(node), Status: "Proven"}
+				func() {
+					defer func() {
+						if failure := recover(); failure != nil {
+							result.Status = "ProbeError"
+							result.Diagnostic = fmt.Sprint(failure)
+						}
+					}()
+					if err := l.provePredicate(node); err != nil {
+						result.Status = "Refused"
+						result.Diagnostic = err.Error()
+					}
+				}()
+				results = append(results, result)
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	return results
+}
+
+// Calls the cast proof without representation lowering; bridges remain refused.
+type HatchCastResult struct {
+	Location       string `json:"location"`
+	Status         string `json:"status"`
+	Diagnostic     string `json:"diagnostic"`
+	CheckedTags    int    `json:"checkedTags"`
+	CheckedClasses int    `json:"checkedClasses"`
+}
+
+func HatchCastProof(ctx context.Context, program *load.Program, lines map[string]bool) []HatchCastResult {
+	files := program.Files()
+	checker, release := program.Checker(ctx, files[0])
+	defer release()
+	l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	l.noteInheritance(files)
+	results := []HatchCastResult{}
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindAsExpression {
+				location := program.Where(node)
+				key := location[:strings.LastIndex(location, ":")]
+				if lines[key] {
+					r := HatchCastResult{Location: location, Status: "ProvenUpcast"}
+					func() {
+						defer func() {
+							if failure := recover(); failure != nil {
+								r.Status = "ProbeError"
+								r.Diagnostic = fmt.Sprint(failure)
+							}
+						}()
+						proof, err := l.castProof(node)
+						if err != nil {
+							r.Status = "Refused"
+							r.Diagnostic = err.Error()
+						} else {
+							r.CheckedTags = len(proof.allowed)
+							r.CheckedClasses = len(proof.classes)
+							if r.CheckedTags+r.CheckedClasses > 0 {
+								r.Status = "Checked"
+							}
+						}
+					}()
+					results = append(results, r)
+				}
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	return results
+}

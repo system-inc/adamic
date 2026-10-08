@@ -1,0 +1,17 @@
+// From TypeScript 6.0.3, src/compiler/commandLineParser.ts:3032
+// Refused hatch: an existing options object receives a hidden readonly property.
+// Reduced dependencies retain only the fields observed by this driver.
+interface CompilerOptions { target: number; }
+interface TsConfigSourceFile { fileName: string; }
+export function setConfigFileInOptions(options: CompilerOptions, configFile: TsConfigSourceFile | undefined): void {
+    if (configFile) {
+        Object.defineProperty(options, "configFile", { enumerable: false, writable: false, value: configFile });
+    }
+}
+const options: CompilerOptions = { target: 1 };
+setConfigFileInOptions(options, { fileName: "tsconfig.json" });
+console.log(`${Object.keys(options).join(",")}`);
+const descriptor = Object.getOwnPropertyDescriptor(options, "configFile");
+console.log(`${descriptor?.enumerable}`);
+console.log(`${descriptor?.writable}`);
+setConfigFileInOptions({ target: 2 }, undefined);
