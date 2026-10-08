@@ -1,0 +1,34 @@
+{
+  "request": {
+    "path": "/workspace/cache/step31-binder-acceptance.json",
+    "bytes": 194014,
+    "sha256": "55cfa3e9c2d5b8ffe85007d2f2c09018e54e11aad89a32ea93ca7397f0e34c89"
+  },
+  "stock": {
+    "path": "/tmp/step31-binder-golden.jsonl",
+    "bytes": 3475070,
+    "sha256": "3f83fbf1a9c1587e2923484f7a22911f21c3ac47382ba80dbca597af04d846aa"
+  },
+  "sourceNode": {
+    "path": "/workspace/cache/step31-binder-port-final/actual.stdout",
+    "bytes": 3475070,
+    "sha256": "3f83fbf1a9c1587e2923484f7a22911f21c3ac47382ba80dbca597af04d846aa"
+  },
+  "compiler": {
+    "path": "/workspace/cache/step31-binder-area-adamic",
+    "bytes": 35168607,
+    "sha256": "7034567941008393fbc207374f26910c2f160f8596b785ac4b4916b8ac14f09d"
+  },
+  "projects": 301,
+  "nativeExecution": false,
+  "splitModes": {
+    "0": {
+      "exit": 1
+    },
+    "1": {
+      "exit": 1,
+      "jobs": 5
+    }
+  },
+  "scannerArtifactSHA256": "6475fbe2cff2341efbdfad7c957a56d26b0e698462b9756e01f6c9acf5186276"
+}

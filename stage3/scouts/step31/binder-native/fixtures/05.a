@@ -1,0 +1,6 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+let host: () => { now: () => number } = () => ({ now: () => 1 });
+function tryGetPerformance(): { now: () => number } { return host(); }
+const performance = tryGetPerformance();
+enum Phase { Ready = 1 }
+console.log(String(performance.now()));

@@ -1,0 +1,77 @@
+{
+  "01.a": {
+    "replace": "[['ok', 1]]",
+    "with": "[['mutant', 1]]",
+    "expected": "ok\n"
+  },
+  "02.a": {
+    "replace": "Error('ok')",
+    "with": "Error('mutant')",
+    "expected": "ok\n"
+  },
+  "03.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "04.a": {
+    "replace": "console.log(String(cache.size))",
+    "with": "console.log(String(cache.size + 1))",
+    "expected": "0\n"
+  },
+  "05.a": {
+    "replace": "now: () => 1",
+    "with": "now: () => 2",
+    "expected": "1\n"
+  },
+  "06.a": {
+    "replace": "true ? () => 1",
+    "with": "true ? () => 3",
+    "expected": "1\n"
+  },
+  "07.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "08.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "09.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "10.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "11.a": {
+    "replace": "new Map<string, number>()",
+    "with": "new Map<string, number>([['x', 1]])",
+    "expected": "0\n"
+  },
+  "12.a": {
+    "replace": "let cache: Map<string, number>;",
+    "with": "let cache: Map<string, number> = new Map<string, number>();",
+    "expected": "undefined\n"
+  },
+  "13.a": {
+    "replace": "now: () => 1",
+    "with": "now: () => 2",
+    "expected": "1\n"
+  },
+  "14.a": {
+    "replace": "now: () => 1",
+    "with": "now: () => 2",
+    "expected": "1\n"
+  },
+  "15.a": {
+    "replace": "now: () => 1",
+    "with": "now: () => 2",
+    "expected": "1\n"
+  }
+}

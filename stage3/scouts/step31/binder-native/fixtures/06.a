@@ -1,0 +1,5 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+const timestamp: () => number = true ? () => 1 : () => 2;
+const start = timestamp();
+enum Phase { Ready = 1 }
+console.log(String(start));
