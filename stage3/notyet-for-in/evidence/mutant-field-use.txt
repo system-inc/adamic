@@ -2,43 +2,15 @@ package native
 
 import (
 	"fmt"
-	"reflect"
-
 	"github.com/system-inc/adamic/internal/ir"
+	"reflect"
 )
-
-func (e *emitter) libraryLanguageValue(value ir.Expression) string {
-	switch value := value.(type) {
-	case ir.ForInOwn:
-		e.forInDeclarations()
-		return fmt.Sprintf("adamic_for_in_own((const adamic_heap *)%s, %s)", e.value(value.Object), e.value(value.Key))
-	case ir.ObjectKeys:
-		if value.Enumeration {
-			e.forInDeclarations()
-			return e.own(ir.Array, fmt.Sprintf("adamic_for_in_keys((const adamic_heap *)%s)", e.value(value.Object)))
-		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_class_object_keys(%s)", e.value(value.Object)))
-	case ir.ClosureSelf:
-		return e.own(ir.Closure, "adamic_retain(self)")
-	case ir.LibraryGlobal:
-		return fmt.Sprintf("(%s)adamic_library_identity(%d)", cType(value.Type()), libraryIdentityIndex(value.Name))
-	}
-	panic(fmt.Sprintf("native: no library language value for %T", value))
-}
-
-func libraryIdentityIndex(name string) int {
-	for index, candidate := range []string{"Object", "Array", "String", "Number", "JSON", "Map", "Set"} {
-		if candidate == name {
-			return index
-		}
-	}
-	panic("native: unknown library identity " + name)
-}
 
 func (e *emitter) forInDeclarations() {
 	e.declarations = append(e.declarations,
 		"extern const adamic_methods adamic_for_in_metadata;",
 		"adamic_array *adamic_for_in_keys(const adamic_heap *);",
+		"adamic_array *adamic_for_in_object_keys(const adamic_object *);",
 		"bool adamic_for_in_own(const adamic_heap *, const adamic_string *);",
 		"adamic_object *adamic_for_in_copy(const adamic_object *);",
 		"void adamic_for_in_initialize(adamic_object *, size_t);",
@@ -156,4 +128,19 @@ func (e *emitter) enumerationSlot(local int, value string) string {
 		return "((adamic_object *)" + value + ")"
 	}
 	return value
+}
+
+func (e *emitter) enumerationArgument(local int, from ir.Type, value string) string {
+	if e.program.Locals[local].Type != ir.Object || !e.enumeratesKeys() || !e.forInOnly(local, map[int]bool{}) {
+		return value
+	}
+	if !from.IsReference() {
+		boxed, fresh := converted(from, ir.Union, value)
+		boxed = "((adamic_object *)" + boxed + ")"
+		if fresh {
+			return e.own(ir.Object, boxed)
+		}
+		return boxed
+	}
+	return e.enumerationSlot(local, value)
 }

@@ -1,6 +1,6 @@
 Built runtime for-in enumeration for both assigned kinds; the earlier ruling-only result is superseded.
-Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; implementation d90f6c61eef475dc00c7b44881743633981c84f2; checked non-null merge 7a7f3905; main landing b16699be.
-All touched package tests, Node-held backend fixtures, sanitizers, leak checks and counts refresh are recorded in evidence/.
+Implementation commits d90f6c61 and 25a9e938; checked non-null c41c0e06 merged in 7a7f3905; current main 5fda2d26 merged in 21773ca4.
+Packages pass: lower 89.992s, native 332.005s, IR 67.000s, fresh 145.193s, oracle 185.335s, flow 115.983s, cmd/adamic 22.601s; JS has no package tests. Counts pass 32.869s.
 Ten semantic mutants produce wrong stdout; two representation-proof mutants fail their negative assertions.
 Ten origin roots and one array root lose these guards; three representative replays reach named next stops. Sparse array construction remains unsupported.
 
@@ -74,3 +74,9 @@ go test ./internal/oracle -count=1 -timeout 30m
 go test ./internal/oracle -run 'TestForIn|TestNativeAgreesWithNode/internal/oracle/testdata/(for_in_|library_for_in)' -count=1 -timeout 30m -v
 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
 ```
+
+Latest-main landing: merged origin/main 5fda2d266f6d213a781e7eff70df9ab7a80b018b in 21773ca4. Its changes affect only the census lane and velocity record, with no compiler or fixture input changes. The metadata isolation and flow registration fix is 25a9e938. Final full oracle passes in 185.335s with the final metadata helper and fixture counts.
+
+Final full native passes in 332.005s with the final compiler and runtime source. Final full oracle passes in 185.335s. Both commands exit 0; all earlier timeout and registration failures are superseded by these successful checks and the successful full flow run. git diff --check is clean. Final report and evidence are committed and pushed to the own branch; no PR is opened.
+
+Rechecked scratch-overlay mutants on final source: RegExp property presence fails only stdout (both processes exit 0, clean stderr), 11.259s; ignored field-use proof fails its assertion, 0.008s; truncated virtual targets fails its assertion, 0.009s. These expected exit-1 results are saved alongside the passing final packages.
