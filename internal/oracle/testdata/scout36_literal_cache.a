@@ -1,0 +1,36 @@
+// Shape: TypeScript checker.ts getStringLiteralType (20305), pinned at 050880ce.
+// The freshType back-edge is deliberately outside this acyclic first shape.
+class LiteralType {
+    readonly value: string;
+    readonly id: number;
+    constructor(value: string, id: number) {
+        this.value = value;
+        this.id = id;
+    }
+}
+const cache = new Map<string, LiteralType>();
+let nextId = 0;
+function getStringLiteralType(value: string): LiteralType {
+    let type = cache.get(value);
+    if(type === undefined) {
+        type = new LiteralType(value, nextId);
+        nextId += 1;
+        cache.set(value, type);
+    }
+    return type;
+}
+function run(): void {
+    let source = ['na', 'me'].join('');
+    const first = getStringLiteralType(source);
+    const second = getStringLiteralType(['n', 'ame'].join(''));
+    const distinct = getStringLiteralType(['na', 'mes'].join(''));
+    console.log(`${first === second} ${first === distinct} ${first.id} ${distinct.id}`);
+    source += '!';
+    cache.delete(['n', 'ame'].join(''));
+    cache.clear();
+    // The returned object and its string outlive both the key and the cache entry.
+    console.log(`${first.value} ${source} ${second.value} ${distinct.value}`);
+    const replacement = getStringLiteralType(['na', 'me'].join(''));
+    console.log(`${replacement === first} ${replacement.id} ${replacement.value}`);
+}
+run();

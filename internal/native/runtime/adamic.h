@@ -81,22 +81,26 @@ void adamic_release_slow(void *value);
 // separate bit first: a plain read of a shared count would race with its atomic updates. A graph
 // member's header bit sends it the same way, to count on its region; an environment's interior cell
 // has count zero, so it too reaches the slow path, which counts its environment.
-static inline void *adamic_retain(void *value) {
+__attribute__((always_inline)) static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return value; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+		if (heap->kind != adamic_kind_cell) { return value; }
 	}
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+__attribute__((always_inline)) static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
+		if (count == 0 && heap->kind != adamic_kind_cell) { return; }
 	}
 	adamic_release_slow(value);
 }

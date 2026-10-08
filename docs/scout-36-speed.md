@@ -7,7 +7,7 @@ The strongest current evidence favors removing ownership traffic and using
 profiles before assuming the allocator is the principal bottleneck. Maps need a
 fresh checker measurement: parsing exercises a very different workload.
 
-This is documentation only, based on `origin/area/runtime`
+The initial scout was documentation only, based on `origin/area/runtime`
 `cdfa22555589194e6f3133d986dd110061aafaa9`. No AGENTS.md existed in the repository
 or workspace ancestors. The base and each evidence branch were fetched by name.
 The parse-only driver is absent from this base; its source and parser/scanner
@@ -206,7 +206,206 @@ nor hardware-counter access. No timing result is claimed for these builds.
    intervention if those costs dominate. Require leak-clean Program release,
    identical outputs, and lifetime mutants for any new ownership correctness path.
 
-No production source, fixture, mutant or recorded count row was added or changed;
-`counts.md` therefore needs no regeneration. The focused scratch build checks,
+At the initial scout checkpoint, no production source, fixture, mutant or recorded
+count row was added or changed; `counts.md` needed no regeneration then. The focused scratch build checks,
 corpus-hash assertions, repeat-count checks, probe neutrality and full Go AST
 comparison passed. This scout makes no claim that step 36 is already achieved.
+
+## Follow-through: source research and the first built shape
+
+The original measurements above are preserved. This follow-through applies the
+previously measured wrapper optimization to this branch, adds independent guards,
+and leaves the wider checker design and language questions explicit. It does not
+claim a working native tsc checker.
+
+### Where step 36 bites in tsc
+
+Stock source pin remains `050880ce59e30b356b686bd3144efe24f875ebc8`.
+[scout-36-sites.json](scout-36-sites.json) records every matched file, content hash
+and line for these queries. [scout-36-sites.py](scout-36-sites.py) reproduces it:
+
+```sh
+python3 docs/scout-36-sites.py /tmp/scout36/corpus --check
+```
+
+The census is lexical and static, excludes the queried function declarations and
+interface signature, and counts multiple occurrences on a line separately.
+`.get`/`.set` receivers are not resolved to Map types, and `.parent` includes
+writes. None of these totals proves hotness or safe borrowing.
+
+| Cost/source shape | Concrete tsc source | Static sites and relevance |
+|---|---|---|
+| Literal/undefined ownership | [scanner.ts:414](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/scanner.ts#L414): `return tokenStrings[t]`; [419](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/scanner.ts#L419): `textToToken.get(s)`; [1821](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/scanner.ts#L1821): keyword lookup. | 56 `tokenToString` call-shaped occurrences: checker 26, parser 18, program 6, emitter 3, utilities 2, binder 1. The primitive result is often static text or undefined, yet an owned read/return can still ask the runtime to count it. |
+| Interned string/type ownership and Maps | [checker.ts:2052](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L2052) declares `stringLiteralTypes`; [20305–20308](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L20305) returns a hit or creates/stores/returns a type. | 24 `getStringLiteralType` call-shaped occurrences, all in checker.ts. This cache itself has one `.get` and one `.set` site. The checker has 90 `new Map` sites, 156 `.get` and 137 `.set` occurrences across receivers. Returning a cached object preserves identity, including after the caller keeps it. |
+| Allocation | [factory/nodeFactory.ts:1209](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/factory/nodeFactory.ts#L1209) delegates base-node creation; [checker.ts:5517](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L5517) constructs a Type and gives it an id. | 116 `createBaseNode` call-shaped occurrences in nodeFactory.ts. The allocation cohorts above measure the dynamic scale; static factory sites do not multiply directly into allocation counts. |
+| Strings | [scanner.ts:3096](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/scanner.ts#L3096) and [3208](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/scanner.ts#L3208) switch on two-unit slices, each with `TODO: don't use slice`. | 12 `.slice` occurrences in scanner.ts. Adjacent code converts numeric-literal substrings and scans class-set operands; replacing a slice with byte reads would need UTF-16 and boundary proofs. |
+| Generated recursive control and field reads | [checker.ts:22759](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L22759) starts `isRelatedTo`; [23324](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L23324) probes its relation cache; [2938](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L2938) creates/reuses node links. | The checker has 1,259 `.parent` property occurrences. Relation-cache access has two `relation.get` sites and three `relation.set` sites. Field reads and call control require inline source attribution, not blanket classification of all checker instructions as generated arithmetic. |
+| Program graph and cycles | [checker.ts:20276](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L20276) sets `regularType` to itself or the supplied type; [20283](https://github.com/microsoft/TypeScript/blob/050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/checker.ts#L20283) constructs fresh/regular back-links. | Eight calls to `getFreshTypeOfLiteralType` in checker.ts; self-links and cross-links make ordinary object-by-object counting insufficient. These full types are not the acyclic LiteralType fixture. |
+
+### Node, typescript-go and the specifications
+
+Node v24.19.0 reports V8 `13.6.233.17-node.51`. At the same Node release,
+[V8 String::Equals, string-inl.h:535](https://github.com/nodejs/node/blob/v24.19.0/deps/v8/src/objects/string-inl.h#L535)
+uses an identity fast path, rejects distinct internalized strings as unequal, and
+otherwise performs `SlowEquals`. That is an implementation fast path for primitive
+value equality, not permission to compare arbitrary separately allocated strings
+by address. [Heap::CollectGarbage, heap.cc:1558](https://github.com/nodejs/node/blob/v24.19.0/deps/v8/src/heap/heap.cc#L1558)
+shows Node's collector. tsc's cache code contains no retain/release calls: V8 keeps
+reachable values alive and can collect unreachable cyclic graphs.
+
+A direct observation on this machine, with `node --expose-gc --trace-gc`, creates
+an object containing `['na','me'].join('')`, caches it by that string, retrieves it
+using a separately constructed equal string, clears the Map, and calls
+`global.gc()`. It prints **`true name undefined`** after one Mark-Compact record.
+The caller's object/string survive; the deleted lookup does not. This supports the
+fixture's answer, not a storage or collection guarantee Adamic can copy.
+
+The repository's typescript-go source pin is the vendored fork
+`cohere/TypeScript` at `d92d9bfee114c80be2c375d72edae966176e3a4f`; these observations
+are source evidence, not a reproduction of the comparator's 1.78 s measurement:
+
+- [scanner.go:2263](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/scanner/scanner.go#L2263)
+  indexes a fixed `[ast.KindCount]string` reverse table; a missing spelling is
+  Go's empty string, whereas the stock JS function returns undefined.
+  [scanner.go:277](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/scanner/scanner.go#L277)
+  returns a source substring with `s.text[s.tokenStart:s.pos]`. Go source positions
+  here use its representation; they are not a license to substitute UTF-8 byte
+  positions for JS UTF-16 indices.
+- [checker.go:25839](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/checker/checker.go#L25839)
+  interns `*Type` values in `map[string]*Type`, returning the existing pointer on
+  a hit. [25849](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/checker/checker.go#L25849)
+  explicitly treats NaN separately because Go's normal NaN map lookup misses.
+- [checker.go:681](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/checker/checker.go#L681)
+  has Symbol, Signature and IndexInfo arenas; [core/arena.go:15](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/core/arena.go#L15)
+  allocates fresh backing batches, growing to 256 elements. Returned pointers
+  preserve old batches through Go's reachability rules. LiteralType construction
+  at [checker.go:25577](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/checker/checker.go#L25577)
+  uses `&LiteralType{}`; not every Type allocation is arena-backed.
+- Fresh/regular cycles are retained in
+  [checker.go:25821](https://github.com/system-inc/TypeScript/blob/d92d9bfee114c80be2c375d72edae966176e3a4f/tsc/internal/checker/checker.go#L25821).
+  The implementation relies on Go memory management, rather than replacing
+  those edges with Weak. Adamic's design must solve their ownership itself.
+
+The normative answers relevant to these shapes are:
+
+- [ECMAScript String type, §6.1.4](https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html#sec-ecmascript-language-types-string-type):
+  strings are sequences of 16-bit code units, including ill-formed surrogate
+  sequences. Representation optimizations must preserve those values and existing
+  aliases; concatenation cannot change the caller's prior string value.
+- [Map.prototype.get](https://tc39.es/ecma262/multipage/keyed-collections.html#sec-map.prototype.get)
+  returns the stored value or undefined. The current specification canonicalizes
+  the key then compares with SameValue; the resulting key behavior is the
+  familiar SameValueZero treatment of NaN and signed zero. String keys compare
+  by value, and returned objects retain object identity.
+- [Map.prototype.set](https://tc39.es/ecma262/multipage/keyed-collections.html#sec-map.prototype.set)
+  replaces an equal key's value or appends an entry;
+  [Map.prototype.delete](https://tc39.es/ecma262/multipage/keyed-collections.html#sec-map.prototype.delete)
+  removes that entry. Deletion is not an operation that invalidates another
+  live language reference to its former value.
+
+These algorithms constrain visible behavior. They do not require V8's collector,
+Go's arenas, Adamic's counts or a particular physical string representation.
+Node remains the executable oracle for every fixture.
+
+### Design inside Adamic's existing rules
+
+The first built intervention changes only `internal/native/runtime/adamic.h` and
+imports the measured wrapper structure from `runtime/retain-fast-path`, rather
+than claiming a new algorithm. Retain/release still count every requested call.
+They first return for NULL. They inspect shared/graph flags **before any plain
+reference-count access**. Ordinary positive counts use the existing inline path;
+zero-count non-cell values return without entering the slow helper. A zero-count
+cell still dispatches to its environment owner. Last-reference release still
+enters the existing destruction path. Both wrappers are forced inline under the
+shipped clang policy. No compiler call is elided, no new lifetime is inferred,
+no graph is traced in production, and no collector is introduced.
+
+This rule is safe without a language ruling: static strings already have zero
+counts and permanent storage; statement-region values already live until region
+end. Shared values and graph members bypass the new zero-count test. An interior
+cell's zero is not immortality, which is why the cell exception is mandatory.
+The two new fixtures exercise primitive lookup and an acyclic intern cache using
+existing owned returns. They do not require borrowed returns or a new Program API.
+
+For the remaining step, preserve the existing ownership model while measuring:
+borrow only stable roots across proven harmless operations; retain an owned
+result before its cache/container can disappear; reuse only a consumed unique
+value whose identity no other holder can observe; keep graph-internal edges in
+the supported dynamic region and preserve every outside owner. Match a profile
+to the full source/runtime/target fingerprint before consuming it. Derive a
+checker CPU budget from self and inline costs before choosing the next change.
+
+The hard cases are cache deletion/replacement while a caller holds the result;
+unknown callbacks or virtual writers during field/element reads; closure cells
+whose owner survives through an interior reference; graph/shared flags whose
+counts cannot be read plainly; fresh/regular self- and back-links; Program
+versions with external owners; UTF-16 surrogate halves in slice/key operations;
+NaN/signed-zero keys; and identity-bearing Type/Symbol objects whose equal fields
+do not make them interchangeable. Blanket immortality, blanket borrowed cache
+results, Go empty-string sentinels or weak graph back-links would not preserve
+these established Node answers.
+
+### Questions for system_adamic
+
+- Should a future borrowed-return convention be part of the language/API contract,
+  or should all cache-returning calls continue to return owned values even when
+  the compiler knows their Program owner?
+- If Program-scoped allocation becomes a source-visible facility, how should a
+  returned Type/Symbol, closure capture or host handle express the outside owner
+  when it outlives the call that created the Program?
+- Should any cross-Program cache be eligible for a Program-lifetime-only contract,
+  and what should the contract require for overlapping Program versions or watch
+  sessions?
+- Should programmer-specified intern pools ever affect identity-bearing objects,
+  or should additional interning remain limited to primitive value representations
+  and already explicit tsc caches?
+- If a future region API permits disposal, what should happen when a caller still
+  holds a language reference: refusal, an explicit retained owner, or another
+  specified contract that never frees that value early?
+
+No ruling on these questions is assumed. Borrowed-return contracts, source-visible
+Program disposal and new identity-bearing interning are not built in this change;
+implementing them would require those language decisions. The existing wrapper
+shape and fixtures require none of them.
+
+### Fixtures, mutants and green implementation
+
+| Fixture/control | Node-held behavior or invariant | Mutant actually rejected |
+|---|---|---|
+| [scout36_token_spellings.a](../internal/oracle/testdata/scout36_token_spellings.a) | Scanner-style reverse-array lookup and keyword Map lookup; missing index returns undefined; held spelling survives removal from the array. | Shift the lookup index by one: valid sanitized, leak-clean native execution finishes, but disagrees with original source Node output. |
+| [scout36_literal_cache.a](../internal/oracle/testdata/scout36_literal_cache.a) | Checker-style equal-string interning returns the same object; distinct names differ; changing the source and deleting/clearing cache entries preserves held object/string values. | Omit `cache.set`: valid sanitized, leak-clean execution finishes, but identity/id output disagrees with original source Node. |
+| `TestScout36FastPathDispatch` | 33 retains and 33 releases remain counted; NULL and 32 immortal-string operations invoke zero slow helpers. | Restore zero-count slow dispatch: the harness rejects exactly 32 retain and 32 release helper entries. This is a performance control, not a claim that the old behavior was semantically wrong. |
+| `TestScout36OwnedCellMutant` | Retaining an interior cell keeps its environment alive after the original environment reference is released. | Treat zero-count cells as immortal: ASan reports heap-use-after-free. |
+
+`internal/oracle/scout36_test.go` registers both fixtures with the shared Node,
+native sanitizer/leak and JavaScript-backend oracle, and runs their semantic
+mutants independently. `internal/native/scout36_test.go` builds the real edited
+runtime for each dispatch/cell mutant, with ASan, UBSan and leak detection enabled.
+The new control measures 64 slow-helper entries removed for the 32 immortal
+pairs, while ownership-call counts stay unchanged. It is not a new throughput
+measurement. Machine remains the EPYC/Linux machine recorded above; during the
+follow-through checks, sampled 1/5/15-minute load was 1.63 / 1.16 / 0.84.
+
+Passing focused commands:
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh --wasi-sdk
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -v \
+  -run 'TestScout36SourceMutants|TestNativeAgreesWithNode/internal/oracle/testdata/scout36_'
+go test ./internal/native -count=1 -v \
+  -run '^TestScout36|^TestEnvironmentCellsCountTheirEnvironment$|^TestGraphMembersCountOnTheirRegion$|^TestRuntimeReleasePaths$|^TestReleaseSharedValueAndUnsafeMutant$'
+go test ./internal/native -count=1 -v \
+  -run '^(TestGraphRegionsRuntime|TestGraphClosureEnvironment|TestRegionEndWeakTargets|TestParallelMemory)$'
+go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1
+python3 docs/scout-36-sites.py /tmp/scout36/corpus --check
+```
+
+The parallel-memory guard also passed its ASan, slab-ASan, counted, malloc and
+TSan variants. Existing graph/shared/last-owner mutants remained caught. Counts
+regeneration changes exactly two rows: token fixture **8 allocations / 8 frees /
+22 retains / 29 releases / peak 5**; literal cache **21 / 21 / 32 / 42 / peak 10**.
+Every pre-existing count row is unchanged. The ledger is committed separately,
+with only `internal/oracle/counts.md` in that commit.

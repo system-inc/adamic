@@ -1,0 +1,23 @@
+// Shapes: TypeScript scanner.ts tokenToString (414), stringToToken (419),
+// and textToKeyword.get(tokenValue) (1821), pinned at 050880ce.
+const tokenStrings = ['', 'if', 'return', '+'];
+function tokenToString(token: number): string | undefined {
+    return tokenStrings[token];
+}
+const keywords = new Map<string, number>();
+keywords.set('if', 1);
+keywords.set('return', 2);
+function run(): void {
+    const source = ['r', 'eturn'].join('');
+    const keyword = keywords.get(source);
+    console.log(`${keyword ?? -1} ${tokenToString(keyword ?? -1) ?? 'absent'}`);
+    for(const token of [1, 2, 3, 4]) {
+        const spelling = tokenToString(token);
+        console.log(spelling === undefined ? 'undefined' : spelling);
+    }
+    // Clearing the table cannot invalidate a value held by its caller.
+    const held = tokenToString(2);
+    tokenStrings.splice(0, tokenStrings.length);
+    console.log(`${held ?? 'lost'} ${tokenToString(2) ?? 'absent'}`);
+}
+run();
