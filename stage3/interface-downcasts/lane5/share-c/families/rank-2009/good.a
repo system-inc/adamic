@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Type {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface NamedTupleMember {readonly value:number;readonly kind:203;}
+interface SyntheticExpression {readonly value:number;readonly kind:238;}
+interface Base {readonly createSyntheticExpression:unknown;}
+interface Target {createSyntheticExpression(type: Type, isSpread?: boolean, tupleNameSource?: ParameterDeclaration | NamedTupleMember): SyntheticExpression;}
+function probe(value:Base):void {const parseNodeFactory=value as Target;const result=parseNodeFactory.createSyntheticExpression({value:3},true,{value:3,kind:170});console.log("completed");}
+probe({createSyntheticExpression:(type: Type,isSpread?: boolean,tupleNameSource?: ParameterDeclaration | NamedTupleMember):SyntheticExpression=>({value:3,kind:238})});

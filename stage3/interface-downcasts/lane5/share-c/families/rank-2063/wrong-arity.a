@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly clear:unknown;}
+interface Target {clear(): void;}
+function probe(value:Base):void {const nonRelativeNameResolutionCache=value as Target;nonRelativeNameResolutionCache.clear();console.log("completed");}
+probe({clear:(extra:number): void=>{}});

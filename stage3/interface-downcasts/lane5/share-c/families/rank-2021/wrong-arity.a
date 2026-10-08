@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Decorator {readonly value:number;readonly kind:171;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateDecorator:unknown;}
+interface Target {updateDecorator(node: Decorator, expression: Expression): Decorator;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateDecorator({value:3,kind:171},{value:3});console.log("completed");}
+probe({updateDecorator:(): Decorator=>({value:3,kind:171})});

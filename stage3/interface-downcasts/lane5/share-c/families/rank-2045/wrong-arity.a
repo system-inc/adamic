@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface OptionalTypeNode {readonly value:number;readonly kind:191;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateOptionalTypeNode:unknown;}
+interface Target {updateOptionalTypeNode(node: OptionalTypeNode, type: TypeNode): OptionalTypeNode;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateOptionalTypeNode({value:3,kind:191},{value:3});console.log("completed");}
+probe({updateOptionalTypeNode:(): OptionalTypeNode=>({value:3,kind:191})});

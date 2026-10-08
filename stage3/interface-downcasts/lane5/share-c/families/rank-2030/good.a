@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface IntersectionTypeNode {readonly value:number;readonly kind:194;}
+interface NodeArray<T0> {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateIntersectionTypeNode:unknown;}
+interface Target {updateIntersectionTypeNode(node: IntersectionTypeNode, types: NodeArray<TypeNode>): IntersectionTypeNode;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateIntersectionTypeNode({value:3,kind:194},{value:3});console.log("completed");}
+probe({updateIntersectionTypeNode:(node: IntersectionTypeNode,types: NodeArray<TypeNode>):IntersectionTypeNode=>({value:3,kind:194})});

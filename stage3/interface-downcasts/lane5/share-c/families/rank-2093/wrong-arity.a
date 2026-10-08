@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface T {readonly value:number;}
+interface Base {readonly lastIndexOf:unknown;}
+interface Target {lastIndexOf(searchElement: T, fromIndex?: number): number;}
+function probe(value:Base):void {const typeRootPathComponents=value as Target;const result=typeRootPathComponents.lastIndexOf({value:3},3);console.log("completed");}
+probe({lastIndexOf:(): number=>(3)});

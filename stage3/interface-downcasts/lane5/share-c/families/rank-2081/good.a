@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeNode {readonly value:number;}
+interface NamedTupleMember {readonly value:number;readonly kind:203;}
+interface Base {readonly parenthesizeElementTypeOfTupleType:unknown;}
+interface Target {parenthesizeElementTypeOfTupleType(type: TypeNode | NamedTupleMember): TypeNode | NamedTupleMember;}
+function probe(value:Base):void {const parenthesizer=value as Target;const result=parenthesizer.parenthesizeElementTypeOfTupleType({value:3});console.log("completed");}
+probe({parenthesizeElementTypeOfTupleType:(type: TypeNode | NamedTupleMember):TypeNode | NamedTupleMember=>({value:3})});

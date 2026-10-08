@@ -1,0 +1,15 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JsxClosingElement {readonly value:number;readonly kind:288;}
+type JsxTagNameExpression =
+    | Identifier
+    | ThisExpression
+    | JsxTagNamePropertyAccess
+    | JsxNamespacedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface ThisExpression {readonly value:number;readonly kind:110;}
+interface JsxTagNamePropertyAccess {readonly value:number;readonly kind:212;}
+interface JsxNamespacedName {readonly value:number;readonly kind:296;}
+interface Base {readonly updateJsxClosingElement:unknown;}
+interface Target {updateJsxClosingElement(node: JsxClosingElement, tagName: JsxTagNameExpression): JsxClosingElement;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateJsxClosingElement({value:3,kind:288},{value:3,kind:80});console.log("completed");}
+probe({updateJsxClosingElement:(node: JsxClosingElement,tagName: JsxTagNameExpression):JsxClosingElement=>({value:3,kind:288})});

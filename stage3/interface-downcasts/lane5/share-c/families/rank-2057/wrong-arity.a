@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeOfExpression {readonly value:number;readonly kind:222;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateTypeOfExpression:unknown;}
+interface Target {updateTypeOfExpression(node: TypeOfExpression, expression: Expression): TypeOfExpression;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateTypeOfExpression({value:3,kind:222},{value:3});console.log("completed");}
+probe({updateTypeOfExpression:(): TypeOfExpression=>({value:3,kind:222})});

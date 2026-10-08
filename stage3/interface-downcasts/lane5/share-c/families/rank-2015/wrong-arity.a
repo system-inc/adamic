@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface NodeArray<T0> {readonly value:number;}
+interface Statement {readonly value:number;}
+interface Base {readonly ensureUseStrict:unknown;}
+interface Target {ensureUseStrict(statements: NodeArray<Statement>): NodeArray<Statement>;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.ensureUseStrict({value:3});console.log("completed");}
+probe({ensureUseStrict:(): NodeArray<Statement>=>({value:3})});

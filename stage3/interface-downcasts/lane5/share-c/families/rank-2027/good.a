@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ImportSpecifier {readonly value:number;readonly kind:277;}
+type ModuleExportName = Identifier | StringLiteral;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+interface Base {readonly updateImportSpecifier:unknown;}
+interface Target {updateImportSpecifier(node: ImportSpecifier, isTypeOnly: boolean, propertyName: ModuleExportName | undefined, name: Identifier): ImportSpecifier;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateImportSpecifier({value:3,kind:277},true,{value:3,kind:80},{value:3,kind:80});console.log("completed");}
+probe({updateImportSpecifier:(node: ImportSpecifier,isTypeOnly: boolean,propertyName: ModuleExportName | undefined,name: Identifier):ImportSpecifier=>({value:3,kind:277})});

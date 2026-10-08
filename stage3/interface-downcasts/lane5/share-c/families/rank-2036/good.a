@@ -1,0 +1,18 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JsxFragment {readonly value:number;readonly kind:289;}
+interface JsxOpeningFragment {readonly value:number;readonly kind:290;}
+type JsxChild =
+    | JsxText
+    | JsxExpression
+    | JsxElement
+    | JsxSelfClosingElement
+    | JsxFragment;
+interface JsxText {readonly value:number;readonly kind:12;}
+interface JsxExpression {readonly value:number;readonly kind:295;}
+interface JsxElement {readonly value:number;readonly kind:285;}
+interface JsxSelfClosingElement {readonly value:number;readonly kind:286;}
+interface JsxClosingFragment {readonly value:number;readonly kind:291;}
+interface Base {readonly updateJsxFragment:unknown;}
+interface Target {updateJsxFragment(node: JsxFragment, openingFragment: JsxOpeningFragment, children: readonly JsxChild[], closingFragment: JsxClosingFragment): JsxFragment;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateJsxFragment({value:3,kind:289},{value:3,kind:290},[{value:3,kind:12}],{value:3,kind:291});console.log("completed");}
+probe({updateJsxFragment:(node: JsxFragment,openingFragment: JsxOpeningFragment,children: readonly JsxChild[],closingFragment: JsxClosingFragment):JsxFragment=>({value:3,kind:289})});

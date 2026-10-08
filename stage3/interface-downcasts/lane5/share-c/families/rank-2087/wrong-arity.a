@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly readDirectory:unknown;}
+interface Target {readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): readonly string[];}
+function probe(value:Base):void {const host=value as Target;const result=host.readDirectory("abc",["abc"],["abc"],["abc"],3);console.log("completed");}
+probe({readDirectory:(): readonly string[]=>(["abc"])});
