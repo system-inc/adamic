@@ -1,0 +1,34 @@
+import { parallelMap, panic } from 'adamic';
+class Scanner {
+ readonly text: string;
+ pos = 0;
+ kind = '';
+ constructor(text: string) { this.text = text; }
+ scan(): void { this.kind = this.text.charAt(this.pos); this.pos++; }
+}
+class ParseNode {
+ readonly kind: string;
+ end: number;
+ constructor(kind: string, end: number) { this.kind = kind; this.end = end; }
+}
+class Parser {
+ readonly scanner: Scanner;
+ readonly nodes: ParseNode[] = [];
+ readonly offsets: number[] = [];
+ count = 0;
+ constructor(text: string) { this.scanner = new Scanner(text); this.next(); }
+ next(): void { this.scanner.scan(); this.count++; }
+ node(index: number): ParseNode { return this.nodes[index] ?? panic('missing node'); }
+ parse(): string {
+  while(this.scanner.kind !== '') {
+   const node = new ParseNode(this.scanner.kind, this.scanner.pos);
+   this.nodes.push(node);
+   this.node(this.nodes.length - 1).end = this.scanner.pos;
+   this.offsets.push(this.node(this.nodes.length - 1).end);
+   this.next();
+  }
+  return String(this.count) + ':' + this.offsets.join(',');
+ }
+}
+const items: readonly string[] = Array.from({ length: 128 }, (_, index) => 'file' + String(index));
+console.log(parallelMap(items, text => { const parser = new Parser(text); return parser.parse(); }).join('|'));

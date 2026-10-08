@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+import { Scanner } from '../../stage1/typescript/scanner/scanner.ts';
+const items: readonly string[] = ['const x = 1;', 'let y = 2;'];
+console.log(parallelMap(items, text => { const scanner = new Scanner(text); return scanner.scan(); }).join('|'));

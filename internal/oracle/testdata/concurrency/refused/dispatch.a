@@ -1,4 +1,5 @@
 import { parallelMap } from 'adamic';
 class Item { readonly value = 1; read(): number { return this.value; } }
+class Derived extends Item { read(): number { return 2; } }
 const items: readonly Item[] = [new Item()];
 parallelMap(items, (item) => item.read());

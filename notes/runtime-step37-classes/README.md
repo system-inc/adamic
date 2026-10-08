@@ -1,5 +1,13 @@
 # runtime-step37-classes
 
+Current result: readonly class tasks and worker-private mutable class tasks are
+admitted by separate proofs. Per-task constructors, field initializers, nested
+Scanner state, private arrays and method-returned node mutation agree with Node
+and are TSan-clean at 1, 4 and 16 threads. Shared mutable receivers and publication
+into captures remain refused. The actual scanner's next blocker is its captured
+mutable keyword Map. The readonly report below predates the October 8 ruling;
+the worker-private section records the final widened unit.
+
 Base: origin/area/runtime 9bc8201f1c97c4c18a03d263a40ece933ffa752e.
 Current origin/main 45487a8 is already an ancestor. This is prework for roadmap
 step 37 (#xfpyaj8), not a parallel parser implementation.
@@ -96,9 +104,8 @@ No mutable Parser instance is declared Shareable by this unit.
 
 These questions are undecided; this implementation does not answer them.
 
-- May a task construct and exclusively own a mutable Parser with its Scanner,
-  nodes and roots, and what construction/move proof is required for the whole
-  graph and for results that return part of it?
+- May a worker-private mutable graph be returned as a task result through an
+  ownership transfer, and what result-transfer proof is required?
 - May an immutable class method call another method through this or capture this
   in a nested closure when the complete transitive graph is race-free?
 - Is a closed-world all-target effect proof sufficient for inherited/interface
@@ -186,7 +193,171 @@ Commands and logs (all test output redirected to files):
 - `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1
   -timeout 15m -args -update-counts`: pass 78.053s, /tmp/step37-counts.log.
 
-Named remaining blocker: **task-local class construction and whole reachable
-graph ownership**. The mutable stage1 Parser is not admitted. No end-to-end
-parallel parser, interface/inherited method admission, move-class admission or
-full stage1 repository gate is claimed.
+The first readonly commit stopped at task-local construction/graph ownership.
+The ruling and proof below address that blocker. No end-to-end parallel parser,
+inherited method admission, move-class admission or full stage1 repository gate
+is claimed.
+
+## October 8 ruling and worker-private extension
+
+Readonly commit: 12a6b288fcd84536e39eed8fb311e59f529ed89a. system_adamic's
+October 8 step-37 ruling, supplied by the user, is:
+
+> 1. Yes: class constructors and methods are admitted on a receiver proven
+> worker-private (allocated inside the task, not reachable from anything the
+> task shares). Mutating a private value is fine.
+
+This answers the construction/mutation question, not the undecided result,
+closure, hierarchy or accessor questions above. The implemented proof follows
+that ruling without making a readonly type out of mutable parser state.
+
+parallel.go now calls taskFunction at the shared task boundary and when gathering
+runtime shared roots. The established shared proof runs first. When it cannot
+prove the task, parallel_private.go:37 tries a separate worker-private graph
+proof; it is used only when a source-class construction is encountered.
+Non-class tasks retain their established proof and diagnostics.
+
+- parallel_private.go:112 tracks allocation sites, not counts, liveness or an
+  assumption that a parameter is owned. Inputs and captures start shared;
+  primitives (including runtime strings) have immutable value semantics.
+- parallel_private.go:92 joins every allocation origin and the shared bit.
+  Function frames, locals, parameters, this receivers, return values, object
+  fields and collection elements keep those origins across branches and loop
+  trips. The whole task is revisited to a monotone fixed point. A shared origin
+  never becomes private after rebinding. Non-convergence is refused after 32
+  passes. Assertions and optional wrappers keep origins.
+- parallel_private_calls.go:9 requires a known source-class constructor with no
+  unproven heritage. It inspects instance field initializers and the constructor
+  body, with this bound to the new allocation. Nested constructors form private
+  graph edges. Scalar constructor arguments and shared immutable children are
+  allowed; shared children remain shared. Recursive construction is refused
+  with a diagnostic rather than risking a compiler recursion panic.
+- parallel_private_calls.go:120 follows the actual receiver allocation origins.
+  Every possible origin must be private or separately admitted by the readonly
+  proof, and every private method target must have a known source body. Private
+  interface views can work because the concrete allocations supply the complete
+  target set. Heritage, replaced/extracted methods, unknown callees and accessors
+  are refused. Recursive private calls currently require ownership summaries
+  and remain refused; callback closure values also remain conservative.
+- parallel_private.go:419 permits field/element mutation only on private origins.
+  Stores to captures, globals or shared receivers are refused even if the stored
+  value was freshly constructed. Constructor and method helper calls propagate
+  argument/return origins, so a helper cannot hide publication. A private parent
+  pointing at a shared readonly array does not authorize mutation of that array.
+- Scalar expressions are traversed through syntax wrappers (including template
+  spans) to inspect their effects. Library calls use an explicit effect list;
+  unknown calls and object coercion dispatch remain refused. Primitive library
+  constants used by scanner defaults are allowed. No native runtime safety check
+  or sanitizer was disabled.
+
+Only Shareable task results are admitted by this extension. Mutable private
+objects may be returned between helpers within the worker, as in Parser.node(),
+but this unit does not add an unchecked graph escape at the task boundary.
+
+## Widened fixtures and observed mutants
+
+The previously refused task_parser_local.a is now accepted under the ruling,
+with identical source and Node output first:1|second:1. Its publication mutant
+stores the private Parser into an outer capture and is refused.
+
+task_private_parser.a is a parser-shaped task with 128 independent input strings.
+It includes constructor-to-method calls, new Scanner inside Parser's constructor,
+array field initializers, scanner position/kind writes, private ParseNode
+construction, this.nodes.push, and this.node(index).end mutation. The node helper
+returns a private child; its caller's write keeps that provenance. The output
+agrees with original Node, JavaScript, release C, ASan/UBSan, slab builds and TSan.
+Both private fixtures run three times at each of 1, 4 and 16 threads in the
+permanent TestTaskWorkerPrivateClassesThreadSanitizer.
+
+Permanent source mutants and their observed catchers:
+
+| Mutation | Catcher |
+|---|---|
+| Use one mutable Parser capture instead of per-task construction | Refused: sharedParser.scanner.pos is not Shareable |
+| Store the constructed Parser into an outer capture | Private proof: publishes into a capture or global |
+| Publish this from the constructor | Same private publication refusal |
+| Publish this.scanner from a method | Same private publication refusal |
+| Pass a shared readonly array into a private object, cast its view and push | Private proof: mutates a shared collection |
+| Rebind a loop/branch alias from private array to shared items, then push | Joined origins retain the shared bit; mutation refused |
+| Extract a method and invoke it without a proven target/receiver | Unknown reference/method dispatch refused |
+| Mutate a global inside a template span | Private effect walk refuses publication/write |
+| Publish a private argument through a named helper | Helper frame rejects the capture store |
+| Recursively construct a class in its field initializer | Recursive construction refusal, no compiler panic |
+
+The C admission mutant replaces every task's Parser_new call with a retained
+pointer to one Parser allocated before the pool, then calls adamic_share on that
+graph. This ensures the object's counts are correctly shared; the mutation is
+sharing mutable parser state, not an unrelated counter race. TSan reports a data
+race in adamic_array_push at four threads. The existing readonly receiver-write
+C mutant also remains caught. Healthy tasks and the shared-receiver mutation
+are separate executions; no mutated output is claimed to match Node.
+
+The initial broad readonly concurrency gate found a stale refusal fixture:
+dispatch.a was exactly the newly admitted immutable-class shape. That gate
+failed only that expectation. The final dispatch refusal now contains a derived
+class, so its hierarchy is outside the known-target subset; the exact prior
+method-dispatch diagnostic remains required. Its dedicated check and the final
+uncached concurrency gate pass. No output mismatch or race failure was waived.
+
+New private counts: task_parser_local has 14 allocations/14 frees, 10 retains,
+17 releases, peak 10; task_private_parser has 2,073 allocations/2,073 frees,
+7,314 retains, 7,704 releases, peak 275. Zero regions/slabs. No existing numeric
+count changed. Count refresh passed in 72.641s.
+
+## Actual scanner probe and remaining boundary
+
+private_scanner.a imports stage1/typescript/scanner/scanner.ts unchanged and
+constructs a Scanner inside each task. Original Node prints
+ConstKeyword|LetKeyword. A permanent Node witness and exact refusal test passed
+in 0.415s. The compiler now reaches scanner.ts:652:29 and refuses:
+
+```text
+task capture 'keywords' is not shareable: keywords is a mutable Map
+```
+
+scanner/tokens.ts:2 declares keywords as an unqualified new Map; punctuators
+at tokens.ts:91 has the same mutable capture type. This is an observation of a
+remaining boundary, not permission to smuggle a Map across it. A prior probe
+stopped at Number.MAX_SAFE_INTEGER in a default argument; the final proof
+recognizes the immutable primitive library constant and reaches the Map.
+Stage1's token tables were not edited. Their Shareable views/proofs and recursive
+private-call/callback summaries are the named remaining work before claiming
+end-to-end parallel parsing.
+
+## Widened validation
+
+All outputs are log files, never piped from test execution.
+
+- `go test ./internal/lower -run 'TestWorkerPrivate|TestTask' -count=1 -v
+  -timeout 10m`: pass 0.409s, /tmp/step37-private-proof-settled.log.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+  'TestTaskParserShapeNodeWitnesses|TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/task_(parser_local|private_parser)'
+  -count=1 -v -timeout 15m`: pass 1.593s, /tmp/step37-private-fixtures.log.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+  'TestTaskPrivateReceiverSharedMutant|TestTaskWorkerPrivateClassesThreadSanitizer'
+  -count=1 -v -timeout 15m`: pass 1.146s including the caught shared receiver
+  mutation, /tmp/step37-private-race-final.log.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+  '^TestTaskActualScannerShareableBoundary$' -count=1 -v -timeout 10m`: pass
+  0.415s, /tmp/step37-actual-scanner-witness.log.
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1
+  -timeout 15m -args -update-counts`: pass 72.641s,
+  /tmp/step37-private-counts.log.
+- Initial `ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/ir
+  ./internal/lower -count=1 -timeout 15m`: pass native 670.908s, ir 35.166s,
+  lower 48.202s, /tmp/step37-packages.log. This preceded the widened private proof.
+- Final `ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/ir -count=1
+  -timeout 15m`: pass lower 58.669s, ir 37.604s,
+  /tmp/step37-private-packages.log. No native source changed; the new C programs
+  were rebuilt in all their oracle/sanitizer variants.
+- Final `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+  'TestTask|TestConcurrency|TestNativeAgreesWithNode/internal/oracle/testdata/concurrency|TestCountsAreRecorded'
+  -count=1 -timeout 20m`: pass 102.175s,
+  /tmp/step37-private-oracle-final.log. This covers every concurrency fixture,
+  task/refusal mutant, explicit 1/4/16 TSan run and the entire recorded count table.
+
+The exploratory broad gate including TestParallel schedules is recorded in
+/tmp/step37-oracle-final.log (746.387s, stale dispatch refusal as described
+above). It is not claimed green. The final gate above intentionally omits the
+large existing parallel schedule benchmark suite. No full repository/stage1
+uncached gate, full-oracle run or macOS verification is claimed for this unit.

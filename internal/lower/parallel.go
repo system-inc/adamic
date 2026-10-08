@@ -37,7 +37,7 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 	proof := &parallelProof{l: l, active: map[*ast.Node]bool{}, checked: map[*ast.Node]bool{}, shareableFunctions: map[*ast.Node]bool{}}
 	body := proof.functionValue(arguments[1], map[*ast.Symbol]bool{})
 	if !moved {
-		if err := proof.function(body, nil); err != nil {
+		if err := proof.taskFunction(body); err != nil {
 			return nil, err
 		}
 	}
@@ -121,7 +121,7 @@ func (l *lowering) checkParallelMap(node *ast.Node) error {
 			return proof.capture(arguments[1], nil, nil)
 		}
 	}
-	return proof.function(work, nil)
+	return proof.taskFunction(work)
 }
 
 type parallelProof struct {
