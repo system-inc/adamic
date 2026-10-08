@@ -1,0 +1,77 @@
+{
+  "brandSites": 36,
+  "publicLines": 27,
+  "jsFiles": 10,
+  "declarationFiles": 715,
+  "changedDeclarations": [
+    "local/compiler/builder.d.ts",
+    "local/compiler/corePublic.d.ts",
+    "local/compiler/moduleNameResolver.d.ts",
+    "local/compiler/path.d.ts",
+    "local/compiler/types.d.ts",
+    "local/compiler/utilities.d.ts",
+    "local/typescript.d.ts",
+    "local/typescript.internal.d.ts"
+  ],
+  "touched": [
+    {
+      "file": "src/compiler/builder.ts",
+      "before": "de66710dda2a3b40f8cca6de785df4b4a4e0d12a18ec021a3998c432a942e283",
+      "after": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "before": "8780462bf9c2d22681b01eb95bacba6f78fc667e06d122ac38deb903caa45fec",
+      "after": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "before": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09",
+      "after": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "before": "4c91681c144d8e3534f33df07d908d9dea9b73d82befe4bae7053796c4d7a4c0",
+      "after": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "before": "919632344bf19080bc834406333fca579a3c42b769c3b3e73183ca9270fcb082",
+      "after": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "before": "9b8d5e539247b437c30efdb42e975ce225b36fd18b992df5040cb61640d30a67",
+      "after": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "before": "a703647782fb5a11d0739d00a585325f6e671d9d15420de52d5b4c0f43141948",
+      "after": "e7386f9325015a3668b93e927751540186aea2e180454c5a2ca6aa8ac4b6dce0",
+      "standaloneJavaScriptIdentical": true
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "698e32e4aabf1b61c0009989370580132af079c0f4ef26ceac29142e7c03bcaf",
+      "after": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "standaloneJavaScriptIdentical": true
+    }
+  ],
+  "mutants": [
+    "unreviewed source byte",
+    "runtime read",
+    "runtime write",
+    "runtime test",
+    "materialized field",
+    "changed JavaScript bytes",
+    "missing JavaScript file",
+    "unrelated public API line",
+    "unreviewed owner type"
+  ]
+}

@@ -1,0 +1,3 @@
+import './types.a';
+import { result } from './reader.a';
+console.log(`${result}`);

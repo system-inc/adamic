@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -38,15 +39,26 @@ func jsxSources(t *testing.T) []string {
 	t.Helper()
 	spans := jsxSpansOracle(t)
 	var paths []string
+	byRule := map[string]int{}
 	for _, row := range upstream(t) {
-		path := strings.Split(row, "\t")[0]
-		if len(bytes.TrimSpace(execute(t, "", spans, path).output)) > 0 {
-			paths = append(paths, path)
+		fields := strings.Split(row, "\t")
+		if len(bytes.TrimSpace(execute(t, "", spans, fields[0]).output)) > 0 {
+			paths = append(paths, fields[0])
+			byRule[fields[1]]++
 		}
 	}
-	// Batch 8's capture held 54 JSX cases before its runner retired; a smaller count means the capture lost some.
-	if len(paths) != 54 {
-		t.Fatalf("JSX source count %d, want 54", len(paths))
+	// Each rule's captured JSX cases, exactly. A rule losing some, or a capture losing a rule, fails here
+	// rather than shrinking the parser check silently, and a new rule that brings JSX cases adds its row.
+	// Batch 8's three rules held the original 54.
+	want := map[string]int{
+		"react/jsx-no-comment-textnodes":              40,
+		"react/no-find-dom-node":                      9,
+		"react/no-is-mounted":                         5,
+		"nexus/consistency-no-abbreviated-identifier": 5,
+		"nexus/consistency-no-ambiguous-identifier":   4,
+	}
+	if !reflect.DeepEqual(byRule, want) {
+		t.Fatalf("captured JSX cases by rule %v, want %v", byRule, want)
 	}
 	return paths
 }
@@ -83,7 +95,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
-	input := manifest(t, rows)
+	input := manifest(t, recoveryRows(t, oracle, rows))
 	compare(t, oracle, binary, directory, input)
 	best := map[string]time.Duration{}
 	var answer []byte

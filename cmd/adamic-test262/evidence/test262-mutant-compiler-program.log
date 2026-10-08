@@ -1,0 +1,8 @@
+=== RUN   TestCompilerCacheProgram
+=== PAUSE TestCompilerCacheProgram
+=== CONT  TestCompilerCacheProgram
+    cache_test.go:307: changed compiler program served "before\n", want "after\n"
+--- FAIL: TestCompilerCacheProgram (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.158s
+FAIL

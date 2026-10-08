@@ -7,7 +7,6 @@ import (
 	goast "go/ast"
 	"go/parser"
 	"go/token"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,6 +17,7 @@ import (
 	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
@@ -356,30 +356,10 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 
 	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if corpus == "" {
-		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE")
+		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
 		return
 	}
-	pin := h.must("corpus-pin", exec.Command("git", "-C", corpus, "rev-parse", "HEAD"))
-	if strings.TrimSpace(string(pin.stdout)) != compilerCommit {
-		t.Fatal("compiler corpus pin differs")
-	}
-	paths = nil
-	err = filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				return err
-			}
-			paths = append(paths, absolute)
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 	sort.Strings(paths)
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")

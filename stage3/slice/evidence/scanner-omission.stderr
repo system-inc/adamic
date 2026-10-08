@@ -1,0 +1,9 @@
+ReferenceError: unicodeESNextIdentifierStart is not defined
+    at isUnicodeIdentifierStart (file:///workspace/scratch/scanner-members-omission/src/compiler/scanner.ts:180:34)
+    at isIdentifierStart (file:///workspace/scratch/scanner-members-omission/src/compiler/scanner.ts:302:50)
+    at scanIdentifier (file:///workspace/scratch/scanner-members-omission/src/compiler/scanner.ts:1623:13)
+    at Object.scan (file:///workspace/scratch/scanner-members-omission/src/compiler/scanner.ts:1571:44)
+    at file:///workspace/scratch/scanner-members-omission-run/main.a:15:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async file:///workspace/adamic/stage3/drivers/scanner/node.mjs:40:5

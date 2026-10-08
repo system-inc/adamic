@@ -1,0 +1,14 @@
+=== RUN   TestCheckerBuildCostProbe
+    checker_cost_probe_test.go:30: before full runtime compilation: 64.482816 seconds
+    checker_cost_probe_test.go:35: after cached split compilation: 74.616061 seconds
+    checker_cost_probe_test.go:41: after identical warm split compilation: 4.272614 seconds
+    checker_cost_probe_test.go:52: pilot process durations: old native=118.032686ms split native=118.5742ms Go program and lint=78.555306ms
+    checker_cost_probe_test.go:58: pilot native with recording=120.080164ms
+    checker_cost_probe_test.go:62: checker compilation phases: load=241.6042ms lower=4.002109144s C=676.312109ms JavaScript=39.754232ms
+    checker_cost_probe_test.go:66: pilot replay durations: Node=463.033187ms emitted JavaScript=109.235095ms
+    checker_cost_probe_test.go:79: native program phases: tsgo: load_ns=75043364 query_ns=271138 queries=2 first_query_ns=133257 run_ns=4827568
+    checker_cost_probe_test.go:99: oracle program.Build nanoseconds: 41332788
+    checker_cost_probe_test.go:100: same C and sanitizer flags, both outputs identical to the live Go oracle
+--- PASS: TestCheckerBuildCostProbe (176.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	176.171s
