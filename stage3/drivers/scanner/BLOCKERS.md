@@ -1,3 +1,24 @@
+## October 8: combined records-library merge closes MapLike admission
+
+Fresh scratch dbd7a7c8 cleanly merges current main 6998ebc2 and combined branch
+2648ad33, containing library e40216f2 plus records/named-index support. No hand
+resolution or compiler/adaptation source edit was made. Compiler build passed
+in 186.725s; setup passed in 54.226s with nproc=5.
+
+The previous measured order 1, corePublic.ts:9:5 MapLike index signature, is gone.
+Its unchanged type-only witness prints ok on both Node and native; diff passes,
+and a one-byte native-control mutant is caught. Both real scanner modes now
+stop at debug.ts:7:1, namespace refusal. Previous measured orders 2 through 15
+remain as fresh orders 1 through 14. Fresh order 15 is an optional-parameter
+function value in the throwing Debug placeholder, explicitly dependent on that
+replacement, as is fresh order 13. No original namespace claim is made from them.
+
+Both full-tree Node diffs pass and both one-byte Node-output mutants are caught.
+Fifteen fresh witnesses finish on Node and reproduce their Adamic diagnostics.
+No native scanner binary, token comparison or native timing exists.
+
+[Combined compiler report, controls and ordered stops](evidence/combined-records-library/REPORT.md).
+
 ## October 8: clean records rebase still conflicts with library
 
 Fresh scratch af708e4e merges current main ffe6efc1 and library b05a9306.

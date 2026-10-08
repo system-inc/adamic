@@ -1,0 +1,2 @@
+function point(text: string): number { return text.codePointAt(0)!; }
+console.log(`${point("A")}`);
