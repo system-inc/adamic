@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=30m",
+    "./stage1/cohere/lint",
+    "-run",
+    "^(TestCheckerCacheSourceByte|TestOwnedWitnesses|TestRulesAgree|TestMutants)$/typescript-no-explicit-any-message"
+  ],
+  "exit": 0,
+  "wall": 202.66763950800123,
+  "nproc": 5,
+  "load": [
+    1.16259765625,
+    1.4169921875,
+    1.9541015625
+  ]
+}

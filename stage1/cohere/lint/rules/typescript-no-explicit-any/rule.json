@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-explicit-any",
+  "kinds": [
+    "AnyKeyword"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleTypescriptNoExplicitAny",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoExplicitAny"
+}

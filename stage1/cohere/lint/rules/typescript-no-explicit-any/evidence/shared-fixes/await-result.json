@@ -1,0 +1,29 @@
+{
+  "go": {
+    "argv": [
+      "/tmp/fixes-any-reproducer/oracle",
+      "--manifest",
+      "/tmp/fixes-any-reproducer/await.manifest"
+    ],
+    "exit": 0
+  },
+  "native": {
+    "argv": [
+      "/tmp/fixes-any-final-profiles/scanner",
+      "--manifest",
+      "/tmp/fixes-any-reproducer/await.manifest"
+    ],
+    "exit": 0
+  },
+  "node": {
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/main.ts",
+      "--manifest",
+      "/tmp/fixes-any-reproducer/await.manifest"
+    ],
+    "exit": 0
+  }
+}

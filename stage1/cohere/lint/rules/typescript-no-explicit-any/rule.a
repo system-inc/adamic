@@ -1,0 +1,39 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { messageNoExplicitAny } from './messages.a';
+import { typescriptFile } from './helpers.a';
+import { SuggestionEdit } from '../../suggestions.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        if(!typescriptFile(context.parser.path)) {
+            return;
+        }
+        if(context.settings.read('ignorerestargs', 'false') === 'true') {
+            for(let owner = context.parent(index); owner >= 0; owner = context.parent(owner)) {
+                if(context.kind(owner) === 'Parameter' && context.has(owner, 'DotDotDotToken')) {
+                    return;
+                }
+            }
+        }
+        const fix = context.settings.read('fixtounknown', 'false') === 'true';
+        const start = context.start(index);
+        const edits: SuggestionEdit[] = [];
+        if(fix) {
+            edits.push(new SuggestionEdit(start, node.end, 'unknown'));
+        }
+        context.reportRange(
+            start, node.end,
+            '@typescript-eslint/no-explicit-any', 'unexpectedAny', messageNoExplicitAny, edits,
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

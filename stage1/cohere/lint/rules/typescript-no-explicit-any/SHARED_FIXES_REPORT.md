@@ -1,0 +1,27 @@
+Both requested fix branches were merged without rebasing: JSX inventory e7c196a9755cbba48809859033158bc9b06f3c7b and parser recovery dbe2fff02270fe9356ee560a699e706a8b444105. The combined merge is 560462eb7bbac8a6e279314671beba51d70525af.
+The owned no-explicit-any rule now passes all 209 unique upstream source/file/options cases from 15 TestNoExplicitAny-prefixed tests, including Adamic filenames, fixes and empty suggestions, against Go on source Node, emitted JavaScript and ASan/UBSan native. Owned witnesses pass.
+The message mutant remains caught. The prior .a file gate also compiles and exits normally but loses the independent byte comparison on type T = any; saved mutant and fixed outputs prove that regression.
+The original full lint run records 117 PASS, 4 FAIL, 1 SKIP including subtests (31 PASS, 4 FAIL, 1 SKIP top-level), wall 1740.219s, nproc 5. Focused post-fix checks record 5 PASS, 0 FAIL, 0 SKIP; refreshed profiles record 1 PASS, 1 FAIL, 0 SKIP.
+No shared code was edited. No new rule was claimed. The two remaining shared failures and the bridge skip are detailed below; raw full-run counts have not been adjusted using focused retries.
+
+## Owned correction and local checks
+
+helpers.a:2 previously recognized only .ts, .tsx, .mts and .cts. Go uses sourcename.TreatedAs at cohere/internal/lint/rules/typescript/no_explicit_any.go:161, so it also recognizes .a. The helper now includes .a. The descriptor remains node:true with AnyKeyword, and the adapter continues decoding both upstream options.
+
+TestRulesAgree initially failed at stage1/cohere/lint/lint_test.go:390, case 448, because Thing.a's any finding was absent. The same owned omission caused the original TestProfileSnapshotsAgree failure at profile_test.go:225. Bucket: ours, fixed. A minimal source is evidence/shared-fixes/file-gate.a.txt, run with filename .a and selection @typescript-eslint/no-explicit-any.
+
+The focused command is in focused-result.json: TestCheckerCacheSourceByte, TestOwnedWitnesses, TestRulesAgree, and TestMutants/typescript-no-explicit-any-message. All pass. The upstream comparison captures 4247 registered cases overall, including all 209 owned cases. Registration, gofmt on the owned adapter, and go vet ./stage1/cohere/lint/... pass. Both the full and focused message mutant have successful builds and normal execution, with only findings comparison catching the mutation. The full run catches all 77 registered mutants.
+
+## Remaining shared failures, first failure first
+
+TestCompilerAndStage1Agree, stage1/cohere/lint/lint_test.go:467, fails when its unconditional .ts/.a discovery includes stage1/typescript/parser/testdata/lint_cases/decorated_async_promise_executor.ts:1. The independent Go collector at stage1/cohere/lint/testdata/oracle.go:186 rejects new Promise(@dec async () => {}) as invalid corpus (Expression expected and comma expected). The smaller new P(@d async()=>{}) produces the same refusal and exit 2. Bucket: shared project replay, specifically corpus discovery admitting a malformed recovery fixture without the recovery classification used by other tests. Reproducer and actual Go output are in invalid-corpus.*.
+
+After the owned fix, TestProfileSnapshotsAgree reaches another failure at stage1/cohere/lint/profile_test.go:225, case 4968. stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts:1 contains await new Promise(); followed by export {};. Native reports no-new, while Go is silent. The smaller await new A;export{}; reproduces against Go, source Node and the freshly compiled native release program, all exiting 0. Parser.awaitContext starts false at stage1/typescript/parser/parser.ts:1182, and the await branch at :1792 accepts only that context or an Identifier lookahead; NewKeyword does not enter it. This splits the awaited construction into a standalone NewExpression statement. Go's no-new only reports an expression statement whose unwrapped expression is NewExpression, at cohere/internal/lint/rules/core/no_new.go:69. Bucket: shared project replay, specifically shared parser module/top-level-await context. Reproducer and outputs are in top-level-await.ts.txt and await-*.log.
+
+TestCheckerBridgeRefusalPending remains skipped at stage1/cohere/lint/checker_pending_test.go:49 because internal/load/prelude.d.ts lacks TSGoError for the C error-buffer result. Bucket: bridge errors; dependency codex/tsgo-errors-as-values. Every external input was supplied, and no skip guard was changed. Its existing pending-refusal-control fixture at checker_pending_test.go:51 is the reproducer once the error-result API exists.
+
+The original first failure, TestCheckerCacheSourceByte at checker_cache_test.go:34, was a checker archive link exhausting scratch space. It passes on the focused retry after expiring disposable compiled objects and completed profile artifacts. This environment failure is resolved locally; it remains visible in the original full counts.
+
+## Reproduction
+
+The all-input runner is the previously committed validation-unpark/unpark-lint-gate.py on the wave branch. It uses ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-11-typescript at 050880ce59e30b356b686bd3144efe24f875ebc8, ADAMIC_LINT_BENCH=1 and both profile variables pointing to a fresh directory. GOCACHE=/tmp/unpark-go-cache and XDG_CACHE_HOME=/tmp/unpark-runtime-cache provide scratch space. Test output goes directly to the saved logs. The latest capacity instruction is honored by focused correction checks rather than repeating the entire red package gate.

@@ -1,0 +1,10 @@
+=== RUN   TestNoExplicitAnyFires
+=== PAUSE TestNoExplicitAnyFires
+=== CONT  TestNoExplicitAnyFires
+=== RUN   TestNoExplicitAnyFires/upstream_fail_15
+=== PAUSE TestNoExplicitAnyFires/upstream_fail_15
+=== CONT  TestNoExplicitAnyFires/upstream_fail_15
+--- PASS: TestNoExplicitAnyFires (0.00s)
+    --- PASS: TestNoExplicitAnyFires/upstream_fail_15 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.007s

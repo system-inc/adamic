@@ -1,0 +1,29 @@
+=== RUN   TestRulesAgree
+    lint_test.go:428: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:18:53: error TS18048: 'owner' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:18:89: error TS2538: Type 'undefined' cannot be used as an index type.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:19:33: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:19:71: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+--- FAIL: TestRulesAgree (9.08s)
+=== RUN   TestMutants
+=== RUN   TestMutants/typescript-no-explicit-any-message
+    lint_test.go:755: /tmp/adamic-gate/TestMutantstypescript-no-explicit-any-message3533230128/021/rules/typescript-no-explicit-any/rule.a:18:53: error TS18048: 'owner' is possibly 'undefined'.
+        /tmp/adamic-gate/TestMutantstypescript-no-explicit-any-message3533230128/021/rules/typescript-no-explicit-any/rule.a:18:89: error TS2538: Type 'undefined' cannot be used as an index type.
+        /tmp/adamic-gate/TestMutantstypescript-no-explicit-any-message3533230128/021/rules/typescript-no-explicit-any/rule.a:19:33: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+        /tmp/adamic-gate/TestMutantstypescript-no-explicit-any-message3533230128/021/rules/typescript-no-explicit-any/rule.a:19:71: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+--- FAIL: TestMutants (2.88s)
+    --- FAIL: TestMutants/typescript-no-explicit-any-message (0.41s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:18:53: error TS18048: 'owner' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:18:89: error TS2538: Type 'undefined' cannot be used as an index type.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:19:33: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-explicit-any/rule.a:19:71: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+--- FAIL: TestOwnedWitnesses (3.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	15.186s
+FAIL
