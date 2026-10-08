@@ -23,10 +23,6 @@ func (l *lowering) enumTagViewFields(node *ast.Node, declared, observed *checker
 		if !changed {
 			continue
 		}
-		of, known := l.representation(target)
-		if !known || (of != ir.Number && of != ir.String && of != ir.Boolean) || field.Flags&ast.SymbolFlagsOptional != 0 || l.includesUndefined(target) || l.includesNull(target) {
-			return nil, l.notYet(node, "a checked numeric enum object view with an incompatible structured or optional payload field "+field.Name)
-		}
 		fields = append(fields, field)
 	}
 	return fields, nil
@@ -51,6 +47,9 @@ func (l *lowering) enumTagView(node *ast.Node, value ir.Expression) (ir.Expressi
 }
 
 func (l *lowering) enumTagViewAs(node *ast.Node, value ir.Expression, declared, observed *checker.Type) (ir.Expression, error) {
+	// A nullish variant cannot reach an observed object payload read. Keep the
+	// object alternatives whose numeric tags may overlap at runtime.
+	declared = l.checker.GetNonNullableType(declared)
 	if declared.Flags()&checker.TypeFlagsUnion == 0 || observed.Flags()&checker.TypeFlagsObject == 0 || declared == observed {
 		return value, nil
 	}
@@ -67,6 +66,15 @@ func (l *lowering) enumTagViewAs(node *ast.Node, value ir.Expression, declared, 
 	fields, err := l.enumTagViewFields(node, declared, observed)
 	if err != nil || len(fields) == 0 {
 		return value, err
+	}
+	// Shared views admit the target lazily. Structured and optional payloads
+	// retain their contracts on reads, including aliases and helper calls.
+	for _, field := range fields {
+		target := l.checker.GetTypeOfSymbol(field)
+		of, known := l.representation(target)
+		if !known || (of != ir.Number && of != ir.String && of != ir.Boolean) || field.Flags&ast.SymbolFlagsOptional != 0 || l.includesUndefined(target) || l.includesNull(target) {
+			return l.view(node, value, observed)
+		}
 	}
 	b := l.libraryArrayBuilder([]ir.Expression{value})
 	object := b.read(b.parameters[0])

@@ -687,8 +687,8 @@ views and mutable containers. Construction and ordinary views require a proof;
 explicit casts insert a member-value check. An ambiguous union selected by an
 open tag receives checked payload reads. Primitive storage is checked before
 reading, followed by literal-value checks when needed; nominal class views use
-the existing class check. Incompatible structured or optional payload views
-remain `NotYet` rather than reading the wrong storage.
+the existing class check. Incompatible structured or optional payload views now use lazy checked views; see
+[the checked payload follow-up](verification/enum-tag-views.md).
 
 `TestNumericEnumLiteralPromises` covers those promises and excluded-member
 narrowing. `TestNumericEnumsAreOpen` proves singleton numeric assignments and
@@ -732,8 +732,8 @@ function requiring a result instead has a checked missing-result site, whose
 message is `numeric enum switch fell through a function requiring a result`.
 It does not prove numeric exhaustiveness.
 
-The complete ruling still has limits: incompatible structured or optional
-payload views remain `NotYet`, and a direct remainder property read rejected by
+At this historical checkpoint, incompatible structured or optional
+payload views remained `NotYet`, and a direct remainder property read rejected by
 the source checker as a property of `never` never reaches lowering. A typed
 alias to the full union permits that read. The final census retains 90 of the
 101 discriminant sites under the explicit checked-view `NotYet` boundary; a
@@ -747,3 +747,9 @@ is retained as history.
 The [census panic follow-up](verification/enum-census-panics.md) replaces both
 computed-key optional-relation panics with the existing named computed-field
 NotYet boundary, held by reduced source and direct lowering pins.
+
+The [checked payload follow-up](verification/enum-tag-views.md) merges lazy checked
+views and removes the remaining 90 admission sites. Structured and optional
+payload reads retain view contracts through aliases. Unsupported view families
+are refused by name when read, while unused payloads are admitted. Pure undefined
+payload checks distinguish absent values from null, false and numeric storage.

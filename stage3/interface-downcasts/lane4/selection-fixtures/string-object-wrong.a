@@ -1,0 +1,9 @@
+interface Identifier { readonly text: string }
+interface Base { readonly kind: 'box' | 'other' }
+interface Box extends Base { readonly kind: 'box'; readonly value: string | Identifier }
+function read(base: Base): void {
+ const value = (base as Box).value;
+ console.log(typeof value + ':' + (typeof value === 'string' ? value : value.text));
+}
+const raw = {kind: 'box' as const, value: {text: 42}};
+read(raw);

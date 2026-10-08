@@ -16,7 +16,7 @@ function show(value: Optional): string { return `${value.label} ${value.amount ?
 console.log(show({ label: 'absent' }));
 console.log(show({ amount: 42, label: 'reordered' }));
 console.log(show({ label: 'present', amount: 7 }));
-const absentExtra = { label: 'absent-extra', padding: 99 };
+const absentExtra: { label: string; padding: number; amount?: number } = { label: 'absent-extra', padding: 99 };
 console.log(show(absentExtra));
 type Shape = { readonly kind: 'Left'; readonly value: number } | { readonly kind: 'Right'; readonly value: number; readonly extra: number };
 function read(shape: Shape): number { return shape.value; }

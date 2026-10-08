@@ -1,0 +1,29 @@
+function check(length: number): void {
+ let kept = `kept${length}`;
+ try {
+  kept = `updated${length}`;
+  const temp = `temporary${length}`;
+  const cells = new Array<number>(length);
+  console.log(`${temp}:${cells.length}`);
+ } catch (error) {
+  if (error instanceof Error) { console.log(`${error.name}:${error.message}:${kept}`); }
+ }
+ const cells = new Array<number>(3);
+ try { cells.length = length; } catch (error) {
+  if (error instanceof Error) { console.log(`${error.name}:${kept}:${cells.length}`); }
+ }
+}
+check(-1);
+check(2);
+function allocate(length: number): number[] { return new Array<number>(length); }
+try {
+ const made = allocate(-1);
+ console.log(`${made.length}`);
+} catch (error) {
+ if (error instanceof RangeError) { console.log(`returned:${error.name}:${error.message}`); }
+}
+function resize(cells: number[], length: number): void { cells.length = length; }
+const returned = allocate(4);
+try { resize(returned, -1); } catch (error) {
+ if (error instanceof RangeError) { console.log(`resized:${error.name}:${returned.length}`); }
+}

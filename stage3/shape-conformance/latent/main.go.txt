@@ -1,0 +1,61 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"sort"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+)
+
+func main() {
+	if len(os.Args) != 4 {
+		panic("usage: shape-latent adapted-root mapped-sites.json output.json")
+	}
+	var roots []string
+	err := filepath.WalkDir(filepath.Join(os.Args[1], "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+			roots = append(roots, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(roots)
+	program, err := load.LatentLoad(roots)
+	if err != nil {
+		panic(err)
+	}
+	if output, failure := lower.Lower(context.Background(), program); output != nil || failure == nil {
+		panic("measurement exposed usable output IR")
+	}
+	if output, failure := load.Load(roots); output != nil || failure == nil {
+		panic("measurement exposed rejected production program")
+	}
+	input, err := os.ReadFile(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	var sites []lower.LatentShapeSite
+	if err := json.Unmarshal(input, &sites); err != nil {
+		panic(err)
+	}
+	result := lower.MeasureLatentShapes(context.Background(), program, os.Args[1], sites)
+	output, err := os.Create(os.Args[3])
+	if err != nil {
+		panic(err)
+	}
+	defer output.Close()
+	encoder := json.NewEncoder(output)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(result); err != nil {
+		panic(err)
+	}
+}

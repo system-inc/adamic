@@ -1,0 +1,5 @@
+--- FAIL: TestPhantomSortedArrayProbe (0.05s)
+    phantom_brands_test.go:82: /workspace/adamic/internal/oracle/testdata/native-sorted-array-brand.a:7:12: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.054s
+FAIL

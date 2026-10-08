@@ -1,0 +1,31 @@
+--- FAIL: TestOptionalCheckedReads (4.83s)
+    --- FAIL: TestOptionalCheckedReads/widening_boolean_as_number.a (0.84s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+    --- FAIL: TestOptionalCheckedReads/widening_boolean_as_number_array.a (0.68s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+    --- FAIL: TestOptionalCheckedReads/widening_boolean_as_number_ops.a (0.98s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x74, 0x72, 0x75, 0x65, 0xa, 0x35, 0x65, 0x2d, 0x33, 0x32, 0x33, 0xa, 0x74, 0x72, 0x75, 0x65, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    --- FAIL: TestOptionalCheckedReads/widening_boolean_as_number_parameter.a (0.66s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x31, 0xa, 0x31, 0x30, 0x31, 0xa, 0x33, 0xa}, stderr:[]uint8{}, exitCode:0}
+    --- FAIL: TestOptionalCheckedReads/widening_boolean_as_number_return.a (0.62s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+    --- FAIL: TestOptionalCheckedReads/widening_false_as_number.a (1.06s)
+        optional_checked_test.go:27: gate cache node miss
+        optional_checked_test.go:47: gate cache node miss
+        optional_checked_test.go:49: exit codes differ; got oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.844s
+FAIL

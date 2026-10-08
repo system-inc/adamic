@@ -1,0 +1,62 @@
+[
+  {
+    "mutant": "in-refusal-dropped",
+    "test": "TestPhantomArrayPresenceNarrowing",
+    "exit": 1
+  },
+  {
+    "mutant": "own-method-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "object-reflection-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "spread-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "assign-source-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "json-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "write-refusal-dropped",
+    "test": "TestPhantomArrayPresenceRefusals",
+    "exit": 1
+  },
+  {
+    "mutant": "generic-constraint-forgotten",
+    "test": "TestPhantomArrayPresenceViews",
+    "exit": 1
+  },
+  {
+    "mutant": "union-arm-forgotten",
+    "test": "TestPhantomArrayPresenceNarrowing",
+    "exit": 1
+  },
+  {
+    "mutant": "member-name-forgotten",
+    "test": "TestPhantomArrayWritesNameTheMember",
+    "exit": 1
+  },
+  {
+    "mutant": "required-undefined-rejected",
+    "test": "TestPhantomSortedArrayProbe",
+    "exit": 1
+  },
+  {
+    "mutant": "required-cast-not-erased",
+    "test": "TestPhantomArrayRequiredCastsAreErased",
+    "exit": 1
+  }
+]

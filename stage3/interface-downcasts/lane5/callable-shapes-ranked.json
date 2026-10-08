@@ -1,0 +1,927 @@
+[
+  {
+    "shape": "(index: number) => number",
+    "pairs": 2,
+    "reads": 140
+  },
+  {
+    "shape": "(start: number, end?: number | undefined) => string",
+    "pairs": 2,
+    "reads": 107
+  },
+  {
+    "shape": "(start?: number | undefined, end?: number | undefined) => string",
+    "pairs": 1,
+    "reads": 84
+  },
+  {
+    "shape": "(key: __String) => Symbol | undefined",
+    "pairs": 2,
+    "reads": 79
+  },
+  {
+    "shape": "() => string",
+    "pairs": 9,
+    "reads": 66
+  },
+  {
+    "shape": "(key: __String, value: Symbol) => SymbolTable",
+    "pairs": 2,
+    "reads": 55
+  },
+  {
+    "shape": "(searchString: string, position?: number | undefined) => number",
+    "pairs": 3,
+    "reads": 54
+  },
+  {
+    "shape": "() => void",
+    "pairs": 17,
+    "reads": 49
+  },
+  {
+    "shape": "{ (searchValue: string | RegExp, replaceValue: string): string; (searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string; (searchValue: { [Symbol.replace](string: string, replaceValue: string): string; }, replaceValue: string): string; (searchValue: { [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }, replacer: (substring: string, ...args: any[]) => string): string; }",
+    "pairs": 2,
+    "reads": 42
+  },
+  {
+    "shape": "(searchString: string, position?: number | undefined) => boolean",
+    "pairs": 3,
+    "reads": 41
+  },
+  {
+    "shape": "(value: string) => boolean",
+    "pairs": 4,
+    "reads": 30
+  },
+  {
+    "shape": "(value: Path) => Set<Path>",
+    "pairs": 1,
+    "reads": 28
+  },
+  {
+    "shape": "() => readonly SourceFile[]",
+    "pairs": 2,
+    "reads": 22
+  },
+  {
+    "shape": "(callbackfn: (value: Symbol, key: __String, map: Map<__String, Symbol>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 22
+  },
+  {
+    "shape": "(value: Path) => boolean",
+    "pairs": 4,
+    "reads": 22
+  },
+  {
+    "shape": "() => CompilerOptions",
+    "pairs": 1,
+    "reads": 21
+  },
+  {
+    "shape": "(key: __String) => boolean",
+    "pairs": 3,
+    "reads": 21
+  },
+  {
+    "shape": "(key: Path) => boolean",
+    "pairs": 12,
+    "reads": 20
+  },
+  {
+    "shape": "(value: string) => Set<string>",
+    "pairs": 2,
+    "reads": 20
+  },
+  {
+    "shape": "(key: string, value: number) => Map<string, number>",
+    "pairs": 1,
+    "reads": 18
+  },
+  {
+    "shape": "{ (separator: string | RegExp, limit?: number | undefined): string[]; (splitter: { [Symbol.split](string: string, limit?: number | undefined): string[]; }, limit?: number | undefined): string[]; }",
+    "pairs": 1,
+    "reads": 18
+  },
+  {
+    "shape": "(path: Path) => SourceFile | undefined",
+    "pairs": 2,
+    "reads": 17
+  },
+  {
+    "shape": "() => number",
+    "pairs": 11,
+    "reads": 16
+  },
+  {
+    "shape": "(from: number, length?: number | undefined) => string",
+    "pairs": 2,
+    "reads": 16
+  },
+  {
+    "shape": "() => PackageJsonInfoCache",
+    "pairs": 2,
+    "reads": 15
+  },
+  {
+    "shape": "(key: string) => number | undefined",
+    "pairs": 2,
+    "reads": 15
+  },
+  {
+    "shape": "(key: string, value: Type) => Map<string, Type>",
+    "pairs": 1,
+    "reads": 15
+  },
+  {
+    "shape": "(value: number) => boolean",
+    "pairs": 3,
+    "reads": 14
+  },
+  {
+    "shape": "() => MapIterator<Symbol>",
+    "pairs": 2,
+    "reads": 12
+  },
+  {
+    "shape": "(key: string) => Type | undefined",
+    "pairs": 1,
+    "reads": 11
+  },
+  {
+    "shape": "(radix?: number | undefined) => string",
+    "pairs": 1,
+    "reads": 11
+  },
+  {
+    "shape": "(key: Path) => readonly Diagnostic[] | undefined",
+    "pairs": 2,
+    "reads": 10
+  },
+  {
+    "shape": "(() => void) | undefined",
+    "pairs": 9,
+    "reads": 9
+  },
+  {
+    "shape": "(key: number) => boolean",
+    "pairs": 7,
+    "reads": 8
+  },
+  {
+    "shape": "(key: string) => boolean",
+    "pairs": 5,
+    "reads": 8
+  },
+  {
+    "shape": "(maxLength: number, fillString?: string | undefined) => string",
+    "pairs": 2,
+    "reads": 8
+  },
+  {
+    "shape": "(value: number) => Set<number>",
+    "pairs": 1,
+    "reads": 8
+  },
+  {
+    "shape": "GetCanonicalFileName",
+    "pairs": 1,
+    "reads": 8
+  },
+  {
+    "shape": "((symbol: Symbol, enclosingDeclaration: Node | undefined, meaning: SymbolFlags) => boolean) | undefined",
+    "pairs": 2,
+    "reads": 7
+  },
+  {
+    "shape": "(key: Path) => FileInfo | undefined",
+    "pairs": 1,
+    "reads": 7
+  },
+  {
+    "shape": "(key: Path) => string | false | undefined",
+    "pairs": 2,
+    "reads": 7
+  },
+  {
+    "shape": "(key: number) => Type | undefined",
+    "pairs": 2,
+    "reads": 7
+  },
+  {
+    "shape": "(pos: number) => string",
+    "pairs": 1,
+    "reads": 7
+  },
+  {
+    "shape": "(propertyName: string) => void",
+    "pairs": 2,
+    "reads": 7
+  },
+  {
+    "shape": "(symbol: Symbol, enclosingDeclaration: Node | undefined, meaning: SymbolFlags) => boolean",
+    "pairs": 1,
+    "reads": 7
+  },
+  {
+    "shape": "{ (regexp: string | RegExp): RegExpMatchArray | null; (matcher: { [Symbol.match](string: string): RegExpMatchArray | null; }): RegExpMatchArray | null; }",
+    "pairs": 2,
+    "reads": 7
+  },
+  {
+    "shape": "(file: SourceFile) => boolean",
+    "pairs": 2,
+    "reads": 6
+  },
+  {
+    "shape": "(key: Path) => BuilderFileEmit | undefined",
+    "pairs": 2,
+    "reads": 6
+  },
+  {
+    "shape": "() => SetIterator<Path>",
+    "pairs": 2,
+    "reads": 5
+  },
+  {
+    "shape": "() => TypeChecker",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "() => readonly (ResolvedProjectReference | undefined)[] | undefined",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "() => readonly ProjectReference[] | undefined",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "() => readonly string[]",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "(fileName: string) => SourceFile | undefined",
+    "pairs": 2,
+    "reads": 5
+  },
+  {
+    "shape": "(key: Path, value: string) => Map<Path, string>",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "(key: number, value: Type) => Map<number, Type>",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]",
+    "pairs": 2,
+    "reads": 5
+  },
+  {
+    "shape": "(specifier: string, symbolName: string | undefined) => void",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "<TKey extends keyof PragmaPseudoMap>(key: TKey) => PragmaPseudoMap[TKey] | PragmaPseudoMap[TKey][]",
+    "pairs": 2,
+    "reads": 5
+  },
+  {
+    "shape": "{ (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined): EmitResult; (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnly?: boolean | EmitOnly | undefined, customTransformers?: CustomTransformers | undefined, forceDtsEmit?: boolean | undefined, skipBuildInfo?: boolean | undefined): EmitResult; }",
+    "pairs": 1,
+    "reads": 5
+  },
+  {
+    "shape": "((propertyName: string) => void) | undefined",
+    "pairs": 4,
+    "reads": 4
+  },
+  {
+    "shape": "() => Map<Path, string>",
+    "pairs": 1,
+    "reads": 4
+  },
+  {
+    "shape": "() => Program",
+    "pairs": 2,
+    "reads": 4
+  },
+  {
+    "shape": "(cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]",
+    "pairs": 2,
+    "reads": 4
+  },
+  {
+    "shape": "(k: Path) => ReadonlySet<Path> | undefined",
+    "pairs": 1,
+    "reads": 4
+  },
+  {
+    "shape": "(key: Path) => EmitSignature | undefined",
+    "pairs": 2,
+    "reads": 4
+  },
+  {
+    "shape": "(key: number, value: Symbol) => Map<number, Symbol>",
+    "pairs": 1,
+    "reads": 4
+  },
+  {
+    "shape": "(key: string) => LibResolution<ResolvedModuleWithFailedLookupLocations> | undefined",
+    "pairs": 1,
+    "reads": 4
+  },
+  {
+    "shape": "(v: Path) => ReadonlySet<Path> | undefined",
+    "pairs": 1,
+    "reads": 4
+  },
+  {
+    "shape": "(() => RepopulateDiagnosticChainInfo) | undefined",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "() => MapIterator<Path>",
+    "pairs": 3,
+    "reads": 3
+  },
+  {
+    "shape": "() => MultiMap<Path, FileIncludeReason>",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "(callbackfn: (value: Path, value2: Path, set: Set<Path>) => void, thisArg?: any) => void",
+    "pairs": 2,
+    "reads": 3
+  },
+  {
+    "shape": "(key: Path, value: FileInfo) => Map<Path, FileInfo>",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "(key: string, value: TypeReference) => Map<string, TypeReference>",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "(node: Node) => Symbol | undefined",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "(options: CompilerOptions) => void",
+    "pairs": 2,
+    "reads": 3
+  },
+  {
+    "shape": "(sourceFile: SourceFile, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]",
+    "pairs": 2,
+    "reads": 3
+  },
+  {
+    "shape": "(writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined) => EmitResult",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "string | ((node: EmitHelperUniqueNameCallback) => string)",
+    "pairs": 1,
+    "reads": 3
+  },
+  {
+    "shape": "((containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void) | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "((file: SourceFile) => void) | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "((node: Node) => void) | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "((pos: number) => number) | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "((specifier: string, symbolName: string | undefined) => void) | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "() => MapIterator<[Path, FileInfo]>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "() => MapIterator<string>",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "() => ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "() => Program | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "() => readonly Diagnostic[]",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "() => string[]",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "() => { assignable: number; identity: number; subtype: number; strictSubtype: number; }",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "(callbackfn: (value: FileInfo, key: Path, map: Map<Path, FileInfo>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(callbackfn: (value: number, key: string, map: Map<string, number>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(callbackfn: (value: string, value2: string, set: Set<string>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(cancellationToken?: CancellationToken | undefined, ignoreSourceFile?: ((sourceFile: SourceFile) => boolean) | undefined) => AffectedFileResult<readonly Diagnostic[]>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(count: number) => string",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(f: SourceFile, moduleName: string, mode: ResolutionMode) => ResolvedModuleWithFailedLookupLocations | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "(f: SourceFile, typeDirectiveName: string, mode: ResolutionMode) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "(file: SourceFile) => CompilerOptions",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: CompilerOptions) => RedirectsCacheKey | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: CompilerOptions, value: RedirectsCacheKey) => Map<CompilerOptions, RedirectsCacheKey>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: Path) => string | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: Path, value: EmitSignature) => Map<Path, EmitSignature>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: Path, value: readonly Diagnostic[]) => Map<Path, readonly Diagnostic[]>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: Path, value: string) => string[]",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: __String) => TransientSymbol | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: __String, value: TransientSymbol) => Map<__String, TransientSymbol>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: number) => string | undefined",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(key: number, value: string) => Map<number, string>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(name: string, mode: ResolutionMode, directoryName: string, redirectedReference: ResolvedProjectReference | undefined) => ResolvedModuleWithFailedLookupLocations | undefined",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "(node: Node) => void",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(nonRelativeName: string, mode: ResolutionMode, redirectedReference?: ResolvedProjectReference | undefined) => PerNonRelativeNameCache<ResolvedModuleWithFailedLookupLocations>",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(searchString: string, endPosition?: number | undefined) => boolean",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined, forceDts?: boolean | undefined) => EmitResolver",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(symbol: Symbol) => Symbol",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(this: Function, thisArg: any, ...argArray: any[]) => any",
+    "pairs": 2,
+    "reads": 2
+  },
+  {
+    "shape": "(type: Type, enclosingDeclaration?: Node | undefined, flags?: TypeFormatFlags | undefined) => string",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "{ (): string; (locales?: string | string[] | undefined, options?: DateTimeFormatOptions | undefined): string; (locales?: LocalesArgument, options?: DateTimeFormatOptions | undefined): string; }",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "{ (regexp: string | RegExp): number; (searcher: { [Symbol.search](string: string): number; }): number; }",
+    "pairs": 1,
+    "reads": 2
+  },
+  {
+    "shape": "(() => BuildInfo) | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(() => string | undefined) | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(() => string) & (() => string)",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "((diagnostic: Diagnostic, newLine: string, options: CompilerOptions, errorCount?: number | undefined) => void) | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "((node: Declaration | undefined) => void) | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => Diagnostic[]",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => IterableIterator<Path>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => Map<Path, false | SourceFile | undefined>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => Map<string, boolean> | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<Declaration>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<Type>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<[__String, Symbol]>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<[number, Symbol]>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<[string, number]>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<[string, string | number]>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => MapIterator<number>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => ModuleResolutionCache | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => ProgramDiagnostics",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => SetIterator<string>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => Symbol[]",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => Type",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "() => boolean",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void, file?: SourceFile | undefined) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: BuilderFileEmit, key: Path, map: Map<Path, BuilderFileEmit>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: FileWatcherCallback, index: number, array: FileWatcherCallback[]) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: Symbol, key: number, map: Map<number, Symbol>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: __String, value2: __String, set: ReadonlySet<__String>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: readonly Diagnostic[], key: Path, map: Map<Path, readonly Diagnostic[]>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: string | number, key: string, map: Map<string, string | number>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(callbackfn: (value: string, key: Path, map: Map<Path, string>) => void, thisArg?: any) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(directoryName: string, redirectedReference?: ResolvedProjectReference | undefined) => ModeAwareCache<ResolvedModuleWithFailedLookupLocations>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(file: SourceFile, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(file: string) => boolean",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(fractionDigits?: number | undefined) => string",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: K) => U | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: Path) => ModeAwareCache<ResolvedModuleWithFailedLookupLocations> | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: Path) => ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations> | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: Path) => string[] | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: Path, value: BuilderFileEmit) => Map<Path, BuilderFileEmit>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: Path, value: string | false) => Map<Path, string | false>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: number) => Identifier | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: number) => Symbol | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: number, value: Identifier) => Map<number, Identifier>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: string) => Signature | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: string) => TypeReference | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: string) => string | number | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: string) => string | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(key: string, value: Signature) => Map<string, Signature>",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(moduleSpecifier: StringLiteralLike, sourceFile?: SourceFile | undefined) => ResolvedModuleWithFailedLookupLocations | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(node: Declaration | undefined) => void",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(nonRelativeName: string, mode: ResolutionMode, directoryName: string, redirectedReference: ResolvedProjectReference | undefined) => ResolvedModuleWithFailedLookupLocations | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(pos: number) => number | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(projectReferencePath: Path) => ResolvedProjectReference | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(referencingFile: SourceFile, ref: FileReference) => SourceFile | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(signature: Signature, enclosingDeclaration?: Node | undefined, flags?: TypeFormatFlags | undefined, kind?: SignatureKind | undefined) => string",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined, nodesToCheck?: Node[] | undefined) => Diagnostic[]",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(t: Type) => Type",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(type: Type) => object | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "(typedRef: FileReference, sourceFile: SourceFile) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "<T>(cb: (resolvedProjectReference: ResolvedProjectReference) => T | undefined) => T | undefined",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "WriteFileCallback",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "{ (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined): readonly Diagnostic[]; (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined, nodesToCheck: Node[]): readonly Diagnostic[]; }",
+    "pairs": 1,
+    "reads": 1
+  },
+  {
+    "shape": "{ <T>(token: CancellationToken, cb: (checker: TypeChecker) => T): T; <T>(token: CancellationToken | undefined, cb: (checker: TypeChecker) => T): T; }",
+    "pairs": 1,
+    "reads": 1
+  }
+]

@@ -1,0 +1,15 @@
+enum AKind { A } enum BKind { B = 1 }
+interface Wide { readonly kind: AKind; readonly brand: number | undefined; readonly marker?: number | undefined; }
+interface Narrow { readonly kind: BKind; readonly brand: undefined; readonly marker?: undefined; }
+function show(v: Wide | Narrow): void {
+    if (v.kind === BKind.B) {
+        console.log('narrowed');
+        console.log(v.brand === undefined ? 'undefined' : 'wrong');
+        console.log(v.marker === undefined ? 'undefined' : 'wrong');
+    }
+}
+const present: Narrow = { kind: BKind.B, brand: undefined, marker: undefined };
+const absent: Narrow = { kind: BKind.B, brand: undefined };
+show(present);
+show(absent);
+console.log('after');

@@ -1,0 +1,19 @@
+interface Comment { readonly text: string; }
+interface Base { readonly kind: string; }
+interface Box extends Base { readonly kind: 'Box'; readonly comment: string | readonly Comment[] | undefined; }
+function read(value: Box): string {
+ const member = value.comment;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'string') return member;
+ const first = member[0];
+ return first === undefined ? 'empty' : first.text;
+}
+const concrete0 = { kind: 'Box', comment: 'plain' };
+const source0: Base = concrete0;
+console.log(read(source0 as Box));
+const concrete1 = { kind: 'Box', comment: [{ text: 'nested' }] };
+const source1: Base = concrete1;
+console.log(read(source1 as Box));
+const concrete2 = { kind: 'Box', comment: undefined };
+const source2: Base = concrete2;
+console.log(read(source2 as Box));

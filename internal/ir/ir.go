@@ -10,6 +10,21 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
+	ViewOrigins []Expression
+
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks struct{ Proven, Checked, Unobservable int }
+
+	// CheckedFields conservatively checks these field names at every object read.
+	OptionalViewFields map[string]bool
+	FreshViewWrites    map[int]bool
+	CheckedFields      map[string]bool
+	ViewContracts      []ViewContract
+	ViewContractTypes  map[int]ViewContractID
+	GraphTypes         map[int]bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -42,6 +57,8 @@ type Program struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	Graph bool
+
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -65,6 +82,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// GraphClosure joins its environment instead of counting captured graph cells.
+	GraphClosure bool
+
 	Name string
 
 	// Parameters are locals, in order.
@@ -79,6 +99,14 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
+
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -162,8 +190,14 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	Name                  string
+	Type                  Type
+	// GraphCell selects graph ownership for its capture cell or shared environment.
+	GraphCell bool
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -173,6 +207,12 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -205,9 +245,10 @@ type (
 	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
 	// Adamic checks it out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -242,7 +283,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -274,6 +315,9 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		RealType        string
+		SpreadReadiness string
+		GraphTypes      []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -298,10 +342,20 @@ type (
 	Property struct {
 		// CheckMessage validates the actual field representation before a checked view reads it.
 		CheckMessage string
-		Object       Expression
-		Name         string
-		Of           Type
-		Optional     bool
+		// View names a required field read whose presence, readiness and representation are checked.
+		ViewReceiverTypeID int
+		ViewWhere          string
+		View               string
+		ViewType           string
+		ViewAllowed        []Expression
+		ViewContract       ViewContractID
+		ViewTypeID         int
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -319,9 +373,10 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		Element  Type
-		Elements []Expression
-		Spread   []bool
+		GraphTypes []int
+		Element    Type
+		Elements   []Expression
+		Spread     []bool
 	}
 
 	// Length is array.length.
@@ -491,25 +546,34 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
-		Value     Expression
-		Field     string
-		FieldType Type
-		Allowed   []Expression
-		Message   string
+		ViewContract  ViewContractID
+		CheckedFields bool
+		Value         Expression
+		Field         string
+		FieldType     Type
+		Allowed       []Expression
+		Message       string
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
-		Array, Index Expression
-		Element      Type
-		Relative     bool
+		Required         bool
+		UndefinedAllowed bool
+		View, ViewType   string
+		ViewAllowed      []ViewLiteral
+		ViewContract     ViewContractID
+		ViewTypeID       int
+		Array, Index     Expression
+		Element          Type
+		Relative         bool
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
 	// which finds NaN.
 	ArraySearch struct {
+		ViewRead     ArrayViewRead
 		Array, Value Expression
 		From         Expression
 		Element      Type
@@ -520,6 +584,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		GraphTypes          []int
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -531,6 +596,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		GraphTypes                       []int
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -543,6 +609,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		GraphTypes       []int
 		Length, Callback Expression
 		Element, First   Type
 	}
@@ -553,14 +620,16 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		Array  Expression
-		Others []Expression
+		GraphTypes []int
+		Array      Expression
+		Others     []Expression
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		ViewRead                 ArrayViewRead
 		Array, Callback, Initial Expression
 		Element, Result          Type
 	}
@@ -572,8 +641,9 @@ type (
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a Maybe pair).
 	ArrayPop struct {
-		Array   Expression
-		Element Type
+		ViewRead ArrayViewRead
+		Array    Expression
+		Element  Type
 	}
 
 	// MakeClosure makes a closure of a function, capturing the cells of its Environment.
@@ -581,6 +651,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct is a sibling code target plus one, sharing Closure as its environment.
+		Direct    int
 		Closure   Expression
 		Arguments []Expression
 		Returns   Type
@@ -589,10 +661,12 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Result   Type
+		ViewRead   ArrayViewRead
+		Array      Expression
+		Callback   Expression
+		Element    Type
+		Result     Type
+		GraphTypes []int
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
@@ -601,37 +675,43 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		ViewRead   ArrayViewRead
+		Method     string
+		Array      Expression
+		Callback   Expression
+		Element    Type
+		Returns    Type
+		GraphTypes []int
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
+		GraphTypes         []int
 		Map                Expression
 		KeyType, ValueType Type
 	}
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		Array     Expression
-		Arguments []Expression
+		GraphTypes []int
+		Array      Expression
+		Arguments  []Expression
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
 	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
-		Array      Expression
-		Comparator int
-		Callback   Expression
-		Element    Type
+		OptionalComparator bool
+		Array              Expression
+		Comparator         int
+		Callback           Expression
+		Element            Type
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		GraphTypes []int
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -642,12 +722,14 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		Map Expression
-		Key Type
+		GraphTypes []int
+		Map        Expression
+		Key        Type
 	}
 	MapValues struct {
-		Map   Expression
-		Value Type
+		GraphTypes []int
+		Map        Expression
+		Value      Type
 	}
 
 	// MapClear is map.clear() and set.clear(), which is void.
@@ -692,8 +774,9 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		Element Type
-		Values  Expression
+		GraphTypes []int
+		Element    Type
+		Values     Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
@@ -708,8 +791,9 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		Set     Expression
-		Element Type
+		GraphTypes []int
+		Set        Expression
+		Element    Type
 	}
 
 	// MapSize is map.size.
@@ -725,6 +809,8 @@ type (
 
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
+		Stringify bool
+		ViewRead  ArrayViewRead
 		Array     Expression
 		Separator Expression
 		Element   Type
@@ -759,13 +845,21 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Certificate is compile-time declaration evidence, independent of layout.
+	Certificate *FieldTypeCertificate
+	// Uninitialized reserves storage without making its typed value readable.
+	Contract      ViewContractID
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -904,6 +998,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -932,6 +1027,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
@@ -995,18 +1093,24 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
@@ -1027,9 +1131,14 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		WriteProven    bool
+		TargetContract ViewContractID
+		WriteContract  ViewContractID
+		WriteWhere     string
+		Uninitialized  bool
+		Object         Expression
+		Name           string
+		Value          Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1068,6 +1177,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		ViewRead ArrayViewRead
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1126,23 +1236,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

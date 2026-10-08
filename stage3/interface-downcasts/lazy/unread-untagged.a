@@ -1,0 +1,6 @@
+interface Base { readonly name: string; }
+interface Target extends Base { readonly opaque: (value: number) => number; }
+function make(): Base { return { name: 'ok'.repeat(2) }; }
+function target(value: Base): Target { return value as Target; }
+function name(value: Target): string { return value.name; }
+console.log(name(target(make())));

@@ -1,0 +1,15 @@
+enum AKind { A } enum BKind { B = 1 }
+interface Wide { readonly kind: AKind; readonly child: { readonly ready: number }; }
+interface Narrow { readonly kind: BKind; readonly child: { readonly ready: boolean }; }
+function read(child: { readonly ready: boolean }): void { console.log(String(child.ready)); }
+function show(v: Wide | Narrow): void {
+    if (v.kind === BKind.B) {
+        console.log('narrowed');
+        const alias = v.child;
+        read(alias);
+    }
+}
+function numeric(): number { return 1; }
+const value: Wide = { kind: numeric(), child: { ready: 0 } };
+show(value);
+console.log('after');

@@ -1,0 +1,12 @@
+stage3/fixtures/host/16_getEnvironmentVariable.a:18:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/16_getEnvironmentVariable.a:20:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/16_getEnvironmentVariable.a:22:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/16_getEnvironmentVariable.a:24:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/16_getEnvironmentVariable.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+stage3/fixtures/host/16_getEnvironmentVariable.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+stage3/fixtures/host/16_getEnvironmentVariable.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+stage3/fixtures/host/16_getEnvironmentVariable.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

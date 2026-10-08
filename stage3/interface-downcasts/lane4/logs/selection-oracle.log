@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewMixedSelection
+=== RUN   TestCheckedViewMixedSelection/string-number-undefined
+=== RUN   TestCheckedViewMixedSelection/string-object
+=== RUN   TestCheckedViewMixedSelection/untagged-objects
+=== RUN   TestCheckedViewMixedSelection/false-string-undefined
+--- PASS: TestCheckedViewMixedSelection (2.20s)
+    --- PASS: TestCheckedViewMixedSelection/string-number-undefined (0.44s)
+    --- PASS: TestCheckedViewMixedSelection/string-object (0.42s)
+    --- PASS: TestCheckedViewMixedSelection/untagged-objects (0.48s)
+    --- PASS: TestCheckedViewMixedSelection/false-string-undefined (0.48s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.206s

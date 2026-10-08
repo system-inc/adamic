@@ -1,0 +1,10 @@
+enum AKind { A } enum BKind { B = 1 }
+interface Wide { readonly kind: AKind; readonly brand: number; readonly opaque: string; }
+interface Narrow { readonly kind: BKind; readonly brand: undefined; readonly opaque: never; }
+function show(v: Wide | Narrow): void {
+    if (v.kind === BKind.B) console.log('narrowed');
+}
+function numeric(): number { return 1; }
+const value: Wide = { kind: numeric(), brand: 7, opaque: 'kept unread' };
+show(value);
+console.log('after');

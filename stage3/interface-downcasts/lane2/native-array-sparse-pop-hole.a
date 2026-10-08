@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
+function items(node: Base): Items { return node as Items; }
+const raw = {kind: 'items' as const, values: new Array<number>(3)};
+raw.values[0] = 7;
+const copy = items(raw).values.slice();
+console.log(`${copy.pop() ?? -1}`);
+console.log(`${copy.length}`);
+console.log(`${copy.pop() ?? -1}`);
+console.log(`${copy.pop() ?? -1}`);

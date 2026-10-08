@@ -351,6 +351,10 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 // differs between variants, and has actually changed in this refinement.
 // Identical metadata fields cannot be evidence for narrowing.
 func (l *lowering) enumTagDiscriminant(declared, observed *checker.Type, name string) bool {
+	declared = l.checker.GetNonNullableType(declared)
+	if declared.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
 	var first *checker.Type
 	unit, different, open, changed := false, false, false, false
 	members := 0
@@ -402,24 +406,6 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 	if remainder, _, _ := l.enumObjectRemainder(node); remainder != nil && viewSite(node) {
 		if target := l.checker.GetContextualType(node, checker.ContextFlagsNone); target != nil && target.Flags()&checker.TypeFlagsNever == 0 && !l.checker.IsTypeAssignableTo(remainder, target) {
 			return &Refused{Where: l.program.Where(node), What: "an open numeric enum object remainder seen as " + l.checker.TypeToString(target), Fix: "keep the full object union or check a member view before using its payload (adamic/enum-tag)"}
-		}
-	}
-
-	if remainder, _, _ := l.enumObjectRemainder(node); remainder == nil && l.isExpression(node) {
-		if symbol := l.flagValueSymbol(node); symbol != nil {
-			declared := l.checker.GetTypeOfSymbol(symbol)
-			observed := l.checker.GetTypeAtLocation(node)
-			if declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
-				for _, field := range l.checker.GetPropertiesOfType(observed) {
-					if l.enumTagDiscriminant(declared, observed, field.Name) {
-						if isClassInstance(observed) {
-							return nil
-						}
-						_, err := l.enumTagViewFields(node, declared, observed)
-						return err
-					}
-				}
-			}
 		}
 	}
 

@@ -1,0 +1,1 @@
+({x:1} as {x:number;y?:number}).y=3; console.log('done');
