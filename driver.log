@@ -5,3 +5,5 @@ github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/13_flag_dow
     fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:Refused What:stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)}
 --- FAIL: TestFixtures/assertions/13_flag_downcast.a/stage0 (0.00s)
 
+red: 5f377f3530d42760a92747c8e452edc816f53e61 full gate, first failure at tests after 79.1 s (coverage=0.0s build=9.2s tools=0.1s vet=20.5s wasi=136.4s catalog=149.4s stage3=149.4s tests=150.4s; 94 units over 30 s (4811 s, 72 on the burn-down, 22 drifted over)), 10 fail, 4299 pass
+stopped: stopped
