@@ -944,11 +944,11 @@ func (l *lowering) writable(proven *checker.Type) bool {
 	return true
 }
 
-// slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, a cell, or a function value's argument or result. number | undefined is packed into
-// one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
-// Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
-// result takes one.
+// slotless reports representations the general field, element, cell and closure-slot
+// lowering paths do not yet support. number | undefined is packed into one word;
+// boolean | undefined still needs two, and a Union must be boxed on its way in.
+// Maps accept Union separately: their construction and set paths already box
+// scalar members, as variables, named parameters and results do.
 func slotless(valueType ir.Type) bool {
 	return valueType == ir.MaybeBoolean || valueType == ir.Union
 }

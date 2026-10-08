@@ -1323,7 +1323,9 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
 }
 
-// mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
+// mapTypes is a Map's key and value representations. Union values already fit one
+// counted reference: construction and set box scalar members with fit, and get
+// and iteration read the same reference as variables and function results.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 2 {
@@ -1334,8 +1336,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
-	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown || slotless(value) {
+	// number | undefined is packed; a Union holds its existing tagged heap reference.
+	// Keep the refusal for representations that still need more than one slot.
+	if !valueKnown || (slotless(value) && value != ir.Union) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
