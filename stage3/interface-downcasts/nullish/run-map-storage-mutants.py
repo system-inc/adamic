@@ -11,6 +11,11 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('nominal-field-readonly-alias-write', 'internal/lower/view_maps_nested_nominal.go', 'if ir.HasMapNominalWitness(l.result, child) && (l.result.ViewContracts[child-1].Of == ir.Object || l.result.ViewContracts[child-1].Of == ir.Union) {', 'if ir.HasMapNominalWitness(l.result, child) && (l.result.ViewContracts[child-1].Of == ir.Object || l.result.ViewContracts[child-1].Of == ir.Union) && !l.checker.IsReadonlySymbol(field) {', '^TestCheckedViewMapCertificates$/entry-nominal-slot-widen-undefined-to-both(-nested)?$'),
+ ('nominal-field-widen-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNominalFieldWidenReadMutants$'),
+ ('nominal-field-widen-js-read', 'internal/javascript/view_nominal_reads.go', '"((value) => (" + strings.Join', '"((value) => (true || " + strings.Join', '^TestCheckedViewNominalFieldWidenReadMutants$'),
+
+ ('nominal-field-union-storage', 'internal/ir/view_maps.go', 'field.Readonly && NominalArrayUnionStorage(program, own.Contract, field.Contract)', 'false && field.Readonly && NominalArrayUnionStorage(program, own.Contract, field.Contract)', '^TestCheckedViewMapCertificates$/entry-nominal-slot-widen-(null|both)(-nested)?$'),
  ('nullable-slot-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalSlotMutants$/^producer$'),
  ('nullable-slot-js-producer', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewNullableNominalSlotMutants$/^producer$'),
  ('nullable-slot-native-write', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalSlotMutants$/^write$'),

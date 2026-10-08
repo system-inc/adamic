@@ -455,3 +455,45 @@ func TestCheckedViewNullableNominalSlotBoundaryRefusals(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckedViewNominalFieldWidenReadMutants(t *testing.T) {
+	for _, variant := range []string{"null", "both"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-slot-widen-"+variant)
+			truth := onNode(t, path)
+			fake, item := -1, -1
+			for i, local := range program.Locals {
+				if local.Name == "fake" {
+					fake = i
+				}
+				if local.Name == "item" {
+					item = i
+				}
+			}
+			if fake < 0 || item < 0 {
+				t.Fatal("missing locals")
+			}
+			changed := false
+			for i, statement := range program.Main {
+				if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "source" {
+					mutation := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i+1], mutation)
+					program.Main = append(program.Main, remaining...)
+					changed = true
+					break
+				}
+			}
+			if !changed {
+				t.Fatal("mutation missed")
+			}
+			native, _ := nativelyUncached(t, program)
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "field read failed:") || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("widened reference lookalike ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; original Object storage rechecks identity through nullable target", truth.stdout)
+		})
+	}
+}

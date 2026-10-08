@@ -89,6 +89,11 @@
       "family": "nullable nominal source-slot conversions",
       "scope": "direct finite class/null and class/null/undefined boxed slots, initially null and existing optional slots, checked source alias writes and original nonnullable constructor-slot containment; unboxed nullable callable values remain refused",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "readonly nominal field reference-to-boxed widening",
+      "scope": "direct and nested readonly class fields widen to null, undefined, and both; class/undefined sources widen to boxed both with later source-alias class and undefined writes; independent nullable field reads reject class lookalikes",
+      "production_reaching_view_counts": "unmeasured"
     }
   ]
 }

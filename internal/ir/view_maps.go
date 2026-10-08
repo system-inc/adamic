@@ -229,7 +229,10 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 						continue
 					}
 					found = true
-					if own.Optional && !field.Optional || !sameStorage(own.Contract, field.Contract) || !accepts(own.Contract, field.Contract) {
+					// The shared nullish field reader preserves counted class references
+					// from Object storage when a readonly target uses Union storage.
+					storage := sameStorage(own.Contract, field.Contract) || field.Readonly && NominalArrayUnionStorage(program, own.Contract, field.Contract)
+					if own.Optional && !field.Optional || !storage || !accepts(own.Contract, field.Contract) {
 						return false
 					}
 					if !field.Readonly && (own.Readonly || !accepts(field.Contract, own.Contract)) {

@@ -1055,3 +1055,39 @@ passed: IR 0.020s, lower 8.677s, native 37.309s, JavaScript 1.032s; scoped vet
 passed. After restricting literal-null certificates to nominal union stores, the
 final focused uncached oracle passed in 6.908s and final IR/lower checks passed
 in 0.011s/4.014s; scoped vet passed again. The full repository gate was not run.
+
+### Readonly nominal field storage widening, October 8
+
+Readonly class fields beneath Map entries reuse the existing counted-reference
+adapter when a source Object slot is read as a nullable Union slot. Logical
+covariance and nullish containment remain separate checks, and mutable fields
+still require both logical directions. The actual producer storage and slot
+contracts remain unchanged. Direct and nested required class fields widen to
+class/null, class/undefined and class/null/undefined. Class/undefined source fields
+also widen to boxed both and can change to a class and back to undefined through
+an original mutable alias.
+
+Eight Node controls pass on sanitized native, release and JavaScript. Initial
+controls measured the missing storage certificate: null and both failed while
+undefined already passed. Later alias writes exposed missing source-write metadata
+because the producer schema called the field readonly. A readonly schema can
+describe a mutable allocation held by another alias, so all private nominal field
+names retain source-write certificates. No callable convention changed.
+
+Two payload mutants independently corrupt an original Object slot with a class
+lookalike after Map producer validation: each stops at its nullable field read.
+Four check-removal counterfactuals omit readonly storage compatibility, readonly
+schema alias-write registration, or either backend read identity guard. All were
+killed without a build failure. Evidence is in `evidence/nominal-slot-widen-*`.
+The conservative inventory remains 2,018 pairs / 9,101 reads, with production
+reaching-view discharge unmeasured. Recursive nominal producer schemas need a
+runtime visited witness; unboxed nullable callable values retain a named refusal
+and broader callable conventions remain with lane 5. Required primitive brands
+retain the existing language refusal.
+
+Readonly field widening validation: the restored scoped uncached oracle
+(`Map|Nominal|TestArrayHoles(Milestone|Refusals)$`) passed in 191.211s.
+Touched packages (`View|Map|Contract|Generic|Class`, inherited Phantom exclusion)
+passed: IR 0.016s, lower 9.696s, native 40.612s, JavaScript 1.104s. Scoped vet
+passed. The focused restored controls and payload mutants passed in 4.637s.
+The full repository gate was not run.

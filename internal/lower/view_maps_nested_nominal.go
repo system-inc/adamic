@@ -83,7 +83,9 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 			}
 		}
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
-		if ir.HasMapNominalWitness(l.result, child) && (l.result.ViewContracts[child-1].Of == ir.Object || l.result.ViewContracts[child-1].Of == ir.Union) && !l.checker.IsReadonlySymbol(field) {
+		// A readonly schema can describe a mutable allocation held by another alias.
+		// Retain source certificates for all writes to these class field names.
+		if ir.HasMapNominalWitness(l.result, child) && (l.result.ViewContracts[child-1].Of == ir.Object || l.result.ViewContracts[child-1].Of == ir.Union) {
 			l.optionalViewWriteField(field.Name)
 		}
 		if l.result.CheckedFields == nil {
