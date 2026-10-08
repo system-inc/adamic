@@ -2139,3 +2139,15 @@ fields. fieldInitialRepresentation in native/emit_objects.go preserves physical
 Union 10 on reserved uninitialized slots; readiness still refuses reads, and
 initialized undefined uses semantic 13. Both fixes have executed omission
 mutants and prior-lane Node controls.
+
+## Lane 2 group fifteen: complete original declarations
+
+FunctionExpression, GetAccessorDeclaration and SetAccessorDeclaration typeParameters
+are held by 15 probes importing complete original declarations at 050880ce. These
+three pairs account for twelve static candidate reads; production reachability is
+unmeasured. Both backends, sanitized/release native, finishing leak checks and two
+executed numeric-field mutants are covered. Cumulative fixture obligations are
+148 pairs / 2713 reads; remainder 186 / 476. See
+`stage3/interface-downcasts/lane2/RANKED15-ARRAYS-REPORT.md`. The required global
+counts refresh remains red in existing fixtures; two failures reproduce at merge
+baseline 0f47b23c. Fifteen group count rows were separately measured and recorded.
