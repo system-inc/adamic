@@ -1,0 +1,5 @@
+--- FAIL: TestNbodyIndexedElementsBorrow (0.04s)
+    element_borrow_test.go:44: want four borrowed counter lookups on the integer path, got 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.049s
+FAIL
