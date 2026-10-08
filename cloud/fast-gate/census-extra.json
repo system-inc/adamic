@@ -1,0 +1,58 @@
+[
+  {
+    "file": "stage1/cohere/graphql/printer/performance_test.go",
+    "test": "TestPrinterThroughput",
+    "id": "TestPrinterThroughput:extra",
+    "line": 17,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestPrinterThroughput"
+    ],
+    "message": "",
+    "class": "measurement",
+    "provides": "Opt-in throughput measurement; does not replace correctness verification."
+  },
+  {
+    "file": "stage1/cohere/estree/throughput_test.go",
+    "test": "TestThroughput",
+    "id": "TestThroughput:extra",
+    "line": 16,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestThroughput"
+    ],
+    "message": "",
+    "class": "measurement",
+    "provides": "Opt-in throughput measurement; does not replace correctness verification."
+  },
+  {
+    "file": "stage1/cohere/estree/corpus_test.go",
+    "test": "TestRepositoryAgreement",
+    "id": "TestRepositoryAgreement:extra",
+    "line": 18,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestRepositoryAgreement"
+    ],
+    "message": "\"set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory\"",
+    "class": "opt-in-lane",
+    "provides": "The estree corpus audit lane: runs against a completed Go/Node corpus audit directory (ADAMIC_ESTREE_CORPUS) produced by that audit, not provisioned by the gate, like the GCC and release-flags lanes."
+  },
+  {
+    "file": "stage1/cohere/estree/corpus_test.go",
+    "test": "TestCorpusNativeRefusals",
+    "id": "TestCorpusNativeRefusals:extra",
+    "line": 84,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestCorpusNativeRefusals"
+    ],
+    "message": "\"completed frozen corpus required\"",
+    "class": "opt-in-lane",
+    "provides": "The estree corpus audit lane: needs the completed frozen corpus that audit produces, not provisioned by the gate."
+  }
+]

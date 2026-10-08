@@ -14,6 +14,7 @@ func main() {
 	root := flag.String("root", ".", "repository root")
 	table := flag.String("table", "internal/skipcensus/testdata/skips.json", "declarations")
 	scan := flag.Bool("scan", false, "print AST census instead of checking a log")
+	extra := flag.String("extra", "", "more declarations for checking the log only, for skips in the gated tree that the -root tree doesn't have")
 	flag.Parse()
 	if *scan {
 		rows, err := skipcensus.Scan(*root)
@@ -51,6 +52,18 @@ func main() {
 		fatal(err)
 	}
 	defer log.Close()
+	if *extra != "" {
+		f, err := os.Open(*extra)
+		if err != nil {
+			fatal(err)
+		}
+		more, err := skipcensus.Load(f)
+		f.Close()
+		if err != nil {
+			fatal(err)
+		}
+		rows = append(rows, more...)
+	}
 	if err := skipcensus.CheckLog(log, os.Stdout, rows); err != nil {
 		fatal(err)
 	}

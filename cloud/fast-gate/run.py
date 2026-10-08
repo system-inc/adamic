@@ -86,7 +86,7 @@ class Gate:
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
         self.watchers = []
-        self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "census"] if arguments.full else ["coverage", "build", "vet", "tests", "smoke", "census"]
+        self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full else ["coverage", "build", "vet", "tests", "smoke", "census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -160,6 +160,9 @@ class Gate:
         if executors & {"workers", "bench-workers"}:
             self.planned.append("workers")
             threads.append(self.guarded("workers", self.workers, executors))
+        if "catalog" in executors:
+            self.planned.append("catalog")
+            threads.append(self.guarded("catalog", self.step, "catalog", ["bash", "-n", "verify/catalog/check.sh"]))
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -194,7 +197,9 @@ class Gate:
         threads = [self.guarded("vet", self.vet),
                    self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
                    self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi),
-                   self.guarded("stage3", self.stage3)]
+                   self.guarded("stage3", self.stage3),
+                   # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
+                   self.guarded("catalog", self.catalogFull)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -222,7 +227,7 @@ class Gate:
             # The map itself changed: every executor it names runs, so it can't quietly lose a path.
             executors.update(name for name, _ in rules if name not in ("inert", "build"))
         # Script executors also run for paths a package owns (bench/workers lives in bench's tree).
-        scripted = ("stage3", "cohere", "workers", "bench-workers", "darwin")
+        scripted = ("stage3", "cohere", "workers", "bench-workers", "catalog", "darwin")
         self.scriptedPaths = {}
         for path in changed:
             executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
@@ -331,6 +336,14 @@ class Gate:
         self.exits["workers"] = 1 if failed else 0
         if failed:
             self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
+
+    def catalogFull(self):
+        if not os.path.exists(os.path.join(self.arguments.tree, "verify/catalog/check.sh")):
+            self.exits["catalog"] = 0
+            self.steps["catalog"] = 0.0
+            self.result["catalog"] = "not in this tree"
+            return
+        self.step("catalog", ["bash", "verify/catalog/check.sh"])
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
@@ -737,7 +750,9 @@ class Gate:
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools
-        process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
+        # census-extra.json: skips in main the tools tree doesn't have yet, classified, checked against the log only.
+        process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, "-extra", os.path.join(tools, "cloud/fast-gate/census-extra.json"),
+                              os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
                              subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
         stdout, stderr = process.communicate()
         with open(os.path.join(self.arguments.out, "census.log"), "w") as handle:

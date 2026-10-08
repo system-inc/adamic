@@ -2,7 +2,7 @@
 # (@system_adamic's ruling, Oct 7 20:48). A path in a Go package (its directory, its testdata, or a
 # file it embeds, or the nearest package above it) is that package's tests and needs no line here.
 # Everything else matches the first line below whose glob fits it (fnmatch: * spans directories).
-# Script executors (stage3, cohere, workers, bench-workers, darwin) also run for paths a package
+# Script executors (stage3, cohere, workers, bench-workers, catalog, darwin) also run for paths a package
 # owns, in addition to its tests. Adding an inert line is a ruling.
 #
 # "mode report" records uncovered paths in fast.json without failing; "mode enforce" makes them red.
@@ -56,3 +56,7 @@ package:internal/oracle  oracle/*
 workers        workers/*
 # Measurement harnesses that need workerd and refuse to time wrong answers: syntax only.
 bench-workers  bench/workers/*.mjs
+# The bug catalog (each catalogued bug reintroduced and caught, a mutant test by kind): check.sh in
+# the full gate on every main, a syntax check in the fast gate. Coverage measurement is records.
+catalog        verify/catalog/*
+inert          verify/coverage/*
