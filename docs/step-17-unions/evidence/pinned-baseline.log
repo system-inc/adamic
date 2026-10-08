@@ -1,0 +1,25 @@
+=== RUN   TestScoutUnionSourceOutcomes
+=== RUN   TestScoutUnionSourceOutcomes/selector-optional-boolean.a
+    scout_unions_test.go:33: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/selector-optional-boolean.a:2:5: stage 0 can't lower a field of type boolean | undefined yet
+=== RUN   TestScoutUnionSourceOutcomes/values-optional-boolean.a
+    scout_unions_test.go:33: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/values-optional-boolean.a:2:5: stage 0 can't lower a field of type boolean | undefined yet
+=== RUN   TestScoutUnionSourceOutcomes/hir-optional-boolean.a
+    scout_unions_test.go:49: CURRENT OUTCOME: both backends match source Node; sanitizers and leak check passed
+=== RUN   TestScoutUnionSourceOutcomes/tsc-source-content.a
+    scout_unions_test.go:33: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/tsc-source-content.a:3:24: stage 0 can't lower a value of type string | null yet
+=== RUN   TestScoutUnionSourceOutcomes/tsc-nullish-content.a
+    scout_unions_test.go:33: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/tsc-nullish-content.a:2:19: stage 0 can't lower a value of type string | null | undefined yet
+=== RUN   TestScoutUnionSourceOutcomes/presence.a
+    scout_unions_test.go:33: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/presence.a:4:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go
+--- PASS: TestScoutUnionSourceOutcomes (1.30s)
+    --- PASS: TestScoutUnionSourceOutcomes/selector-optional-boolean.a (0.23s)
+    --- PASS: TestScoutUnionSourceOutcomes/values-optional-boolean.a (0.17s)
+    --- PASS: TestScoutUnionSourceOutcomes/hir-optional-boolean.a (0.47s)
+    --- PASS: TestScoutUnionSourceOutcomes/tsc-source-content.a (0.13s)
+    --- PASS: TestScoutUnionSourceOutcomes/tsc-nullish-content.a (0.16s)
+    --- PASS: TestScoutUnionSourceOutcomes/presence.a (0.15s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.312s

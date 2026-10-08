@@ -329,3 +329,132 @@ It originally supplied a relative path to the oracle cache; that harness error
 was corrected and the passing measurement uses absolute paths. These standalone
 probes have not been registered as positive count fixtures; no allocation row is
 claimed for a refused program. No inherited-field/delete policy was changed.
+
+## Implemented concrete shape
+
+`string | null` and `string | null | undefined` now use canonical `ir.Union`
+storage. No runtime ABI was added. Null uses the existing immortal sentinel;
+undefined uses NULL; a string remains its counted string pointer. Parameters,
+locals, plain-object fields and array elements preserve those tags. `typeof`
+uses the live tag instead of assigning one meaning to every missing pointer.
+Native coalescing converts the retained non-null string after testing both tags.
+
+A narrowed field is loaded once in its stored union representation and checked
+before conversion to string. A stale alias write to null therefore takes the
+existing union-member panic, in both backends. Explicit null/undefined comparisons,
+typeof and ?? observe the stored tag even after a stale checker narrowing. They
+must not panic merely to ask what value is there. Empty strings stay present.
+
+The fixture exercises heap strings, repeated alias writes, replacement with null
+and undefined, coalescing, identity, spread, array reads/writes/push, missing entries
+and stale-narrowing observations. All successful runs agree byte for byte with
+source Node, including stderr and exit, under ASan/UBSan, release and leak checks.
+A separate checked fixture demonstrates the stale field-use panic; source Node
+continues and prints null. Existing refusal tests for nullable number/boolean,
+unknown reflection and unsound relations pass. Class fields with mixed storage,
+boolean class fields and the original delete/presence boundary remain stopped.
+
+## Exact tsc boundary before and after
+
+All 82 input hashes and byte lengths match the stock catalogue pinned at ec0b16c0;
+[input-hashes.json](step-17-unions/evidence/input-hashes.json) preserves that check.
+A detached checkout of delivery base 4885cec5 uses the shared pinned cohere
+submodule through a symlink. No worker branch was merged into the delivery.
+
+The first selector used the declaration position 102:5, which is not the failure
+position. Its log retains the actual diagnostic at 102:52. Replaying that exact
+observed diagnostic on the base exits 0 and reproduces the NotYet reason:
+
+```sh
+source /workspace/adamic-tools/env.sh
+go run ./stage3/census/latent/replay \
+  -project /tmp/hidden-adapted/src/compiler \
+  -where /tmp/hidden-adapted/src/compiler/sourcemap.ts:102:52 -kind NotYet \
+  -reason 'a value of type string | null' > replay.log 2>&1
+```
+
+[Base exact replay](step-17-unions/evidence/tsc-before-exact.log) selects
+setSourceContent at 102:5 and reports that same reason at 102:52.
+[Fixing exact replay](step-17-unions/evidence/tsc-after-exact.log) selects the same
+function and instead reports NotYet `an array of never` at 105:51, for the empty
+array initializer. Its exit 1 means the requested old signature no longer matches;
+it is not a successful whole-function/native build. The selected concrete
+nullable-string root has advanced. The nullish-string reduction also now lowers,
+but its other tsc callers have not all been replayed.
+
+The old 6,421 and 1,382 credits remain historical outermost estimates. No whole
+hidden census was rerun and no hidden-byte reduction is claimed for this unit.
+Generic T/U/V/K, branded strings, checked-view contracts, closure capture/ABI,
+other nullable arms and overload specialization remain separate blockers.
+
+## Mutants and independent catchers
+
+| Mutant actually run | Catcher and observed result |
+| --- | --- |
+| Add one to a copied census byte credit | Exact source-ledger comparison rejects the altered credit |
+| Box null as NULL | The field/array fixture completes natively with exit 0, no stderr, but prints undefined in null positions; source Node prints null |
+| Treat a tagged union as an untagged nullable pointer in lowering | Nullish-content probe becomes NotYet at typeof; its required successful lowering fails |
+| Classify a union's missing pointer as null in native typeof | Native and release stdout disagree with source Node on the undefined arm |
+| Refuse nullable-string storage again | TestNullableStringAdmission fails at the previously admitted parameter |
+| Drop the narrowed field's tag check in IR | The checked baseline exits 70; mutant JavaScript completes and prints undefined, exposing the unchecked field load |
+| Check an explicit null comparison before observing its tag | The stale-observation fixture panics where source Node completes |
+
+Every source mutant was restored before final checks. The first null-box mutant
+was tried against only direct-call arguments and survived: that boundary has its
+own null conversion and bypasses Box. It was rerun independently against field
+and array boxing and caught by a completed wrong-output run, not a clang error or
+sanitizer crash. The dropped-check IR mutant is executed within its focused test
+and the overall test passes only when the mutant disagrees.
+
+## Counts and validation
+
+`go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m
+-args -update-counts` passed. Five registered rows were added:
+
+| Fixture | Allocations | Frees | Retains | Releases | Max live | Regions |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| hir-optional-boolean.a | 1 | 1 | 0 | 1 | 1 | 0 |
+| tsc-source-content.a | 0 | 0 | 2 | 2 | 0 | 0 |
+| tsc-nullish-content.a | 0 | 0 | 6 | 6 | 0 | 0 |
+| scout_nullable_strings.a | 34 | 34 | 130 | 156 | 5 | 0 |
+| scout_nullable_string_stale_field.a | 1 | 0 | 4 | 3 | 1 | 0 |
+
+The HIR row allocates its argument object. The two reduced tsc probes use immortal
+strings/null/undefined, so their ownership transfers allocate nothing. The full
+fixture's dynamic strings, arrays and objects all free; the final checked fixture
+is counted at its intentional panic, so its live object is not a finished-program
+leak. Null and undefined need no allocation.
+
+Two existing rows also change structurally: logical_and_reference_maybe.a moves
+to its registration position with all six numbers unchanged; taste/17_binder_flow.a
+is removed because the delivery base's taste_stage3_test.go already registers it
+with lowers=false. Neither is a new compiler acceptance/refusal change. Every
+other old row keeps its numbers. The standalone stopped probes are not registered
+as positive count fixtures.
+
+Final focused commands, with output in evidence log files:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m -v \
+  -run '^TestNullableStringFieldCheckMutant$|^TestScoutUnionSourceOutcomes$|^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_nullable_'
+go test ./internal/lower -count=1 -v \
+  -run '^TestNullableStringAdmission$|^TestTasteRepresentationLimitsStayExplicit$|^TestUnknownReflectionRefusals$|^TestProvenRelationsRefuse$'
+go vet ./internal/lower ./internal/native ./internal/oracle
+gofmt -l internal/lower/expression.go internal/lower/object.go \
+  internal/lower/nullable_strings.go internal/lower/nullable_strings_test.go \
+  internal/native/union.go internal/oracle/scout_unions_test.go
+```
+
+The backend selector covers two registered runtime fixtures plus all six measured
+probes; the source reductions that still stop pin their exact reason. No whole
+package test or full gate was run. Formatting and vet logs are empty. Setup passed
+with Go/Node at 0.023s, submodules 0.062s, clang 0.152s, build cache 41.424s and
+completion 41.452s; nproc=5. Detached-checkout compilation exhausted workspace
+space; removing only regenerable Go cache entries restored it, and no source or
+evidence was removed. The delivery carries own commits only on the area tip.
+
+Scalar-only `number | undefined` and `boolean | undefined` do not have a counted
+arm. Their existing Maybe pair/packed scalar slots remain valid specializations
+of present-versus-undefined; this unit does not force them into allocated boxes.
+The class-field gate still rejects optional booleans on this base even though
+interface reads have a tagged byte. Completing that class path is remaining work.

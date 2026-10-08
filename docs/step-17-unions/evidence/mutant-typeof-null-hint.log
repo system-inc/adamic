@@ -1,0 +1,11 @@
+=== RUN   TestScoutUnionSourceOutcomes
+=== RUN   TestScoutUnionSourceOutcomes/tsc-nullish-content.a
+    scout_unions_test.go:38: /workspace/adamic/docs/step-17-unions/probes/tsc-nullish-content.a:3:17: stage 0 can't lower typeof a value holding both null and undefined without a presence slot yet
+--- FAIL: TestScoutUnionSourceOutcomes (0.18s)
+    --- FAIL: TestScoutUnionSourceOutcomes/tsc-nullish-content.a (0.18s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.194s
+FAIL

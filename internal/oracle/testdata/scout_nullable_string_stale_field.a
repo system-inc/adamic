@@ -1,0 +1,7 @@
+interface Content { value: string | null; }
+function clear(content: Content): void { content.value = null; }
+const content: Content = {value: 'source'};
+if (content.value !== null) {
+    clear(content);
+    console.log(content.value);
+}

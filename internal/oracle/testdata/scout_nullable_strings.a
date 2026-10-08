@@ -1,0 +1,35 @@
+interface Content { value: string | null | undefined; }
+function describe(content: string | null | undefined): string {
+    return content === null ? 'null' : content === undefined ? 'undefined' : content;
+}
+function read(content: Content): string {
+    if (content.value === null) return 'null';
+    if (content.value === undefined) return 'undefined';
+    return content.value;
+}
+function clear(content: Content): void { content.value = null; }
+function exercise(seed: number): void {
+    const content: Content = { value: `text${seed}` };
+    const alias = content;
+    console.log(`${read(content)}|${typeof content.value}|${content.value ?? 'fallback'}`);
+    alias.value = null;
+    console.log(`${read(content)}|${typeof content.value}|${content.value ?? 'fallback'}`);
+    alias.value = undefined;
+    console.log(`${read(content)}|${typeof content.value}|${content.value ?? 'fallback'}`);
+    content.value = '';
+    console.log(`${read(alias)}|${typeof content.value}|${content.value ?? 'fallback'}`);
+    const copy = { ...content };
+    console.log(`${content === alias}|${content === copy}|${read(copy)}`);
+    content.value = 'again';
+    if (content.value !== null) {
+        clear(content);
+        console.log(`${content.value === null}|${typeof content.value}|${content.value ?? 'fallback'}`);
+    }
+    const entries: (string | null)[] = [`item${seed}`, null, ''];
+    console.log(`${describe(entries[0])}|${describe(entries[1])}|${describe(entries[2])}|${describe(entries[9])}`);
+    entries[0] = null;
+    entries.push(`tail${seed}`);
+    console.log(`${describe(entries[0])}|${describe(entries[3])}|${typeof entries[1]}|${typeof entries[9]}`);
+}
+exercise(1);
+exercise(2);

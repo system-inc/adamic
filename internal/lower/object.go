@@ -486,6 +486,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		optional := access.QuestionDotToken != nil
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if declared := l.concrete(l.checker.GetTypeOfSymbol(field)); nullableStringUnion(declared) && of == ir.String {
+				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
+				return l.checkedNullableString(node, read), nil
+			}
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && of != ir.Union && !of.IsReference() {
 				return nil, l.notYet(node, "a narrowed scalar in a boxed union field")
 			}

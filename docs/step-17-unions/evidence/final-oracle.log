@@ -1,0 +1,40 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestScoutUnionSourceOutcomes
+=== RUN   TestScoutUnionSourceOutcomes/selector-optional-boolean.a
+    scout_unions_test.go:34: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/selector-optional-boolean.a:2:5: stage 0 can't lower a field of type boolean | undefined yet
+=== RUN   TestScoutUnionSourceOutcomes/values-optional-boolean.a
+    scout_unions_test.go:34: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/values-optional-boolean.a:2:5: stage 0 can't lower a field of type boolean | undefined yet
+=== RUN   TestScoutUnionSourceOutcomes/hir-optional-boolean.a
+    scout_unions_test.go:50: CURRENT OUTCOME: both backends match source Node; sanitizers and leak check passed
+=== RUN   TestScoutUnionSourceOutcomes/tsc-source-content.a
+    scout_unions_test.go:50: CURRENT OUTCOME: both backends match source Node; sanitizers and leak check passed
+=== RUN   TestScoutUnionSourceOutcomes/tsc-nullish-content.a
+    scout_unions_test.go:50: CURRENT OUTCOME: both backends match source Node; sanitizers and leak check passed
+=== RUN   TestScoutUnionSourceOutcomes/presence.a
+    scout_unions_test.go:34: CURRENT STOP: /workspace/adamic/docs/step-17-unions/probes/presence.a:4:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go
+--- PASS: TestScoutUnionSourceOutcomes (1.61s)
+    --- PASS: TestScoutUnionSourceOutcomes/selector-optional-boolean.a (0.17s)
+    --- PASS: TestScoutUnionSourceOutcomes/values-optional-boolean.a (0.12s)
+    --- PASS: TestScoutUnionSourceOutcomes/hir-optional-boolean.a (0.39s)
+    --- PASS: TestScoutUnionSourceOutcomes/tsc-source-content.a (0.38s)
+    --- PASS: TestScoutUnionSourceOutcomes/tsc-nullish-content.a (0.40s)
+    --- PASS: TestScoutUnionSourceOutcomes/presence.a (0.13s)
+=== RUN   TestNullableStringFieldCheckMutant
+    scout_unions_test.go:113: Dropped field tag check mutant caught: JavaScript exits 0 and prints undefined; checked baseline panics with exit 70
+--- PASS: TestNullableStringFieldCheckMutant (0.37s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a (0.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a (0.48s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.513s

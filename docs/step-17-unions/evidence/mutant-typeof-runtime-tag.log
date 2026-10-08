@@ -1,0 +1,13 @@
+=== RUN   TestScoutUnionSourceOutcomes
+=== RUN   TestScoutUnionSourceOutcomes/tsc-nullish-content.a
+    scout_unions_test.go:44: native: stdout differs
+    scout_unions_test.go:44: release: stdout differs
+    scout_unions_test.go:50: CURRENT OUTCOME: both backends match source Node; sanitizers and leak check passed
+--- FAIL: TestScoutUnionSourceOutcomes (1.29s)
+    --- FAIL: TestScoutUnionSourceOutcomes/tsc-nullish-content.a (1.29s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.357s
+FAIL

@@ -1,0 +1,6 @@
+=== RUN   TestNullableStringAdmission
+    nullable_strings_test.go:14: /tmp/adamic-gate/TestNullableStringAdmission3330677414/001/main.a:1:15: stage 0 can't lower a value of type string | null yet
+--- FAIL: TestNullableStringAdmission (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

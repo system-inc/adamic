@@ -17,6 +17,9 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 		return maybe(to, value), false
 	case to == ir.Weak:
 		return fmt.Sprintf("adamic_weak_of(%s)", value), true
+	case from == ir.Union && to == ir.String:
+		// A nullable string coalesces only after its null/undefined tags were tested.
+		return fmt.Sprintf("((adamic_string *)(%s))", value), false
 	case to != ir.Union:
 		panic(fmt.Sprintf("native: no conversion from %d to %d", from, to))
 	case from == ir.Number:

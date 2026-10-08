@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:770: exit codes differ
+        node:   exit 0, stdout "text1|string|text1\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem1|null||undefined\nnull|tail1|object|undefined\ntext2|string|text2\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem2|null||undefined\nnull|tail2|object|undefined\n", stderr ""
+        native: exit 70, stdout "text1|string|text1\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:776: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "text1|string|text1\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem1|null||undefined\nnull|tail1|object|undefined\ntext2|string|text2\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem2|null||undefined\nnull|tail2|object|undefined\n", stderr ""
+        backend: exit 70, stdout "text1|string|text1\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:783: leaks:
+        exit 70
+        adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a (0.54s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.590s
+FAIL
