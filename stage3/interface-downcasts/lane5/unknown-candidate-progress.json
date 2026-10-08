@@ -1570,6 +1570,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "export-property-type-tags",
+      "pairs": 3,
+      "candidateReads": 36,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createExportSpecifier",
+          "declared_types": [
+            "(isTypeOnly: boolean, propertyName: string | ModuleExportName | undefined, name: string | ModuleExportName) => ExportSpecifier"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 12,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 8686,
+            "column": 15
+          },
+          "rank": 141,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createPropertySignature",
+          "declared_types": [
+            "(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, type: TypeNode | undefined) => PropertySignature"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 12,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 4282,
+            "column": 20
+          },
+          "rank": 144,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createTypeCheck",
+          "declared_types": [
+            "(value: Expression, tag: TypeOfTag) => Expression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 12,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 475,
+            "column": 29
+          },
+          "rank": 145,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
