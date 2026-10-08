@@ -1,0 +1,12 @@
+// a-check: checked
+// tsc-shaped input; source evidence: binder.ts:679
+function run(iterations: number): number {
+ const names: string[]=[]; for(let i=0;i<256;i++) names.push(`Type${i}`);
+ let total=0;
+ for(let n=0;n<iterations;n++) for(const name of names) {
+  const path="src/compiler/"+name+".ts";
+  total+=path.length+path.charCodeAt(13);
+ }
+ return total;
+}
+console.log(`${run(8)}`);

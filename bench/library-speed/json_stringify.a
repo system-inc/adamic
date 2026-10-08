@@ -1,0 +1,16 @@
+// a-check: checked
+// Dense scalar-fileInfo subset of builder.ts:1130,1166; emitter.ts:1138.
+function run(iterations: number): number {
+ const fileNames: string[]=[]; const fileInfos: string[]=[]; const root: number[]=[];
+ for(let i=0;i<256;i++) {
+  fileNames.push(`./src/compiler/file${i}.ts`);
+  fileInfos.push("0123456789abcdef"); root.push(i+1);
+ }
+ let total=0;
+ for(let n=0;n<iterations;n++) {
+  const text=JSON.stringify({fileNames:fileNames,fileInfos:fileInfos,root:root,options:{target:7,strict:true},version:"6.0.3"}) ?? "";
+  total+=text.length+text.charCodeAt(0)+text.charCodeAt(text.length-1);
+ }
+ return total;
+}
+console.log(`${run(8)}`);

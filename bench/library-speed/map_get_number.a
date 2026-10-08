@@ -1,0 +1,13 @@
+// a-check: checked
+// tsc-shaped input; source evidence: binder.ts:341,342,344,787,794
+function run(iterations: number): number {
+ const table=new Map<number,number>();
+ for(let i=0;i<256;i++) if(i%3!==0) table.set(i,i+1);
+ let total=0;
+ for(let n=0;n<iterations;n++) for(let i=0;i<256;i++) {
+  const key=i; total+=table.get(key) ?? 0;
+ }
+ 
+ return total;
+}
+console.log(`${run(8)}`);

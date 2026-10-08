@@ -1,0 +1,9 @@
+// a-check: checked
+// tsc-shaped input; source evidence: checker.ts:5576; scanner.ts:441
+function run(iterations: number): number {
+ let text=""; for(let i=0;i<256;i++) text+="const identifier = 123;\n";
+ let total=0;
+ for(let n=0;n<iterations;n++) for(let i=0;i<text.length;i++) total+=text.charCodeAt(i);
+ return total;
+}
+console.log(`${run(8)}`);

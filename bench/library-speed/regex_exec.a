@@ -1,0 +1,13 @@
+// a-check: checked
+// tsc-shaped input; source evidence: scanner.ts:792,801,967
+function run(iterations: number): number {
+ const pattern=/^#!.*/;
+ const lines=["#!/usr/bin/env node\nconst x=1;","const x=1;","#!node\r\nlet y=2;"];
+ let total=0;
+ for(let n=0;n<iterations;n++) for(let i=0;i<256;i++) {
+  const match=pattern.exec(lines[i%3] ?? "");
+  total+=match===null ? 0 : (match[0]?.length ?? 0);
+ }
+ return total;
+}
+console.log(`${run(8)}`);

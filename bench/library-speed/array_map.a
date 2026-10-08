@@ -1,0 +1,14 @@
+// a-check: checked
+// tsc-shaped input; source evidence: builder.ts:574
+interface Token {kind: number; pos: number;}
+function run(iterations: number): number {
+ const source: Token[]=[];
+ for(let i=0;i<256;i++) source.push({kind:i%4===0 ? 80 : 28,pos:i});
+ let total=0;
+ for(let n=0;n<iterations;n++) {
+  const result=source.map(token=>token.pos);
+  for(const pos of result) total+=pos;
+ }
+ return total;
+}
+console.log(`${run(8)}`);

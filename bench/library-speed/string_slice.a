@@ -1,0 +1,12 @@
+// a-check: checked
+// tsc-shaped input; source evidence: checker.ts:8062
+function run(iterations: number): number {
+ let text=""; for(let i=0;i<512;i++) text+="const identifier = 123;\n";
+ let total=0;
+ for(let n=0;n<iterations;n++) for(let i=0;i<512;i++) {
+  const start=i*24+6; const token=text.slice(start,start+10);
+  total+=token.length+token.charCodeAt(0)+token.charCodeAt(9);
+ }
+ return total;
+}
+console.log(`${run(8)}`);

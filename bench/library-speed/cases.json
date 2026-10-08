@@ -1,0 +1,126 @@
+[
+  {
+    "name": "string_concat",
+    "mutant_from": "\".ts\"",
+    "mutant_to": "\".tsx\"",
+    "source": "binder.ts:679",
+    "lowers": true
+  },
+  {
+    "name": "string_slice",
+    "mutant_from": "start+10",
+    "mutant_to": "start+9",
+    "source": "checker.ts:8062",
+    "lowers": true
+  },
+  {
+    "name": "charcode_ascii",
+    "mutant_from": "charCodeAt(i)",
+    "mutant_to": "charCodeAt((i+1)%text.length)*2",
+    "source": "checker.ts:5576; scanner.ts:441",
+    "lowers": true
+  },
+  {
+    "name": "charcode_unicode",
+    "mutant_from": "charCodeAt(i)",
+    "mutant_to": "charCodeAt((i+1)%text.length)*2",
+    "source": "checker.ts:5576; scanner.ts:441",
+    "lowers": true
+  },
+  {
+    "name": "map_get_string",
+    "mutant_from": "table.get(key) ?? 0",
+    "mutant_to": "table.get(key+\"!\") ?? 0",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "map_set_string",
+    "mutant_from": "table.set(key,n+i)",
+    "mutant_to": "table.set(key,n+i+1)",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "map_has_string",
+    "mutant_from": "table.has(key) ? 1 : 0",
+    "mutant_to": "table.has(key) ? 0 : 1",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "map_get_number",
+    "mutant_from": "table.get(key) ?? 0",
+    "mutant_to": "table.get(key+256) ?? 0",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "map_set_number",
+    "mutant_from": "table.set(key,n+i)",
+    "mutant_to": "table.set(key,n+i+1)",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "map_has_number",
+    "mutant_from": "table.has(key) ? 1 : 0",
+    "mutant_to": "table.has(key) ? 0 : 1",
+    "source": "binder.ts:341,342,344,787,794",
+    "lowers": true
+  },
+  {
+    "name": "array_push",
+    "mutant_from": "result.push(token)",
+    "mutant_to": "result.push(source[0] ?? token)",
+    "source": "binder.ts:853",
+    "lowers": true
+  },
+  {
+    "name": "array_map",
+    "mutant_from": "token=>token.pos",
+    "mutant_to": "token=>token.pos+1",
+    "source": "builder.ts:574",
+    "lowers": true
+  },
+  {
+    "name": "array_filter",
+    "mutant_from": "token.kind===80",
+    "mutant_to": "token.kind===28",
+    "source": "checker.ts:14708",
+    "lowers": true
+  },
+  {
+    "name": "regex_test",
+    "mutant_from": " ? 1 : 0",
+    "mutant_to": " ? 0 : 1",
+    "source": "path.ts:882,734,744,902",
+    "lowers": true
+  },
+  {
+    "name": "regex_exec",
+    "mutant_from": "/^#!.*/",
+    "mutant_to": "/^#!/",
+    "source": "scanner.ts:792,801,967",
+    "lowers": true
+  },
+  {
+    "name": "json_stringify",
+    "mutant_from": "JSON.stringify({fileNames:fileNames,fileInfos:fileInfos,root:root,options:{target:7,strict:true},version:\"6.0.3\"}) ?? \"\"",
+    "mutant_to": "(JSON.stringify({fileNames:fileNames,fileInfos:fileInfos,root:root,options:{target:7,strict:true},version:\"6.0.3\"}) ?? \"\")+\"!\"",
+    "source": "builder.ts:1130,1166; emitter.ts:1138",
+    "lowers": true
+  },
+  {
+    "name": "json_object_reference",
+    "source": "builder.ts:1145; emitter.ts:1138",
+    "lowers": false,
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+  },
+  {
+    "name": "string_number_concat",
+    "source": "binder.ts:733",
+    "lowers": false,
+    "reason": "a BinaryExpression with a string and a number"
+  }
+]
