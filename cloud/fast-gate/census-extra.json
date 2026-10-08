@@ -298,5 +298,20 @@
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
     ]
+  },
+  {
+    "file": "stage1/cohere/lint/checker_pending_test.go",
+    "test": "TestCheckerBridgeRefusalPending",
+    "id": "TestCheckerBridgeRefusalPending:extra",
+    "line": 51,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "message": "\"awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer\"",
+    "class": "pending",
+    "provides": "Pending (@system_cohere_lint_rules, Oct 8): the checker bridge's refusal test, until codex/tsgo-errors-as-values makes tsgoInspect return TSGoError.",
+    "awaits": "codex/tsgo-errors-as-values"
   }
 ]

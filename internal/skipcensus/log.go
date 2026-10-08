@@ -14,9 +14,37 @@ import (
 // The skip reason disambiguates multiple sites in one enclosing test; line numbers
 // are diagnostic only, so historical logs remain usable when source lines move.
 func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
+	return CheckLogAwaiting(input, output, rows, nil)
+}
+
+// Landed says whether a branch is on main. An error means it can't be told, which fails the check closed.
+type Landed func(branch string) (bool, error)
+
+var awaitedBranch = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._/-]*$`)
+
+// checkPending holds a pending row to its reason: it names the branch it awaits, and its skip message says so.
+func checkPending(row Row) error {
+	if !awaitedBranch.MatchString(row.Awaits) {
+		return fmt.Errorf("a pending skip names the branch it awaits")
+	}
+	literal, err := strconv.Unquote(row.Message)
+	if err != nil {
+		literal = row.Message
+	}
+	if !strings.Contains(literal, "awaits "+row.Awaits) {
+		return fmt.Errorf("a pending skip's message says %q", "awaits "+row.Awaits)
+	}
+	return nil
+}
+
+// CheckLogAwaiting is CheckLog with pending skips (@system_adamic, Oct 8): a skip that waits on another
+// branch passes while that branch is off main and fails the moment it lands and the test still skips, so a
+// skip can't outlive its reason. Every pending skip is listed by name. Without landed, a pending skip can't
+// be checked and counts as unclassified.
+func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Landed) error {
 	decoder := json.NewDecoder(input)
 	messages := map[string]string{}
-	required, unknown, total := 0, 0, 0
+	required, unknown, total, pending, overdue := 0, 0, 0, 0, 0
 	for {
 		var event struct{ Action, Package, Test, Output string }
 		err := decoder.Decode(&event)
@@ -65,6 +93,27 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 			continue
 		}
 		row := candidates[0]
+		if row.Class == "pending" {
+			if landed == nil || checkPending(row) != nil {
+				unknown++
+				fmt.Fprintf(output, "unknown\t%s\t%s\n", event.Package, event.Test)
+				continue
+			}
+			on, err := landed(row.Awaits)
+			if err != nil {
+				overdue++
+				fmt.Fprintf(output, "pending-unknown\t%s\t%s\t%s\tawaits %s: %v\n", event.Package, event.Test, row.ID, row.Awaits, err)
+				continue
+			}
+			if on {
+				overdue++
+				fmt.Fprintf(output, "pending-landed\t%s\t%s\t%s\tawaits %s, which is on main, and the test still skips\n", event.Package, event.Test, row.ID, row.Awaits)
+				continue
+			}
+			pending++
+			fmt.Fprintf(output, "pending\t%s\t%s\t%s\tawaits %s\n", event.Package, event.Test, row.ID, row.Awaits)
+			continue
+		}
 		switch row.Class {
 		case "required-input", "measurement", "not-applicable", "opt-in-lane":
 		default:
@@ -77,9 +126,9 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 			required++
 		}
 	}
-	fmt.Fprintf(output, "skips=%d required-input=%d unknown=%d\n", total, required, unknown)
-	if required+unknown > 0 {
-		return fmt.Errorf("gate skipped %d required-input tests; %d unclassified skips", required, unknown)
+	fmt.Fprintf(output, "skips=%d required-input=%d unknown=%d pending=%d\n", total, required, unknown, pending)
+	if required+unknown+overdue > 0 {
+		return fmt.Errorf("gate skipped %d required-input tests; %d unclassified skips; %d pending skips past or unsure of their reason", required, unknown, overdue)
 	}
 	return nil
 }

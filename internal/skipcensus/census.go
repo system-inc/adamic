@@ -31,6 +31,8 @@ type Row struct {
 	Provides  string   `json:"provides"`
 	OptInOn   []string `json:"opt_in_on,omitempty"`
 	OptInOff  []string `json:"opt_in_off,omitempty"`
+	// Awaits names the branch a pending skip waits on (class "pending"); its message says "awaits <branch>".
+	Awaits string `json:"awaits,omitempty"`
 }
 
 type function struct {
@@ -291,6 +293,10 @@ func Validate(actual, declared []Row) error {
 		}
 		switch r.Class {
 		case "required-input", "measurement", "not-applicable", "opt-in-lane":
+		case "pending":
+			if err := checkPending(r); err != nil {
+				return fmt.Errorf("%s: %w", k, err)
+			}
 		default:
 			return fmt.Errorf("invalid class for %s", k)
 		}

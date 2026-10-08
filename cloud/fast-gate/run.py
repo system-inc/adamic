@@ -1189,7 +1189,9 @@ class Gate:
         started = time.monotonic()
         tools = self.arguments.tools
         # census-extra.json: skips in main the tools tree doesn't have yet, classified, checked against the log only.
+        # -git: a pending skip passes only while the branch it awaits is off main (asked of the candidate's origin).
         process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, "-extra", os.path.join(tools, "cloud/fast-gate/census-extra.json"),
+                              "-git", os.path.abspath(self.arguments.tree),
                               os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
                              subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
         stdout, stderr = process.communicate()
@@ -1203,6 +1205,8 @@ class Gate:
                 self.census["required_input"].append(fields[1] + " " + fields[2])
             if len(fields) == 3 and fields[0] in ("unknown", "unclassified"):
                 self.census["unclassified"].append(fields[1] + " " + fields[2])
+            if len(fields) == 5 and fields[0] in ("pending", "pending-landed", "pending-unknown"):
+                self.census.setdefault("pending", []).append("%s %s (%s)" % (fields[1].rsplit("/", 1)[-1], fields[2], fields[4]))
         if process.returncode != 0:
             self.fail("census", (stdout + stderr)[-4000:])
 
@@ -1314,6 +1318,7 @@ class Gate:
             "skip": self.counts["skip"],
             "required_input_skips": self.census["required_input"],
             "unclassified_skips": self.census["unclassified"],
+            "pending_skips": self.census.get("pending", []),
             "failure": self.failure,
             "planned_stages": self.planned,
             "stages_exit": self.exits,
@@ -1337,6 +1342,8 @@ class Gate:
         if self.result.get("slow_packages"):
             steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
         steps += "; %d tests over %d s (%.0f s)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"])
+        if self.census.get("pending"):
+            steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         deferred = self.result.get("deferred_to_full_gate", [])
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")

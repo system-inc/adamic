@@ -2,6 +2,7 @@ package skipcensus
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -368,5 +369,48 @@ func TestRequiredSkipNamesInput(t *testing.T) {
 	log := `{"Action":"skip","Package":"github.com/system-inc/adamic/lint","Test":"TestCompilerAndStage1Agree"}`
 	if err := CheckLog(strings.NewReader(log), &output, rows); err == nil || !strings.Contains(output.String(), "ADAMIC_TYPESCRIPT_SOURCE") {
 		t.Fatalf("missing input unnamed: %v %s", err, &output)
+	}
+}
+
+// A pending skip passes while its awaited branch is off main and fails once it lands and the test still skips.
+func TestPendingSkipsCantOutliveTheirReason(t *testing.T) {
+	t.Parallel()
+	row := Row{File: "probe/probe_test.go", ID: "TestProbe:pending", Class: "pending", Callers: []string{"TestProbe"},
+		Message: `"awaits codex/feature: the bridge returns its error"`, Awaits: "codex/feature", Provides: "waits on codex/feature"}
+	log := `{"Action":"skip","Package":"github.com/system-inc/adamic/probe","Test":"TestProbe"}`
+	check := func(landed Landed) (string, error) {
+		var output bytes.Buffer
+		err := CheckLogAwaiting(strings.NewReader(log), &output, []Row{row}, landed)
+		return output.String(), err
+	}
+	off := func(string) (bool, error) { return false, nil }
+	on := func(string) (bool, error) { return true, nil }
+	gone := func(string) (bool, error) { return false, fmt.Errorf("origin has no branch codex/feature") }
+	if output, err := check(off); err != nil || !strings.Contains(output, "pending\tgithub.com/system-inc/adamic/probe\tTestProbe\tTestProbe:pending\tawaits codex/feature") || !strings.Contains(output, "pending=1") {
+		t.Fatalf("off main: %v %s", err, output)
+	}
+	if output, err := check(on); err == nil || !strings.Contains(output, "pending-landed") {
+		t.Fatalf("landed and still skipping passed: %v %s", err, output)
+	}
+	if output, err := check(gone); err == nil || !strings.Contains(output, "pending-unknown") {
+		t.Fatalf("an unanswerable branch passed: %v %s", err, output)
+	}
+	if output, err := check(nil); err == nil || !strings.Contains(output, "unknown=1") {
+		t.Fatalf("a pending skip with nobody to ask passed: %v %s", err, output)
+	}
+	if err := checkPending(row); err != nil {
+		t.Fatal(err)
+	}
+	for name, broken := range map[string]Row{
+		"no branch":           func() Row { r := row; r.Awaits = ""; return r }(),
+		"message doesn't say": func() Row { r := row; r.Message = `"later"`; return r }(),
+	} {
+		if err := checkPending(broken); err == nil {
+			t.Errorf("%s: accepted", name)
+		}
+		var output bytes.Buffer
+		if err := CheckLogAwaiting(strings.NewReader(log), &output, []Row{broken}, off); err == nil {
+			t.Errorf("%s: the log check passed", name)
+		}
 	}
 }
