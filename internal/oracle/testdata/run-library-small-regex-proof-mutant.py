@@ -20,4 +20,4 @@ with tempfile.TemporaryDirectory(prefix="regex-proof-mutant-") as directory:
     text = log.read_text()
     assert result.returncode != 0 and "capture-free producer proof admitted an unproven pattern" in text, text[-4000:]
     assert "build failed" not in text, text[-4000:]
-    print("capture-proof: caught by refusal assertion; " + str(log))
+    print("capture-proof: caught by producer-proof assertion; " + str(log))
