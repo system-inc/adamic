@@ -17,6 +17,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 	if !l.callableViewContract(target) {
 		return 0, l.notYet(node, "checked callable read of "+l.checker.TypeToString(declared))
 	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		return l.prepareUntaggedCallableUnionRead(node, target)
+	}
 	id := l.result.ViewContractTypes[int(target.Id())]
 	if id == 0 {
 		var err error

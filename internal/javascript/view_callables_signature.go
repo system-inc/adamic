@@ -8,28 +8,9 @@ import (
 
 func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
 	expected := e.viewCallableExpected(property)
-	choices := []string{}
-	methods := map[int]bool{}
-	for _, class := range e.program.Classes {
-		for _, method := range class.Methods {
-			methods[method] = true
-		}
-	}
-	for index, function := range e.program.Functions {
-		if !function.Closure && !methods[index] || function.Receiver {
-			continue
-		}
-		locals := function.Parameters
-		if !function.Closure {
-			locals = locals[1:]
-		}
-		parameters := make([]ir.Type, len(locals))
-		for i, local := range locals {
-			parameters[i] = e.program.Locals[local].Type
-		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)))
-	}
-	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : value)"
+	recorded := e.viewCallableRecorded("value")
+	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
+	recorded = e.untaggedCallableRecorded(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"
 }
 
@@ -65,4 +46,30 @@ func viewCallableProducerResult(result ir.Type) ir.Type {
 		return ir.Type(254)
 	}
 	return result
+}
+
+func (e *emitter) viewCallableRecorded(value string) string {
+	choices := []string{}
+	methods := map[int]bool{}
+	for _, class := range e.program.Classes {
+		for _, method := range class.Methods {
+			methods[method] = true
+		}
+	}
+	for index, function := range e.program.Functions {
+		if !function.Closure && !methods[index] || function.Receiver {
+			continue
+		}
+		locals := function.Parameters
+		if !function.Closure {
+			locals = locals[1:]
+		}
+		parameters := make([]ir.Type, len(locals))
+		for i, local := range locals {
+			parameters[i] = e.program.Locals[local].Type
+		}
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), fmt.Sprintf("({...%s, function: %d})", viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name), index)))
+	}
+	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
+	return recorded
 }
