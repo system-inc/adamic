@@ -58,6 +58,9 @@ set -u
 exec 9> ~/full-gate/lock
 flock 9
 source ~/adamic-tools/env.sh
+# env.sh points TMPDIR into /tmp, which a WSL restart empties: every gate failed in 1 s on 'go:
+# creating work dir: stat /tmp/adamic-gate' after Cloud's restart (Oct 8). Each gate makes it, world-traversable.
+mkdir -p -m 1777 "\${TMPDIR:-/tmp}"
 git -C ~/full-gate/tools fetch -q origin "${tools}" && git -C ~/full-gate/tools switch -q --detach "${tools}"
 git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree switch -q --detach "${sha}"
 git -C ~/full-gate/tree submodule update -q --init --recursive

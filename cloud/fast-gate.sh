@@ -71,6 +71,9 @@ while [ -z "${slot}" ]; do
 done
 suffix=$([ "${slot}" = 1 ] && echo "" || echo "-${slot}")
 source ~/adamic-tools/env.sh
+# env.sh points TMPDIR into /tmp, which a WSL restart empties: every gate failed in 1 s on 'go:
+# creating work dir: stat /tmp/adamic-gate' after Cloud's restart (Oct 8). Each gate makes it, world-traversable.
+mkdir -p -m 1777 "${TMPDIR:-/tmp}"
 for directory in tools tree; do
   if [ ! -d ~/fast-gate/${directory}${suffix} ]; then
     if [ -d ~/fast-gate/${directory} ]; then cp -a ~/fast-gate/${directory} ~/fast-gate/${directory}${suffix}; else git clone -q https://github.com/system-inc/adamic.git ~/fast-gate/${directory}${suffix}; fi
