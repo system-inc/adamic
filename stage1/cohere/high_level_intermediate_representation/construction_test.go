@@ -115,6 +115,7 @@ func TestWholeConstructionCensus(t *testing.T) {
 		t.Fatal("empty construction coverage would prove nothing")
 	}
 	checkConstructionMutants(t, root, lane, manifest, node, true)
+	checkArenaIndexMutant(t, root, lane, manifest)
 }
 func compareConstructionCensus(t *testing.T, output []byte, manifest string, mutant bool) (int, int) {
 	t.Helper()
@@ -205,14 +206,14 @@ var constructionMutants = []constructionMutant{
 	{"update operation flips", "lower.ts", "node.operator === 'PlusPlusToken' ? '++' : '--'", "node.operator === 'PlusPlusToken' ? '--' : '++'"},
 	{"property load loses name", "lower.ts", "return this.emit({ kind: 'PropertyLoad', object, property: this.parser.node(node.children[1] ?? -1).text }", "return this.emit({ kind: 'PropertyLoad', object, property: '' }"},
 	{"computed load loses key", "lower.ts", "{ kind: 'ComputedLoad', object, property: this.expression(node.children[1] ?? -1) }", "{ kind: 'ComputedLoad', object, property: object }"},
-	{"if branch successors swap", "lower.ts", "kind: 'If', test, consequent: consequent.id, alternate: alternate.id", "kind: 'If', test, consequent: alternate.id, alternate: consequent.id"},
+	{"if branch successors swap", "lower.ts", "kind: 'If', testPlace: test, consequent: consequent.id, alternate: alternate.id", "kind: 'If', testPlace: test, consequent: alternate.id, alternate: consequent.id"},
 	{"ternary true arm becomes false", "lower.ts", "logical === undefined ? 2 : 0", "logical === undefined ? 4 : 0"},
 	{"logical short circuit chooses wrong arm", "lower.ts", "const swapped = logical === '||' || logical === '??';", "const swapped = logical === '&&';"},
 	{"while back edge exits loop", "lower.ts", "this.jumps.pop(); this.jump(test.id, 1);", "this.jumps.pop(); this.jump(fallthrough.id, 0);"},
 	{"continue uses break target", "lower.ts", "node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock", "target.breakBlock"},
 	{"throw becomes return", "lower.ts", "this.close({ kind: 'Throw', value: this.expression(node.children[0] ?? -1) });", "this.close({ kind: 'Return', value: this.expression(node.children[0] ?? -1) });"},
 	{"return becomes unreachable", "lower.ts", "this.close({ kind: 'Return', value: this.fn.returns });", "this.close({ kind: 'Unreachable' });"},
-	{"post abrupt instructions disappear", "lower.ts", "for(const id of ids) { this.statement(id); }", "for(const id of ids) { this.statement(id); if(this.current === undefined) { break; } }"},
+	{"post abrupt instructions join entry", "lower.ts", "if(this.current === undefined) { this.current = this.fn.newBlock('block'); }", "if(this.current === undefined) { this.current = this.fn.block(this.fn.entry); }"},
 }
 
 func checkConstructionMutants(t *testing.T, root, lane, input string, want []byte, census bool) {
@@ -272,4 +273,74 @@ func checkConstructionMutants(t *testing.T, root, lane, input string, want []byt
 			}
 		})
 	}
+}
+
+// The index mutant must stop at a checked read, rather than silently produce a wrong graph.
+func checkArenaIndexMutant(t *testing.T, root, lane, manifest string) {
+	t.Helper()
+	directory, err := os.MkdirTemp(filepath.Dir(lane), "hir-arena-mutant-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(directory)
+	files, err := filepath.Glob(filepath.Join(lane, "*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if filepath.Base(file) == "lower.ts" {
+			from := "this.fn.functions.push(builder.functionIndex);"
+			if strings.Count(string(data), from) != 1 {
+				t.Fatal("arena mutant anchor moved")
+			}
+			data = []byte(strings.Replace(string(data), from, "this.fn.functions.push(builder.functionIndex + 1);", 1))
+		}
+		if err := os.WriteFile(filepath.Join(directory, filepath.Base(file)), data, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	binary := filepath.Join(t.TempDir(), "arena-mutant")
+	command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(directory, "main.ts"), "-o", binary)
+	for _, args := range [][]string{{"node", "--no-warnings", "oracle/node.mjs", filepath.Join(directory, "main.ts"), "--coverage", manifest}, {binary, "--coverage", manifest}} {
+		c := exec.Command(args[0], args[1:]...)
+		c.Dir = root
+		output, err := c.CombinedOutput()
+		if err == nil {
+			t.Fatal("off-by-one arena index did not stop")
+		}
+		if !strings.Contains(string(output), "function index") || !strings.Contains(string(output), "out of range") {
+			t.Fatalf("index mutant stopped for the wrong reason: %s", output)
+		}
+	}
+	t.Log("off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native")
+}
+
+func TestArenaIndexBrands(t *testing.T) {
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
+	directory, err := os.MkdirTemp(filepath.Dir(lane), "hir-index-brand-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(directory)
+	// Import the production index types: they must be incompatible at the checker boundary.
+	source := "import type { FunctionIndex, BlockIndex } from '../high_level_intermediate_representation/core.ts';\nconst fn: FunctionIndex = 0;\nconst wrong: BlockIndex = fn;\nconsole.log(`${wrong}`);\n"
+	entry := filepath.Join(directory, "main.ts")
+	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	c := exec.Command("go", "run", "./cmd/adamic", "build", entry, "-o", filepath.Join(t.TempDir(), "wrong-brand"))
+	c.Dir = root
+	output, err := c.CombinedOutput()
+	if err == nil || !strings.Contains(string(output), "not assignable to type 'BlockIndex'") {
+		t.Fatalf("FunctionIndex accepted as BlockIndex or wrong refusal: %v\n%s", err, output)
+	}
+	_ = lane
 }

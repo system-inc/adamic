@@ -1,24 +1,41 @@
-# Unit 2 WIP: closure lowering blocked by native ownership analysis
+# Unit 2 local checkpoint: arena-based closures
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
 
-## Current compiler blocker
+## Current native certificate
 
-Closure lowering is WIP and cannot compile natively. The compiler rejects the nested
-function table append as `adamic/cycle-capable` (`lower.ts:166`, corresponding to Go
-`lower_expression.go:699` / `lower.go:1219`). Full diagnostic and reproduction are in
-EVIDENCE.md for @system_adamic. No Weak/readonly ownership workaround was introduced.
-The last cross-backend certified checkpoint is 9deb9cc33b1b1e10aa708af94052108940dcbd19.
+The Oct 8 arena ruling resolves the nested-function ownership refusal. Both backends
+now match **280/1,465 corpus functions**, with **37/37 probes** (317/1,502 including
+probes). Native coverage rises by **58**, meeting Node coverage. Active non-Flow
+coverage is 280/1,442. All 34 semantic lowering mutants compile, execute and disagree
+on both backends, and an additional off-by-one FunctionIndex mutant stops loudly at
+an arena read on both. The checker rejects FunctionIndex as BlockIndex.
 
-Current Node-only comparison: **280/1,465 corpus functions** and **37/37 probes**,
-317/1,502 including probes. These 58 additional corpus matches are provisional;
-**certified coverage remains 222/1,465**. Five new closure mutants execute and are
-caught on Node; native mutant execution is blocked by the production refusal. The
-checked-in construction-summary.json retains the last passing native certificate.
+The first full local run found one retained mutant invalidated by nested-root census
+paths: dropping all post-abrupt statements removed the function a path selected. The
+replacement moves post-abrupt instructions into the entry block while retaining the
+nested table; the targeted rerun repeats the entire Go/Node/native census and passes
+that corrected mutant and the index mutant. The retained regression and symbol tests
+passed in the full run. See EVIDENCE.md for commands and the original diagnostics.
+
+The function graph owner retains the HIRArena and root handle together. Nested
+function targets are FunctionIndex values, with Go-local ordinals retained only for
+dump compatibility. Each function owns a typed block table and BlockIndex order;
+control-flow successors and predecessor edges are numeric handles. Nominal numeric
+enums brand function, block, instruction, identifier and declaration indices. Every
+function/block read validates its index; existing instruction/identifier reads stop
+on missing entries. No node contains a reference back to its arena or another HIR
+function. Context analysis is a named recursive method, without a self-held function
+value. The ruling is recorded beside Arenas in docs/memory.md.
+
+Unit 2, remaining flow/expression variants, JSX, ForFunction integration and
+static-components remain unfinished. The plan branch is not pushed until the unit
+passes. The earlier gap evidence and three-line reproducer are visible at
+54ad652e6795fef214582ee3d0348157243ad545 on stage1-hir/wip.
 
 ## Construction corpus and coverage
 
-At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 222 match byte for byte on Node and native Adamic**. Twenty-four additional path probes also match: 246/1,489 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
+At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 280 match byte for byte on Node and native Adamic**. Thirty-seven additional path probe graphs also match: 317/1,502 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
 
 Every original Go HIR test runs through a test-file overlay that redirects its `Lower`, `ForFunction` and `ForFunctionWithoutManualMemoization` calls to observers. The original production implementations are called unchanged, their return values are returned unchanged, and the observer constructs/dumps a deep clone. For the memo-erased entry, a separate original Lower is observed because the erased result is not the construction oracle. Production files, test files on disk, and the cohere gitlink are untouched. This captures generated test inputs and their actual checker contexts, including multi-file programs, rather than approximating them by extracting raw strings.
 
@@ -230,3 +247,15 @@ Next work remains closures once the native refusal is resolved, remaining flow a
 expression variants, JSX, full export provenance, ForFunction/cache/visitors/cloning,
 and static-components. This WIP is local and no unit gate has been triggered. The
 oldest unpushed checkpoint is about ten minutes old, below the 90-minute backup limit.
+
+
+## Arena representation checkpoint
+
+The prior closure-WIP section records the rejected pointer representation and its
+Node-only certificate historically; it is superseded by the native certificate above.
+The original diagnostic/reproducer remains in EVIDENCE.md for @system_adamic as the
+reason for the representation change. The result is an owned graph with numeric edges,
+not Weak references or a readonly-array exception to the cycle rule. All SSA algorithms
+remain imported by reference; the adapter alone changes storage and typed boundaries.
+The next construction work is remaining control flow and JSX, followed by complete
+export provenance, ForFunction/cache/full visitors/cloning and static-components.

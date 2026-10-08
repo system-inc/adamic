@@ -473,6 +473,9 @@ The analyses that move and reuse values (`internal/flow`, and reuse in place on 
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
 
+
+Oct 8 ruling for stage 1: both the control-flow graph and the React Compiler HIR function-nesting graph use typed, index-based arenas rather than strong node-to-node references. Each index kind is branded, every arena read checks bounds and stops on an invalid index, and handles stay with their owning arena, whose storage is freed as one unit. Preserve Go cohere's graph meaning and byte-identical oracle output; numeric handles are supported Adamic today, so do not wait for cycle collection or weaken IR ownership to bypass `adamic/cycle-capable`.
+
 ### The design (#272q6cv, on paper)
 
 Status: **built** (`internal/native/region.go`, `runtime/region.c`), as designed below. What building it measured is at the end of this section. The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.

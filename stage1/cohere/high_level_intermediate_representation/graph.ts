@@ -3,32 +3,32 @@ import { panic } from 'adamic';
 import { construct } from '../static_single_assignment/construct.ts';
 import { reversePostorder, markPredecessors, markEvaluationOrder } from '../static_single_assignment/graph.ts';
 import type { GraphInterface } from '../static_single_assignment/static_single_assignment.ts';
-import { HIRFunction, BasicBlock } from './core.ts';
-import type { PlaceInterface } from './core.ts';
+import { HIRFunction, BasicBlock, HIRArena, blockIndex, testPlace, testBlock } from './core.ts';
+import type { PlaceInterface, FunctionIndex } from './core.ts';
 export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> = {
     entry: (fn) => fn.entry,
     blockBound: (fn) => fn.nextBlock,
-    block: (fn, id) => fn.byId.get(id),
-    blocks: (fn) => fn.blocks,
-    setBlocks: function(fn, blocks) { fn.blocks = blocks; },
-    retain: function(fn, keep) { for(const id of fn.byId.keys()) { if(!keep(id)) { fn.byId.delete(id); } } },
+    block: (fn, id) => fn.retained.has(id) ? fn.block(blockIndex(id)) : undefined,
+    blocks: (fn) => fn.blockOrder.map((id) => fn.block(id)),
+    setBlocks: function(fn, blocks) { fn.blockOrder = blocks.map((block) => block.id); },
+    retain: function(fn, keep) { for(const id of fn.retained) { if(!keep(id)) { fn.retained.delete(id); } } },
     placeholder: function(fn, block) {
         const placeholder = new BasicBlock(block.id, { kind: 'Unreachable' }, block.kind);
         placeholder.predecessors = [...block.predecessors];
-        fn.byId.set(block.id, placeholder);
+        fn.blockTable[block.id - 1] = placeholder;
         return placeholder;
     },
     id: (block) => block.id,
     predecessors: (block) => block.predecessors,
-    setPredecessors: function(block, predecessors) { block.predecessors = predecessors; },
+    setPredecessors: function(block, predecessors) { block.predecessors = predecessors.map((id) => blockIndex(id)); },
     phis: (block) => block.phis,
     setPhis: function(block, phis) { block.phis = phis; },
     eachEdge: function(block, visit) {
         const terminal = block.terminal;
-        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.fallthrough, 'Fallthrough'); }
-        if(terminal.kind === 'Goto') { visit(terminal.block, 'Real'); }
-        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { visit(terminal.consequent, 'Real'); visit(terminal.alternate, 'Real'); }
-        else if(terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.test, 'Real'); }
+        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
+        if(terminal.kind === 'Goto') { visit(terminal.block ?? panic('missing goto target'), 'Real'); }
+        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { visit(terminal.consequent ?? panic('missing consequent'), 'Real'); visit(terminal.alternate ?? panic('missing alternate'), 'Real'); }
+        else if(terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(testBlock(terminal), 'Real'); }
     },
     endsInReturn: (block) => block.terminal.kind === 'Return',
     instructionCount: (_fn, block) => block.instructions.length,
@@ -60,8 +60,8 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     },
     eachTerminalPlace: function(block, visit) {
         const terminal = block.terminal;
-        if(terminal.kind === 'Return' || terminal.kind === 'Throw') { terminal.value = visit(terminal.value, 'Use'); }
-        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { terminal.test = visit(terminal.test, 'Use'); }
+        if(terminal.kind === 'Return' || terminal.kind === 'Throw') { terminal.value = visit(terminal.value ?? panic('missing terminal value'), 'Use'); }
+        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { terminal.testPlace = visit(testPlace(terminal), 'Use'); }
     },
     setTerminalOrder: function(block, order) { block.terminalOrder = order; },
     params: (fn) => fn.params,
@@ -80,10 +80,11 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     identifierOf: (place) => place.identifier,
     withIdentifier: (place, identifier) => ({ identifier, effect: place.effect, reactive: place.reactive, start: place.start, end: place.end }),
 };
-export function constructHIR(fn: HIRFunction): void {
+export function constructHIR(arena: HIRArena, index: FunctionIndex): void {
+    const fn = arena.read(index);
     reversePostorder(hirGraph, fn);
     markPredecessors(hirGraph, fn);
     markEvaluationOrder(hirGraph, fn);
     construct(hirGraph, fn);
-    for(const nested of fn.functions) { constructHIR(nested); }
+    for(const nested of fn.functions) { constructHIR(arena, nested); }
 }

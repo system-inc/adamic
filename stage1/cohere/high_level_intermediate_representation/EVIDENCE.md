@@ -114,7 +114,10 @@ no compilation failure contributes to the 29. No cohere source or gitlink change
 Per the new standing policy, this checkpoint is local until unit 2 is complete.
 
 
-## Blocking closure compiler refusal — @system_adamic
+## Closure compiler refusal — @system_adamic
+
+Resolved by the Oct 8 arena ruling; the original types, reproducer and verbatim
+diagnostics below are retained as historical evidence.
 
 Go type: `Function.Functions []*Function`
 (`high_level_intermediate_representation.go:233`).
@@ -184,3 +187,50 @@ The same mutations are registered in construction_test.go for both-backend execu
 once the production compiler blocker is resolved. No refusal is counted as a caught
 mutant. **Native-certified coverage stays 222/1,465**, and the checked-in summary is
 unchanged. Unit 2 and static-components remain incomplete; nothing has been pushed.
+
+
+## Arena ruling and native recertification
+
+Oct 8 owner ruling: represent both the control-flow graph and HIR function nesting
+with typed index arenas, branded handles and loud checked reads. The short ruling
+paragraph is in docs/memory.md beside Arenas. Current nesting is FunctionIndex[],
+and ConstructedHIR retains HIRArena with the selected root. Block storage/order and
+successors use BlockIndex; instruction, identifier and declaration indices have
+separate nominal numeric brands. The dump still prints Go's function-local ordinals.
+The context walk is a named method rather than a function value retaining itself.
+No strong HIRFunction-to-HIRFunction edge, Weak handle or readonly-array exemption
+remains in production storage.
+
+Initial full local command:
+`HIR_CENSUS_EXPORT=/tmp/hir-arena-census go test -v -count=1 -timeout=25m ./stage1/cohere/high_level_intermediate_representation`
+
+The entire Go/Node/native census matched: 317/1,502 including probes, hence
+**Node 280/1,465 and native 280/1,465**, plus **37/37 probes**. Thirty-three semantic
+mutants passed; the old post-abrupt AST-dropping mutant stopped at a missing nested
+path and was not counted as caught. The off-by-one FunctionIndex mutant stopped at
+a checked read on both backends. The incompatible-brand check, retained 12-case
+straight-line regression/return mutant and 22-symbol-selector/identity mutant passed.
+
+The post-abrupt replacement preserves nested construction and sends orphan
+instructions into the entry block. Final source rerun:
+
+```bash
+HIR_CENSUS_EXPORT=/tmp/hir-arena-census-final go test -v -count=1 -timeout=25m ./stage1/cohere/high_level_intermediate_representation -run 'TestWholeConstructionCensus/catches_post_abrupt'
+```
+
+```text
+HIR construction census: 1502 context-distinct functions in 1502 records; 317 eligible; 395 fixtures (40 Flow exclusions)
+317/1502 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+45 Go tests skipped; names recorded in go-tests.log
+off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native
+PASS: catches_post_abrupt_instructions_join_entry
+PASS
+ok github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation 30.010s
+```
+
+All **34 current semantic lowering mutants** have executed and disagreed on both
+backends across these runs; the **35th**, the corrupt-index mutant, is caught by a
+nonzero exit containing `function index` and `out of range`, after successful native
+compilation. This distinguishes a checked-read failure from a compiler refusal.
+The checked-in summary now records the 280-function native certificate. Flow and
+private-corpus exclusions are unchanged. Unit 2 remains incomplete and unpushed.

@@ -1,9 +1,9 @@
 // Construction slice of lower.go / lower_expression.go. Other paths are explicit declines.
 import { panic, utf8Length } from 'adamic';
+import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR, blockIndex } from './core.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
-import { HIRFunction, Instruction, BasicBlock } from './core.ts';
-import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, FunctionIndex, BlockIndex } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
@@ -103,15 +103,17 @@ class StraightLineBuilder {
     readonly parser: Parser;
     readonly source: string;
     readonly fn: HIRFunction;
+    readonly arena: HIRArena;
+    readonly functionIndex: FunctionIndex;
     current: BasicBlock | undefined;
-    readonly jumps: { readonly breakBlock: number; readonly continueBlock: number }[] = [];
+    readonly jumps: { readonly breakBlock: BlockIndex; readonly continueBlock: BlockIndex }[] = [];
     readonly symbols: SymbolSnapshot | undefined;
     readonly enclosing: StraightLineBuilder | undefined;
     readonly captured: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
     readonly captureSymbols: number[] = [];
     readonly contextual: Set<number> = new Set<number>();
     readonly locals: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
-    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined) { this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; this.enclosing = enclosing; this.current = fn.blocks[0]; }
+    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined, arena: HIRArena, functionIndex: FunctionIndex) { this.arena = arena; this.functionIndex = functionIndex; this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; this.enclosing = enclosing; this.current = fn.block(fn.entry); }
     identity(id: number): number {
         const node = this.parser.node(id);
         if(this.symbols === undefined) { return 0; }
@@ -120,8 +122,10 @@ class StraightLineBuilder {
     findContext(root: number): void {
         if(this.symbols === undefined) { return; }
         const usage = new Map<number, { reassigned: boolean; referenced: boolean; innerWrite: boolean }>();
-        let walk: (id: number, depth: number) => void;
-        walk = (id: number, depth: number): void => {
+        this.contextUsage(root, 0, usage);
+        for(const [symbol, entry] of usage) { if(symbol !== 0 && (entry.innerWrite || (entry.reassigned && entry.referenced))) { this.contextual.add(symbol); } }
+    }
+    contextUsage(id: number, depth: number, usage: Map<number, { reassigned: boolean; referenced: boolean; innerWrite: boolean }>): void {
             const node = this.parser.node(id);
             let target = -1;
             if(node.kind === 'BinaryExpression' && (this.parser.node(node.children[1] ?? -1).kind === 'EqualsToken' || compounds.has(this.parser.node(node.children[1] ?? -1).kind))) { target = node.children[0] ?? -1; }
@@ -137,10 +141,7 @@ class StraightLineBuilder {
                 entry.referenced = true; usage.set(symbol, entry);
             }
             const next = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(node.kind) ? depth + 1 : depth;
-            for(const child of node.children) { walk(child, next); }
-        };
-        walk(root, 0);
-        for(const [symbol, entry] of usage) { if(symbol !== 0 && (entry.innerWrite || (entry.reassigned && entry.referenced))) { this.contextual.add(symbol); } }
+            for(const child of node.children) { this.contextUsage(child, next, usage); }
     }
     captureOf(symbol: number): PlaceInterface | undefined {
         if(symbol === 0 || this.enclosing === undefined) { return undefined; }
@@ -156,15 +157,15 @@ class StraightLineBuilder {
         return place;
     }
     nested(id: number): PlaceInterface {
-        const builder = lowerFunction(this.parser, id, this.source, this.symbols, this) ?? panic('supported nested function declined');
+        const builder = lowerFunction(this.parser, id, this.source, this.symbols, this, this.arena) ?? panic('supported nested function declined');
         const captures: PlaceInterface[] = [];
         for(const symbol of builder.captureSymbols) {
             const place = this.locals.get(symbol) ?? this.captureOf(symbol);
             captures.push(place === undefined ? { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 } : { identifier: place.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 });
         }
         const functionId = this.fn.functions.length;
-        this.fn.functions.push(builder.fn);
-        return this.emit({ kind: 'FunctionExpression', functionId, captures }, id, undefined);
+        this.fn.functions.push(builder.functionIndex);
+        return this.emit({ kind: 'FunctionExpression', functionReference: { index: builder.functionIndex, ordinal: functionId }, captures }, id, undefined);
     }
     bind(id: number): PlaceInterface {
         const node = this.parser.node(id);
@@ -247,7 +248,7 @@ class StraightLineBuilder {
     close(terminal: TerminalType): void {
         if(this.current !== undefined) { this.current.terminal = terminal; this.current = undefined; }
     }
-    jump(block: number, variant: number): void { this.close({ kind: 'Goto', block, variant }); }
+    jump(block: BlockIndex, variant: number): void { this.close({ kind: 'Goto', block, variant }); }
     statements(ids: readonly number[]): void { for(const id of ids) { this.statement(id); } }
     statement(id: number): void {
         const node = this.parser.node(id);
@@ -262,17 +263,17 @@ class StraightLineBuilder {
             const test = this.expression(node.children[0] ?? -1);
             const consequent = this.fn.newBlock('block'); const fallthrough = this.fn.newBlock('block');
             const alternate = node.children[2] === undefined ? fallthrough : this.fn.newBlock('block');
-            this.close({ kind: 'If', test, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
+            this.close({ kind: 'If', testPlace: test, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
             this.current = consequent; this.statement(node.children[1] ?? -1); this.jump(fallthrough.id, 0);
             if(node.children[2] !== undefined) { this.current = alternate; this.statement(node.children[2] ?? -1); this.jump(fallthrough.id, 0); }
             this.current = fallthrough;
         }
         else if(node.kind === 'WhileStatement') {
             const test = this.fn.newBlock('block'); const loop = this.fn.newBlock('loop'); const fallthrough = this.fn.newBlock('block');
-            this.close({ kind: 'While', test: test.id, loop: loop.id, fallthrough: fallthrough.id });
+            this.close({ kind: 'While', testBlock: test.id, loop: loop.id, fallthrough: fallthrough.id });
             this.current = test;
             const value = this.expression(node.children[0] ?? -1);
-            this.close({ kind: 'Branch', test: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id });
+            this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id });
             this.current = loop; this.jumps.push({ breakBlock: fallthrough.id, continueBlock: test.id });
             this.statement(node.children[1] ?? -1); this.jumps.pop(); this.jump(test.id, 1);
             this.current = fallthrough;
@@ -296,8 +297,8 @@ class StraightLineBuilder {
         const node = this.parser.node(id);
         const result = this.fn.temporary(this.byte(node.pos), this.byte(node.end));
         const testBlock = this.fn.newBlock('value'); const fallthrough = this.fn.newBlock('block');
-        if(logical === undefined) { this.close({ kind: 'Ternary', test: testBlock.id, fallthrough: fallthrough.id }); }
-        else { this.close({ kind: 'Logical', operator: logical, test: testBlock.id, fallthrough: fallthrough.id }); }
+        if(logical === undefined) { this.close({ kind: 'Ternary', testBlock: testBlock.id, fallthrough: fallthrough.id }); }
+        else { this.close({ kind: 'Logical', operator: logical, testBlock: testBlock.id, fallthrough: fallthrough.id }); }
         this.current = testBlock;
         const left = this.expression(node.children[0] ?? -1);
         const first = this.fn.newBlock('value'); const second = this.fn.newBlock('value');
@@ -305,7 +306,7 @@ class StraightLineBuilder {
         // A logical's first arm is the short-circuit arm; a ternary's is the true arm.
         const consequent = logical === undefined || swapped ? first : second;
         const alternate = logical === undefined || swapped ? second : first;
-        this.close({ kind: 'Branch', test: left, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
+        this.close({ kind: 'Branch', testPlace: left, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
         const shared = (this.fn.identifiers[result.identifier] ?? panic('missing result')).declaration;
         this.current = first;
         const firstNode = node.children[logical === undefined ? 2 : 0] ?? -1;
@@ -440,7 +441,7 @@ class StraightLineBuilder {
         return this.emit({ kind: 'UnaryExpression', operator, value }, id, undefined);
     }
 }
-function lowerFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined): StraightLineBuilder | undefined {
+function lowerFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined, arena: HIRArena): StraightLineBuilder | undefined {
     const node = parser.node(root);
     let name = '';
     let bodyId = -1;
@@ -465,8 +466,9 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     }
     const statements: number[] = bodyId < 0 ? [] : parser.node(bodyId).children;
     for(const id of statements) { if(!supportedStatement(parser, id)) { return undefined; } }
-    const fn = new HIRFunction(name);
-    const builder = new StraightLineBuilder(parser, source, fn, symbols, enclosing);
+    const functionIndex = arena.create(name);
+    const fn = arena.read(functionIndex);
+    const builder = new StraightLineBuilder(parser, source, fn, symbols, enclosing, arena, functionIndex);
     for(const id of parameters) {
         const parameter = parser.node(id);
         fn.params.push(builder.bind(id));
@@ -478,7 +480,7 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     return builder;
 }
 // Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.
-export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = ''): HIRFunction | undefined {
+export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = ''): ConstructedHIR | undefined {
     const parser = new Parser(source, '/test.tsx'); parser.file();
     let root = -1;
     for(let index = 0; index < parser.nodes.length; index++) {
@@ -486,11 +488,12 @@ export function lowerSourceAt(source: string, start: number, end: number, symbol
         if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
     }
     if(root < 0 || !supportedFunction(parser, root)) { return undefined; }
-    const builder = lowerFunction(parser, root, source, symbols, undefined);
+    const arena = new HIRArena();
+    const builder = lowerFunction(parser, root, source, symbols, undefined, arena);
     if(builder === undefined) { return undefined; }
-    constructHIR(builder.fn);
-    let fn = builder.fn;
-    if(path !== '') { for(const part of path.split(',')) { fn = fn.functions[Number.parseInt(part, 10)] ?? panic('missing nested path'); } }
-    return fn;
+    constructHIR(arena, builder.functionIndex);
+    let index = builder.functionIndex;
+    if(path !== '') { for(const part of path.split(',')) { index = arena.read(index).functions[Number.parseInt(part, 10)] ?? panic('missing nested path'); } }
+    return new ConstructedHIR(arena, index);
 }
-export function lowerSource(source: string): HIRFunction | undefined { return lowerSourceAt(source, -1, -1); }
+export function lowerSource(source: string): ConstructedHIR | undefined { return lowerSourceAt(source, -1, -1); }

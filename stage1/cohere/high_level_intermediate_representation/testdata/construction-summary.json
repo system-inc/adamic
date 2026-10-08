@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 222,
-  "pathProbes": 24,
-  "pathProbesMatched": 24,
+  "constructionCorpusFunctionsMatched": 280,
+  "pathProbes": 37,
+  "pathProbesMatched": 37,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -96,6 +96,15 @@
   ],
   "matchedFunctions": [
     {
+      "key": "0243ffd256eee57f5e80af6f56e2f962cf11264887a9fa34d125f1f4f982a729",
+      "start": 0,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "045e78e1b6ed01ff96a527b817efb9228fb6b964375c6cb70527a9fe2441dd7f",
       "start": 32,
       "end": 69,
@@ -111,6 +120,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "0977d18213e193697af245f395c2997bc77b8679f55830b22d98cbd395f5e267",
+      "start": 51,
+      "end": 130,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.not-useEffect-external-mutate.js"
       ]
     },
     {
@@ -194,6 +212,24 @@
       ]
     },
     {
+      "key": "14f8a3480f91543d5f25cda3d3440b12bab1a1defb150d3fe94e2aa3b199ea38",
+      "start": 83,
+      "end": 227,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-return-mutable-function-from-hook.js"
+      ]
+    },
+    {
+      "key": "179b1d972545e8448081d72edfd7f78098f191552de3304449dc83b5d2291985",
+      "start": 0,
+      "end": 271,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js"
+      ]
+    },
+    {
       "key": "18cda18affeb87c6351061ed7d55a02df2e591d24f8fb6c0f0b0f5069f174f7c",
       "start": 82,
       "end": 90,
@@ -214,6 +250,33 @@
         "cache_test.go:221/nested/nested",
         "cache_test.go:79/nested/nested",
         "cache_test.go:83/nested/nested"
+      ]
+    },
+    {
+      "key": "1badf71c19d5f411c971c812b64e39bef17072f61ae4c071c6eb48fa07ce6db6",
+      "start": 0,
+      "end": 608,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-allow-assigning-to-inferred-ref-prop-in-callback.js"
+      ]
+    },
+    {
+      "key": "1cefcf5c045d87b0d5a5652895c80c06fcab7eb066e1a32988ac0238bddf2084",
+      "start": 0,
+      "end": 206,
+      "checker": true,
+      "calls": [
+        "upstream:error.hoisting-simple-function-declaration.js"
+      ]
+    },
+    {
+      "key": "1d2e12da95436096b0a822ef48b2dd71a9df39132dbe33bb267c84510fe92c84",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -259,6 +322,15 @@
       "checker": true,
       "calls": [
         "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
+      "key": "229720e368cc9cdde9dc372e33a4df2444df1e7c40f60e6c4311d3b5c5cc8a38",
+      "start": 158,
+      "end": 260,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-449a37146a83.js/nested"
       ]
     },
     {
@@ -420,12 +492,30 @@
       ]
     },
     {
+      "key": "3155fdd166dd21020cc9b839cb51bd10dc4b2bd1b9bb140ed96798c931f979a7",
+      "start": 812,
+      "end": 850,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91/nested"
+      ]
+    },
+    {
       "key": "38b66492218afa33a38a0464d67d61bdee0be5d6744cbd78865c94ec9bcbf919",
       "start": 0,
       "end": 109,
       "checker": true,
       "calls": [
         "upstream:error.bailout-on-flow-suppression.js"
+      ]
+    },
+    {
+      "key": "38cfe792909020c72dccd65cd437c36514038cb3a8862e78298d0393e369eafd",
+      "start": 1114,
+      "end": 1141,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-hook-argument.js/nested"
       ]
     },
     {
@@ -453,6 +543,33 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-hook-reassigned-in-conditional.js"
+      ]
+    },
+    {
+      "key": "3c61877c046c180a83823ce2699089a75aaa6d549b908d4d912e896551fc021c",
+      "start": 98,
+      "end": 116,
+      "checker": true,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
+      "key": "3e8b5614a5d6577113b5c8a3da622402e6cea805075a6875fec986a00341c2f3",
+      "start": 0,
+      "end": 214,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-76a74b4666e9.js"
+      ]
+    },
+    {
+      "key": "416eaa933f15a21da67e269c3b0fc6fce3aacf89bb9c931cd88abc31fb096b21",
+      "start": 27,
+      "end": 166,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-repro-named-function-with-shadowed-local-same-name.js/nested"
       ]
     },
     {
@@ -550,6 +667,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "492cf925219764846f50d9da0f61c278af2ec28f41b2c3d46b07fb724e47bb93",
+      "start": 41,
+      "end": 71,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-in-hook-return-value.js/nested"
       ]
     },
     {
@@ -702,12 +828,30 @@
       ]
     },
     {
+      "key": "6238e5de7341bc12d349a916756e64ec140c9918f43bf498efbebb073ea89da5",
+      "start": 16,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "upstream:error.not-useEffect-external-mutate.js"
+      ]
+    },
+    {
       "key": "6319f63d1f565217de6e6bd8a81d8390acee861bc381ed65cff011b3fe55de65",
       "start": 0,
       "end": 152,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-dynamic-hook-via-hooklike-local.js"
+      ]
+    },
+    {
+      "key": "63e521841b4cc1962c0659651d695552ab47fd969dc5dd24d6742d04e116f10a",
+      "start": 88,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-prop-mutation-indirect.js/nested"
       ]
     },
     {
@@ -747,6 +891,15 @@
       ]
     },
     {
+      "key": "661d659536696e7d48a666977a7a4ba4e41cf423a8d7acd07c431a95b6495a57",
+      "start": 62,
+      "end": 201,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.todo-repro-named-function-with-shadowed-local-same-name.js/nested"
+      ]
+    },
+    {
       "key": "679ff6f040e2403a745af8acc46b149347c23412909e495c6db4034acebbd27a",
       "start": 0,
       "end": 199,
@@ -767,6 +920,24 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "681a152bbbc6a6ab2ca81649c63ef73eb04accf340e2774eba0ea5b11b18edf1",
+      "start": 0,
+      "end": 131,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "681ddc402b20533384cf1ffe97090ba59dc7dfd1623cab63e4930f0c5c67adc9",
+      "start": 0,
+      "end": 181,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.reassignment-to-global-indirect.js"
       ]
     },
     {
@@ -815,6 +986,15 @@
       ]
     },
     {
+      "key": "6e99ff8d3b035659db6d34c3c33e237306bbe58c73255d4002196f5d7176ace9",
+      "start": 38,
+      "end": 148,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-in-closure.js/nested"
+      ]
+    },
+    {
       "key": "6ea3e36e4193fd34e5211827dbce5e6ed320286b4262f2fea00d265c7441eb90",
       "start": 40,
       "end": 103,
@@ -851,12 +1031,48 @@
       ]
     },
     {
+      "key": "70685b245f608afab600d4a3cc06fced8afd54758de4abb123fc3ca2dfb301be",
+      "start": 0,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-in-closure.js"
+      ]
+    },
+    {
+      "key": "71adf394ce8d76d5cf6f4a6bae1b263eca82b154774c5051e6d470be9f602f22",
+      "start": 0,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-handle-update-context-identifiers.js"
+      ]
+    },
+    {
       "key": "724223604fc5d8fca0e183ea8f68540a17722ab6bde45fb3c089d4b926173725",
       "start": 0,
       "end": 64,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "725a78446d10542162ffb393ada98a27801d16949f6822264dc08edd9e327e8b",
+      "start": 0,
+      "end": 79,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoist-function-decls.js"
+      ]
+    },
+    {
+      "key": "728489c2cfaea4e693693c32ee4144c53282142527134165fdb782055da651ec",
+      "start": 32,
+      "end": 145,
+      "checker": true,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:207"
       ]
     },
     {
@@ -887,6 +1103,15 @@
       ]
     },
     {
+      "key": "78a668ce003e24eab9c13bea7d634afec0636d8b2b54733c647f75491cfd4b4b",
+      "start": 0,
+      "end": 119,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-prop-mutation-indirect.js"
+      ]
+    },
+    {
       "key": "78ab67786f77523af38a9fbc6b890023077c64e61016c8a970f1de55d559a47d",
       "start": 316,
       "end": 324,
@@ -905,6 +1130,15 @@
       ]
     },
     {
+      "key": "79357987f2acadf280613fea76fe43e8828c22d0ec1d3a8462b1bfc6e88a1e94",
+      "start": 39,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-function-expression-references-later-variable-declaration.js/nested"
+      ]
+    },
+    {
       "key": "7956de39b0f3708d0be1a06b4c9189c2480c9dbadcba14b2dc2f4ddc4669a0ff",
       "start": 218,
       "end": 278,
@@ -914,12 +1148,30 @@
       ]
     },
     {
+      "key": "79fb33bc026c3c8b6ffc5f06ba13063e956dd66ad2a164465b28bfeb3e1d45d6",
+      "start": 0,
+      "end": 222,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d952b82c2597.js"
+      ]
+    },
+    {
       "key": "7b6bf968ba190dae65b5130aa0a901541f3566f16c2221771ec00cdf466ebcc6",
       "start": 149,
       "end": 157,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7cc392de0276b7871e09f15b31a2ef20aea7906626cd672025cb4fc352b12a15",
+      "start": 0,
+      "end": 263,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-449a37146a83.js"
       ]
     },
     {
@@ -1013,6 +1265,15 @@
       ]
     },
     {
+      "key": "816d5b2880a68a6c141e3377a80eeaca1bb4ca3ead0f403421d87fb8379189a2",
+      "start": 82,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
       "key": "8291ce147cfbd5431020299760cecef570f73a0b55c2139aaaee0a9000fa22c6",
       "start": 0,
       "end": 231,
@@ -1037,6 +1298,15 @@
       "checker": true,
       "calls": [
         "upstream:error.capitalized-function-call-aliased.js"
+      ]
+    },
+    {
+      "key": "849b0336f416e3608c89915eb7f0668366ed21574357c5884e75d20cc802be5a",
+      "start": 181,
+      "end": 224,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-return-mutable-function-from-hook.js/nested"
       ]
     },
     {
@@ -1067,6 +1337,15 @@
       ]
     },
     {
+      "key": "8664f457fa5c4dfe173807c039d7cdbf618fcff678e04bc4dc17f3b3927a3ce8",
+      "start": 85,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "8705c1c699be5050bdb308dfb69672bb1f743a072b195fd209931e317ca2189c",
       "start": 36,
       "end": 71,
@@ -1091,6 +1370,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "877a7e10587d78fe45f094310e3bdc4014f8a7c31f84c0cc1339ecdfeacb1412",
+      "start": 199,
+      "end": 1097,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-hook-argument.js/nested"
       ]
     },
     {
@@ -1139,6 +1427,15 @@
       ]
     },
     {
+      "key": "8b18d76b210e46d22a9281d770749a57b1e700103ea93ca8bfb28ce1780d542a",
+      "start": 48,
+      "end": 72,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "8b59a46b1e1926f0b6095958e2f16dcd5b366ef9fb93d53ac40b638e8eaa4dbe",
       "start": 0,
       "end": 103,
@@ -1175,6 +1472,15 @@
       ]
     },
     {
+      "key": "8fdf8465e0c2d4968cfa2d60891fdb2303c227719c33135d7c6649656471994c",
+      "start": 51,
+      "end": 85,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-handle-update-context-identifiers.js/nested"
+      ]
+    },
+    {
       "key": "90210ff15e6d8a63fbb4c25969c1010a4f34b6bb2a91d56950d1ba7a7a558770",
       "start": 0,
       "end": 111,
@@ -1208,6 +1514,24 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js/nested/nested"
+      ]
+    },
+    {
+      "key": "9422f5035a7db466a8e26e4abec18d145882dcfb993800d142b32918cae65d64",
+      "start": 0,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-repro-named-function-with-shadowed-local-same-name.js"
+      ]
+    },
+    {
+      "key": "9599d5e9fd198a7aa945874215093b889d796e7050354c89d34320e1cdb78714",
+      "start": 78,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
       ]
     },
     {
@@ -1256,6 +1580,15 @@
       ]
     },
     {
+      "key": "997df98826074bbbc482a66422a6fd526f9414dc3db81102aec8fd34571c0630",
+      "start": 48,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:207"
+      ]
+    },
+    {
       "key": "9a9916cc1e4d35415df9d469d0010df1b46ab414aa510bc87ae96e84beeab232",
       "start": 0,
       "end": 92,
@@ -1271,6 +1604,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9c8a4085810a9c77779abca43c73333bf4e27686b0bc9ca2aab1b72fca89af3e",
+      "start": 895,
+      "end": 1032,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-kitchensink.js/nested"
       ]
     },
     {
@@ -1301,6 +1643,15 @@
       ]
     },
     {
+      "key": "a124a494fc924745298be7ad0698b618e8e8874519273e421df8075b9e15c603",
+      "start": 78,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "a17bbb9f165f2270554fcb61964a78f7d0ef3b3cf9d7b4c4a6c7f17c5f043a31",
       "start": 52,
       "end": 91,
@@ -1310,12 +1661,30 @@
       ]
     },
     {
+      "key": "a1b4f3b01816e0979ec3310d5a3eb0e2cf9f7c073aa42ca968b072bff5be1e6b",
+      "start": 0,
+      "end": 148,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-hook-function-argument-mutates-local-variable.js"
+      ]
+    },
+    {
       "key": "a21e3c12c554779ee5c78a9e6cc4ddfe521c7c0db4b9a79762811edb024b5cbe",
       "start": 0,
       "end": 136,
       "checker": true,
       "calls": [
         "upstream:error.invalid-access-ref-during-render.js"
+      ]
+    },
+    {
+      "key": "a3a210c987e10a31088ee2f04687cd62e341f34e753c69336acfc9a06d11c6fd",
+      "start": 0,
+      "end": 74,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-in-hook-return-value.js"
       ]
     },
     {
@@ -1409,6 +1778,15 @@
       ]
     },
     {
+      "key": "a952f005016789742a86f5e34a2a84f5145a690c9e39ae24bf8d34f3b9d0aeda",
+      "start": 39,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-prop-mutation-indirect.js/nested"
+      ]
+    },
+    {
       "key": "ab90c56d830d16052f129b6e6ee1984a9b847f4e40804405535ed0d0bbf644a4",
       "start": 87,
       "end": 141,
@@ -1424,6 +1802,15 @@
       "checker": true,
       "calls": [
         "upstream:error.reassign-global-fn-arg.js/nested"
+      ]
+    },
+    {
+      "key": "aca8de7673cc1b229be64e77fa0d7e0a43de47c6c22cd4c8e9656b487cd6cd24",
+      "start": 0,
+      "end": 292,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoisting-simple-var-declaration.js"
       ]
     },
     {
@@ -1540,6 +1927,15 @@
       "checker": true,
       "calls": [
         "upstream:error.assign-global-in-component-tag-function.js/nested"
+      ]
+    },
+    {
+      "key": "ba999376f82ed98854a20d56c63113b7013fd839757ea3736d85423e9dc86d53",
+      "start": 76,
+      "end": 1161,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-hook-argument.js"
       ]
     },
     {
@@ -1681,6 +2077,15 @@
       ]
     },
     {
+      "key": "cee1a3aaf09bf4a52f8c6ee7b130786c4f8c4c8100fa9bcb807a7c0a9405d345",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "cfb859dd11493fd84eb6579c4db3e0e9dfcc70d9640f72ea03eb7afd55dad4f4",
       "start": 0,
       "end": 94,
@@ -1774,6 +2179,24 @@
       ]
     },
     {
+      "key": "d84f29acc750ed67788e03e7da533f74c3b1e65a5785e99789383f00c8c58c5a",
+      "start": 0,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "dcfcd625e2fa2a6f1c8c003e39355045f599a7a9c8216f505dd2a453d2852a8b",
+      "start": 48,
+      "end": 85,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "ddd0e5a7da324a534672b0cf9f62e5594a35768d78278cef3e387a1cf77c5779",
       "start": 337,
       "end": 379,
@@ -1807,6 +2230,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "e09de8be71c5b79977315910fe11d05d69a02a1b16cf0b7a49ad601ed38676d7",
+      "start": 83,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested/nested"
+      ]
+    },
+    {
+      "key": "e10ce494d936cceb2fc52a934abde8da69a352d6ffd5d5b134f56be9b780ba3f",
+      "start": 31,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85"
       ]
     },
     {
@@ -1863,6 +2304,24 @@
       ]
     },
     {
+      "key": "e518e4b036c338c981165a8c43b61f78161708d5874aca5101e0a611a739544d",
+      "start": 0,
+      "end": 227,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d842d36db450.js"
+      ]
+    },
+    {
+      "key": "e6a561d2c47142f1144b49eb97402118140af13cb8b97b739d2f81a5d3c54296",
+      "start": 74,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "upstream:error.hoisting-simple-function-declaration.js/nested"
+      ]
+    },
+    {
       "key": "e7a9cbd845816d496eb97fd557d82ea5f2841e7d1965bc5028e039bbef4fb6df",
       "start": 21,
       "end": 156,
@@ -1878,6 +2337,24 @@
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "e7cabe59ac52896d53ededf7b4b8125142f35d60bdad9affacfd01f4730a55d1",
+      "start": 138,
+      "end": 178,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-hook-argument.js/nested"
+      ]
+    },
+    {
+      "key": "e7fe8b561161c8b104d0f3e34e002278cdfb78a6098f13859e2b97056994b019",
+      "start": 0,
+      "end": 220,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0a1dbff27ba0.js"
       ]
     },
     {
@@ -1926,6 +2403,15 @@
       ]
     },
     {
+      "key": "ea58e61bb0da38a367c8ea19995ff9638a32217e19bf82949466709547efed65",
+      "start": 229,
+      "end": 587,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-allow-assigning-to-inferred-ref-prop-in-callback.js/nested"
+      ]
+    },
+    {
       "key": "ebb712997f3c06f911e65514bd6eaf4a13d78601caf194e3afadef6ca67122f6",
       "start": 325,
       "end": 367,
@@ -1950,6 +2436,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "eed589319c5533579519f701110e54ac5955125063ae62c7078907dfe9164dbf",
+      "start": 0,
+      "end": 146,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassignment-to-global-indirect.js"
       ]
     },
     {
@@ -1995,6 +2490,15 @@
       "checker": true,
       "calls": [
         "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
+      "key": "f375f665a6c0827f966fde854021c2e046d9c43cdea5d8f0e5357fab596ecb52",
+      "start": 102,
+      "end": 144,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-hook-function-argument-mutates-local-variable.js/nested"
       ]
     },
     {
@@ -2085,6 +2589,15 @@
       ]
     },
     {
+      "key": "fa70fefd7a2db96605fcf0f40884f62337017ca1a05a58db8ea322014672bba2",
+      "start": 158,
+      "end": 268,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js/nested"
+      ]
+    },
+    {
       "key": "fafa0746261b09e16a2403e9ed1e04fb089341b2784c046714af03d822a78d9e",
       "start": 0,
       "end": 88,
@@ -2157,6 +2670,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:error.ref-like-name-not-a-ref.js/nested"
+      ]
+    },
+    {
+      "key": "fe9406266e7499254b9187451f673cc70d2f01be50317a71a02723a7a5571cf2",
+      "start": 0,
+      "end": 225,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.todo-repro-named-function-with-shadowed-local-same-name.js"
       ]
     }
   ],
