@@ -12,6 +12,8 @@ parser.add_argument('adapted', type=Path)
 parser.add_argument('before', type=Path)
 parser.add_argument('after', type=Path)
 parser.add_argument('output', type=Path)
+parser.add_argument('--all', action='store_true')
+parser.add_argument('--compiler', default='4885cec50290686df487b62aac47c85d871ed40c')
 a = parser.parse_args()
 spec = importlib.util.spec_from_file_location('pinned_hidden', a.source_pin / 'stage3/census/hidden/hidden.py')
 hidden = importlib.util.module_from_spec(spec)
@@ -21,13 +23,16 @@ for name, metadata in stock.items():
  data = (a.adapted / name).read_bytes()
  assert len(data) == metadata['bytes'] and hashlib.sha256(data).hexdigest() == metadata['sha256'], name
 regions = [('hidden-01','transformers/declarations.ts',68180,81805), ('hidden-05','transformers/es2018.ts',35690,41768), ('hidden-06','transformers/esDecorators.ts',61324,72741)]
+if a.all:
+ regions = [('hidden-01-large','transformers/declarations.ts',68180,81805),('hidden-01-small','transformers/declarations.ts',82928,89827),('hidden-05-large','transformers/es2018.ts',35690,41768),('hidden-05-small','transformers/es2015.ts',144178,149926),('hidden-06','transformers/esDecorators.ts',61324,72741),('hidden-13','transformers/es2017.ts',30237,37526),('hidden-14','utilities.ts',455532,462634)]
 selected = {name:stock[name] for _,name,_,_ in regions}
 results = {}
 for side, path in [('before',a.before),('after',a.after)]:
  rows = hidden.read_rows(path)
- computed = hidden.calculate(rows, selected, a.adapted)
+ original = Path(rows[1]['file'].split('/src/compiler/')[0]) / 'src/compiler'
+ computed = hidden.calculate(rows, selected, original)
  results[side] = computed
-output = {'source_pin':'388096e6a83a4e9d287fb827f793c599ba1bf0ad','delivery_base':'4885cec50290686df487b62aac47c85d871ed40c','all_adapted_hashes_verified':len(stock),'scope':'All independent declarations in the three named files; entire project loaded and registered. No corpus-wide claim.','regions':[]}
+output = {'source_pin':'388096e6a83a4e9d287fb827f793c599ba1bf0ad','compiler':a.compiler,'all_adapted_hashes_verified':len(stock),'scope':('All independently overlapping declarations in the seven assigned intervals; entire project loaded and registered. No corpus-wide claim.' if a.all else 'All independent declarations in the three named files; entire project loaded and registered. No corpus-wide claim.'),'regions':[]}
 for label,name,start,end in regions:
  row = {'label':label,'file':name,'sha256':stock[name]['sha256'],'start':start,'end':end,'bytes':end-start}
  for side in ['before','after']:
