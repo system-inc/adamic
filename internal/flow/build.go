@@ -447,6 +447,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			}
 		case reflect.Struct:
 			switch value.Type() {
+			case reflect.TypeOf(ir.ObjectCall{}):
+				if value.Interface().(ir.ObjectCall).Method == "catchProperty" {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

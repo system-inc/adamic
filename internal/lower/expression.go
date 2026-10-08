@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.catchOrigin(node, map[*ast.Symbol]bool{}) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+		return ir.Union, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -43,6 +46,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsNull != 0:
+		return ir.Object, true
 	case flags&checker.TypeFlagsUnknown != 0:
 		return ir.Union, true
 	case flags&checker.TypeFlagsNumberLike != 0:
@@ -188,6 +193,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
 		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+	}
+	if err == nil && value.Type() != ir.Union && ast.SkipParentheses(node).Kind != ast.KindNullKeyword && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && contextual.Flags()&checker.TypeFlagsUnknown != 0 {
+			value = l.boxCaughtValue(node, value)
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
@@ -492,6 +502,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				read = ir.Unwrap{Value: read}
 			}
 		}
+		if l.catchOrigin(node, map[*ast.Symbol]bool{}) {
+			read = l.checkedCatchUse(node, read)
+		}
 		return l.defined(node, read), nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
@@ -731,7 +744,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}

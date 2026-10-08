@@ -32,6 +32,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.value(expression.Value)
 			return "false"
 		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
+		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -192,7 +195,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
-		return e.box(expression.Value)
+		return e.boxNull(expression.Value, expression.Null)
 	case ir.MakeError:
 		return e.makeError(expression)
 	case ir.WeakOf:

@@ -188,6 +188,9 @@ func (e *emitter) arguments(call ir.Call) []string {
 			// is known; a reference where a Weak goes, its handle.
 			takes := e.program.Locals[parameters[index]].Type
 			boxed, fresh := converted(argument.Type(), takes, value)
+			if _, null := argument.(ir.Null); null && takes == ir.Union {
+				boxed, fresh = "&adamic_null", false
+			}
 			if fresh {
 				boxed = e.own(takes, boxed)
 			}

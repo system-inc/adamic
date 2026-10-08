@@ -26,7 +26,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Throw{Value: fit(value, ir.Union)}}, nil
+	return []ir.Statement{ir.Throw{Value: l.boxCaughtValue(thrown, value)}}, nil
 }
 
 // newError lowers new Error(message), and new Error().
@@ -92,14 +92,22 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.isLibraryGlobal(binary.Right, "Error") {
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
-	local, known := l.local(left)
-	if !known {
+	if ast.IsIdentifier(left) {
+		local, known := l.local(left)
+		if !known {
+			return nil, false
+		}
+		return ir.InstanceOf{Value: ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(left, local)}, Class: ir.ErrorClass}, true
+	}
+	value, err := l.expression(left)
+	if err != nil {
+		l.unlowerable = err
 		return nil, false
 	}
-	return ir.InstanceOf{Value: ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(left, local)}, Class: ir.ErrorClass}, true
+	return ir.InstanceOf{Value: value, Class: ir.ErrorClass}, true
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
@@ -154,6 +162,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.Throw:
 			found = true
+		case ir.ObjectCall:
+			if node.Method == "catchProperty" {
+				found = true
+			}
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true

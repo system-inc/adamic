@@ -188,11 +188,14 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 // shape declares an object literal's layout once, at file scope, and names it.
 func (e *emitter) shape(fields []ir.Field) string {
 	names, types := []string{}, []ir.Type{}
+	nulls := []bool{}
 	for _, field := range fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
+		_, literalNull := field.Value.(ir.Null)
+		nulls = append(nulls, field.Null || literalNull)
 	}
-	return e.shapeOf(names, types)
+	return e.shapeWith(names, types, nil, nulls...)
 }
 
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
@@ -202,11 +205,14 @@ func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
 		return e.shape(literal.Fields)
 	}
 	names, types := []string{}, []ir.Type{}
+	nulls := []bool{}
 	for _, field := range literal.Fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
+		_, literalNull := field.Value.(ir.Null)
+		nulls = append(nulls, field.Null || literalNull)
 	}
-	return e.shapeWith(names, types, literal.Methods)
+	return e.shapeWith(names, types, literal.Methods, nulls...)
 }
 
 // shapeOf declares a layout by its field names and types.
@@ -216,14 +222,19 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, nulls ...bool) string {
 	names, references := []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	key := strings.Join(names, ",") + "|" + strings.Join(references, ",") + fmt.Sprint(fieldTypes)
+	for index, null := range nulls {
+		if null {
+			key += fmt.Sprintf("|null:%d", index)
+		}
+	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}

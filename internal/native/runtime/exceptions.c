@@ -53,3 +53,32 @@ _Noreturn void adamic_uncaught(void) {
 	}
 	adamic_panic(text, length);
 }
+
+// Catch-member policy follows JavaScript: primitives have no ordinary own field,
+// absent fields stay undefined, and nullish receivers throw a catchable TypeError.
+adamic_heap *adamic_caught_property(adamic_heap *value, const adamic_string *name) {
+	if (value == NULL || value->kind == adamic_kind_null) {
+		static adamic_string undefined = ADAMIC_STRING("Cannot read properties of undefined (reading '");
+		static adamic_string null = ADAMIC_STRING("Cannot read properties of null (reading '");
+		static adamic_string suffix = ADAMIC_STRING("')");
+		static adamic_string type_error = ADAMIC_STRING("TypeError");
+		adamic_string *message = adamic_string_concat(3, (adamic_string *const[]){value == NULL ? &undefined : &null, (adamic_string *)name, &suffix});
+		adamic_object *error = adamic_error_new(message);
+		adamic_release(message);
+		adamic_release(error->slots[0].reference);
+		error->slots[0].reference = adamic_retain(&type_error);
+		adamic_thrown = &error->heap;
+		adamic_exception_pending = true;
+		return NULL;
+	}
+	if (value->kind != adamic_kind_object) { return NULL; }
+	adamic_object *object = (adamic_object *)value;
+	for (size_t index = 0; index < object->shape->count; index++) {
+		const char *field = object->shape->names[index];
+		if (strlen(field) != name->length || memcmp(field, name->bytes, name->length) != 0) { continue; }
+		if (object->shape->references[index]) { return adamic_retain(object->slots[index].reference); }
+		static const char message[] = "adamic/catch-property: scalar field has no dynamic representation";
+		adamic_panic(message, sizeof message - 1);
+	}
+	return NULL;
+}

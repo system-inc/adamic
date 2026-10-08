@@ -29,6 +29,9 @@ func InsertedChecks(program *Program) []InsertedCheck {
 			return
 		}
 		if value.Kind() == reflect.Struct && value.CanInterface() {
+			if narrow, ok := value.Interface().(Narrow); ok && narrow.Checked {
+				checks = append(checks, InsertedCheck{Kind: "caught-type", Where: narrow.Where})
+			}
 			if coalesce, ok := value.Interface().(Coalesce); ok && coalesce.Panic != nil {
 				if message, ok := coalesce.Panic.(StringConstant); ok {
 					text := program.Strings[message.Index]
