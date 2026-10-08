@@ -359,3 +359,11 @@ void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs) {
 		adamic_map_set(map, key, value);
 	}
 }
+
+// These maps keep no pointer into themselves, so a move needs nothing. Library's small Maps store
+// their first entries inline (area/library 3b607c39); its map.c defines this to re-point entries,
+// and keeping both definitions in a merge is a compile error, never a silent loss of the fix.
+void adamic_map_relocated(const adamic_map *from, adamic_map *to) {
+	(void)from;
+	(void)to;
+}

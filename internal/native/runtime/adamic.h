@@ -605,6 +605,9 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+// adamic_map_relocated fixes a map copied byte for byte from one allocation to another (a graph
+// region's adoption) before the old allocation is freed: pointers into the map itself move with it.
+void adamic_map_relocated(const adamic_map *from, adamic_map *to);
 
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).

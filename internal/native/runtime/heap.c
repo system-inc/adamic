@@ -291,6 +291,9 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	adamic_graph_header *prefix = (adamic_graph_header *)storage;
 	adamic_heap *heap = (adamic_heap *)(prefix + 1);
 	memcpy(heap, old, size);
+	// A value that points into itself (a small Map's inline entries, on area/library) must point into
+	// its new home before the old one is freed.
+	if (old->kind == adamic_kind_map) { adamic_map_relocated((adamic_map *)old, (adamic_map *)heap); }
 	heap->slab = slab | ADAMIC_GRAPH_FLAG;
 	*prefix = (adamic_graph_header){NULL, NULL};
 	deallocate(old);
