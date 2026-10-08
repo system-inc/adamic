@@ -61,7 +61,7 @@
   ],
   "additional_forms": {
     "optional_tuple_map": "certified absent, present undefined and present with Node, both backends and leaks",
-    "rest_tuple_map": "pending shared rest contracts"
+    "rest_tuple_map": "certified zero, one, many and mismatched rest contracts with Node and both backends; completing cases leak checked"
   },
   "lane4b_checks": "queued after primary; two overlapping frontier obligations, no added production reads",
   "exact_reaching_view_coverage": "not measured",

@@ -71,9 +71,11 @@ func supportedTupleArity(target *checker.Type) bool {
 		return false
 	}
 	optional := false
-	for _, flag := range target.TargetTupleType().ElementFlags() {
+	for position, flag := range target.TargetTupleType().ElementFlags() {
 		if flag == checker.ElementFlagsOptional {
 			optional = true
+		} else if flag == checker.ElementFlagsRest && position == len(target.TargetTupleType().ElementFlags())-1 {
+			return true
 		} else if flag != checker.ElementFlagsRequired || optional {
 			return false
 		}

@@ -1721,3 +1721,12 @@ which marks the single tupleViewSlot plan variable with its required prefix.
 Optional fields retain Absent read policy and complete Map schemas preserve
 that same arity domain. Array tuple-union dispatch remains fixed-only.
 Six object/Map forms and the absent-as-present mutant certify this boundary.
+
+Trailing rest tuple admission: the existing constructor stores TupleRest as its
+child contract and keeps only the finite prefix in Tuple. tupleLiteral maps
+written tails to the declared rest element, retaining actual shape arity.
+readTupleViewElement maps each constant tail position to that same child and
+registers its checked read. MapCertificatePairs checks rest storage and semantic
+subtyping as well as the prefix. Zero/one/many object and Map forms, late wrong
+elements and wrong Map schemas certify this extension; spread and variadic
+rest forms remain refused. No array consumer predicate was widened.

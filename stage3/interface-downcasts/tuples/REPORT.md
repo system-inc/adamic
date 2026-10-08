@@ -1,3 +1,28 @@
+Built: trailing rest tuple object/Map views through the single certificate and producer path.
+Commits: rest admission is separate from optional admission cf1765d1 and foundation 8b37f903.
+Checks: eight Node/backend witnesses include release, sanitized and finishing leak checks; scoped counts PASS 37.966s; lane 2/lane 4 regressions PASS 32.443s.
+Mutants: zero-rest-as-present FAIL 0.249s (stdout); unchecked late position FAIL 0.386s (missing refusal); erased rest schema FAIL 0.275s (missing Map refusal).
+Remaining: five primary pairs / seven reads and two overlapping lane 4b checks; spread/variadic rest remain refused.
+
+Commands: TestCheckedViewTupleRestContract and
+TestTupleOptionalRestOriginalLayoutProbe -count=1 -v
+(/tmp/views-tuples-rest-contract-final.log). Presence mutant:
+ADAMIC_TUPLE_REST_CONTRACT_MUTANT=present on
+TestCheckedViewTupleRestAbsentMutant
+(/tmp/views-tuples-rest-contract-mutant.log). Late check mutant:
+ADAMIC_TUPLE_NUMERIC_MUTANT=3 on rest-view-wrong-tail
+(/tmp/views-tuples-rest-tail-mutant.log). Schema mutant:
+ADAMIC_TUPLE_REST_CONTRACT_MUTANT=schema on
+TestCheckedViewTupleRestSchemaMutant
+(/tmp/views-tuples-rest-schema-mutant.log). All semantic mutants compile and
+finish exit zero with incorrect behavior rather than a compiler failure.
+Scoped tuple counts -args -update-counts refreshes 52 owned rows
+(/tmp/views-tuples-rest-contract-counts.log). The same ten lane 2/lane 4
+array/union tests remain unchanged with 221 uncached Node observations
+(/tmp/views-tuples-rest-contract-regressions.log). gofmt applied.
+
+---
+
 Built: optional tuple view arity contracts and optional Map tuple forms, through the existing constructor.
 Commits: optional admission is a separate patch following 8b37f903 arity foundation.
 Checks: six Node/JavaScript/native release/sanitized/leak witnesses PASS 2.520s; layout probe PASS 0.319s; scoped counts PASS 27.497s; lane 2/lane 4 regressions PASS 24.436s.

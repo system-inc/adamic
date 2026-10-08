@@ -57,8 +57,8 @@ func TestTupleOptionalRestOriginalLayoutProbe(t *testing.T) {
 				}
 				if member.TargetTupleType().ElementFlags()[len(flags)-1] != checker.ElementFlagsRequired {
 					id := l.tupleViewSlot(nil, member, func(*checker.Type) ir.ViewContractID { return 1 })
-					if sample.rest && id != 0 {
-						t.Fatal("rest source admission remains refused")
+					if sample.rest && (id == 0 || l.result.ViewContracts[id-1].TupleRest == 0) {
+						t.Fatal("rest arity plan missing")
 					}
 					if !sample.rest && (id == 0 || !l.result.ViewContracts[id-1].TupleVariable) {
 						t.Fatal("optional arity plan missing")

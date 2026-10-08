@@ -31,13 +31,15 @@ func (l *lowering) tupleViewSlot(node *ast.Node, target *checker.Type, build fun
 	}
 	tuple := target.TargetTupleType()
 	minimum, variable := 0, false
-	for _, flag := range tuple.ElementFlags() {
+	for position, flag := range tuple.ElementFlags() {
 		if flag == checker.ElementFlagsRequired {
 			if variable {
 				return 0
 			}
 			minimum++
 		} else if flag == checker.ElementFlagsOptional {
+			variable = true
+		} else if flag == checker.ElementFlagsRest && position == len(tuple.ElementFlags())-1 {
 			variable = true
 		} else {
 			return 0
@@ -61,6 +63,12 @@ func (l *lowering) tupleViewSlot(node *ast.Node, target *checker.Type, build fun
 			return 0
 		}
 		name := strconv.Itoa(position)
+		if tuple.ElementFlags()[position] == checker.ElementFlagsRest {
+			contract.TupleRest = child
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Optional: true, Readonly: tuple.IsReadonly()})
+			l.result.CheckedFields[name] = true
+			continue
+		}
 		contract.Tuple = append(contract.Tuple, child)
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Optional: tuple.ElementFlags()[position] == checker.ElementFlagsOptional, Readonly: tuple.IsReadonly()})
 		l.result.CheckedFields[name] = true
@@ -74,12 +82,24 @@ func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, na
 	receiver := node.AsElementAccessExpression().Expression
 	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(receiver))
 	position, err := strconv.Atoi(name)
-	if err != nil || position < 0 || position >= len(elements) {
+	tuple := l.checker.GetTypeAtLocation(receiver).TargetTupleType()
+	rest := len(elements) > 0 && tuple.ElementFlags()[len(elements)-1] == checker.ElementFlagsRest
+	declaredPosition := position
+	if rest && position >= len(elements)-1 {
+		declaredPosition = len(elements) - 1
+	}
+	if err != nil || position < 0 || declaredPosition >= len(elements) {
 		return ir.Property{Object: object, Name: name, Of: of}
 	}
-	declared := l.concrete(elements[position])
+	if rest && position >= len(elements)-1 {
+		if l.result.CheckedFields == nil {
+			l.result.CheckedFields = map[string]bool{}
+		}
+		l.result.CheckedFields[name] = true
+	}
+	declared := l.concrete(elements[declaredPosition])
 	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(receiver).Id())}
-	property.Absent = l.checker.GetTypeAtLocation(receiver).TargetTupleType().ElementFlags()[position] == checker.ElementFlagsOptional
+	property.Absent = tuple.ElementFlags()[declaredPosition] == checker.ElementFlagsOptional || rest && position >= len(elements)-1
 	property.ViewAllowed = l.viewLiterals(declared)
 	property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 	return property

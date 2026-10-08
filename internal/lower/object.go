@@ -1888,12 +1888,16 @@ func (l *lowering) tupleType(node *ast.Node) *checker.Type {
 func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	elements := l.checker.GetTypeArguments(tuple)
-	if len(items) > len(elements) {
+	rest := len(elements) > 0 && tuple.TargetTupleType().ElementFlags()[len(elements)-1] == checker.ElementFlagsRest
+	if len(items) > len(elements) && !rest {
 		return nil, l.notYet(node, "a tuple literal with more values than its tuple has elements")
 	}
 	literal := ir.ObjectLiteral{Tuple: true}
 	// Missing optional positions stay absent. Shape arity remains actual source length.
 	for index := len(items); index < len(elements); index++ {
+		if rest && index == len(elements)-1 {
+			continue
+		}
 		of, isKnown := l.representation(elements[index])
 		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
@@ -1903,9 +1907,13 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
 		}
-		of, isKnown := l.representation(elements[index])
+		declaredPosition := index
+		if rest && index >= len(elements)-1 {
+			declaredPosition = len(elements) - 1
+		}
+		of, isKnown := l.representation(elements[declaredPosition])
 		if !isKnown || slotless(of) {
-			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[declaredPosition]))
 		}
 		value, err := l.expression(item)
 		if err != nil {
