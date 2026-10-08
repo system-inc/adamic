@@ -14,12 +14,12 @@ func (p *Program) writeDeclaration(out *fields, declaration *ast.Node) {
 	if source == nil {
 		panic("declaration has no source")
 	}
-	out.text(source.FileName())
+	out.text(source.FileName().AsString())
 	out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 	out.number(uint64(declaration.Pos()))
 	out.number(uint64(declaration.End()))
 	out.yes(source.IsDeclarationFile)
-	out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.Path()))
+	out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 	parent := declaration.Parent
 	parentKind, parentName := "", ""
 	first, last := uint64(0), uint64(0)

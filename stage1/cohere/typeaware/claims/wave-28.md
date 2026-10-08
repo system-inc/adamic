@@ -79,3 +79,9 @@ react/jsx-no-undef and react/jsx-fragments are now implemented and green in the 
 ## Fifth-batch completion
 
 All three fifth-batch rules, including react/jsx-no-constructed-context-values, are implemented and green in the owned native type-aware harness. Positive controls and both frozen corpus streams match Go byte for byte on findings/fixes/suggestions; each rule has a normally executing comparison mutant; sanitizer and released-handle checks pass. Named kinds and supplied-node dispatch are retained. All fifth-batch correctness/readiness tests build missing tools instead of skipping. The fourth-batch analysis claims remain parked; no sixth batch is claimed yet.
+
+## Shared checker landing
+
+Merged origin/area/stage1-lint at c8f6d74f5 with merge commit 0eeb4b73a; no rebase and no new claim. Nine existing ports now have typed, node-taking descriptors under ../lint/rules and query RuleContext.checker. The old standalone drivers and checks are retained as historical controls; they are not the unified checker or its recording path.
+
+Three existing ports are blocked from unified registration on the shared foreign-file node selector and replay binding: nexus/correctness-no-process-exit-after-output, nexus/correctness-require-blocking-standard-streams, and react/jsx-no-constructed-context-values. The three React Hooks HIR analysis claims remain parked. JSX parsing has landed and is no longer their blocker; the existing static_single_assignment port does not supply the required high-level IR analysis. Exact upstream symbols, locations, and the selector probe are in ../wave28_next/checker-landing/BLOCKERS.md. Current validation evidence belongs in that landing directory.

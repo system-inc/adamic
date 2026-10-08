@@ -20,7 +20,7 @@ func (p *Program) streamSignature(out *fields, c *checker.Checker, node *ast.Nod
 		if file == nil {
 			return "", fmt.Errorf("signature declaration has no source")
 		}
-		out.text(file.FileName())
+		out.text(file.FileName().AsString())
 		out.text(strings.TrimPrefix(decl.Kind.String(), "Kind"))
 		out.number(uint64(decl.Pos()))
 		out.number(uint64(decl.End()))

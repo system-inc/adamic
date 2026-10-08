@@ -1,0 +1,3 @@
+declare const flag: boolean; declare const error: Error;
+throw flag ? error : 0;
+throw "failure";

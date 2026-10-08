@@ -1,0 +1,77 @@
+import { Tree } from './tree.a';
+import { ReferenceSymbol } from './reference_symbol.a';
+import { panic } from 'adamic';
+export class Constant {readonly text: string;readonly string: boolean;readonly valid: boolean;constructor(text='',string=false,valid=false){this.text=text;this.string=string;this.valid=valid;}}
+export class RegExpReferences {
+ readonly tree: Tree;readonly symbols=new Map<number,ReferenceSymbol>();readonly references=new Map<string,number[]>();readonly found: number[]=[];readonly following=new Set<string>();
+ constructor(tree: Tree){this.tree=tree;}
+ symbol(index: number): ReferenceSymbol{if(!this.symbols.has(index)){this.symbols.set(index,new ReferenceSymbol(this.tree,index));}return this.symbols.get(index)??panic('missing reference symbol');}
+ value(index: number): boolean{
+  const t=this.tree;const parent=t.parent(index);const kind=t.kind(parent);if(parent<0){return false;}
+  if(t.bindings.declaring(index)){return false;}
+  if(['TypeReference','TypeQuery','QualifiedName','LabeledStatement','BreakStatement','ContinueStatement','JsxAttribute','ImportSpecifier'].includes(kind)){return false;}
+  if(kind==='PropertyAccessExpression'){return t.last(parent)!==index;}
+  if(kind==='BindingElement' && t.name(parent)!==index && t.child(parent,0)===index){return false;}
+  if(['JsxOpeningElement','JsxSelfClosingElement','JsxClosingElement'].includes(kind)){const text=t.rules.parser.node(index).text;return text!=='' && (text[0]??'')!==(text[0]??'').toLowerCase();}
+  return true;
+ }
+ writes(index: number): boolean{
+  const t=this.tree;if(t.kind(t.parent(index))==='PropertyAccessExpression' && t.last(t.parent(index))===index){return false;}let at=index;
+  while(t.parent(at)>=0){const parent=t.parent(at);const kind=t.kind(parent);
+   if(['SpreadElement','SpreadAssignment','ArrayLiteralExpression','ObjectLiteralExpression','ParenthesizedExpression'].includes(kind)){at=parent;continue;}
+   if(kind==='PropertyAssignment'){if(t.last(parent)!==at){return false;}at=parent;continue;}
+   if(kind==='ShorthandPropertyAssignment'){if(t.name(parent)!==at){return false;}at=parent;continue;}
+   if(kind==='BinaryExpression'){return t.child(parent,0)===at && ['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','AmpersandAmpersandEqualsToken','BarBarEqualsToken','QuestionQuestionEqualsToken'].includes(t.operator(parent));}
+   if(['PrefixUnaryExpression','PostfixUnaryExpression'].includes(kind)){return ['PlusPlusToken','MinusMinusToken'].includes(t.operator(parent));}
+   if(['ForInStatement','ForOfStatement'].includes(kind)){return (t.kind(t.child(parent,0))==='AwaitKeyword'?t.child(parent,1):t.child(parent,0))===at;}
+   return false;
+  }
+  return false;
+ }
+ constant(index: number,scope=true,seen: number[]=[]): Constant{
+  const t=this.tree;const at=t.skip(index);const kind=t.kind(at);if(at<0){return new Constant();}const node=t.rules.parser.node(at);
+  if(scope && kind==='RegularExpressionLiteral'){return new Constant(node.text,true,true);}
+  if(scope && kind==='Identifier'){
+   const symbol=this.symbol(at);if(symbol.id===0 || seen.includes(symbol.id)){return new Constant();}const declarations=symbol.declarations.filter((decl)=>decl.path===t.rules.path);const decl=declarations[0];if(declarations.length!==1 || decl===undefined || decl.kind!=='VariableDeclaration' || symbol.declarations.every((origin)=>origin.declaration)){return new Constant();}
+   const binding=t.at(decl.kind,decl.pos,decl.end);const initializer=t.initializer(binding);const list=t.parent(binding);const name=t.name(binding);if(initializer<0 || t.kind(list)!=='VariableDeclarationList'){return new Constant();}
+   if(t.rules.parser.node(list).semantic!=='2'){
+    for(let other=0;other<t.rules.parser.nodes.length;other++){if(other!==name && t.parent(other)>=0 && t.kind(other)==='Identifier' && name>=0 && t.rules.parser.node(other).text===t.rules.parser.node(name).text && this.writes(other) && this.symbol(other).id===symbol.id){return new Constant();}}
+   }
+   const next=seen.slice();next.push(symbol.id);return this.constant(initializer,true,next);
+  }
+  if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(kind)){return new Constant(node.text,true,true);}if(kind==='NumericLiteral'){return new Constant(node.text,false,true);}if(['TrueKeyword','FalseKeyword','NullKeyword'].includes(kind)){return new Constant(kind==='TrueKeyword'?'true':kind==='FalseKeyword'?'false':'null',false,true);}
+  if(kind==='BinaryExpression' && t.operator(at)==='PlusToken'){const left=this.constant(t.child(at,0),scope,seen);const right=this.constant(t.last(at),scope,seen);return left.valid && right.valid && (left.string || right.string)?new Constant(left.text+right.text,true,true):new Constant();}
+  if(kind==='TemplateExpression'){
+   let text=t.rules.parser.node(t.child(at,0)).text;
+   for(const child of node.children.slice(1)){if(t.kind(child)!=='TemplateSpan'){continue;}const value=this.constant(t.child(child,0),scope,seen);if(!value.valid){return new Constant();}text+=value.text+t.rules.parser.node(t.last(child)).text;}return new Constant(text,true,true);
+  }
+  return new Constant();
+ }
+ index(): void{
+  const t=this.tree;for(let at=0;at<t.rules.parser.nodes.length;at++){if(t.parent(at)<0 || t.kind(at)!=='Identifier' || !this.value(at)){continue;}const name=t.rules.parser.node(at).text;if(!this.references.has(name)){this.references.set(name,[]);}(this.references.get(name)??panic('missing reference index')).push(at);}
+ }
+ global(name: string): number[]{const clean: number[]=[];for(const at of this.references.get(name)??EMPTY){if(this.symbol(at).declarations.some((decl)=>!decl.declaration)){continue;}if(this.writes(at)){return EMPTY;}clean.push(at);}return clean;}
+ reads(key: string,refs: number[],regexp: boolean): void{if(this.following.has(key)){return;}this.following.add(key);for(const at of refs){this.follow(at,regexp);}this.following.delete(key);}
+ pass(index: number): boolean{const t=this.tree;const parent=t.parent(index);const kind=t.kind(parent);if(['ParenthesizedExpression','AsExpression','SatisfiesExpression','TypeAssertionExpression','NonNullExpression','ExpressionWithTypeArguments'].includes(kind)){return true;}if(kind==='ConditionalExpression'){return t.child(parent,2)===index || t.last(parent)===index;}if(kind==='BinaryExpression'){const op=t.operator(parent);return ['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(op) || op==='CommaToken' && t.last(parent)===index;}return false;}
+ follow(index: number,regexp: boolean): void{
+  const t=this.tree;let at=index;while(this.pass(at)){at=t.parent(at);}const parent=t.parent(at);const kind=t.kind(parent);if(parent<0){return;}
+  if(['PropertyAccessExpression','ElementAccessExpression'].includes(kind)){
+   if(regexp || t.child(parent,0)!==at){return;}const key=kind==='PropertyAccessExpression'?new Constant(t.rules.parser.node(t.last(parent)).text,true,true):this.constant(t.last(parent),false);if(key.valid && key.text==='RegExp'){this.follow(parent,true);}return;
+  }
+  if(['CallExpression','NewExpression'].includes(kind)){if(regexp && t.child(parent,0)===at){this.found.push(parent);}return;}
+  if(kind==='BinaryExpression'){if(t.last(parent)!==at || !['EqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'].includes(t.operator(parent))){return;}this.target(t.child(parent,0),regexp);this.follow(parent,regexp);return;}
+  if(['VariableDeclaration','Parameter','BindingElement','ShorthandPropertyAssignment'].includes(kind) && (kind==='ShorthandPropertyAssignment'?t.last(parent):t.initializer(parent))===at){this.target(t.name(parent),regexp);}
+ }
+ key(index: number): Constant{const t=this.tree;if(t.kind(index)==='ComputedPropertyName'){return this.constant(t.child(index,0),false);}if(['Identifier','StringLiteral','NumericLiteral'].includes(t.kind(index))){return new Constant(t.rules.parser.node(index).text,true,true);}return new Constant();}
+ property(name: number,value: number,regexp: boolean): void{if(regexp){return;}const key=this.key(name);if(key.valid && key.text==='RegExp'){this.target(value,true);}}
+ target(index: number,regexp: boolean): void{
+  const t=this.tree;const at=t.skip(index);const kind=t.kind(at);
+  if(kind==='Identifier'){const symbol=this.symbol(at);if(symbol.id===0){return;}const refs=(this.references.get(t.rules.parser.node(at).text)??EMPTY).filter((other)=>this.symbol(other).id===symbol.id);this.reads(`symbol:${symbol.id}`,refs,regexp);return;}
+  if(kind==='ObjectBindingPattern'){for(const element of t.rules.parser.node(at).children){if(t.kind(element)!=='BindingElement' || t.rules.parser.node(element).children.some((child)=>t.kind(child)==='DotDotDotToken')){continue;}const name=t.name(element);const first=t.child(element,0);this.property(first===name?name:first,name,regexp);}return;}
+  if(kind==='ObjectLiteralExpression'){for(const member of t.rules.parser.node(at).children){if(t.kind(member)==='PropertyAssignment'){this.property(t.name(member),t.last(member),regexp);}if(t.kind(member)==='ShorthandPropertyAssignment'){this.property(t.name(member),t.name(member),regexp);}}return;}
+  if(kind==='BinaryExpression' && t.operator(at)==='EqualsToken'){this.target(t.child(at,0),regexp);}
+ }
+ calls(): number[]{this.index();this.reads('global:RegExp',this.global('RegExp'),true);for(const name of ['global','globalThis','self','window']){this.reads(`global:${name}`,this.global(name),false);}return this.found;}
+}
+
+const EMPTY: number[]=[];

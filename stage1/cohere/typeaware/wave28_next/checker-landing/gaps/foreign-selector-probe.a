@@ -1,0 +1,5 @@
+import type { RuleContext } from '../../../../lint/context.ts';
+// A foreign declaration is not an index into the current file's parser.
+export function foreignAnswer(context: RuleContext, path: string, start: number, end: number, kind: string): void {
+    context.checker?.askOtherFile(path, start, end, kind, 'raw-type');
+}

@@ -1,0 +1,14 @@
+{
+  "name": "no-useless-backreference",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUselessBackreference",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUselessBackreference"
+}

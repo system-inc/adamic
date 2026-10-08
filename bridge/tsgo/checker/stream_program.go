@@ -20,7 +20,7 @@ func (p *Program) streamProgram(out *fields, node *ast.Node) (string, error) {
 	files := p.Compiler.GetSourceFiles()
 	out.number(uint64(len(files)))
 	for _, file := range files {
-		out.text(file.FileName())
+		out.text(file.FileName().AsString())
 		out.yes(file.IsDeclarationFile)
 		text := ""
 		if !file.IsDeclarationFile {
@@ -70,8 +70,8 @@ func (p *Program) streamProgram(out *fields, node *ast.Node) (string, error) {
 				value = record.specifier.Text()
 				resolved := p.Compiler.GetResolvedModuleFromModuleSpecifier(file, record.specifier)
 				if resolved != nil && resolved.IsResolved() {
-					if next := p.Compiler.GetSourceFileForResolvedModule(resolved.ResolvedFileName); next != nil {
-						target = next.FileName()
+					if next := p.Compiler.GetSourceFileForResolvedModule(resolved); next != nil {
+						target = next.FileName().AsString()
 					}
 				}
 			}

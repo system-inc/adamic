@@ -1,0 +1,113 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+export class Model {
+ readonly context: RuleContext;
+ readonly parser: RuleContext['parser']; readonly scanner: RuleContext['scanner']; readonly parents: readonly number[]; readonly path: string;
+ constructor(context: RuleContext) { this.context = context; this.parser = context.parser; this.scanner = context.scanner; this.parents = context.parents; this.path = context.checker?.path ?? ''; }
+ start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+ byte(position: number): number { return position; }
+ ask(index: number, question: string): string { const answer = this.context.checker?.ask(index, question); return answer?.value ?? panic('checker question refused'); }
+ skip(index: number): number { return this.context.unwrap(index); }
+}
+export class Tree {
+ readonly rules: Model; readonly bindings: Bindings; readonly symbols: Symbols;
+ constructor(context: RuleContext) {const model=new Model(context);const bindings=new Bindings(context);const symbols=new Symbols(model);this.rules=model;this.bindings=bindings;this.symbols=symbols;}
+ kind(index: number): string {return index<0?'':this.rules.parser.node(index).kind;}
+ parent(index: number): number {return this.rules.parents[index] ?? -1;}
+ child(index: number,position: number): number {return index<0?-1:this.rules.parser.node(index).children[position] ?? -1;}
+ last(index: number): number {if(index<0) {return -1;}const children=this.rules.parser.node(index).children;return children[children.length-1] ?? -1;}
+ name(index: number): number {if(index<0) {return -1;}if(['MethodDeclaration','GetAccessor','SetAccessor','PropertyDeclaration','PropertySignature','MethodSignature','PropertyAssignment'].includes(this.kind(index))) {return this.rules.parser.node(index).children.find((child)=>['Identifier','ComputedPropertyName','StringLiteral','NumericLiteral','PrivateIdentifier'].includes(this.kind(child))) ?? -1;}return this.bindings.name(index);}
+ body(index: number): number {if(this.kind(index)==='ArrowFunction') {return this.last(index);}return index<0?-1:this.rules.parser.node(index).children.find((child)=>this.kind(child)==='Block') ?? -1;}
+ up(index: number): number {let current=index;while(this.kind(this.parent(current))==='ParenthesizedExpression') {current=this.parent(current);}return current;}
+ args(index: number): number[] {const node=this.rules.parser.node(index);const empty: number[]=[];return node.list>0?node.children.slice(node.children.length-node.list):empty;}
+ operator(index: number): string {return this.kind(index)==='BinaryExpression'?this.kind(this.child(index,1)):this.rules.parser.node(index).operator;}
+ skip(index: number): number {return index<0?-1:this.rules.skip(index);}
+ initializer(index: number): number {return this.bindings.initializer(index);}
+ at(kind: string,start: number,end: number): number {return this.bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('declaration missing from tree');}
+}
+
+export class Bindings {
+ readonly context: RuleContext; readonly spans = new Map<string, number>();
+ constructor(context: RuleContext) { this.context = context; const offsets = context.checker?.offsets; if(offsets === undefined) { return; } for(let index=0;index<context.parser.nodes.length;index++) { const node=context.node(index); this.spans.set(`${node.kind}:${offsets[node.pos] ?? -1}:${offsets[node.end] ?? -1}`, index); } }
+ functionKind(kind: string): boolean { return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind); }
+    declaring(index: number): boolean {
+        const parentIndex = this.context.parent(index);
+        if(parentIndex < 0) {
+            return false;
+        }
+        const parent = this.context.parser.node(parentIndex);
+        if(parent.kind === 'BindingElement' && parent.children.length > 1 &&
+            parent.children[0] === index && this.name(parentIndex) !== index) {
+            return true;
+        }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement', 'FunctionDeclaration',
+            'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration',
+            'TypeAliasDeclaration', 'EnumDeclaration', 'EnumMember', 'ModuleDeclaration',
+            'TypeParameter', 'ImportClause', 'ImportEqualsDeclaration', 'NamespaceImport',
+            'PropertyDeclaration', 'PropertySignature', 'MethodDeclaration', 'MethodSignature',
+            'GetAccessor', 'SetAccessor'].includes(parent.kind)) {
+            return this.name(parentIndex) === index;
+        }
+        if(parent.kind === 'ImportSpecifier' || parent.kind === 'JsxAttribute') {
+            return true;
+        }
+        if(parent.kind === 'PropertyAccessExpression' || parent.kind === 'QualifiedName') {
+            return parent.children[parent.children.length - 1] === index;
+        }
+        if(parent.kind === 'PropertyAssignment') {
+            return parent.children[0] === index;
+        }
+        if(parent.kind === 'ExportSpecifier') {
+            let current = parentIndex;
+            while(current >= 0) {
+                const node = this.context.parser.node(current);
+                if(node.kind === 'ExportDeclaration') {
+                    if(node.children.some((child) => this.context.parser.node(child).kind === 'StringLiteral')) {
+                        return true;
+                    }
+                    break;
+                }
+                current = this.context.parent(current);
+            }
+            const names = parent.children.filter((child) => this.context.parser.node(child).kind === 'Identifier');
+            return names.length > 1 && names[0] !== index;
+        }
+        if(parent.kind === 'TypePredicate') {
+            return this.name(parentIndex) === index;
+        }
+        if(parent.kind === 'TypeQuery') {
+            let current = parentIndex;
+            while(current >= 0) {
+                const kind = this.context.parser.node(current).kind;
+                const name = this.name(current);
+                if(['Parameter', 'VariableDeclaration'].includes(kind) && name >= 0 &&
+                    this.context.parser.node(name).text === this.context.parser.node(index).text) {
+                    return true;
+                }
+                current = this.context.parent(current);
+            }
+        }
+        return false;
+    }
+ name(index: number): number { if(index<0) {return -1;} const node=this.context.node(index); if(node.kind==='BindingElement') {const initializer=this.initializer(index);const names=node.children.filter((child)=>child!==initializer && this.context.kind(child)!=='DotDotDotToken');return names[names.length-1] ?? -1;} if(['ImportSpecifier','NamespaceImport'].includes(node.kind)) {return node.children[node.children.length-1] ?? -1;} for(const child of node.children) {if(['Identifier','ThisKeyword','ArrayBindingPattern','ObjectBindingPattern'].includes(this.context.kind(child))) {return child;}} return -1; }
+ initializer(index: number): number { if(index<0) {return -1;} const node=this.context.node(index);const last=node.children[node.children.length-1] ?? -1;if(last<0) {return -1;} const child=this.context.node(last);this.context.scanner.pos=node.pos;let equals=-1;while(this.context.scanner.scan()!=='EndOfFile' && this.context.scanner.start<child.pos) {if(this.context.scanner.kind==='EqualsToken') {equals=this.context.scanner.start;}} return equals>=0 ? last : -1; }
+}
+export class Ancestor {
+    readonly kind: string; readonly pos: number; readonly end: number; readonly flags: number; readonly name: string; readonly augmentation: boolean;
+    constructor(frames: Frames) { this.kind=frames.field();this.pos=frames.natural();this.end=frames.natural();this.flags=frames.natural();this.name=frames.field();this.augmentation=frames.yes(); }
+}
+export class Declaration {
+    readonly path: string; readonly declarationFile: boolean; readonly library: boolean; readonly external: boolean; readonly ancestors: Ancestor[]=[];
+    constructor(frames: Frames) { this.path=frames.field();this.declarationFile=frames.yes();this.library=frames.yes();this.external=frames.yes();const count=frames.natural();for(let at=0;at<count;at++){this.ancestors.push(new Ancestor(frames));} }
+}
+export class SymbolFact {
+    readonly present: boolean; readonly id: number; readonly flags: number; readonly name: string; readonly declarations: Declaration[]=[];
+    constructor(frames: Frames) {this.present=frames.yes();this.id=this.present?frames.natural():0;this.flags=this.present?frames.natural():0;this.name=this.present?frames.field():'';const count=this.present?frames.natural():0;for(let at=0;at<count;at++){this.declarations.push(new Declaration(frames));} }
+}
+export class Symbols {
+    readonly rules: Model; readonly cache=new Map<number,SymbolFact[]>();
+    constructor(rules: Model){this.rules=rules;}
+    facts(index: number): SymbolFact[] {if(!this.cache.has(index)){const frames=new Frames(this.rules.ask(index,'stream-symbol'));header(frames,'stream-symbol');const own=new SymbolFact(frames);const alias=new SymbolFact(frames);frames.end();this.cache.set(index,[own,alias]);}return this.cache.get(index)??panic('missing symbol facts');}
+}

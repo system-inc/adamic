@@ -1,0 +1,5 @@
+{
+  "name": "Either if branch credited as exit",
+  "from": "this.exits(node.children[1] ?? -1) && this.exits(node.children[2] ?? -1)",
+  "to": "this.exits(node.children[1] ?? -1) || this.exits(node.children[2] ?? -1)"
+}

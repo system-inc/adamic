@@ -1,0 +1,85 @@
+// Compare every var declaration with every identifier's own checker symbol.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+export class Rule {
+    readonly rules: RuleContext;
+    constructor(rules: RuleContext) { this.rules = rules; }
+    symbol(index: number): number {
+        const answer = this.rules.checker?.ask(index, 'symbol-identities');
+        if(answer === undefined || answer.value === undefined) { return 0; }
+        const frames = new Frames(answer.value);
+        header(frames, 'symbol-identities');
+        const identity = frames.natural();
+        frames.natural(); frames.yes(); frames.natural(); frames.natural(); frames.end();
+        return identity;
+    }
+    bindingName(index: number): number {
+        const node = this.rules.node(index);
+        if(node.kind === 'BindingElement') {
+            const initializer = this.rules.initializer(index);
+            const children = node.children.filter((child) => child !== initializer && this.rules.kind(child) !== 'DotDotDotToken');
+            return children[children.length - 1] ?? -1;
+        }
+        return node.children.find((child) => ['Identifier', 'ThisKeyword', 'ArrayBindingPattern', 'ObjectBindingPattern'].includes(this.rules.kind(child))) ?? -1;
+    }
+    names(index: number, into: number[]): void {
+        if(index < 0) { return; }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') { into.push(index); }
+        else if(['ArrayBindingPattern', 'ObjectBindingPattern'].includes(node.kind)) {
+            for(const child of node.children) {
+                if(this.rules.parser.node(child).kind === 'BindingElement') { this.names(this.bindingName(child), into); }
+            }
+        }
+    }
+    container(index: number): number {
+        let parent = this.rules.parents[index] ?? -1;
+        while(parent >= 0) {
+            if(['Block', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'SwitchStatement',
+                'CatchClause', 'ClassStaticBlockDeclaration', 'SourceFile'].includes(this.rules.parser.node(parent).kind)) { return parent; }
+            parent = this.rules.parents[parent] ?? -1;
+        }
+        return -1;
+    }
+    readonly declarations: number[] = [];
+    readonly identifiers: number[] = [];
+    visit(node: ParseNode, index: number): void {
+        if(node.kind === 'Identifier') { this.identifiers.push(index); return; }
+        const parent = this.rules.parent(index);
+        if(parent >= 0 && this.rules.kind(parent) === 'VariableDeclarationList' && this.rules.node(parent).semantic === '0') { this.names(this.bindingName(index), this.declarations); }
+    }
+    finish(root: number): void {
+        const declarations = this.declarations;
+        const identifiers = this.identifiers;
+        if(declarations.length === 0) { return; }
+        const symbols = new Map<number, number>();
+        for(const identifier of identifiers) { symbols.set(identifier, this.symbol(identifier)); }
+        for(const declaration of declarations) {
+            const symbol = symbols.get(declaration) ?? 0;
+            const container = this.container(declaration);
+            if(symbol === 0 || container < 0) { continue; }
+            const bounds = this.rules.parser.node(container);
+            const name = this.rules.parser.node(declaration);
+            const start = this.rules.start(declaration);
+            let line = 1; let column = 1;
+            const source = this.rules.scanner.text;
+            for(let at = 0; at < start; at++) {
+                const code = source.charCodeAt(at);
+                if(code === 13) { line++; column = 1; if(source.charCodeAt(at + 1) === 10 && at + 1 < start) { at++; } }
+                else if(code === 10 || code === 8232 || code === 8233) { line++; column = 1; }
+                else { column++; }
+            }
+            for(const identifier of identifiers) {
+                if(symbols.get(identifier) !== symbol) { continue; }
+                const use = this.rules.parser.node(identifier);
+                if(use.pos >= bounds.pos && use.end <= bounds.end) { continue; }
+                this.rules.reportNode(identifier, 'block-scoped-var', 'outOfScope',
+                    `\`${use.text}\` is declared with \`var\` inside a block on line ${line} column ${column}, and used here, outside it. That works because \`var\` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with \`let\` in the scope that actually needs it, or move the declaration out to where it is used.`);
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

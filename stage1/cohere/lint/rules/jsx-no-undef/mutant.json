@@ -1,0 +1,5 @@
+{
+  "name": "Unicode component mistaken for intrinsic",
+  "from": "first >= 97 && first <= 122",
+  "to": "first >= 97"
+}

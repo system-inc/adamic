@@ -1,0 +1,174 @@
+// Production structural exit analysis, including platform property descriptors.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+
+export class Rule {
+    readonly rules: RuleContext;
+    constructor(rules: RuleContext) { this.rules = rules; }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    up(index: number): number {
+        let current = index;
+        while(this.kind(current) === 'ParenthesizedExpression') { current = this.parent(current); }
+        return current;
+    }
+    key(index: number): string {
+        if(index < 0) { return ''; }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ComputedPropertyName') {
+            const child = this.rules.unwrap(node.children[0] ?? -1);
+            return ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(child)) ? this.rules.parser.node(child).text : '';
+        }
+        return ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind) ? node.text : '';
+    }
+    getter(index: number): boolean {
+        if(this.kind(index) === 'GetAccessor') { return true; }
+        const parent = this.parent(index);
+        let holder = -1; let key = -1;
+        if(this.kind(parent) === 'PropertyAssignment') {
+            key = this.rules.parser.node(parent).children[0] ?? -1; holder = this.parent(parent);
+        } else if(this.kind(index) === 'MethodDeclaration' && this.kind(parent) === 'ObjectLiteralExpression') {
+            key = this.rules.parser.node(index).children.find((child) => !this.kind(child).endsWith('Keyword') && this.kind(child) !== 'Decorator') ?? -1;
+            holder = parent;
+        }
+        if(this.key(key) !== 'get' || this.kind(holder) !== 'ObjectLiteralExpression') { return false; }
+        let argument = holder; let nested = false;
+        if(this.kind(this.parent(holder)) === 'PropertyAssignment') {
+            argument = this.parent(this.parent(holder)); nested = true;
+            if(this.kind(argument) !== 'ObjectLiteralExpression') { return false; }
+        }
+        const callIndex = this.up(this.parent(argument));
+        if(this.kind(callIndex) !== 'CallExpression') { return false; }
+        const call = this.rules.parser.node(callIndex);
+        const callee = this.rules.parser.node(this.rules.unwrap(call.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) { return false; }
+        const receiver = this.rules.unwrap(callee.children[0] ?? -1);
+        if(this.kind(receiver) !== 'Identifier') { return false; }
+        const object = this.rules.parser.node(receiver).text;
+        let member = '';
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        if(callee.kind === 'PropertyAccessExpression') { member = this.key(name); }
+        else {
+            const literal = this.rules.unwrap(name);
+            if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(literal))) { member = this.rules.parser.node(literal).text; }
+        }
+        if(nested ? object !== 'Object' || !['defineProperties', 'create'].includes(member) :
+            !['Object', 'Reflect'].includes(object) || member !== 'defineProperty') { return false; }
+        if(call.list <= 0) { return false; }
+        const args = call.children.slice(call.children.length - call.list);
+        const wanted = args[nested ? 1 : 2] ?? -1;
+        if(wanted < 0 || this.rules.unwrap(wanted) !== argument) { return false; }
+        return this.global(receiver);
+    }
+    global(index: number): boolean {
+        const answer = this.rules.checker?.ask(index, 'node-symbol-details');
+        if(answer === undefined || answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value);
+        header(frames, 'node-symbol-details');
+        let global = false;
+        if(frames.yes()) {
+            frames.natural(); frames.natural(); frames.field();
+            const count = frames.natural(); global = count > 0;
+            for(let at = 0; at < count; at++) {
+                frames.field(); frames.field(); frames.natural(); frames.natural();
+                const declarationFile = frames.yes();
+                if(!declarationFile) { global = false; }
+                frames.yes(); frames.field(); frames.field(); frames.natural(); frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) {
+                    frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field();
+                }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+            }
+        }
+        frames.end(); return global;
+    }
+    exits(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.rules.parser.node(index);
+        if(['ReturnStatement', 'ThrowStatement'].includes(node.kind)) { return true; }
+        if(node.kind === 'Block') { return node.children.some((child) => this.exits(child)); }
+        if(node.kind === 'IfStatement') { return this.exits(node.children[1] ?? -1) && this.exits(node.children[2] ?? -1); }
+        if(node.kind === 'LabeledStatement' || node.kind === 'WithStatement') { return this.exits(node.children[node.children.length - 1] ?? -1); }
+        if(node.kind === 'TryStatement') {
+            const attempt = node.children[0] ?? -1;
+            const catcher = node.children.find((child) => this.kind(child) === 'CatchClause') ?? -1;
+            const final = node.children.find((child) => child !== attempt && this.kind(child) === 'Block') ?? -1;
+            if(this.exits(final)) { return true; }
+            if(!this.exits(attempt)) { return false; }
+            return catcher < 0 || this.exits(this.rules.parser.node(catcher).children.find((child) => this.kind(child) === 'Block') ?? -1);
+        }
+        if(node.kind === 'SwitchStatement') {
+            const caseBlock = node.children.find((child) => this.kind(child) === 'CaseBlock') ?? -1;
+            if(caseBlock < 0) { return false; }
+            const clauses = this.rules.parser.node(caseBlock).children;
+            if(!clauses.some((child) => this.kind(child) === 'DefaultClause')) { return false; }
+            for(let at = 0; at < clauses.length; at++) {
+                const clause = this.rules.parser.node(clauses[at] ?? -1);
+                const statements = clause.kind === 'CaseClause' ? clause.children.slice(1) : clause.children;
+                if(statements.length === 0) { if(at === clauses.length - 1) { return false; } continue; }
+                if(!statements.some((child) => this.exits(child))) { return false; }
+            }
+            return true;
+        }
+        return false;
+    }
+    returns(index: number): boolean {
+        if(this.functionKind(this.kind(index))) { return false; }
+        const node = this.rules.parser.node(index);
+        return node.kind === 'ReturnStatement' || node.children.some((child) => this.returns(child));
+    }
+    head(index: number, body: number, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        const owner = this.kind(this.parent(index)) === 'PropertyAssignment' ? this.parent(index) : index;
+        const start = this.rules.start(owner);
+        const parameters = node.children.filter((child) => this.kind(child) === 'Parameter');
+        let end = -1;
+        if(parameters.length > 0) {
+            const pos = this.rules.parser.node(parameters[0] ?? -1).pos;
+            if(this.rules.scanner.text.slice(pos - 1, pos) === '(') { end = pos - 1; }
+            else { end = this.rules.start(parameters[0] ?? -1); }
+        } else {
+            // Skip property names and generic parameter nodes before scanning the list.
+            let after = this.rules.start(index);
+            for(const child of node.children) {
+                if(child === body || ['Block', 'Parameter'].includes(this.kind(child))) { break; }
+                if(['Identifier', 'ComputedPropertyName', 'StringLiteral', 'NumericLiteral', 'PrivateIdentifier', 'TypeParameter', 'Decorator'].includes(this.kind(child))) {
+                    after = this.rules.parser.node(child).end;
+                }
+            }
+            const scanner = new Scanner(this.rules.scanner.text); scanner.pos = after;
+            while(scanner.pos <= this.rules.parser.node(body).pos) {
+                scanner.scan();
+                if(scanner.kind === 'OpenParenToken') { end = scanner.start; break; }
+                if(scanner.kind === 'EndOfFileToken' || scanner.kind === 'OpenBraceToken') { break; }
+            }
+        }
+        if(end < start) { panic('getter parameter list absent from Adamic tree'); }
+        this.rules.reportRange(start, end, 'getter-return', id, message);
+    }
+    functionKind(kind: string): boolean { return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(kind); }
+    visit(node: ParseNode, index: number): void {
+            if(node.kind === 'ReturnStatement' && node.children.length === 0 && this.rules.settings.read('allowimplicit', 'false') !== 'true') {
+                let owner = this.parent(index);
+                while(owner >= 0 && !this.functionKind(this.kind(owner))) { owner = this.parent(owner); }
+                if(owner >= 0 && this.getter(owner) && this.rules.parser.node(owner).children.some((child) => this.kind(child) === 'Block')) {
+                    this.rules.reportNode(index, 'getter-return', 'expected', 'This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.');
+                }
+            }
+            if(!['GetAccessor', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(node.kind)) { return; }
+            const body = node.children.find((child) => this.kind(child) === 'Block') ?? -1;
+            if(body < 0 || !this.getter(index) || this.exits(body)) { return; }
+            if(this.returns(body)) {
+                this.head(index, body, 'expectedAlways', 'This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.');
+            } else {
+                this.head(index, body, 'expected', 'This getter never returns a value, so reading the property yields undefined. Return the value it stands for.');
+            }
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

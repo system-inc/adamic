@@ -1,0 +1,5 @@
+{
+  "name": "Conditional error possibility changed from or to and",
+  "from": "this.could(node.children[2] ?? -1) || this.could(node.children[node.children.length - 1] ?? -1)",
+  "to": "this.could(node.children[2] ?? -1) && this.could(node.children[node.children.length - 1] ?? -1)"
+}

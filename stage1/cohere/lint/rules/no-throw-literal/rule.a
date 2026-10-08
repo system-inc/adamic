@@ -1,0 +1,36 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ could(index: number): boolean {
+  const node = this.context.node(index);
+  if(['Identifier','CallExpression','NewExpression','PropertyAccessExpression','ElementAccessExpression','TaggedTemplateExpression','YieldExpression','AwaitExpression'].includes(node.kind)) { return true; }
+  if(node.kind === 'BinaryExpression') {
+   const operator = this.context.kind(node.children[1] ?? -1);
+   if(['EqualsToken','AmpersandAmpersandEqualsToken','AmpersandAmpersandToken','CommaToken'].includes(operator)) { return this.could(node.children[2] ?? -1); }
+   if(['BarBarEqualsToken','QuestionQuestionEqualsToken','BarBarToken','QuestionQuestionToken'].includes(operator)) { return this.could(node.children[0] ?? -1) || this.could(node.children[2] ?? -1); }
+  }
+  if(node.kind === 'ConditionalExpression') { return this.could(node.children[2] ?? -1) || this.could(node.children[node.children.length - 1] ?? -1); }
+  return false;
+ }
+ visit(node: ParseNode, index: number): void {
+  const argument = node.children[0] ?? -1;
+  if(argument < 0) { return; }
+  let id = '';
+  if(!this.could(argument)) { id = 'object'; }
+  else if(this.context.kind(argument) === 'Identifier' && this.context.node(argument).text === 'undefined') {
+   const answer = this.context.checker?.ask(argument, 'reference-symbol');
+   if(answer === undefined || answer.value === undefined) { return; }
+   const frames = new Frames(answer.value); header(frames, 'reference-symbol');
+   frames.natural(); const count = frames.natural(); let shadowed = false;
+   for(let at = 0; at < count; at++) { frames.field(); if(!frames.yes()) { shadowed = true; } frames.field(); frames.natural(); frames.natural(); }
+   frames.end(); if(!shadowed) { id = 'undef'; }
+  }
+  if(id !== '') { this.context.reportNode(index, 'no-throw-literal', id, id === 'undef' ? UNDEF : OBJECT); }
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
+const OBJECT='This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.';
+const UNDEF='This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.';

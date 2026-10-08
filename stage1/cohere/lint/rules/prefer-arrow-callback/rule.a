@@ -1,0 +1,76 @@
+import { Tree } from './tree.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SuggestionEdit as Repair } from '../../suggestions.a';
+class Frame {usesThis=false;usesSuper=false;usesNewTarget=false;usesArguments=false;}
+class Callback {callback=false;lexical=false;member=-1;call=-1;}
+export class Rule {
+ readonly tree: Tree;readonly allowNamed: boolean;readonly allowUnbound: boolean;
+ constructor(context: RuleContext){this.tree=new Tree(context);this.allowNamed=context.settings.read('allownamedfunctions','false')==='true';this.allowUnbound=context.settings.read('allowunboundthis','true')==='true';}
+ declaring(index: number): boolean{const t=this.tree;const parent=t.parent(index);return ['VariableDeclaration','Parameter','FunctionDeclaration','FunctionExpression','ClassDeclaration','BindingElement'].includes(t.kind(parent)) && t.name(parent)===index;}
+ collect(index: number,owner: Frame|undefined): void{
+  const t=this.tree;const node=t.rules.parser.node(index);const kind=node.kind;
+  if(owner!==undefined){if(kind==='ThisKeyword'){owner.usesThis=true;}if(kind==='SuperKeyword'){owner.usesSuper=true;}if(kind==='MetaProperty' && node.operator==='NewKeyword'){owner.usesNewTarget=true;}
+   if(kind==='Identifier' && node.text==='arguments' && !this.declaring(index)){const symbol=t.symbols.facts(index)[0];if(symbol===undefined || symbol.declarations.length===0){owner.usesArguments=true;}}
+  }
+  const opens=['FunctionDeclaration','FunctionExpression','MethodDeclaration','GetAccessor','SetAccessor','Constructor','ClassStaticBlockDeclaration'].includes(kind);const frame=opens?new Frame():owner;
+  for(const child of node.children){this.collect(child,frame);}
+ }
+ self(index: number): boolean{
+  const t=this.tree;const name=t.name(index);if(name<0){return false;}const symbol=t.symbols.facts(name)[0];if(symbol===undefined){return false;}
+  return this.selfVisit(index,name,symbol.id,t.rules.parser.node(name).text);
+ }
+ selfVisit(index: number,name: number,id: number,text: string): boolean{const t=this.tree;const node=t.rules.parser.node(index);return index!==name && node.kind==='Identifier' && node.text===text && t.symbols.facts(index)[0]?.id===id || node.children.some((child)=>this.selfVisit(child,name,id,text));}
+ info(index: number): Callback{
+  const t=this.tree;const info=new Callback();let current=index;let bound=false;
+  while(current>=0){const parent=t.parent(current);const kind=t.kind(parent);
+   if(['ConditionalExpression','ParenthesizedExpression'].includes(kind)){current=parent;continue;}
+   if(kind==='BinaryExpression'){if(!['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(t.operator(parent))){return info;}current=parent;continue;}
+   if(kind==='PropertyAccessExpression'){
+    if(t.child(parent,0)!==current || t.kind(t.last(parent))!=='Identifier' || t.rules.parser.node(t.last(parent)).text!=='bind'){return info;}
+    const callee=t.up(parent);const call=t.parent(callee);if(t.kind(call)!=='CallExpression' || t.child(call,0)!==callee){return info;}
+    if(!bound){bound=true;const args=t.args(call);info.lexical=args.length===1 && t.kind(args[0]??-1)==='ThisKeyword';info.member=parent;info.call=call;}current=call;continue;
+   }
+   if(['CallExpression','NewExpression'].includes(kind)){info.callback=t.child(parent,0)!==current;}return info;
+  }
+  return info;
+ }
+ judge(index: number,frame: Frame): void{
+  const t=this.tree;const node=t.rules.parser.node(index);
+  if(this.allowNamed && t.name(index)>=0 || node.children.some((child)=>t.kind(child)==='AsteriskToken') || this.self(index) || frame.usesArguments){return;}
+  const callback=this.info(index);if(!callback.callback || this.allowUnbound && frame.usesThis && !callback.lexical || frame.usesSuper || frame.usesNewTarget){return;}
+  const fixes=this.fix(index,frame,callback);t.rules.context.reportNode(index,'prefer-arrow-callback','preferArrowCallback',MESSAGE,fixes);
+ }
+ comment(text: string,start: number,end: number): boolean{
+  if(start<0 || end>text.length || start>=end){return false;}
+  for(let at=start;at<end-1;at++){const char=text[at]??'';if(["'",'"','`'].includes(char)){at++;while(at<end && text[at]!==char){if(text[at]==='\\'){at++;}at++;}}else if(char==='/' && ['/', '*'].includes(text[at+1]??'')){return true;}}
+  return false;
+ }
+ parenthesized(index: number): boolean{
+  const t=this.tree;if(t.kind(t.parent(index))==='ParenthesizedExpression'){return true;}const node=t.rules.parser.node(index);const text=t.rules.parser.scanner.text;let before=node.pos-1;while(before>=0 && [' ','\t','\n','\r'].includes(text[before]??'')){before--;}let after=node.end;while(after<text.length && [' ','\t','\n','\r'].includes(text[after]??'')){after++;}return before>=0 && after<text.length && text[before]==='(' && text[after]===')';
+ }
+ fix(index: number,frame: Frame,callback: Callback): Repair[]{
+  const t=this.tree;const node=t.rules.parser.node(index);const empty: Repair[]=[];if(!callback.lexical && frame.usesThis){return empty;}
+  const parameters=node.children.filter((child)=>t.kind(child)==='Parameter');const seen=new Set<string>();
+  for(const parameter of parameters){const name=t.name(parameter);if(t.kind(name)!=='Identifier'){break;}const text=t.rules.parser.node(name).text;if(seen.has(text)){return empty;}seen.add(text);}
+  const first=t.name(parameters[0]??-1);if(t.kind(first)==='Identifier' && t.rules.parser.node(first).text==='this'){return empty;}
+  const text=t.rules.parser.scanner.text;const body=t.body(index);if(body<0){return empty;}const bodyPos=t.rules.parser.node(body).pos;
+  let keyword=-1;for(let at=node.pos;at+8<=node.end && at+8<=text.length;at++){if(text.slice(at,at+8)==='function'){keyword=at;break;}}
+  let paren=-1;for(let at=node.pos;at<Math.min(bodyPos,text.length);at++){if(text[at]==='('){paren=at;break;}}
+  if(keyword<0 || paren<keyword+8){return empty;}
+  if(node.children.some((child)=>t.kind(child)==='AsyncKeyword') && text.slice(keyword+8,paren).includes('\n')){return empty;}
+  const fixes: Repair[]=[];
+  if(callback.lexical){if(t.parent(index)!==callback.member || t.parent(callback.member)!==callback.call){return empty;}const start=node.end;const end=t.rules.parser.node(callback.call).end;if(end<=start || this.comment(text,start,end)){return empty;}fixes.push(new Repair(t.rules.byte(start),t.rules.byte(end),''));}
+  if(this.comment(text,keyword+8,paren)){fixes.push(new Repair(t.rules.byte(keyword),t.rules.byte(keyword+8),''));const name=t.name(index);if(name>=0){const named=t.rules.parser.node(name);fixes.push(new Repair(t.rules.byte(t.rules.start(named)),t.rules.byte(named.end),''));}}
+  else{fixes.push(new Repair(t.rules.byte(keyword),t.rules.byte(paren),''));}
+  let insertion=bodyPos;while(insertion>0 && [' ','\t','\n','\r'].includes(text[insertion-1]??'')){insertion--;}
+  fixes.push(new Repair(t.rules.byte(insertion),t.rules.byte(insertion),' =>'));
+  const replaced=callback.lexical?callback.call:index;const parent=t.parent(replaced);
+  if(parent>=0 && !['CallExpression','NewExpression','ConditionalExpression'].includes(t.kind(parent)) && !this.parenthesized(replaced) && !this.parenthesized(index)){const replacement=t.rules.parser.node(replaced);fixes.push(new Repair(t.rules.byte(t.rules.start(replacement)),t.rules.byte(t.rules.start(replacement)),'('));fixes.push(new Repair(t.rules.byte(replacement.end),t.rules.byte(replacement.end),')'));}
+  return fixes;
+ }
+ visit(node: ParseNode,index: number): void { const frame=new Frame(); for(const child of node.children) {this.collect(child,frame);} this.judge(index,frame); }
+}
+const MESSAGE='An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.';
+
+export function create(context: RuleContext): Rule {return new Rule(context);}

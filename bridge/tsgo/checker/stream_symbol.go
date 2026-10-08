@@ -39,9 +39,9 @@ func (p *Program) streamSymbol(out *fields, c *checker.Checker, node *ast.Node, 
 			if file == nil {
 				return "", fmt.Errorf("stream declaration has no source")
 			}
-			out.text(file.FileName())
+			out.text(file.FileName().AsString())
 			out.yes(file.IsDeclarationFile)
-			out.yes(p.Compiler.IsSourceFileDefaultLibrary(file.Path()))
+			out.yes(p.Compiler.IsSourceFileDefaultLibrary(file.PathKey()))
 			out.yes(ast.IsExternalModule(file))
 			var ancestors []*ast.Node
 			for at := decl; at != nil; at = at.Parent {

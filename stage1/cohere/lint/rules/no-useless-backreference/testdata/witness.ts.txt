@@ -1,0 +1,2 @@
+const pattern = /(a)|\1/;
+const octal = /\2(a)/;

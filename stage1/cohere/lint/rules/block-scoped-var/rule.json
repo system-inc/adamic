@@ -1,0 +1,16 @@
+{
+  "name": "block-scoped-var",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "Identifier",
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleBlockScopedVar",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestBlockScopedVar",
+  "finish": "finish"
+}

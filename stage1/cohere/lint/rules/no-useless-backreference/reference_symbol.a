@@ -1,0 +1,10 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { Tree } from './tree.a';
+export class Origin {
+ readonly path: string;readonly declaration: boolean;readonly kind: string;readonly pos: number;readonly end: number;
+ constructor(frames: Frames){this.path=frames.field();this.declaration=frames.yes();this.kind=frames.field();this.pos=frames.natural();this.end=frames.natural();}
+}
+export class ReferenceSymbol {
+ readonly id: number;readonly declarations: Origin[]=[];
+ constructor(tree: Tree,index: number){const frames=new Frames(tree.rules.ask(index,'reference-symbol'));header(frames,'reference-symbol');this.id=frames.natural();const count=frames.natural();for(let at=0;at<count;at++){this.declarations.push(new Origin(frames));}frames.end();}
+}

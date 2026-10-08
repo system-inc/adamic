@@ -1,0 +1,18 @@
+{
+  "name": "getter-return",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "ReturnStatement",
+    "GetAccessor",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleGetterReturn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestGetterReturn"
+}

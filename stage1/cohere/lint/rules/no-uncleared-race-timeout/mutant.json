@@ -1,0 +1,5 @@
+{
+  "name": "Timeout assignment recognition reversed",
+  "from": "node.children[0]===outer",
+  "to": "node.children[0]!==outer"
+}

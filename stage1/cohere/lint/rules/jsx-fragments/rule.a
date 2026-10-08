@@ -1,0 +1,144 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+const shorthandMessage = "Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.";
+const namedMessage = "Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.";
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly element: boolean;
+    readonly declarations = new Map<string, number>();
+    constructor(context: RuleContext, element = false) {
+        this.context = context;
+        this.element = context.settings.read('mode', context.settings.read('option', 'Syntax')).toLowerCase() === 'element';
+        const checker = context.checker;
+        if(checker === undefined) { return; }
+        for(let index = 0; index < context.parser.nodes.length; index++) {
+            const node = context.parser.nodes[index] ?? panic('missing node');
+            this.declarations.set(`${node.kind}:${checker.offsets[node.pos] ?? panic('missing checker offset')}:${checker.offsets[node.end] ?? panic('missing checker offset')}`, index);
+        }
+    }
+    child(index: number, position: number): number {
+        return this.context.parser.node(index).children[position] ?? -1;
+    }
+    node(index: number): ParseNode {
+        return this.context.parser.node(index);
+    }
+    parent(index: number): number {
+        return this.context.parents[index] ?? -1;
+    }
+    source(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.node(index);
+        switch(node.kind) {
+            case 'Identifier':
+                return node.text === 'React';
+            case 'PropertyAccessExpression': {
+                const receiver = this.node(this.child(index, 0));
+                const member = this.node(this.child(index, 1));
+                return receiver.kind === 'Identifier' && receiver.text === 'React' && member.kind === 'Identifier' && member.text === 'Fragment';
+            }
+            case 'CallExpression': {
+                const callee = this.node(this.child(index, 0));
+                if(callee.kind !== 'Identifier' || callee.text !== 'require' || node.list <= 0) { return false; }
+                const argument = this.node(node.children[node.children.length - node.list] ?? panic('missing argument'));
+                return (argument.kind === 'StringLiteral' || argument.kind === 'NoSubstitutionTemplateLiteral') && argument.text === 'react';
+            }
+            default:
+                return false;
+        }
+    }
+    initializer(index: number): number {
+        const node = this.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        if(last < 0) { return -1; }
+        const source = this.context.scanner.text;
+        const child = this.node(last);
+        // Check the scanner token before the last child, including trivia around the equals sign.
+        this.context.scanner.pos = node.pos;
+        let equals = -1;
+        while(this.context.scanner.scan() !== 'EndOfFile' && this.context.scanner.start < child.pos) {
+            if(this.context.scanner.kind === 'EqualsToken') { equals = this.context.scanner.start; }
+        }
+        return equals >= 0 && source.slice(equals, equals + 1) === '=' ? last : -1;
+    }
+    declaration(index: number): boolean {
+        const node = this.node(index);
+        switch(node.kind) {
+            case 'VariableDeclaration':
+                return this.source(this.initializer(index));
+            case 'BindingElement': {
+                const pattern = this.parent(index);
+                const variable = this.parent(pattern);
+                return pattern >= 0 && variable >= 0 && this.node(pattern).kind === 'ObjectBindingPattern' && this.node(variable).kind === 'VariableDeclaration' && this.source(this.initializer(variable));
+            }
+            case 'ImportSpecifier': {
+                const imported = this.node(this.child(index, 0));
+                if(imported.kind !== 'Identifier' || imported.text !== 'Fragment') { return false; }
+                const named = this.parent(index);
+                const clause = this.parent(named);
+                const declaration = this.parent(clause);
+                if(named < 0 || clause < 0 || declaration < 0 || this.node(named).kind !== 'NamedImports' || this.node(clause).kind !== 'ImportClause' || this.node(declaration).kind !== 'ImportDeclaration') { return false; }
+                const children = this.node(declaration).children;
+                for(const child of children) {
+                    const module = this.node(child);
+                    if(module.kind === 'StringLiteral' || module.kind === 'NoSubstitutionTemplateLiteral') { return module.text === 'react'; }
+                }
+                return false;
+            }
+            default:
+                return false;
+        }
+    }
+    fragment(index: number): boolean {
+        const node = this.node(index);
+        if(node.kind === 'PropertyAccessExpression') { return this.source(index); }
+        if(node.kind !== 'Identifier') { return false; }
+        const context = this.context;
+        const checker = context.checker;
+        if(checker === undefined) { return false; }
+        const answer = checker.ask(index, 'reference-symbol');
+        if(answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value);
+        header(frames, 'reference-symbol');
+        const symbol = frames.natural();
+        const count = frames.natural();
+        let result = false;
+        for(let at = 0; at < count; at++) {
+            const path = frames.field();
+            frames.yes();
+            const kind = frames.field();
+            const pos = frames.natural();
+            const end = frames.natural();
+            if(path === checker.path) {
+                const declaration = this.declarations.get(`${kind}:${pos}:${end}`) ?? -1;
+                if(declaration >= 0 && this.declaration(declaration)) { result = true; }
+            }
+        }
+        frames.end();
+        return symbol !== 0 && result;
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        let opening = node;
+        const first = node.children[0] ?? -1;
+        if(first < 0) { return; }
+        const child = this.node(first);
+        // Inspect the supplied node's structure; relevance was selected by the driver's listener table.
+        if(child.kind === 'JsxOpeningFragment') {
+            if(this.element) {
+                context.reportNode(index, 'react/jsx-fragments', 'preferPragma', namedMessage);
+            }
+            return;
+        }
+        if(this.element) { return; }
+        if(child.kind === 'JsxOpeningElement') { opening = child; }
+        const tag = opening.children[0] ?? -1;
+        const attributes = opening.children.find((child) => this.node(child).kind === 'JsxAttributes') ?? -1;
+        if(tag < 0 || attributes >= 0 && this.node(attributes).children.length > 0 || !this.fragment(tag)) { return; }
+        context.reportNode(index, 'react/jsx-fragments', 'preferFragment', shorthandMessage);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

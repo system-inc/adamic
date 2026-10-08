@@ -1,0 +1,6 @@
+{
+  "name": "Capturing group duplicated",
+  "file": "regex_structure.a",
+  "from": "this.groups.push(new Group(name,index,this.stack.slice()));",
+  "to": "this.groups.push(new Group(name,index,this.stack.slice())); this.groups.push(new Group(name,index,this.stack.slice()));"
+}

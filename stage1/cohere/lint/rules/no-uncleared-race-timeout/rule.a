@@ -1,0 +1,104 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Model, Bindings, Symbols, SymbolFact } from './tree.a';
+export class Rule {
+    readonly rules: Model;readonly symbols: Symbols;readonly bindings: Bindings;readonly shape: Bindings;
+    constructor(context: RuleContext){const model=new Model(context);const symbols=new Symbols(model);const bindings=new Bindings(context);this.rules=model;this.symbols=symbols;this.bindings=bindings;this.shape=bindings;}
+    skip(index: number): number{return index<0?-1:this.rules.skip(index);}
+    kind(index: number): string{return index<0?'':this.rules.parser.node(index).kind;}
+    parent(index: number): number{return this.rules.parents[index]??-1;}
+    up(index: number): number{let at=index;while(this.kind(this.parent(at))==='ParenthesizedExpression'){at=this.parent(at);}return at;}
+    own(index: number): SymbolFact|undefined{return this.symbols.facts(index)[0];}
+    args(index: number): number[]{const node=this.rules.parser.node(index);const empty: number[]=[];return node.list>0?node.children.slice(node.children.length-node.list):empty;}
+    library(index: number, owner: string): boolean{const symbol=this.own(index);return symbol!==undefined && symbol.declarations.length>0 && symbol.declarations.every((decl)=>decl.library && decl.ancestors[1]?.kind==='InterfaceDeclaration' && decl.ancestors[1]?.name===owner);}
+    promise(index: number): number{
+        let at=this.skip(index);
+        if(this.kind(at)==='Identifier'){
+            const symbol=this.own(at);if(symbol===undefined || symbol.declarations.length!==1){return -1;}
+            const decl=symbol.declarations[0]??panic('missing symbol declaration');const loc=decl.ancestors[0];
+            if(decl.path!==this.rules.path || loc?.kind!=='VariableDeclaration'){return -1;}
+            const binding=this.bindings.spans.get(`${loc.kind}:${loc.pos}:${loc.end}`)??-1;
+            const list=this.parent(binding);if(binding<0 || this.kind(list)!=='VariableDeclarationList' || this.rules.parser.node(list).semantic!=='2'){return -1;}
+            at=this.skip(this.rules.parser.node(binding).children[this.rules.parser.node(binding).children.length-1]??-1);
+        }
+        if(this.kind(at)!=='NewExpression'){return -1;}
+        const constructor=this.skip(this.rules.parser.node(at).children[0]??-1);
+        if(this.kind(constructor)!=='Identifier' || this.rules.parser.node(constructor).text!=='Promise'){return -1;}
+        const symbol=this.own(constructor);return symbol!==undefined && symbol.declarations.some((decl)=>decl.library)?at:-1;
+    }
+    timer(index: number): boolean{
+        const callee=this.skip(this.rules.parser.node(index).children[0]??-1);let name=callee;
+        if(this.kind(callee)==='PropertyAccessExpression'){
+            const node=this.rules.parser.node(callee);const receiver=this.skip(node.children[0]??-1);
+            if(this.kind(receiver)!=='Identifier' || !['globalThis','window'].includes(this.rules.parser.node(receiver).text)){return false;}
+            name=node.children[node.children.length-1]??-1;
+        }else if(this.kind(callee)!=='Identifier'){return false;}
+        if(this.kind(name)!=='Identifier' || this.rules.parser.node(name).text!=='setTimeout'){return false;}
+        const symbol=this.own(name);if(symbol===undefined || symbol.declarations.length===0){return false;}
+        return symbol.declarations.every((decl)=>{
+            if(!decl.declarationFile){return false;}
+            const container=decl.ancestors[1];
+            return container?.kind==='SourceFile'?!decl.external:container?.kind==='ModuleBlock'?decl.ancestors[2]?.augmentation===true:
+                container?.kind==='InterfaceDeclaration' && container.name==='WindowOrWorkerGlobalScope' && decl.library;
+        });
+    }
+    target(index: number): boolean{const outer=this.up(index);const parent=this.parent(outer);if(this.kind(parent)!=='BinaryExpression'){return false;}const node=this.rules.parser.node(parent);return this.kind(node.children[1]??-1)==='EqualsToken' && node.children[0]===outer;}
+    unread(index: number): boolean{
+        const symbol=this.own(index);if(symbol===undefined || symbol.declarations.length!==1){return false;}
+        const decl=symbol.declarations[0]??panic('missing symbol declaration');const loc=decl.ancestors[0];if(decl.path!==this.rules.path || loc?.kind!=='VariableDeclaration'){return false;}
+        const binding=this.bindings.spans.get(`${loc.kind}:${loc.pos}:${loc.end}`)??-1;const declared=this.shape.name(binding);
+        if(declared<0){return false;}
+        const name=this.rules.parser.node(declared).text;
+        for(let at=0;at<this.rules.parser.nodes.length;at++){
+            const node=this.rules.parser.node(at);if(this.parent(at)<0 || node.kind!=='Identifier' || node.text!==name || at===declared){continue;}
+            let identity=this.own(at)?.id??0;
+            if(this.kind(this.parent(at))==='ShorthandPropertyAssignment'){
+                const frames=this.symbols.rules.ask(at,'symbol-identities');
+                identity=this.shorthand(frames);
+            }
+            if(identity===symbol.id && !this.target(at)){return false;}
+        }
+        return true;
+    }
+    shorthand(text: string): number{
+        const frames=new Frames(text);header(frames,'symbol-identities');const own=frames.natural();frames.natural();frames.yes();frames.natural();const value=frames.natural();frames.end();return value===0?own:value;
+    }
+    lost(executor: number,index: number): boolean{
+        const outer=this.up(index);const parent=this.parent(outer);
+        if(['ExpressionStatement','VoidExpression'].includes(this.kind(parent)) || parent===executor){return true;}
+        if(this.kind(parent)==='VariableDeclaration'){
+            const node=this.rules.parser.node(parent);if(node.children[node.children.length-1]!==outer){return false;}
+            const name=this.shape.name(parent);return this.kind(name)==='Identifier' && this.unread(name);
+        }
+        if(this.kind(parent)==='BinaryExpression'){
+            const node=this.rules.parser.node(parent);if(this.kind(node.children[1]??-1)!=='EqualsToken' || node.children[node.children.length-1]!==outer){return false;}
+            const target=this.skip(node.children[0]??-1);return this.kind(target)==='Identifier' && this.kind(this.parent(this.up(parent)))==='ExpressionStatement' && this.unread(target);
+        }
+        return false;
+    }
+    walk(executor: number,index: number): void{
+        if(index<0){return;}
+        const node=this.rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration','ClassExpression'].includes(node.kind)){return;}
+        if(node.kind==='CallExpression' && this.timer(index) && this.lost(executor,index)){
+            this.rules.context.reportNode(index,'nexus/correctness-no-uncleared-race-timeout','unclearedRaceTimeout',MESSAGE);
+        }
+        for(const child of node.children){this.walk(executor,child);}
+    }
+    visit(node: ParseNode,index: number): void {
+            const callee=this.skip(node.children[0]??-1);if(this.kind(callee)!=='PropertyAccessExpression'){return;}
+            const access=this.rules.parser.node(callee);const name=access.children[access.children.length-1]??-1;
+            if(this.kind(name)!=='Identifier' || this.rules.parser.node(name).text!=='race' || !this.library(name,'PromiseConstructor')){return;}
+            const array=this.skip(this.args(index)[0]??-1);if(this.kind(array)!=='ArrayLiteralExpression'){return;}
+            for(const element of this.rules.parser.node(array).children){
+                const promise=this.promise(element);if(promise<0){continue;}
+                const executor=this.skip(this.args(promise)[0]??-1);if(!['ArrowFunction','FunctionExpression'].includes(this.kind(executor))){continue;}
+                const functionNode=this.rules.parser.node(executor);const body=functionNode.children[functionNode.children.length-1]??-1;this.walk(executor,body);
+            }
+    }
+}
+import { Frames, header } from '../../../typeaware/frames.ts';
+const MESSAGE="This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.";
+
+export function create(context: RuleContext): Rule {return new Rule(context);}

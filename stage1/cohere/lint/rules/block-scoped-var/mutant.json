@@ -1,0 +1,5 @@
+{
+  "name": "All var uses treated as in scope",
+  "from": "use.pos >= bounds.pos && use.end <= bounds.end",
+  "to": "true"
+}

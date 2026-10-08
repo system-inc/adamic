@@ -34,7 +34,7 @@ func (p *Program) referenceSymbol(out *fields, c *checker.Checker, node *ast.Nod
 			if file == nil {
 				return "", fmt.Errorf("reference declaration has no source")
 			}
-			out.text(file.FileName())
+			out.text(file.FileName().AsString())
 			out.yes(file.IsDeclarationFile)
 			out.text(strings.TrimPrefix(decl.Kind.String(), "Kind"))
 			out.number(uint64(decl.Pos()))
