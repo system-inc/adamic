@@ -1,0 +1,5 @@
+const greeting = '🌍';
+const H = class extends PureComponent {
+    'render' = async <T>(value) => ({ label: 'é', value });
+    componentDidUpdate = (previous?) => {};
+};

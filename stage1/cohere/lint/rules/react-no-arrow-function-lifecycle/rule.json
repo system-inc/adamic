@@ -1,0 +1,14 @@
+{
+  "name": "react/no-arrow-function-lifecycle",
+  "kinds": [
+    "CallExpression",
+    "ClassDeclaration",
+    "ClassExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoArrowFunctionLifecycle",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoArrowFunctionLifecycle"
+}

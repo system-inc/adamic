@@ -1,0 +1,3 @@
+export function lifecycleMessage(name: string): string {
+    return `${name} is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.`;
+}

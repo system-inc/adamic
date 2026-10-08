@@ -1,0 +1,5 @@
+{
+  "name": "react_lifecycle_static_list_omitted",
+  "from": "name === 'getDerivedStateFromProps'",
+  "to": "name === 'neverALifecycleMethod'"
+}

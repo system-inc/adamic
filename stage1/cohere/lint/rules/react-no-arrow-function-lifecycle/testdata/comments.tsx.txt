@@ -1,0 +1,4 @@
+class H extends React.Component {
+ render = () => /*before*/ <div /> /*after*/;
+ componentDidMount = /*head*/ () => {};
+}

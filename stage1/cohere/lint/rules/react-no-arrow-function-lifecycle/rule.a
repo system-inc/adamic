@@ -1,0 +1,140 @@
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { stylePropObjectUnwrapParentheses } from '../../helpers/rules-react/style_prop_object_unwrap_parentheses.a';
+import { parametersOf } from '../../helpers/rules-react/parameters_of.a';
+import { lifecycleMessage } from './messages.a';
+
+const instanceMethods: readonly string[] = [
+    'getDefaultProps', 'getInitialState', 'getChildContext', 'componentWillMount',
+    'UNSAFE_componentWillMount', 'componentDidMount', 'componentWillReceiveProps',
+    'UNSAFE_componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate',
+    'UNSAFE_componentWillUpdate', 'getSnapshotBeforeUpdate', 'componentDidUpdate',
+    'componentDidCatch', 'componentWillUnmount', 'render',
+];
+
+// Go's rule-local scan is literal-blind. Preserve that behavior and its line bound.
+// Numeric pairs store each start followed by its end without a structural object array.
+function commentsBetween(source: string, from: number, to: number): number[] {
+    const found: number[] = [];
+    if(from < 0 || to > source.length || from >= to) { return found; }
+    let index = from;
+    while(index < to - 1) {
+        if(source[index] === '/' && source[index + 1] === '/') {
+            const start = index;
+            while(index < to && source[index] !== '\n') { index++; }
+            found.push(start);
+            found.push(index);
+            continue;
+        }
+        if(source[index] === '/' && source[index + 1] === '*') {
+            const start = index;
+            index += 2;
+            while(index < to - 1 && !(source[index] === '*' && source[index + 1] === '/')) { index++; }
+            if(index < to - 1) { index += 2; }
+            found.push(start);
+            found.push(index);
+            continue;
+        }
+        index++;
+    }
+    return found;
+}
+
+// This Go rule-local predicate is narrower than the shared ES5 predicate:
+// createClass and a parenthesized React receiver do not count.
+function factoryCall(context: RuleContext, index: number): boolean {
+    const callee = context.unwrap(context.child(index, 0));
+    if(context.kind(callee) === 'Identifier') { return context.node(callee).text === 'createReactClass'; }
+    if(context.kind(callee) !== 'PropertyAccessExpression') { return false; }
+    const receiver = context.child(callee, 0);
+    const name = context.property(callee);
+    return context.kind(receiver) === 'Identifier' && context.node(receiver).text === 'React' &&
+        context.kind(name) === 'Identifier' && context.node(name).text === 'createReactClass';
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    report(property: number, name: string, edits: readonly SuggestionEdit[] = []): void {
+        this.context.reportNode(property, 'react/no-arrow-function-lifecycle', 'lifecycle', lifecycleMessage(name), edits);
+    }
+    check(property: number, key: number, value: number, classField: boolean): void {
+        const context = this.context;
+        if(context.kind(value) !== 'ArrowFunction' || !['Identifier', 'StringLiteral'].includes(context.kind(key))) { return; }
+        const name = context.node(key).text;
+        const lifecycle = classField && context.has(property, 'StaticKeyword')
+            ? name === 'getDerivedStateFromProps' : instanceMethods.includes(name);
+        if(!lifecycle) { return; }
+        const children = context.node(value).children;
+        const body = children[children.length - 1] ?? -1;
+        if(body < 0) { this.report(property, name); return; }
+        const names: string[] = [];
+        for(const parameter of parametersOf(context, value)) {
+            const parts = context.node(parameter).children;
+            const parameterName = parts[0] ?? -1;
+            if(parts.length !== 1 || context.kind(parameterName) !== 'Identifier') { this.report(property, name); return; }
+            names.push(context.node(parameterName).text);
+        }
+        let arrow = -1;
+        for(const child of children) {
+            if(context.kind(child) === 'EqualsGreaterThanToken') { arrow = child; break; }
+            if(!['AsyncKeyword', 'TypeParameter', 'Parameter'].includes(context.kind(child))) { this.report(property, name); return; }
+        }
+        if(arrow < 0) { this.report(property, name); return; }
+        const keyEnd = context.node(key).end;
+        const arrowEnd = context.node(arrow).end;
+        if(commentsBetween(context.source, keyEnd, arrowEnd).length > 0) { this.report(property, name); return; }
+        const bodyStart = context.start(body);
+        const leading = commentsBetween(context.source, arrowEnd, bodyStart);
+        const first = leading[0];
+        const headEnd = first === undefined ? bodyStart : first;
+        const head = classField ? `(${names.join(', ')}) ` : `: function(${names.join(', ')}) `;
+        const edits: SuggestionEdit[] = [new SuggestionEdit(keyEnd, headEnd, head)];
+        if(context.kind(body) !== 'Block') {
+            let bodyText = body;
+            if(context.kind(body) === 'ParenthesizedExpression') {
+                const unwrapped = stylePropObjectUnwrapParentheses(context, body);
+                if(unwrapped >= 0) { bodyText = unwrapped; }
+            }
+            const bodyEnd = context.node(body).end;
+            let lineEnd = bodyEnd;
+            while(lineEnd < context.source.length && context.source[lineEnd] !== '\n') { lineEnd++; }
+            const trailing = commentsBetween(context.source, bodyEnd, lineEnd);
+            const last = trailing[trailing.length - 1];
+            let replacedEnd = last === undefined ? bodyEnd : last;
+            if(context.source[replacedEnd] === ';') { replacedEnd++; }
+            let leadingText = '';
+            for(let comment = 0; comment < leading.length; comment += 2) { leadingText += context.source.slice(leading[comment] ?? 0, leading[comment + 1] ?? 0); }
+            let trailingText = '';
+            for(let comment = 0; comment < trailing.length; comment += 2) { trailingText += context.source.slice(trailing[comment] ?? 0, trailing[comment + 1] ?? 0); }
+            edits.push(new SuggestionEdit(headEnd, replacedEnd, `{ return ${leadingText}${context.raw(bodyText)}${trailingText}; }`));
+        }
+        this.report(property, name, edits);
+    }
+    visit(index: number): void {
+        const context = this.context;
+        if(context.kind(index) === 'CallExpression') {
+            if(!factoryCall(context, index)) { return; }
+            const object = context.arguments(index)[0] ?? -1;
+            if(context.kind(object) !== 'ObjectLiteralExpression') { return; }
+            for(const property of context.node(object).children) {
+                if(context.kind(property) === 'PropertyAssignment') {
+                    this.check(property, context.child(property, 0), context.child(property, 1), false);
+                }
+            }
+            return;
+        }
+        const nodes = project(context.parser.nodes);
+        if(!reactEs6ComponentClass(nodes, index, (expression: number): boolean => isComponentBase(nodes, expression, isComponentBaseName))) { return; }
+        for(const member of context.members(index)) {
+            if(context.kind(member) !== 'PropertyDeclaration') { continue; }
+            const children = context.node(member).children;
+            this.check(member, context.name(member), children[children.length - 1] ?? -1, true);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

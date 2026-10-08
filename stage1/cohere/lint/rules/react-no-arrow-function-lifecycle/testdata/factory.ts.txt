@@ -1,0 +1,2 @@
+const H = React.createReactClass({ componentDidUpdate: (previous, state) => { use(previous, state); } });
+const unrelated = React.createClass({ render: () => 0 });

@@ -1,0 +1,1 @@
+class H extends Component { componentDidUpdate = (previous: Props) => {}; componentDidMount = (): void => {}; render = ({ value }) => value; }

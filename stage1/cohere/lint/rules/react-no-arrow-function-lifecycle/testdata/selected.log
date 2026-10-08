@@ -1,0 +1,67 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestReactNoArrowFunctionLifecycleSelected
+=== PAUSE TestReactNoArrowFunctionLifecycleSelected
+=== RUN   TestReactNoArrowFunctionLifecycleNativeMutant
+=== PAUSE TestReactNoArrowFunctionLifecycleNativeMutant
+=== CONT  TestMutants
+=== CONT  TestReactNoArrowFunctionLifecycleNativeMutant
+=== CONT  TestReactNoArrowFunctionLifecycleSelected
+=== RUN   TestMutants/react_lifecycle_static_list_omitted
+=== PAUSE TestMutants/react_lifecycle_static_list_omitted
+=== CONT  TestMutants/react_lifecycle_static_list_omitted
+=== NAME  TestReactNoArrowFunctionLifecycleNativeMutant
+    lint_test.go:147: checker compilation phases: load=707.445539ms lower=14.098250589s C=2.377785421s JavaScript=160.973545ms
+=== NAME  TestMutants/react_lifecycle_static_list_omitted
+    lint_test.go:1000: checker compilation phases: load=518.079187ms lower=14.834886539s C=3.190040252s JavaScript=131.067551ms
+    lint_test.go:1006: react_lifecycle_static_list_omitted caught on Node: case 91 line 4631: port "fixed\tclass H extends React.Component { static getDerivedStateFromProps = () => ({}); static render = () => 0; getDerivedStateFromProps = () => 0; }\\u000a", Go "/tmp/adamic-gate/TestMutantsreact_lifecycle_static_list_omitted158506887/022/react-no-arrow-function-lifecycle-3.ts:1:35"
+        Go context:
+          react/no-arrow-function-lifecycle  componentDidUpdate is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 35 101 lifecycle fix	: function(previous, state) 		53 76
+        fixed	const H = React.createReactClass({ componentDidUpdate: function(previous, state) { use(previous, state); } });\u000aconst unrelated = React.createClass({ render: () => 0 });\u000a
+        case 91
+        /tmp/adamic-gate/TestMutantsreact_lifecycle_static_list_omitted158506887/022/react-no-arrow-function-lifecycle-3.ts:1:35
+          react/no-arrow-function-lifecycle  getDerivedStateFromProps is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 34 79 lifecycle fix	() 		65 74
+        fix-edit	74 79	{ return {}; }
+    lint_test.go:1006: react_lifecycle_static_list_omitted caught on emitted JavaScript: case 91 line 4631: port "fixed\tclass H extends React.Component { static getDerivedStateFromProps = () => ({}); static render = () => 0; getDerivedStateFromProps = () => 0; }\\u000a", Go "/tmp/adamic-gate/TestMutantsreact_lifecycle_static_list_omitted158506887/022/react-no-arrow-function-lifecycle-3.ts:1:35"
+        Go context:
+          react/no-arrow-function-lifecycle  componentDidUpdate is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 35 101 lifecycle fix	: function(previous, state) 		53 76
+        fixed	const H = React.createReactClass({ componentDidUpdate: function(previous, state) { use(previous, state); } });\u000aconst unrelated = React.createClass({ render: () => 0 });\u000a
+        case 91
+        /tmp/adamic-gate/TestMutantsreact_lifecycle_static_list_omitted158506887/022/react-no-arrow-function-lifecycle-3.ts:1:35
+          react/no-arrow-function-lifecycle  getDerivedStateFromProps is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 34 79 lifecycle fix	() 		65 74
+        fix-edit	74 79	{ return {}; }
+--- PASS: TestMutants (4.67s)
+    --- PASS: TestMutants/react_lifecycle_static_list_omitted (21.37s)
+=== NAME  TestReactNoArrowFunctionLifecycleSelected
+    lint_test.go:295: cohere cases: 5307 unique source/rule/options combinations
+    react_no_arrow_function_lifecycle_selected_test.go:22: react/no-arrow-function-lifecycle: 102 unique captured upstream cases
+    react_no_arrow_function_lifecycle_selected_test.go:36: checker compilation phases: load=409.620228ms lower=12.330396993s C=1.44413818s JavaScript=102.853232ms
+    react_no_arrow_function_lifecycle_selected_test.go:36: checker native build: 1m54.563848438s
+=== NAME  TestReactNoArrowFunctionLifecycleNativeMutant
+    lint_test.go:155: checker native mutant build: 1m54.584424563s
+    react_no_arrow_function_lifecycle_selected_test.go:57: react_lifecycle_static_list_omitted caught on sanitized native: case 3 line 33: port "fixed\tclass H extends React.Component { static getDerivedStateFromProps = () => ({}); static render = () => 0; getDerivedStateFromProps = () => 0; }\\u000a", Go "/tmp/adamic-gate/TestReactNoArrowFunctionLifecycleNativeMutant3318438893/004/react-no-arrow-function-lifecycle-3.ts:1:35"
+        Go context:
+          react/no-arrow-function-lifecycle  componentDidUpdate is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 35 101 lifecycle fix	: function(previous, state) 		53 76
+        fixed	const H = React.createReactClass({ componentDidUpdate: function(previous, state) { use(previous, state); } });\u000aconst unrelated = React.createClass({ render: () => 0 });\u000a
+        case 3
+        /tmp/adamic-gate/TestReactNoArrowFunctionLifecycleNativeMutant3318438893/004/react-no-arrow-function-lifecycle-3.ts:1:35
+          react/no-arrow-function-lifecycle  getDerivedStateFromProps is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.
+        
+        range 34 79 lifecycle fix	() 		65 74
+        fix-edit	74 79	{ return {}; }
+--- PASS: TestReactNoArrowFunctionLifecycleNativeMutant (314.04s)
+=== NAME  TestReactNoArrowFunctionLifecycleSelected
+    react_no_arrow_function_lifecycle_selected_test.go:36: Go, Node, emitted JavaScript, native identical: 54305 bytes
+--- PASS: TestReactNoArrowFunctionLifecycleSelected (315.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	315.584s
