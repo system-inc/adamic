@@ -23,6 +23,11 @@ inert       *.exit
 inert       */evidence/*
 inert       documentation/velocity/*
 inert       stage3/meter/runs/*
+# Standalone design prototypes (runtime's async ownership study, Oct 8): run by hand, referenced by
+# nothing, so no gate executes them. A prototype a gate should trust moves into a Go package. Their .a
+# programs keep the a-check.
+inert       prototypes/*.py
+inert       prototypes/*.c
 inert       cloud/reports/*
 inert       docs/*
 inert       notes/*
