@@ -995,6 +995,7 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "library_number_format.h"
 #include "node_fs_file.h"
 #include "node_buffer.h"
 #include "node_crypto.h"
