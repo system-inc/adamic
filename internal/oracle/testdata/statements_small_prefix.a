@@ -1,0 +1,20 @@
+let globalCount = 0;
+console.log(`${++globalCount}/${globalCount}/${--globalCount}/${globalCount}`);
+function exercise(): string {
+    let count = 0;
+    const enter = () => ++count;
+    const exit = () => --count;
+    const first = enter();
+    const second = enter();
+    const third = exit();
+    const fourth = exit();
+    const fifth = exit();
+    let local = -0;
+    const changed = ++local + ++local;
+    return `${first}/${second}/${third}/${fourth}/${fifth}/${count}/${changed}/${local}`;
+}
+console.log(exercise());
+let large = 9007199254740992;
+console.log(`${++large}/${--large}`);
+let special = NaN;
+console.log(`${++special}`);
