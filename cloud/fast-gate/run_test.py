@@ -443,13 +443,12 @@ func TestGuard(t *testing.T) {
 class LongestFirst(unittest.TestCase):
     def test_queue_priorities_and_boost_fallback(self):
         queue = run.TestQueue(4)
-        for seconds, name, parallel in [(10, "short", False), (60, "unknown", False), (400, "long", True)]:
-            queue.add(seconds, parallel, "p", name, [])
+        queue.add([(seconds, parallel, "p", name, []) for seconds, name, parallel in [(10, "short", False), (60, "unknown", False), (400, "long", True)]])
         item = queue.take()
         self.assertEqual(item[1:4], ("long", 400, 4))
         queue.release(4)
         self.assertEqual(queue.take()[1], "unknown")
-        queue.add(500, True, "p", "boost", [])
+        queue.add([(500, True, "p", "boost", [])])
         self.assertEqual(queue.take()[3], 1)  # three free: retain parallel=2
         queue.release(1)
         queue.release(1)
@@ -528,6 +527,46 @@ class LongestFirst(unittest.TestCase):
         self.assertEqual(gate.result["test_starts"][0]["slots"], 4)
         self.assertEqual(record.read()[("p", "TestLong")], (350, True))
         self.assertEqual(gate.result["split_tally"], {"packages": 1, "planned": 3, "passed": 3, "touched": 1})
+
+    def test_a_ready_long_test_starts_before_the_last_package_builds(self):
+        # q's build waits until TestLong (p's, the longest known) has started: building every package
+        # before any test would deadlock here, and a short test of q can't go first.
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        tree = directory.name
+        gate = object.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=tree, out=tree, parallel=4)
+        gate.lock = threading.Lock()
+        gate.failure = None
+        gate.complete = False
+        gate.watchers, gate.result, gate.steps, gate.exits, gate.deferred = [], {}, {}, {}, {}
+        gate.packageDirectories = {"p": tree, "q": tree}
+        gate.fail = lambda stage, detail: setattr(gate, "failure", detail)
+        longStarted = threading.Event()
+
+        def stream(stage, command, log, *args):
+            if "-c" in command:
+                if command[-1] == "q" and not longStarted.wait(3):
+                    return 1
+                with open(command[command.index("-o") + 1], "w") as handle:
+                    handle.write("binary")
+                return 0
+            with gate.lock:
+                gate.recordTestStart(command)
+            if "^TestLong$" in command:
+                longStarted.set()
+            return 0
+        gate.stream = stream
+        gate.capture = lambda command, directory: "TestLong\n" if command[0].endswith("p.test") else "TestShortQ\n"
+        record = run.TestSeconds(os.path.join(tree, "record.tsv"))
+        record.update({("p", "TestLong"): (400, False), ("q", "TestShortQ"): (10, False)})
+        with mock.patch.object(run, "TestSeconds", return_value=record):
+            thread = threading.Thread(target=gate.testSplit, args=(["q", "p"], io.StringIO()))
+            thread.start()
+            thread.join(10)
+            self.assertFalse(thread.is_alive())
+        self.assertEqual([row["test"] for row in gate.result["test_starts"]], ["TestLong", "TestShortQ"])
+        self.assertEqual(gate.result["split_tally"], {"packages": 2, "planned": 2, "passed": 2, "touched": 2})
 
     def test_boost_requires_four_free_slots(self):
         gate, commands, _ = self.split(parallel=3)

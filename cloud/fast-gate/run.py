@@ -102,14 +102,25 @@ class TestQueue:
     def __init__(self, slots):
         self.free = slots
         self.pending = []
+        self.closed = False
         self.condition = threading.Condition()
 
-    def add(self, seconds, parallel, package, name, command):
-        heapq.heappush(self.pending, (-seconds, package, name, parallel, command))
+    def add(self, tests):
+        """(seconds, parallel, package, name, command) for each test of one package, at once."""
+        with self.condition:
+            for seconds, parallel, package, name, command in tests:
+                heapq.heappush(self.pending, (-seconds, package, name, parallel, command))
+            self.condition.notify_all()
+
+    def close(self):
+        """Every package is built and listed: nothing more will be added."""
+        with self.condition:
+            self.closed = True
+            self.condition.notify_all()
 
     def take(self):
         with self.condition:
-            while self.pending and not self.free:
+            while (not self.pending and not self.closed) or (self.pending and not self.free):
                 self.condition.wait()
             if not self.pending:
                 return None
@@ -942,12 +953,14 @@ class Gate:
             self.result.setdefault("split_tests", {})[importPath] = len(names)
             with self.lock:
                 tally["planned"] += len(names)
+            ready = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
                            "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
                 seconds, parallel = history.get((importPath, name), (60, False))
-                with self.lock:
-                    queue.add(seconds, parallel, importPath, name, command)
+                ready.append((seconds, parallel, importPath, name, command))
+            # A package's tests arrive together, so a waiting worker can't take its short one before its long one.
+            queue.add(ready)
 
         def packageWeight(package):
             known = [seconds for (path, _), (seconds, _) in history.items() if path == package]
@@ -967,14 +980,6 @@ class Gate:
                     runPackage(package)
                 except BaseException:
                     self.fail("tests", traceback.format_exc())
-
-        # Build/list first so a short test cannot hide a long test in another binary.
-        for _ in range(min(2, self.arguments.parallel)):
-            thread = self.guarded("tests", buildWorker)
-            thread.start()
-            threads.append(thread)
-        for thread in threads:
-            thread.join()
 
         def testWorker():
             while True:
@@ -1001,11 +1006,22 @@ class Gate:
                         self.testLaunchLock.release()
                     queue.release(permits)
 
-        threads = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
-        for thread in threads:
+        # Tests start as their package is built and listed, longest first among those ready. Builds go in
+        # the order of each package's longest known test, so the longest test's binary is ready first and a
+        # short test can't hold the slots it needs: early on, few tests are ready and slots are plenty.
+        testers = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
+        for thread in testers:
             thread.start()
+        for _ in range(min(2, self.arguments.parallel)):
+            thread = self.guarded("tests", buildWorker)
+            thread.start()
+            threads.append(thread)
         for thread in threads:
             thread.join()
+        queue.close()
+        for thread in testers:
+            thread.join()
+
         self.watchers.remove(watch)
         record.update(observations)
         self.steps["tests"] = round(time.monotonic() - started, 1)
