@@ -37,7 +37,11 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 	sites := append([]ir.PredicateCallCheck(nil), program.PredicateChecks.Sites...)
 	sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
 	for _, site := range sites {
-		fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
+		if site.Overload == 0 {
+			fmt.Fprintf(output, "%s: predicate %s\n", relative(site.Where), site.Function)
+		} else {
+			fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
+		}
 		for _, direction := range site.Directions {
 			status := direction.Status
 			if status == "unobservable" {

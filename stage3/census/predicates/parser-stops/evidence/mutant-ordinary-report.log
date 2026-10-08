@@ -1,0 +1,28 @@
+--- FAIL: TestExplainChecksOutput (2.48s)
+    --- FAIL: TestExplainChecksOutput/callback_parameter_read (0.05s)
+        checks_test.go:38: c explanation:
+            adamic: predicate checks: proven 0 checked 0 unobservable 0
+            
+            want:
+            internal/lower/testdata/predicates/callback_parameter_read.a:3:9: predicate test
+              true: proven; closed-world predicate argument contracts are validated
+              false: proven; closed-world predicate argument contracts are validated
+            adamic: predicate checks: proven 2 checked 0 unobservable 0
+    --- FAIL: TestExplainChecksOutput/ordinary_regions (0.04s)
+        checks_test.go:38: c explanation:
+            adamic: predicate checks: proven 0 checked 0 unobservable 0
+            
+            want:
+            internal/lower/testdata/predicates/ordinary_regions.a:10:13: predicate isIdentifier
+              true: unobservable (proven); no narrowed read in the true region
+              false: unobservable (proven); no narrowed read in the false region
+            internal/lower/testdata/predicates/ordinary_regions.a:12:13: predicate isDefined
+              true: proven; implementation body proves this direction
+              false: proven; implementation body proves this direction
+            internal/lower/testdata/predicates/ordinary_regions.a:5:9: predicate isIdentifier
+              true: checked; a narrowed read consumes this direction
+              false: unobservable (proven); no narrowed read in the false region
+            adamic: predicate checks: proven 5 checked 1 unobservable 3
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	2.628s
+FAIL

@@ -148,6 +148,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err != nil {
 			return nil, err
 		}
+		l.recordOrdinaryPredicateChecks(expression.AsCallExpression())
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		return l.assignment(expression)

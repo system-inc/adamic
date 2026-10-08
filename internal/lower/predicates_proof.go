@@ -1172,9 +1172,47 @@ func (l *lowering) predicateOverloadOrdinal(implementation, overload *ast.Node) 
 	return ordinal
 }
 
+// Ordinary predicates are admitted by the declaration or argument proof pass.
+// Tag-only proofs instead rely on the checked view at each narrowed read.
+func (l *lowering) recordOrdinaryPredicateChecks(call *ast.CallExpression) {
+	signature := l.checker.GetResolvedSignature(call.AsNode())
+	if signature == nil {
+		return
+	}
+	declaration := signature.Declaration()
+	if declaration == nil || declaration.Type() == nil || declaration.Type().Kind != ast.KindTypePredicate {
+		return
+	}
+	if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+		return
+	}
+	annotation := declaration.Type()
+	proven := false
+	reason := "implementation body proves this direction"
+	if l.predicateParameter(annotation) != nil {
+		proven = true
+		reason = "closed-world predicate argument contracts are validated"
+	} else if l.proveFlowPredicate(annotation) == nil {
+		proven = true
+	} else if proof, err := l.provePredicate(annotation); err == nil {
+		proven = !proof.TaggedView
+	}
+	name := "anonymous"
+	if declaration.Name() != nil {
+		name = declaration.Name().Text()
+	} else if call.Expression.Kind == ast.KindIdentifier {
+		name = call.Expression.Text()
+	}
+	l.recordPredicateDirections(call, name, 0, l.predicateUseDirections(call), proven, reason)
+}
+
 func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementation, overload *ast.Node, observed predicateTruth, proven bool) {
+	l.recordPredicateDirections(call, implementation.Name().Text(), l.predicateOverloadOrdinal(implementation, overload), observed, proven, "implementation body proves this direction")
+}
+
+func (l *lowering) recordPredicateDirections(call *ast.CallExpression, function string, overload int, observed predicateTruth, proven bool, reason string) {
 	counts := &l.result.PredicateChecks
-	site := ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: implementation.Name().Text(), Overload: l.predicateOverloadOrdinal(implementation, overload)}
+	site := ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: function, Overload: overload}
 	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
 		if l.predicateDirectionCount(call, direction) == 0 {
 			continue
@@ -1186,7 +1224,7 @@ func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementatio
 		report := ir.PredicateDirectionCheck{Direction: name}
 		switch {
 		case proven:
-			report.Status, report.Reason = "proven", "implementation body proves this direction"
+			report.Status, report.Reason = "proven", reason
 			counts.Proven++
 		case observed&direction != 0:
 			report.Status, report.Reason = "checked", "a narrowed read consumes this direction"

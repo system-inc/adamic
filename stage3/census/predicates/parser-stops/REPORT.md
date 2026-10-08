@@ -1,8 +1,8 @@
-Built: callback body-proof regressions and generic NonNullable assertion admission; specialized null/undefined comparisons preserve Node semantics.
+Built: callback and generic NonNullable assertion admission, plus ordinary call direction reporting in --explain-checks.
 Commits: callback d8f6241210b229c49e327310e28a986185989a8d pushed; assertion implementation and final evidence are in the containing commit.
 Commands/results: complete lower, CLI, IR and load packages pass; uncached filtered predicate/generic/regex oracle passes; vet, formatting and diff checks pass.
 Mutants: six independent compiler mutants caught; null-test and scalar-evaluation erasures fail both backends; undefined/null confusion fails native output.
-Limits: mixed-union closure ABI remains NotYet; ordinary predicate direction reporting and the full repository gate are not covered.
+Limits: mixed-union closure ABI is under investigation; the full repository gate is not covered.
 
 The requested base already admits the exact unused callback signature probe. It is
 pinned byte for byte from 5d777de3b9506d2a303a4a69d66d21f37f608ede,
@@ -175,3 +175,28 @@ assertion helpers and ordinary-predicate per-direction reporting remain outside
 this unit. No code was copied from cohere. The implementation does not edit any
 of the four prohibited compiler/oracle ownership files. The report and evidence
 keep original probe admission, actual execution, and reporting limits separate.
+
+## Ordinary call reporting follow-up
+
+Ordinary annotated predicate calls now record the same direction states as overload
+calls. Calls used as statements are included, so a normally returning assertion is
+reported. Callback parameter invocations report their validated closed-world argument
+contract. Ordinary tag predicates report checked directions where narrowed reads use
+checked views, and unobservable directions where no such read occurs. Reporting adds
+no new runtime checks or admission rules. Overload numbering and output are unchanged.
+
+Exact CLI stderr goldens cover C, JavaScript and sanitized build for
+`callback_parameter_read.a`, `assert_defined_read.a`, and `ordinary_regions.a`.
+The callback reports proven 2, checked 0, unobservable 0. The assertion witness has
+three specializations/call sites, each with only a proven true direction, totaling
+proven 3. The direct predicate witness reports proven 5, checked 1, unobservable 3.
+`ordinary_regions.a` also runs on original Node and both backends with stdout
+`word`, `true`, `true`, each on its own line, and exit 0 with empty stderr.
+
+Validation: `go test ./internal/lower ./cmd/adamic -count=1 -timeout 10m` passed
+(lower 28.721s; CLI 8.126s). `go test ./internal/oracle -run
+TestPredicateDirectionCountsAreRecorded -count=1 -timeout 5m` passed (1.221s).
+Erasing ordinary expression reporting and separately erasing assertion statement
+reporting each fails `TestExplainChecksOutput` by an exact stderr mismatch; both
+mutants built successfully and were restored. Logs are in `evidence/ordinary-*`
+and `evidence/mutant-ordinary-report.log`, `evidence/mutant-assertion-report.log`.
