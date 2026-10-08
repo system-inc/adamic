@@ -29,19 +29,30 @@ ssh "${box}" bash -s -- "${sha}" "${base}" "${tools}" "${out}" <<'BOX'
 set -euo pipefail
 sha=$1 base=$2 tools=$3 out=$4
 mkdir -p ~/fast-gate
-exec 9> ~/fast-gate/lock
-flock 9
+# Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
+# stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
+slot=""
+for candidate in 1 2; do
+  exec 9> ~/fast-gate/lock$([ "${candidate}" = 1 ] && echo "" || echo "-${candidate}")
+  if flock -n 9; then slot=${candidate}; break; fi
+  exec 9>&-
+done
+if [ -z "${slot}" ]; then exec 9> ~/fast-gate/lock; flock 9; slot=1; fi
+suffix=$([ "${slot}" = 1 ] && echo "" || echo "-${slot}")
 source ~/adamic-tools/env.sh
 for directory in tools tree; do
-  [ -d ~/fast-gate/${directory} ] || git clone -q https://github.com/system-inc/adamic.git ~/fast-gate/${directory}
+  if [ ! -d ~/fast-gate/${directory}${suffix} ]; then
+    if [ -d ~/fast-gate/${directory} ]; then cp -a ~/fast-gate/${directory} ~/fast-gate/${directory}${suffix}; else git clone -q https://github.com/system-inc/adamic.git ~/fast-gate/${directory}${suffix}; fi
+  fi
 done
-git -C ~/fast-gate/tools fetch -q origin "${tools}"
-git -C ~/fast-gate/tools switch -q --detach "${tools}"
-git -C ~/fast-gate/tree fetch -q origin "${sha}" "${base}"
-git -C ~/fast-gate/tree switch -q --detach "${sha}"
-git -C ~/fast-gate/tree submodule update -q --init --recursive
+git -C ~/fast-gate/tools${suffix} fetch -q origin "${tools}"
+git -C ~/fast-gate/tools${suffix} switch -q --detach "${tools}"
+git -C ~/fast-gate/tree${suffix} fetch -q origin "${sha}" "${base}"
+git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
+git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
-python3 ~/fast-gate/tools/cloud/fast-gate/run.py --tree ~/fast-gate/tree --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools --out ~/"${out}"
+echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
+python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}"
 BOX
 code=$?
 set -e
