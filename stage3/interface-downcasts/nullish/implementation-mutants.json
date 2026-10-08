@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "collapse-null",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullish$/^number-both$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-collapse-null.log"
+  },
+  {
+    "mutant": "allow-forbidden-undefined",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishMutants$/^number-null-opposite$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-allow-forbidden-undefined.log"
+  },
+  {
+    "mutant": "skip-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishMutants$/^string-both-wrong$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-skip-kind.log"
+  }
+]

@@ -1,6 +1,7 @@
 // object.c: plain objects, each carrying its shape.
 
 #include "adamic.h"
+#include "view_nullish.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -150,6 +151,10 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 	return slot;
 }
 
+adamic_value *adamic_object_read_contract(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner) {
+ return adamic_object_read_mode(object,name,cache,expression,expected,owner);
+}
+
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
 	return adamic_object_read_mode(object, name, cache, expression, NULL, NULL);
 }
@@ -192,7 +197,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
 	if (actual == 10) {
 		const adamic_heap *boxed = slot->reference;
-		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : "function";
+		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : boxed->kind == adamic_kind_null ? "null" : "function";
 	}
 	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
 	char *message = malloc(capacity);

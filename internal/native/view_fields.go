@@ -9,6 +9,9 @@ import (
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
 func (e *emitter) viewField(property ir.Property) string {
+	if property.Nullish {
+		return e.nullishViewField(property)
+	}
 	of := property.Type()
 	object := e.value(property.Object)
 	slot := e.temporary()
