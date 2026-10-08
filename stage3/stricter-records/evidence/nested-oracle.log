@@ -1,0 +1,41 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_objects.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_objects.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_objects.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_objects.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_objects.a (0.56s)
+PASS
+gate cache: native hits=0 misses=24
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.318s
