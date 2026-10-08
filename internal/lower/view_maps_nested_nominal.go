@@ -182,9 +182,9 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 	return id
 }
 
-// The visited-witness adapter covers recursive data objects and readonly arrays.
-// Mutable recursive arrays and recursive class declarations
-// retain their existing refusals until their storage producers have this proof.
+// The visited witness covers recursive data objects and reference arrays.
+// Array source writes retain their constructor element certificate. Recursive
+// class declarations still require separate initializer and layout proofs.
 func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*checker.Type]bool) bool {
 	target = l.concrete(target)
 	if seen[target] {
@@ -199,7 +199,7 @@ func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*ch
 		return target.Flags()&checker.TypeFlagsUnion == 0
 	}
 	if base := l.viewArrayBase(target); base != nil {
-		return l.isLibraryType(base, "ReadonlyArray") && l.recursiveNominalObjectPath(l.viewArrayElementType(target), seen)
+		return l.recursiveNominalObjectPath(l.viewArrayElementType(target), seen)
 	}
 	if checker.IsTupleType(target) {
 		return !l.mapNestedNominalType(target, map[*checker.Type]bool{})

@@ -1,0 +1,148 @@
+{
+  "start_commit": "f82620635fb25e529198b9b66a4e3b5a8957687e",
+  "built": "recursive mutable array source certificates and graph nominal write checks",
+  "positive_fixtures": 5,
+  "payload_mutants": [
+    "producer",
+    "read",
+    "push",
+    "index"
+  ],
+  "backends": [
+    "native sanitized",
+    "native release",
+    "JavaScript"
+  ],
+  "implementation_mutants": [
+    {
+      "name": "native-write",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrayMutants$/(push|index)$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/native-write.log"
+    },
+    {
+      "name": "javascript-write",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrayMutants$/(push|index)$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/javascript-write.log"
+    },
+    {
+      "name": "source-certificate",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrays$/write$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/source-certificate.log"
+    },
+    {
+      "name": "mutable-admission",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrays$/control$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/mutable-admission.log"
+    }
+  ],
+  "original_pin_mutant": "wrong source pin rejected before observing declarations",
+  "counts_refresh": {
+    "command": "go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -timeout 15m -args -update-counts",
+    "result": "failed on same 26 fixture names at starting tip; five independently measured rows inserted",
+    "baseline_failures": [
+      "internal/oracle/testdata/census_overload_contracts.a",
+      "internal/oracle/testdata/census_small_boolean.a",
+      "internal/oracle/testdata/maybe_number_slots.a",
+      "internal/oracle/testdata/nbody_field_values.a",
+      "internal/oracle/testdata/node_fs_directory_entries.a",
+      "internal/oracle/testdata/node_fs_directory_permissions.a",
+      "internal/oracle/testdata/node_fs_directory_realpath.a",
+      "internal/oracle/testdata/node_fs_file_buffer.a",
+      "internal/oracle/testdata/node_fs_file_close.a",
+      "internal/oracle/testdata/node_fs_file_mkdir.a",
+      "internal/oracle/testdata/node_fs_file_mkdtemp.a",
+      "internal/oracle/testdata/node_fs_file_open.a",
+      "internal/oracle/testdata/node_fs_file_read.a",
+      "internal/oracle/testdata/node_fs_file_read_sync.a",
+      "internal/oracle/testdata/node_fs_file_rm.a",
+      "internal/oracle/testdata/node_fs_file_stat.a",
+      "internal/oracle/testdata/node_fs_file_system.a",
+      "internal/oracle/testdata/node_fs_file_unlink.a",
+      "internal/oracle/testdata/node_fs_file_utimes.a",
+      "internal/oracle/testdata/node_fs_file_write.a",
+      "internal/oracle/testdata/node_fs_file_write_buffer.a",
+      "internal/oracle/testdata/node_fs_file_write_file.a",
+      "internal/oracle/testdata/process_bad_code.a",
+      "internal/oracle/testdata/process_exit.a",
+      "internal/oracle/testdata/process_exit_default.a",
+      "internal/oracle/testdata/user_iterators.a"
+    ]
+  },
+  "remaining": {
+    "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "observed_pairs": 1903,
+    "observed_reads": 8761,
+    "unresolved_pairs": 115,
+    "unresolved_reads": 340,
+    "adapted_type_differences": 35,
+    "measurement": "Exact original witness and property declaration observations; runtime discharge unmeasured",
+    "evidence": "original-declaration-observations.json.gz"
+  },
+  "runtime_remaining": {
+    "pairs": 2018,
+    "reads": 9101,
+    "certified_remaining_pairs": null,
+    "certified_remaining_reads": null
+  },
+  "class_blocker": "native initialization checks children before assignment; candidate stays unshipped",
+  "setup": {
+    "nproc": 5,
+    "done_seconds": 702.588
+  },
+  "broad_storage_run": "317.505s; six switch-label declaration errors found; scoped case fix; full affected MapCertificates suite plus new array tests pass in 160.458s",
+  "final_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewMapCertificates$|^TestCheckedViewRecursiveMutableArray' -count=1 -timeout 10m",
+  "recorded_counts_check": "pass 1.403s; wrong control allocation count mutant fails with unrecorded fixture counts",
+  "final_restored_checks": {
+    "oracle_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewRecursiveMutableArray' -v -count=1 -timeout 5m",
+    "oracle": "pass 6.101s",
+    "vet": "pass"
+  }
+}

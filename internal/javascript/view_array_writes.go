@@ -67,13 +67,22 @@ func viewArrayReferenceRuntime(program *ir.Program) string {
 			nulls[index+1] = source.Null
 		}
 	}
+	checks := "const adamicArrayNominalProducers = {\n"
+	producer := &emitter{program: program}
+	for index := range program.ViewContracts {
+		id := ir.ViewContractID(index + 1)
+		if ir.HasMapNominalWitness(program, id) && nominal[index+1] == 0 {
+			checks += fmt.Sprintf("%d: value => %s,\n", id, producer.mapEntryNominalCertificate(id, "value", "<array write>"))
+		}
+	}
+	checks += "};\n"
 	classes, _ := json.Marshal(nominal)
 	missing, _ := json.Marshal(nullable)
 	nullJSON, _ := json.Marshal(nulls)
 	named, _ := json.Marshal(names)
 	pairs, _ := json.Marshal(ir.ArrayRecordWritePairs(program))
 	descriptors, _ := json.Marshal(fields)
-	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayNominalNull = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, nullJSON, named, pairs, descriptors) + viewArrayReferenceHelpers
+	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayNominalNull = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, nullJSON, named, pairs, descriptors) + checks + viewArrayReferenceHelpers
 }
 
 const viewArrayReferenceHelpers = `const adamicArrayElementContracts = new WeakMap();
@@ -85,6 +94,10 @@ const adamicArrayReferenceWrite = (array, value) => {
  if (adamicArrayStorage.get(array) !== 10) adamicArrayWriteCheck(array, 4);
  const target = adamicArrayElementContracts.get(array) || 0;
  if (!target) adamicArrayReferenceFailure("object", "uncertified source element contract");
+ if (adamicArrayNominalProducers[target]) {
+  adamicArrayNominalProducers[target](value);
+  return;
+ }
  if (adamicArrayNominalClasses[target]) {
   if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target]) || value === undefined && adamicArrayNominalUndefined[target] || value === null && adamicArrayNominalNull[target])) adamicArrayReferenceFailure(adamicArrayReferenceNames[target],"object without required class identity");
   return;

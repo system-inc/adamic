@@ -39,6 +39,9 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 			return l.mapNominalEntrySlot(node, element)
 		}
 	}
+	if element != nil && l.mapNestedNominalType(element, map[*checker.Type]bool{}) {
+		return l.mapEntrySlot(node, element)
+	}
 	return l.viewArrayRecordSourceContract(node, element)
 }
 

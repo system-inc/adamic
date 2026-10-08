@@ -31,11 +31,11 @@
       "production_reaching_view_counts": "unmeasured"
     },
     {
-      "family": "mutable recursive arrays and recursive class declarations",
+      "family": "recursive class declarations",
       "read": "node.value",
-      "outcome": "producer witness coverage not implemented; existing named refusals retained",
+      "outcome": "existing named refusal retained; native initialization fails in isolated admission candidate",
       "production_reaching_view_counts": "unmeasured",
-      "class_evidence": "recursive-class-blocker.json: four Node controls remain refused at node.value (6:33 or 6:52); array initialization and null-layout ownership prerequisites"
+      "class_evidence": "recursive-mutable-array-class-candidate-runtime.log.gz: four controls fail before output at <write>.children; JavaScript agrees with Node"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -124,7 +124,25 @@
       "family": "nullable nominal aggregate source-link writes",
       "scope": "complete scalar/object nominal graphs, null, undefined and combined-nullish links; direct/helper source writes, fresh references, independent escaped reads; graph-aware holds/drops and repaired inline Map entries after graph adoption",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "mutable recursive reference arrays with nominal data leaves",
+      "scope": "owned producer traversal, escaped descendant reads, push and index writes, actual array back edge",
+      "fixtures": 5,
+      "payload_mutants": 4,
+      "implementation_mutants": 4,
+      "production_reaching_view_counts": "unmeasured"
     }
   ],
-  "integration_base": "ffe428ab26eefb73154adbf570ad99e9c1b4f872"
+  "integration_base": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
+  "original_declaration_observations": {
+    "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "observed_pairs": 1903,
+    "observed_reads": 8761,
+    "unresolved_pairs": 115,
+    "unresolved_reads": 340,
+    "adapted_type_differences": 35,
+    "measurement": "Exact original witness and property declaration observations; runtime discharge unmeasured",
+    "evidence": "original-declaration-observations.json.gz"
+  }
 }

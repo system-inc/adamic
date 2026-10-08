@@ -29,13 +29,18 @@ func (e *emitter) viewArrayReferenceWrite(array, value string) {
 		if source.Of != ir.Object && source.Of != ir.Union {
 			continue
 		}
-		class, _, _ := mapNominalContract(e.program, ir.ViewContractID(index+1))
-		if class.NominalClass == 0 {
+		id := ir.ViewContractID(index + 1)
+		if !ir.HasMapNominalWitness(e.program, id) {
 			continue
 		}
-		e.line("case %d:", index+1)
-		e.nominalViewRead(ir.ViewContractID(index+1), value, "<array write>", false)
-		e.line("%s = true; break;", checked)
+		e.line("case %d: {", index+1)
+		class, _, _ := mapNominalContract(e.program, id)
+		if class.NominalClass != 0 {
+			e.nominalViewRead(id, value, "<array write>", false)
+		} else {
+			e.mapEntryNominalCertificate(id, value, "<array write>")
+		}
+		e.line("%s = true; break; }", checked)
 	}
 	e.line("default: break; }")
 	e.line("if (!%s) {", checked)

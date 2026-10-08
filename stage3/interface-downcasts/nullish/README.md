@@ -1301,3 +1301,70 @@ Evidence: evidence/nullable-aggregate-link.json and its logs. Inventory remains
 2,018 pairs / 9,101 reads, with production reaching-view discharge unmeasured.
 Required primitive brands retain internal/lower/phantom_brands.go:133,
 (*lowering).phantomRefusal: a primitive brand member brand whose type is not void.
+
+## Mutable recursive array stores
+
+Continuation starts at f82620635fb25e529198b9b66a4e3b5a8957687e.
+Mutable recursive reference arrays now carry their original element contract.
+The existing visited producer witness checks nominal leaves on owned producer
+traversal and on push or index assignment. Escaped descendant reads retain their
+read check. Five controls cover producer, read, writes, and an actual array back
+edge. All match Node in native release, native sanitized, and JavaScript; native
+leak checks pass. The cycle records one graph region and five merges.
+
+Four independent payload mutants substitute a structural lookalike for a class
+at producer, escaped read, push, and index boundaries. All stop with exit 70 and
+class identity diagnostics in all three modes. Four implementation mutants
+remove native writes, JavaScript writes, original source certificates, or mutable
+admission. Each makes its focused test fail; the write guard mutants finish with
+exit 0 and are caught by the boundary assertion. All edits are restored. The
+original declaration tool also rejects a source tree at the wrong commit.
+
+Original TypeScript declarations were fetched at
+050880ce59e30b356b686bd3144efe24f875ebc8. certify-original.cjs verifies that pin
+and clean src files, then requires exact original witness text and location and
+records original receiver fields and member declarations. It observes 1,903
+pairs / 8,761 reads; 115 pairs / 340 reads remain unresolved. Thirty-five declared
+types differ from the adapted inventory. The pair inventory counts three more
+reads than the authoritative site inventory at two dynamic-index pairs; the
+report uses the 9,101 site total. These are declaration observations, not runtime
+certification of production reaching views. Production discharge remains
+unmeasured over 2,018 pairs / 9,101 reads.
+
+Recursive classes remain refused. An isolated unshipped lowering candidate
+admits four existing controls. JavaScript agrees with Node, but both native modes
+stop before output: field read failed: <write>.children is not a array; expected
+array, found nullish. Class initialization must be resolved before admitting this
+next group. Every callback refusal, including entry-live-mutation.a:5:69, remains
+in place; required primitive brands retain their existing refusal. No lane 5
+branch was merged.
+
+Validation commands, with output redirected to logs:
+
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewRecursiveMutableArray' -v -count=1 -timeout 10m: pass, 110.217s.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewRecursive|^TestCheckedViewNullableAggregateLink|^TestCheckedViewNominalArray|^TestCheckedViewMapNominalGaps$|^TestCheckedViewNullableNominalSlotBoundaryRefusals$|^TestCheckedViewMapForEach' -v -count=1 -timeout 10m: pass, 23.117s.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract|Callable|Tuple|Nullish|Nullable' -skip Phantom -count=1 -timeout 10m: pass, 0.017s / 13.212s / 82.689s / 2.477s. Phantom is the inherited baseline exclusion.
+- go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle: pass.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Map|Nullish|NullableSelection|RecursiveMutableArray' -v -count=1 -timeout 15m: six native compile failures, all switch labels followed by new aggregate declarations; scoped cases repair this. The affected certificate suite and new array tests are rerun separately below.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 15m -args -update-counts: fails on 26 existing fixtures. An overlay of the five changed existing files from the starting tip reproduces exactly the same 26 fixture failures. The global update writes nothing on failure. Five new rows were measured with TestCheckedViewRecursiveMutableArrayCounts and inserted into counts.md.
+- node stage3/interface-downcasts/nullish/certify-original.cjs /tmp/views-lazy-original /tmp/views-lazy-original-observations.json: pass; unresolved declarations are retained explicitly.
+
+Setup used GOPROXY='https://proxy.golang.org|direct', bash cloud/setup.sh, and
+/workspace/adamic-tools/env.sh. nproc=5. Timing lines: node 0.082s, Go 0.105s,
+clang 0.886s, Markdown dependencies 1.744s, submodules 181.612s, Go build 702.067s,
+cache warm 702.510s, done 702.588s. Evidence is in
+[evidence/recursive-mutable-array.json](evidence/recursive-mutable-array.json),
+its compressed logs, and original-declaration-observations.json.gz.
+
+The final affected-suite rerun passes in 160.458s:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewMapCertificates$|^TestCheckedViewRecursiveMutableArray' -count=1
+-timeout 10m. The recorded five-row count check passes in 1.403s; changing the
+control allocation count makes it fail with unrecorded fixture counts. The
+unshipped class admission patch is retained as evidence/recursive-class-admission-candidate.patch.
+
+All four implementation mutants were rerun against the scoped case repair and
+were caught. After restoring them, the new array fixtures, payload mutants and
+recorded count check pass together in 6.101s with ADAMIC_GATE_UNCACHED=1 go test
+./internal/oracle -run '^TestCheckedViewRecursiveMutableArray' -v -count=1
+-timeout 5m. Final scoped vet passes.
