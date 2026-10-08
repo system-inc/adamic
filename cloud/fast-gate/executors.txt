@@ -1,0 +1,35 @@
+# Every changed path a gate sees maps to an executor, or the gate is red with "no gate covers <path>"
+# (@system_adamic's ruling, Oct 7 20:48). A path in a Go package (its directory, its testdata, or a
+# file it embeds) is that package's tests and needs no line here. Everything else matches the first
+# line below whose glob fits it (fnmatch: * spans directories). Adding an inert line is a ruling.
+#
+# "mode report" records uncovered paths in fast.json without failing; "mode enforce" makes them red.
+mode report
+#
+# executor  glob
+# Not executed by anything: prose, evidence and records.
+inert       *.md
+inert       *.log
+inert       *.log.gz
+inert       *.stdout
+inert       *.stderr
+inert       *.exit
+inert       */evidence/*
+inert       documentation/velocity/*
+inert       stage3/meter/runs/*
+inert       cloud/reports/*
+# Built and vetted by every gate.
+build       go.mod
+build       go.sum
+build       go.work
+build       go.work.sum
+build       */go.mod
+build       */go.sum
+# Stage 3's landing lane (tier 1, @system_adamic_typescript's inventory): stage3/test_apply.py, the
+# lane's own unit tests, go test ./stage3/..., and stage3/lane/run.sh (apply, then the upstream
+# suite and the sanctioned API check).
+stage3      stage3/*
+# The cohere submodule: every stage 1 package that reads it.
+cohere      cohere
+# Read by path from outside a package's tree: the Node oracle runners the oracle's tests start.
+package:internal/oracle  oracle/*

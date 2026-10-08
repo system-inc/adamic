@@ -66,11 +66,13 @@ class FailClosed(unittest.TestCase):
         os.makedirs(os.path.join(self.tree, "cloud/fast-gate"))
         with open(os.path.join(self.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
             handle.write("internal/oracle/testdata/a.a\n")
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("inert *.md\nstage3 stage3/*\n")
         for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
 
-    def gate(self, full=False, broken=None, silent=None):
+    def gate(self, full=False, broken=None, silent=None, unowned=()):
         out = tempfile.mkdtemp(dir=self.directory)
         arguments = mock.Mock(tree=self.tree, sha=self.sha, base=self.sha, tools=self.tree, out=out, parallel=4, full=full,
                               branch="", branch_source="", session="", session_source="", weights=None)
@@ -87,9 +89,10 @@ class FailClosed(unittest.TestCase):
 
         listing = mock.Mock(stdout="example.com/p\n")
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
-                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree}) or ["p"], [])), \
+                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.subprocess, "run", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
+                mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
                 mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
             gate = run.Gate(arguments)
             gate.packageDirectories = {}
@@ -127,6 +130,21 @@ class FailClosed(unittest.TestCase):
                 gate, status, result = self.gate(silent=silent)
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(stageName, status)
+
+
+class Coverage(FailClosed):
+    def test_a_path_with_no_executor_is_red_and_named(self):
+        for full in (False, True):
+            gate, status, result = self.gate(full=full, unowned=["tools/stray.py"])
+            self.assertTrue(status.startswith("red:"), status)
+            self.assertEqual(gate.failure["step"], "coverage")
+            self.assertIn("tools/stray.py", gate.failure["detail"])
+            self.assertEqual(result["uncovered_files"], ["tools/stray.py"])
+
+    def test_an_inert_path_is_covered(self):
+        gate, status, result = self.gate(unowned=["notes/README.md"])
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["executors"], {"inert": 1})
 
 
 if __name__ == "__main__":

@@ -18,6 +18,7 @@ the run ends.
 
 import argparse
 import base64
+import fnmatch
 import hashlib
 import json
 import re
@@ -85,7 +86,7 @@ class Gate:
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
         self.watchers = []
-        self.planned = ["build", "vet", "tests", "wasi", "census"] if arguments.full else ["build", "vet", "tests", "smoke", "census"]
+        self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "census"] if arguments.full else ["coverage", "build", "vet", "tests", "smoke", "census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -108,6 +109,7 @@ class Gate:
         if head != self.arguments.sha:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
             return
+        self.npmCli()
         if not self.npmPackages():
             return
         if self.arguments.full:
@@ -115,9 +117,19 @@ class Gate:
             return
         smoke, smokeSource = self.smokeList()
         self.deferred = self.deferredList()
-        changed = git(tree, "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
+        # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
+        changed = git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
         packages, unowned = self.touched(changed)
+        executors = self.cover(unowned)
+        if executors is None:
+            return
+        if "cohere" in executors:
+            packages = sorted(set(packages) | set(self.goList("./stage1/cohere/...")))
+        packages = sorted(set(packages) | set(self.extraPackages))
+        if "stage3" in executors:
+            packages = sorted(set(packages) | set(self.goList("./stage3/...")))
+            self.planned.append("stage3")
         self.result.update({
             "changed_files": changed,
             "packages": packages,
@@ -136,6 +148,8 @@ class Gate:
         threads = [self.guarded("build", self.build), self.guarded("vet", self.vet),
                    self.guarded("tests", self.testSplit, packages, log),
                    self.guarded("smoke", self.smoke, smoke, log)]
+        if "stage3" in executors:
+            threads.append(self.guarded("stage3", self.stage3))
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -154,6 +168,11 @@ class Gate:
             order = [name for _, name in sorted(weighed, key=lambda row: -float(row[0])) if name in listing]
         packages = order + [name for name in listing if name not in order]
         self.result.update({"packages": "all", "package_list": packages})
+        # The no-executor check holds on main too: what this main changed against its first parent.
+        parents = git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+        changed = git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
+        _, unowned = self.touched([path for path in changed if path])
+        self.cover(unowned)
         try:
             self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
         except BaseException:
@@ -164,7 +183,8 @@ class Gate:
             wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
         threads = [self.guarded("vet", self.vet),
                    self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
-                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi)]
+                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi),
+                   self.guarded("stage3", self.stage3)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -174,6 +194,77 @@ class Gate:
             self.checkCensus()
         except BaseException:
             self.fail("census", traceback.format_exc())
+
+    def cover(self, unowned):
+        """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
+        tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
+        with none turns the gate red before anything runs. Returns the set of executors, or None."""
+        rules, enforce = [], True
+        with open(os.path.join(self.arguments.tools, "cloud/fast-gate/executors.txt")) as handle:
+            for line in handle:
+                fields = line.split()
+                if fields[:2] == ["mode", "report"]:
+                    enforce = False  # record uncovered paths without failing, until the rulings are in
+                elif fields and not fields[0].startswith("#") and fields[0] != "mode":
+                    rules.append((fields[0], fields[1]))
+        executors, covered, uncovered = set(), {}, []
+        for path in unowned:
+            executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
+            if executor is None:
+                uncovered.append(path)
+            else:
+                executors.add(executor)
+                covered[executor] = covered.get(executor, 0) + 1
+        # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
+        self.extraPackages = sorted(module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:"))
+        self.result["executors"] = covered
+        self.result["uncovered_files"] = uncovered
+        self.steps["coverage"] = 0.0
+        self.result["coverage_enforced"] = enforce
+        if uncovered and enforce:
+            self.exits["coverage"] = 1
+            self.fail("coverage", "no gate covers %d changed path%s:\n%s" % (len(uncovered), "" if len(uncovered) == 1 else "s", "\n".join(uncovered[:200])))
+            return None
+        self.exits["coverage"] = 0
+        return executors
+
+    def goList(self, pattern):
+        listing = subprocess.run(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
+        return listing.stdout.split() if listing.returncode == 0 else []
+
+    def stage3(self):
+        """Stage 3's tier-1 lane: apply's tests, the lane's own tests, and stage3/lane/run.sh, which
+        applies the adaptations to the pinned TypeScript and runs the upstream suite and the sanctioned
+        API check. Its results (an 81,500-file adapted tree among them) stay beside the tree; only the
+        verdict and the logs under 5 MB are copied into the published out directory."""
+        started = time.monotonic()
+        results = os.path.realpath(self.arguments.tree) + "-stage3-lane"
+        if os.path.lexists(results):
+            os.rename(results, "%s-%d" % (results, time.time()))
+        commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"]),
+                    ("stage3-lane-tests", ["python3", "-m", "unittest", "stage3/lane/test_check.py", "stage3/lane/test_table.py"]),
+                    ("stage3-lane", ["bash", "stage3/lane/run.sh", results])]
+        codes = {}
+
+        def one(name, command):
+            with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
+                codes[name] = self.spawn(command, output).wait()
+
+        threads = [self.guarded("stage3", one, name, command) for name, command in commands]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        for name in ("execution.json", "verdict.json", "verdict.txt", "patch-set.md"):
+            if os.path.isfile(os.path.join(results, name)):
+                with open(os.path.join(results, name), "rb") as source, open(os.path.join(self.arguments.out, "stage3-lane-" + name), "wb") as target:
+                    target.write(source.read())
+        self.steps["stage3"] = round(time.monotonic() - started, 1)
+        self.result["stage3_exits"] = codes
+        failed = [name for name, _ in commands if codes.get(name) != 0]
+        self.exits["stage3"] = 1 if failed else 0
+        if failed:
+            self.fail("stage3", "stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed)))
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
@@ -240,6 +331,14 @@ class Gate:
                 os.rename(staging, home)
             except OSError:
                 pass  # another gate published the same pinned npm first
+        shim = os.path.expanduser("~/fast-gate/npm/bin/npm")
+        text = "#!/bin/sh\n# The gates' pinned npm (cloud/markdown-width/npm-bootstrap.json), integrity-checked when fetched.\nexec node %s \"$@\"\n" % cli
+        if not os.path.exists(shim) or open(shim).read() != text:
+            os.makedirs(os.path.dirname(shim), exist_ok=True)
+            with open(shim + ".%d" % os.getpid(), "w") as handle:
+                handle.write(text)
+            os.chmod(shim + ".%d" % os.getpid(), 0o755)
+            os.replace(shim + ".%d" % os.getpid(), shim)
         return cli
 
     def guarded(self, stage, target, *arguments):
@@ -280,9 +379,9 @@ class Gate:
         return [], {"root": self.arguments.tools, "from": "missing"}
 
     def touched(self, changed):
-        """Each changed file's package: its own directory's, the package owning its testdata, or one
-        that embeds it. Anything else (go.mod, docs, a submodule pointer, a file no package reads by
-        name) is listed as unowned, for the full gate after landing."""
+        """Each changed file's package: its own directory's, one that embeds it, or the nearest package
+        directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
+        a package's tree is that package's to test). Anything else is unowned and goes to cover()."""
         listing = subprocess.run(["go", "list", "-f", "{{.Dir}}\t{{.ImportPath}}\t{{join .EmbedFiles \",\"}}\t{{join .TestEmbedFiles \",\"}}\t{{join .XTestEmbedFiles \",\"}}", "./..."],
                                  cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
@@ -302,8 +401,10 @@ class Gate:
         for path in changed:
             directory = os.path.dirname(path) or "."
             owner = directories.get(directory) or embedded.get(path)
-            if owner is None and "/testdata/" in "/" + path:
-                owner = directories.get(("/" + path).split("/testdata/")[0].lstrip("/") or ".")
+            ancestor = directory
+            while owner is None and ancestor not in (".", ""):
+                ancestor = os.path.dirname(ancestor) or "."
+                owner = directories.get(ancestor) if ancestor != "." else None
             if owner is None:
                 unowned.append(path)
             else:
@@ -410,7 +511,15 @@ class Gate:
         def runPackage(importPath):
             binary = os.path.join(binaries, importPath.replace("/", "_") + ".test")
             with slots:
-                if self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None) is None or not os.path.exists(binary):
+                if os.path.exists(binary):
+                    os.rename(binary, binary + ".previous")
+                if self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None) != 0:
+                    return
+                if not os.path.exists(binary):
+                    # go test -c succeeded and wrote nothing: the package has no test files.
+                    with self.lock:
+                        tally["packages"] += 1
+                    self.result.setdefault("split_tests", {})[importPath] = 0
                     return
                 listing = self.capture([binary, "-test.list", "."], self.packageDirectories[importPath])
             if listing is None:
@@ -575,8 +684,11 @@ class Gate:
             if self.failure is not None and not self.arguments.full:
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
-            process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True,
-                                       env=dict(os.environ, **gateEnvironment, **(environment or {})))
+            variables = dict(os.environ, **gateEnvironment)
+            # The box has Node but no npm; stage 3's apply runs npm ci, so the gates' pinned npm is on PATH.
+            variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
+            variables.update(environment or {})
+            process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
         return process
 
