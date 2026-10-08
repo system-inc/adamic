@@ -1,0 +1,10 @@
+type ResolvedConfigFileName = string & { readonly length: number };
+type ResolvedConfigFilePath = ResolvedConfigFileName & { readonly toString: () => string };
+function holdName(value: ResolvedConfigFileName): ResolvedConfigFileName { return value; }
+function holdPath(value: ResolvedConfigFilePath): ResolvedConfigFilePath { return value; }
+const path: ResolvedConfigFilePath = 'config'.repeat(2);
+console.log(holdName(path));
+console.log(holdPath(path));
+console.log(`${typeof holdPath(path)} ${holdPath(path) === path}`);
+const absent: ResolvedConfigFileName | undefined = undefined;
+console.log(absent ?? path);

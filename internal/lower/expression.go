@@ -43,6 +43,13 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		// Intersecting a string with structural proof fields does not change its
+		// primitive storage. Cast validation still has to prove those fields.
+		for _, member := range proven.Types() {
+			if member.Flags()&checker.TypeFlagsStringLike != 0 {
+				return ir.String, true
+			}
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
