@@ -1,0 +1,5 @@
+function describe(value: unknown): string {
+    return typeof value;
+}
+console.log(describe(null));
+console.log(describe(undefined));

@@ -1,0 +1,117 @@
+reason,listed_root_sites,covered_root_sites,status,why
+a value of type SolutionBuilderState<T>,22,0,skipped,"Neither example reproduces on required base. First stops at function returning Path; second reports map-key, branded-array, binary-expression and nested-function stops. Not cancelled as an echo."
+a value of type unknown,20,0,skipped,"Exact binder example reproduced. Sound null/undefined tagging requires IR, conversion and runtime work outside typeOf; the unknown-to-Union mutant silently miscompiles the reduction."
+a value of type ResolvedConfigFilePath,18,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type object,16,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ResolvedConfigFileName,12,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type K,8,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type readonly T[] | undefined,8,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindableStaticNameExpression,7,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type NonNullable<T>,7,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type HasJSDoc | undefined,6,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type readonly T[],6,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type string | null | undefined,6,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; },5,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type HasJSDoc,5,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ((node: Node) => boolean) | undefined,4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (ConstructorDeclaration & { body: Block; }) | undefined,4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }),4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type CompilerOptionsValue,4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ImmediatelyInvokedArrowFunction,4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type object | undefined,4,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindableAccessExpression,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindableObjectDefinePropertyCall,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type Children | undefined,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type EndOfFileToken,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type InitializedVariableDeclaration,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type WrappedExpression<AnonymousFunctionDefinition>,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type X,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type false | TypeOnlyAliasDeclaration | undefined,3,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }) | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type AnonymousFunctionDefinition,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type CompilerHost & ReadBuildProgramHost,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type EmitNode & { autoGenerate: AutoGenerateInfo; },2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; },2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type K | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type LeftHandSideExpression & Identifier,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ParameterPropertyDeclaration,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type SourceFile,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type U,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type U | readonly U[] | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type U | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type UnaryExpression & NumericLiteral,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type V | undefined,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type false | RegExpExecArray | null,2,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type """" | ResolvedConfigFileName | undefined",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression),1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (VariableDeclaration & { name: Identifier; }) | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type (element: Node) => ""quit"" | boolean",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (s: string) => void,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type (value: T) => void,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type AccessExpression | RequireOrImportCall,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type AliasDeclarationNode,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ArrowFunction | BinaryExpression | BindingElement | Block | BreakStatement | CallSignatureDeclaration | ... 64 more ... | EndOfFileToken,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindableStaticAccessExpression,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type CallExpression | BindableStaticAccessExpression,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type CanonicalKey,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type Child,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ClassElement | ParameterPropertyDeclaration,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ClassNamedEvaluationHelperBlock,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type CustomTransformerFactory | TransformerFactory<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression),1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type IncludeTypeSpaceImports,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type IncrementalMultiFileEmitBuildInfoFileInfo,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type JSDocImportTag | CanHaveModuleSpecifier,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type Map<K, Set<V>>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type Map<Path, ModeAwareCache<T>> | undefined",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type Map<string, ModeAwareCache<T>>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type Map<string, WildcardDirectoryWatcher<T>>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type Map<string, [K, V[]]>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type MapLike<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type NamedDeclaration & { name: DeclarationName; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type NodeArray<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type NonNullable<K>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type NonNullable<U>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PrimitiveLiteral,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type PrivateEnvironment<TData, TEntry>",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PrivateIdentifierInExpression,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PropertyAccessExpression | LiteralLikeElementAccessExpression,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PropertyAccessExpression | SyntheticSuper,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type PropertyDeclaration | ParameterPropertyDeclaration,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ReplaceableIndexedAccessType,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type RequireOrImportCall,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ResolvedConfigFileName | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ResolvedModuleWithFailedLookupLocations & ResolvedTypeReferenceDirectiveWithFailedLookupLocations,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ResolvedType & InstantiationExpressionType,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type Set<K>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type Set<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type SortedArray<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type Source,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type SourceFileOrString,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type UnaryExpression & (BigIntLiteral | NumericLiteral),1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type V,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type VariableDeclaration & { name: Identifier; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type VariableDeclarationList & { _usingBrand: void; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type WatchFactoryHost & { trace?(s: string): void; },1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type boolean | V | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type readonly Child[],1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type readonly K[],1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type string | null,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+a value of type string | object | undefined,1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
+"a value of type { forEach: (callbackfn: (value: T, key: K, map: Map<K, T>) => void, thisArg?: any) => void; clear: () => void; }",1,0,skipped,Not attempted after the unknown representation blocker; no outcome inferred.
