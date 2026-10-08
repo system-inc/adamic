@@ -1,0 +1,12 @@
+let receivers = 0;
+let argumentsRun = 0;
+function receiver(value: number[] | undefined): number[] | undefined { receivers += 1; return value; }
+function separator(): string { argumentsRun += 1; return ':'; }
+function text(value: number[] | undefined): string | undefined {
+    return receiver(value)?.map((item) => item + 1).join(separator());
+}
+console.log(text(undefined) ?? 'absent');
+const empty: number[] = [];
+console.log(text(empty) ?? 'missing');
+console.log(text([0, 1]) ?? 'missing');
+console.log(`${receivers} ${argumentsRun}`);

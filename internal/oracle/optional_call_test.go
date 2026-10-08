@@ -8,6 +8,7 @@ func init() {
 		"internal/oracle/testdata/optional_call_receiver.a",
 		"internal/oracle/testdata/optional_call_collections.a",
 		"internal/oracle/testdata/optional_call_chain.a",
+		"internal/oracle/testdata/optional_call_result_chain.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string

@@ -6,7 +6,7 @@ function receiver(value: Runner | undefined): Runner | undefined { reads += 1; r
 function invoke(value: Runner | undefined): string | undefined { return receiver(value)?.run?.(argument()); }
 console.log(invoke(undefined) ?? 'absent object');
 console.log(invoke({ name: 'missing' }) ?? 'absent method');
-const object: Runner = { name: 'literal', run(value: number): string { return `${this.name}:${value}`; } };
+const object: Runner = { name: 'arrow', run: (value: number): string => `arrow:${value}` };
 console.log(invoke(object) ?? 'missing');
 class NamedRunner {
     readonly name: string;

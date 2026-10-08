@@ -32,6 +32,16 @@ func (l *lowering) lowerOptionalCall(node *ast.Node, discarded bool) (ir.Express
 				represented, known := l.representation(declared)
 				safe = known && represented.IsReference() && !l.includesUndefined(declared) && !l.includesNull(declared)
 			}
+			// A call with a proven non-null reference result carries absence
+			// only from its earlier optional receiver, just like a required field.
+			if source.Kind == ast.KindCallExpression {
+				signatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source.AsCallExpression().Expression)), checker.SignatureKindCall)
+				if len(signatures) == 1 {
+					declared := l.checker.GetReturnTypeOfSignature(signatures[0])
+					represented, known := l.representation(declared)
+					safe = known && represented.IsReference() && !l.includesUndefined(declared) && !l.includesNull(declared)
+				}
+			}
 			if !safe {
 				return nil, true, l.notYet(node, "an optional call continuing through an unguarded intermediate property")
 			}
@@ -102,16 +112,26 @@ func (l *lowering) lowerOptionalCall(node *ast.Node, discarded bool) (ir.Express
 	} else if !discarded {
 		return nil, true, l.notYet(node, "a void optional call used as a value")
 	}
-	absent := fit(ir.Undefined{}, resultType)
+	helperType := resultType
+	// The closure ABI has one result word. Boolean absence uses the existing
+	// proven union box, then narrows back to the checker-proven boolean pair.
+	if resultType == ir.MaybeBoolean {
+		helperType = ir.Union
+	}
+	absent := fit(ir.Undefined{}, helperType)
 	body := []ir.Statement{ir.Declare{Local: final, Value: saved}, ir.If{Condition: ir.IsUndefined{Value: ir.Read{Local: final, Of: saved.Type()}}, Then: []ir.Statement{ir.Return{Value: absent}}}}
 	if value.Type() == 0 {
 		body = append(body, ir.Evaluate{Value: value}, ir.Return{Value: absent})
 	} else {
-		body = append(body, ir.Return{Value: fit(value, resultType)})
+		body = append(body, ir.Return{Value: fit(value, helperType)})
 	}
-	l.result.Functions[index].Returns = resultType
+	l.result.Functions[index].Returns = helperType
 	l.result.Functions[index].Body = body
-	return ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: resultType}, true, nil
+	result := ir.Expression(ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: helperType})
+	if helperType != resultType {
+		result = ir.Narrow{Value: result, To: resultType}
+	}
+	return result, true, nil
 }
 
 // Only these intrinsics have one receiver operand. Unknown shapes stay stopped.
@@ -298,7 +318,7 @@ func (l *lowering) optionalCallable(node *ast.Node, discarded bool) (ir.Expressi
 	call := node.AsCallExpression()
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(call.Expression))
 	signatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
-	if len(signatures) != 1 || l.censusNeverRestSignature(signatures[0]) {
+	if len(signatures) != 1 {
 		return nil, l.notYet(node, "an optional call without one concrete callable signature")
 	}
 	signature := signatures[0]
@@ -348,11 +368,11 @@ func (l *lowering) optionalCallable(node *ast.Node, discarded bool) (ir.Expressi
 			return nil, err
 		}
 		if position < len(signature.Parameters()) {
-			if takes, known := l.censusCallableParameter(signature.Parameters()[position]); known {
+			if takes, known := l.representation(l.checker.GetTypeOfSymbol(signature.Parameters()[position])); known {
 				lowered = fit(lowered, takes)
 			}
 		}
-		if censusCallableSlotless(lowered.Type()) {
+		if slotless(lowered.Type()) {
 			return nil, l.notYet(argument, "an optional callable argument without a closure slot")
 		}
 		arguments = append(arguments, lowered)
@@ -362,7 +382,7 @@ func (l *lowering) optionalCallable(node *ast.Node, discarded bool) (ir.Expressi
 	if result.Flags()&checker.TypeFlagsVoid == 0 {
 		var known bool
 		returns, known = l.representation(result)
-		if !known || censusCallableSlotless(returns) {
+		if !known || slotless(returns) {
 			return nil, l.notYet(node, "an optional callable result without a closure slot")
 		}
 	} else if !discarded {

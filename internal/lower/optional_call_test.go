@@ -20,6 +20,7 @@ func TestOptionalCallsLower(t *testing.T) {
 func TestOptionalCallStopsStayNamed(t *testing.T) {
 	for _, probe := range []struct{ source, reason string }{
 		{"function observed(run: (() => void) | undefined): void { return run?.(); }", "a void optional call used as a value"},
+		{"interface Runner { run?(): number; } const runner: Runner = { run(): number { return 1; } }; console.log(`${runner.run?.() ?? 0}`);", "a literal method through a view that erases its receiver"},
 		{"function spread(run: ((...values: number[]) => number) | undefined): number | undefined { return run?.(1, 2); }", "a rest parameter in an optional callable"},
 	} {
 		_, err := lowerSource(t, probe.source)
