@@ -42,3 +42,12 @@ Focused commands and their logs are recorded with each delivery. No whole-packag
 full gate is run for this unit. Rulings 5, 3 and 6 follow this slice; ruling 4 belongs to the
 TypeScript adaptation. Step 21's exception branch is not on the starting area tip and will
 be named as a dependency rather than merged while unlanded.
+
+Ruling 2 validation after merging current main: `go test ./internal/lower -run
+'^TestLibraryMethodValue' -count=1` passes; `go test ./internal/oracle -run
+'^TestObjectCachedIntrinsic' -count=1 -v` passes both the Node fixture and its mutant.
+`go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(library_method_values|method_coverage_object_descriptors)'
+-count=1 -v` passes the existing descriptor and alias fixtures. The initial count run
+found missing pinned Node declarations and two intercepted descriptor paths; both were
+fixed. `go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts`
+then passes and refreshes the table, including the new fixture.
