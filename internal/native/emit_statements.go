@@ -191,6 +191,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
+		if statement.Record {
+			e.recordWrite(statement)
+			e.end()
+			break
+		}
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
@@ -200,6 +205,29 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+		records := e.hasRecordStorage()
+		keptValue := value
+		if statement.Value.Type().IsReference() {
+			keptValue = e.kept(value)
+		}
+		if records {
+			e.line("if (adamic_record_is(%s)) {", object)
+			boxed := keptValue
+			if statement.Value.Type() == ir.Number {
+				boxed = fmt.Sprintf("adamic_box_number(%s)", value)
+			}
+			if statement.Value.Type() == ir.Boolean {
+				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+			}
+			if statement.Value.Type() == ir.MaybeNumber {
+				boxed = fmt.Sprintf("((%s).present ? adamic_box_number((%s).number) : NULL)", value, value)
+			}
+			if statement.Value.Type() == ir.MaybeBoolean {
+				boxed = fmt.Sprintf("((%s).present ? ((%s).boolean ? &adamic_box_true : &adamic_box_false) : NULL)", value, value)
+			}
+			e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), boxed)
+			e.line("} else {")
+		}
 		slot := e.temporary()
 		cache := ""
 		if e.fieldTypesNeeded() {
@@ -229,7 +257,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, e.kept(value))
+			e.line("%s->reference = %s;", slot, keptValue)
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
@@ -242,6 +270,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		if e.fieldReadinessNeeded(statement.Name) {
 			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
+		}
+		if records {
+			e.line("}")
 		}
 		e.end()
 	case ir.Panic:

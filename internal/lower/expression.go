@@ -817,6 +817,18 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		spell := func(value ir.Expression) ir.Expression {
+			switch value.Type() {
+			case ir.Number:
+				return ir.NumberToString{Value: value}
+			case ir.Boolean:
+				return ir.BooleanToString{Value: value}
+			}
+			return value
+		}
+		left, right = spell(left), spell(right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}

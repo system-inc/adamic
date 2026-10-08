@@ -96,6 +96,11 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			call.Returns = ir.Array
 		case "values", "entries":
 			result := l.checker.GetTypeAtLocation(node)
+			// The interface overload may return any. Its destination supplies the
+			// contract we must prove or check, never permission to erase it.
+			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+				result = contextual
+			}
 			arguments := l.checker.GetTypeArguments(result)
 			if len(arguments) != 1 {
 				return refused("tsc's result must be an array with a proven element type")

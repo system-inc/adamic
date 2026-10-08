@@ -5,6 +5,117 @@ Delivery branch: `codex/entries-provenance`, based only on
 Research: `codex/step12-scout` at `ebaf1bc0`, read without merging.
 Task: `#d9eemrs`.
 
+## Acceptance follow-up
+
+Dependency: `codex/step12-entries-fixtures` at `8d864f9c`, read and run without
+merging its branch or committing its fixtures. Its six source programs, Node
+observations, and six source mutations remain unchanged. Supply the extracted
+bucket with `ADAMIC_ENTRIES_ACCEPTANCE` when it is not present in Stage 3.
+After the unchanged acceptance runner passed 12/12, the bucket was moved out of
+the delivery checkout and independently retested:
+
+```sh
+ADAMIC_ENTRIES_ACCEPTANCE=/tmp/entries-acceptance-dependency-8d864f9c ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestEntriesAcceptance$' -count=1 -v > /tmp/entries-acceptance-external.log 2>&1
+```
+
+All 12 contracts pass, with reflection modes inspected and compiled cases run
+in both backends, native release, and native sanitizers. The ten own source
+fixtures, readiness witness, allocation proof, refusal boundaries, related
+Object/class/regex checks, vet and Linux counts regeneration pass. The counts
+diff adds only the two new own fixture rows.
+
+| Acceptance program | Result |
+|---|---|
+| 01 scanner keywords | All 84 original keyword entries match Node, including the exact computed constructor key. Allocation proof removes the check. |
+| 02 extra numeric field | Both visible and hidden entries match Node. Allocation proof removes the check. |
+| 03 extra string field | Checked enumeration exits 70 at hidden, naming actual string and declared number. |
+| 04 alias adds a field | Checked enumeration includes late in Node order. Its string mutation exits 70 at late. |
+| 05 getter | Explicitly refused for the getter/accessor. Replacing it with a data field matches Node. |
+| 06 symbol key | Explicitly refused for the symbol key. Replacing it with a string data field matches Node. |
+
+The initial compiler refused the scanner's index annotation, the interface
+results' permissive any overload, and the alias's index annotation. The getter
+was refused for an unrelated reason and the symbol was NotYet. The acceptance
+adapter now checks refusal text without the filename, so a filename containing
+getter or symbol cannot satisfy the diagnostic assertion accidentally.
+
+The result destination supplies the declared enumeration value contract when
+TypeScript's interface overload returns any. Effect-free constant string keys
+preserve the scanner's computed constructor spelling. String display of number
+and boolean values uses their existing conversions.
+
+String index annotations are admitted in modules using Object enumeration.
+Const literal origins that receive indexed writes use the existing counted,
+ordered record table. Alias writes invalidate unchecked enumeration. Actual own
+keys and values are used through narrower views, including hasOwnProperty and
+all Object.keys paths. Numeric keys sort numerically; other keys keep creation
+order. Records retain representation checks through narrowed parameters.
+
+The new own witness `internal/oracle/testdata/entries_record_alias.a` caught a
+real exit-0 error: native Object.keys printed the table wrapper's key 0, and a
+narrow numeric field read printed pointer bits instead of 4. Record-aware key
+routes and representation checks repair both. This witness also checks scalar
+number, string and boolean records, repeated strings, reads and writes through
+parameters, overwriting a field, and keys before and after mutation. It matches
+Node in release native, ASan/UBSan native and JavaScript. The second new witness,
+entries_record_misfit.a, pins exit 70 and the complete late/string/number
+message. Counts are regenerated on Linux for both new registered witnesses.
+
+Conservative boundary: indexed mutations with unknown allocation origins,
+nonconstant write keys, record allocation with spreads, and union or optional
+field reads in record programs remain NotYet. Record spread copying stops
+explicitly at runtime. Getter and symbol layouts remain outside this reflection
+implementation. These restrictions prevent unsupported storage from being
+silently treated as inline object fields. This is not general dictionary lowering.
+
+Focused checks (complete output in logs):
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/oracle -run '^TestEntries|^TestObjectRefusalsExplainSoundness$|^TestObjectUnprovenShapesStayNotYet$|^TestUniformFieldsMatchNode$|^TestRuntimeFieldLayoutsAreIncluded$|^TestRegexProgramsKeepCheckedFieldReads$|TestNativeAgreesWithNode/internal/oracle/testdata/(library_object_|class_features_|regexp_match)' -count=1 -v > /tmp/entries-acceptance-related-final.log 2>&1
+python3 stage3/fixtures/entries/check.py --acceptance --scratch /tmp/entries-acceptance-delivery > /tmp/entries-acceptance-delivery.log 2>&1
+python3 internal/oracle/testdata/run-entries-provenance-mutants.py > /tmp/entries-acceptance-mutants.log 2>&1
+python3 internal/oracle/testdata/run-entries-provenance-mutants.py lowering-drop-indexed-origin-boundary lowering-drop-indexed-read-boundary lowering-drop-record-spread-boundary > /tmp/entries-boundary-mutants.log 2>&1
+go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle > /tmp/entries-acceptance-vet.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/entries-acceptance-counts.log 2>&1
+```
+
+Eleven implementation mutants are run and restored by the mutation runner:
+removing native or JavaScript readiness checks; treating the hidden-value or
+record-value misfit as proven; dropping a native or JavaScript enumeration key;
+removing native record key dispatch; removing record representation marks; and
+removing the indexed-origin, indexed-read and record-spread boundaries.
+Pinned exit 70 catches removal of readiness and enumeration checks. Exact Node
+stdout catches all three dropped-key mutants. Removing record representation
+marks is caught because a successful Node program instead stops with exit 70. Existing fixture tests also remove the IR check and finite-literal
+membership checks, proving both backend results revert to Node's exit-0 output
+rather than the specified checked stop. Removing each refusal boundary is caught by its explicit NotYet assertion:
+unknown indexed writers, undeclared indexed field reads, and spreads into record
+storage. Their separate log is /tmp/entries-boundary-mutants.log. Counts initially
+found a regression in existing regexp_match named-group reads; the indexed-read
+boundary is now scoped to record storage, and that fixture and the regex field
+layout check pass.
+
+No full suite or shared gate is run locally. No Stage 3 status or recorded Node
+observation is regenerated. The full scanner remains subject to its earlier
+closed-program blockers; the exact scanner allocation in acceptance program 01
+passes independently. The final native scanner driver was also rerun:
+
+```sh
+bash stage3/drivers/scanner/run.sh /tmp/entries-scanner-acceptance-after --tree /tmp/entries-scanner-slice --inputs /tmp/entries-scanner-before/adapted --oracle /tmp/entries-scanner-slice-baseline/node.stdout > /tmp/entries-scanner-acceptance-after.log 2>&1
+```
+
+Its first stop remains `corePublic.ts:9:5`, Refused index signature, build exit 1.
+The module containing that earlier declaration has no Object enumeration call,
+so the deliberately narrow declaration exception does not admit it. Node output
+is byte-identical to the initial baseline: 108,019,868 bytes, 1,369,441 tokens,
+466 diagnostics, 81 files, SHA-256
+`ef99bf424a5b54ccdcbdf6eee2e4267aa59856887239008bca1d68582b22fc3b`.
+Comparison control exits 0 and the end-token mutant is caught with diff exit 1.
+The initial driver comparison and setup evidence below are retained as the
+initial delivery's observations.
+
+## Initial delivery evidence
+
 Object.entries and Object.values now follow stable literal origins through annotated
 aliases and imported symbols. A const or never-reassigned binding is eligible;
 assignment and destructuring writes invalidate the proof. Every actual literal

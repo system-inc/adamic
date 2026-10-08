@@ -87,12 +87,20 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = l.predicateRefusal(node)
 			return found != nil
 		}
+		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.enumerationDescriptorRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true
 		}
 		// FileName restores the loader's .a alias; real .ts sources keep checked !.
-		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || l.program.FileName(module) != module.FileName().AsString()) {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || l.program.FileName(module) != module.FileName().AsString()) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
