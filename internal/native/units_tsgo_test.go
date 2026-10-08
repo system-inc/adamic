@@ -6,6 +6,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
+
+	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
@@ -65,4 +68,71 @@ func TestSplitTSGoAgrees(t *testing.T) {
 		}
 		t.Logf("checker uncached=%s: %d identical bytes: %s", uncached, len(got), got)
 	}
+}
+
+// Compile-only coverage of the split checker path: no checker archive or runtime
+// link is needed to detect disagreements between generated units and runtime types.
+func TestSplitTSGoSmoke(t *testing.T) {
+	compiler, err := exec.LookPath("clang")
+	if err != nil {
+		t.Skip("clang is not installed")
+	}
+	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	path := filepath.Join(directory, "smoke.ts")
+	// arguments.length selects the struct method-entry convention; the class
+	// ensures that convention is exercised by an emitted method table.
+	const input = `class Counter {
+ value = 1;
+ step(): number { this.value += 1; return this.value; }
+}
+function count(): number { return arguments.length; }
+console.log(new Counter().step().toString() + count().toString());
+`
+	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded.EnableTSGo()
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := TSGoC(program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(source, "const adamic_method_entry") {
+		t.Fatal("smoke program did not emit a method table")
+	}
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	common := []runtimeFile{{"units.h", []byte(header)}, {"tsgo.h", bridge.Header}}
+	for _, file := range files {
+		if strings.HasSuffix(file.name, ".h") {
+			common = append(common, file)
+		}
+	}
+	// Match splitTSGoRuntime's checker flags and buildUnitsWithLibrary's per-unit
+	// path. Always bypass the object cache so the fast gate actually compiles.
+	flags := append(sourceFlags(source, Options{}), "-DADAMIC_TSGO")
+	for _, unit := range units {
+		snapshot := append(append([]runtimeFile{}, common...), runtimeFile{unit.name, []byte(unit.source)})
+		if _, err := compileUnit(unit, snapshot, flags, compiler, string(version), filepath.Join(directory, "cache"), directory, true); err != nil {
+			t.Error(err)
+		}
+	}
+	t.Logf("attempted compilation of %d split checker units", len(units))
 }
