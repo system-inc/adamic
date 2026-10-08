@@ -163,6 +163,10 @@ class Gate:
         if "a-check" in executors and self.result.get("unchecked_a_files"):
             self.planned.append("a-check")
             threads.append(self.guarded("a-check", self.aCheck, self.result["unchecked_a_files"]))
+        staling = self.catalogEntriesTouched(changed)
+        if staling:
+            self.planned.append("catalog-apply")
+            threads.append(self.guarded("catalog-apply", self.catalogApply, staling))
         if "catalog" in executors:
             self.planned.append("catalog")
             threads.append(self.guarded("catalog", self.step, "catalog", ["bash", "-n", "verify/catalog/check.sh"]))
@@ -293,16 +297,18 @@ class Gate:
         results = os.path.realpath(self.arguments.tree) + "-stage3-lane"
         if os.path.lexists(results):
             os.rename(results, "%s-%d" % (results, time.time()))
-        commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"]),
-                    ("stage3-lane-tests", ["python3", "-m", "unittest", "stage3/lane/test_check.py", "stage3/lane/test_table.py"]),
-                    ("stage3-lane", ["bash", "stage3/lane/run.sh", results])]
+        # The lane's own tests import check and run from their directory (from the root both fail with
+        # ModuleNotFoundError); with stage3/api's npm packages in place they are 32 of 32 on the box.
+        commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"], None),
+                    ("stage3-lane-tests", ["python3", "-m", "unittest", "test_check", "test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
+                    ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
         codes = {}
 
-        def one(name, command):
+        def one(name, command, directory):
             with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
-                codes[name] = self.spawn(command, output).wait()
+                codes[name] = self.spawn(command, output, subprocess.STDOUT, directory).wait()
 
-        threads = [self.guarded("stage3", one, name, command) for name, command in commands]
+        threads = [self.guarded("stage3", one, name, command, directory) for name, command, directory in commands]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -313,7 +319,7 @@ class Gate:
                     target.write(source.read())
         self.steps["stage3"] = round(time.monotonic() - started, 1)
         self.result["stage3_exits"] = codes
-        failed = [name for name, _ in commands if codes.get(name) != 0]
+        failed = [name for name, _, _ in commands if codes.get(name) != 0]
         self.exits["stage3"] = 1 if failed else 0
         if failed:
             self.fail("stage3", "stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed)))
@@ -390,6 +396,43 @@ class Gate:
         self.exits["a-check"] = 1 if failed else 0
         if failed:
             self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])))
+
+    def catalogEntriesTouched(self, changed):
+        """The bug catalog's entries whose undo patch edits a file this change touches."""
+        directory = os.path.join(self.arguments.tree, "verify/catalog")
+        if not os.path.isdir(directory):
+            return []
+        touched = []
+        for name in sorted(os.listdir(directory)):
+            if name.endswith(".patch"):
+                with open(os.path.join(directory, name), errors="replace") as handle:
+                    files = set(re.findall(r"^\+\+\+ b/(\S+)", handle.read(), re.M))
+                if files & set(changed):
+                    touched.append(name)
+        return touched
+
+    def catalogApply(self, patches):
+        """Staling moves to where it's cheap to fix (@system_adamic, Oct 7 21:28): an entry's undo patch
+        that applied to main and no longer applies with this change makes the change red, naming the
+        entry, so the landing that stales it refreshes it. One already stale on main stays a warning."""
+        started = time.monotonic()
+        stale, staled = [], []
+        for name in patches:
+            patch = os.path.join(self.arguments.tree, "verify/catalog", name)
+            onCandidate = self.spawn(["git", "apply", "--check", patch], subprocess.DEVNULL, subprocess.DEVNULL).wait() == 0
+            index = os.path.join(self.arguments.out, "catalog-base.index")
+            environment = {"GIT_INDEX_FILE": index}
+            self.spawn(["git", "read-tree", self.arguments.base], subprocess.DEVNULL, subprocess.DEVNULL, None, environment).wait()
+            onBase = self.spawn(["git", "apply", "--check", "--cached", patch], subprocess.DEVNULL, subprocess.DEVNULL, None, environment).wait() == 0
+            if onBase and not onCandidate:
+                staled.append(name)
+            elif not onCandidate:
+                stale.append(name)
+        self.result["catalog_apply"] = {"checked": patches, "staled_by_this_change": staled, "already_stale": stale}
+        self.steps["catalog-apply"] = round(time.monotonic() - started, 1)
+        self.exits["catalog-apply"] = 1 if staled else 0
+        if staled:
+            self.fail("catalog-apply", "this change stops the bug catalog's undo patch from applying: %s. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)" % ", ".join(staled))
 
     def catalogFull(self):
         if not os.path.exists(os.path.join(self.arguments.tree, "verify/catalog/check.sh")):
