@@ -397,8 +397,25 @@ class Gate:
             self.steps["catalog"] = 0.0
             self.result["catalog"] = "not in this tree"
             return
-        # check.sh takes the commit whose bugs it reintroduces and proves caught.
-        self.step("catalog", ["bash", "verify/catalog/check.sh", self.arguments.sha])
+        # check.sh takes the commit whose bugs it reintroduces and proves caught. Its verdict per entry:
+        # applies-and-fails-as-recorded (caught), skipped (with its reason), no-longer-applies (the undo
+        # patch went stale as the code moved: the catalog's upkeep, recorded, not main's red), or
+        # applies-but-failure-not-as-recorded (a reintroduced bug no longer caught as recorded: red).
+        started = time.monotonic()
+        with open(os.path.join(self.arguments.out, "catalog.log"), "w") as output:
+            code = self.spawn(["bash", "verify/catalog/check.sh", self.arguments.sha], output).wait()
+        self.steps["catalog"] = round(time.monotonic() - started, 1)
+        with open(os.path.join(self.arguments.out, "catalog.log")) as handle:
+            lines = handle.read().splitlines()
+        uncaught = [line for line in lines if "applies-but-failure-not-as-recorded" in line]
+        stale = [line.split(":")[0] for line in lines if "no-longer-applies" in line]
+        caught = [line for line in lines if "applies-and-fails-as-recorded" in line]
+        self.result["catalog"] = {"exit": code, "caught": len(caught), "stale": stale, "uncaught": uncaught}
+        if uncaught or (code != 0 and not stale) or not caught:
+            self.exits["catalog"] = 1
+            self.fail("catalog", "the bug catalog: %s" % ("; ".join(uncaught) if uncaught else "check.sh exited %d with no entry caught or stale (see catalog.log)" % code))
+        else:
+            self.exits["catalog"] = 0
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
