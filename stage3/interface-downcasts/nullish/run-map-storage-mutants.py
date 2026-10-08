@@ -11,6 +11,7 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('optional-reference-admission', 'internal/ir/view_maps.go', 'return allowsNullish(to, ViewUndefined) && accepts(payload, to)', 'return accepts(payload, to)', 'entry-convert-optional-object-schema'),
  ('number-box', runtime, 'adamic_box_number(value.number)', 'NULL', 'entry-convert-number-null'),
  ('boolean-box', runtime, 'value.boolean ? &adamic_box_true : &adamic_box_false', 'value.boolean ? &adamic_box_false : &adamic_box_true', 'entry-convert-boolean-null'),
  ('number-presence', runtime, '(adamic_maybe_number){true, value.number}', '(adamic_maybe_number){false, value.number}', 'entry-convert-number-undefined'),

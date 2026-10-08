@@ -472,3 +472,26 @@ Scoped View|Map|Contract|Callable|Tuple checks pass: IR 0.014s, lower 5.460s,
 native 41.677s, JavaScript 1.033s. Vet passes. Added gap controls pass in 1.903s
 and boolean mixed-union control in 0.516s. Previously documented broader gate
 failures remain outside this selection; no full repository gate pass is claimed.
+
+## Optional reference conversion admission (October 8)
+
+Merged integration 322bd65d before this group. Optional object and array source
+contracts now compare their present payload through private descriptor copies;
+the target must separately admit undefined. Original producer descriptors and
+IDs remain unchanged. String, object, array and already certified callable
+controls cover get, present undefined, identity, values/entries loops, cloning
+and callbacks across Map.clear(), matching Node and passing leak checks. Targets
+excluding undefined stop at node.value for all four source families. Removing
+the separate undefined guard makes object and array mutants run on with exit 0;
+the behavioral mutant is recorded and reproducible with the storage runner.
+
+Uncached Map|Nullish|NullableSelection oracle selection passes in 175.085s.
+Optional controls pass in 6.151s. Scoped View|Map|Contract|Callable|Tuple packages
+pass: IR 0.017s, lower 6.324s, native 55.113s, JavaScript 1.431s; vet passes.
+Evidence is in map-optional-reference-*.log.gz. Optional/rest tuples now belong
+to lane 4c and are not developed here. Nested element and key storage conversion,
+and nominal runtime witnesses remain next. The conservative nullish inventory
+still has 2,018 pairs / 9,101 reads awaiting production reachability and lowering;
+these are unmeasured production rows, not a claim that every row still refuses.
+The overlapping intersection inventory is 15 pairs / 42 reads; fixture success
+cannot establish how many production rows in either inventory are discharged.

@@ -3,6 +3,21 @@ package ir
 // MapCertificatePairs retains source storage and semantic subtype evidence.
 // Writable maps require both directions; readonly maps permit covariance.
 func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContractID {
+	// Compare optional reference payloads using private present descriptors. The
+	// producer IDs remain unchanged; undefined must separately be admitted by the
+	// target. Never rewrite a program descriptor to make a certificate fit.
+	comparison := *program
+	comparison.ViewContracts = append([]ViewContract(nil), program.ViewContracts...)
+	present := map[ViewContractID]ViewContractID{}
+	for index, contract := range program.ViewContracts {
+		if contract.Undefined && contract.Kind != ViewScalar && contract.Kind != ViewNullable && contract.Kind != ViewUnion {
+			contract.Undefined = false
+			contract.Of = contract.Of.Present()
+			comparison.ViewContracts = append(comparison.ViewContracts, contract)
+			present[ViewContractID(index+1)] = ViewContractID(len(comparison.ViewContracts))
+		}
+	}
+	program = &comparison
 	c := program.ViewContracts[target-1]
 	pairs := [][2]ViewContractID{}
 	active := map[[2]ViewContractID]bool{}
@@ -88,6 +103,9 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 		// Readonly arrays permit element covariance; writable arrays require both
 		// directions. Every recursive step also preserves physical storage.
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
+		if payload := present[from]; payload != 0 {
+			return allowsNullish(to, ViewUndefined) && accepts(payload, to)
+		}
 		if source.Kind == ViewNull || source.Kind == ViewUndefined {
 			return allowsNullish(to, source.Kind)
 		}
