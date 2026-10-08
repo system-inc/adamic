@@ -124,6 +124,7 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 	thrown->slots[2].reference = before;
 	adamic_release(detail);
 	adamic_release(syscall);
+	adamic_error_tag(thrown);
 	adamic_thrown = thrown;
 }
 // NUL is rejected before any filesystem effect. The supported path contract is
@@ -209,6 +210,7 @@ static bool valid(const adamic_string *path, bool target) {
 		adamic_string_concat(2, (adamic_string *const[]){target ? &target_before : &before, shown});
 	thrown->slots[2].reference = &code;
 	adamic_release(shown);
+	adamic_error_tag(thrown);
 	adamic_thrown = thrown;
 	return false;
 }

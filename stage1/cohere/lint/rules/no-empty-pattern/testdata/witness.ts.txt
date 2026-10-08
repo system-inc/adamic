@@ -1,0 +1,9 @@
+// Both messages fire; real bindings distinguish the compiled mutant.
+const {} = objectValue;
+const [] = arrayValue;
+const { nested: {} } = objectValue;
+const { nested: [] } = objectValue;
+const { present } = objectValue;
+const [first] = arrayValue;
+function accepts({}) {}
+function defaults({} = {}) {}

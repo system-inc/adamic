@@ -1,0 +1,63 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { messageMaximum } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly maximum: number;
+    readonly ignoreExpressions: boolean;
+    count = 0;
+    constructor(context: RuleContext) {
+        this.context = context;
+        let maximum = 1;
+        let ignoreExpressions = false;
+        // Factories exist even on another rule's row; its options are not ours.
+        if(context.enabled('max-classes-per-file')) {
+            // Captured upstream options use Maximum; raw configuration also allows max or an integer.
+            maximum = Number(context.settings.read('maximum', context.settings.read('max', context.settings.read('option', '1'))));
+            if(!Number.isInteger(maximum) || maximum < 1) {
+                panic('max-classes-per-file takes a maximum of at least 1');
+            }
+            ignoreExpressions = context.settings.read('ignoreexpressions', 'false') === 'true';
+        }
+        this.maximum = maximum;
+        this.ignoreExpressions = ignoreExpressions;
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        // Both subscribed kinds are relevant. Expressions keep counting inside functions;
+        // declarations there are fixtures rather than design units of this file.
+        if(node.kind === 'ClassExpression') {
+            if(!this.ignoreExpressions) {
+                this.count++;
+            }
+            return;
+        }
+        let ancestor = parent;
+        while(ancestor >= 0) {
+            if(this.context.functionLike(ancestor)) {
+                return;
+            }
+            ancestor = this.context.parent(ancestor);
+        }
+        this.count++;
+    }
+    finish(root: number): void {
+        if(this.count <= this.maximum) {
+            return;
+        }
+        // The source root's final child is EOF; trivia outside its statements is excluded.
+        const statements = this.context.node(root).children;
+        const first = statements[0] ?? panic('classes without a statement');
+        const last = statements[statements.length - 2] ?? panic('classes without a statement');
+        this.context.reportRange(
+            this.context.start(first), this.context.node(last).end,
+            'max-classes-per-file', 'maximumExceeded',
+            messageMaximum.replace('%d', `${this.count}`).replace('%d', `${this.maximum}`),
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
