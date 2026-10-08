@@ -1,0 +1,3029 @@
+{
+  "environment": {
+    "format": "adamic-emitter-v1",
+    "typescript": "6.0.3",
+    "node": "v24.19.0",
+    "api": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+    "libraries": "c4bbec912cb85fb91d95ff7a0922b1eb09fceb9d584cdd18debfd049c48d22cd",
+    "driver": "97a8232889191d5616c7b298ef2359e35dfde4db338f1673a7e77ca57611a402"
+  },
+  "projects": [
+    {
+      "id": "001_varianceCantBeStrictWhileStructureIsnt",
+      "input": "3c4ee401e34da97b69d08ce04d2c06aa54de0970e48fe608d2f4ab564f69a7b7",
+      "shard": "projects/2fe85edda5b128d0955002c3696b65392bc350492c791bdf8f3d0f475168e4aa.jsonl",
+      "sha256": "dc860a02282855741d1178a58ce7cdd71f08e37dea94f027e04e7af941c380d1",
+      "bytes": 579,
+      "milliseconds": 281.74069000000003,
+      "reused": false
+    },
+    {
+      "id": "002_conditionalEqualityTestingNullability",
+      "input": "027800f20f183a5f3157ef3938e312259cabcc1e7c707e84ef85ca477c84faa9",
+      "shard": "projects/85eae0113fe47bde2cc2c7fd72c6fd67c5421dfb21a9d573a3c7edfe238f3240.jsonl",
+      "sha256": "355323440579ab144b435f2d81b9525062cb86e579cc404205b62fa3dd415020",
+      "bytes": 470,
+      "milliseconds": 8.198709000000008,
+      "reused": false
+    },
+    {
+      "id": "003_commentOnClassAccessor1",
+      "input": "d19067930fe4d5f78eeb493ac100f0fe067c25a2ee93c3326a0df2099c5cd9c7",
+      "shard": "projects/9ffc7b06af95812584d3df305ed6e8aeff02aa2b981469e90f3f9e93ce7f01b1.jsonl",
+      "sha256": "0eb2b72e2e03a132b8f7b0983bfcc2c887690544647bcba69384454c20ba0201",
+      "bytes": 503,
+      "milliseconds": 5.226292999999998,
+      "reused": false
+    },
+    {
+      "id": "004_metadataOfUnion",
+      "input": "93f3883470fd137b639fcbd4bc38c14845f23ecfbccc0a1542d813bc52cba1ae",
+      "shard": "projects/dea27ab25546a28f153f2a23d1d9aed4629776dc09fbc3b933812c4f6bbabe3d.jsonl",
+      "sha256": "3ab18ead8f89bbe96d2a253e783b895f325eee4da7e79155203e513cd334ec63",
+      "bytes": 2226,
+      "milliseconds": 11.495486000000028,
+      "reused": false
+    },
+    {
+      "id": "005_ambientEnumElementInitializer3",
+      "input": "057d610fcf813c199c126ed7155e5e3037ab364f1b49e7e7aec5be430b468865",
+      "shard": "projects/267456e94b66b3680c011fbd15ab656b8867531163f29db771617a5f7a8174d4.jsonl",
+      "sha256": "b6df754866580fdf1a0006eb894d0a06ab2cb35bf454c10dc966b5978894ce37",
+      "bytes": 440,
+      "milliseconds": 2.1909140000000207,
+      "reused": false
+    },
+    {
+      "id": "006_arrayDestructuringInSwitch1",
+      "input": "0d8222ce3dd06a688d61d083dca6043ab020e2b1db146f64d8ed4921fb96c8d8",
+      "shard": "projects/c30aff8e34f35e4f31e7bda9103e2dd69db2e0aa1d899d4230975c0ca0f33a90.jsonl",
+      "sha256": "f00ec006ce789b6bc4c2c4033ea1884598c9c12df76dc510003450cfd68a7c8a",
+      "bytes": 969,
+      "milliseconds": 16.169538999999986,
+      "reused": false
+    },
+    {
+      "id": "007_nestedBlockScopedBindings15",
+      "input": "05d2c7642d68e2b7e27def1c68c55b03ec74f29ce22ad49b56e7a0363d162b31",
+      "shard": "projects/ab969dc7a1ea0d557533a1672f284e36fd5aa7e0ce0c19ee167199b5e09bea08.jsonl",
+      "sha256": "be7b6fa5985747fb05474690a7e8c1a2ad39da0f2fa21740e5297816ce848234",
+      "bytes": 817,
+      "milliseconds": 3.474841999999967,
+      "reused": false
+    },
+    {
+      "id": "008_library_StringSlice",
+      "input": "fc5e35e3851dd622d41e7e69a8422d481439ee47fda72d0b2555b341141c135d",
+      "shard": "projects/a40b451c7bfbc1d73dd79c4f10e46b48ea6587ed13dace26b4b82057c51a7caf.jsonl",
+      "sha256": "b0bde536ef42108cce0c26298405d22ef43e4540635bba6e7fd8f768a63894a7",
+      "bytes": 557,
+      "milliseconds": 2.413805000000025,
+      "reused": false
+    },
+    {
+      "id": "009_es6ModuleWithModuleGenTargetCommonjs",
+      "input": "cac003142c1a3a889646cb7c810f448d8a900f0f033a99b451b691bf814cfcd8",
+      "shard": "projects/a7fd197cddf6b4d179282c3ee21c2d9f88e5aaf2aa63b3f8e1bdb6ae15a1d536.jsonl",
+      "sha256": "ba38b1459c8b5b774e166d6438dfdef770a9f89fc07261636a0863c8ad8c1741",
+      "bytes": 658,
+      "milliseconds": 3.535951999999952,
+      "reused": false
+    },
+    {
+      "id": "010_nestedTypeVariableInfersLiteral",
+      "input": "98b8c7e5f0963e174336400d8b475f3dbb1d7c01797c551144e26c948bf2e727",
+      "shard": "projects/07767d9c82766bfa431c2285d13aa7632d3ebfbc7b5530235210034ce6156722.jsonl",
+      "sha256": "8c140ce57e788f139cac84b6fe38648a1432b612898a17e31cb70862c7afd1ff",
+      "bytes": 888,
+      "milliseconds": 8.486835999999983,
+      "reused": false
+    },
+    {
+      "id": "011_namespaces2",
+      "input": "cf8b4f0e594bcf13f02d74f0ae94b1726a222a2f3a27094c0db475bf40c5b069",
+      "shard": "projects/d5b7d90a4f84ce3d1b3586dbc641227f47d2f650b4ebe7ff1ccc5e6c87af070b.jsonl",
+      "sha256": "81c42116fc872e44a0891a1b41053a5cd3c7f96e858512104670df67a9bd2775",
+      "bytes": 563,
+      "milliseconds": 3.021589000000006,
+      "reused": false
+    },
+    {
+      "id": "012_expandoFunctionExpressionsWithDynamicNames2",
+      "input": "72d5e61d6800a79f430344b3378fe5480a7a7fa68c7f029edd055ddf7d59006a",
+      "shard": "projects/12a12ebf6a00cec38e5d39e1fe9c4856ff3e2ad6aa3a4b9b2ba3b0186854ffc4.jsonl",
+      "sha256": "d908b0b2fe867ba5a9e696990dfcdfbd81d40e3bc2a3d261186775c4dc9144be",
+      "bytes": 646,
+      "milliseconds": 40.045492999999965,
+      "reused": false
+    },
+    {
+      "id": "013_parseEntityNameWithReservedWord",
+      "input": "3a92f8538aa1efe75c4d4ea36374480a7142d928532673e3f3103c09ef7a1355",
+      "shard": "projects/4eb64174db215730fa7595e3f799f163e4d692d56cbb05d079a1170f9c8d4dc8.jsonl",
+      "sha256": "e8678761305e32cfaca8b704423b7b277b19afdd23fae357cfa989523e4b9fc7",
+      "bytes": 567,
+      "milliseconds": 2.1888620000000856,
+      "reused": false
+    },
+    {
+      "id": "014_keyofObjectWithGlobalSymbolIncluded",
+      "input": "9c9acc015d821e1802978302f9e1dcaf0822e9d5a6d82c96bdac2a51da3d6f88",
+      "shard": "projects/599be9afa28ed2eec4c04277cdb8718a1d8b979cd972cee2970fb487810152c4.jsonl",
+      "sha256": "9e4dcf81c67b519e11b886e0fa7ec8c46e441f9e2936135e05956e14b70ebf91",
+      "bytes": 514,
+      "milliseconds": 2.2251659999999447,
+      "reused": false
+    },
+    {
+      "id": "015_decoratorReferences",
+      "input": "7a871603b17487ac11fa375bcb906d10c35d31dc67c91b6bbadaab28e610c6e7",
+      "shard": "projects/dbcdd4321d193eed66b0ed9fc44d88df28d47a81bb76b3bb5162038e395aa8c8.jsonl",
+      "sha256": "29fac3e1258788c523775c950f237ada05c5201cda3615f7c4bd1bbc870b3d7b",
+      "bytes": 1689,
+      "milliseconds": 4.691098000000011,
+      "reused": false
+    },
+    {
+      "id": "016_yieldStarContextualType",
+      "input": "ce003b6813b005b0baa249ebd94d9b3ddbf173a94eabe6b561387f7627859b7e",
+      "shard": "projects/39a44dad7f9751584f56d81f22a17abde218f891160b62d044068ff0ea7ab699.jsonl",
+      "sha256": "4eded8ce1ffdd75bfdf2773f939bf8e66177a23f0567ae5693395e0cb7f6335c",
+      "bytes": 495,
+      "milliseconds": 179.13151400000004,
+      "reused": false
+    },
+    {
+      "id": "017_binopAssignmentShouldHaveType",
+      "input": "84e9e53bb1ca2c478da897a16dfa13f10a8545c512d91442f311177966642b0a",
+      "shard": "projects/4f76d8d4d8aad75e11d30c495035f87dd0b5ef46979283f033e8ae9a3eb57b63.jsonl",
+      "sha256": "b275a862ad6d0a62270f05178f012a8361a00c391eae49388d55fd7fdf5e8d0b",
+      "bytes": 811,
+      "milliseconds": 3.1378409999999803,
+      "reused": false
+    },
+    {
+      "id": "018_typeofUsedBeforeBlockScoped",
+      "input": "12ebb9b32702ec997017d366e9a5feff9be43bfc9eb9e3926409c1b2201c3778",
+      "shard": "projects/db34d50768256db4e75c84e651a55731ab6de61d9cdc7ddc35ef53e3c760dc0d.jsonl",
+      "sha256": "6f377378a2b3f5d3277f2d1ae585f533156c4f76bbfde5678e837fcafc92370b",
+      "bytes": 484,
+      "milliseconds": 2.8199990000000525,
+      "reused": false
+    },
+    {
+      "id": "019_superHasMethodsFromMergedInterface",
+      "input": "15a49fe7fd3b76cb6e75b7470cbcb7d8ded549934e520d5e4f34b86ba823c284",
+      "shard": "projects/35d55e27b053f1e702c3a5c58e3a7bb5ae307b46d7806908c598a6c7af537f47.jsonl",
+      "sha256": "6e651ec4958a4e61b746076bee5b923a2a7c1cdfcccbd42a9e25fb961672091f",
+      "bytes": 546,
+      "milliseconds": 3.1056030000000874,
+      "reused": false
+    },
+    {
+      "id": "020_intersectionApparentTypeCaching",
+      "input": "2292f5c403792e6320920470441da5da514f2f08c0e31f0c0602757f88968985",
+      "shard": "projects/f372273278f077d2c2339dd1affd6d8f5c79952669e8531b88ca9eb606f363d9.jsonl",
+      "sha256": "7e9e907d4c9dc3ec268eac9d126b637ca3a38bf8ad443891907ec2514cac3b56",
+      "bytes": 514,
+      "milliseconds": 7.294113999999922,
+      "reused": false
+    },
+    {
+      "id": "021_commentOnArrayElement12",
+      "input": "9b54d4f8cc9befc56b8ab32a46d40df4e1f3556f44bea975f602064a2b43e828",
+      "shard": "projects/140c029f759a016c17545cd2bcf1c8f229a7634e49f122d42327bf65fbd897d7.jsonl",
+      "sha256": "b233c9b8ac28b264769fd65efae5eb1f57fd73b58a81ea9827608cf9567abb0e",
+      "bytes": 468,
+      "milliseconds": 1.7155190000000857,
+      "reused": false
+    },
+    {
+      "id": "022_nestedBlockScopedBindings4",
+      "input": "d61dac6f914e1b04172f15bd8be947ab404fa36693b13050d0f1d049d562b437",
+      "shard": "projects/1b00ca335e32b3477ef25706412ceaf3b7a2af56873f04548e8952bcdd376780.jsonl",
+      "sha256": "bd17d9b6890942f3a58495c01d52802661e79ab8408452fcbf382944de04e278",
+      "bytes": 1003,
+      "milliseconds": 3.8656720000000178,
+      "reused": false
+    },
+    {
+      "id": "023_capturedLetConstInLoop10_ES6",
+      "input": "cdd3059c6c3cbd1c4ee17b6fec0c2f47e36dda2797a2f5b40f1b0e908cbbe11e",
+      "shard": "projects/349a161d00a5a17c7c7e25b89bcfed1bf88ad41b983f0027cb5560425db56097.jsonl",
+      "sha256": "13761faeb5f356faab8b6bc0597cc8ca5ea798d99da3784ded117c87a266a177",
+      "bytes": 1366,
+      "milliseconds": 4.932817,
+      "reused": false
+    },
+    {
+      "id": "024_genericTypeParameterEquivalence2",
+      "input": "8fa82f4cdd96e1eb17037e96902a934a38158672ddc5b29ce9100638f9f3fdcb",
+      "shard": "projects/be8563a61cf3b753b15c433adbe3d10d0e1369701c9b5706623a7071322f2292.jsonl",
+      "sha256": "b311a488fdbed6181c33eb0a59246e8a9db99c7988d51689bf27df2fe967acda",
+      "bytes": 1637,
+      "milliseconds": 8.097338000000036,
+      "reused": false
+    },
+    {
+      "id": "025_exportArrayBindingPattern",
+      "input": "1a2f98070a48e7feb7b2929e96824bf8e73ccf7759fa61d5e28fa8fefc3ef690",
+      "shard": "projects/0858fcaec221228969a3962ff866dda6fed4fef34223a0f1e751515d4c450c40.jsonl",
+      "sha256": "fa63f3ad7c550a07e52cacaa8039cd0ba4c239807f8fdc33e0d1d9cc8999ec47",
+      "bytes": 669,
+      "milliseconds": 16.29069800000002,
+      "reused": false
+    },
+    {
+      "id": "026_functionAssignmentError",
+      "input": "a624bf5c1fb8521d1f15fafeebd3c4d5fb5c96ff626dc2b1486ca593661ea816",
+      "shard": "projects/eda774322dc4e4c1060510c1fb62754006041801b3c6c109e7c71474d30eb207.jsonl",
+      "sha256": "1fadf3b9a56be6c3e94d28a0caf8ecc630c9d24631ae063111caea021a54fc94",
+      "bytes": 520,
+      "milliseconds": 1.9805519999999888,
+      "reused": false
+    },
+    {
+      "id": "027_multiExtendsSplitInterfaces1",
+      "input": "3f2b743b0dc41b4b6dcd833c4e1689bfa5027f23731fd16c480efd8cec5f54cc",
+      "shard": "projects/3514770a6685cb404bc39d80ec85ae1945005984c32dbd1be752e022d72a8baf.jsonl",
+      "sha256": "6807404ea6777fef2ed79e6ee419f2607a27825e6bc53f63eed133170262b69b",
+      "bytes": 465,
+      "milliseconds": 8.92378599999995,
+      "reused": false
+    },
+    {
+      "id": "028_stringMatchAll",
+      "input": "80f2488b2d53c273182f69da112da6d82db7130ab84f557d57a0e13091a84f4b",
+      "shard": "projects/eb58791fa72f2daa9d32d9cab403c7796074ae3a1f825497ee4b3d0956426732.jsonl",
+      "sha256": "5ea9631b0caa2164e5f9b2294058cb41de931ecea37094d7b81bb966dde91cee",
+      "bytes": 505,
+      "milliseconds": 133.69152700000006,
+      "reused": false
+    },
+    {
+      "id": "029_enumLiteralUnionNotWidened",
+      "input": "140bd09fa61ce861c75ead075ee1c79fe422ce034f35e2ebed473e44fcc99291",
+      "shard": "projects/873c7cf7c2c1a1740ead78c69cdf753eaded7a8a6f87f37206697d8bcc7613ee.jsonl",
+      "sha256": "c9d0bf090ea061a9ceead6ded43d1996d678aafbba8708acc9138f387322eee9",
+      "bytes": 1062,
+      "milliseconds": 3.8620169999999234,
+      "reused": false
+    },
+    {
+      "id": "030_asyncYieldStarContextualType",
+      "input": "e76acb6a1775da9b18bd2e6e576475d4a6a8388c7f9ca91004365b7ab72661df",
+      "shard": "projects/6ee40577a86c5d0e49a9cf1b8ca1e91493ec5ad6d1565b6422756bdea0cbf1df.jsonl",
+      "sha256": "8df0978a13fd846e4545077f8634b9798b4270c540cffefa924718c72c3be0be",
+      "bytes": 877,
+      "milliseconds": 16.059774999999945,
+      "reused": false
+    },
+    {
+      "id": "031_commentInNamespaceDeclarationWithIdentifierPathName",
+      "input": "733860e47c39ee9003822a0e8ca3e32789b150f9f21a8b8bb46211e3428d0de3",
+      "shard": "projects/d5a3c1f17cd227034d0f2fc1bbfd8e0882e55804d6b72280954fa09136adea13.jsonl",
+      "sha256": "40c6c0602793922ad36dc7462e92ac67f13f79d857297576f0578a5de851529e",
+      "bytes": 800,
+      "milliseconds": 1.7268250000000762,
+      "reused": false
+    },
+    {
+      "id": "032_templateLiteralsAndDecoratorMetadata",
+      "input": "118ffb0b56e19d4a0d70bd49a28354cb6915741d1c54907406887d0c501c73a4",
+      "shard": "projects/2ebfbebc2b6de31954965321ef650a91bc85dd0057d7e8da1aa0e6d99f23d16a.jsonl",
+      "sha256": "d448ad9e65057fe957616643e3f37a90ece8d45dc85c78798e6faa4ebd93e435",
+      "bytes": 1536,
+      "milliseconds": 1.7483369999999923,
+      "reused": false
+    },
+    {
+      "id": "033_assignmentCompatability6",
+      "input": "71aab3091368d452bf88b61c97337d90c28dca66095113a9bee43ced5bdbf7cc",
+      "shard": "projects/298b6fc450f49af0adae3b72739203bd375dfc2dd2d2d6890b6861cf71cae1fe.jsonl",
+      "sha256": "b5bf2ae1efb4e167844c60f4c7fec2160257ea680d2e39541cf60aae7330ceb4",
+      "bytes": 770,
+      "milliseconds": 2.2012899999999718,
+      "reused": false
+    },
+    {
+      "id": "034_parseReplacementCharacter",
+      "input": "a000bfbdda52a453493f2d04696d0ef63a18c852e37de7d4f14593fe0d6d96f4",
+      "shard": "projects/9f3408017cb79f296a4ccf520bb0ee202ef755467cf819daa2b86dbd46415248.jsonl",
+      "sha256": "fb4a5641ee7d02c7a8449688162b495fe86fb1acadb4399d87fb1df8c551ba81",
+      "bytes": 589,
+      "milliseconds": 1.0586630000000241,
+      "reused": false
+    },
+    {
+      "id": "035_classOrder1",
+      "input": "ee8e0aae62c50c8957aae2a3a54d85b7088853b8e31deeb39663c6e00ff6c5f4",
+      "shard": "projects/ef0597ae48e88c9d678e7abfe866deb54b4286c0d65a271c699d6c99a814ba33.jsonl",
+      "sha256": "087d398484d5816689a5ef57f22872488d6c0c96f67a4cb3d58033243a26fbda",
+      "bytes": 483,
+      "milliseconds": 1.2013339999999744,
+      "reused": false
+    },
+    {
+      "id": "036_conditionalExpressions2",
+      "input": "bc89d804b3941e0d1ea5ba7e045a20da2a2fbd1f744743fa2aa68a255e4de5e0",
+      "shard": "projects/fc745e0e9f22db6c1600b3135d0fc48054652c0d84dfb2a1ae7b067fb72d9c00.jsonl",
+      "sha256": "9b54ad9f02a8bf0f6c46b9db9a519def22e40b65caf53c4d139b17efcfd2fdc4",
+      "bytes": 791,
+      "milliseconds": 2.1302140000000236,
+      "reused": false
+    },
+    {
+      "id": "037_singletonLabeledTuple",
+      "input": "79bb3de17347ce90224b89944e3d4f721cab852a697908ce9ce182805353795b",
+      "shard": "projects/055193bf5927df8087d23a3857918635097ae8d02b80498ad0c5171adb5e3152.jsonl",
+      "sha256": "ff0bea5421f57b6dd99a0f263b260d0ca1b889ebd51a1d03533c4a295d1b181f",
+      "bytes": 413,
+      "milliseconds": 1.4886410000000296,
+      "reused": false
+    },
+    {
+      "id": "038_breakInIterationOrSwitchStatement1",
+      "input": "f2ba8827ae0b5b97c106af838306ed6b4e9f7da9a9239715e0bee86f1a543b79",
+      "shard": "projects/0226f1cde479c090a7ba098a2b6e9ef2cfa97c67c95bd50f631390f3f77f286a.jsonl",
+      "sha256": "841497f96f9062ba73f7de76f9555588d4c94f684b56c53c7efa4a36b8ddcbf1",
+      "bytes": 483,
+      "milliseconds": 0.9997550000000501,
+      "reused": false
+    },
+    {
+      "id": "039_narrowByClauseExpressionInSwitchTrue2",
+      "input": "35605c0a260223a7b004f97c018898fdb7fc114fbfddacc250224f0ddef70061",
+      "shard": "projects/c79b259a69db0ab9dad993f2b515de9a8e046fbd345f7083dde51e8b375cd07e.jsonl",
+      "sha256": "6b8c1298f4b4fc706f147cf997726a7ace74efc3849302f6e69727d87956312f",
+      "bytes": 784,
+      "milliseconds": 2.0448180000000775,
+      "reused": false
+    },
+    {
+      "id": "040_emitOneLineVariableDeclarationRemoveCommentsFalse",
+      "input": "ad3954e5d8ec98f50220325cb8535468a262ad9c31bb26c774b1691c4f356268",
+      "shard": "projects/ce25ccec32b857d060a94aa2eeafcb81d82e20e3b894f68ef644ec636859dd5e.jsonl",
+      "sha256": "5ca3997834cb0f452a9782ab7d76dd56e4b70758b000c5f1e9b0d9bb1950af74",
+      "bytes": 739,
+      "milliseconds": 1.402934000000073,
+      "reused": false
+    },
+    {
+      "id": "041_nongenericConditionalNotPartiallyComputed",
+      "input": "06673b44f5455ee305ac8552c307213232dd1cf233b09d52555ad56d1ef6df55",
+      "shard": "projects/67ca7a80eba2435ccc5a20308cc00d0cb61b8e5f6b868dd5c3c0f0bc452b9bd6.jsonl",
+      "sha256": "b99aebcc2dd2d186145b794345b1b204e78f45606f11e995712ec23f29272465",
+      "bytes": 473,
+      "milliseconds": 1.102027000000021,
+      "reused": false
+    },
+    {
+      "id": "042_exportDefaultForNonInstantiatedModule",
+      "input": "32e5077f49725a44b16d6688b53ff403279c52d5779f42a3e042fd401df9c2a5",
+      "shard": "projects/5dbd3b2232e230c37097e62f93427c1d8bd6f8cacb3cb7e7225bacc15b151b62.jsonl",
+      "sha256": "19f543e7aa978a1ee34e78d12c0426cd76ae896c87072ef590bed54bed492782",
+      "bytes": 453,
+      "milliseconds": 1.603742000000011,
+      "reused": false
+    },
+    {
+      "id": "043_collisionThisExpressionAndLocalVarInProperty",
+      "input": "a096bfc520db0bf6a5dd63f151c05f3d1203a1565279b21a2315c9b0bb62fb92",
+      "shard": "projects/9b024f9a2c58241f6cb37d3ddd0d930e16cfb814a19f410648a139696b521ca9.jsonl",
+      "sha256": "9760c9791c137706627d7679d00449a5e5e56dedc5d53dd9dabd4cbca35630dd",
+      "bytes": 917,
+      "milliseconds": 2.6962449999999762,
+      "reused": false
+    },
+    {
+      "id": "044_functionWithDefaultParameterWithNoStatements10",
+      "input": "4c77ae71fdf990b0b49ce09322823f1a8a10c465c0419f5c87511d8640740c68",
+      "shard": "projects/8b76b2599ecd06458bcae9540198b79466e22b8d55754d397e70d88b9e3d1d0f.jsonl",
+      "sha256": "e3d8c406c1b716ba08e78a1dc6d87042e5844762a1f03b8a1a0c186fa959cdd2",
+      "bytes": 543,
+      "milliseconds": 1.2364659999999503,
+      "reused": false
+    },
+    {
+      "id": "045_discriminantUsingEvaluatableTemplateExpression",
+      "input": "f646b28cd8f1d54a91fce9c5cac2f75b689ff2597ba90fd968474fe796fdde96",
+      "shard": "projects/cd7c8e2cc1e1f4c000c21dd37aec7fdba2e7f27d42b22634630019fa9aea7acd.jsonl",
+      "sha256": "f9ecc70d0aec226e12394843a5f9fa5d98010ca8ff7813cbfcd5ecccefd53f58",
+      "bytes": 650,
+      "milliseconds": 1.9271730000000389,
+      "reused": false
+    },
+    {
+      "id": "046_assignmentCompatForEnums",
+      "input": "b228b20594661b2caf06d2f6307869f1f36a96f2df8b756bbd22390c0047c7cc",
+      "shard": "projects/63ed1dce53f5b35b2b3586fe6d509893e9e676fad5e4a42e4bc7350e2c79a199.jsonl",
+      "sha256": "02261985128e7d02cf582d3272a2a1df74aa760ee4dc97ea59ab2eb437af10d3",
+      "bytes": 747,
+      "milliseconds": 1.6414879999999812,
+      "reused": false
+    },
+    {
+      "id": "047_promiseWithResolvers",
+      "input": "a685bd459eab0082d6193cd2ae0b829100a83db044b04d6e3b8b060ed6c8d3ef",
+      "shard": "projects/09f2d88f011e33b65ac075086c8b07de4376e58031a9fdfa9cd1da8bd3d52514.jsonl",
+      "sha256": "8637715994a06227e6ab710abd53d5132ac292d1877fbeba8a89e7f000ef13f5",
+      "bytes": 473,
+      "milliseconds": 16.88874599999997,
+      "reused": false
+    },
+    {
+      "id": "048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds",
+      "input": "ca0a2baacabe6cd063ca780f9327bb86e5ab8aa04c7947366ae431808248bff5",
+      "shard": "projects/ca4221a92810a3e088e58e00bc15e0fc0c47d1a917f4da1281fdf07adf7c8eda.jsonl",
+      "sha256": "9eff3179e1891e33e12c2c6b5233439ef78a648742adf107f9ce55ae45098732",
+      "bytes": 579,
+      "milliseconds": 2.4218869999999697,
+      "reused": false
+    },
+    {
+      "id": "049_decoratorMetadataNoStrictNull",
+      "input": "ac14caf5a6909e340d374b95bfb52b043ab384563d9e6516bcf1e96209f99b70",
+      "shard": "projects/480a8e2998cddf5af5cc8da05bb2c2e50e82ece93a7622767eb2f079918ea6f4.jsonl",
+      "sha256": "b22a7ac2ec5f000feae89fa9f558f29db86f75d417b2e3134c924dc209a36c20",
+      "bytes": 1536,
+      "milliseconds": 2.0182079999999587,
+      "reused": false
+    },
+    {
+      "id": "050_unusedInterfaceinNamespace4",
+      "input": "4f6438f6bd0d7a5f8e2dbb763922b034179fc54d4d05032c9f4e84e5a804f9e1",
+      "shard": "projects/b737fb6d184c766c67b5d8d90f45f7418bf4252c0e38983a7a0006cab8747a58.jsonl",
+      "sha256": "65921e98a7d6de70f66103ca5ff4a5d71aca71983b9e4d97c269f0a76ce06243",
+      "bytes": 608,
+      "milliseconds": 1.902245999999991,
+      "reused": false
+    },
+    {
+      "id": "051_extendedUnicodeEscapeSequenceIdentifiers",
+      "input": "d3b361ce66d4be97747a9141f6fabc1d4edf01aafc89afc03ed440b532da4fbc",
+      "shard": "projects/86ea94f53b8367fc29a2d4992fbd03ed51cb0a9e8759f2905ee9c7d7b3d212ca.jsonl",
+      "sha256": "589c8a43518a9f6599ffc309f1554eee626cb5fc31b92ca222f436df2860123a",
+      "bytes": 536,
+      "milliseconds": 1.5482200000000148,
+      "reused": false
+    },
+    {
+      "id": "052_commentOnClassAccessor2",
+      "input": "0ad074025b3d94101daf32115f16690d69002cab0a3f8b35ebf019b07d269f5d",
+      "shard": "projects/8266c029b82cf51439ce8350c5270772f8a706fb55c6e4144173c87361051063.jsonl",
+      "sha256": "85eb3e77ca65366579183b372a5e12d479a3eab15312d91a3950f9dc3db00091",
+      "bytes": 550,
+      "milliseconds": 1.358508000000029,
+      "reused": false
+    },
+    {
+      "id": "053_contextualTypeBasedOnIntersectionWithAnyInTheMix5",
+      "input": "799c64f682ac2a63abe1a10425ffd3cdb90b9602d351b8d4694148a51c3030a1",
+      "shard": "projects/5d6c21ab708464e9ebd386df5ce9ecefffd8568cd1f7f84dc6c10cfeabd5bed8.jsonl",
+      "sha256": "a46da7cd605f625986b63368888bb39edcdd0620582224807baafaf9195602c1",
+      "bytes": 739,
+      "milliseconds": 6.038838999999939,
+      "reused": false
+    },
+    {
+      "id": "054_contextualTyping19",
+      "input": "87bcaaa38dfa34edca7f78fe4519f4d3442e31cc412fbbf5c5d57d4031891f10",
+      "shard": "projects/4f6957890452d07f3e4a3868c6849317d109efd8ab32d15262ee03b78817c201.jsonl",
+      "sha256": "ac4dbaa6f3f3063ba3ba4a8e7b08a50f18ddf33f5bf013ba8d2da2d06a18f548",
+      "bytes": 459,
+      "milliseconds": 1.5217800000000352,
+      "reused": false
+    },
+    {
+      "id": "055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib",
+      "input": "22349da857d4f331cd4bd5c007274eeb67306304f90601ce7bb375aaaa914a32",
+      "shard": "projects/e2a5592b36b1200118ca5ff8a249fd0a4ea889d097996efc9c79a80d68f4a182.jsonl",
+      "sha256": "c450752430de7161f9ee166e5f717616d2eef88a7d3f172f116d27884832f9a1",
+      "bytes": 748,
+      "milliseconds": 1.8010550000000194,
+      "reused": false
+    },
+    {
+      "id": "056_genericCallInferenceInConditionalTypes1",
+      "input": "38406b46807d312a131e177ba7cdb764194e8dda44a3e091a258a99c2c4a6c05",
+      "shard": "projects/14bfd0aa7ba2f498bc00f07c4c9a0c48f53ef2d592fea44242c457e1aedb4bbe.jsonl",
+      "sha256": "83e17d72c81d350ce1ea87e6216668d7a4bb9ae2f020bb29e7f48bcdd78fb995",
+      "bytes": 623,
+      "milliseconds": 9.482966000000033,
+      "reused": false
+    },
+    {
+      "id": "057_localImportNameVsGlobalName",
+      "input": "8c501edd037d3e9301c7498164e4710cbae084b42dc099477b4e9bd38c0c8f4a",
+      "shard": "projects/ae155f6ee1e283fb61bca1100efc92ffe18cf1e0f9001c80ec4f81094ce20214.jsonl",
+      "sha256": "5736a9e0305ca0c2d87348f7765d4a77a2b482c06541426302a2e3f1d5586ea2",
+      "bytes": 954,
+      "milliseconds": 2.709404999999947,
+      "reused": false
+    },
+    {
+      "id": "058_contextualTypingOfConditionalExpression",
+      "input": "a5dbe10757ece8dfc5244e513894d89ad9124a2adf52edf118a79a3159503fa3",
+      "shard": "projects/e40b784739055d173c7e3cab17cefaa5ced0382934fed309e34835cd65912c26.jsonl",
+      "sha256": "b05705b70ca6c6b53257573226950c5768547f321f45bc7ae2ce3187426419f4",
+      "bytes": 653,
+      "milliseconds": 2.2254859999999326,
+      "reused": false
+    },
+    {
+      "id": "059_functionOverloads31",
+      "input": "044c329ba6efe44ce8ed46e54eb2d5e0f3e575318d7675f627debefe8bae948f",
+      "shard": "projects/430b4a4fac9f5f1c8beb79c4619fe398b9468968fa8e8311aeab2ccd9cb10179.jsonl",
+      "sha256": "28fd5e616944ea964b827990ca2921d9e0d85d3ff8f1b83d70a9be2d989c5f2f",
+      "bytes": 459,
+      "milliseconds": 1.3125499999999874,
+      "reused": false
+    },
+    {
+      "id": "060_numberAsInLHS",
+      "input": "6f10fae80735d1bd506df203b0b94ee36788304931475885927882e2978cf50d",
+      "shard": "projects/3524c0c12dce72d75b08b2766c57057acb83819436c5f1647372bb1a70f8b47a.jsonl",
+      "sha256": "43b6b227843d9182de5cc927e81fd4418c79d8c2db43c3bec379e6ce19d3b31f",
+      "bytes": 403,
+      "milliseconds": 1.073464999999942,
+      "reused": false
+    },
+    {
+      "id": "061_constEnumErrors",
+      "input": "c82d65ad558e76b80cbb94fe08b6e315f6ce932f957041a32fc0ddb2e86a5339",
+      "shard": "projects/f7a97ef79f02cc553a4a72582a8080c4e9e72a9972fd1c96aae838c04fa06d7f.jsonl",
+      "sha256": "c0a21401971b533d920143367e4f81b930bf8d73a031a8c37fce50892742a5de",
+      "bytes": 611,
+      "milliseconds": 3.5595570000000407,
+      "reused": false
+    },
+    {
+      "id": "062_interfaceDeclaration1",
+      "input": "011ddeff28169e900d9bf128225b4714eb04de3d978036ee9051f9357683c35c",
+      "shard": "projects/a1d20cec5cc397497aa4000d446e60b7b0cc58bd5495d292cd69e35b0ea7e9cc.jsonl",
+      "sha256": "3dfef1f4e6d83f95cabd4a0dead6da38868ec8efb56fe438077a7e1260b1c638",
+      "bytes": 500,
+      "milliseconds": 3.3140730000000076,
+      "reused": false
+    },
+    {
+      "id": "063_didYouMeanSuggestionErrors",
+      "input": "be436167d2b79a086a0310f70f5d1dac23c8017c35e9ac9c9a32877015a59d33",
+      "shard": "projects/2b40d867269dfd8d9d9d570453cd903c0878913f36c04f3e3fb54bf6ee167d74.jsonl",
+      "sha256": "40c304ba7b4a5adaaad6f7e83484b05fd16d152bfa013c6f4edb2f0b49d7442f",
+      "bytes": 1126,
+      "milliseconds": 3.1675650000000815,
+      "reused": false
+    },
+    {
+      "id": "064_recursiveFunctionTypes",
+      "input": "598934544f44d9f6320c506291d92712a37d0d22b4df82aa4b23a8d29ceb7276",
+      "shard": "projects/cd2d8f8f770d171dffbfbfaee6fbbc77ef5f8efb1cac9e5e17266b6a7265f711.jsonl",
+      "sha256": "2a1bd06bc8def0f8ab5bfc52edd9ee8c3137e8ccdd4f14bf11b48c14e94b91bc",
+      "bytes": 953,
+      "milliseconds": 8.193860999999856,
+      "reused": false
+    },
+    {
+      "id": "065_callOverloads2",
+      "input": "9d325a7a5845167c7e5732c4fb9264aa4e6117f6e8866d4551f794d45b456480",
+      "shard": "projects/500096e27466366385010139226bd17857768b35cd111a638836777b84b4b96a.jsonl",
+      "sha256": "ba6cba9fe5a83b777b4fe72ee3d2087473f484da079f814e3e0ac67feb4fda19",
+      "bytes": 659,
+      "milliseconds": 1.9556549999999788,
+      "reused": false
+    },
+    {
+      "id": "066_decoratorUsedBeforeDeclaration",
+      "input": "3f33d92774fadd08445661cee759f38cae2b6a7e371b96e52e479811594b6885",
+      "shard": "projects/f295c739afcb5a461e1aa518df722d1d1d193e2e241cd9c77be11e60d01f0ccd.jsonl",
+      "sha256": "1556e40c3179a13be4c43a48ab04e3e33251c838103b477dc4f54a7e563685db",
+      "bytes": 3341,
+      "milliseconds": 6.074022999999897,
+      "reused": false
+    },
+    {
+      "id": "067_undefinedTypeAssignment4",
+      "input": "753359aa3599df403298235f23c479436ea56522b944db139a083208c9803232",
+      "shard": "projects/0935f0d2509d75863b21df11c65c141c9948bebc0812a31a2460cacfd08fa51e.jsonl",
+      "sha256": "d6aa96657a4446404ce02340e2e5fa04f806bcc074cdab6bc02fe52330d084e3",
+      "bytes": 544,
+      "milliseconds": 1.3835449999999128,
+      "reused": false
+    },
+    {
+      "id": "068_emitCapturingThisInTupleDestructuring1",
+      "input": "e4063aad1b825626800cf77ab54ee207df949873e4af6ba36134427617a8ca41",
+      "shard": "projects/94dc457ac14546bf5ca640d0191c35b3f7f3a36a30f4a91837e3d280bff8cbf7.jsonl",
+      "sha256": "4f52cf040b354abdd1843354e137f4bcfdf4103ea3f5ccf8383730a4e790bbd0",
+      "bytes": 633,
+      "milliseconds": 3.3244280000001254,
+      "reused": false
+    },
+    {
+      "id": "069_computedPropertiesInDestructuring1",
+      "input": "9c07d4dea5c8e458dae6550ad3187a2f7a955b60e2a26c354f78eda6cc8d715b",
+      "shard": "projects/2aa496640c36a7f72eb9b535c94c5d6dfbf73d5586c346f46f7101e7bdf07ff4.jsonl",
+      "sha256": "daa973ee2af44a6cdb2457a306dd7135dce6d8739fded157723bf800ad15fdfa",
+      "bytes": 1445,
+      "milliseconds": 8.525845000000118,
+      "reused": false
+    },
+    {
+      "id": "070_assignmentToReferenceTypes",
+      "input": "514d140ded006cba0374d347a89a6bbe6907adca7649480a951401bdce68d8a8",
+      "shard": "projects/0c1d227a1190310a910304897cd8d12d8837e1de89114b6503c7675fe782660a.jsonl",
+      "sha256": "379087c1ccc86bd354934c7be80a3c3584944959a1611a5a1ae3e7625d42e874",
+      "bytes": 648,
+      "milliseconds": 1.5494519999999739,
+      "reused": false
+    },
+    {
+      "id": "071_overloadModifiersMustAgree",
+      "input": "334a3001ea53f477b75bfb65cc0527ecd1b9c6b557ff354266ac7cd9ab7699a2",
+      "shard": "projects/9e9aec06f7140c45e8f4043b5e078fc1f79dd8fe30f724c7f8e366a01964abeb.jsonl",
+      "sha256": "768750e448bdf1742f562d0f766e9f5bfd2975f3c3b9aa438bab16f2139ceb98",
+      "bytes": 625,
+      "milliseconds": 1.8290069999998195,
+      "reused": false
+    },
+    {
+      "id": "072_noImplicitAnyForIn",
+      "input": "25ab65dccef0849103c952b4cfa64c4748c24103e18a9fd1e3ee43b8ee36aeef",
+      "shard": "projects/19820fe0249b33865554ea8fd3c86ccb11ad9b703d9db66fb75c7aa8f7265f2b.jsonl",
+      "sha256": "b70edeb13563afaebb717623a126aa26eb5250a703fef8ede9fb01cd3b23e404",
+      "bytes": 956,
+      "milliseconds": 4.17179699999997,
+      "reused": false
+    },
+    {
+      "id": "073_superNewCall1",
+      "input": "99495439eafbabae0633f72e3ae5ba567db0538c657640d15fc6789353d15fe1",
+      "shard": "projects/1db3a85157ac1528eedb401c0dce9060d8455b3e031b27cc4fa9c105e2af243d.jsonl",
+      "sha256": "02e58141e429aaec66d098ebf271ae0298cc140c6f2c0f0503716a93334571c9",
+      "bytes": 570,
+      "milliseconds": 2.2567430000001423,
+      "reused": false
+    },
+    {
+      "id": "074_parseInvalidNullableTypes",
+      "input": "3962cb9b53f0cbd17931080ef1d9184c99560392c3776ab12fb1af1ccab587a7",
+      "shard": "projects/aae270fdfeeef76955beeb1bfad8f69a53008c1ec7d5fecdabbdb374e5f3a772.jsonl",
+      "sha256": "3a34fb77e74033e0ea291ac8c42a3c89443d6c119cc1e0b79d942da75cb4afc4",
+      "bytes": 685,
+      "milliseconds": 2.093399999999974,
+      "reused": false
+    },
+    {
+      "id": "075_recursiveConditionalCrash4",
+      "input": "3303b5647a88ab398f35868d809bc1176390eebee11ef9844d81043d33794d22",
+      "shard": "projects/646cbd192bfcb58bf452703aea18a5480d7bbb86524347ed7c61ab8961136300.jsonl",
+      "sha256": "dbada1ab94f98f5cedfc021a8f1d4fe332f7bfb5a0b0989cc5b2e6e30c013a13",
+      "bytes": 465,
+      "milliseconds": 18.50673000000006,
+      "reused": false
+    },
+    {
+      "id": "076_interfacedeclWithIndexerErrors",
+      "input": "c6bcd909b5bc1f40f5a69b491820127b47a4ab20eb20765e71edf9c017f6509b",
+      "shard": "projects/a93b301fad6c5dd3880363db69f4e7711ee689ce54aa3f932e3c720f8e3bfb61.jsonl",
+      "sha256": "8631dedc780fb1ed1a711a7701c377ff3afee455004eea88f7cb64a260e4e861",
+      "bytes": 497,
+      "milliseconds": 3.5717959999999493,
+      "reused": false
+    },
+    {
+      "id": "077_objectLitIndexerContextualType",
+      "input": "ab40b90de099ff3351bab65da316da161dacd71197e7c329b7810217ead38b43",
+      "shard": "projects/abbf5266442ff8542cf9b93c77ce70fc781d73ca279f76f08491e4aff555db80.jsonl",
+      "sha256": "f99bc6f586d2058f12f7799dd94d9c7b1cda267489cfbd5eb0d8e3905b9fa104",
+      "bytes": 659,
+      "milliseconds": 2.822632999999996,
+      "reused": false
+    },
+    {
+      "id": "078_weakType",
+      "input": "8839989d53a99f8e179f5d29dcdd508b445c73074bd79344e1018a6437d39955",
+      "shard": "projects/a1f6e30556976e18bb862305bb9b3b9f1d9e84c877392705ec81484872216403.jsonl",
+      "sha256": "dab6445032479c7ac68470c2239bb43dbe44d9d870baee422ee236cde8d8b82c",
+      "bytes": 889,
+      "milliseconds": 6.07797800000003,
+      "reused": false
+    },
+    {
+      "id": "079_nullableFunctionError",
+      "input": "733eee7d545732db3531f5484bb467341e7fa9db34f89363d2685b88df07fb19",
+      "shard": "projects/0db3fe4ddc6ab876b5106fce136cfd22b5c4a921e7eb507263098ea3a6998efc.jsonl",
+      "sha256": "af099473537385269b5aa1e53f4c3b30892f6e221318ac6db2ceb79e9a261778",
+      "bytes": 474,
+      "milliseconds": 1.0895080000000235,
+      "reused": false
+    },
+    {
+      "id": "080_builtinIterator",
+      "input": "68e3097502c44d21e26d44449ac0b93caa886428e131f2702d754e6d89f7fb20",
+      "shard": "projects/895e2ecf448882fd1a1f7d4cab7970edd4e0ab5e2126026df73327e1e6b7c358.jsonl",
+      "sha256": "a15fa6669729ec1760ea7949fda9d1a99d2b581223f023ceda09fb83bf7db815",
+      "bytes": 1856,
+      "milliseconds": 17.625340999999935,
+      "reused": false
+    },
+    {
+      "id": "081_errorForUsingPropertyOfTypeAsType03",
+      "input": "48772bbc83a3dc21461ca1b0780ff57e9eef1b0b33cf11dc4e914137c0e45e24",
+      "shard": "projects/3d6507f4b0780ffd4f5d2eb63c0fa2d839788308cd2fcd41f3dceb69c947d61d.jsonl",
+      "sha256": "7d0942d8d9c23f4f97629e5b3b49c5ec56d4b1e2f9ee46ae7b76107cc14dbd9b",
+      "bytes": 956,
+      "milliseconds": 2.137926000000107,
+      "reused": false
+    },
+    {
+      "id": "082_unusedDestructuring",
+      "input": "16de11d5b35a9b8cc403aeb235c21b991ad74d6bbf9d3f0edef5f2ce14d5e9f4",
+      "shard": "projects/435b292b83f7d71af135986d24d73e298c0fc1e7c7f680a2ca8405b1199ea5c3.jsonl",
+      "sha256": "bafa01275400d7ecd3e183310d435804dc5b31edaae87cf5f9271af415ad95a3",
+      "bytes": 631,
+      "milliseconds": 1.7672849999999016,
+      "reused": false
+    },
+    {
+      "id": "083_indirectSelfReferenceGeneric",
+      "input": "eb5d872aa354c45036a851f6b8a85fac96d1ff10ef3c6d0de4dfd4137371b0e0",
+      "shard": "projects/673f4e2e68f3808ebfb273bd37501dae85cedae5449600089604c13af755188d.jsonl",
+      "sha256": "5339458cb452865165a272b148dddbe4f57fd0cd509c16c9ea2aa60c08044d6f",
+      "bytes": 482,
+      "milliseconds": 1.120053999999982,
+      "reused": false
+    },
+    {
+      "id": "084_thisInModule",
+      "input": "58d16b76eda78da0c54f0492b9b09e83df46e732f44999a77373131be794f577",
+      "shard": "projects/271b95d3c668491bbfee21e3cfabf8eb22f5ead9cb792d73e8c7fb8eea7ae6a6.jsonl",
+      "sha256": "c2e1df1954f5481aff8ac1a853e2cec7b4ac5609ef501cccd3bc054d83d2bcfe",
+      "bytes": 476,
+      "milliseconds": 1.0339460000000145,
+      "reused": false
+    },
+    {
+      "id": "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
+      "input": "faf4e1b1c910f15aacb0d1fdd6c3dc8b6920ce31f757af2b2a7f3fa457a1f28b",
+      "shard": "projects/4cc8b8e1998c46240e8f7b80c85f15f13a715c993f1a7716ae959326fdd41010.jsonl",
+      "sha256": "a6640e5e525f79a91b3503684c478414cc344f058b032a39a4f55a9aae1253fc",
+      "bytes": 807,
+      "milliseconds": 2.842983000000004,
+      "reused": false
+    },
+    {
+      "id": "086_noImplicitSymbolToString",
+      "input": "dd9508c27411840ac81beb80c5e96f9a2973c1af8bbf438eafda6f50e8448ab2",
+      "shard": "projects/8098d01ccdd19afd4cc3c811bfc47f8c0960caf8d9665aa39c61dff41305c2cf.jsonl",
+      "sha256": "931c25bcf46a2dcce3ba34b411a52575ee9a76d10455e0c3d056879e4331f42a",
+      "bytes": 1048,
+      "milliseconds": 3.501850999999988,
+      "reused": false
+    },
+    {
+      "id": "087_strictModeInConstructor",
+      "input": "88c4f9b8f74a6996a3c6ecaca7d4f8c749ad82204a25174afddefd29cabe3092",
+      "shard": "projects/e1541248b693241d41ed0e4436f68b9a603f4210b6128515444cbc1e0668aec9.jsonl",
+      "sha256": "26a0c2a174656ba4d41da4e0f10bad5852beb10a5f18a5f7dd3cc1c266187454",
+      "bytes": 1248,
+      "milliseconds": 2.86348299999986,
+      "reused": false
+    },
+    {
+      "id": "088_baseConstraintOfDecorator",
+      "input": "c9340f0b122ca00f4b1d93f5e002a0530af26d0bcd23c18c1d407183e3f08a36",
+      "shard": "projects/c659a81cbcb20090851b3e225fe705082894d8edee210c5b197f4957b7b832da.jsonl",
+      "sha256": "bc030ea11fbd3da9f89fd15a8d85d67486889a26f778513508205ddeefcd1011",
+      "bytes": 932,
+      "milliseconds": 4.191816000000017,
+      "reused": false
+    },
+    {
+      "id": "089_moduleVisibilityTest3",
+      "input": "278f858b2db9abb2e63ad7f6933d1f004d52d35a8b1fe0702bc7b517db35277f",
+      "shard": "projects/e1037f03a9473b3ef874efc1504e6723f948bbacde8d4487f301a28eb6670178.jsonl",
+      "sha256": "8ca2b490259f621291043a4504a0bb3d0fff8b2710271233269f5dc35dc82036",
+      "bytes": 822,
+      "milliseconds": 1.7560779999998886,
+      "reused": false
+    },
+    {
+      "id": "090_constraintWithIndexedAccess",
+      "input": "999a656994fa91d4e6ac13d5d5f7063c4b03d65b5d4aac274d5e2267c3cdf669",
+      "shard": "projects/d2f80fa3175eb63d71bfb3f7cb5d20f09f43252582b91bbeeaa30273fc3e84ef.jsonl",
+      "sha256": "0770b8237e97dc5954f120cfd412c4dab15515ce6d3f85e010101daebcc155b8",
+      "bytes": 426,
+      "milliseconds": 6.9968730000000505,
+      "reused": false
+    },
+    {
+      "id": "091_excessivelyLargeTupleSpread",
+      "input": "14a773ed5e65b753646b6ef7d40efd3a3a3d63100114910d89cdb0a5e988c0f7",
+      "shard": "projects/d0db1e0da449f2d9b89570c4442cf3d62760b011bdc65a833b58a4a3c0935540.jsonl",
+      "sha256": "ade7331672010cfb671d49c420b8c27192ad1a2379c46bd9469dcc14cf70d4db",
+      "bytes": 881,
+      "milliseconds": 90.86214799999993,
+      "reused": false
+    },
+    {
+      "id": "092_omittedExpressionForOfLoop",
+      "input": "9e671a25b4025ff837c787a8596197b05fb6a112125ae440dbf699505234da44",
+      "shard": "projects/88be3789d4ecba6ac32db60d4c54a3e2396a99d6603be1b10e77215b00e946b3.jsonl",
+      "sha256": "d9de71cadf83d2bee978f972b55b492dbdf6886a62c29a6af920bb5f306eddf3",
+      "bytes": 570,
+      "milliseconds": 4.841020999999955,
+      "reused": false
+    },
+    {
+      "id": "093_typeOfEnumAndVarRedeclarations",
+      "input": "d73d4fcd75579e2b67b04b142a0b1ff2fffdfbe9252f198b740324b93ea145de",
+      "shard": "projects/53e30a53e0f228c5094d45f910f727ada75446e6289f198d45e72850f6aa3fc3.jsonl",
+      "sha256": "74f6680eb5307e834066edbead2ab683039faea7dfb92d4a3be8d66e9c024661",
+      "bytes": 708,
+      "milliseconds": 2.265205000000151,
+      "reused": false
+    },
+    {
+      "id": "094_assignmentToParenthesizedExpression1",
+      "input": "e52ab9805b1cbcfc849c96251da108565b2858345c08cd8d1647425c5548cd0c",
+      "shard": "projects/33e819c205f045e386b5024ce7d175591cb33fbd1ab5dfbbba5bf3008a66c877.jsonl",
+      "sha256": "5dee09b9c53ba00678fab5dd0615a895c98bd1acc1fee84feac4deff282672e0",
+      "bytes": 479,
+      "milliseconds": 1.113695000000007,
+      "reused": false
+    },
+    {
+      "id": "095_interfaceExtendsClassWithPrivate1",
+      "input": "2840288431f00e2a5cff5ca52815551eec3f49b6b2e633969a662aee0f8c5f85",
+      "shard": "projects/7f6600a283ae1ec49028ade354332f89e314819e8e8a62fd1fc1663a2ba53f27.jsonl",
+      "sha256": "202fba3d8783f2a79a867d595092a40b6deed08066956492492ea557000fa14c",
+      "bytes": 714,
+      "milliseconds": 2.5564280000000963,
+      "reused": false
+    },
+    {
+      "id": "096_importDeclRefereingExternalModuleWithNoResolve",
+      "input": "7bfe521778c6e6e53464b6e01acc89323812b6a286d2c0ea86e73af43dadf6f8",
+      "shard": "projects/14b292a3097a4f64dbcadb9c4a920d25ad3db0420324f17162349d6e6da6ff41.jsonl",
+      "sha256": "b51ad531693bdfd94b8b4de38a0dbf4707f50d64d3cb5fd922d21165fbb0d96e",
+      "bytes": 591,
+      "milliseconds": 13.462607999999818,
+      "reused": false
+    },
+    {
+      "id": "097_mappedTypeGenericWithKnownKeys",
+      "input": "002d71b23fadb67782f41895fece00fd2f030d66ceb902d3fa7404a804571c84",
+      "shard": "projects/a476e8e1d63b321464577be0d77ba452677fbe447a88de530c77600b44a27384.jsonl",
+      "sha256": "bef3ebd5aeb7af59ab76a6aab94ca4587e9aa657f4d5c1324f7242a5a117ef0e",
+      "bytes": 644,
+      "milliseconds": 3.87232199999994,
+      "reused": false
+    },
+    {
+      "id": "098_moduleAugmentationGlobal7_1",
+      "input": "14ac0928b5a2124bdc2cc6c32012f6ccfc9956e24ac7b05a2b3d9111c573a7df",
+      "shard": "projects/2474c6635de6197b08313bbaeef58ad9cfc568691aaf6a36da2e579d65ab1bb3.jsonl",
+      "sha256": "098c057387dadd3155fe1ae2b480fda00f256fd6d4aa75a02964e256bd126085",
+      "bytes": 446,
+      "milliseconds": 1.9212039999999888,
+      "reused": false
+    },
+    {
+      "id": "099_untypedFunctionCallsWithTypeParameters1",
+      "input": "58e94e0e52b5136d0b07b35b397c96f330451fa2a960c287500dbeb53300569a",
+      "shard": "projects/4ac4f24b698f14e8c760efd2b7c43efe3141a37eb8d6ebddac5b570ba2244a58.jsonl",
+      "sha256": "245275331c4b8b55d1c06d856ce62b237ba6784fb0abda18e2b05377c6aebcee",
+      "bytes": 966,
+      "milliseconds": 3.8282070000000203,
+      "reused": false
+    },
+    {
+      "id": "100_scopeCheckExtendedClassInsidePublicMethod2",
+      "input": "c9eaa094b41b42e48bb8fd2be7b2c3cb24b69421f90d5491ae8d119e5c82fac9",
+      "shard": "projects/c8d1a44ac34bb98486ebb2d609112553f6c2960324e15388ca8e10732524bf8a.jsonl",
+      "sha256": "dca7f4d5bb0c7a5c5abc51e6f0982496c504ed3bbb55fafb97bc51b7af041cfa",
+      "bytes": 600,
+      "milliseconds": 2.1773350000000846,
+      "reused": false
+    },
+    {
+      "id": "101_noUncheckedIndexedAccessCompoundAssignments",
+      "input": "48848c3cb394ee857643f1f04c58aad2b01dfffc71a5f263c0d7b175fc31ac0a",
+      "shard": "projects/6eaf5485ac789433d22521086e7b359eed38ca34c7cfc18e5ea21667e0b4dfe2.jsonl",
+      "sha256": "fdfe5e29d6a9fa2c3e15415c7b31151188d42022811e9327412bd6bb01b6870e",
+      "bytes": 820,
+      "milliseconds": 2.7814310000001115,
+      "reused": false
+    },
+    {
+      "id": "102_implicitAnyDeclareTypePropertyWithoutType",
+      "input": "fe08deb9ac3100124d79a06900b10ff91463fa904db99985de9825ec64033ab8",
+      "shard": "projects/4b3e8d1290e6ebdb97e60c855216d4b7ac2ecdcbc03e3d9ac1e50a605c7f9f38.jsonl",
+      "sha256": "b1ecaeab34cb58352bf6b19f5ddb9a0f586daa62a1a0449bd12124b2273f6d6a",
+      "bytes": 772,
+      "milliseconds": 1.9325000000001182,
+      "reused": false
+    },
+    {
+      "id": "103_circularReferenceInReturnType2",
+      "input": "021df3a3e945f2d815511fd68ceada39b3533d8dcc92e94380463499225006ed",
+      "shard": "projects/84fdc3d214e53989faf9e714a60ad4d31de89855e788656956d07c17909eaa8c.jsonl",
+      "sha256": "7863d4983938f88987a0b840f40e83844c08fcaba31983a96f6e007283e1e7b2",
+      "bytes": 752,
+      "milliseconds": 5.728178999999955,
+      "reused": false
+    },
+    {
+      "id": "104_mixedStaticAndInstanceClassMembers",
+      "input": "4443d9a0edeed86c49f93c2a9733414518e0a32188b43694b5475745e07ea93d",
+      "shard": "projects/7ca0884e0e94071ca3c09e0d648dfce90eb21ad9ea9a6acf9c58834726633654.jsonl",
+      "sha256": "a897dd60181378af34b6c9c6396e00d0b55c8c88d5feb9ea96c2cbc6bb8dffc5",
+      "bytes": 546,
+      "milliseconds": 1.8583699999999226,
+      "reused": false
+    },
+    {
+      "id": "105_exportDefaultTypeClassAndValue",
+      "input": "4e6a7f0b54cd83ceeff165b7fc8ac3b25f757fb21fd9e94b3bf4bf9cb705eef5",
+      "shard": "projects/8e6e75ce214793ee3befb1d7d9d1aa9db932e53e636216197bf81123ef954251.jsonl",
+      "sha256": "e3447ca9219d958b9056580f1b7f42c97328c6e3b785022cbc5f03466f2d6ab0",
+      "bytes": 606,
+      "milliseconds": 1.9510379999999259,
+      "reused": false
+    },
+    {
+      "id": "106_interfaceMergeWithNonGenericTypeArguments",
+      "input": "96706956df678baf0bf9c2519782c53dc5b9546e68c16bc97191123ecf1a1fd8",
+      "shard": "projects/50af864a368c1259c75a221f3cab1d88801c369629eea68bed635729df326769.jsonl",
+      "sha256": "2cb6517943bca983aa5d1e9832b8097272c0926a0c1e33748f52376106c0b5d7",
+      "bytes": 588,
+      "milliseconds": 1.7889780000000428,
+      "reused": false
+    },
+    {
+      "id": "107_objectFreeze",
+      "input": "818ba4cd581cd79f9d83a5e13f9d3b5e9a3bca718b91cfd959beb6d84540509b",
+      "shard": "projects/f970d5650fc5aaa393f641016bd18ca0d218e0820f6977cc667aeba76cde6450.jsonl",
+      "sha256": "36661fe7ce673be031a39045c301f496d3285059a4340b1ce864f17ae5711dd4",
+      "bytes": 696,
+      "milliseconds": 5.584835999999996,
+      "reused": false
+    },
+    {
+      "id": "108_redeclareParameterInCatchBlock",
+      "input": "9b5323b5477f91f365ee57f53c023f13dec59b914c0f352e7b048cacd21555a9",
+      "shard": "projects/c0a2541a7f9b6013180a0e9ec608ae29da2157475481ea1b5805d1e2608c38fb.jsonl",
+      "sha256": "5b1e62ed1b862848bc10765a220abeee34fb3e44b0f67bdb8895e1398db2f359",
+      "bytes": 707,
+      "milliseconds": 2.643357000000151,
+      "reused": false
+    },
+    {
+      "id": "109_classExtendsNull2",
+      "input": "4b613e222b523ccd0d7bb95a2c7cc099196bb45b883ca03d79729ec00c4e9655",
+      "shard": "projects/7a8274e2f8200435b643c2e1e41f3568be44661b3ed1e0b2d248aa66601f5f6e.jsonl",
+      "sha256": "974f165ff11c99b6ffba7a815f94cb530569ff1f001425b141bf9e1cae025e11",
+      "bytes": 545,
+      "milliseconds": 1.6086290000000645,
+      "reused": false
+    },
+    {
+      "id": "110_importDeclWithExportModifierAndExportAssignment",
+      "input": "83d67432bd81b082b598988b479a29356b96ed032df635cfdd28b3e07cd1db9c",
+      "shard": "projects/4636175610214d35a1e7aafdfe13f84f9bd79b67b86216173ccdba411bcb187d.jsonl",
+      "sha256": "5867ce0f272e8ab5acea291e494515a25733b3563c1d6a078bce7ebbf30ba7b7",
+      "bytes": 571,
+      "milliseconds": 1.8949049999998806,
+      "reused": false
+    },
+    {
+      "id": "111_circularlyReferentialInterfaceAccessNoCrash",
+      "input": "24ee5e0c6842623b218420c782313ccdf9d5dff0ec92f6c60c9b922b0ba04cb6",
+      "shard": "projects/2b9310cebbbd5e8c45ca9be8912948098d4c7cff7d34f323fa01ae404111e223.jsonl",
+      "sha256": "5ecb702f1e5415b4f6736ca86d4c3d1c8d59faeebc66ab007fcbdb588aecda16",
+      "bytes": 479,
+      "milliseconds": 2.061252000000195,
+      "reused": false
+    },
+    {
+      "id": "112_noImplicitAnyParametersInInterface",
+      "input": "1522b6067791703cb84017ade72ccf1f793675e49d9575efe119b3fa11cf24fc",
+      "shard": "projects/297027d68d490da9e987fc9fd573b1a17f6b5353b1f5b35908cc75b585d5278f.jsonl",
+      "sha256": "9bfa60364f693473b2fbae317d95603fc0206f8e504579d82a6f8580971c916e",
+      "bytes": 473,
+      "milliseconds": 2.2455459999998766,
+      "reused": false
+    },
+    {
+      "id": "113_duplicateSymbolsExportMatching",
+      "input": "c50a1f2b3f51f57f027fe9a2eddfcbd85bb1408e09bb38ba84f196fb51ff9e39",
+      "shard": "projects/a939566202c8ed4c37c8941ba01b45be914b0c380e38c9c4ea567b0e4e4a0308.jsonl",
+      "sha256": "6c884391124a8945fd30b42b0bab037173b919611b2f6e2902857ee6525b9b75",
+      "bytes": 1256,
+      "milliseconds": 2.8823509999999715,
+      "reused": false
+    },
+    {
+      "id": "114_truthinessPromiseCoercion",
+      "input": "59a6fbdb2ca9342ae22d6b72c33f59659bd4cfc11bfcf33b94bf2fc2fbc8623e",
+      "shard": "projects/31deeb4598c3c2829471ae744b230011e576977cdc03856ac33cd2bd003c43d5.jsonl",
+      "sha256": "ac7d4dcee233d307b45a84c0f8ca971aedaeb713f4b5090c712cf4b9988bdfc9",
+      "bytes": 1204,
+      "milliseconds": 6.951285000000098,
+      "reused": false
+    },
+    {
+      "id": "115_unusedClassesinNamespace4",
+      "input": "23becc15f566a363539f340579fe2e982fb849e2e70f5ac16b8ca461bd7df538",
+      "shard": "projects/d2c3ff47734263bb98fc3165f23906da8364a086bf343f61a6a436ba14148a10.jsonl",
+      "sha256": "fefd1b61254a173f880a305e9af9a0b7e6114abc86368ee8b02f29caaf1c6b8d",
+      "bytes": 659,
+      "milliseconds": 15.270573000000013,
+      "reused": false
+    },
+    {
+      "id": "116_recursivelyExpandingUnionNoStackoverflow",
+      "input": "e5caaf59103128dcb4414806891455e1ed410626b507412b8d45953950cbbe0c",
+      "shard": "projects/97354001da9d9c57c812024651688c3959464adb549cafcd620b97e09b84fd19.jsonl",
+      "sha256": "72dfa916b9f2f3f7c4757a4dd53c6e1c77c30c0c054497e5a74fd98849249ffb",
+      "bytes": 470,
+      "milliseconds": 4.010397000000012,
+      "reused": false
+    },
+    {
+      "id": "117_typeUsedAsTypeLiteralIndex",
+      "input": "4567a1fbf0dcb4be2d8d92691e1f637cfb9f384a909e6b93c25c20e75f5e9ff0",
+      "shard": "projects/197be6417c46fb029d1664d0cfd647cd78b978291154da910bcaba71c0e3963b.jsonl",
+      "sha256": "184a6001833fa0bd37de05172425aac7480630866f069350f8909d9c8e9f092a",
+      "bytes": 450,
+      "milliseconds": 3.87528599999996,
+      "reused": false
+    },
+    {
+      "id": "118_anyMappedTypesError",
+      "input": "611a5e1dafe53a85303d0caedfc992c7dbb17f65841d25dc730c796a3ff8a1fe",
+      "shard": "projects/5b23b61e5d8b08c840700f3c294d612c5e1162ebbf0ecdaa176176898fa06f53.jsonl",
+      "sha256": "7804524c47537b3bb3353923c04f6ce738868cc2709fd40d879d41ed054590c7",
+      "bytes": 428,
+      "milliseconds": 1.3304160000000138,
+      "reused": false
+    },
+    {
+      "id": "119_yieldExpressionInFlowLoop",
+      "input": "9fba1bf0565f39f6f6ccdb06c8c5ff5a48da8d517b1b679988d7c571db831352",
+      "shard": "projects/560901db240912607b9beeb60bc7310fc44358e3e93be117ac70c32481d29505.jsonl",
+      "sha256": "8380dd61bfd009e0d504907ca60f8838a92d2f26a2eebcf8ae84788493846046",
+      "bytes": 536,
+      "milliseconds": 2.041922999999997,
+      "reused": false
+    },
+    {
+      "id": "120_excessPropertyCheckWithSpread",
+      "input": "a41850c27532d929ca4f1faafa2d52d94becf0644d82fbd63b048c8d89e88816",
+      "shard": "projects/6561c4fef55fa3ffc8871c06ee60950bbb3ccf05077d395d8201719a0c681631.jsonl",
+      "sha256": "3d13accd4abbaea416f2314556a2666f7b6c60efe69b900a8ee6cafaac26af5f",
+      "bytes": 534,
+      "milliseconds": 2.7479620000001432,
+      "reused": false
+    },
+    {
+      "id": "121_switchCasesExpressionTypeMismatch",
+      "input": "96af9ea4854c3f5fd263214fb5a3ff0f6570040938ea115048d2cb6d244c3856",
+      "shard": "projects/80478367a700ac646b4e378581f142950bdee291c356f74cb3e4025fd2a23307.jsonl",
+      "sha256": "b0ed0e514f43a1ee3f1394ffe2ffd7ab8593de43ee0077c8ce34668ee4837f60",
+      "bytes": 909,
+      "milliseconds": 1.8898980000001302,
+      "reused": false
+    },
+    {
+      "id": "122_literalsInComputedProperties1",
+      "input": "d773994e323e96de0dd1299fe6f278af5028a704ece4fabd5fadb32f1cd8df1d",
+      "shard": "projects/78b88f834255d2a19d5e52fa52b06fc5cb15f21b85b6f6f17008ac870eb999f7.jsonl",
+      "sha256": "6c5912b6ab3077a1b1cf2a5754e94513079537b49b25d8bd36573dc917034ec0",
+      "bytes": 1157,
+      "milliseconds": 3.20598300000006,
+      "reused": false
+    },
+    {
+      "id": "123_narrowByEquality",
+      "input": "b96c9ae10885a381ad05db029e9bedc214f227731bbca82b7b7d1b356d14d831",
+      "shard": "projects/a1f320b15d22e15ad08219056b1f2a63ebc77da473d6795d292a4d7308a15e2e.jsonl",
+      "sha256": "47d5cba2d6463bd1b1357de03949291f022085f68ff4f6db6e6166a17a16bf46",
+      "bytes": 1039,
+      "milliseconds": 4.017957999999908,
+      "reused": false
+    },
+    {
+      "id": "124_this_inside-enum-should-not-be-allowed",
+      "input": "cbecab43b6cb4c9a6ab10e96ad3313e9630c073754098faf87b2ca44db89b6c2",
+      "shard": "projects/6c992ae4538c55048995ae60180762029628e9c5b0c087ea12986223c86ac2e2.jsonl",
+      "sha256": "0749f9082fbe63a0ee1767f87deab74aa09e0620093a9b4e5ecb35ae3ebea3f7",
+      "bytes": 1009,
+      "milliseconds": 1.589971000000105,
+      "reused": false
+    },
+    {
+      "id": "125_noMappedGetSet",
+      "input": "bef85d0a6b17ca5788839570c4445eda0a37426169e76e97200b23b597c077eb",
+      "shard": "projects/f5570a308e4b0f7ea1676bc66c1ade031f899a46cc0e46cd2def73215522a0d2.jsonl",
+      "sha256": "7347f19b34b94d85b3c00ad77fff127a1709332a77ae8daf77cfb3c910507457",
+      "bytes": 392,
+      "milliseconds": 1.8439789999999903,
+      "reused": false
+    },
+    {
+      "id": "126_restInvalidArgumentType",
+      "input": "6d94828d0c9fc857b20b22fd6c7b7074fd2b68f3696635cd468e0828f893fb1b",
+      "shard": "projects/8d9bdd0caf5669328263c636ab2e4f84089c0aea6335783beaeb2a79b7845ceb.jsonl",
+      "sha256": "8bd34af09bbf37567293627e68b3a295631e0d43ee9ac2fbfe582d1d9980487c",
+      "bytes": 2591,
+      "milliseconds": 5.311790999999857,
+      "reused": false
+    },
+    {
+      "id": "127_forInStatement4",
+      "input": "61c51c38ed0787dfd05cfb1af8559da9cbdbdbaca1c09f5890e2c6dd78b48042",
+      "shard": "projects/3d98b43043df9aaffd33f3d1fda5f079b97ae7da85aba4a95afc44110fc9d9db.jsonl",
+      "sha256": "7c6566d1ede80a3206834d70297416c313a2932bea0e008ab289297293fb2f3d",
+      "bytes": 447,
+      "milliseconds": 1.0403859999998986,
+      "reused": false
+    },
+    {
+      "id": "128_noImplicitAnyUnionNormalizedObjectLiteral1",
+      "input": "1b5876778c996a2d6edc62c0c9183d21dabcad394da8ecc7ad9016dee3414deb",
+      "shard": "projects/450cee05594717c5f4cca6edb70ad0e875135698700942f2d4ca91e0ec0d1579.jsonl",
+      "sha256": "65b35005ff4a2018a048d8d950619562b247c5a38152951bb93ed0fb441e65b6",
+      "bytes": 882,
+      "milliseconds": 2.201569999999947,
+      "reused": false
+    },
+    {
+      "id": "129_enumWithPrimitiveName",
+      "input": "5456dc986794940a125661e3c3c6c920e8a60ec5de0829330d3f679cbc26f384",
+      "shard": "projects/a0474d266f417cf4e0df81680d28933457d32cbc779e6564510d45a0211fb12d.jsonl",
+      "sha256": "3a31b476e83ddd3f90c0450037f85a92805a545aa11e9d3a955d77e5634adff4",
+      "bytes": 596,
+      "milliseconds": 1.0495489999998426,
+      "reused": false
+    },
+    {
+      "id": "130_inheritedStringIndexersFromDifferentBaseTypes2",
+      "input": "4e13b41ff0c9de618b823774125516fa812b41278efb3206157c4f5ed944f051",
+      "shard": "projects/989a5f2546711014dd90df5d53472f5850466a2ad84764470dd150a4f487a3fa.jsonl",
+      "sha256": "42a9cc56873c28132ece1e6573bade4fe9a1b73ddf229154e051ec9dfc05dcf2",
+      "bytes": 503,
+      "milliseconds": 1.5932470000000194,
+      "reused": false
+    },
+    {
+      "id": "131_errorsForCallAndAssignmentAreSimilar",
+      "input": "057b6b5088435f3096532769626e0a83e421ecbc38911d5548875c1ae5cfb3a4",
+      "shard": "projects/d0f9ad265fee13d27b19da72277a72e2b1987f5807a8d43f3509561f06cd41bf.jsonl",
+      "sha256": "2d0dabc481d5afd0a73e807109f1d4b758101cdd5e4f33e27d5af2fdc376bd6e",
+      "bytes": 691,
+      "milliseconds": 3.036720999999943,
+      "reused": false
+    },
+    {
+      "id": "132_missingCommaInTemplateStringsArray",
+      "input": "9ddc48d4c49ebf6f79dc0098da4abab1de4f1617c34b5754c47d1b5c12ad4ade",
+      "shard": "projects/969aa26b050bdb1fbf058a90f67564b9df6bda90fec9069fdbb476f5b04a9138.jsonl",
+      "sha256": "6785fba7afab8e66fa99766ea63fedc1909f6f94b08b77ad729c26e36e5327b8",
+      "bytes": 516,
+      "milliseconds": 1.4673800000000483,
+      "reused": false
+    },
+    {
+      "id": "133_forInStatement2",
+      "input": "570af682f5f2ab27e55090101e3007d83afc9e870f1b31f692fc0479877845bc",
+      "shard": "projects/b3904fa2f221f21e703e29591a085e480dc8b59dc24fdf472d05dd6954df75c3.jsonl",
+      "sha256": "6eb0eed1eaf6ce94d9bb89b5d2682e07b43d0691d78bf0087f0f9200bd9c4e54",
+      "bytes": 436,
+      "milliseconds": 0.9012890000001335,
+      "reused": false
+    },
+    {
+      "id": "134_augmentedTypesEnum",
+      "input": "2b9f897047662eff549d4d90cfd4b99ba53fcabe856cf901a275e4a8e1cb0f19",
+      "shard": "projects/1476b4461f5b5fd6ea099c1b0a7aa4320c722cb3bcc38181025965f6e4ca7bf1.jsonl",
+      "sha256": "777f28cb823cf4cd4e79e1ee082e6a3c0b5f190e0cb750c603f3afe0698e05ff",
+      "bytes": 1929,
+      "milliseconds": 2.3097710000001825,
+      "reused": false
+    },
+    {
+      "id": "135_narrowingTruthyObject",
+      "input": "a26d4fa88595cede6d2058af2c355f55755ac7b0c0b9d32ee3a8ae3966e4117e",
+      "shard": "projects/ef1badf76e3febccdf995060baf2b26c8e3260275583293f32e2d3a69c0a39e8.jsonl",
+      "sha256": "8d5adc96b683c94758837074dd64a63c8fa5f7b6891e620dfce895b49b8700dd",
+      "bytes": 1078,
+      "milliseconds": 4.170104000000038,
+      "reused": false
+    },
+    {
+      "id": "136_nestedFreshLiteral",
+      "input": "7867156b74b9dfe1630fdecd2d20a6407bea8a485d04408d4703208cdda4787a",
+      "shard": "projects/e2091a8f7a8cd225f5e622c40df26ebd9193cc2b1afb17e4b89e618eda21f2d1.jsonl",
+      "sha256": "21dbeb71690fafbb8e75687050ec98d634b2e77eb1e8ac2204cee8a94893edda",
+      "bytes": 489,
+      "milliseconds": 1.6128459999999905,
+      "reused": false
+    },
+    {
+      "id": "137_duplicateErrorNameNotFound",
+      "input": "10421e59fdaa67fcd6a24a2a2546b54adb0bed98cbe96992cc6b39361e495a0a",
+      "shard": "projects/e7c4bfb15c0475f6b6c3219d3a96d8f8e910a5294550915e7a4bad595afd1a25.jsonl",
+      "sha256": "b73c11b373b92214d5cf2bc70075e0f873fd54b2a1f3b92ce3869befe3683ba5",
+      "bytes": 528,
+      "milliseconds": 1.306871000000001,
+      "reused": false
+    },
+    {
+      "id": "138_voidAsOperator",
+      "input": "04dc62fd50c1931fa97228e6032797316b8d311060f4962f8ecd6567481540be",
+      "shard": "projects/b93a606fd93da307756111aeaf14688b90e0dff731296e1f82af306300374fb3.jsonl",
+      "sha256": "df042519777a26bd601b362d31f258b4150954769da5486473f01fead4b61479",
+      "bytes": 457,
+      "milliseconds": 0.9631609999999,
+      "reused": false
+    },
+    {
+      "id": "139_typeParametersInStaticAccessors",
+      "input": "400bbc027f2298dadb8d919ed58ac8d0ad362a4e6a0b50188a7b8df0eb04e9f6",
+      "shard": "projects/319bbd118b7fdf40349185b526ce2d966cfd914789d1a5823be4187243846e70.jsonl",
+      "sha256": "94d1c48044c6b1fc5effd5531484df93a02c53db69c1eb5ad08f6e77d42ef851",
+      "bytes": 525,
+      "milliseconds": 1.3878310000000056,
+      "reused": false
+    },
+    {
+      "id": "140_arrayAssignmentTest5",
+      "input": "f014304f6e7083e256d3ab9bb8cbf0ea989cbee32912bfb69e4c2bbd29b85945",
+      "shard": "projects/5624b952a83be93ef0d01fbfb0149fd99dbd647f19df89a70bd3a64b1db1952f.jsonl",
+      "sha256": "44f814beeafad4a00687f66f754248bd979f2c533053fd62564c457f6a6ad446",
+      "bytes": 977,
+      "milliseconds": 2.4031400000001213,
+      "reused": false
+    },
+    {
+      "id": "141_forInStrictNullChecksNoError",
+      "input": "8f811b023eab509b042afa417a74266e54657c79aa8914c3184ff8c601875d95",
+      "shard": "projects/6dce8d2cd797eaa17191bc9152e0289bf99e5d0043be7262a897adce40ff190d.jsonl",
+      "sha256": "9b07a768580ef0730f5215bb4436b513d04395f89b350ea3838ff9929086ab58",
+      "bytes": 591,
+      "milliseconds": 1.5110340000001088,
+      "reused": false
+    },
+    {
+      "id": "142_spreadUnionPropOverride",
+      "input": "6770a78bff6db6e6cfc9482df062e805aec9ddf5e409da417a79fc4555799f6d",
+      "shard": "projects/aa231156e63878ba8a078f45421ccfa41cf571f2567c185fcc9b70306722cb97.jsonl",
+      "sha256": "53f58be8ba30857ec80c16728fb4c864332f6d4319fefd08dedb00d18970c072",
+      "bytes": 1463,
+      "milliseconds": 4.538451000000123,
+      "reused": false
+    },
+    {
+      "id": "143_enumPropertyAccessBeforeInitalisation",
+      "input": "5d56cbb669ce154c60b473a267041704d3eace33dddea8c23d23d216b5ad5220",
+      "shard": "projects/e0ca3a2ef19e931335c730c4819132a2062bd242632080016deffb3c3c930709.jsonl",
+      "sha256": "4e92c21892f76a3c876ad4ab35528c380670b6ba3ca355b6f50916619c7596db",
+      "bytes": 643,
+      "milliseconds": 1.4879800000001069,
+      "reused": false
+    },
+    {
+      "id": "144_inheritedStringIndexersFromDifferentBaseTypes",
+      "input": "06d4d85140f962ba24b1c030d404fd4a6880835f0ef505135123fe82e89a94f7",
+      "shard": "projects/fb2eedc5e7bb13658d9004680492676f4be28464f3da16b978d076e60735fa2d.jsonl",
+      "sha256": "d70862d45f6a897045b5c530e9457b63c6ae79451788b5dd3008642365310fd9",
+      "bytes": 485,
+      "milliseconds": 1.3683920000000853,
+      "reused": false
+    },
+    {
+      "id": "145_ClassDeclaration10",
+      "input": "da74f5e1424a88e16137dec5b4ff53e248fbcb2673a2cdc42c29cc924b965fe5",
+      "shard": "projects/6ed85c2941c6876055624fd5613f61d9231a46c6efb82d70bc88fe42e3906502.jsonl",
+      "sha256": "7b25209400e2581e5ef2386ffd9803b57409892b6ef2313b6c08a24997bf2b84",
+      "bytes": 433,
+      "milliseconds": 0.9346789999999601,
+      "reused": false
+    },
+    {
+      "id": "146_noImplicitAnyIndexing",
+      "input": "46e9f0fa45287d55912c0ae5740c5ad714f95085ecf889122a46536f945067b6",
+      "shard": "projects/0502ea19430eec7d30aab72f580526ff27bb13523a9035f295ddb11cd70cd02a.jsonl",
+      "sha256": "185c8af6230673427e86a4974718da07ef43a47e3484f32bb8eaa8d7462027fd",
+      "bytes": 1399,
+      "milliseconds": 2.5822650000000067,
+      "reused": false
+    },
+    {
+      "id": "147_genericMappedTypeAsClause",
+      "input": "6dd8ef634cb5bd019a2b8f0531e301cdfd9dc1d7f4f87db4334cecb7a67f84f5",
+      "shard": "projects/d727a8ea866b2755a657e969117ea6eece43dd8b87d2ab5f567a0d1f2916db83.jsonl",
+      "sha256": "3d934db5647c45ce5152bc9adbdb4b09b06a83ad7aeb3a1211483baaff49424e",
+      "bytes": 753,
+      "milliseconds": 4.527225000000044,
+      "reused": false
+    },
+    {
+      "id": "148_nonArrayRestArgs",
+      "input": "ee05cf593dd64870bad8961b4bd756db47f32f0463053218e86c7629190ee925",
+      "shard": "projects/ceee8e68c1a3d336a1b30f420ebd43abf2b039fd764872cd7f2d3c2c70bf8607.jsonl",
+      "sha256": "b32aaa5fac9cc4c2118e36145e157bafb8835c36fbdc0404b4302d08239e1686",
+      "bytes": 478,
+      "milliseconds": 1.249516999999969,
+      "reused": false
+    },
+    {
+      "id": "149_undefinedTypeAssignment1",
+      "input": "314f1a4d34fe01028f8988679ab7dab77cbfa8086363ffe8a406395b7fba96fc",
+      "shard": "projects/dd75213a8fca1d20546d62afba4e32aeb222b1e0b6ee9c895ed0b585c69d4d26.jsonl",
+      "sha256": "37589240e3a1832d1b45348f3ac6ac964b2e999bbfda357110bcc25277af2992",
+      "bytes": 483,
+      "milliseconds": 0.8913540000000921,
+      "reused": false
+    },
+    {
+      "id": "150_useUnknownInCatchVariables01",
+      "input": "3810cc23b78369a8d777caa14bc0b6eac5b70cc5b733b4d727b474cb280f352f",
+      "shard": "projects/8a87ee2747e1900a47d290f83b4a8ab43e76dd4a6a878fc93a5e1bc7c54599ea.jsonl",
+      "sha256": "afa7f68e802de81a5b25ade365df0435afa9e9b23a47be97a9986e7e5e411bff",
+      "bytes": 1082,
+      "milliseconds": 3.06469200000015,
+      "reused": false
+    },
+    {
+      "id": "151_normalizedIntersectionTooComplex",
+      "input": "843b73448b09f97a2d98e2406ad8174e3bde3e5b5d7c371645f489912fdddec1",
+      "shard": "projects/eb7881b409310d5b59b7db2ec40e3b60ba8bb190fba357d553f326d96dc3b9de.jsonl",
+      "sha256": "b981d3ef9e4588ea2264c622ced8acf1bb1409b7fd55f67633b8e638c62d43a4",
+      "bytes": 576,
+      "milliseconds": 8.46064699999988,
+      "reused": false
+    },
+    {
+      "id": "152_errorOnEnumReferenceInCondition",
+      "input": "7be4eac13066f558ea77f086eefbedd42d00786bcf063590e5ce049fc45ba393",
+      "shard": "projects/5b1355c9c6adbfaccf292bb38df33a2fe3702ffd1b651649abdb9ccfb3872d01.jsonl",
+      "sha256": "90c9a041741e7d9bb28ad4e2c62d305d34ec089cb4789decc976dbdf99ebe49a",
+      "bytes": 1070,
+      "milliseconds": 1.7426490000000285,
+      "reused": false
+    },
+    {
+      "id": "153_returnTypeTypeArguments",
+      "input": "fa97e90b0dec5f46a7459a1326a804494a5ad4d2da7881b36b28e648932c654b",
+      "shard": "projects/d24a3b46b77514e5fb5a179c3badc332d1246287a4895a5150e4d655a7cdd513.jsonl",
+      "sha256": "3545ba4f1b356bcc62ea4652ed20a2b31575748b2f69b31a90f66f98422fc78b",
+      "bytes": 1014,
+      "milliseconds": 3.357187000000067,
+      "reused": false
+    },
+    {
+      "id": "154_emitThisInSuperMethodCall",
+      "input": "f781f6bafc101d65d7aecad4894465a924b088464e139d9af6a8ebca28da2bf8",
+      "shard": "projects/70593af396cbf7a36c9946c78252e86f6a754bb0ebd015b5c535eef44ae5295e.jsonl",
+      "sha256": "60fa23000db8b43626dc37e8ffdae53ddaac91bccdf8cbd905ede7d618384ceb",
+      "bytes": 853,
+      "milliseconds": 1.5713650000000143,
+      "reused": false
+    },
+    {
+      "id": "155_varianceReferences",
+      "input": "4d01ca108ef53912feb4821e3b6134dabc6a40f51a88785dc64f7f5b76f184e5",
+      "shard": "projects/63a8c31dd8b0714dad17c40bee8cda0788b69c0336a09a8bd827317f55c2de1f.jsonl",
+      "sha256": "7274ebafd906766857a050ebbef4dbd23790a34813f24ad84734e2142f2cd17a",
+      "bytes": 560,
+      "milliseconds": 2.5493269999999484,
+      "reused": false
+    },
+    {
+      "id": "156_misspelledNewMetaProperty",
+      "input": "d79df651bceb84390102c61fc3feb214d42755420b49dfb9b6318c8189fb9ae5",
+      "shard": "projects/52420d4812651e956c883f1885d1de3150e2b7fab8c7e30cd19eb175efbdf210.jsonl",
+      "sha256": "b8b712a71bb676bc1729f3f40c684743ee660cb47816f097136fd417cf2583d8",
+      "bytes": 455,
+      "milliseconds": 8.188462999999956,
+      "reused": false
+    },
+    {
+      "id": "157_varNameConflictsWithImportInDifferentPartOfModule",
+      "input": "94cddec5423c6f57cb355b66b788fd96f47a3a55759a4e43c57a4e283348a497",
+      "shard": "projects/a9cf143b14e922a7a48319eb0b948962c6155687a0b8c870302b5454471f26ad.jsonl",
+      "sha256": "74be97238441755eea1a4fff1be8d371bd4dfa6397d1a4684d68d99e60678e10",
+      "bytes": 667,
+      "milliseconds": 1.4411609999999655,
+      "reused": false
+    },
+    {
+      "id": "158_incorrectRecursiveMappedTypeConstraint",
+      "input": "304077e3ebf2a3889573fa3cc3f9f1a12d63daa94ba7cb5b193e2ec373c3ef07",
+      "shard": "projects/5e3f5d40cc8e4ad4935e58419c367040954a770593c4d7d7deaaba00e44471c0.jsonl",
+      "sha256": "56b7cebb3ed5bb099a3eb8d4a2e074005244e6d90c2f540b094b518cbd5ced38",
+      "bytes": 519,
+      "milliseconds": 1.450315000000046,
+      "reused": false
+    },
+    {
+      "id": "159_objectBindingPattern_restElementWithPropertyName",
+      "input": "0bb1704e5b55e6703d7dbe9346fe1b6af4c71fff4f5dccc4c74f9175e7efd1d8",
+      "shard": "projects/414e6933f84055d355e9826cd8ce2ceefa1ab38617069e609b66dbfbb6e23cf7.jsonl",
+      "sha256": "6b581e64deddf3fc6be902494809941913353ca5a975b8d6ffaaef2f02033508",
+      "bytes": 1025,
+      "milliseconds": 1.0726640000000316,
+      "reused": false
+    },
+    {
+      "id": "160_incompatibleAssignmentOfIdenticallyNamedTypes",
+      "input": "d5cddab37c165a35b5b548cc326c4923e0d65ed5311ea2ead2f5bf5e7b5438c7",
+      "shard": "projects/2b70532cf9e2129f23bcc50af31cba24bd2867158f3bece190c6c7ec78105b00.jsonl",
+      "sha256": "3af436867fdc9ffcdc7053fcebb022882b752fc4164eec546cb176f4f09aa61f",
+      "bytes": 541,
+      "milliseconds": 1.2237380000001394,
+      "reused": false
+    },
+    {
+      "id": "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
+      "input": "0909643591657cd28506a69aa3d9acb333c2f1850e56ecd550fec464e681bd35",
+      "shard": "projects/c6034362d348bb3af7a94f83f392b84914c5de938e9519b62c7f5b544fb4c401.jsonl",
+      "sha256": "02989971d9bd24934e8333300854401c6d178aa644b4a855fd4b0a5ac9e25ec6",
+      "bytes": 728,
+      "milliseconds": 3.2084560000000693,
+      "reused": false
+    },
+    {
+      "id": "162_instanceofWithPrimitiveUnion",
+      "input": "1049daced38dcc3ab16070fe5d1951c84f8252ce7fc104dc152cf4e9e3e8a639",
+      "shard": "projects/dccbc8f14e1fcd238d48877bd9be9272e12868c71da54f79c350d7d87c7ccf08.jsonl",
+      "sha256": "2a683bdcecaed65e0da31f15f4ef3ff8b0be455046835beff20b1ee05caacee9",
+      "bytes": 584,
+      "milliseconds": 1.681867999999895,
+      "reused": false
+    },
+    {
+      "id": "163_ArrowFunctionExpression1",
+      "input": "9b68e791552a356171419ff7e0f17ade309f7ab8921bffab407b925b72a185cd",
+      "shard": "projects/3a6ef9349956be8659f83979b21b466cc344ad180e5623664005a7eda84459a1.jsonl",
+      "sha256": "4352a765aaeea224e250ff903d15af345fc0047622d14952fb2610081b09c870",
+      "bytes": 443,
+      "milliseconds": 0.9212780000000294,
+      "reused": false
+    },
+    {
+      "id": "164_staticOffOfInstance1",
+      "input": "545cb5599859c30effe9bca6d378d317d17d4d83c5498172a5983611126bf9d8",
+      "shard": "projects/5730d0dfcd76c316e7370691850836aa221af8bc1fb1e85cbb535c6ae6b86261.jsonl",
+      "sha256": "2b6ed6e9484eca07a26884fb7f9e593202b5258a88fd6f17ff64d4c006cfcf81",
+      "bytes": 491,
+      "milliseconds": 1.1012050000001636,
+      "reused": false
+    },
+    {
+      "id": "165_defaultValueInConstructorOverload1",
+      "input": "ad367cb91ff166c2de23c2303c65ab434eeb6613bb770fadb0c7900430ac2909",
+      "shard": "projects/576cb2752854e01350f3065c9d728ef98ba6330496a050c4f7c9ca58ffcfa401.jsonl",
+      "sha256": "9ecbd7c9fb57287949ae42c29b0c45091156c509e9bab75dfccd5d9d763f1f24",
+      "bytes": 500,
+      "milliseconds": 0.9771220000000085,
+      "reused": false
+    },
+    {
+      "id": "166_inheritanceMemberFuncOverridingProperty",
+      "input": "f938fd14121103b435923bd67de1cd9b31998563e934960bfe0a5d39ed69e8d7",
+      "shard": "projects/63f80b54c9669d54f15ea8dd103744b8c4c27b493c79a88b31c5da9ac333dca7.jsonl",
+      "sha256": "0fe38c06e3fa039c76b9636ce0331d198cd85ccf171c2a519d582417862ed3cd",
+      "bytes": 562,
+      "milliseconds": 1.5318860000002132,
+      "reused": false
+    },
+    {
+      "id": "167_compareTypeParameterConstrainedByLiteralToLiteral",
+      "input": "59ec074a4ae5c92ce06e76c4c36c751df80853ecf7d69101fcffd155641e3648",
+      "shard": "projects/e561656ce15fccad14c66288fa110508a38ee02a88c17c66d3ac346f3fc38b89.jsonl",
+      "sha256": "5b94931bbf219aaad2512df61e8a3d47f0990263186528b8b3b92c4efd409fff",
+      "bytes": 615,
+      "milliseconds": 1.3123290000000907,
+      "reused": false
+    },
+    {
+      "id": "168_importedModuleAddToGlobal",
+      "input": "4d6dd0ac00b20584335c422f451791507b198afa874c86ff8fb10b39d0fe5099",
+      "shard": "projects/8cc8199d8ea530b82a21fd2bc70a32639424d6a0b5735aa41d37018c24f05bb2.jsonl",
+      "sha256": "1f8b9f494d3c8c7204969692de0f366d58e29b7434e7e0f5ccdcf59aa12d0d1a",
+      "bytes": 594,
+      "milliseconds": 2.154230000000098,
+      "reused": false
+    },
+    {
+      "id": "169_spreadInvalidArgumentType",
+      "input": "e4eb3c489e5db65e9d94eae8b0c6a9ee7746396e7975870321f26981b5438e57",
+      "shard": "projects/30386afe5a7983aaaff79c302e9311ab2d2c77a8d7d7fd5f0bed3ef12d1d5eb2.jsonl",
+      "sha256": "59a8a9ae16c6bff55597c2811c49f61b2dcd81dbd912db16dadb5939120eeed0",
+      "bytes": 2211,
+      "milliseconds": 3.1200549999998657,
+      "reused": false
+    },
+    {
+      "id": "170_decrementAndIncrementOperators",
+      "input": "934c7f1b92223441e9c9a05c41fa633d6212a88679ed4c5aea2bbb05e08eb766",
+      "shard": "projects/0a2516d6be32d9dc6af4bc9b547cefa0d14c0b7c39b74db0692885661ec37ff1.jsonl",
+      "sha256": "df981239c46a3c27c3ca5d74932695b1b1b38586430c17b666b1ec986020c607",
+      "bytes": 689,
+      "milliseconds": 1.3508059999999205,
+      "reused": false
+    },
+    {
+      "id": "171_extendPrivateConstructorClass",
+      "input": "b632d17fd3082ebc9c511cf39c0be0c1643fb1a899d94e188687dbebd50f92b6",
+      "shard": "projects/fa5d29ef3c44a9c94a95f8b1ed905a2b7725921e22289b3de43da769ffe7034c.jsonl",
+      "sha256": "d7d2f21df06dd550db7f21ae9709b9192236c9363eaff41d13f38509eba2a784",
+      "bytes": 467,
+      "milliseconds": 1.1834680000001754,
+      "reused": false
+    },
+    {
+      "id": "172_constDeclarationShadowedByVarDeclaration",
+      "input": "a582da359fd7035ec8c0f1fd5f0f4422669b2e9a6ce45754915600c206e9d6be",
+      "shard": "projects/53032f3a87a5a8400378755f0dffe256c45afba95630d1a07b5cc1981d98bf89.jsonl",
+      "sha256": "edd4e78f9baa052e85aa585d2e15e28e65c156e40b51f0008b5650b3d55a3f73",
+      "bytes": 700,
+      "milliseconds": 0.9609070000001338,
+      "reused": false
+    },
+    {
+      "id": "173_selfReferencesInFunctionParameters",
+      "input": "b623f9208212e0d3ee7327b381a3baeacb25169aef12e5e54130049cc04e0da3",
+      "shard": "projects/5d90ef998291e63f66c1850e460e03b31371f3a46891beff32d74176a2a1e5ae.jsonl",
+      "sha256": "b6d8610aa5f850cb2e633b05ac7c9ab3defb1d866d84e250aeb70149ca5c9f68",
+      "bytes": 630,
+      "milliseconds": 1.3964849999999842,
+      "reused": false
+    },
+    {
+      "id": "174_baseExpressionTypeParameters",
+      "input": "9ffd4a0f907b7f9d303d03e17462c3097ac13e158d28d904087c02ac2da31737",
+      "shard": "projects/c2829aac6b137662f31dfe05cc54e8f3001674cf39f148112d10303ebdf4f4be.jsonl",
+      "sha256": "34860ed0002ee59316435c50633c5809d629a80b1e15c72622d8107ec3e8e40b",
+      "bytes": 618,
+      "milliseconds": 1.8124319999999443,
+      "reused": false
+    },
+    {
+      "id": "175_propertyOrdering",
+      "input": "8001d1feb731a415cb57df6aee0970a4418cf9abc8279a1d9214a36c5df451ea",
+      "shard": "projects/5c60024039d7457065c6894fd4d25af85d7b90c06fd0eef4576cf390ec222345.jsonl",
+      "sha256": "48a86749d1d3500aae551beb268c79df348ef58799a114795a36d66fdb0a3688",
+      "bytes": 822,
+      "milliseconds": 2.021532999999863,
+      "reused": false
+    },
+    {
+      "id": "176_exportSpecifierReferencingOuterDeclaration1",
+      "input": "53dc0fb9d1e331e789148bfd17228ac1d95fbd5ab7b618dc8bf1b80c80f59525",
+      "shard": "projects/405f52b32f82567bd6818aa341facce96b9384bfd4e7caac694a0df8c84f83ed.jsonl",
+      "sha256": "50f44dfea5bd276f74d33018cb7c2cbe5fdca6ffb267dcb2b2889c9e9060ac65",
+      "bytes": 479,
+      "milliseconds": 1.0168409999998858,
+      "reused": false
+    },
+    {
+      "id": "177_readonlyTupleAndArrayElaboration",
+      "input": "28ef62a30a0a2b93c4e6736c2c94870267fb917f8d0aec0d0e1143ebf407f79b",
+      "shard": "projects/cfa0d803e58156e29afca639dbc7476768f67d2ec055d468c17a92be612eb76b.jsonl",
+      "sha256": "7a52e867a4a13d449dad9ecb99f3dc68c8703064e841bd76d43ccf4ef988c6b1",
+      "bytes": 1252,
+      "milliseconds": 5.0954880000001594,
+      "reused": false
+    },
+    {
+      "id": "178_bitwiseCompoundAssignmentOperators",
+      "input": "15e02fb65ac59b86be992e058096df2263ea9e759a9d7deb012f7bbf0e39f6f2",
+      "shard": "projects/26433a4d1e1cd693cfb3c07ce34ba615532d1b279b7e7241b84c711e536a37cd.jsonl",
+      "sha256": "60db8809919e770a5a594773d444e0d3fe514705bccfc646a5d199fdef5baff8",
+      "bytes": 742,
+      "milliseconds": 1.8217759999999998,
+      "reused": false
+    },
+    {
+      "id": "179_callOnClass",
+      "input": "c45ee6d8cdc3ccbc32c872d2ca70ede4e13e6fddbf9eb1e6776eceb27aac528b",
+      "shard": "projects/055956e019e75e0ad1614db3e63b59e9f4a55fd6c656ebc5c120b66c27395060.jsonl",
+      "sha256": "cc5f06f8d7c6126f95f2deebd5dc14b6044e2c7768142cd6f4bdf5ec4ad012cd",
+      "bytes": 411,
+      "milliseconds": 0.897162999999864,
+      "reused": false
+    },
+    {
+      "id": "180_keywordExpressionInternalComments",
+      "input": "aa8558bd3e3761186c19aface7048712aa8efde2f80836df61d8cbb7b5c54a8d",
+      "shard": "projects/a8f6669ba05d612a0552efd44cf024218e52efc01fee00b0d3807740ba9166bf.jsonl",
+      "sha256": "13e5a352ace2fffaf4b45bd79bb7d54623815f11589746df4502a075cb2ca363",
+      "bytes": 585,
+      "milliseconds": 1.3870010000000548,
+      "reused": false
+    },
+    {
+      "id": "181_noImplicitAnyDestructuringParameterDeclaration",
+      "input": "74ca89fc3a01d8c2ace72cba2326afb1af608611778dc13d852bb3ff9c15c30b",
+      "shard": "projects/66bd90091443636c6c04f66dce75221744f1acacef6bd9d9453dc55bd5c63182.jsonl",
+      "sha256": "22ba45412f044d2c1006df73f17444e70f2728972e77f117d41e4580fcbdd276",
+      "bytes": 771,
+      "milliseconds": 2.4440309999999954,
+      "reused": false
+    },
+    {
+      "id": "182_propertyAccessibility1",
+      "input": "1a26c329fc5c7901daa8dbb49af8f3a0408464f027c780af6868ee2cba31514e",
+      "shard": "projects/20bea4f4ec82fb7fccbbfa8de2a9900d704f1fb638dd57b8dae80ede66c50505.jsonl",
+      "sha256": "3bc2cf389977f8ee9da63cbb4771ebc33e01a173d361f1b11185a9839ecfed08",
+      "bytes": 536,
+      "milliseconds": 1.1948039999999764,
+      "reused": false
+    },
+    {
+      "id": "183_internalImportInstantiatedModuleNotReferencingInstance",
+      "input": "f6de3824c11077d8e8b508866c67b918544fe523a930f7471ee798ed60f7fee6",
+      "shard": "projects/84c71a76c9a97857f8577af22c3d13463f3abeb5c595e0a56ebdcc7a58dd7084.jsonl",
+      "sha256": "046ba0f1adcb1a98967b84f5c172c9650c944f37dd384551b0266cfb308fc084",
+      "bytes": 633,
+      "milliseconds": 1.2677429999998822,
+      "reused": false
+    },
+    {
+      "id": "184_bindingPatternCannotBeOnlyInferenceSource",
+      "input": "f33b612d2d623c3379a49559f08c81405f2b33ef2953d2fa8cbb0e098aa9a446",
+      "shard": "projects/d0e4002eee1424f4826eae50d8a03271f8a4f4bca6827bdc8f20825f012cc21f.jsonl",
+      "sha256": "6770dc36257c814e00ed81f4438646ebb80cfa5c90f821c7dbea2b2629dde0db",
+      "bytes": 940,
+      "milliseconds": 5.019976999999926,
+      "reused": false
+    },
+    {
+      "id": "185_restParamsWithNonRestParams",
+      "input": "3d9a09db321e8db2fed08aec7c07ba134785b088f5fe67aa27e6acfbed108842",
+      "shard": "projects/4b79e43956a77ed74124947b2d1b2180e71916b80b3e133e2eb0896812eb3753.jsonl",
+      "sha256": "7099f8a7749d2f314c5a878ea128bb1a73ab93622377b727697d7994d8122cc6",
+      "bytes": 591,
+      "milliseconds": 1.295994999999948,
+      "reused": false
+    },
+    {
+      "id": "186_superInConstructorParam1",
+      "input": "67af2320fae68b4a1f7f627cd5d189e0f4d3e584565f5f1a05da4d535cf6a84d",
+      "shard": "projects/0b44a99f103d1a67a04f2a4a99afddecb049ea5962acf7f4ef51d9019bc28944.jsonl",
+      "sha256": "cdaeb078e74cce3dea36f1af82a9ba757d46a7b4c58af23d8f8cf902479d7058",
+      "bytes": 542,
+      "milliseconds": 10.38759899999991,
+      "reused": false
+    },
+    {
+      "id": "187_deleteReadonlyInStrictNullChecks",
+      "input": "58a46bcdaa5ff91d6f14e4c77c1e7538626da32acdecc8396a3ab5712af214e3",
+      "shard": "projects/7c0e6bdc2a28100f77d87c52da97cfb398abede92b563c7dceb0400f175c52b2.jsonl",
+      "sha256": "f24ab9e5edba57654abebaccec5c56eaf007534a817a9eb86b26f25bae950943",
+      "bytes": 504,
+      "milliseconds": 2.594724999999926,
+      "reused": false
+    },
+    {
+      "id": "188_uncalledFunctionChecksInConditional",
+      "input": "2e52486bcbf0bd09594ac7a629a7c25963e5d444e1558f9e81a9e698ef1edbcb",
+      "shard": "projects/2fe9dc992b45f0ce20dca5df05273297b554cab47e94ab3b74727b594f095d61.jsonl",
+      "sha256": "95caf8481ee15510f2a92ad9868dc26c796afeb9f254c6cd578f929c538cbfe2",
+      "bytes": 1035,
+      "milliseconds": 4.863313000000062,
+      "reused": false
+    },
+    {
+      "id": "189_circularModuleImports",
+      "input": "c6c3b44b96eb0a6285835a15a9ed30c52448326eda035fe78d59104834ea769f",
+      "shard": "projects/9b17c8707923d43322ee24505e3076289906bec33f4d5181be3d944b46308af4.jsonl",
+      "sha256": "6e602d92ce3354c2edc717c5f06cbb58277efca13c936c27210d77c21cd106b7",
+      "bytes": 413,
+      "milliseconds": 1.5610790000000634,
+      "reused": false
+    },
+    {
+      "id": "190_interfaceMayNotBeExtendedWitACall",
+      "input": "f5e62faaa177eae41cf59852eeb4b3e44674cf600320df6e21b01d83196f6a54",
+      "shard": "projects/b6cb72c77b79ba7b12f4245f7f774c23f5cc9f77741f9f463e2c75746c420485.jsonl",
+      "sha256": "1f45c5a4d64abec59b27cee4eb304bb1e209a94fa51b00cdf81b255adb0cc960",
+      "bytes": 449,
+      "milliseconds": 1.0471350000000257,
+      "reused": false
+    },
+    {
+      "id": "191_extendedInterfacesWithDuplicateTypeParameters",
+      "input": "1f9420e796f9393225b7f24f6dbaa2de37558e3f8214716677952d536c156b8d",
+      "shard": "projects/b40082de022cb6caff9b8838105060dfff0a26f81264dd5500873f7986feb773.jsonl",
+      "sha256": "5d4ece097301fd33d6ff9c3b89e01c98b4265c0ea69f96a673f5af8d70055d0f",
+      "bytes": 485,
+      "milliseconds": 1.0465249999999742,
+      "reused": false
+    },
+    {
+      "id": "192_constructorOverloads1",
+      "input": "89a8a5b0e2aa2e4383a76756cfbfdfbf20168a1bdee65ee189ecbdbc0d8bdbb5",
+      "shard": "projects/08edef986c8cf30f1de9a29800bff4603373e2e03cfe7fab6646483ceb2ba5eb.jsonl",
+      "sha256": "4f58e93d131ccf061d4702f8d4c2a54237316fa0edd047765e38074de02e1b68",
+      "bytes": 649,
+      "milliseconds": 3.4279820000001564,
+      "reused": false
+    },
+    {
+      "id": "193_capturedParametersInInitializers1",
+      "input": "36e014ee16ff87eeac360ea996599b6d12318fd4fb52ed6e593dcbeb9ec9489f",
+      "shard": "projects/e766376164f4595a4344f161944fb161c78e9039f6f916df79e12eff15d21ada.jsonl",
+      "sha256": "25942f3aa7cfe7d045094bb53b2e263625b47049e4bd6f77ba9963a5434d1b99",
+      "bytes": 2070,
+      "milliseconds": 4.81607299999996,
+      "reused": false
+    },
+    {
+      "id": "194_reachabilityChecks1",
+      "input": "ca49005e7dff6f07c3356b14d37f00a888b8e365e6bcc6a3546eea84e7084ed4",
+      "shard": "projects/2d5e90da06ad45d2861a4204881e3cc586ee4daf7d55fc364d84adbe2e7276b2.jsonl",
+      "sha256": "9b618c0c75ea68a44015168eb4e7b465e881cf845ce7288fb8c2d16eec8d7792",
+      "bytes": 1701,
+      "milliseconds": 2.843564000000015,
+      "reused": false
+    },
+    {
+      "id": "195_inheritanceMemberAccessorOverridingProperty",
+      "input": "3e99e8cca1f8d49911e7e1bcd04d27eb79431c643e4eecf89197bbca60b2f83c",
+      "shard": "projects/dde44637e7a3e32787c505b10d0c8005d61ed8c84490978fe3e03fb148896ac3.jsonl",
+      "sha256": "c49a0d89e4236cece0588f9211fc375d7b2adc4d4d69d13e664172325325d2ff",
+      "bytes": 606,
+      "milliseconds": 1.4593079999999645,
+      "reused": false
+    },
+    {
+      "id": "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
+      "input": "2a039e7be445db6d5c4ed26cb9bda5c7702888d55dc30bfd919a2b77345556a8",
+      "shard": "projects/7766835498cdaf663798da36bb237499c4e5bbdd7591d0a59307f46d1869efa1.jsonl",
+      "sha256": "a65399330a0bafe6c18792e1e4d0b4e5b46e5ceabbdd12c3d878e425bc4f83a2",
+      "bytes": 665,
+      "milliseconds": 1.511075000000119,
+      "reused": false
+    },
+    {
+      "id": "197_classExtendsInterfaceInModule",
+      "input": "673ff897413a161553e9ab131e13d5fc6c0b105541b8c0581a8c31f7fc63650f",
+      "shard": "projects/00c57caab993e6fa728f6b4a8ddce20484ab933960b4959066ac9802fad86483.jsonl",
+      "sha256": "51c88e060c99eada7830f10d773d2e9e03530f70f36250512067fd54a7b6ea37",
+      "bytes": 528,
+      "milliseconds": 1.1248199999999997,
+      "reused": false
+    },
+    {
+      "id": "198_shadowPrivateMembers",
+      "input": "ad7832236cfdf0238685c6eff032a412e4fbc53cb22be2b26f1a758562b3b4e1",
+      "shard": "projects/f23026b58ab55e2e768e8614a3c68c592e75fa9a5e07e15450c0570371ecc0fa.jsonl",
+      "sha256": "bf24643ba4430c7b99fb25ff65cc4d2c84e647478eff6e7860b1bb92c83f3539",
+      "bytes": 486,
+      "milliseconds": 1.3433259999999336,
+      "reused": false
+    },
+    {
+      "id": "199_getterMissingReturnError",
+      "input": "8e7815e6defbb06b5c5786d3ce03e6d386010c910540a9d0765ceb61ceac3e72",
+      "shard": "projects/66f99c4a85e0a9340c00b65936bf760129063035fff9e4de45fb7a98bf3a6d83.jsonl",
+      "sha256": "ab7eddedd387af52d477635b22b508cf8457b845a6976aa17c3d583c74674d52",
+      "bytes": 462,
+      "milliseconds": 0.9404770000001008,
+      "reused": false
+    },
+    {
+      "id": "200_instantiationExpressionErrorNoCrash",
+      "input": "e4157b93cf918b94743d8109b9f36ebb3933ad556c85306373d392c56b0ce902",
+      "shard": "projects/955cafc54379f1c562cebabb41927cf7f03fb7736371ec2a07555a8138da4cf7.jsonl",
+      "sha256": "1f92f4e08057f43bec8933d890df3564dc31195f4bda0eb0844559d0d49d4188",
+      "bytes": 636,
+      "milliseconds": 4.572913000000199,
+      "reused": false
+    },
+    {
+      "id": "201_thisPredicateInObjectLiteral",
+      "input": "4d72edf732d5dd6449895f5d4fcbfd9c03037cc40b8b678c1d39b70499ccb654",
+      "shard": "projects/7b1432d8806f8e8ed5cd1afc10c322610630b1a2b2e9e8313ec69f65fabcd611.jsonl",
+      "sha256": "43820941548c8f63d5a500723cd738a5d2346f56ad2a3bc11e809cb3066bf899",
+      "bytes": 621,
+      "milliseconds": 1.7545460000001185,
+      "reused": false
+    },
+    {
+      "id": "202_reservedNameOnInterfaceImport",
+      "input": "f6f04a61f39c0108026a20770bc0712826ac0ecc58b918ee54e03a33047fea3e",
+      "shard": "projects/6bd3ff708c909948ac1a88f801437af0e7534fdcc6a30d685687c813482eee24.jsonl",
+      "sha256": "28a36f5d4d33bde4f069bf5054b6f5b35abd7fd3219d5c28cee465225945365f",
+      "bytes": 437,
+      "milliseconds": 1.186672999999928,
+      "reused": false
+    },
+    {
+      "id": "203_incrementOnTypeParameter",
+      "input": "efec006822f7927f5b18837243acf3f923a8ff17ddeb390da19b9cb5f95e2225",
+      "shard": "projects/90f944e4dbf6adc076dbefd3efc3b5301b84ad46f9f47ed12c213fe4606c216d.jsonl",
+      "sha256": "715d5f4fe18b2d6331de8219f8549e9d43bf8c35fb8cc1861c570e7337047b52",
+      "bytes": 538,
+      "milliseconds": 2.279976999999917,
+      "reused": false
+    },
+    {
+      "id": "204_classExpressionExtendingAbstractClass",
+      "input": "1316a68ddc2c956a6d0757f8eb631df9e48d335b85dd11c0c2789d2fe85d1505",
+      "shard": "projects/6fd530bd37202d7aafb46e2424e8d75359439cb0ab69f89e3f2458734ab897dc.jsonl",
+      "sha256": "ec35ae161effda9e85b756ab080e69f5344e0209e3349bc21909a8fcab46e65a",
+      "bytes": 506,
+      "milliseconds": 1.5058359999998174,
+      "reused": false
+    },
+    {
+      "id": "205_noImplicitReturnsInAsync2",
+      "input": "254daf7b327992923b651c4a51a09d9d3ae256f95431dd88a088dff2a744585e",
+      "shard": "projects/e04a937fc4d8a24ddecd1c7b58ac45f2823c7eb690002f907856a54bc137f072.jsonl",
+      "sha256": "5d9e61d39b41417ec9a71ea0a1cd16bc9939e46b8e56106936ee429518899a0b",
+      "bytes": 2395,
+      "milliseconds": 2.45288400000004,
+      "reused": false
+    },
+    {
+      "id": "206_recursiveResolveTypeMembers",
+      "input": "769aeab18beeda5d280e62f28c4a673851d8d1d2357d6ff5cee77e217b64e45a",
+      "shard": "projects/94451f5d5eb64fc4e41576da2b4b4383e5721688d9366ac379c2e7d18a2c759f.jsonl",
+      "sha256": "1408a0f5c6bc47018a913f0d02d3c365b684f58ff5e99070fe7ac30d89b22265",
+      "bytes": 453,
+      "milliseconds": 3.718943999999965,
+      "reused": false
+    },
+    {
+      "id": "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
+      "input": "765ea37c18b1e7a95e95717fadc1528c2fa9dd9e0183ba181bf70509a5038b49",
+      "shard": "projects/93a0b8cf2f3b9916e77e093bdb1b3fc4206861bfe92f35e9c8e175c6c71dd54f.jsonl",
+      "sha256": "7e8b9c999458f651ef6209b9026cab3f2d590e0830d5db063cc1ff4c3204a61a",
+      "bytes": 681,
+      "milliseconds": 2.0495740000001206,
+      "reused": false
+    },
+    {
+      "id": "208_importAliasInModuleAugmentation",
+      "input": "92c40936ea9d25796820dfdc43e5b3bc48b136448b9ebfbc011d0db8d43be28d",
+      "shard": "projects/9a7574eb43e9af37d4d748b7a891e166b40a17a3c0cf492bf47714a1bc2b22bf.jsonl",
+      "sha256": "93aba524170a5f5da42b3f5ea5d39616bffcb778b0af9068a152b3663f487343",
+      "bytes": 636,
+      "milliseconds": 2.246037000000115,
+      "reused": false
+    },
+    {
+      "id": "209_genericSpecializations2",
+      "input": "e743d073aace50317d7e4907c5be1128e2a4f7540747255f78561575abd2d133",
+      "shard": "projects/f55578949dcd6653a52b1beac7bb2f422c2573113078fd904de53bdd07987f15.jsonl",
+      "sha256": "834b0259af7c4fba650339c922b130ce44702d9b7a74e29fae4329c3371aa133",
+      "bytes": 634,
+      "milliseconds": 2.4004550000001927,
+      "reused": false
+    },
+    {
+      "id": "210_illegalSuperCallsInConstructor",
+      "input": "6aff55090c9d2778d572295b3ea8013a9c19868a3f98725653c837c84fc6ceca",
+      "shard": "projects/96ec2214b16f7c60fa857b2b25ad732761927e5c610a21f43d8bceef2eb50ac5.jsonl",
+      "sha256": "6c64d2731087721180a2813052bd22a7b408b45ea27aa6a7181136a7cfbd19e0",
+      "bytes": 826,
+      "milliseconds": 1.7975599999999758,
+      "reused": false
+    },
+    {
+      "id": "211_functionParameterArityMismatch",
+      "input": "1087ab36ac31c8234b2a783aebb890495054379e2e55e7e8e905c23cdf5703ac",
+      "shard": "projects/36d772292be04de03e1b942ea9b60c1da22525036a9d23746dc9b93b4f8e5d50.jsonl",
+      "sha256": "6bb37734f43e3e6bacebf3846ecc946c1a4525dbc8ee3df50ce41fa393912390",
+      "bytes": 589,
+      "milliseconds": 2.1739890000001196,
+      "reused": false
+    },
+    {
+      "id": "212_duplicateIdentifierDifferentModifiers",
+      "input": "9337f2065b9af9aa98b1c0ce4ed874468ed65f0bff1ba2dd9d8fb7820889d262",
+      "shard": "projects/be0e0d8fe8a74b1a047dca71d0567d9f07b46e5e880ce172f66596647badd676.jsonl",
+      "sha256": "cf8cedd24507b28f932ec5acfce0b2368da84996233df988f699a37fa07b5a44",
+      "bytes": 522,
+      "milliseconds": 1.0494490000000951,
+      "reused": false
+    },
+    {
+      "id": "213_inheritanceMemberPropertyOverridingAccessor",
+      "input": "856a5eca9fefc37aa20100843283c529c860294280d1f8d03b5029b47a78d192",
+      "shard": "projects/231ba5e96f79fbd5d82b7dded58c4b9b537692e7a4493c227426868c40232d91.jsonl",
+      "sha256": "7abb19c933dfb4f0d5599db920c8986747de8e85651fb078abe0175a126df584",
+      "bytes": 636,
+      "milliseconds": 1.6618089999999484,
+      "reused": false
+    },
+    {
+      "id": "214_ambientExternalModuleWithRelativeModuleName",
+      "input": "fdd537bad5e6d42437f6536e9a14a4a28fb4d1c2cf46966cb4dbd698afdfa711",
+      "shard": "projects/6cc0c498c36be61c224a0408149d670a11b4eba13d15117d753ec70624b17961.jsonl",
+      "sha256": "fd479e398259348be9a3ab730b35489525bb831453ab11436df744a44553be9c",
+      "bytes": 479,
+      "milliseconds": 1.1723309999999856,
+      "reused": false
+    },
+    {
+      "id": "215_classImplementsPrimitive",
+      "input": "43da507bae7429cb040d3bb9b9f4b5c8301a8109a75905946e92fb6d645027bd",
+      "shard": "projects/7501628f9ad1a3ac252869e74ced1442282f8d3e5eb0aa460bb4ede220334916.jsonl",
+      "sha256": "c06db2b4e22be69c4f9b84567e8a59f9b12d6f91c927f7148420b7ac6ce4c96e",
+      "bytes": 656,
+      "milliseconds": 1.7163390000000618,
+      "reused": false
+    },
+    {
+      "id": "216_functionTypeArgumentArityErrors",
+      "input": "29dbc17d06fbb311cc26a4c185127fb5baac4db7a0753782ba15d317c113f116",
+      "shard": "projects/0d34c21ceba4934ab0077cc385f91de2f7644d78914cd93471c22c0b0e7e88cc.jsonl",
+      "sha256": "914654be16458c1f0764e8d535612bf12396f51a48fb8a247657e6824025bad7",
+      "bytes": 521,
+      "milliseconds": 2.1730780000000323,
+      "reused": false
+    },
+    {
+      "id": "217_fallFromLastCase2",
+      "input": "a0cb8c7d16de1176abe7f4865eee7493bf6637c4d8f743c5be1a2f2effc6541b",
+      "shard": "projects/ce64081dbc3d223d87d57d0e8f05970747ce9c98a4b383ca2d656e4c14225c97.jsonl",
+      "sha256": "342c1cfb3cae8a54f8a66a52e0d781d0481ae172eb8abb8ee73a2c4675525e9e",
+      "bytes": 839,
+      "milliseconds": 1.3242669999999634,
+      "reused": false
+    },
+    {
+      "id": "218_shorthandPropertyUndefined",
+      "input": "d83709b4d19ec6bd9dd32f9a6ca24e99a53a07ca53756a9e43efad0af62f2bb8",
+      "shard": "projects/808d7cf332228de8718d660eec866a640ac33b5e67504bde49fee8054f91aebc.jsonl",
+      "sha256": "8a8d1458a3af1d99a30a98ce8869403bb90f71296f2bc372f71a018c6ca22738",
+      "bytes": 444,
+      "milliseconds": 1.8682459999999992,
+      "reused": false
+    },
+    {
+      "id": "219_classImplementsClass4",
+      "input": "d8893f53d6c0e337de0ad173590549e90a9729b75c3889047bd269f6cd6b3384",
+      "shard": "projects/116b731bb308b61428a2ac25e1962666cd8e9e38e1a2fdeb5fabb86ca6322126.jsonl",
+      "sha256": "8a0d0b8fece4590320b9eb678e7a9e56700479ec154c72d4abdb1aec1d88c635",
+      "bytes": 597,
+      "milliseconds": 1.8271649999999227,
+      "reused": false
+    },
+    {
+      "id": "220_bigIntWithTargetLessThanES2016",
+      "input": "ea586e48a1d626335a79c663df79856ff75f00b5f5671defad3bf70a6b92a270",
+      "shard": "projects/f2f21c7810cfbb57e0b79d610c53b5d63c27b5e576d2a27d886b9527c761d3bf.jsonl",
+      "sha256": "996b021c40a32a21c6b0fd834d0fa571e115a2040cdc26310238efa2398b09b9",
+      "bytes": 577,
+      "milliseconds": 2.530698999999913,
+      "reused": false
+    },
+    {
+      "id": "221_unusedParameterProperty2",
+      "input": "a61701d60e757c09b4a13958f540aad37d9ff98bc6ea5fcf65334f8085fba120",
+      "shard": "projects/081e9f427f49cdb38d86c049f1f0fae63e26ac3aa1cbdfafff252ffdcd5e6622.jsonl",
+      "sha256": "df4c3151da56c3e362d0db523dda21521ee0b452a41a1c6438a5b23df5f24303",
+      "bytes": 584,
+      "milliseconds": 1.1866029999998773,
+      "reused": false
+    },
+    {
+      "id": "222_staticPrototypeProperty",
+      "input": "c111898cf6b258fa47da46512f14f45f75ee7ae97b2596bf7b4148648a737c5c",
+      "shard": "projects/56b887917d9d174d37f8a56ffc93d34f966bf4ca752c14ab13bfdbe70b658886.jsonl",
+      "sha256": "c8a6405ccdae9d4c2455189c49974d64a8174061eb5fc3254206d49bcb0c687e",
+      "bytes": 476,
+      "milliseconds": 1.0532039999998233,
+      "reused": false
+    },
+    {
+      "id": "223_instanceofOnInstantiationExpression",
+      "input": "4596463d57cbca706ed0f96ee30b62cfb706b338620159163e31aa3e880fbf8f",
+      "shard": "projects/82cd51047c601034489599f26305f3d45e707d8a919bbe327227fcd1d4373249.jsonl",
+      "sha256": "4b5408102018d83df6a19d10a90fd1a242eb8387af3f93bb98283b722bfbdb1a",
+      "bytes": 698,
+      "milliseconds": 1.8854109999999764,
+      "reused": false
+    },
+    {
+      "id": "224_newFunctionImplicitAny",
+      "input": "fecbe00a6ebd9d54f9f6af4e5e8e07906068386c4a576928dc577225735414cb",
+      "shard": "projects/f9c620e9e6366fefed4f112fa619bc00d201d45eacb6ab8c78f2d8f8dadfde05.jsonl",
+      "sha256": "ce36bb1d8966867931f93ee65091d4906aeef8e20e7f76c35b6974c6a4704f2d",
+      "bytes": 553,
+      "milliseconds": 9.35978299999988,
+      "reused": false
+    },
+    {
+      "id": "225_returnInConstructor1",
+      "input": "786d217384827e1626c00b7c01408023f73e57bfe7932761ec61613247d8895c",
+      "shard": "projects/7ca182679db63cfe895e5fe66c8d0fefceb7037c4c48d9b1a84f6bcf2e16af52.jsonl",
+      "sha256": "292956f3ccfeb84bec62e2453f59c53146252636982d171331dbf5acc4a359a2",
+      "bytes": 1184,
+      "milliseconds": 4.080560999999989,
+      "reused": false
+    },
+    {
+      "id": "226_assigningFromObjectToAnythingElse",
+      "input": "a979922acb8a3a746a8a62e96538de3478625e03f02c97f5e1205a5d54ed9200",
+      "shard": "projects/b2fb6df6e57020685e79ec8d641a866de0f93b4d8c55487f7a06d524bcff1a4a.jsonl",
+      "sha256": "53e078d9ac2c59b1ddc34d50385cd07cf1550adef90ca62ed6da5ab2ae87771f",
+      "bytes": 545,
+      "milliseconds": 2.002945999999838,
+      "reused": false
+    },
+    {
+      "id": "227_classFieldSuperNotAccessible",
+      "input": "b519d24c91065beabcbee9f0e0672795ebf17337e9de9b15ff8908c35b9ded9a",
+      "shard": "projects/1a36cdd8e72e2b0666354165cb35e0e62a2faf1aafafa26258f3a3142dbdbd41.jsonl",
+      "sha256": "ea4c8bbe95075481aff8d64154079db4a28bb1a97e4db1eb5bd648222e66b5b0",
+      "bytes": 563,
+      "milliseconds": 2.7381370000000516,
+      "reused": false
+    },
+    {
+      "id": "228_inKeywordAndUnknown",
+      "input": "db966a906b7015db95e3d9a53c0eb7ed6ab9f505ce1f3342649797aaa9c90fd0",
+      "shard": "projects/90624f17ec120be86065c8cb57c67c540b8bee125b94323537ef97f67c717aca.jsonl",
+      "sha256": "d7939f3c8debf6daf1b26d0d5ae4fc1791c690c21aa4d70bdd87e4f67e417a26",
+      "bytes": 1242,
+      "milliseconds": 5.370027000000164,
+      "reused": false
+    },
+    {
+      "id": "229_awaitCallExpressionInSyncFunction",
+      "input": "b69b89ce58d7b1628db1de113852930ea25d6785c6c2c29b3ca39f5cae6b5a1a",
+      "shard": "projects/c50707693b96f259cef372a1fe8a09dac63eb751f54548cd205d02fd274d665b.jsonl",
+      "sha256": "95cf96ad5976b62e1551966c3ebf33f23f278e2628657dadfeed48900610db4f",
+      "bytes": 531,
+      "milliseconds": 3.622620999999981,
+      "reused": false
+    },
+    {
+      "id": "230_parameterPropertyInConstructor3",
+      "input": "5ebfe1857f907362e8b3b0338cdfd85732a94240b4a4187f2d4054c997c8cd6b",
+      "shard": "projects/47a8d0014899b0ebad91219d26787aaaf4e00cf1429f2abb8ad4f5035477e8de.jsonl",
+      "sha256": "2e48d7cbf235b8d00480ee82e86c556c5697ccac7628c7b49d0a69aaeadb37f3",
+      "bytes": 539,
+      "milliseconds": 1.267212999999856,
+      "reused": false
+    },
+    {
+      "id": "231_circularReferenceInReturnType",
+      "input": "4b71f57ff17aa192a7c8c9e11093e643c95f9f618010c20a2a5607c64976ca86",
+      "shard": "projects/0fae0cbe8191425eb4bdfe2e9f3269c2a707de66f427eccb4d5cccfa7b1ed9cb.jsonl",
+      "sha256": "093d3bf5440af1ec920d64ece45d112a88d6a75ee6907f5e83d042d7937a1509",
+      "bytes": 692,
+      "milliseconds": 2.864213999999947,
+      "reused": false
+    },
+    {
+      "id": "232_neverNullishThroughParentheses",
+      "input": "08b4e6987851dfa2c95bbe2a81e63183471402b859322713feb51295651650fc",
+      "shard": "projects/674de2245c73ac2bde6b1f6ad8a4bff048b9ffc0cf47996ca47dad8bb9ab5ccf.jsonl",
+      "sha256": "9a94efb5b82fa69607d6b9ba1337f5e8af43cf6332722bdc6b04be90f4144d9c",
+      "bytes": 1662,
+      "milliseconds": 2.3386740000000827,
+      "reused": false
+    },
+    {
+      "id": "233_noImplicitAnyNamelessParameter",
+      "input": "7fb60649ab1dfc78edd26d5fa1e2b8a2ef43893fa74996aa3d94c79673bdff2e",
+      "shard": "projects/e0f65e6bfdb9c7284d03a1059870fc45270115b0531be6e3bf59614df1810adb.jsonl",
+      "sha256": "e8747dcceac41bdd660fbdd0f7990c53466f2ab0d32a76a9722d620cc622f843",
+      "bytes": 557,
+      "milliseconds": 1.5288009999999304,
+      "reused": false
+    },
+    {
+      "id": "234_superCallFromClassThatHasNoBaseType1",
+      "input": "9365280a8c511949fa65b390aa371c17305b56531223272582c6a72fc23315a1",
+      "shard": "projects/212dc28a77636c0193aa0c136733bdfc11613d82fb9c59b161a6a0ef511ade42.jsonl",
+      "sha256": "bceffd3388326af32b4f314bbb26db84f6cc82542eb27e04be858db8caeebd94",
+      "bytes": 611,
+      "milliseconds": 1.3218630000001212,
+      "reused": false
+    },
+    {
+      "id": "235_reachabilityChecks3",
+      "input": "8020b8ea856c3759232994a878c1e68c1c336500e650486045ad10d2d021d3d4",
+      "shard": "projects/b075b956cc98d3e0e2373ba3f0fb7d67c9e96e681b9e949180ddf620bff668cd.jsonl",
+      "sha256": "5625dbbcbeb87b9de9e48742689ae55941380cca329cae2c17984a9fe9ac1714",
+      "bytes": 592,
+      "milliseconds": 1.534599999999955,
+      "reused": false
+    },
+    {
+      "id": "236_returnValueInSetter",
+      "input": "1c46d87d7a4ea1ffcf8f60b5431776cb0f7497570dee46cb9cd01e2861eca0ab",
+      "shard": "projects/8bec958981d6c3b16960ba1c31f1a9ee39bc4dfc747ae37ded42b56aa86da9cd.jsonl",
+      "sha256": "0f5a50f7eb72c7246fab49fe7638d24b3baf2c5ca51aa90f4c3c01ced4284162",
+      "bytes": 507,
+      "milliseconds": 1.0562589999999545,
+      "reused": false
+    },
+    {
+      "id": "237_gettersAndSettersAccessibility",
+      "input": "567aa0bf1501eed4ef81400730222b01312f1817237d848d285b8d21aff57a22",
+      "shard": "projects/4e8844f5628f398b246d90811b84c60f3ad254d9a564b959dbbd31258df23879.jsonl",
+      "sha256": "212ab3418e8d982e919cc5cdc4dfebe3aa33ef0692b27b5813c0d50c7a0c78d8",
+      "bytes": 553,
+      "milliseconds": 0.9815880000001016,
+      "reused": false
+    },
+    {
+      "id": "238_typeParameterAsBaseClass",
+      "input": "eae081ab0ef1c91f71d4565388d8c1560727548dd25d91c6fda653d80836117e",
+      "shard": "projects/9547d4bb506befd81fe4ae1f35c2d4ce15f95fd233e67f880d69d45e30005706.jsonl",
+      "sha256": "a2200b187534965521912ed9cd8b31a48c84ac3dc3ad03a6cdaf12555000f6e3",
+      "bytes": 461,
+      "milliseconds": 1.3419229999999516,
+      "reused": false
+    },
+    {
+      "id": "239_expressionWithJSDocTypeArguments",
+      "input": "d5e84cc659a037eaad2769dfe9ff97c0c4e88e067a9c011f9f4443873f4e031f",
+      "shard": "projects/f3c150dd463a817dc0a65c0a84d42d3aa601a5bdc0e20c206e6ec64a2e411ec0.jsonl",
+      "sha256": "4ad5605ee540f57a7048243ff2aee2b3c45a6845cc52e2930dc98fa84a04c573",
+      "bytes": 863,
+      "milliseconds": 2.003305000000182,
+      "reused": false
+    },
+    {
+      "id": "240_indexedAccessPrivateMemberOfGenericConstraint",
+      "input": "55462cd4e90e2976c5266aac383b597978adb2ba854684f91433b0c67293f503",
+      "shard": "projects/c69d08f9de372ce9ae2cddcff3f8a33033530f42d260660e1454643e680b6ff3.jsonl",
+      "sha256": "1c7d627c7527aec333d24051551f0c803343d53358333f2cb38c88c8d94bae0a",
+      "bytes": 513,
+      "milliseconds": 1.2714379999999892,
+      "reused": false
+    },
+    {
+      "id": "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
+      "input": "65366a527609d398d3b8c8bfd9c6748092ea1ea8399c6d7692aee98fc0c8e2bb",
+      "shard": "projects/9298a12f54031ddd4f530b5b1ea65ebfd6b77f7ba08c0d50a322715a1e7ad280.jsonl",
+      "sha256": "a2dcb9b290eaa459891e97610d68eb8e4f615c8db507d3e7eb76527da055d037",
+      "bytes": 955,
+      "milliseconds": 1.4180160000000797,
+      "reused": false
+    },
+    {
+      "id": "242_constDeclarations-access2",
+      "input": "3dac45cd8240ccb52fb0906d37da89103c1f3d9e1b975ae6a915c5ca2cec1824",
+      "shard": "projects/55cca58e0e9a74eee8399e5ef025c7ec3fd3de963fe477a8034bc14627f89ff7.jsonl",
+      "sha256": "de83aba61ff55cb8d4ce231ba5c1610719e66384b343d95c3787d8c0a6a3a33f",
+      "bytes": 706,
+      "milliseconds": 2.0001210000000356,
+      "reused": false
+    },
+    {
+      "id": "243_classExtendsNull3",
+      "input": "ee9b5d01476008213c46b4f41b64d4d742d556b7845e41a9004702abb36e8a82",
+      "shard": "projects/76c4ff59537b87e407e7fa3fde8b4a19fd0802b6f6356abbf70fdd49b3114016.jsonl",
+      "sha256": "f6958cd2156b0e8764ac2395c92ef4864f75839e127261c4f24799387129bb95",
+      "bytes": 566,
+      "milliseconds": 1.2021449999999732,
+      "reused": false
+    },
+    {
+      "id": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+      "input": "213a6aa44196a079468abb9c6a6c953bf675e254a1b61a19f7c28159d4ea05ed",
+      "shard": "projects/80e6cf5c88217b84ac592dddbbcf7f26c79b71d55ac705f654c235d5240e88ba.jsonl",
+      "sha256": "4b6dad25332571ec3e28e7a53575b72480f50a971a783ba94c19c29055767ab8",
+      "bytes": 1448,
+      "milliseconds": 2.7624539999999342,
+      "reused": false
+    },
+    {
+      "id": "245_inheritanceMemberFuncOverridingAccessor",
+      "input": "17d34b6e81065660f7f9b584a90163852cacabb0587af6321fd5b6fc544be1de",
+      "shard": "projects/2001bb9ae75014e6b0962112c5173dec4699add5c34c624ae6657e0212fb1579.jsonl",
+      "sha256": "dec7b0ec2c28426910cc7e6048e484d013f246351321e3ef9b1586d590ee90d1",
+      "bytes": 636,
+      "milliseconds": 1.4204399999998714,
+      "reused": false
+    },
+    {
+      "id": "246_noCrashOnMixin",
+      "input": "3564c69ea7d685e52d98df5f08ea92f7a71a6b45499c1f279064bc8d7319ea63",
+      "shard": "projects/b1ade02e7b3ceb25024984398357bede995463da873b5180b2485f45b3dcb33f.jsonl",
+      "sha256": "3e7333e4e8423f58af4ee86cb0e24b93e17ca0be5c507df09ee03d5d49e49057",
+      "bytes": 660,
+      "milliseconds": 2.83658400000013,
+      "reused": false
+    },
+    {
+      "id": "247_missingDomElements",
+      "input": "bf196d7b364441275828c392a4f0b0f69f5babaa4148418c66e9561a3a2d963a",
+      "shard": "projects/a3cdf6c5ef44795c21a02171ab3fb2251abe9d131f2f81861de4962e3866c8ba.jsonl",
+      "sha256": "832c76e93a0a494a89d4c94469612b401d22bf7595001f573675a0977a59f1f4",
+      "bytes": 538,
+      "milliseconds": 2.415668000000096,
+      "reused": false
+    },
+    {
+      "id": "248_relationComplexityError",
+      "input": "93463efc10b8c80a2218bc8a1fdbaad36540091e12730c02be378c8e46289552",
+      "shard": "projects/8b438d418507317f09330f6bb5835b1e07967e57881f1bc7726b669588293125.jsonl",
+      "sha256": "e8211c78f8f18a0b6bf9c0ab921f72d78d23c7cde66d2e2d99e0bd32cb2f2449",
+      "bytes": 547,
+      "milliseconds": 2639.484617,
+      "reused": false
+    },
+    {
+      "id": "249_mergedClassNamespaceRecordCast",
+      "input": "529e9b5e36a887c13c5617da52427d7fbcc552436e1e4bd7aed4c4fa34586e76",
+      "shard": "projects/b3a38bef2d8f3b4d6325765db2fbf3db590a41582243fb5c54b3fb0fb6b57da7.jsonl",
+      "sha256": "41497f8e3f270a3e44cc37114be34a207102575a3a2e3a95c12b4d89c18c8b8c",
+      "bytes": 698,
+      "milliseconds": 3.211108999999851,
+      "reused": false
+    },
+    {
+      "id": "250_parseInvalidNonNullableTypes",
+      "input": "40dd0338e3786571ff52cd80ac1628e44377626eb78ded5ad0f422f39bd3e5d1",
+      "shard": "projects/540f9b22449549fd75631eadad83d293ef11790a66fa10e0ea1921b4cb7717f6.jsonl",
+      "sha256": "690b9003c075768069252abcf8a6752183b853cbef2aa8f69afef04a43ed645b",
+      "bytes": 700,
+      "milliseconds": 1.7965080000003582,
+      "reused": false
+    },
+    {
+      "id": "251_decoratorMetadataGenericTypeVariable",
+      "input": "a4e7709841bedcb341f3baa8278d55ade1791e530f67644665a8783335483f8b",
+      "shard": "projects/0d4d236842df2038f8fbb99b582c23c814e2864be114ea82c23ce9e8c2691e26.jsonl",
+      "sha256": "392fd5b6b24b60f53762be1323b2fefa67db99a0faf53d89abb75850f0313e64",
+      "bytes": 1395,
+      "milliseconds": 2.339103999999679,
+      "reused": false
+    },
+    {
+      "id": "252_unusedFunctionsinNamespaces3",
+      "input": "7b94df6efc3397a7b370e593b97c690f1fcefdd2544651fc8bd6c031ea4e5b93",
+      "shard": "projects/8aabf9f3bde2a8062b36cf41da9d64c0d9ab4c4c205f18abbed3e41ef53bb335.jsonl",
+      "sha256": "4d4fd56f12d6f3dc747e87a0be67e90586ef3cef9a90e80870bd82c6631f2dcf",
+      "bytes": 612,
+      "milliseconds": 1.3007020000004559,
+      "reused": false
+    },
+    {
+      "id": "253_correctOrderOfPromiseMethod",
+      "input": "2303e73b3a91fce2ceca34bcd4429441490eca463eb75ca566acc371bfd0011c",
+      "shard": "projects/322b53a5378fc834a427ee24142c01adf9cc01b5a846463dc65814dd75f0ae0b.jsonl",
+      "sha256": "e8569a37f31084071b5389b5ce55d866600a8ff61da269e80524b7ebe5b5be73",
+      "bytes": 1802,
+      "milliseconds": 7.389345999999932,
+      "reused": false
+    },
+    {
+      "id": "254_parseTypes",
+      "input": "f83ff2586003e0ae38b6245765ab480988783e54e5a70dc4a3ad41edf219b5e2",
+      "shard": "projects/a641815f11711ece2362a662e3ebecd460b8c852f655b0990b267c4b9bbf6c8c.jsonl",
+      "sha256": "1653055e11d68834354f7319c529eaa933fde1ea0b43d9802f1c015b947e232d",
+      "bytes": 539,
+      "milliseconds": 2.0900650000003225,
+      "reused": false
+    },
+    {
+      "id": "255_keyRemappingKeyofResult",
+      "input": "db56a85e3cc2ebe2fa3c7a4ed6dc36c4f455a750687a62ef205df5eab403226a",
+      "shard": "projects/7af755fcbc072686395f5bd3c7cb49fb31f5a655835c3b86b6e9480f9e8944ea.jsonl",
+      "sha256": "0da10dab234331a548a13a2b448700fbff7acaee0e66eba753d43fca6cef408d",
+      "bytes": 1024,
+      "milliseconds": 4.181451000000379,
+      "reused": false
+    },
+    {
+      "id": "256_namespaceDisambiguationInUnion",
+      "input": "19e5fd0187ab08640a3e3b4cd2345206b440c0b87fcbf78b1894ae535f9c8290",
+      "shard": "projects/dca6ed2ad11dfcd8ea4e466a04ad005b7b1f6125032cada7b9fa58482c3491ff.jsonl",
+      "sha256": "9875a0bc2df17eece21896b9872150a35d0fdb9fbb972093c93adaec421bc15e",
+      "bytes": 555,
+      "milliseconds": 3.4866489999994883,
+      "reused": false
+    },
+    {
+      "id": "257_generatorES6_5",
+      "input": "e07f94be09c8975626115e4fd0d3bf8c431a5660af8e678532d5c4ca9a161e99",
+      "shard": "projects/5accca9224937cfb6ea5dfd7fd2928578c121f680da047610fa39f5d435a6c28.jsonl",
+      "sha256": "cf841460b3a2c19a2c42291be2ae1187277bdb5f69b4bb3313e42c3a3f5376a9",
+      "bytes": 433,
+      "milliseconds": 1.8644590000003518,
+      "reused": false
+    },
+    {
+      "id": "258_decoratorMetadataGenericTypeVariableInScope",
+      "input": "396134bb0d3dd389810c844cafe9f0ac23682d6f03e2201fd75991f49b0795d5",
+      "shard": "projects/04ce0f4b910ef85c6b7f96dc8e60a6e8bd9f89a3aa7aa3cd7fb1211d4177d39c.jsonl",
+      "sha256": "66732a3d874cfe21b846119d2192d96c1d84f70b4f47715a1396dc18f905ab98",
+      "bytes": 1640,
+      "milliseconds": 2.027510999999322,
+      "reused": false
+    },
+    {
+      "id": "259_conditionalAnyCheckTypePicksBothBranches",
+      "input": "7cfcef438e34435a1b95502b8c0ff3a9584a550973fc046aff91ca4f2f8d650e",
+      "shard": "projects/2ab36dc4eb12d28a6b6d5b2827a48270fee56b9219d15cfa00a0cd8f23382295.jsonl",
+      "sha256": "031288c8bb4ce61776b086a0840cbbe727e460d91488f9d4842e0c4300c4ec02",
+      "bytes": 543,
+      "milliseconds": 1.5058769999996002,
+      "reused": false
+    },
+    {
+      "id": "260_unusedFunctionsinNamespaces6",
+      "input": "e38edae4c7e23c27c28ff993c056f06f72b8c535741371951373bda29fe62ff6",
+      "shard": "projects/1e61f63fa77bb2dda006afff209e86c7e83190fc312b25a50eadd09b17557095.jsonl",
+      "sha256": "10ecf990a444ca7f7a7ec56e4cba3177eb2b084d2a6c6d6b133fc33920cf8ec4",
+      "bytes": 803,
+      "milliseconds": 1.2751539999999295,
+      "reused": false
+    },
+    {
+      "id": "261_promiseIdentity2",
+      "input": "a47f4300188f7c628f0844904818b97a9374d8d23480cbf4e1fc4dc97634c280",
+      "shard": "projects/50ca92733888c28799febcbbf12a8203db593e353395c519edbcedae179b953b.jsonl",
+      "sha256": "18c57a6b74392f0dc47ac627c51a2a60ea868320bb3c77d65a99f49286331a8e",
+      "bytes": 588,
+      "milliseconds": 1.5025219999997717,
+      "reused": false
+    },
+    {
+      "id": "262_decoratorMetadataConditionalType",
+      "input": "3592d3870b53e4942edac2f34bd39a88b584fc5d4b431d45f2ef13d991e62e54",
+      "shard": "projects/f0f78a238c93f16bf84f1fc854def7a66a92bb71597cd3f8e0fbe86e521149aa.jsonl",
+      "sha256": "599cea58334f7cfdb88924dacee4f9214f5ec17dcf01dcf9e9b72d68ad0f3940",
+      "bytes": 1523,
+      "milliseconds": 1.6684580000001006,
+      "reused": false
+    },
+    {
+      "id": "263_keyofIsLiteralContexualType",
+      "input": "b7455e41b60db958402a2c70152df1db44e43925255e2106aff5a9885f9fc083",
+      "shard": "projects/b37e26402a172a1b46a041a7ab09f85181c95dc630a15219b2bd59bbeb34771f.jsonl",
+      "sha256": "9b9c3388cc06a1a76027ab32c9e5e6ff3afc60f6ff0af3b8aa41eacf03ae4387",
+      "bytes": 637,
+      "milliseconds": 2.190212999999858,
+      "reused": false
+    },
+    {
+      "id": "264_unusedVariablesinNamespaces3",
+      "input": "a7d4a2169825ab53c06aacd6f9d40d42c7d834434a53160a6c9e6a6b55d0bbd7",
+      "shard": "projects/6993ebf07b0b8ccbb5d56b98274ea81bdf583b954ad00a4af22c412fcc9eea3c.jsonl",
+      "sha256": "d0b9448761ed25ae5529780cc7eee9ad689bdb5fac95413976ef7054118f3838",
+      "bytes": 885,
+      "milliseconds": 1.8032979999998133,
+      "reused": false
+    },
+    {
+      "id": "265_promiseIdentity",
+      "input": "90f174dbfa31dfa9d1fb878c534527af28078a7e3c2e782c8ac8e617198e9b86",
+      "shard": "projects/30deb31f04b7b7b504837dc49ff3408b1f79aac1a331bcf194e397d0ecbe81cd.jsonl",
+      "sha256": "56685c5717531205b3169cf13ea91b92f300f32e1de1a74a191532a9957d6fa8",
+      "bytes": 606,
+      "milliseconds": 2.189712000000327,
+      "reused": false
+    },
+    {
+      "id": "266_decoratorMetadataGenericTypeVariableDefault",
+      "input": "b053ad3fb34415fd2b6f13cc99abcfa5b97cf5b7ba5defc7c555ecbdbc914efb",
+      "shard": "projects/a6c14fc7fa172ddfd34df28ebc4eb019f6ddceed17209a1c5f661ae3d9feb474.jsonl",
+      "sha256": "af5eac7af8523ec91bde27557140a2241a86dbaa6ed6f8f385e74f77219edef5",
+      "bytes": 1416,
+      "milliseconds": 1.6586440000000948,
+      "reused": false
+    },
+    {
+      "id": "267_reverseMappedTypeContextualTypeNotCircular",
+      "input": "936d122e72c8e1cf92a03fca1851b49a0cf994a663b302231eb07902d617dc3a",
+      "shard": "projects/746e34de0192c3b5b01d6d34b965def2f4816cccd1ff6a073d9aa6be26917b59.jsonl",
+      "sha256": "bfb6d173c9a3b2f5c170a1d4272993c6211bfd9231c91ade609793b01859ce0c",
+      "bytes": 737,
+      "milliseconds": 3.277649000000565,
+      "reused": false
+    },
+    {
+      "id": "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
+      "input": "b467dda9cbab0718dcb5211b42367c4afec107ddd139e57a0daaac1b7b720e2e",
+      "shard": "projects/ecbe87f4de2c7bb3a7d989f8056448121b3732068fc958eec59ead1a6989dd63.jsonl",
+      "sha256": "7a4f135e60e0956e8631ce9952385760d7e4d2c62e0453983ef5664952679099",
+      "bytes": 578,
+      "milliseconds": 1.441291000000092,
+      "reused": false
+    },
+    {
+      "id": "269_unusedFunctionsinNamespaces5",
+      "input": "2223cd83cfce63c9bf17edd8978996e8e80995f76dc08572778043d06679418b",
+      "shard": "projects/e841a3b4e23bda5fffdce6570d61675ada67c645b53dea0caa931d76d88d9655.jsonl",
+      "sha256": "bdeccb73afab7b36362135cdb09221d1a33ac0e6799010991df6cfadd1e635d6",
+      "bytes": 772,
+      "milliseconds": 1.1203740000000835,
+      "reused": false
+    },
+    {
+      "id": "270_promiseChaining1",
+      "input": "7f0913edac6d31b17c7ac067e147380c9a274936ac56d06a28db3689c9494b31",
+      "shard": "projects/26ec292d7216474db94193a2951aa7dbf90350418bbaf59c601c010d47edbe15.jsonl",
+      "sha256": "31c418b022919fd4a75cd6152fd5b80b21bc26b204b053a211f1740a9c480769",
+      "bytes": 870,
+      "milliseconds": 2.9028809999999794,
+      "reused": false
+    },
+    {
+      "id": "271_enumUsedBeforeDeclaration",
+      "input": "77274fbb5818b5657963e59e68cd9be2b1f9c00bc2fc550a8f0d8780539007e6",
+      "shard": "projects/e0e7edbaffcb6fca901f816aa7edec6165418f7df32f64755eeab0930d016593.jsonl",
+      "sha256": "a3d143ce361becd01461b07313be2e37a3da51d7cc4f5bc2cce09505e951630a",
+      "bytes": 680,
+      "milliseconds": 1.450594999999339,
+      "reused": false
+    },
+    {
+      "id": "272_conditionalExpressionNewLine3",
+      "input": "47552a720924fc37d5a666bf6223b6c6165b45b0ba7abb88ec2ef67d0a9f5ac7",
+      "shard": "projects/95f5ec05dc525e86030af68606ad1f01af3a43d58d7e9f7db77a4c2602bb5a37.jsonl",
+      "sha256": "d699c8d8895d0c994662835deabce599b004b937a1cad445286d193a81af7816",
+      "bytes": 462,
+      "milliseconds": 1.6224700000002485,
+      "reused": false
+    },
+    {
+      "id": "273_stringMappingAssignability",
+      "input": "f7b17464ab3a27cfc08fbdb6c16d0916b6df1c86a62765746ad9f840e34d7551",
+      "shard": "projects/a609728a83d6b83dfa9146e2ba6153f03726b7a13ed3c86954da886aa0344210.jsonl",
+      "sha256": "d04d62914158afdd6d68bd0a77a52b254e381c34a87d02bf528ab466dd1dd70b",
+      "bytes": 486,
+      "milliseconds": 1.5157719999997425,
+      "reused": false
+    },
+    {
+      "id": "274_ipromise3",
+      "input": "ab6128193746be5ca3c139da661b6bde19a4cc2e1d46634cabf174f2757d7295",
+      "shard": "projects/4bb8fadc593eb1bc125c6603da310b719bc8a72a5c07d128a3ee0f5c4765360e.jsonl",
+      "sha256": "e99d63f8af0f7f5f1659a47f5266ad3134f3fee812d36e1c43f2c73c9a454319",
+      "bytes": 439,
+      "milliseconds": 2.530948999999964,
+      "reused": false
+    },
+    {
+      "id": "275_unusedInterfaceinNamespace1",
+      "input": "fa569f535a003de98aeca69c8cd84a867017070b0aabe3fbb314f9ba25a073fc",
+      "shard": "projects/8592a7384bf6f0d13d6e493174dff4a185153ba4532d3167a04f80acf20a60f9.jsonl",
+      "sha256": "e67ad93b59e7480653ac01ddb2c39c60e03a913fa9d83d015f50439fe31a3324",
+      "bytes": 479,
+      "milliseconds": 0.8824610000001485,
+      "reused": false
+    },
+    {
+      "id": "276_intersectionsAndOptionalProperties",
+      "input": "ac637adce00ec0ee94c48f89f78dc14c10db698fd7ac0245a550d2ede9f09779",
+      "shard": "projects/24fb6969365ea45d5b8200bf071adb1b1664303626b2186e288b3b1ef70cfa83.jsonl",
+      "sha256": "6ea0c6fe97cd5368990221c125ece5b264058cf4aa35409a1e8eb61eb72b4bd4",
+      "bytes": 643,
+      "milliseconds": 4.635274999999638,
+      "reused": false
+    },
+    {
+      "id": "277_useBeforeDeclaration_destructuring",
+      "input": "6fd9e7be20510f285e30679e4f896945e9bc499c97a6804e446231bf9f050726",
+      "shard": "projects/f0b4a954e2075189b18f01519bf5706e7ea0a219f18ca3dd53e9e5b132803278.jsonl",
+      "sha256": "49d9e43c916f49104bf78c73e63434a34f9c250e5f82613bb879cefdadea7980",
+      "bytes": 530,
+      "milliseconds": 1.4199390000003405,
+      "reused": false
+    },
+    {
+      "id": "278_typeOfOperator1",
+      "input": "bf999f70fd320650ae320f64cbb214c100a01bfb1297ff86f316970dcede691c",
+      "shard": "projects/fe3c3bf275febad1cd35f0aa9b7e72a878a5097981b2b5cc69e5adf69fd261de.jsonl",
+      "sha256": "f72cbbcbf5ed2c6f6a80834370064b60d5035464f21ddb1321b46df92f4d5aff",
+      "bytes": 445,
+      "milliseconds": 1.0671350000002349,
+      "reused": false
+    },
+    {
+      "id": "279_enumAssignmentCompat",
+      "input": "450ea9f86ea09343f5105940b0479122ef524edb193418a608b0435b7d91097a",
+      "shard": "projects/57bdbbd35f218d2847248823cdc8895199508c459c98c0d08943fa97e8352d2f.jsonl",
+      "sha256": "f5f3fde33541f72718a0a9799a556c609572114408767b61c73c99c21a33c8a6",
+      "bytes": 841,
+      "milliseconds": 2.3477069999999003,
+      "reused": false
+    },
+    {
+      "id": "280_unusedClassesinNamespace2",
+      "input": "e59671a9940d091dbba5f66c8b35ac497f5ad4816e631ac7f81bf9f33c9d42cd",
+      "shard": "projects/34431d3aadf4cdbac5d3f93c25bf2176e1f3fd60a746e381d3b217dbd7cb6e67.jsonl",
+      "sha256": "f27f8345a71a3deae661db421d230d37737e37fe9775fb76603b6fa3db91034f",
+      "bytes": 625,
+      "milliseconds": 0.9935759999998481,
+      "reused": false
+    },
+    {
+      "id": "281_doubleUnderStringLiteralAssignability",
+      "input": "8d99f16c6c2f80576777eadbe71f7de7b2f3358ac729ddba7626360c460d891e",
+      "shard": "projects/bc51311005ccf10a8431cb988e0c01f511414c957e1ce687226a0e9b58c52f25.jsonl",
+      "sha256": "47a226dec3cd351fdf4571b1937b530287d160f9de97fbc69f88dca3d5ea87bd",
+      "bytes": 566,
+      "milliseconds": 0.9256850000001577,
+      "reused": false
+    },
+    {
+      "id": "282_ipromise4",
+      "input": "c98818a543730cb1e26ac27584e887d576c38af57d651897ea03ba27c6dbc166",
+      "shard": "projects/e44b211382fd2f6b68c9969c924ef891060346bf435e2cba80a0c6ed4ce73d11.jsonl",
+      "sha256": "7a75a2108e683e7509d39bb9ff561ed45993b8294f09c8c31426e0514ae15931",
+      "bytes": 537,
+      "milliseconds": 2.729714999999487,
+      "reused": false
+    },
+    {
+      "id": "283_errorsWithInvokablesInUnions01",
+      "input": "680e1e4079b33b5efa21e748410aa40cbabdfe45a07c28136b07033af8252ac8",
+      "shard": "projects/8dbe4eb1a2c53d9aba1b95ce91cbf1feaf1d92caab82ef5142dc7482695847ae.jsonl",
+      "sha256": "3d60b3f18ec8548b39e8bdc822266f7e7dfb8d3d4b53d69abdd8a42c0515308e",
+      "bytes": 485,
+      "milliseconds": 2.6319100000000617,
+      "reused": false
+    },
+    {
+      "id": "284_exhaustiveSwitchCheckCircularity",
+      "input": "5640c6e7f8f69305bc6031bd3774aaba06c8193ab34d3a64f87db37cbd3a90d5",
+      "shard": "projects/87e9fd793913a77e0200645979f4fd2a67b182863c5ac44123683fa0e1f50ac8.jsonl",
+      "sha256": "f65b5f6f41d83bf45062acf843cd6ea5eda812d429570cca43263dfe65776654",
+      "bytes": 1029,
+      "milliseconds": 2.2354809999997087,
+      "reused": false
+    },
+    {
+      "id": "285_numberAssignableToEnumInsideUnion",
+      "input": "b708d09296d0442939bb364a401f732db860ded83960c5bbaa7a58e312efbc31",
+      "shard": "projects/4bb8e684f9338104b9494afa23ab19c89e3a892ac174a61cc07147819768a54d.jsonl",
+      "sha256": "4b2e8137a1fb8af44ad09f8c12cab26802b8173a79b50b97a3dea65f5ac801cc",
+      "bytes": 574,
+      "milliseconds": 1.0556479999995645,
+      "reused": false
+    },
+    {
+      "id": "286_conditionalExpressionNewLine9",
+      "input": "36ac92452d6169afc484fd0534f2f4a1877b602be79e5d5f96044f559b3310ff",
+      "shard": "projects/e2cec01b3f1970863a0df43ceab945f633956f21edeca48d2a597b651a55f8c0.jsonl",
+      "sha256": "0091198478d9462415ce6d7515ba862ecb335d15557067cf902dc4b889b59b87",
+      "bytes": 501,
+      "milliseconds": 2.0684330000003683,
+      "reused": false
+    },
+    {
+      "id": "287_unusedFunctionsinNamespaces2",
+      "input": "f853248e720c08cb851f05f79363042aa6494bfae83a26ea25f10d57e2e09fe2",
+      "shard": "projects/0837183c69975ef8f3727dd73161a72c59d02fc2e1aba0242d4c4553d96bca56.jsonl",
+      "sha256": "b90bdb5a2fb1a0e13e1a989be50df369e62da32180fcab8ad4aacd843f6d5f14",
+      "bytes": 606,
+      "milliseconds": 0.9862649999995483,
+      "reused": false
+    },
+    {
+      "id": "288_numberOnLeftSideOfInExpression",
+      "input": "f4534bf407103cac825bfeb7a8f3969fd0d0de9a672bbfd07c894b264da34b5b",
+      "shard": "projects/1fd2eb80c61142d0ebfafacd114ce6dd25c5bd7880d013011d854938f97841d4.jsonl",
+      "sha256": "5bec5daff8bda2a45dd627695011d487136d77bcabb4b6a398c542e65f149d8f",
+      "bytes": 479,
+      "milliseconds": 7.02900099999988,
+      "reused": false
+    },
+    {
+      "id": "289_awaitedTypeStrictNull",
+      "input": "0666f0204b15296ae4981455abea0ab5793ccb6221540df84d3c4f646d2fd517",
+      "shard": "projects/c51d6ecf9f4117a5b2ac4bde4a45b3c470252fcfca294c21541c3b4056ec5e6f.jsonl",
+      "sha256": "41841ef3cd217c1198d99b79b8e891c0491da2b13c33a85c150df6e689eb9318",
+      "bytes": 1044,
+      "milliseconds": 62.110610000000634,
+      "reused": false
+    },
+    {
+      "id": "290_contextuallyTypingOrOperator",
+      "input": "dae186fe627765c49d0ce1c0a25941a08e156f6b5b1eef99bf03c88eef0e809c",
+      "shard": "projects/e9ccc1ae8ca8ade38126b1ea7dcd97f737811eef23f0eceb543ab8722f0263da.jsonl",
+      "sha256": "233addb97036ecd7e8a7995804a100b60f74c9b9c1ec670fb3bd54089aedace3",
+      "bytes": 668,
+      "milliseconds": 2.8084510000007867,
+      "reused": false
+    },
+    {
+      "id": "291_nonexistentPropertyOnUnion",
+      "input": "5fc68216a68fec100bf8e9cddba3d2d712213e7d75b31f665f45dc537ad0a55f",
+      "shard": "projects/3c0983995fc72eb69a059bb966437e0cb278f999570b9584e8f1f50f377900b4.jsonl",
+      "sha256": "06ba7fc65b65889797cdb041cc642075d05e10eb2f8902b5fbe5e88c03f075ca",
+      "bytes": 470,
+      "milliseconds": 1.6796150000000125,
+      "reused": false
+    },
+    {
+      "id": "292_scopingInCatchBlocks",
+      "input": "324b1d067d03c7a1d672805c536f465062955c271a9985fba9cc5fc8bc5baf5d",
+      "shard": "projects/22c91d6b691eb31b8bd81422b569b8ca0e849ce3a14951efa3e3bd8877262729.jsonl",
+      "sha256": "c0f56dc2e49a8df0bf77fa98cd0e593d5b4318154484074c01f11962577c6c7a",
+      "bytes": 575,
+      "milliseconds": 1.6147490000003017,
+      "reused": false
+    },
+    {
+      "id": "293_augmentedTypesEnum2",
+      "input": "3ddf70cecdf6b900b4184d6cc9ff1929fb00c219c6f17a7fe972119757e3d7fa",
+      "shard": "projects/c3985adeb8389cb073f68fe96582c2ca40d4d8fa2a72b14f915f3487ad6048a7.jsonl",
+      "sha256": "0f7a72cd26b6b7d166639cc6b7d8131de395758c55b95f3e258871e816a4ade5",
+      "bytes": 784,
+      "milliseconds": 1.246752000000015,
+      "reused": false
+    },
+    {
+      "id": "294_mappedTypeWithCombinedTypeMappers",
+      "input": "e6cafbbad345c62c44ae9818efc3315b6370fb2d50ed2dd47063b6d63cde2172",
+      "shard": "projects/4e6d5951c334fc679f98761258042f2f9803a20afe1f04b9ab599ea3acef5d2f.jsonl",
+      "sha256": "9530c3d463678264dc018628fca989de0754cb01aef7a567c60e6e02acf58bd1",
+      "bytes": 510,
+      "milliseconds": 1.653016000000207,
+      "reused": false
+    },
+    {
+      "id": "295_unusedFunctionsinNamespaces4",
+      "input": "376fc5b1a5f3be332f7ae5aef59b9d59165ea80ad831b886282f28dcd928f300",
+      "shard": "projects/ab54078e03f5ecf61777f5e8801d2b69d1c0682756d33a20d5fac2d431a0b252.jsonl",
+      "sha256": "a6e447e5136d78bdd30882eafd09376b35b1b7ef3e9d6bdfcbae1ab7a52fdf24",
+      "bytes": 680,
+      "milliseconds": 1.1381400000000212,
+      "reused": false
+    },
+    {
+      "id": "296_numberToString",
+      "input": "1c544408b088c3e82f4d5e02735c7dc601ae7c23837a44ad651aad63ffaf70f5",
+      "shard": "projects/9bfabab1579756e2b39f08ab08d11396f61788766cb989d490d3c26196ceb7fc.jsonl",
+      "sha256": "189bb9ab3c859e80b17c28b879e92bfd77c76936e38a46e4cb5542c845ac8a4e",
+      "bytes": 567,
+      "milliseconds": 1.0684870000004594,
+      "reused": false
+    },
+    {
+      "id": "297_promiseIdentityWithAny",
+      "input": "6b974d3c646f4a9071c61484a102592e41fbd3502f1bdcb3543d26211f7eaff9",
+      "shard": "projects/b7306428833065400daa0902f384587b367b8da30d3bc85a2c67871941946283.jsonl",
+      "sha256": "1c38d62344aaaef3f9fe1f19a9386e870ede9a1e18fda3e96886f14b187138c9",
+      "bytes": 496,
+      "milliseconds": 1.318569000000025,
+      "reused": false
+    },
+    {
+      "id": "298_destructuringAssignmentWithDefault2",
+      "input": "a14857c297861444096829061785290baa453184024ccf77eba239278cc730c5",
+      "shard": "projects/43c012d153d1b0c67e499ce60ea78e2108217895105d9e1e7c7e8e52c5964929.jsonl",
+      "sha256": "2dd2cfe5eb8a81e5fe2f3cdd191e9fdbb806de17e948014d3e5aa968c3701a7b",
+      "bytes": 897,
+      "milliseconds": 2.4343950000002224,
+      "reused": false
+    },
+    {
+      "id": "299_contextualTypingOfArrayLiterals1",
+      "input": "55b0256f9782c1361cfe8245f2ed2b58264139cba9c893de7783943e3044327c",
+      "shard": "projects/3647c21ece13abbee4a68982ee73bb0c9c5782cf70e30a4d38de3e63ab90ec10.jsonl",
+      "sha256": "4c2067b7c8da05820892a80469fedd974bc84313d0890fdcac0e34af62081352",
+      "bytes": 520,
+      "milliseconds": 1.6414680000007138,
+      "reused": false
+    },
+    {
+      "id": "300_errorMessageOnIntersectionsWithDiscriminants01",
+      "input": "b1e447a77789defe27be8c70c6a848cd0385cc102ecfeffebe1217c52d36985a",
+      "shard": "projects/add7d796934988ae62d7931dcf8e83153d6d84860debb60db276351e77d6f013.jsonl",
+      "sha256": "6a01aaaf0393f9a1bcbe2553b41ae9abe9c4f7da50e92679db512ab8d242ed58",
+      "bytes": 491,
+      "milliseconds": 1.5313450000003286,
+      "reused": false
+    },
+    {
+      "id": "tiny",
+      "input": "7483f800f81bd6b7b82df1eb21e362c6d97ec7c8cb023d8602ed903211e562ff",
+      "shard": "projects/8950abfda7b727630760dd35bcf5c3daa7631aff223a90f7728c0d2521dde10c.jsonl",
+      "sha256": "6d4e118e6585f916a23dd4d2b34a1b7b90c8f24a9b29d1d862dab67d606680da",
+      "bytes": 584,
+      "milliseconds": 355.4524449999999,
+      "reused": false
+    }
+  ],
+  "selected": [
+    "001_varianceCantBeStrictWhileStructureIsnt",
+    "002_conditionalEqualityTestingNullability",
+    "003_commentOnClassAccessor1",
+    "004_metadataOfUnion",
+    "005_ambientEnumElementInitializer3",
+    "006_arrayDestructuringInSwitch1",
+    "007_nestedBlockScopedBindings15",
+    "008_library_StringSlice",
+    "009_es6ModuleWithModuleGenTargetCommonjs",
+    "010_nestedTypeVariableInfersLiteral",
+    "011_namespaces2",
+    "012_expandoFunctionExpressionsWithDynamicNames2",
+    "013_parseEntityNameWithReservedWord",
+    "014_keyofObjectWithGlobalSymbolIncluded",
+    "015_decoratorReferences",
+    "016_yieldStarContextualType",
+    "017_binopAssignmentShouldHaveType",
+    "018_typeofUsedBeforeBlockScoped",
+    "019_superHasMethodsFromMergedInterface",
+    "020_intersectionApparentTypeCaching",
+    "021_commentOnArrayElement12",
+    "022_nestedBlockScopedBindings4",
+    "023_capturedLetConstInLoop10_ES6",
+    "024_genericTypeParameterEquivalence2",
+    "025_exportArrayBindingPattern",
+    "026_functionAssignmentError",
+    "027_multiExtendsSplitInterfaces1",
+    "028_stringMatchAll",
+    "029_enumLiteralUnionNotWidened",
+    "030_asyncYieldStarContextualType",
+    "031_commentInNamespaceDeclarationWithIdentifierPathName",
+    "032_templateLiteralsAndDecoratorMetadata",
+    "033_assignmentCompatability6",
+    "034_parseReplacementCharacter",
+    "035_classOrder1",
+    "036_conditionalExpressions2",
+    "037_singletonLabeledTuple",
+    "038_breakInIterationOrSwitchStatement1",
+    "039_narrowByClauseExpressionInSwitchTrue2",
+    "040_emitOneLineVariableDeclarationRemoveCommentsFalse",
+    "041_nongenericConditionalNotPartiallyComputed",
+    "042_exportDefaultForNonInstantiatedModule",
+    "043_collisionThisExpressionAndLocalVarInProperty",
+    "044_functionWithDefaultParameterWithNoStatements10",
+    "045_discriminantUsingEvaluatableTemplateExpression",
+    "046_assignmentCompatForEnums",
+    "047_promiseWithResolvers",
+    "048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds",
+    "049_decoratorMetadataNoStrictNull",
+    "050_unusedInterfaceinNamespace4",
+    "051_extendedUnicodeEscapeSequenceIdentifiers",
+    "052_commentOnClassAccessor2",
+    "053_contextualTypeBasedOnIntersectionWithAnyInTheMix5",
+    "054_contextualTyping19",
+    "055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib",
+    "056_genericCallInferenceInConditionalTypes1",
+    "057_localImportNameVsGlobalName",
+    "058_contextualTypingOfConditionalExpression",
+    "059_functionOverloads31",
+    "060_numberAsInLHS",
+    "061_constEnumErrors",
+    "062_interfaceDeclaration1",
+    "063_didYouMeanSuggestionErrors",
+    "064_recursiveFunctionTypes",
+    "065_callOverloads2",
+    "066_decoratorUsedBeforeDeclaration",
+    "067_undefinedTypeAssignment4",
+    "068_emitCapturingThisInTupleDestructuring1",
+    "069_computedPropertiesInDestructuring1",
+    "070_assignmentToReferenceTypes",
+    "071_overloadModifiersMustAgree",
+    "072_noImplicitAnyForIn",
+    "073_superNewCall1",
+    "074_parseInvalidNullableTypes",
+    "075_recursiveConditionalCrash4",
+    "076_interfacedeclWithIndexerErrors",
+    "077_objectLitIndexerContextualType",
+    "078_weakType",
+    "079_nullableFunctionError",
+    "080_builtinIterator",
+    "081_errorForUsingPropertyOfTypeAsType03",
+    "082_unusedDestructuring",
+    "083_indirectSelfReferenceGeneric",
+    "084_thisInModule",
+    "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
+    "086_noImplicitSymbolToString",
+    "087_strictModeInConstructor",
+    "088_baseConstraintOfDecorator",
+    "089_moduleVisibilityTest3",
+    "090_constraintWithIndexedAccess",
+    "091_excessivelyLargeTupleSpread",
+    "092_omittedExpressionForOfLoop",
+    "093_typeOfEnumAndVarRedeclarations",
+    "094_assignmentToParenthesizedExpression1",
+    "095_interfaceExtendsClassWithPrivate1",
+    "096_importDeclRefereingExternalModuleWithNoResolve",
+    "097_mappedTypeGenericWithKnownKeys",
+    "098_moduleAugmentationGlobal7_1",
+    "099_untypedFunctionCallsWithTypeParameters1",
+    "100_scopeCheckExtendedClassInsidePublicMethod2",
+    "101_noUncheckedIndexedAccessCompoundAssignments",
+    "102_implicitAnyDeclareTypePropertyWithoutType",
+    "103_circularReferenceInReturnType2",
+    "104_mixedStaticAndInstanceClassMembers",
+    "105_exportDefaultTypeClassAndValue",
+    "106_interfaceMergeWithNonGenericTypeArguments",
+    "107_objectFreeze",
+    "108_redeclareParameterInCatchBlock",
+    "109_classExtendsNull2",
+    "110_importDeclWithExportModifierAndExportAssignment",
+    "111_circularlyReferentialInterfaceAccessNoCrash",
+    "112_noImplicitAnyParametersInInterface",
+    "113_duplicateSymbolsExportMatching",
+    "114_truthinessPromiseCoercion",
+    "115_unusedClassesinNamespace4",
+    "116_recursivelyExpandingUnionNoStackoverflow",
+    "117_typeUsedAsTypeLiteralIndex",
+    "118_anyMappedTypesError",
+    "119_yieldExpressionInFlowLoop",
+    "120_excessPropertyCheckWithSpread",
+    "121_switchCasesExpressionTypeMismatch",
+    "122_literalsInComputedProperties1",
+    "123_narrowByEquality",
+    "124_this_inside-enum-should-not-be-allowed",
+    "125_noMappedGetSet",
+    "126_restInvalidArgumentType",
+    "127_forInStatement4",
+    "128_noImplicitAnyUnionNormalizedObjectLiteral1",
+    "129_enumWithPrimitiveName",
+    "130_inheritedStringIndexersFromDifferentBaseTypes2",
+    "131_errorsForCallAndAssignmentAreSimilar",
+    "132_missingCommaInTemplateStringsArray",
+    "133_forInStatement2",
+    "134_augmentedTypesEnum",
+    "135_narrowingTruthyObject",
+    "136_nestedFreshLiteral",
+    "137_duplicateErrorNameNotFound",
+    "138_voidAsOperator",
+    "139_typeParametersInStaticAccessors",
+    "140_arrayAssignmentTest5",
+    "141_forInStrictNullChecksNoError",
+    "142_spreadUnionPropOverride",
+    "143_enumPropertyAccessBeforeInitalisation",
+    "144_inheritedStringIndexersFromDifferentBaseTypes",
+    "145_ClassDeclaration10",
+    "146_noImplicitAnyIndexing",
+    "147_genericMappedTypeAsClause",
+    "148_nonArrayRestArgs",
+    "149_undefinedTypeAssignment1",
+    "150_useUnknownInCatchVariables01",
+    "151_normalizedIntersectionTooComplex",
+    "152_errorOnEnumReferenceInCondition",
+    "153_returnTypeTypeArguments",
+    "154_emitThisInSuperMethodCall",
+    "155_varianceReferences",
+    "156_misspelledNewMetaProperty",
+    "157_varNameConflictsWithImportInDifferentPartOfModule",
+    "158_incorrectRecursiveMappedTypeConstraint",
+    "159_objectBindingPattern_restElementWithPropertyName",
+    "160_incompatibleAssignmentOfIdenticallyNamedTypes",
+    "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
+    "162_instanceofWithPrimitiveUnion",
+    "163_ArrowFunctionExpression1",
+    "164_staticOffOfInstance1",
+    "165_defaultValueInConstructorOverload1",
+    "166_inheritanceMemberFuncOverridingProperty",
+    "167_compareTypeParameterConstrainedByLiteralToLiteral",
+    "168_importedModuleAddToGlobal",
+    "169_spreadInvalidArgumentType",
+    "170_decrementAndIncrementOperators",
+    "171_extendPrivateConstructorClass",
+    "172_constDeclarationShadowedByVarDeclaration",
+    "173_selfReferencesInFunctionParameters",
+    "174_baseExpressionTypeParameters",
+    "175_propertyOrdering",
+    "176_exportSpecifierReferencingOuterDeclaration1",
+    "177_readonlyTupleAndArrayElaboration",
+    "178_bitwiseCompoundAssignmentOperators",
+    "179_callOnClass",
+    "180_keywordExpressionInternalComments",
+    "181_noImplicitAnyDestructuringParameterDeclaration",
+    "182_propertyAccessibility1",
+    "183_internalImportInstantiatedModuleNotReferencingInstance",
+    "184_bindingPatternCannotBeOnlyInferenceSource",
+    "185_restParamsWithNonRestParams",
+    "186_superInConstructorParam1",
+    "187_deleteReadonlyInStrictNullChecks",
+    "188_uncalledFunctionChecksInConditional",
+    "189_circularModuleImports",
+    "190_interfaceMayNotBeExtendedWitACall",
+    "191_extendedInterfacesWithDuplicateTypeParameters",
+    "192_constructorOverloads1",
+    "193_capturedParametersInInitializers1",
+    "194_reachabilityChecks1",
+    "195_inheritanceMemberAccessorOverridingProperty",
+    "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
+    "197_classExtendsInterfaceInModule",
+    "198_shadowPrivateMembers",
+    "199_getterMissingReturnError",
+    "200_instantiationExpressionErrorNoCrash",
+    "201_thisPredicateInObjectLiteral",
+    "202_reservedNameOnInterfaceImport",
+    "203_incrementOnTypeParameter",
+    "204_classExpressionExtendingAbstractClass",
+    "205_noImplicitReturnsInAsync2",
+    "206_recursiveResolveTypeMembers",
+    "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
+    "208_importAliasInModuleAugmentation",
+    "209_genericSpecializations2",
+    "210_illegalSuperCallsInConstructor",
+    "211_functionParameterArityMismatch",
+    "212_duplicateIdentifierDifferentModifiers",
+    "213_inheritanceMemberPropertyOverridingAccessor",
+    "214_ambientExternalModuleWithRelativeModuleName",
+    "215_classImplementsPrimitive",
+    "216_functionTypeArgumentArityErrors",
+    "217_fallFromLastCase2",
+    "218_shorthandPropertyUndefined",
+    "219_classImplementsClass4",
+    "220_bigIntWithTargetLessThanES2016",
+    "221_unusedParameterProperty2",
+    "222_staticPrototypeProperty",
+    "223_instanceofOnInstantiationExpression",
+    "224_newFunctionImplicitAny",
+    "225_returnInConstructor1",
+    "226_assigningFromObjectToAnythingElse",
+    "227_classFieldSuperNotAccessible",
+    "228_inKeywordAndUnknown",
+    "229_awaitCallExpressionInSyncFunction",
+    "230_parameterPropertyInConstructor3",
+    "231_circularReferenceInReturnType",
+    "232_neverNullishThroughParentheses",
+    "233_noImplicitAnyNamelessParameter",
+    "234_superCallFromClassThatHasNoBaseType1",
+    "235_reachabilityChecks3",
+    "236_returnValueInSetter",
+    "237_gettersAndSettersAccessibility",
+    "238_typeParameterAsBaseClass",
+    "239_expressionWithJSDocTypeArguments",
+    "240_indexedAccessPrivateMemberOfGenericConstraint",
+    "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
+    "242_constDeclarations-access2",
+    "243_classExtendsNull3",
+    "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+    "245_inheritanceMemberFuncOverridingAccessor",
+    "246_noCrashOnMixin",
+    "247_missingDomElements",
+    "248_relationComplexityError",
+    "249_mergedClassNamespaceRecordCast",
+    "250_parseInvalidNonNullableTypes",
+    "251_decoratorMetadataGenericTypeVariable",
+    "252_unusedFunctionsinNamespaces3",
+    "253_correctOrderOfPromiseMethod",
+    "254_parseTypes",
+    "255_keyRemappingKeyofResult",
+    "256_namespaceDisambiguationInUnion",
+    "257_generatorES6_5",
+    "258_decoratorMetadataGenericTypeVariableInScope",
+    "259_conditionalAnyCheckTypePicksBothBranches",
+    "260_unusedFunctionsinNamespaces6",
+    "261_promiseIdentity2",
+    "262_decoratorMetadataConditionalType",
+    "263_keyofIsLiteralContexualType",
+    "264_unusedVariablesinNamespaces3",
+    "265_promiseIdentity",
+    "266_decoratorMetadataGenericTypeVariableDefault",
+    "267_reverseMappedTypeContextualTypeNotCircular",
+    "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
+    "269_unusedFunctionsinNamespaces5",
+    "270_promiseChaining1",
+    "271_enumUsedBeforeDeclaration",
+    "272_conditionalExpressionNewLine3",
+    "273_stringMappingAssignability",
+    "274_ipromise3",
+    "275_unusedInterfaceinNamespace1",
+    "276_intersectionsAndOptionalProperties",
+    "277_useBeforeDeclaration_destructuring",
+    "278_typeOfOperator1",
+    "279_enumAssignmentCompat",
+    "280_unusedClassesinNamespace2",
+    "281_doubleUnderStringLiteralAssignability",
+    "282_ipromise4",
+    "283_errorsWithInvokablesInUnions01",
+    "284_exhaustiveSwitchCheckCircularity",
+    "285_numberAssignableToEnumInsideUnion",
+    "286_conditionalExpressionNewLine9",
+    "287_unusedFunctionsinNamespaces2",
+    "288_numberOnLeftSideOfInExpression",
+    "289_awaitedTypeStrictNull",
+    "290_contextuallyTypingOrOperator",
+    "291_nonexistentPropertyOnUnion",
+    "292_scopingInCatchBlocks",
+    "293_augmentedTypesEnum2",
+    "294_mappedTypeWithCombinedTypeMappers",
+    "295_unusedFunctionsinNamespaces4",
+    "296_numberToString",
+    "297_promiseIdentityWithAny",
+    "298_destructuringAssignmentWithDefault2",
+    "299_contextualTypingOfArrayLiterals1",
+    "300_errorMessageOnIntersectionsWithDiscriminants01",
+    "tiny"
+  ],
+  "changed": 301,
+  "reused": 0,
+  "requestSha256": "45868317caf5849709a0d6b43c37fa70a1c2d6e7cf7b6fcfbb392d15bcec2163",
+  "milliseconds": 4785.8988850000005,
+  "sha256": "c25c363bc358f8b5a5ba4d06172eb89b4b1cb8128a9af2157df2c9370bd6eebd"
+}

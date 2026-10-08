@@ -1,0 +1,43 @@
+{
+  "piece": "binder",
+  "compiler": "train",
+  "profile": "node-declarations",
+  "command": [
+    "/tmp/step31-train-adamic",
+    "build",
+    "/tmp/step31-train-binder-slice/native-entry.a",
+    "-o",
+    "/tmp/step31-train-native-final/binder-node-declarations/component.bin"
+  ],
+  "exit": 1,
+  "timeout": false,
+  "seconds": 1.364605261998804,
+  "first_stop": "adamic: /tmp/step31-train-binder-slice/src/compiler/corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+  "diagnostic_lines": 1,
+  "binary_exists": false,
+  "entry_sha256": "0ca55add69bb87715c98c89f927f04fa19bb8f7a3367284c711824e86257f90b",
+  "slice_sha256": "830fd5666a02821e205bbf1e162bf609f04a7d5f9df4802f8d9d144f9e75df62",
+  "slice_summary": {
+    "typescript": "6.0.3",
+    "tree": "/tmp/step31-train-adapted",
+    "entries": [
+      "src/compiler/binder.ts:bindSourceFile"
+    ],
+    "declarations": 1484,
+    "copied_spans": 1492,
+    "namespace_wrapper_spans": 8,
+    "value_declarations": 850,
+    "type_declarations": 634,
+    "files": 79,
+    "declaration_files": 21,
+    "code_declarations": 1407,
+    "export_facade_records": 77,
+    "evaluation_only_files": 58,
+    "preserves_evaluation": true,
+    "declaration_lines": 26463,
+    "declaration_bytes": 1642310,
+    "rewritten_import_lines": 220
+  },
+  "status": "blocked",
+  "native_differential_run": false
+}

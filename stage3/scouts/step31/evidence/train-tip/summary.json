@@ -1,0 +1,36 @@
+{
+  "train_ref": "origin/cloud/land-train-4-views-v3-787cea7a-6c28ada8",
+  "train_tip": "1e81b051c52eee40d47c44f4a5f68b821e606708",
+  "merge_commit": "49183f57f8ac273665be143c4a525bff0896a54a",
+  "main": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "scout_parent": "2de9fc1b01d3da3beb35c554e70d98cd6d9fe536",
+  "node": {
+    "binder": {
+      "projects": 301,
+      "sha256": "3f83fbf1a9c1587e2923484f7a22911f21c3ac47382ba80dbca597af04d846aa",
+      "bytes": 3475070,
+      "pre_train_baseline_identical": true,
+      "status": "baseline-compatible"
+    },
+    "checker": {
+      "projects": 301,
+      "sha256": "f5b3ccb280ac67ed516240b52b476a9748dd8a60a516cec86f76be371265828a",
+      "bytes": 333703,
+      "pre_train_baseline_identical": true,
+      "status": "baseline-compatible",
+      "stock_seconds": 4.609707645
+    },
+    "emitter": {
+      "projects": 301,
+      "sha256": "c25c363bc358f8b5a5ba4d06172eb89b4b1cb8128a9af2157df2c9370bd6eebd",
+      "bytes": 222338,
+      "pre_train_baseline_identical": true,
+      "status": "baseline-compatible",
+      "stock_seconds": 4.785898885000001
+    }
+  },
+  "native_pass": false,
+  "train_only_pass_policy": "pending",
+  "train_compiler_sha256": "45e9a8906682811995579a47be697b952d7fac0d9ad1ae2197c3e66f0559e81b",
+  "main_compiler_sha256": "ffe1dcf02a43e5a2a7ca9ba4283472e108ea09d220ed88c6f15e244004a63b18"
+}

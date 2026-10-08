@@ -2,7 +2,8 @@ Step 31 scouts the real TypeScript 6.0.3 binder, checker and emitter. The delive
 implementations are Node binder, checker and emitter observers, with fixtures,
 mutants and native process comparators. REPORT.md retains the initial research;
 COMPONENTS.md specifies the checker/emitter protocol and changed-input workflow.
-COMPONENTS-REPORT.md records their measured results.
+COMPONENTS-REPORT.md records their measured results. TRAIN-REPORT.md records
+the named views-train rebuild, 301-project confirmation and native first stops.
 
 Run after sourcing the environment printed by cloud/setup.sh:
 

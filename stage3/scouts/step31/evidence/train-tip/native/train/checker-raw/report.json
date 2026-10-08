@@ -1,0 +1,43 @@
+{
+  "piece": "checker",
+  "compiler": "train",
+  "profile": "raw",
+  "command": [
+    "/tmp/step31-train-adamic",
+    "build",
+    "/tmp/step31-train-checker-slice/slice-entry.a",
+    "-o",
+    "/tmp/step31-train-native-final/checker-raw/component.bin"
+  ],
+  "exit": 1,
+  "timeout": false,
+  "seconds": 1.9959264760000224,
+  "first_stop": "/tmp/step31-train-checker-slice/src/compiler/checker.ts:10894:30: error TS18048: 'file' is possibly 'undefined'.",
+  "diagnostic_lines": 225,
+  "binary_exists": false,
+  "entry_sha256": "0c40619744091c93b4bc893e0a662a77477a6a5e4fbd6632fbce3436971d173e",
+  "slice_sha256": "bc3e4b1aad12b15c0bd8f37433a4349a72f0db59d0a40f3c1f0fc19873ef5e0c",
+  "slice_summary": {
+    "typescript": "6.0.3",
+    "tree": "/tmp/step31-train-adapted",
+    "entries": [
+      "src/compiler/checker.ts:createTypeChecker"
+    ],
+    "declarations": 3467,
+    "copied_spans": 3485,
+    "namespace_wrapper_spans": 18,
+    "value_declarations": 2620,
+    "type_declarations": 847,
+    "files": 79,
+    "declaration_files": 39,
+    "code_declarations": 3390,
+    "export_facade_records": 77,
+    "evaluation_only_files": 40,
+    "preserves_evaluation": true,
+    "declaration_lines": 124651,
+    "declaration_bytes": 6787997,
+    "rewritten_import_lines": 283
+  },
+  "status": "blocked",
+  "native_differential_run": false
+}

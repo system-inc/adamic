@@ -1,0 +1,47 @@
+[
+  {
+    "mutant": "function-flags",
+    "function": "bindFunctionDeclaration",
+    "before": "SymbolFlags.Function, SymbolFlags.FunctionExcludes",
+    "after": "SymbolFlags.BlockScopedVariable, SymbolFlags.FunctionExcludes",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "binder dump bytes versus independent stock golden",
+    "changed_files": [
+      "aliases.a",
+      "scopes.a"
+    ],
+    "baseline_sha256": "7210a2d1d077360b29637552464c9b010bd3fb7ab3e1e6f5326e0222d873731b",
+    "mutant_sha256": "22eb4b921b26f9e9a8f25009e18269dc0515b0630aba99f4b538d322798ae715"
+  },
+  {
+    "mutant": "variable-flags",
+    "function": "bindVariableDeclarationOrBindingElement",
+    "before": "SymbolFlags.BlockScopedVariable, SymbolFlags.BlockScopedVariableExcludes",
+    "after": "SymbolFlags.FunctionScopedVariable, SymbolFlags.BlockScopedVariableExcludes",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "binder dump bytes versus independent stock golden",
+    "changed_files": [
+      "scopes.a"
+    ],
+    "baseline_sha256": "7210a2d1d077360b29637552464c9b010bd3fb7ab3e1e6f5326e0222d873731b",
+    "mutant_sha256": "ec23cc355102092babdf09184cc50bdc1a545d0b063922614d842425185e7d35"
+  },
+  {
+    "mutant": "declaration-flags",
+    "function": "addDeclarationToSymbol",
+    "before": "symbol.flags |= symbolFlags;",
+    "after": "symbol.flags = 0;",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "binder dump bytes versus independent stock golden",
+    "changed_files": [
+      "aliases.a",
+      "members.a",
+      "scopes.a"
+    ],
+    "baseline_sha256": "7210a2d1d077360b29637552464c9b010bd3fb7ab3e1e6f5326e0222d873731b",
+    "mutant_sha256": "3d5a6781e76be4c737dff0810f2efd862702653ce920c6d5b0682148c45e4913"
+  }
+]

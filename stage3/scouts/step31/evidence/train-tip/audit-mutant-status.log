@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/audit-train.py", line 39, in <module>
+    assert row['status'] == ('pending' if code == 0 else 'blocked'), 'native pending status'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: native pending status

@@ -1,0 +1,44 @@
+{
+  "piece": "emitter",
+  "compiler": "main",
+  "profile": "raw",
+  "command": [
+    "/tmp/step31-main-adamic",
+    "build",
+    "/tmp/step31-train-emitter-slice/slice-entry.a",
+    "-o",
+    "/tmp/step31-train-main-stops/emitter-raw/component.bin"
+  ],
+  "exit": 1,
+  "timeout": false,
+  "seconds": 0.41995895999934874,
+  "first_stop": "/tmp/step31-train-emitter-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+  "diagnostic_lines": 98,
+  "binary_exists": false,
+  "entry_sha256": "ae527c586de1811d68f788bfc87944bbf05303ff491a974b97c49b5c04201727",
+  "slice_sha256": "f9b172e3ec8a9d1536b8ad805ab5c8babef5244c7fe5facd894c31414092b50e",
+  "slice_summary": {
+    "typescript": "6.0.3",
+    "tree": "/tmp/step31-train-adapted",
+    "entries": [
+      "src/compiler/emitter.ts:emitFiles",
+      "src/compiler/emitter.ts:createPrinter"
+    ],
+    "declarations": 2650,
+    "copied_spans": 2664,
+    "namespace_wrapper_spans": 14,
+    "value_declarations": 1895,
+    "type_declarations": 755,
+    "files": 79,
+    "declaration_files": 35,
+    "code_declarations": 2573,
+    "export_facade_records": 77,
+    "evaluation_only_files": 44,
+    "preserves_evaluation": true,
+    "declaration_lines": 59347,
+    "declaration_bytes": 3127205,
+    "rewritten_import_lines": 266
+  },
+  "status": "blocked",
+  "native_differential_run": false
+}

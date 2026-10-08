@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/audit-train.py", line 38, in <module>
+    assert row['first_stop'] == first, 'native first stop recount'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: native first stop recount

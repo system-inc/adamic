@@ -1,0 +1,154 @@
+WORK=/tmp/adamic-gate/go-build1326993403
+mkdir -p $WORK/b166/
+cat >/tmp/adamic-gate/go-build1326993403/b166/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/internal/ast=/home/agent/.cache/go-build/2b/2b1da76097d53d0229a278c23af5aa56d6ce355df869567e6a58da8f92f9c7ba-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/core=/home/agent/.cache/go-build/c4/c46b8ee0e2eea1513386236bd7322ea7a7f623c4b943eb138149210747ee4c02-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/scanner=/home/agent/.cache/go-build/63/63bd7be50da77a093c0a115da1ac9a2e4a2b04ab23955b394e481d57a08c8ab7-d
+packagefile iter=/home/agent/.cache/go-build/a1/a142ff76e483384fb01686e2d94cf96e6d9e073ea58c9dc4f741077432192a59-d
+EOF
+cd /tmp/step31-train-main
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b166/_pkg_.a -trimpath "$WORK/b166=>" -p github.com/microsoft/TypeScript/tsc/shim/scanner -lang=go1.24 -complete -buildid jBgpqrFiPyh0waQiXR-8/jBgpqrFiPyh0waQiXR-8 -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b166/importcfg -pack ./cohere/TypeScript-shim/scanner/position.go ./cohere/TypeScript-shim/scanner/shim.go
+mkdir -p $WORK/b218/
+mkdir -p $WORK/b126/
+cat >/tmp/adamic-gate/go-build1326993403/b218/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b218/_pkg_.a -trimpath "$WORK/b218=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/binding -lang=go1.27 -complete -buildid 5WzSMmnwDYnl8P-WcnJ5/5WzSMmnwDYnl8P-WcnJ5 -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b218/importcfg -pack ./cohere/internal/lint/ecmascript/binding/ownership.go
+cat >/tmp/adamic-gate/go-build1326993403/b126/importcfg << 'EOF' # internal
+# import config
+packagefile cmp=/home/agent/.cache/go-build/ce/ce2ec3cb790e784664bdd890680c9aca1396d4a11c84ba091b591d665670d63a-d
+packagefile context=/home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d
+packagefile encoding/hex=/home/agent/.cache/go-build/88/8816f2c309bb29ad6ae3c5b9d1b4df7b4052f32ff7243675087bcfe87c1e36a4-d
+packagefile errors=/home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d
+packagefile fmt=/home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/ast=/home/agent/.cache/go-build/2b/2b1da76097d53d0229a278c23af5aa56d6ce355df869567e6a58da8f92f9c7ba-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/collections=/home/agent/.cache/go-build/7e/7e416b4478c41bbeea14317599e52bf89272831cab32462b2a0b9d4b027ddef5-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/core=/home/agent/.cache/go-build/c4/c46b8ee0e2eea1513386236bd7322ea7a7f623c4b943eb138149210747ee4c02-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/diagnostics=/home/agent/.cache/go-build/23/23bbac915ce9bd58131637fd101d2024a7798dec43a55ed003e77e710e198325-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/ipc=/home/agent/.cache/go-build/56/564ea28c4fba666e997b48d52dcad3226f1c6f1c22f524e359f388d89cf50010-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/json=/home/agent/.cache/go-build/96/96f7238bcb56f2f97278f9aa94b1a44abbce21c3c1eae3c6af3fb08b36fe710d-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/jsonrpc=/home/agent/.cache/go-build/69/69299a3618111f2abc381a4d91eb8b5d6f7bc640164205cfdbf3dc1fce428fe2-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/locale=/home/agent/.cache/go-build/4a/4ab5f3ffa3f67c16f0f069c9349c3f99ef66967a24d80cfccb92ad400a2d0224-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/parser=/home/agent/.cache/go-build/a9/a9848049d6a5ce60cc2e9f5e872d7c48d584d16c1681712e2c63b262114a3a29-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/spanmap=/home/agent/.cache/go-build/ab/ab7ae43fff96b12b9d97abe4f0de522d1a7476f9194b42dcf8414d964b3e008d-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/tspath=/home/agent/.cache/go-build/e4/e490b6fa84f7b100aba46679b9edd0c0b66d5555c7cfe0a289dc0165962a15f0-d
+packagefile github.com/zeebo/xxh3=/home/agent/.cache/go-build/cf/cf75cb34e8c81e925f117bd2c92713dc68a35cbf6635184bc99f75794517db58-d
+packagefile io=/home/agent/.cache/go-build/66/6679b9449c0e834ddf048fa8c0643d1dcd7b5e9ef50623ce3a86b2f535a1702c-d
+packagefile maps=/home/agent/.cache/go-build/f1/f11f9f5b4679ced8820d2768983005e30fb6de8b328b7354826e9ca7f93bf83b-d
+packagefile reflect=/home/agent/.cache/go-build/58/58a860243c497f1b66d9622b236677bce451387b96ab6060199133cacd464166-d
+packagefile slices=/home/agent/.cache/go-build/e4/e4baaa8e2a83d40777c65a5af0c4443587a80afe6a6810cef6919f9af42686dc-d
+packagefile strconv=/home/agent/.cache/go-build/cc/cc3d09a73b2608d56be41802c7d8512bb6b6cd4817ca493804cce0bb60f3c19d-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+packagefile sync=/home/agent/.cache/go-build/71/71fd1a1fb755008d8e7d96b618b0e1b5423d06e23078c721917bedfaac47f467-d
+packagefile sync/atomic=/home/agent/.cache/go-build/f8/f8c5d7829b4eb8949a3fbec539e0cf816dbf13b63851bcd9e87d6c1e56914d19-d
+packagefile time=/home/agent/.cache/go-build/c3/c3beca8e80d518b9d575a82fecc6a05470acc51e86e94b88bc41d5dbe2c065b0-d
+packagefile unicode/utf8=/home/agent/.cache/go-build/ad/ad8e1ae53307df21ee7ceb661450f63a5c6657df0c7c275828a7fbcd214c9c3a-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b126/_pkg_.a -trimpath "$WORK/b126=>" -p github.com/microsoft/TypeScript/tsc/internal/contentmapper -lang=go1.27 -complete -buildid aZdjHLFmJRx_xinC_XWY/aZdjHLFmJRx_xinC_XWY -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b126/importcfg -pack ./cohere/TypeScript/tsc/internal/contentmapper/contentmapper.go ./cohere/TypeScript/tsc/internal/contentmapper/host.go ./cohere/TypeScript/tsc/internal/contentmapper/hostimpl.go ./cohere/TypeScript/tsc/internal/contentmapper/transform.go
+mkdir -p $WORK/b223/
+cat >/tmp/adamic-gate/go-build1326993403/b223/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+packagefile github.com/system-inc/cohere/internal/lint/ecmascript/text=/home/agent/.cache/go-build/61/617ff4eac414085f7e4d7f17ca0788a7934af508e3ae683eccf60a3471657c96-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b223/_pkg_.a -trimpath "$WORK/b223=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/jsx -lang=go1.27 -complete -buildid Sk4d6ctODfcqurgc7ujW/Sk4d6ctODfcqurgc7ujW -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b223/importcfg -pack ./cohere/internal/lint/ecmascript/jsx/attributes.go
+mkdir -p $WORK/b224/
+cat >/tmp/adamic-gate/go-build1326993403/b224/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b224/_pkg_.a -trimpath "$WORK/b224=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/module -lang=go1.27 -complete -buildid 1UXtjZVxrWHvawgszcQv/1UXtjZVxrWHvawgszcQv -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b224/importcfg -pack ./cohere/internal/lint/ecmascript/module/declarations.go ./cohere/internal/lint/ecmascript/module/exports.go
+go tool buildid -w $WORK/b223/_pkg_.a # internal
+cp $WORK/b223/_pkg_.a /home/agent/.cache/go-build/c2/c29cd208f82822a3454afcc52a43c62b56c5fa36cdaf6afa4c92785614d8c507-d # internal
+mkdir -p $WORK/b225/
+cat >/tmp/adamic-gate/go-build1326993403/b225/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+packagefile slices=/home/agent/.cache/go-build/e4/e4baaa8e2a83d40777c65a5af0c4443587a80afe6a6810cef6919f9af42686dc-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b225/_pkg_.a -trimpath "$WORK/b225=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/module_roots -lang=go1.27 -complete -buildid ObRPqhZ_iijwO2KjcoC9/ObRPqhZ_iijwO2KjcoC9 -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b225/importcfg -pack ./cohere/internal/lint/ecmascript/module_roots/roots.go
+go tool buildid -w $WORK/b166/_pkg_.a # internal
+go tool buildid -w $WORK/b126/_pkg_.a # internal
+cp $WORK/b166/_pkg_.a /home/agent/.cache/go-build/cb/cbf8debf7bdad50e6a2e28a71c59f9fe3a5ce6ed6944f57ffdf54d024ca8fbaf-d # internal
+mkdir -p $WORK/b226/
+cat >/tmp/adamic-gate/go-build1326993403/b226/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b226/_pkg_.a -trimpath "$WORK/b226=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/nextjs -lang=go1.27 -complete -buildid -i5l9Q6-hjNo4f5yCp5z/-i5l9Q6-hjNo4f5yCp5z -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b226/importcfg -pack ./cohere/internal/lint/ecmascript/nextjs/contract.go ./cohere/internal/lint/ecmascript/nextjs/directives.go ./cohere/internal/lint/ecmascript/nextjs/paths.go
+cp $WORK/b126/_pkg_.a /home/agent/.cache/go-build/eb/eba7cf09b401e1039d26288602821b00cdbf16fca4e3807b49e7522bb201e1af-d # internal
+mkdir -p $WORK/b125/
+cat >/tmp/adamic-gate/go-build1326993403/b125/importcfg << 'EOF' # internal
+# import config
+packagefile cmp=/home/agent/.cache/go-build/ce/ce2ec3cb790e784664bdd890680c9aca1396d4a11c84ba091b591d665670d63a-d
+packagefile errors=/home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d
+packagefile fmt=/home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/ast=/home/agent/.cache/go-build/2b/2b1da76097d53d0229a278c23af5aa56d6ce355df869567e6a58da8f92f9c7ba-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/collections=/home/agent/.cache/go-build/7e/7e416b4478c41bbeea14317599e52bf89272831cab32462b2a0b9d4b027ddef5-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/contentmapper=/tmp/adamic-gate/go-build1326993403/b126/_pkg_.a
+packagefile github.com/microsoft/TypeScript/tsc/internal/core=/home/agent/.cache/go-build/c4/c46b8ee0e2eea1513386236bd7322ea7a7f623c4b943eb138149210747ee4c02-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/debug=/home/agent/.cache/go-build/aa/aa6adcaa4b1ac70c797b74f9108b1c7b1799622c7257bb452a863ebc74d8de25-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/diagnostics=/home/agent/.cache/go-build/23/23bbac915ce9bd58131637fd101d2024a7798dec43a55ed003e77e710e198325-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/glob=/home/agent/.cache/go-build/d4/d4e1838688320e58698f76ebb71134f4efa47175dbe992da28c24dbc032a7c49-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/jsnum=/home/agent/.cache/go-build/cd/cd1ad487948ed54bda71fb47d9edf81f0fa3e025f9ed58cf45b41d068416bcb3-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/json=/home/agent/.cache/go-build/96/96f7238bcb56f2f97278f9aa94b1a44abbce21c3c1eae3c6af3fb08b36fe710d-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/locale=/home/agent/.cache/go-build/4a/4ab5f3ffa3f67c16f0f069c9349c3f99ef66967a24d80cfccb92ad400a2d0224-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/module=/home/agent/.cache/go-build/cd/cd7776d49821e9fc509d94c25d61d0f595dafee2a501ba4738a60988c11471ef-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/outputpaths=/home/agent/.cache/go-build/5f/5f8d5e197e1e94b297a9fa09e44c67575bb8243191c278bf8f23c961e2252b84-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/packagejson=/home/agent/.cache/go-build/2d/2d1dea5582589fafdfe1b12a5b5271dde68d4e0c0875d366b9cf18768abdd4c0-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/parser=/home/agent/.cache/go-build/a9/a9848049d6a5ce60cc2e9f5e872d7c48d584d16c1681712e2c63b262114a3a29-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/scanner=/home/agent/.cache/go-build/63/63bd7be50da77a093c0a115da1ac9a2e4a2b04ab23955b394e481d57a08c8ab7-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/stringutil=/home/agent/.cache/go-build/d7/d7324e3e18f00611fca861bba331b3475597dac8e56dc7396d6a159467923e53-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/tspath=/home/agent/.cache/go-build/e4/e490b6fa84f7b100aba46679b9edd0c0b66d5555c7cfe0a289dc0165962a15f0-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/vfs=/home/agent/.cache/go-build/af/af00eab5f93e9f89982f944200e258feacde56929a4e212e15bbdcd237289e8b-d
+packagefile github.com/microsoft/TypeScript/tsc/internal/vfs/vfsmatch=/home/agent/.cache/go-build/d0/d029f888ba9737121bab442e6a2362888e5e26568fe9b6cefa8a4a090976608e-d
+packagefile iter=/home/agent/.cache/go-build/a1/a142ff76e483384fb01686e2d94cf96e6d9e073ea58c9dc4f741077432192a59-d
+packagefile maps=/home/agent/.cache/go-build/f1/f11f9f5b4679ced8820d2768983005e30fb6de8b328b7354826e9ca7f93bf83b-d
+packagefile reflect=/home/agent/.cache/go-build/58/58a860243c497f1b66d9622b236677bce451387b96ab6060199133cacd464166-d
+packagefile slices=/home/agent/.cache/go-build/e4/e4baaa8e2a83d40777c65a5af0c4443587a80afe6a6810cef6919f9af42686dc-d
+packagefile strconv=/home/agent/.cache/go-build/cc/cc3d09a73b2608d56be41802c7d8512bb6b6cd4817ca493804cce0bb60f3c19d-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+packagefile sync=/home/agent/.cache/go-build/71/71fd1a1fb755008d8e7d96b618b0e1b5423d06e23078c721917bedfaac47f467-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b125/_pkg_.a -trimpath "$WORK/b125=>" -p github.com/microsoft/TypeScript/tsc/internal/tsoptions -lang=go1.27 -complete -buildid 3_JyvcCUXPOQ4srQzZnU/3_JyvcCUXPOQ4srQzZnU -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b125/importcfg -pack ./cohere/TypeScript/tsc/internal/tsoptions/commandlineoption.go ./cohere/TypeScript/tsc/internal/tsoptions/commandlineparser.go ./cohere/TypeScript/tsc/internal/tsoptions/contentmappers.go ./cohere/TypeScript/tsc/internal/tsoptions/declarations_generated.go ./cohere/TypeScript/tsc/internal/tsoptions/diagnostics.go ./cohere/TypeScript/tsc/internal/tsoptions/enummaps.go ./cohere/TypeScript/tsc/internal/tsoptions/errors.go ./cohere/TypeScript/tsc/internal/tsoptions/namemap.go ./cohere/TypeScript/tsc/internal/tsoptions/options_generated.go ./cohere/TypeScript/tsc/internal/tsoptions/parsedbuildcommandline.go ./cohere/TypeScript/tsc/internal/tsoptions/parsedcommandline.go ./cohere/TypeScript/tsc/internal/tsoptions/parsedoptions.go ./cohere/TypeScript/tsc/internal/tsoptions/parsinghelpers.go ./cohere/TypeScript/tsc/internal/tsoptions/rawcompileroptions.go ./cohere/TypeScript/tsc/internal/tsoptions/showconfig.go ./cohere/TypeScript/tsc/internal/tsoptions/tsconfigparsing.go ./cohere/TypeScript/tsc/internal/tsoptions/wildcarddirectories.go
+go tool buildid -w $WORK/b218/_pkg_.a # internal
+cp $WORK/b218/_pkg_.a /home/agent/.cache/go-build/9d/9d70a3cb7998f63c7e9537928e4ee32bf2bd79b5e73ed2120e3c7172d3b965e9-d # internal
+mkdir -p $WORK/b227/
+cat >/tmp/adamic-gate/go-build1326993403/b227/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b227/_pkg_.a -trimpath "$WORK/b227=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/property -lang=go1.27 -complete -buildid OK0QZujQ9qijmOHEqwU8/OK0QZujQ9qijmOHEqwU8 -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b227/importcfg -pack ./cohere/internal/lint/ecmascript/property/name.go
+go tool buildid -w $WORK/b224/_pkg_.a # internal
+cp $WORK/b224/_pkg_.a /home/agent/.cache/go-build/b7/b7d1d286df55e0c5537a5c09d5b5d618e5d3d7d59989739d056363b284b37169-d # internal
+mkdir -p $WORK/b228/
+cat >/tmp/adamic-gate/go-build1326993403/b228/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+packagefile strings=/home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d
+packagefile unicode=/home/agent/.cache/go-build/8c/8ca4fffd68b02aaed928cef2154ef3142691aba27e19427e2d0ee271a3fc32f6-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b228/_pkg_.a -trimpath "$WORK/b228=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/react -lang=go1.27 -complete -buildid 7p_hnIwU1c2Fd3BTXIXn/7p_hnIwU1c2Fd3BTXIXn -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b228/importcfg -pack ./cohere/internal/lint/ecmascript/react/compiled.go ./cohere/internal/lint/ecmascript/react/component.go ./cohere/internal/lint/ecmascript/react/names.go
+go tool buildid -w $WORK/b225/_pkg_.a # internal
+go tool buildid -w $WORK/b227/_pkg_.a # internal
+cp $WORK/b225/_pkg_.a /home/agent/.cache/go-build/0f/0f6f48640012d5c8e96e81df969702b0c9c80a47eff31fb6d6bcc88ef85c8b65-d # internal
+mkdir -p $WORK/b231/
+cat >/tmp/adamic-gate/go-build1326993403/b231/importcfg << 'EOF' # internal
+# import config
+packagefile github.com/microsoft/TypeScript/tsc/shim/ast=/home/agent/.cache/go-build/42/427921b5fda9c28dc8196c24d4770963c5b4702a0bdc1f958034fd96abd7e306-d
+EOF
+/workspace/adamic-tools/go/pkg/tool/linux_amd64/compile -o $WORK/b231/_pkg_.a -trimpath "$WORK/b231=>" -p github.com/system-inc/cohere/internal/lint/ecmascript/scope -lang=go1.27 -complete -buildid yK8AcqsplY3k2wHJDTge/yK8AcqsplY3k2wHJDTge -goversion go1.27.1 -c=5 -nolocalimports -importcfg $WORK/b231/importcfg -pack ./cohere/internal/lint/ecmascript/scope/enclosing.go
+cp $WORK/b227/_pkg_.a /home/agent/.cache/go-build/4a/4a39aaa39e935992c132e099592aad196fba06c93bff546504fa72775c1191df-d # internal
+go tool buildid -w $WORK/b226/_pkg_.a # internal
+cp $WORK/b226/_pkg_.a /home/agent/.cache/go-build/56/56ba006ddcd365b9d3242fa1bb88efa483608249a79354d9b3b28ec06752bf36-d # internal
+# github.com/system-inc/cohere/internal/lint/ecmascript/react
+compile: writing output: write $WORK/b228/_pkg_.a: no space left on device
+# github.com/microsoft/TypeScript/tsc/internal/tsoptions
+compile: writing output: write $WORK/b125/_pkg_.a: no space left on device
+# github.com/system-inc/cohere/internal/lint/ecmascript/scope
+compile: writing output: write $WORK/b231/_pkg_.a: no space left on device
