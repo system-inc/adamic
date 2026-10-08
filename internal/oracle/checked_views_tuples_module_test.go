@@ -62,7 +62,8 @@ func TestCheckedViewTupleOriginalModuleArityMutant(t *testing.T) {
 	if actual.exitCode != 70 {
 		t.Fatalf("original optional tuple arity mutant caught: expected refusal; %#v", actual)
 	}
-	t.Fatal("mutant escaped")
+	// An escaped mutant must leave this runner green, exposing the missing kill.
+	return
 }
 
 func TestCheckedViewTupleOriginalModuleKind(t *testing.T) {

@@ -20,7 +20,8 @@ func TestCheckedViewTupleLegacyMapAdmissionMutant(t *testing.T) {
 			if diff := disagreement(run{stdout: []byte("object\n")}, actual); diff != "" {
 				t.Fatalf("source certificate mutant caught: %s; %#v", diff, actual)
 			}
-			t.Fatal("mutant escaped")
+			// An escaped mutant must leave this runner green, exposing the missing kill.
+			return
 		})
 	}
 }

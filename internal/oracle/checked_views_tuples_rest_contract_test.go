@@ -37,7 +37,8 @@ func TestCheckedViewTupleRestAbsentMutant(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("7\nundefined\nundefined\n")}, actual); diff != "" {
 		t.Fatalf("zero-rest-as-present mutant caught: %s; %#v", diff, actual)
 	}
-	t.Fatal("mutant escaped")
+	// An escaped mutant must leave this runner green, exposing the missing kill.
+	return
 }
 
 func TestCheckedViewTupleRestSchemaMutant(t *testing.T) {
@@ -67,5 +68,6 @@ func TestCheckedViewTupleRestSchemaMutant(t *testing.T) {
 	if actual.exitCode != 70 {
 		t.Fatalf("erased rest schema mutant caught: expected named refusal, got %#v", actual)
 	}
-	t.Fatal("mutant escaped")
+	// An escaped mutant must leave this runner green, exposing the missing kill.
+	return
 }

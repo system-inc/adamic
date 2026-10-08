@@ -1,3 +1,20 @@
+Built: opt-in mutant runners now fail only when their semantic, leak or sanitizer oracle catches the mutation.
+Commits: test-only cleanup follows fc21dde4f9445f6250d5311fb2d679254b1e4a80.
+Checks: baseline opt-in tests pass with mutations disabled; final unit PASS 122.144s and lane regressions PASS 28.186s before this test-only cleanup.
+Mutants: all ten affected modes rerun and fail at their real oracle; skip-release leaks 24 bytes and double-release triggers sanitizer use-after-free.
+Remaining: primary 10 pairs / 15 reads complete; overlapping lane 4b direct-cast frontier remains blocked.
+
+Removed unconditional fallback failures that could mask an escaped mutant. An
+escaped mutation now passes its opt-in runner, making a missing kill visible.
+Exact rerun environments, tests, exit codes and logs are recorded in
+/tmp/views-tuples-final-mutants.json; logs are /tmp/views-tuples-final-mutant-1.log
+through -10.log. All exit 1 and contain their oracle's mutant-caught evidence.
+Baseline command selects those nine opt-in test functions with environments
+unset, -count=1; /tmp/views-tuples-final-mutant-baseline.log records its result.
+No compiler behavior, fixtures or counts changed in this cleanup.
+
+---
+
 Built: original lane 4b outSignature frontier certified with string, tuple and wrong-primitive inputs; primary total remains 10 pairs / 15 candidate reads.
 Commits: frontier certification follows blocked direct-cast witness 348c4d74e5f3faacac80efe6e570f7ab4b7e9f8d.
 Checks: three Node/JS/native release/sanitized witnesses PASS 2.919s with finishing leak checks; 82 tuple and two legacy Map count rows refreshed PASS 54.120s.

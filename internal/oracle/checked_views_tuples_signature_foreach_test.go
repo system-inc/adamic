@@ -34,5 +34,6 @@ func TestCheckedViewTupleOriginalSignatureForEachMutant(t *testing.T) {
 	if actual.exitCode != 70 {
 		t.Fatalf("tuple alternative arity mutant caught: expected named refusal; %#v", actual)
 	}
-	t.Fatal("mutant escaped")
+	// An escaped mutant must leave this runner green, exposing the missing kill.
+	return
 }
