@@ -1,0 +1,27 @@
+{
+  "started": "2026-10-08T13:42:54.408081+00:00",
+  "paused": [
+    {
+      "pid": 64452,
+      "binary": "/workspace/stage3-scoreboard-tmp/front-3-census"
+    },
+    {
+      "pid": 65552,
+      "binary": "/workspace/stage3-scoreboard-tmp/main-census"
+    },
+    {
+      "pid": 67279,
+      "binary": "/workspace/stage3-scoreboard-tmp/method-values-entry-census"
+    },
+    {
+      "pid": 67761,
+      "binary": "/workspace/stage3-scoreboard-tmp/area-compiler-entry-census"
+    },
+    {
+      "pid": 67966,
+      "binary": "/workspace/stage3-scoreboard-tmp/conditions-entry-census"
+    }
+  ],
+  "tests_exit": 0,
+  "ended": "2026-10-08T13:45:54.568849+00:00"
+}

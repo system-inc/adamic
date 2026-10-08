@@ -1,0 +1,32 @@
+..Es.........ss..................
+======================================================================
+ERROR: test_per_ref_builds_and_runs_each_pinned_compiler (compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/stage3-latent-scoreboard/stage3/meter/compiler_test.py", line 169, in test_per_ref_builds_and_runs_each_pinned_compiler
+    run, result = self.measure('per-ref')
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/stage3-latent-scoreboard/stage3/meter/compiler_test.py", line 147, in measure
+    self.command('bash', 'stage3/meter/twice-daily.sh')
+  File "/workspace/stage3-latent-scoreboard/stage3/meter/compiler_test.py", line 137, in command
+    result = subprocess.run(args, cwd=self.repository, env=self.env,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2141, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '('bash', 'stage3/meter/twice-daily.sh')' timed out after 119.99998091199814 seconds
+
+----------------------------------------------------------------------
+Ran 33 tests in 205.464s
+
+FAILED (errors=1, skipped=3)

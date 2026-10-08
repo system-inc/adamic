@@ -1,0 +1,24 @@
+package main
+
+import (
+	"bytes"
+	"strings"
+	"testing"
+)
+
+func TestExactQueryAndMissingShape(t *testing.T) {
+	source := []byte("package lower;\n//go:linkname external pkg.external\nfunc external()\nfunc (l *lowering) predicateArguments() { if true { symbol := l.symbol(nil); " + expected + "; if changed { return } } }")
+	rewritten, err := rewrite(source)
+	if err != nil || !bytes.Contains(rewritten, []byte("latentPredicateWriteQuery")) || !bytes.Contains(rewritten, []byte("//go:linkname external pkg.external")) {
+		t.Fatalf("rewrite: %s %v", rewritten, err)
+	}
+	for _, mutant := range [][]byte{
+		bytes.Replace(source, []byte("predicateArguments"), []byte("missing"), 1),
+		bytes.Replace(source, []byte("ast.IsAssignmentTarget(n)"), []byte("false"), 1),
+	} {
+		_, err := rewrite(mutant)
+		if err == nil || !strings.Contains(err.Error(), "predicateArguments") {
+			t.Fatalf("missing shape survived: %v", err)
+		}
+	}
+}

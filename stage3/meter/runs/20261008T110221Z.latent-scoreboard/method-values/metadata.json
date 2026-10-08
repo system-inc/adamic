@@ -1,0 +1,165 @@
+{
+  "name": "method-values",
+  "ref": "origin/codex/method-values",
+  "sha": "f7de26dbb795d75010d7ebab8dd6357042d11c01",
+  "adapted": "/workspace/stage3-scoreboard-tmp/main-adapted",
+  "overlay_commit": "93f7f8e0862b6460aaee0ac100bdec9c5bf435fb",
+  "state_shape_guards_commit": "9d534d3a31814f1a192a528e701f6c2ea7c910bc",
+  "mode": "per-ref",
+  "started": "2026-10-08T11:08:07.806217+00:00",
+  "commands": [
+    [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/stage3-scoreboard-tmp/method-values-overlay/overlay.json",
+      "-o",
+      "/workspace/stage3-scoreboard-tmp/method-values-census",
+      "./stage3/census/latent/tool"
+    ],
+    [
+      "/workspace/stage3-scoreboard-tmp/method-values-census",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler",
+      "/workspace/stage3-latent-scoreboard/stage3/meter/runs/20261008T110221Z.latent-scoreboard/method-values/compiler/full.jsonl"
+    ],
+    [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/stage3-scoreboard-tmp/method-values-entry-overlay/overlay.json",
+      "-o",
+      "/workspace/stage3-scoreboard-tmp/method-values-entry-census",
+      "./stage3/census/latent/tool"
+    ],
+    [
+      "/workspace/stage3-scoreboard-tmp/method-values-entry-census",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/tsc/tsc.ts",
+      "/workspace/stage3-latent-scoreboard/stage3/meter/runs/20261008T110221Z.latent-scoreboard/method-values/tsc/full.jsonl"
+    ]
+  ],
+  "overlays": {
+    "compiler": {
+      "binary_sha256": "b7dfa863c4b14e2af8f625a894961bede882c15aa81791a686372144cc3395f7",
+      "replacements": [
+        {
+          "source": "internal/lower/lower.go",
+          "sha256": "dc8315465a6f5d75d0f43171d1915beb6b8294993ea1538f539473e40e3b7bff"
+        },
+        {
+          "source": "internal/lower/latent_state.go",
+          "sha256": "d67f323be379e79a00449f89bb8835b0a9fe68be220adc7913519b90eccb0667"
+        },
+        {
+          "source": "internal/lower/statements.go",
+          "sha256": "fbf6427f87d795d730d06b97bf81cae41f96b120fe121f041fd75f344d15f179"
+        },
+        {
+          "source": "internal/lower/latent_full.go",
+          "sha256": "97f18de6cb6d6fead00801dfd78ffc678ebd7b1a5916080b02ab4425afcfff14"
+        },
+        {
+          "source": "internal/lower/latent_units.go",
+          "sha256": "bb7e7d4197b64250ebf4f0f4f3180f94484676b51b3a08c7030a47a30aca0c60"
+        },
+        {
+          "source": "internal/lower/refusals.go",
+          "sha256": "da130954d394c3d0a8588858a6503011c82ee9d4c3c161e264b38f7d69d16147"
+        },
+        {
+          "source": "internal/load/load.go",
+          "sha256": "dbdfdef6a94370e29afc3374ffce1099fa5b2b332c4a35b646407fb07f1f5160"
+        },
+        {
+          "source": "internal/load/latent_hook.go",
+          "sha256": "629925aa160b0b8bdc0c8bdea68ed9f0758cfb29327b7015eb2f0d6527cee296"
+        },
+        {
+          "source": "internal/lower/expression.go",
+          "sha256": "99c86922d474579af69c6a01d4558e8c83d4b1253e90e57feb5da24534773b1f"
+        },
+        {
+          "source": "internal/lower/functions.go",
+          "sha256": "72b3fd63acd90dd72a0d698ffa98a004d0cb7be7d7b46744b2d17580b3f3b4e8"
+        },
+        {
+          "source": "internal/lower/locals.go",
+          "sha256": "7db7aec2440df2eea277a53809267330b4f40ea91040e1abc72a26563aa295ff"
+        },
+        {
+          "source": "internal/lower/latent_hook.go",
+          "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b"
+        },
+        {
+          "source": "stage3/census/latent/tool/main.go",
+          "sha256": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3"
+        }
+      ]
+    },
+    "tsc": {
+      "binary_sha256": "21ed0442df0a60d42aa239c24ef8c6baa0264e69568df621bfcb32c26fdcf20f",
+      "replacements": [
+        {
+          "source": "internal/lower/lower.go",
+          "sha256": "dc8315465a6f5d75d0f43171d1915beb6b8294993ea1538f539473e40e3b7bff"
+        },
+        {
+          "source": "internal/lower/latent_state.go",
+          "sha256": "d67f323be379e79a00449f89bb8835b0a9fe68be220adc7913519b90eccb0667"
+        },
+        {
+          "source": "internal/lower/statements.go",
+          "sha256": "fbf6427f87d795d730d06b97bf81cae41f96b120fe121f041fd75f344d15f179"
+        },
+        {
+          "source": "internal/lower/latent_full.go",
+          "sha256": "97f18de6cb6d6fead00801dfd78ffc678ebd7b1a5916080b02ab4425afcfff14"
+        },
+        {
+          "source": "internal/lower/latent_units.go",
+          "sha256": "bb7e7d4197b64250ebf4f0f4f3180f94484676b51b3a08c7030a47a30aca0c60"
+        },
+        {
+          "source": "internal/lower/refusals.go",
+          "sha256": "da130954d394c3d0a8588858a6503011c82ee9d4c3c161e264b38f7d69d16147"
+        },
+        {
+          "source": "internal/load/load.go",
+          "sha256": "dbdfdef6a94370e29afc3374ffce1099fa5b2b332c4a35b646407fb07f1f5160"
+        },
+        {
+          "source": "internal/load/latent_hook.go",
+          "sha256": "ead7d8320ca86348ec5ac4579f9b4a918dadaca85f9bf19cbad0145ffac0e9c4"
+        },
+        {
+          "source": "internal/lower/expression.go",
+          "sha256": "99c86922d474579af69c6a01d4558e8c83d4b1253e90e57feb5da24534773b1f"
+        },
+        {
+          "source": "internal/lower/functions.go",
+          "sha256": "72b3fd63acd90dd72a0d698ffa98a004d0cb7be7d7b46744b2d17580b3f3b4e8"
+        },
+        {
+          "source": "internal/lower/locals.go",
+          "sha256": "7db7aec2440df2eea277a53809267330b4f40ea91040e1abc72a26563aa295ff"
+        },
+        {
+          "source": "internal/lower/latent_hook.go",
+          "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b"
+        },
+        {
+          "source": "stage3/census/latent/tool/main.go",
+          "sha256": "f7d18ccb2e9be563e72abc566af03d15a3984850c9bd394978b39f12302a15c1"
+        }
+      ]
+    }
+  },
+  "completed": "2026-10-08T15:30:12.670443+00:00",
+  "runtime_environment": {
+    "GOMAXPROCS": "2",
+    "GOMEMLIMIT": null,
+    "GOFLAGS": "-p=1",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  },
+  "runtime_environment_note": "Recorded from the original launch settings; null means unset. The runner default was added after these processes started."
+}

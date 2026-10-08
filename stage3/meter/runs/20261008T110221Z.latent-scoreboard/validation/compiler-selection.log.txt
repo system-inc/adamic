@@ -1,0 +1,7 @@
+main efe9f4042049234e5a52639fe77b47c311fd530c /workspace/stage3-latent-scoreboard
+area-compiler b68b2fe1af2dd6ad369ad8dfbfedf66be5a42861 /workspace/stage3-scoreboard-tmp/area-compiler-tree
+front-3 a36d1c0472649ef2ee549cc2505b93a84e893b59 /workspace/stage3-scoreboard-tmp/front-3-tree
+method-values f7de26dbb795d75010d7ebab8dd6357042d11c01 /workspace/stage3-scoreboard-tmp/method-values-tree
+conditions a4218d46fc5610442caefcf6d998baaaecb740b2 /workspace/stage3-scoreboard-tmp/conditions-tree
+worker-compiler swap mutant caught: selected compiler module: /workspace/stage3-latent-scoreboard != /workspace/stage3-scoreboard-tmp/area-compiler-tree
+PASS: five independently selected compiler modules

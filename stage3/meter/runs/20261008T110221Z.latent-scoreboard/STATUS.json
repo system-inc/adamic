@@ -1,0 +1,49 @@
+[
+  {
+    "name": "main",
+    "ref": "origin/main",
+    "sha": "efe9f4042049234e5a52639fe77b47c311fd530c",
+    "complete": false,
+    "status": "stopped by user: speculative census supersedes scoreboard",
+    "completed_compiler_file_records": 60,
+    "malformed_partial_lines": 0,
+    "compiler_scope_complete": false,
+    "tsc_scope_started": false,
+    "included_in_tables": false,
+    "stopped": "2026-10-08T15:43:04.046793+00:00"
+  },
+  {
+    "name": "area-compiler",
+    "ref": "origin/area/compiler",
+    "sha": "b68b2fe1af2dd6ad369ad8dfbfedf66be5a42861",
+    "complete": true,
+    "status": "complete"
+  },
+  {
+    "name": "front-3",
+    "ref": "origin/compiler/stage3-front-3",
+    "sha": "a36d1c0472649ef2ee549cc2505b93a84e893b59",
+    "complete": false,
+    "status": "stopped by user: speculative census supersedes scoreboard",
+    "completed_compiler_file_records": 44,
+    "malformed_partial_lines": 0,
+    "compiler_scope_complete": false,
+    "tsc_scope_started": false,
+    "included_in_tables": false,
+    "stopped": "2026-10-08T15:43:04.046793+00:00"
+  },
+  {
+    "name": "method-values",
+    "ref": "origin/codex/method-values",
+    "sha": "f7de26dbb795d75010d7ebab8dd6357042d11c01",
+    "complete": true,
+    "status": "complete"
+  },
+  {
+    "name": "conditions",
+    "ref": "origin/codex/conditions",
+    "sha": "a4218d46fc5610442caefcf6d998baaaecb740b2",
+    "complete": true,
+    "status": "complete"
+  }
+]

@@ -1,0 +1,103 @@
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"go/ast"
+	"go/format"
+	"go/parser"
+	"go/token"
+	"os"
+)
+
+const expected = `changed := false
+var writes ast.Visitor
+writes = func(n *ast.Node) bool {
+ if n.Kind == ast.KindIdentifier && l.symbol(n) == symbol && ast.IsAssignmentTarget(n) {
+  changed = true
+ }
+ n.ForEachChild(writes)
+ return false
+}
+for _, file := range l.program.Files() {
+ file.AsNode().ForEachChild(writes)
+}`
+
+func canonical(statements []ast.Stmt) string {
+	var output bytes.Buffer
+	for _, statement := range statements {
+		if err := format.Node(&output, token.NewFileSet(), statement); err != nil {
+			panic(err)
+		}
+		output.WriteByte('\n')
+	}
+	return output.String()
+}
+
+func rewrite(input []byte) ([]byte, error) {
+	files := token.NewFileSet()
+	file, err := parser.ParseFile(files, "predicates.go", input, parser.ParseComments)
+	if err != nil {
+		return nil, err
+	}
+	witness, err := parser.ParseFile(token.NewFileSet(), "expected.go", "package p; func witness() {"+expected+"}", 0)
+	if err != nil {
+		return nil, err
+	}
+	wanted := canonical(witness.Decls[0].(*ast.FuncDecl).Body.List)
+	functions, matches := 0, 0
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || function.Name.Name != "predicateArguments" {
+			continue
+		}
+		functions++
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			block, ok := node.(*ast.BlockStmt)
+			if !ok {
+				return true
+			}
+			for index := 0; index+4 <= len(block.List); index++ {
+				original := block.List[index : index+4]
+				if canonical(original) != wanted {
+					continue
+				}
+				matches++
+				body := append([]ast.Stmt{}, original...)
+				body = append(body, &ast.ReturnStmt{Results: []ast.Expr{ast.NewIdent("changed")}})
+				call := &ast.CallExpr{Fun: &ast.SelectorExpr{X: ast.NewIdent("l"), Sel: ast.NewIdent("latentPredicateWriteQuery")}, Args: []ast.Expr{
+					ast.NewIdent("symbol"), &ast.FuncLit{Type: &ast.FuncType{Params: &ast.FieldList{}, Results: &ast.FieldList{List: []*ast.Field{{Type: ast.NewIdent("bool")}}}}, Body: &ast.BlockStmt{List: body}},
+				}}
+				replacement := &ast.AssignStmt{Lhs: []ast.Expr{ast.NewIdent("changed")}, Tok: token.DEFINE, Rhs: []ast.Expr{call}}
+				block.List = append(append(append([]ast.Stmt{}, block.List[:index]...), replacement), block.List[index+4:]...)
+				return false
+			}
+			return true
+		})
+	}
+	if functions != 1 || matches != 1 {
+		return nil, fmt.Errorf("predicateArguments: expected one exact immutable assignment query, found functions=%d queries=%d", functions, matches)
+	}
+	var output bytes.Buffer
+	if err := format.Node(&output, files, file); err != nil {
+		return nil, err
+	}
+	return output.Bytes(), nil
+}
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("usage: predicate-cache input output")
+	}
+	input, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	output, err := rewrite(input)
+	if err != nil {
+		panic(err)
+	}
+	if err := os.WriteFile(os.Args[2], output, 0600); err != nil {
+		panic(err)
+	}
+}

@@ -1,0 +1,1856 @@
+[
+  {
+    "body_end": 55473,
+    "body_start": 53978,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1281:43: error TS18046: 'e' is of type 'unknown'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "watchPresentFileSystemEntry",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1216:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:991:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1257:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 73483,
+    "body_start": 72789,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1651:44: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1651:59: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "enableCPUProfiler",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1646:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 76233,
+    "body_start": 75041,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1697:54: error TS7006: Parameter 'err' implicitly has an 'any' type.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1697:61: error TS7031: Binding element 'profile' implicitly has an 'any' type.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1700:120: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "disableCPUProfiler",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1694:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 76616,
+    "body_start": 76290,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1729:41: error TS2304: Cannot find name '__filename'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "isFileSystemCaseSensitive",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1723:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 80749,
+    "body_start": 79384,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1789:25: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "readFile",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1788:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 83136,
+    "body_start": 81442,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1854:38: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1854:59: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getAccessibleFileSystemEntries",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1839:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 83476,
+    "body_start": 83302,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1884:96: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "readDirectory",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1469:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1463:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts:1883:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sys.ts"
+  },
+  {
+    "body_end": 119230,
+    "body_start": 118607,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/commandLineParser.ts:2952:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "formatValueOrArray",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/commandLineParser.ts:2833:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/commandLineParser.ts:2833:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/commandLineParser.ts:2942:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/commandLineParser.ts"
+  },
+  {
+    "body_end": 158786,
+    "body_start": 140932,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/moduleNameResolver.ts:2772:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "loadModuleFromTargetExportOrImport",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/moduleNameResolver.ts:2751:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/moduleNameResolver.ts:2751:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/moduleNameResolver.ts:2753:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/moduleNameResolver.ts"
+  },
+  {
+    "body_end": 125891,
+    "body_start": 122191,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:2900:36: error TS2488: Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "mergeModuleAugmentation",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:2857:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 268919,
+    "body_start": 268777,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:5311:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getMergedSymbol",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:5309:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 282555,
+    "body_start": 282400,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:5564:33: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(string | undefined)[]' is not assignable to parameter of type 'readonly string[]'.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createTypeofType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:5563:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 315100,
+    "body_start": 310367,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6035:9: error TS2375: Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'aliasesToMakeVisible' are incompatible.\n    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "hasVisibleDeclarations",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6030:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 434371,
+    "body_start": 425432,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:7837:133: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'questionToken' are incompatible.\n    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.\n      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "addPropertyToElementList",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6309:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:7753:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 450899,
+    "body_start": 447105,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8082:62: error TS2379: Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createRecoveryBoundary",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6309:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8070:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 478325,
+    "body_start": 476621,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8566:17: error TS2322: Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "lookupTypeParameterNodes",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6309:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8557:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 496663,
+    "body_start": 494159,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8861:21: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "typeParameterToName",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6309:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:8829:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 652606,
+    "body_start": 526839,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9363:17: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "symbolTableToDeclarationStatements",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:6309:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 543636,
+    "body_start": 542168,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9591:37: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitSymbolTable",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9577:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 575410,
+    "body_start": 574667,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10022:63: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10022:86: error TS18048: 'm' is possibly 'undefined'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getNamespaceMembersForSerialization",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10010:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 575625,
+    "body_start": 575470,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10026:97: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "isTypeOnlyNamespace",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10025:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 579932,
+    "body_start": 575731,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10033:67: error TS18048: 'm' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10033:79: error TS18048: 'm' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10053:53: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10061:90: error TS18048: 'n' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10062:69: error TS18048: 's' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10063:69: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10064:47: error TS18048: 's' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10064:93: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10065:122: error TS18048: 's' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10066:103: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10070:50: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "serializeModule",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10029:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 599899,
+    "body_start": 593989,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10319:83: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10320:51: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10324:76: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n      Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n        Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10336:86: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "serializeAsClass",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10295:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 641885,
+    "body_start": 631805,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10941:33: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'."
+    ],
+    "depth": 3,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "makeSerializePropertySymbol",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:9346:9",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:10809:13",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 702519,
+    "body_start": 701507,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getFlowTypeFromCommonJSExport",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:12022:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 813960,
+    "body_start": 810126,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:13986:47: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:13990:49: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.\n  Type 'undefined' is not assignable to type 'Declaration'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getResolvedMembersOrExportsOfSymbol",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:13949:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 853273,
+    "body_start": 847867,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:14643:66: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "resolveAnonymousTypeMembers",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:14595:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 881368,
+    "body_start": 880639,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15145:9: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getAllPossiblePropertiesOfTypes",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15129:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 917940,
+    "body_start": 907242,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15695:41: error TS18048: 'prop' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15697:22: error TS18048: 'prop' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15697:47: error TS18048: 'prop' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15700:51: error TS18048: 'prop' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15701:42: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15704:43: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15706:52: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createUnionOrIntersectionProperty",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:15567:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 971902,
+    "body_start": 971708,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:16689:70: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getIndexInfosOfSymbol",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:16687:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1044109,
+    "body_start": 1041215,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:17890:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createTupleTargetType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:17876:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1050423,
+    "body_start": 1044493,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:17946:29: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createNormalizedTupleType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:17936:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1095517,
+    "body_start": 1085228,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:18662:15: error TS2322: Type '(Type | undefined)[]' is not assignable to type 'Type[]'.\n  Type 'Type | undefined' is not assignable to type 'Type'.\n    Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getIntersectionType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:18659:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1112651,
+    "body_start": 1110118,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:19044:25: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getTemplateLiteralType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:19040:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1204765,
+    "body_start": 1203447,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getMappedType",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:20576:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1205428,
+    "body_start": 1205276,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:20618:50: error TS2345: Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.\n  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'debugInfo' are incompatible.\n      Type '(() => string) | undefined' is not assignable to type '() => string'.\n        Type 'undefined' is not assignable to type '() => string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "makeFunctionTypeMapper",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:20617:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1259104,
+    "body_start": 1257785,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:21434:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "elaborateDidYouMeanToCallOrConstruct",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:21415:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1330360,
+    "body_start": 1323751,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "reportIncompatibleStack",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:22380:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:22492:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 1544990,
+    "body_start": 1544412,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:25972:13: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:25974:9: error TS2322: Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.\n  Type 'undefined' is not assignable to type 'Symbol[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getPropertiesOfContext",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:25962:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2095648,
+    "body_start": 2094537,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:35290:33: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n      Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n        Type 'undefined' is not assignable to type 'Symbol'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:35291:79: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getSuggestionForSymbolNameLookup",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:35274:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2276166,
+    "body_start": 2275328,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:38430:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.\n  Type 'undefined' is not assignable to type 'ElementFlags'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getParameterNameAtPosition",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:38418:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2526414,
+    "body_start": 2523629,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.\n  Type 'undefined' is not assignable to type 'TypeParameter'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getTypeArgumentConstraint",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:42802:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2565287,
+    "body_start": 2562035,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getPromisedTypeOfPromise",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:43496:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2577207,
+    "body_start": 2571117,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:43740:86: error TS2379: Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getAwaitedTypeNoAlias",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:43700:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2701379,
+    "body_start": 2699181,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getIterationTypesOfIterableFast",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46100:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2703913,
+    "body_start": 2702480,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46159:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.\n  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'errors' are incompatible.\n      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n        Type 'undefined' is not assignable to type 'Diagnostic[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getIterationTypesOfIterableSlow",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46148:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2734917,
+    "body_start": 2732995,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46734:64: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.\n  Type 'undefined' is not assignable to type '__String'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46736:167: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.\n  Type 'undefined' is not assignable to type '__String'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "checkTryStatement",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:46709:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2920201,
+    "body_start": 2918753,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getApplicableIndexSymbol",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:50133:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2995786,
+    "body_start": 2985815,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51465:110: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createResolver",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51380:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 2995779,
+    "body_start": 2994846,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51530:21: error TS18048: 's' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51532:25: error TS18048: 'merged' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51533:41: error TS18048: 'merged' is possibly 'undefined'."
+    ],
+    "depth": 2,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "isImportRequiredByAugmentation",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51380:5",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:51522:9",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 3053625,
+    "body_start": 3051401,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52426:13: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52427:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52429:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52430:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52432:13: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52433:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52435:13: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52436:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52438:14: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52439:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52441:42: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52443:39: error TS18048: 'parameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52446:39: error TS18048: 'parameter' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "checkGrammarIndexSignatureParameters",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:1486:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts:52415:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/checker.ts"
+  },
+  {
+    "body_end": 10201,
+    "body_start": 6782,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "appendSourceMap",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sourcemap.ts:36:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sourcemap.ts:36:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sourcemap.ts:176:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/sourcemap.ts"
+  },
+  {
+    "body_end": 83311,
+    "body_start": 80337,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitInNewClassLexicalEnvironment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:1796:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 106778,
+    "body_start": 104189,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformConstructorBodyWorker",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2249:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 112133,
+    "body_start": 106935,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformConstructorBody",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2311:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 128025,
+    "body_start": 127814,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2745:16: error TS2375: Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getPrivateIdentifierEnvironment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2743:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 133228,
+    "body_start": 132311,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2864:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'setterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "addPrivateIdentifierGetAccessorDeclarationToEnvironment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2846:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 134521,
+    "body_start": 133567,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2896:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'getterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "addPrivateIdentifierSetAccessorDeclarationToEnvironment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:354:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts:2875:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/classFields.ts"
+  },
+  {
+    "body_end": 12052,
+    "body_start": 11877,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:351:9: error TS2322: Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "enterClass",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:350:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts"
+  },
+  {
+    "body_end": 14191,
+    "body_start": 13855,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:398:13: error TS2322: Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "enterOther",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:392:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts"
+  },
+  {
+    "body_end": 58739,
+    "body_start": 57213,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:1164:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:1165:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:1192:80: error TS18048: 'superStatementIndex' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformConstructorBodyWorker",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts:1162:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esDecorators.ts"
+  },
+  {
+    "body_end": 12811,
+    "body_start": 11629,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:325:21: error TS2322: Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'.\n  Type '__String | undefined' is not assignable to type '__String'.\n    Type 'undefined' is not assignable to type '__String'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:327:17: error TS18048: 'catchClauseUnshadowedNames' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitCatchClauseInAsyncBody",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:316:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts"
+  },
+  {
+    "body_end": 24039,
+    "body_start": 23568,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:599:86: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitVariableDeclarationListWithCollidingNames",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:593:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts"
+  },
+  {
+    "body_end": 37526,
+    "body_start": 30696,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:765:25: error TS18048: 'originalParameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:765:58: error TS18048: 'originalParameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:767:76: error TS18048: 'outerParameter' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:770:44: error TS18048: 'outerParameter' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAsyncFunctionBody",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:119:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts:738:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2017.ts"
+  },
+  {
+    "body_end": 8519,
+    "body_start": 3662,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:183:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:205:52: error TS2345: Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'.\n  Type 'ExportSpecifier | undefined' is not assignable to type 'ExportSpecifier'.\n    Type 'undefined' is not assignable to type 'ExportSpecifier'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitSourceFile",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:71:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:71:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:128:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts"
+  },
+  {
+    "body_end": 16734,
+    "body_start": 13187,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:344:44: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:384:36: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformUsingDeclarations",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:71:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:71:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts:339:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/esnext.ts"
+  },
+  {
+    "body_end": 8571,
+    "body_start": 5494,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:174:24: error TS2488: Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:187:172: error TS18046: 's' is of type 'unknown'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:187:188: error TS18046: 's' is of type 'unknown'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformSourceFile",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:159:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts"
+  },
+  {
+    "body_end": 13513,
+    "body_start": 12922,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:309:58: error TS2345: Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.\n  Type 'undefined' is not assignable to type 'JsxChild'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "convertJsxChildrenToChildrenPropAssignment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:306:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts"
+  },
+  {
+    "body_end": 23295,
+    "body_start": 21051,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:502:62: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformJsxAttributesToExpression",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:92:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts:470:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/jsx.ts"
+  },
+  {
+    "body_end": 125522,
+    "body_start": 124133,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitVariableDeclarationList",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:2780:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts"
+  },
+  {
+    "body_end": 139980,
+    "body_start": 135579,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "convertForOfStatementHead",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:3021:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts"
+  },
+  {
+    "body_end": 208201,
+    "body_start": 200219,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitTypeScriptClassWrapper",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:4343:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts"
+  },
+  {
+    "body_end": 217164,
+    "body_start": 213723,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAndSpreadElements",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:488:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts:4633:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/es2015.ts"
+  },
+  {
+    "body_end": 52353,
+    "body_start": 52173,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1283:39: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAndEmitStatements",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1280:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 56771,
+    "body_start": 55603,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1370:35: error TS18048: 'variable' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1374:70: error TS2345: Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.\n  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.\n    Type 'undefined' is not assignable to type 'VariableDeclaration'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAndEmitVariableDeclarationList",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1356:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 68624,
+    "body_start": 65120,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1684:46: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAndEmitForInStatement",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1617:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 69802,
+    "body_start": 68682,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1729:55: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitForInStatement",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1705:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 76900,
+    "body_start": 72603,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1866:21: error TS18048: 'clause' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1880:25: error TS18048: 'clause' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1881:43: error TS18048: 'clause' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1881:50: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.\n  Property 'expression' does not exist on type 'DefaultClause'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1887:62: error TS18048: 'clause' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1887:69: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.\n  Property 'expression' does not exist on type 'DefaultClause'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1889:55: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1889:85: error TS18048: 'clause' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1889:92: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.\n  Property 'expression' does not exist on type 'DefaultClause'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1911:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1918:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1919:44: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformAndEmitSwitchStatement",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:1820:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 93856,
+    "body_start": 93455,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2446:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "hasImmediateContainingLabeledBlock",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2443:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 95001,
+    "body_start": 94086,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2469:56: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2472:53: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2480:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "findBreakTarget",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2464:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 95987,
+    "body_start": 95237,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2499:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2507:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "findContinueTarget",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2494:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 110608,
+    "body_start": 107886,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2880:63: error TS18048: 'withBlock' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "appendLabel",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2869:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 111370,
+    "body_start": 110758,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2951:21: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "tryEnterLabel",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2936:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 114058,
+    "body_start": 112361,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2983:57: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2984:23: error TS2322: Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.\n  Type 'undefined' is not assignable to type 'CodeBlock'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "tryEnterOrLeaveBlock",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:336:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts:2981:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/generators.ts"
+  },
+  {
+    "body_end": 4570,
+    "body_start": 2754,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:100:46: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.\n  Type 'undefined' is not assignable to type 'FileReference | Node'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformSourceFile",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+  },
+  {
+    "body_end": 7122,
+    "body_start": 5508,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:163:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.\n  Type 'undefined' is not assignable to type 'TextRange'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitor",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+  },
+  {
+    "body_end": 8293,
+    "body_start": 7829,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:194:37: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.\n  Type 'undefined' is not assignable to type 'FileReference | Node'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:196:81: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "visitImportOrRequireCall",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+  },
+  {
+    "body_end": 11308,
+    "body_start": 8548,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:251:22: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createRequireCall",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts:207:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+  },
+  {
+    "body_end": 90564,
+    "body_start": 68264,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "transformTopLevelDeclaration",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/declarations.ts:259:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/declarations.ts:259:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/declarations.ts:1387:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformers/declarations.ts"
+  },
+  {
+    "body_end": 13753,
+    "body_start": 13521,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:367:9: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "enableSubstitution",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:365:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts"
+  },
+  {
+    "body_end": 15045,
+    "body_start": 14808,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:395:9: error TS2532: Object is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "enableEmitNotification",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:393:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts"
+  },
+  {
+    "body_end": 24349,
+    "body_start": 21826,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:563:9: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.\n  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:564:9: error TS2322: Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.\n  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:565:9: error TS2322: Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.\n  Type 'undefined' is not assignable to type 'Statement[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "endLexicalEnvironment",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:520:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts"
+  },
+  {
+    "body_end": 26554,
+    "body_start": 25526,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:614:9: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.\n  Type 'undefined' is not assignable to type 'Identifier[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "endBlockScope",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:248:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts:600:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/transformer.ts"
+  },
+  {
+    "body_end": 130867,
+    "body_start": 128956,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "getEmitHost",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:1515:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:1515:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:2598:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts"
+  },
+  {
+    "body_end": 230654,
+    "body_start": 207833,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "verifyCompilerOptions",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:1515:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:1515:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4075:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts"
+  },
+  {
+    "body_end": 259725,
+    "body_start": 259457,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4956:9: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4957:9: error TS2412: Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "onProgramCreateComplete",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4954:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts"
+  },
+  {
+    "body_end": 261274,
+    "body_start": 260720,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4988:28: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "directoryExistsIfProjectReferenceDeclDir",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4980:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts"
+  },
+  {
+    "body_end": 264289,
+    "body_start": 262493,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:5038:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "fileOrDirectoryExistsUsingSource",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:4891:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts:5020:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/program.ts"
+  },
+  {
+    "body_end": 68247,
+    "body_start": 67750,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1493:60: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1495:26: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1496:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "toIncrementalBuildInfoEmitDiagnostics",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1235:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1235:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1489:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts"
+  },
+  {
+    "body_end": 71400,
+    "body_start": 71040,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1562:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "toChangeFileSet",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1235:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1235:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:1558:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts"
+  },
+  {
+    "body_end": 112656,
+    "body_start": 112138,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:2377:13: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Type 'Generator<[Path | undefined, never[]], void, unknown>' is missing the following properties from type 'readonly (readonly [Path, readonly ReusableDiagnostic[]])[]': length, concat, join, slice, and 25 more.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:2379:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "toPerFileSemanticDiagnostics",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:2254:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:2254:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts:2373:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/builder.ts"
+  },
+  {
+    "body_end": 46813,
+    "body_start": 45948,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:990:43: error TS2379: Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "resolveTypeReferenceDirectiveReferences",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:982:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 48187,
+    "body_start": 47213,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1019:43: error TS2379: Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "resolveModuleNameLiterals",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1011:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 61379,
+    "body_start": 59217,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1282:21: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1297:17: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createDirectoryWatcherForPackageDir",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1254:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 62471,
+    "body_start": 62024,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1332:58: error TS2375: Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1332:58: error TS2379: Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createOrAddRefToDirectoryWatchOfFailedLookups",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1325:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 66184,
+    "body_start": 64607,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "stopWatchFailedLookupLocationOfResolution",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1379:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 77623,
+    "body_start": 77098,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1616:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1618:39: error TS18048: 'dirPath' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1619:46: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1619:74: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1619:99: error TS18048: 'dirPath' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "isInvalidatedFailedLookup",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:579:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts:1614:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/resolutionCache.ts"
+  },
+  {
+    "body_end": 30255,
+    "body_start": 28773,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:568:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "close",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:420:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:420:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:562:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts"
+  },
+  {
+    "body_end": 33908,
+    "body_start": 30574,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:661:9: error TS2412: Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:662:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "synchronizeProgram",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:420:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:420:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts:613:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/watchPublic.ts"
+  },
+  {
+    "body_end": 46867,
+    "body_start": 44722,
+    "checker_diagnostics": [
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:1064:76: error TS18048: 'data' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:1065:62: error TS18048: 'data' is possibly 'undefined'.",
+      "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:1066:42: error TS18048: 'data' is possibly 'undefined'."
+    ],
+    "depth": 1,
+    "kind": "KindFunctionDeclaration",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "name": "createProgram",
+    "parent": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:932:1",
+    "status": "split_checker_body",
+    "top": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:932:1",
+    "where": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts:1022:5",
+    "file": "/workspace/stage3-scoreboard-tmp/main-adapted/src/compiler/tsbuildPublic.ts"
+  }
+]

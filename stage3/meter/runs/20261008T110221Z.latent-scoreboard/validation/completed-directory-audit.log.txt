@@ -1,0 +1,9 @@
+area-compiler total mutant caught: totals
+area-compiler owner mutant caught: owner disposition
+area-compiler {'NotYet': 14520, 'Refused': 11186, 'panic': 21, 'error': 2, 'SkippedDependency': 4, 'Boundary': 21142} directory-only PASS
+method-values total mutant caught: totals
+method-values owner mutant caught: owner disposition
+method-values {'NotYet': 14522, 'Refused': 10965, 'panic': 21, 'error': 2, 'SkippedDependency': 4, 'Boundary': 21139} directory-only PASS
+conditions total mutant caught: totals
+conditions owner mutant caught: owner disposition
+conditions {'NotYet': 13934, 'Refused': 9457, 'panic': 20, 'error': 2, 'SkippedDependency': 4, 'Boundary': 20628} directory-only PASS

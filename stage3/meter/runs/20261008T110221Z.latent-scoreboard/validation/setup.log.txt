@@ -1,0 +1,14 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.067s)
+setup: node ready (0.069s)
+fatal: destination path '/workspace/stage3-latent-scoreboard/cohere' already exists and is not an empty directory.
+fatal: clone of 'https://github.com/system-inc/cohere.git' into submodule path '/workspace/stage3-latent-scoreboard/cohere' failed
+Failed to clone 'cohere'. Retry scheduled
+fatal: destination path '/workspace/stage3-latent-scoreboard/cohere' already exists and is not an empty directory.
+fatal: clone of 'https://github.com/system-inc/cohere.git' into submodule path '/workspace/stage3-latent-scoreboard/cohere' failed
+Failed to clone 'cohere' a second time, aborting
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.016s
+setup: markdown dependencies ready (0.184s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.752s)

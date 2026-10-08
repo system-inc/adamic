@@ -1,0 +1,8 @@
+function consume(value: string | number, accept: (value: string | number) => value is string): boolean { return accept(value); }
+let mutable = (value: string | number): value is string => typeof value === "string";
+function rejectedFirst(): boolean { return consume("x", mutable); }
+function rejectedSecond(): boolean { return consume("y", mutable); }
+mutable = (value: string | number): value is string => typeof value === "string";
+const stable = (value: string | number): value is string => typeof value === "string";
+function acceptedFirst(): boolean { return consume("x", stable); }
+function acceptedSecond(): boolean { return consume("y", stable); }

@@ -1,0 +1,8 @@
+directory statecopy is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using:
+	go work use ../../..
+Traceback (most recent call last):
+  File "/workspace/stage3-latent-scoreboard/stage3/census/latent/make_overlay.py", line 27, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/stage3-latent-scoreboard/stage3/census/latent/statecopy', '/workspace/stage3-scoreboard-tmp/area-compiler-tree', '/workspace/stage3-scoreboard-tmp/area-compiler-overlay/internal_lower_lower.go', '/workspace/stage3-scoreboard-tmp/area-compiler-overlay/internal_lower_latent_state.go']' returned non-zero exit status 1.

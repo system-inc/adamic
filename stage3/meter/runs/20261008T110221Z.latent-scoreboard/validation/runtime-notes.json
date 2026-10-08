@@ -1,0 +1,12 @@
+{
+  "main_completed_attempt_GOMEMLIMIT": "2GiB",
+  "other_initial_attempts_GOMEMLIMIT": "unset",
+  "parallel_censuses": 5,
+  "cgroup_memory_bytes": 17179869184,
+  "nproc": 5,
+  "cpu_quota": 4,
+  "partial_attempt": "../failed-attempts/main-unbounded-memory",
+  "profiles": "Separate 20-second diagnostic-only processes; no profile results are included in census counts",
+  "front_3_observed_hotspot": "predicateArguments.func2 repeatedly scans the whole program for identifier assignment targets; 82.55 percent cumulative CPU in checker-only sample",
+  "measurement_overlay": "No performance rewrite was applied to the measured compiler"
+}

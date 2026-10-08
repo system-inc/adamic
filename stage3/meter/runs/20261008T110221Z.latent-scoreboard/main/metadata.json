@@ -1,0 +1,33 @@
+{
+  "name": "main",
+  "ref": "origin/main",
+  "sha": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "adapted": "/workspace/stage3-scoreboard-tmp/main-adapted",
+  "overlay_commit": "93f7f8e0862b6460aaee0ac100bdec9c5bf435fb",
+  "state_shape_guards_commit": "9d534d3a31814f1a192a528e701f6c2ea7c910bc",
+  "mode": "per-ref",
+  "started": "2026-10-08T11:56:44.050422+00:00",
+  "commands": [],
+  "runtime_environment": {
+    "GOMAXPROCS": "2",
+    "GOMEMLIMIT": "2GiB",
+    "GOFLAGS": "-p=1",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  },
+  "runtime_environment_note": "Recorded from the original launch settings; null means unset. The runner default was added after these processes started.",
+  "complete": false,
+  "stop": {
+    "name": "main",
+    "ref": "origin/main",
+    "sha": "efe9f4042049234e5a52639fe77b47c311fd530c",
+    "complete": false,
+    "status": "stopped by user: speculative census supersedes scoreboard",
+    "completed_compiler_file_records": 60,
+    "malformed_partial_lines": 0,
+    "compiler_scope_complete": false,
+    "tsc_scope_started": false,
+    "included_in_tables": false,
+    "stopped": "2026-10-08T15:43:04.046793+00:00"
+  }
+}

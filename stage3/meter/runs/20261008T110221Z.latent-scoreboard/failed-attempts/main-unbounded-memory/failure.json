@@ -1,0 +1,8 @@
+{
+  "exit": -9,
+  "complete": false,
+  "scope": "compiler",
+  "reason": "cgroup OOM killed main census",
+  "evidence": "memory.events oom=1 oom_kill=1",
+  "included_in_tables": false
+}

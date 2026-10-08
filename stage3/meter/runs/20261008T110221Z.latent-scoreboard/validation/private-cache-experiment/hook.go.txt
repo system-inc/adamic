@@ -1,0 +1,32 @@
+package lower
+
+import (
+ "os"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/load"
+)
+
+type latentPredicateWriteKey struct {
+ program *load.Program
+ checker *checker.Checker
+ symbol *ast.Symbol
+}
+
+// Only immutable source-tree assignment queries are cached. Lowering state,
+// signatures, predicate proofs and diagnostics are never cached here.
+var latentPredicateWriteQueries = map[latentPredicateWriteKey]bool{}
+
+func (l *lowering) latentPredicateWriteQuery(symbol *ast.Symbol, original func() bool) bool {
+ key := latentPredicateWriteKey{l.program, l.checker, symbol}
+ if value, exists := latentPredicateWriteQueries[key]; exists {
+  if os.Getenv("LATENT_MUTANT_PREDICATE_WRITE_CACHE") == "1" { return false }
+  if os.Getenv("LATENT_VERIFY_PREDICATE_WRITE_CACHE") == "1" && value != original() {
+   panic("predicateArguments: immutable assignment query cache disagreement")
+  }
+  return value
+ }
+ value := original()
+ latentPredicateWriteQueries[key] = value
+ return value
+}
