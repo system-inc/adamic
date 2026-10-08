@@ -325,7 +325,8 @@ var strictAloneTypedCases = map[string]bool{
 // changes it on purpose; a drop means the capture lost programs.
 // no-array-delete adds 44 captured programs, no-throw-literal 47 and verify-optional-parity 21 (the two
 // plain-harness guards are listed above).
-const capturedTypedCases = 373
+// @typescript-eslint/prefer-reduce-type-parameter adds 42 captured RunTypedFiles cases.
+const capturedTypedCases = 415
 
 // typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
 // when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
