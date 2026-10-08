@@ -29,6 +29,8 @@ mkdir -p "${state}"
 git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
+# Release only this watcher's scheduling guard on an ordinary shutdown.
+trap '[ "${slotTableOwned:-}" = yes ] && rmdir "${state}/slot-table.lock" 2>/dev/null || true' EXIT
 
 . "${here}/cloud/fast-gate-classify.sh"
 
@@ -154,6 +156,8 @@ while true; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
     read -r branch sha class box original testedHead gateLog < "${file}"
+    # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
+    if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi
     entry=$(cat "${file}")
     # A void gate goes back to the queue as the class it was queued with, not the slot it borrowed.
     class=${original:-${class}}
@@ -205,6 +209,10 @@ while true; do
       (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
+  # Shared with the dispatcher: checking free slots and recording a PID is one transaction.
+  # If a merge is claiming a slot, leave scheduling to the next poll.
+  if mkdir "${state}/slot-table.lock" 2>/dev/null; then
+  slotTableOwned=yes
   # A deploy barrier persists until this tools version gets a real main verdict.
   # A running probe is never duplicated, including across watcher restarts.
   # An old watcher's result cannot satisfy this startup's deploy barrier.
@@ -282,6 +290,9 @@ while true; do
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}$([ "${slot}" = "${class}" ] || echo " in an ${slot} slot") on ${box}, waited $(( now - queued )) s, log ${log})"
     (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
   done
+  rmdir "${state}/slot-table.lock"
+  slotTableOwned=""
+  fi
   # A durable queue survives restarts. The dispatcher and area-merge's own locks serialize merges;
   # a locked area stays queued, and removing the switch prevents the next attempt.
   if [ -f "${state}/auto-area-merge" ]; then

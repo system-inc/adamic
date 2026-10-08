@@ -5,6 +5,8 @@ No test sends real worker/Circle messages or pushes an area.
 """
 import importlib.util
 import json
+import os
+import shlex
 from pathlib import Path
 import subprocess
 import sqlite3
@@ -72,9 +74,9 @@ class Wiring(unittest.TestCase):
 
     def test_dry_run_passes_no_push_and_never_notifies(self):
         result = subprocess.CompletedProcess([], 3, 'conflict merging branch:\ninternal/foo.go\n')
-        with patch.object(auto, 'run', return_value=result) as run, patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
+        with patch.object(auto, 'remote_merge', return_value=result) as remote, patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
             self.assertEqual(auto.attempt(self.root, 'codex/host-new', 'a' * 40, True), 'conflict')
-            self.assertIn('--no-push', run.call_args.args)
+            self.assertTrue(remote.call_args.args[4])
             notify.assert_not_called()
         row = (self.state / 'dry-run' / auto.RECORD_FILE).read_text()
         self.assertIn(',platforms,conflict,', row)
@@ -87,7 +89,7 @@ class Wiring(unittest.TestCase):
 
     def test_red_returns_details_to_worker_and_journals_result(self):
         result = subprocess.CompletedProcess([], 1, 'new failures from merging branch:\n  package TestFailure\n')
-        with patch.object(auto, 'run', return_value=result), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
+        with patch.object(auto, 'remote_merge', return_value=result), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
             self.assertEqual(auto.attempt(self.root, 'codex/host-new', 'a' * 40, False), 'red')
             self.assertIn('TestFailure', notify.call_args.args[4])
         rows = list((self.state / 'area-records-outbox').glob('*.json'))
@@ -148,8 +150,9 @@ class Wiring(unittest.TestCase):
             self.assertEqual(send.call_count, 3)
             self.assertEqual({call.args[3] for call in send.call_args_list}, {'system_adamic_integration', 'system_adamic_compiler', 'system_adamic_typescript'})
             for call in send.call_args_list:
-                self.assertIn(branch, call.args[-1])
-                self.assertIn(sha, call.args[-1])
+                self.assertIn(branch, call.args[4])
+                self.assertIn(sha, call.args[4])
+                self.assertEqual(call.args[-2:], ('--from', 'system_adamic_developer_tools'))
         queue = self.state / 'area-queue'
         self.assertEqual(list(queue.glob('*.done')), [])
         self.assertEqual(list(queue.glob('*.json')), [])
@@ -196,7 +199,7 @@ class Wiring(unittest.TestCase):
                  (0, 'refused: local changes\n', 'held'),
                  (3, 'refused: origin moved\nconflict text\n', 'held')]
         for code, output, expected in cases:
-            with patch.object(auto, 'run', return_value=subprocess.CompletedProcess([], code, output)), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify, patch.object(auto, 'hold_job') as hold:
+            with patch.object(auto, 'remote_merge', return_value=subprocess.CompletedProcess([], code, output)), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify, patch.object(auto, 'hold_job') as hold:
                 self.assertEqual(auto.attempt(self.root, 'codex/host-new', 'a' * 40, False), expected)
                 hold.assert_called_once()
                 notify.assert_not_called()
@@ -206,15 +209,11 @@ class Wiring(unittest.TestCase):
         branch, sha = 'codex/host-new', 'a' * 40
         with patch('sys.argv', ['auto', '--enqueue', branch, sha]):
             auto.main()
-        def run(*args, **kwargs):
-            if args[0] == 'bash':
-                return subprocess.CompletedProcess(args, 1, 'refused: worktree has local changes\n')
-            return subprocess.CompletedProcess(args, 0, 'sent')
-        with patch.object(auto, 'checkout', return_value=self.root), patch.object(auto, 'publish_records'), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'run', side_effect=run) as calls, patch.object(auto, 'notify') as notify:
+        with patch.object(auto, 'checkout', return_value=self.root), patch.object(auto, 'publish_records'), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'remote_merge', return_value=subprocess.CompletedProcess([], 1, 'refused: worktree has local changes\n')) as remote, patch.object(auto, 'run', return_value=subprocess.CompletedProcess([], 0, 'sent')), patch.object(auto, 'notify') as notify:
             for _ in range(3):
                 with patch('sys.argv', ['auto', '--drain']):
                     auto.main()
-            self.assertEqual(sum(call.args[0] == 'bash' for call in calls.call_args_list), 1)
+            self.assertEqual(remote.call_count, 1)
             notify.assert_not_called()
         self.assertEqual(len(list((self.state / 'area-queue').glob('*.held'))), 1)
         self.assertEqual(list((self.state / 'area-queue').glob('*.done')), [])
@@ -243,11 +242,12 @@ class Wiring(unittest.TestCase):
     def test_reaping_enqueues_only_real_matching_green_worker_with_switch(self):
         watcher = Path(__file__).with_name('fast-gate-watch.sh').read_text()
         void_function = watcher[watcher.index('voidCause() {'):watcher.index('\ntips() {')]
-        loop = watcher[watcher.index('  for file in "${state}"/running/*; do'):watcher.index('  while [ -s "${state}/queue" ]; do')]
+        loop = watcher[watcher.index('  for file in "${state}"/running/*; do'):watcher.index('  # Shared with the dispatcher:')]
         sha = 'a' * 40
         cases = [('codex/worker', f'green: {sha} passed\n', True, True),
                  ('codex/worker', f'green: {sha} passed\n', False, False),
                  ('area/compiler', f'green: {sha} passed\n', True, False),
+                 ('area-merge/compiler', 'no gate verdict\n', True, False),
                  ('codex/worker', 'Connection reset by peer\n', True, False),
                  ('codex/worker', f'red: {sha} failed\ncreating work dir\n', True, False),
                  ('codex/worker', f'red: {sha} failed\n', True, False),
@@ -267,7 +267,10 @@ class Wiring(unittest.TestCase):
             result = subprocess.run(['bash', '-c', script, 'reap-test', str(directory)], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual((directory / 'enqueued').exists(), expected, (branch, verdict, switch))
-            if 'creating work dir' in verdict or not verdict.startswith(('green:', 'red:')):
+            if branch.startswith('area-merge/'):
+                self.assertFalse((directory / 'queue').exists())
+                self.assertFalse((directory / 'void-tries').exists())
+            elif 'creating work dir' in verdict or not verdict.startswith(('green:', 'red:')):
                 self.assertIn(sha, (directory / 'queue').read_text())
 
 
@@ -283,7 +286,7 @@ class Wiring(unittest.TestCase):
         self.assertIn('unexpected', entry['reason'])
 
     def test_successful_attempt_notifies_worker(self):
-        with patch.object(auto, 'run', return_value=subprocess.CompletedProcess([], 0, 'merged: area/platforms takes branch\n')), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
+        with patch.object(auto, 'remote_merge', return_value=subprocess.CompletedProcess([], 0, 'merged: area/platforms takes branch\n')), patch.object(auto, 'git', return_value='b' * 40 + '\tref'), patch.object(auto, 'notify') as notify:
             self.assertEqual(auto.attempt(self.root, 'codex/host-new', 'a' * 40, False), 'merged')
             self.assertEqual(notify.call_args.args[3], 'merged')
 
@@ -294,6 +297,198 @@ class Wiring(unittest.TestCase):
         area, why = auto.route('codex/host-new', self.integration)
         self.assertEqual(area, 'hold')
         self.assertIn('routing unavailable', why)
+
+
+    def stub_transport(self):
+        binaries = self.root / 'bin'
+        binaries.mkdir()
+        ssh = binaries / 'ssh'
+        ssh.write_text('#!' + sys.executable + '\n' + """
+import json, os, pathlib, shlex, sys
+state = pathlib.Path(os.environ['AUTO_MERGE_TEST_STATE'])
+arguments = shlex.split(sys.argv[-1])
+entry = state / 'running' / str(os.getpid())
+expected = f'area-merge/{arguments[0]} {arguments[2]} B threadripper B\\n'
+assert entry.read_text() == expected, entry
+assert not (state / 'slot-table.lock').exists()
+script = sys.stdin.read()
+(state / 'ssh-observed.json').write_text(json.dumps({'argv': sys.argv[1:], 'arguments': arguments, 'script': script, 'entry': str(entry)}))
+print('new failures from merging ' + arguments[1] + ':')
+print('  package TestFailure')
+print('go vet failed: /tmp/area-log/vet.log')
+print('logs in /tmp/area-log')
+sys.exit(int(os.environ.get('AUTO_MERGE_TEST_EXIT', '1')))
+""")
+        ssh.chmod(0o755)
+        scp = binaries / 'scp'
+        scp.write_text('#!' + sys.executable + '\n' + """
+import json, os, pathlib, sys
+state = pathlib.Path(os.environ['AUTO_MERGE_TEST_STATE'])
+assert not list((state / 'running').glob('*')), 'claim must be removed before artifact copy'
+(state / 'scp-observed.json').write_text(json.dumps(sys.argv[1:]))
+token = sys.argv[-2].rsplit('/', 1)[1]
+bundle = pathlib.Path(sys.argv[-1]) / token
+(bundle / 'logs/0').mkdir(parents=True)
+(bundle / 'logs/0/vet.log').write_text('remote vet diagnostic')
+(bundle / 'logs.json').write_text(json.dumps({'/tmp/area-log': 'logs/0'}))
+(bundle / 'output.log').write_text('remote merge output')
+""")
+        scp.chmod(0o755)
+        (self.state / 'slots').write_text('threadripper B\nthreadripper S\nworkshop B\n')
+        (self.state / 'running').mkdir()
+        return {'PATH': str(binaries) + os.pathsep + os.environ['PATH'], 'AUTO_MERGE_TEST_STATE': str(self.state)}
+
+    def test_remote_ssh_claim_copy_and_cleanup_without_real_box(self):
+        environment = self.stub_transport()
+        with patch.dict('os.environ', environment), patch.object(auto, 'git', return_value='c' * 40):
+            result = auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, True)
+        observed = json.loads((self.state / 'ssh-observed.json').read_text())
+        self.assertEqual(observed['argv'][:4], ['-l', 'ahra', 'cloud', 'bash'])
+        self.assertEqual(observed['arguments'][:4], ['platforms', 'codex/host-new', 'a' * 40, 'c' * 40])
+        self.assertIn('--no-push', observed['arguments'])
+        self.assertIn('source ~/adamic-tools/env.sh', observed['script'])
+        self.assertIn('export PATH="${ADAMIC_TYPESCRIPT_SOURCE}/bin:${PATH}"', observed['script'])
+        self.assertIn('taskset -c 0-23 bash ~/area-merge/integration/cloud/integration/area-merge.sh', observed['script'])
+        self.assertEqual(result.returncode, 1)
+        self.assertFalse(Path(observed['entry']).exists())
+        self.assertFalse((self.state / 'slot-table.lock').exists())
+        self.assertNotIn('/tmp/area-log', result.stdout)
+        self.assertIn(str(self.state / 'dry-run'), result.stdout)
+        self.assertEqual(len(list((self.state / 'dry-run').glob('*/logs/0/vet.log'))), 1)
+        copied = json.loads((self.state / 'scp-observed.json').read_text())
+        self.assertIn('User=ahra', copied)
+
+    def test_remote_waits_for_cloud_big_slot_then_claims(self):
+        environment = self.stub_transport()
+        busy = self.state / 'running/999999998'
+        busy.write_text('area/runtime oldsha B threadripper B\n')
+        def release(_):
+            self.assertFalse((self.state / 'ssh-observed.json').exists())
+            busy.unlink()
+        with patch.dict('os.environ', environment), patch.object(auto, 'git', return_value='c' * 40), patch.object(auto.time, 'sleep', side_effect=release) as sleep:
+            auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, True)
+        sleep.assert_called_once()
+
+    def test_cloud_slot_arithmetic_matches_box_and_assigned_class(self):
+        self.stub_transport()
+        running = self.state / 'running/999999998'
+        for text, expected in [('gate sha B workshop B', True),
+                               ('gate sha S threadripper B', True),
+                               ('gate sha B threadripper B', False),
+                               ('gate sha B', False)]:
+            running.write_text(text)
+            self.assertEqual(auto.cloud_area_free(), expected, text)
+
+    def test_switch_off_while_waiting_does_not_start_ssh(self):
+        self.stub_transport()
+        with patch.object(auto, 'git', return_value='c' * 40), patch.object(auto.subprocess, 'Popen') as ssh:
+            with self.assertRaises(auto.SlotWaitCancelled):
+                auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, False)
+            ssh.assert_not_called()
+
+    def test_ssh_failure_removes_slot_claim(self):
+        environment = self.stub_transport()
+        environment['AUTO_MERGE_TEST_EXIT'] = '255'
+        with patch.dict('os.environ', environment), patch.object(auto, 'git', return_value='c' * 40):
+            result = auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, True)
+        self.assertEqual(result.returncode, 255)
+        self.assertEqual(list((self.state / 'running').glob('*')), [])
+
+    def test_slot_guard_blocks_ssh_until_watcher_allocation_finishes(self):
+        environment = self.stub_transport()
+        guard = self.state / 'slot-table.lock'
+        guard.mkdir()
+        def release(_):
+            self.assertFalse((self.state / 'ssh-observed.json').exists())
+            guard.rmdir()
+        with patch.dict('os.environ', environment), patch.object(auto, 'git', return_value='c' * 40), patch.object(auto.time, 'sleep', side_effect=release) as sleep:
+            auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, True)
+        sleep.assert_called_once()
+
+    def test_switch_removal_cancels_busy_slot_wait(self):
+        self.stub_transport()
+        switch = self.state / 'auto-area-merge'
+        switch.touch()
+        (self.state / 'running/999999998').write_text('gate sha B threadripper B\n')
+        with patch.object(auto, 'git', return_value='c' * 40), patch.object(auto.time, 'sleep', side_effect=lambda _: switch.unlink()), patch.object(auto.subprocess, 'Popen') as ssh:
+            with self.assertRaises(auto.SlotWaitCancelled):
+                auto.remote_merge(self.root, 'platforms', 'codex/host-new', 'a' * 40, False)
+            ssh.assert_not_called()
+        self.assertFalse((self.state / 'slot-table.lock').exists())
+
+
+    def test_remote_wrapper_environment_affinity_and_transaction_logs(self):
+        home = self.root / 'remote-home'
+        tools = home / 'adamic-tools'
+        (tools / 'bin').mkdir(parents=True)
+        ts = home / 'typescript'
+        (ts / 'bin').mkdir(parents=True)
+        temporary = home / 'temp'
+        temporary.mkdir()
+        (tools / 'env.sh').write_text(f'export ADAMIC_TYPESCRIPT_SOURCE={shlex.quote(str(ts))}\nexport TMPDIR={shlex.quote(str(temporary))}\n')
+        for directory in ('integration', 'tree'):
+            (home / 'area-merge' / directory / '.git').mkdir(parents=True)
+        integration = home / 'area-merge/integration/cloud/integration'
+        integration.mkdir(parents=True)
+        private = home / 'private'
+        private.mkdir()
+        (private / 'must-not-copy').write_text('unrelated file')
+        (integration / 'area-merge.sh').write_text('node -v\nlogs=$(mktemp -d)\necho "vet diagnostic" > "$logs/vet.log"\necho "not merged: logs in $logs"\necho "logs in ${HOME}/private"\nexit 1\n')
+        commands = {'id': 'echo ahra\n', 'git': 'exit 0\n', 'node': 'echo v24.19.0\n',
+                    'taskset': '[ "$1" = -c ] && [ "$2" = 0-23 ] || exit 9\nshift 2\nexec "$@"\n'}
+        for name, body in commands.items():
+            path = tools / 'bin' / name
+            path.write_text('#!/usr/bin/env bash\n' + body)
+            path.chmod(0o755)
+        with patch.dict('os.environ', {'HOME': str(home), 'PATH': str(tools / 'bin') + os.pathsep + os.environ['PATH']}):
+            result = subprocess.run(['bash', str(Path(__file__).with_name('auto-area-merge-remote.sh')), 'compiler', 'codex/compiler-fix', 'a' * 40, 'c' * 40, 'area-merge/out/test', '--no-push'], text=True, capture_output=True)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn('v24.19.0', result.stdout)
+        bundle = home / 'area-merge/out/test'
+        manifest = json.loads((bundle / 'logs.json').read_text())
+        self.assertEqual(len(manifest), 1)
+        self.assertTrue(next(iter(manifest)).startswith(str(temporary)))
+        self.assertNotIn(str(private), manifest)
+        self.assertEqual((bundle / next(iter(manifest.values())) / 'vet.log').read_text().strip(), 'vet diagnostic')
+
+    def test_watcher_cannot_schedule_into_claimed_cloud_area_slot(self):
+        watcher = Path(__file__).with_name('fast-gate-watch.sh').read_text()
+        start = watcher.index('  # Shared with the dispatcher:')
+        stop = watcher.index('  # A durable queue survives restarts.', start)
+        scheduling = watcher[start:stop]
+        (self.state / 'slots').write_text('threadripper B\n')
+        running = self.state / 'running'
+        running.mkdir()
+        (running / '999999999').write_text('area-merge/compiler ' + 'a' * 40 + ' B threadripper B\n')
+        queued = 'B 1 codex/compiler-fix ' + 'b' * 40 + '\n'
+        (self.state / 'queue').write_text(queued)
+        script = 'state=$1; here=$1\n' + scheduling
+        result = subprocess.run(['bash', '-c', script, 'schedule-test', str(self.state)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((self.state / 'queue').read_text(), queued)
+        self.assertEqual(len(list(running.glob('*'))), 1)
+        self.assertFalse((self.state / 'slot-table.lock').exists())
+
+    def test_hold_sender_is_passed_to_ahra_stub(self):
+        binaries = self.root / 'bin'
+        binaries.mkdir()
+        stub = binaries / 'ahra'
+        stub.write_text('#!' + sys.executable + '\n' + """
+import json, os, pathlib, sys
+assert sys.argv[1:4] == ['os', 'send', 'system_adamic_integration']
+assert sys.argv[-2:] == ['--from', 'system_adamic_developer_tools']
+pathlib.Path(os.environ['AUTO_MERGE_TEST_STATE'], 'hold-delivered.json').write_text(json.dumps(sys.argv[1:]))
+""")
+        stub.chmod(0o755)
+        actual_run = auto.run
+        def from_test_directory(*args, **kwargs):
+            self.assertEqual(kwargs['cwd'], '/Users/kirkouimet/Projects/ahra')
+            kwargs['cwd'] = self.root
+            return actual_run(*args, **kwargs)
+        with patch.dict('os.environ', {'PATH': str(binaries) + os.pathsep + os.environ['PATH'], 'AUTO_MERGE_TEST_STATE': str(self.state)}), patch.object(auto, 'run', side_effect=from_test_directory):
+            auto.hold_job('codex/unknown', 'a' * 40, 'integration decides')
+        delivered = json.loads((self.state / 'hold-delivered.json').read_text())
+        self.assertIn('codex/unknown', delivered[3])
 
 
 @unittest.skipUnless(INTEGRATION, 'pass --integration to run integration-owned routing coverage against origin')

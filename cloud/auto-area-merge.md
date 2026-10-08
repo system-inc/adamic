@@ -15,6 +15,50 @@ integration script owns the actual local and origin area locks. A lock refusal r
 `locked` and retains the job for a later poll; it never drops it. Removing the switch leaves
 the queue intact. No conflict is resolved by the dispatcher.
 
+## Remote execution and the Cloud area slot
+
+Merges and merged-package tests run over `ssh -l ahra cloud`; the dispatcher never invokes
+`area-merge.sh` locally. Cloud's `ahra` user has the push credential. Its independent checkouts
+are `~/area-merge/integration` (trusted `cloud/merge-tree` tools, pinned to the commit used for
+routing on the Mac) and `~/area-merge/tree` (the repository), with area worktrees under
+`~/area-merge/worktrees`. The remote wrapper sources `~/adamic-tools/env.sh`, puts
+`~/adamic-tools/bin` first for the pinned node and adds `${ADAMIC_TYPESCRIPT_SOURCE}/bin` to PATH.
+It runs integration's unchanged merge script under `taskset -c 0-23`.
+
+The dispatcher waits until the watcher's slot table has a free `threadripper B` slot, counting
+running records by their assigned slot (third column) and box (fourth; legacy entries default
+to threadripper), exactly as the watcher does. `threadripper` is Cloud's name in this table;
+`cloud` is the SSH alias for access as ahra. Workshop/Server/Home cannot substitute for it.
+
+The watcher and dispatcher share a short directory guard, `<state>/slot-table.lock`, around
+slot calculation and recording a process. SSH receives no script on stdin until its running
+record exists: `<state>/running/<ssh-pid>` contains `area-merge/<area> <sha> B threadripper B`.
+The entry remains while SSH runs and is removed in cleanup, before copying artifacts. The
+reaper explicitly skips dead `area-merge/*` entries, so a dispatch failure never becomes a
+void gate or gets inserted into the gate queue. Ordinary watcher shutdown releases its own
+guard. An uncatchable death during allocation can leave the directory guard; integration
+must verify the allocators stopped before removing it. Removing the switch cancels a pending
+slot wait and leaves the queued job intact.
+
+The remote wrapper retains stdout and copies transaction log directories into
+`~/area-merge/out/<run-id>`, with a path manifest. The Mac copies this bundle into
+`<state>/area-logs/<run-id>` (or `<state>/dry-run/<run-id>`), rewrites diagnostic paths to the
+local copies for worker notices, and retains SSH output even if SCP fails. Only mktemp log
+directories are bundled; arbitrary paths mentioned in test diagnostics are not copied.
+
+Every dispatcher `ahra os send`, including named Circle recipients, passes
+`--from system_adamic_developer_tools`. These sends still run from
+`/Users/kirkouimet/Projects/ahra` and retain once-per-branch/recipient behavior.
+
+Remote wiring review: based on `origin/devtools/fast-gate`
+`a9749bc378266bb358928f315756012b77c5ac4f`. Twenty-nine dispatcher tests passed (the optional
+integration-origin test was skipped); all nineteen `cloud/fast-gate/run_test.py` tests passed.
+Shell syntax and whitespace checks passed. Transport tests use executable local SSH/SCP/Ahra
+stubs and a local fake remote environment, including slot claim/cleanup, occupied-slot waits,
+shared allocation guard, actual watcher allocation/reaping, remote affinity/environment/log
+bundles, and sender identity. No real boxes were contacted and the switch was not enabled.
+The first live remote merge is reserved for integration's review.
+
 ## Routing and holds
 
 Integration owns routing. The dispatcher fetches `origin/cloud/merge-tree` into its stable
@@ -63,7 +107,7 @@ from `/Users/kirkouimet/Projects/ahra`. No session or a send failure is logged l
 Refusals send no instruction to the worker to fix its branch. `ADAMIC_AI_DATABASE` has the gate's
 same default. Dry runs send no worker or Circle messages.
 
-## Follow-up validation
+## Previous routing follow-up validation
 
 Merged gate tools `4af2c103d4e5e0f5de3a969fed5d4a3a7ea4276a` as a true merge. Enqueueing is
 inside the reaping loop after `voidCause()` accepts the verdict, with exact SHA and switch
@@ -100,7 +144,7 @@ fleet fallback therefore has no local evidence, which may account for these fail
 owns any metadata correction; its files were not edited. The switch remains absent and no area
 was pushed during review. Live worker/Circle delivery and Mac execution are not verified.
 
-## Review dry run
+## Original local dry run (historical; current dry runs use SSH)
 
 ```sh
 ADAMIC_FAST_GATE_WATCH_STATE=/path/to/review-state \
