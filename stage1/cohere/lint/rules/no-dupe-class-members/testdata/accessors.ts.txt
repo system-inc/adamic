@@ -1,0 +1,7 @@
+class Accessors {
+    get x() {} set x(value) {} set x(value) {}
+    set y(value) {} get y() {} get y() {}
+    get z() {} get z() {} set z(value) {} z() {}
+    run(x: string): string; run(x: number): number; run(x: unknown): unknown { return x; } run() {}
+}
+abstract class Abstract { abstract missing(): void; abstract missing(): void; repeated = 1; repeated = 2; }

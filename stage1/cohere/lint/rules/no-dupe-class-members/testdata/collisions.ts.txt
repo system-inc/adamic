@@ -1,0 +1,9 @@
+class Keys {
+    static foo() {} foo() {} foo() {}
+    #secret() {} secret() {} #secret() {}
+    10() {} 1e1() {} ['10']() {}
+    ['a|true|false']() {} ['a|true|false']() {}
+    [((`template`))]() {} template() {}
+    constructor() {} constructor() {}
+}
+const expression = class { method() {} method() {} };

@@ -7,6 +7,8 @@ The owning claim is [ecmascript-classmembers.md](../claims/ecmascript-classmembe
 - [MemberName](member_name.a): accepted node kinds and raw Name() identity; -1 means nil.
 - [IsOverloadSignature](is_overload_signature.a): methods/accessors with no body, including abstract ones.
 - [IsAccessorKind](is_accessor_kind.a): getter or setter kind only.
+- [KeyOf](key_of.a): shared NameTagged plus static/private parser facts.
+- [ForEachDuplicate](for_each_duplicate.a): first-seen member collision and accessor pairing.
 
 Adapters pass immutable parser facts: the canonical kind name (without Go's
 `Kind` prefix), raw numeric name-node identity, and body presence. These helpers
@@ -23,16 +25,18 @@ pin, compares source Node, emitted JavaScript and ASan/UBSan native byte-for-byt
 and builds and runs one semantic mutant per helper on all three backends.
 The capture refuses upstream test failures and skips.
 
-## Stopped helpers and rule proof
+## Dependency and rule proof
 
-`KeyOf`: `cohere/internal/lint/ecmascript/classmembers/duplicates.go:128` calls
-`property.NameTagged(name, property.Static)`. The shared NameTagged port is absent
-from the lint area and origin/lint-helpers/property. This package is being landed
-by another worker tonight. No private name/tag implementation is supplied.
-`ForEachDuplicate`, at line 61, depends on KeyOf and therefore stops with it.
-The two consuming rules (`no-dupe-class-members` and
-`@typescript-eslint/no-dupe-class-members`) both require that duplicate walker,
-so neither can be proved or credited as unblocked by this partial package.
-This is a shared dependency stop, not a language gap. There is no compiler
-refusal to report. Resume those two helpers and the rule proof when NameTagged
-lands. The three independent helpers have complete upstream-call coverage.
+[NameTagged](../property/name_tagged.a) is now provided by the shared property
+package, on branch lint-helpers/property-name-tagged at
+`ecfd7ffc1e4d37c8b1933c8b339913e2cd3c9a59`. It is imported rather than copied.
+Both core and TypeScript no-dupe-class-members consumers are covered by the
+live capture. The [core rule](../../rules/no-dupe-class-members/rule.a) proves
+this package against 37 unique captured upstream cases and two witnesses.
+The TypeScript extension is now helper-ready; its earlier claim remains with
+its owner. No shared dependency or language gap remains for this package.
+
+The duplicate walker deliberately retains the first member kind. Consequently,
+getter/setter/setter and setter/getter/getter do not report a duplicate in Go;
+the port preserves that behavior. Numeric and string keys remain distinct,
+and the Go tagged name is preserved in diagnostic text.

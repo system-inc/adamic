@@ -1,0 +1,49 @@
+{
+  "started": 1791464851.5236142,
+  "nproc": 5,
+  "load_before": [
+    0.9775390625,
+    0.59521484375,
+    1.51708984375
+  ],
+  "profile": "/tmp/classmembers-helpers-profile.HOiA2U",
+  "exit": 0,
+  "wall_seconds": 204.87564635276794,
+  "load_after": [
+    2.9423828125,
+    2.2080078125,
+    2.01904296875
+  ],
+  "counts": {
+    "pass": 50,
+    "fail": 0,
+    "skip": 0
+  },
+  "packages": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/property",
+      "elapsed_seconds": 22.248,
+      "result": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/classmembers",
+      "elapsed_seconds": 23.069,
+      "result": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/module",
+      "elapsed_seconds": 23.554,
+      "result": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+      "elapsed_seconds": 145.023,
+      "result": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "elapsed_seconds": 200.642,
+      "result": "pass"
+    }
+  ]
+}

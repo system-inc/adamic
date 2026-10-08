@@ -1,26 +1,36 @@
 === RUN   TestConsumerCallsAgree
-    helpers_test.go:106: fresh Go capture: {"core": {"passing_test_events": 40, "calls": {"MemberName": 81, "IsOverloadSignature": 81, "IsAccessorKind": 23}}, "typescript": {"passing_test_events": 35, "calls": {"MemberName": 63, "IsOverloadSignature": 63, "IsAccessorKind": 20}}}
-    helpers_test.go:133: Node source identical to Go: 331 calls, 1383 bytes
-    helpers_test.go:133: sanitized native identical to Go: 331 calls, 1383 bytes
-    helpers_test.go:133: emitted JavaScript identical to Go: 331 calls, 1383 bytes
-    helpers_test.go:135: per-helper calls: map[IsAccessorKind:43 IsOverloadSignature:144 MemberName:144]
---- PASS: TestConsumerCallsAgree (35.82s)
-=== RUN   TestIndependentHelperMutants
-=== RUN   TestIndependentHelperMutants/member_name.a
-    helpers_test.go:187: member_name.a caught on Node source: compiled and ran, output differs from Go
-    helpers_test.go:187: member_name.a caught on sanitized native: compiled and ran, output differs from Go
-    helpers_test.go:187: member_name.a caught on emitted JavaScript: compiled and ran, output differs from Go
-=== RUN   TestIndependentHelperMutants/is_overload_signature.a
-    helpers_test.go:187: is_overload_signature.a caught on Node source: compiled and ran, output differs from Go
-    helpers_test.go:187: is_overload_signature.a caught on sanitized native: compiled and ran, output differs from Go
-    helpers_test.go:187: is_overload_signature.a caught on emitted JavaScript: compiled and ran, output differs from Go
-=== RUN   TestIndependentHelperMutants/is_accessor_kind.a
-    helpers_test.go:187: is_accessor_kind.a caught on Node source: compiled and ran, output differs from Go
-    helpers_test.go:187: is_accessor_kind.a caught on sanitized native: compiled and ran, output differs from Go
-    helpers_test.go:187: is_accessor_kind.a caught on emitted JavaScript: compiled and ran, output differs from Go
---- PASS: TestIndependentHelperMutants (4.48s)
-    --- PASS: TestIndependentHelperMutants/member_name.a (1.04s)
-    --- PASS: TestIndependentHelperMutants/is_overload_signature.a (1.50s)
-    --- PASS: TestIndependentHelperMutants/is_accessor_kind.a (1.94s)
+    helpers_test.go:106: fresh Go capture: {"core": {"passing_test_events": 40, "calls": {"MemberName": 81, "IsOverloadSignature": 81, "KeyOf": 75, "IsAccessorKind": 23, "ForEachDuplicate": 38}}, "typescript": {"passing_test_events": 35, "calls": {"MemberName": 63, "IsOverloadSignature": 63, "KeyOf": 55, "IsAccessorKind": 20, "ForEachDuplicate": 33}}}
+    helpers_test.go:136: Node source identical to Go: 532 calls, 5817 bytes
+    helpers_test.go:136: sanitized native identical to Go: 532 calls, 5817 bytes
+    helpers_test.go:136: emitted JavaScript identical to Go: 532 calls, 5817 bytes
+    helpers_test.go:138: per-helper calls: map[ForEachDuplicate:71 IsAccessorKind:43 IsOverloadSignature:144 KeyOf:130 MemberName:144]
+--- PASS: TestConsumerCallsAgree (30.13s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/member_name.a
+    helpers_test.go:201: member_name.a caught on Node source: compiled and ran, output differs from Go
+    helpers_test.go:201: member_name.a caught on sanitized native: compiled and ran, output differs from Go
+    helpers_test.go:201: member_name.a caught on emitted JavaScript: compiled and ran, output differs from Go
+=== RUN   TestHelperMutants/is_overload_signature.a
+    helpers_test.go:201: is_overload_signature.a caught on Node source: compiled and ran, output differs from Go
+    helpers_test.go:201: is_overload_signature.a caught on sanitized native: compiled and ran, output differs from Go
+    helpers_test.go:201: is_overload_signature.a caught on emitted JavaScript: compiled and ran, output differs from Go
+=== RUN   TestHelperMutants/is_accessor_kind.a
+    helpers_test.go:201: is_accessor_kind.a caught on Node source: compiled and ran, output differs from Go
+    helpers_test.go:201: is_accessor_kind.a caught on sanitized native: compiled and ran, output differs from Go
+    helpers_test.go:201: is_accessor_kind.a caught on emitted JavaScript: compiled and ran, output differs from Go
+=== RUN   TestHelperMutants/key_of.a
+    helpers_test.go:201: key_of.a caught on Node source: compiled and ran, output differs from Go
+    helpers_test.go:201: key_of.a caught on sanitized native: compiled and ran, output differs from Go
+    helpers_test.go:201: key_of.a caught on emitted JavaScript: compiled and ran, output differs from Go
+=== RUN   TestHelperMutants/for_each_duplicate.a
+    helpers_test.go:201: for_each_duplicate.a caught on Node source: compiled and ran, output differs from Go
+    helpers_test.go:201: for_each_duplicate.a caught on sanitized native: compiled and ran, output differs from Go
+    helpers_test.go:201: for_each_duplicate.a caught on emitted JavaScript: compiled and ran, output differs from Go
+--- PASS: TestHelperMutants (5.59s)
+    --- PASS: TestHelperMutants/member_name.a (1.06s)
+    --- PASS: TestHelperMutants/is_overload_signature.a (1.07s)
+    --- PASS: TestHelperMutants/is_accessor_kind.a (1.18s)
+    --- PASS: TestHelperMutants/key_of.a (1.19s)
+    --- PASS: TestHelperMutants/for_each_duplicate.a (1.08s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/classmembers	40.335s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/classmembers	35.726s

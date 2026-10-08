@@ -120,6 +120,9 @@ func TestConsumerCallsAgree(t *testing.T) {
 	for _, row := range rows {
 		counts[row.Symbol]++
 		encoded, err := json.Marshal(row.Result)
+		if text, ok := row.Result.(string); ok {
+			encoded = []byte(text)
+		}
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -134,7 +137,7 @@ func TestConsumerCallsAgree(t *testing.T) {
 	}
 	t.Logf("per-helper calls: %v", counts)
 }
-func TestIndependentHelperMutants(t *testing.T) {
+func TestHelperMutants(t *testing.T) {
 	data, err := os.ReadFile("testdata/consumer-calls.json")
 	if err != nil {
 		t.Fatal(err)
@@ -146,6 +149,9 @@ func TestIndependentHelperMutants(t *testing.T) {
 	var want strings.Builder
 	for _, row := range rows {
 		encoded, _ := json.Marshal(row.Result)
+		if text, ok := row.Result.(string); ok {
+			encoded = []byte(text)
+		}
 		want.Write(encoded)
 		want.WriteByte('\n')
 	}
@@ -154,6 +160,8 @@ func TestIndependentHelperMutants(t *testing.T) {
 		{"member_name.a", "case 'MethodDeclaration':", "case 'Constructor':"},
 		{"is_overload_signature.a", "return !hasBody;", "return hasBody;"},
 		{"is_accessor_kind.a", "kind === 'SetAccessor'", "kind === 'MethodDeclaration'"},
+		{"key_of.a", "isStatic: member.isStatic", "isStatic: false"},
+		{"for_each_duplicate.a", "member.kind !== previous", "member.kind === previous"},
 	}
 	for _, m := range mutations {
 		t.Run(m.file, func(t *testing.T) {
@@ -162,7 +170,7 @@ func TestIndependentHelperMutants(t *testing.T) {
 			if err := os.Mkdir(directory, 0755); err != nil {
 				t.Fatal(err)
 			}
-			for _, file := range []string{"main.a", "member_name.a", "is_overload_signature.a", "is_accessor_kind.a"} {
+			for _, file := range []string{"main.a", "member_name.a", "is_overload_signature.a", "is_accessor_kind.a", "member.a", "key_of.a", "for_each_duplicate.a"} {
 				contents, err := os.ReadFile(file)
 				if err != nil {
 					t.Fatal(err)
@@ -175,11 +183,17 @@ func TestIndependentHelperMutants(t *testing.T) {
 				}
 				write(t, filepath.Join(directory, file), contents)
 			}
-			options, err := os.ReadFile("../options_json.ts")
-			if err != nil {
-				t.Fatal(err)
+			for _, file := range []string{"options_json.ts", "slot02_ast.a", "property_name.a", "property/name_tagged.a"} {
+				data, err := os.ReadFile(filepath.Join("..", file))
+				if err != nil {
+					t.Fatal(err)
+				}
+				path := filepath.Join(root, file)
+				if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+					t.Fatal(err)
+				}
+				write(t, path, data)
 			}
-			write(t, filepath.Join(root, "options_json.ts"), options)
 			for _, side := range observations(t, directory, path) {
 				if bytes.Equal(side.output, []byte(want.String())) {
 					t.Fatalf("mutant survived on %s", side.name)

@@ -3,6 +3,10 @@ import { OptionsJson } from '../options_json.ts';
 import { MemberName } from './member_name.a';
 import { IsAccessorKind } from './is_accessor_kind.a';
 import { IsOverloadSignature } from './is_overload_signature.a';
+import type { HelperNode } from '../slot02_ast.a';
+import type { Member, Key } from './member.a';
+import { KeyOf } from './key_of.a';
+import { ForEachDuplicate } from './for_each_duplicate.a';
 function field(input: OptionsJson, row: number, name: string): number {
     const node = input.node(row);
     const offset = node.keys.indexOf(name);
@@ -17,12 +21,31 @@ if(root < 0) { panic(input.error); }
 for(const row of input.node(root).children) {
     const symbol = input.node(field(input, row, 'symbol')).text;
     const kind = input.node(field(input, row, 'kind')).text;
+    const nodes: HelperNode[] = [];
+    const members: Member[] = [];
+    if(symbol === 'KeyOf' || symbol === 'ForEachDuplicate') {
+        for(const index of input.node(field(input,row,'nodes')).children) {
+            nodes.push({kind:input.node(field(input,index,'kind')).text,text:input.node(field(input,index,'text')).text,expression:Number(input.node(field(input,index,'expression')).text),name:-1});
+        }
+        for(const index of input.node(field(input,row,'members')).children) {
+            members.push({kind:input.node(field(input,index,'kind')).text,name:Number(input.node(field(input,index,'name')).text),hasBody:input.node(field(input,index,'body')).text === 'true',isStatic:input.node(field(input,index,'static')).text === 'true'});
+        }
+    }
     if(symbol === 'MemberName') {
         console.log(`${MemberName(kind, Number(input.node(field(input, row, 'name')).text))}`);
     }
     else if(symbol === 'IsAccessorKind') { console.log(`${IsAccessorKind(kind)}`); }
     else if(symbol === 'IsOverloadSignature') {
         console.log(`${IsOverloadSignature(kind, input.node(field(input, row, 'body')).text === 'true')}`);
+    }
+    else if(symbol === 'KeyOf') {
+        const answer = KeyOf(nodes, members[0] ?? panic('member missing'), Number(input.node(field(input,row,'name')).text));
+        console.log(`${answer.known}|${answer.name}|${answer.isStatic}|${answer.isPrivate}`);
+    }
+    else if(symbol === 'ForEachDuplicate') {
+        const reports: string[] = [];
+        ForEachDuplicate(nodes, members, (name: number, key: Key): void => { reports.push(`${name}|${key.name}|${key.isStatic}|${key.isPrivate}`); });
+        console.log(reports.join('\n'));
     }
     else { panic('unknown helper'); }
 }

@@ -24,4 +24,4 @@ rule when its shared prerequisite closure is available; full helpers/lint gates
 use every required input before the finished-unit push.
 
 Post-push claim scan: sole classmembers reservation, 2a7d5c0135769fe9bed15cd32edb0c0e42134ca2 at 2026-10-08T12:21:36Z.
-Status: three independent helpers validated; KeyOf and ForEachDuplicate await property.NameTagged. No rule unblocked yet.
+Status: all five helpers validated against live Go consumer captures. Shared property.NameTagged was built at ecfd7ffc1e4d37c8b1933c8b339913e2cd3c9a59 under explicit follow-up authorization. Core no-dupe-class-members is the proof rule; the TypeScript extension is now helper-ready and remains with its existing claimant.

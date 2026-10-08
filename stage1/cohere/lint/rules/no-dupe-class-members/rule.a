@@ -1,0 +1,25 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import type { Member, Key } from '../../helpers/classmembers/member.a';
+import { ForEachDuplicate } from '../../helpers/classmembers/for_each_duplicate.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        for(const node of this.context.parser.nodes) {
+            this.nodes.push({kind: node.kind, text: node.text, expression: node.children[0] ?? -1, name: -1});
+        }
+    }
+    visit(index: number): void {
+        const members: Member[] = [];
+        for(const member of this.context.members(index)) {
+            members.push({kind:this.context.kind(member), name:this.context.name(member), hasBody:this.context.children(member,'Block').length > 0, isStatic:this.context.children(member,'StaticKeyword').length > 0});
+        }
+        ForEachDuplicate(this.nodes, members, (name: number, key: Key): void => {
+            this.context.report(name, 'no-dupe-class-members', 'noDupeClassMembers', message(key.name), '', '', '');
+        });
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

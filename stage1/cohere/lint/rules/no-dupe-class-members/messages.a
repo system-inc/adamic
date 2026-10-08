@@ -1,0 +1,3 @@
+export function message(name: string): string {
+    return `This class already declares a member named ${name}. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.`;
+}

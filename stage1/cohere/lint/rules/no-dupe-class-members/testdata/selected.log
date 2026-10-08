@@ -1,0 +1,56 @@
+=== RUN   TestNoDupeClassMembersSelected
+    lint_test.go:283: cohere cases: 4613 unique source/rule/options combinations
+    adamic_classmembers_selected_test.go:20: no-dupe-class-members: 37 unique captured upstream cases
+    adamic_classmembers_selected_test.go:48: comparison manifest: 126 upstream, witness and inherited rows
+    adamic_classmembers_selected_test.go:49: checker compilation phases: load=185.379781ms lower=3.285466174s C=579.227724ms JavaScript=28.856883ms
+    adamic_classmembers_selected_test.go:49: checker native build: 1m12.464546886s
+    adamic_classmembers_selected_test.go:49: Go, Node, emitted JavaScript, native identical: 508801 bytes
+--- PASS: TestNoDupeClassMembersSelected (110.58s)
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestMutants
+=== RUN   TestMutants/no-dupe-class-members-static-flag-lost
+=== PAUSE TestMutants/no-dupe-class-members-static-flag-lost
+=== CONT  TestMutants/no-dupe-class-members-static-flag-lost
+    lint_test.go:147: checker compilation phases: load=252.609802ms lower=4.169749749s C=636.088146ms JavaScript=43.544182ms
+    lint_test.go:155: checker native mutant build: 1m0.182620102s
+    lint_test.go:845: no-dupe-class-members-static-flag-lost caught on Node: case 86 line 4494: port "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:21", Go "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30"
+        Go context:
+          no-dupe-class-members  This class already declares a member named string:repeated. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 350 358 noDupeClassMembers 			350 358
+        fixed	class Accessors {\u000a    get x() {} set x(value) {} set x(value) {}\u000a    set y(value) {} get y() {} get y() {}\u000a    get z() {} get z() {} set z(value) {} z() {}\u000a    run(x: string): string; run(x: number): number; run(x: unknown): unknown { return x; } run() {}\u000a}\u000aabstract class Abstract { abstract missing(): void; abstract missing(): void; repeated = 1; repeated = 2; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30
+          no-dupe-class-members  This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 42 45 noDupeClassMembers 			42 45
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:3:30
+    lint_test.go:845: no-dupe-class-members-static-flag-lost caught on emitted JavaScript: case 86 line 4494: port "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:21", Go "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30"
+        Go context:
+          no-dupe-class-members  This class already declares a member named string:repeated. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 350 358 noDupeClassMembers 			350 358
+        fixed	class Accessors {\u000a    get x() {} set x(value) {} set x(value) {}\u000a    set y(value) {} get y() {} get y() {}\u000a    get z() {} get z() {} set z(value) {} z() {}\u000a    run(x: string): string; run(x: number): number; run(x: unknown): unknown { return x; } run() {}\u000a}\u000aabstract class Abstract { abstract missing(): void; abstract missing(): void; repeated = 1; repeated = 2; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30
+          no-dupe-class-members  This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 42 45 noDupeClassMembers 			42 45
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:3:30
+    lint_test.go:845: no-dupe-class-members-static-flag-lost caught on native: case 86 line 4494: port "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:21", Go "/tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30"
+        Go context:
+          no-dupe-class-members  This class already declares a member named string:repeated. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 350 358 noDupeClassMembers 			350 358
+        fixed	class Accessors {\u000a    get x() {} set x(value) {} set x(value) {}\u000a    set y(value) {} get y() {} get y() {}\u000a    get z() {} get z() {} set z(value) {} z() {}\u000a    run(x: string): string; run(x: number): number; run(x: unknown): unknown { return x; } run() {}\u000a}\u000aabstract class Abstract { abstract missing(): void; abstract missing(): void; repeated = 1; repeated = 2; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:2:30
+          no-dupe-class-members  This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 42 45 noDupeClassMembers 			42 45
+        /tmp/adamic-gate/TestMutantsno-dupe-class-members-static-flag-lost2808692107/017/no-dupe-class-members-1.ts:3:30
+--- PASS: TestMutants (0.02s)
+    --- PASS: TestMutants/no-dupe-class-members-static-flag-lost (66.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	177.317s

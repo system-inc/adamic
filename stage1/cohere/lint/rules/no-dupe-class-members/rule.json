@@ -1,0 +1,11 @@
+{
+  "name": "no-dupe-class-members",
+  "kinds": ["ClassDeclaration", "ClassExpression"],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDupeClassMembers",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoDupeClassMembers"
+}

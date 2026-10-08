@@ -1,0 +1,13 @@
+// Immutable class-member parser facts. Names are identities in the property arena.
+export interface Member {
+    readonly kind: string;
+    readonly name: number;
+    readonly hasBody: boolean;
+    readonly isStatic: boolean;
+}
+export interface Key {
+    readonly name: string;
+    readonly isStatic: boolean;
+    readonly isPrivate: boolean;
+    readonly known: boolean;
+}

@@ -1,0 +1,23 @@
+import type { HelperNode } from '../slot02_ast.a';
+import type { Member, Key } from './member.a';
+import { MemberName } from './member_name.a';
+import { IsOverloadSignature } from './is_overload_signature.a';
+import { IsAccessorKind } from './is_accessor_kind.a';
+import { KeyOf } from './key_of.a';
+export function ForEachDuplicate(nodes: readonly HelperNode[], members: readonly Member[], report: (name: number, key: Key) => void): void {
+    const seen = new Map<string, string>();
+    for(const member of members) {
+        const name = MemberName(member.kind, member.name);
+        if(name < 0 || IsOverloadSignature(member.kind, member.hasBody)) { continue; }
+        const key = KeyOf(nodes, member, name);
+        if(!key.known) { continue; }
+        // Two fixed-width flag characters plus the complete tagged name form an
+        // injective encoding of Go's three-field key, even for delimiter names.
+        const identity = (key.isStatic ? '1' : '0') + (key.isPrivate ? '1' : '0') + key.name;
+        const previous = seen.get(identity);
+        if(previous === undefined) { seen.set(identity, member.kind); continue; }
+        if(IsAccessorKind(member.kind) && IsAccessorKind(previous) && member.kind !== previous) { continue; }
+        // Go retains the FIRST kind even after a pair or a reported collision.
+        report(name, key);
+    }
+}

@@ -1,0 +1,10 @@
+import { panic } from 'adamic';
+import type { HelperNode } from '../slot02_ast.a';
+import { Static } from '../property_name.a';
+import { NameTagged } from '../property/name_tagged.a';
+import type { Member, Key } from './member.a';
+export function KeyOf(nodes: readonly HelperNode[], member: Member, name: number): Key {
+    const text = NameTagged(nodes, name, Static);
+    if(!text.named) { return { name: '', isStatic: false, isPrivate: false, known: false }; }
+    return { name: text.name, isStatic: member.isStatic, isPrivate: (nodes[name] ?? panic('known name missing')).kind === 'PrivateIdentifier', known: true };
+}
