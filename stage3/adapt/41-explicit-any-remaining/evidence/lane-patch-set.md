@@ -13,7 +13,7 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 32-indexed-reads-program | 20 | 135 | 135 |
 | 33-indexed-reads-emit | 16 | 119 | 119 |
 | 40-explicit-any | 17 | 106 | 106 |
-| 41-explicit-any-remaining | 10 | 40 | 37 |
+| 41-explicit-any-remaining | 9 | 25 | 25 |
 | 45-regex-captures | 5 | 12 | 10 |
 | 46-fix-pragma-empty-argument | 1 | 1 | 1 |
 | 47-host-errors | 3 | 16 | 5 |
@@ -26,6 +26,5 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 63-temporary-tracing-legend | 1 | 1 | 1 |
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
 | 70-readonly-views | 7 | 22 | 22 |
-| 71-writable-views | 20 | 88 | 88 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 79 | 5255 | 5226 |
+| **Total** | 78 | 5153 | 5127 |
