@@ -1,10 +1,14 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
@@ -61,4 +65,17 @@ func TestObjectLiteralNeverMethodUsesOrdinaryCall(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+}
+
+func lowerTypeScriptSource(t *testing.T, source string) (*ir.Program, error) {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "main.ts")
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return Lower(context.Background(), program)
 }

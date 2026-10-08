@@ -67,7 +67,7 @@ func TestMarkdownAstPath(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-path")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	build.Dir = cohere
-	if output, err := build.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(build); err != nil {
 		t.Fatalf("Go path %v %s", err, output)
 	}
 	nativeCases := filepath.Join(dir, "native.txt")

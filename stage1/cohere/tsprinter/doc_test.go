@@ -20,13 +20,14 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+path, "-run=^TestAdamicDocuments$", "./internal/format/doc")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go doc corpus %v\n%s", err, output)
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
+	planCorpus(t, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
 func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
@@ -35,7 +36,7 @@ func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	port, _ := filepath.Abs("docMain.ts")
 	compare := func(name string, result run) {
 		if result.exitCode != 0 || len(result.stderr) > 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, firstDifference(string(result.stdout), want))
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
 		}
 	}
 	compare("Node", onNode(t, port, cases))

@@ -81,7 +81,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSourceExtension(t, string(source), extension)
+			lowerInput := lowerSource
+			if extension == ".ts" {
+				lowerInput = lowerTypeScriptSource
+			}
+			program, err := lowerInput(t, string(source))
 			if probe.name == "parser_callback_parameter" {
 				var refused *Refused
 				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-type-predicate") {

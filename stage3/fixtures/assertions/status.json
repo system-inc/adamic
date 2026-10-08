@@ -10,7 +10,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/01_map_call.a:7:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "02_code_point_call.a",
@@ -23,7 +23,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/02_code_point_call.a:7:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "03_exports_field.a",
@@ -36,7 +36,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/03_exports_field.a:9:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "04_field_then_call.a",
@@ -49,7 +49,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/04_field_then_call.a:11:35: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "05_regex_call_index.a",
@@ -62,7 +62,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/05_regex_call_index.a:8:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "06_memoize_clear.a",
@@ -75,7 +75,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/06_memoize_clear.a:8:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/06_memoize_clear.a:10:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "07_indexed_operation.a",
@@ -88,7 +88,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/07_indexed_operation.a:50:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/07_indexed_operation.a:40:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "08_optional_start.a",
@@ -101,7 +101,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/assertions/08_optional_start.a:10:16: stage 0 can't lower a BinaryExpression with a string and a string yet"}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/assertions/08_optional_start.a:11:52: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "09_interface_kind.a",
@@ -114,7 +114,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: stage 0 can't lower checked view field properties of type readonly number[] yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/09_interface_kind.a:15:10: stage 0 can't lower checked view field properties of type readonly number[] yet"}
   },
   {
     "file": "10_union_kind.a",
@@ -143,7 +143,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: stage 0 can't lower checked view field expression of type Node yet"}
   },
   {
     "file": "12_union_target.a",
@@ -262,7 +262,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/assertions/19_identifier_kind.a:14:13: stage 0 can't lower a case that isn't a constant yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
+    }
   },
   {
     "file": "20_type_flag_mask.a",

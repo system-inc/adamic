@@ -10,10 +10,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
   },
   {
     "file": "02_readFile_utf16le.a",
@@ -26,10 +23,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
   },
   {
     "file": "03_readFile_utf16be.a",
@@ -42,10 +36,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
   },
   {
     "file": "04_readFile_missing.a",
@@ -58,10 +49,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
   },
   {
     "file": "05_writeFile.a",
@@ -75,10 +63,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "/workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
   },
   {
     "file": "06_fileExists.a",
@@ -95,10 +80,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/06_fileExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/06_fileExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"}
   },
   {
     "file": "07_directoryExists.a",
@@ -115,10 +97,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/07_directoryExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/07_directoryExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"}
   },
   {
     "file": "08_getDirectories.a",
@@ -145,10 +124,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/08_getDirectories.a:209:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/08_getDirectories.a:160:25: stage 0 can't lower node:fs.readdirSync yet"}
   },
   {
     "file": "09_realpath.a",
@@ -182,10 +158,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:34:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/10_getModifiedTime.a:34:5: stage 0 can't lower node:fs.symlinkSync yet"}
   },
   {
     "file": "11_setModifiedTime.a",
@@ -198,10 +171,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Compiles",
-      "what": ""
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "12_deleteFile.a",
@@ -214,10 +184,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/12_deleteFile.a:22:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/12_deleteFile.a:22:5: stage 0 can't lower node:fs.symlinkSync yet"}
   },
   {
     "file": "13_createDirectory.a",
@@ -235,10 +202,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/13_createDirectory.a:55:17: error TS18046: 'e' is of type 'unknown'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/13_createDirectory.a:55:17: error TS18046: 'e' is of type 'unknown'."}
   },
   {
     "file": "14_getCurrentDirectory.a",
@@ -270,10 +234,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:22:21: stage 0 can't lower node:path.basename yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/15_getExecutingFilePath.a:20:52: stage 0 can't lower node:path.dirname yet"}
   },
   {
     "file": "16_getEnvironmentVariable.a",
@@ -286,10 +247,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Compiles",
-      "what": ""
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower node:process.Process.env yet"}
   },
   {
     "file": "17_write.a",
@@ -302,10 +260,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Compiles",
-      "what": ""
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/17_write.a:12:5: stage 0 can't lower node:net.Socket.write yet"}
   },
   {
     "file": "18_exit_0.a",
@@ -319,10 +274,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/18_exit_0.a:23:30: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/18_exit_0.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
   },
   {
     "file": "19_exit_1.a",
@@ -336,10 +288,7 @@
       "stderr": "",
       "exit": 1
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/19_exit_1.a:23:30: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/19_exit_1.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
   },
   {
     "file": "20_exit_2.a",
@@ -353,10 +302,7 @@
       "stderr": "",
       "exit": 2
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/20_exit_2.a:23:30: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/20_exit_2.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
   },
   {
     "file": "21_createHash.a",
@@ -371,10 +317,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "/workspace/adamic/stage3/fixtures/host/21_createHash.a:14:18: Adamic 0.1 refuses the non-null assertion !; prove presence with a guard, or use a checked assertion in .ts"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/host/21_createHash.a:14:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "22_createHash_fallback.a",
@@ -388,10 +331,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:21:1: stage 0 can't lower a function without a body yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/22_createHash_fallback.a:21:1: stage 0 can't lower a function without a body yet"}
   },
   {
     "file": "23_newLine.a",
@@ -404,10 +344,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Compiles",
-      "what": ""
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower node:os.EOL yet"}
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
@@ -543,9 +480,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
-    }
+    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."}
   }
 ]

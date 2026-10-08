@@ -34,14 +34,18 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{checkedViewFixturePath("internal/oracle/testdata/non_null_" + probe.name + ".a"), true, probe.checked})
+		}{"internal/oracle/testdata/non_null_" + probe.name + ".ts", true, probe.checked})
 	}
 	for _, name := range []string{"initialized", "uninitialized", "uninitialized_field", "uninitialized_capture", "uninitialized_exception", "uninitialized_loop", "uninitialized_default", "uninitialized_const", "weak", "definite", "definite_local", "definite_field", "static_initialized", "static_uninitialized", "uninitialized_optional", "uninitialized_spread", "literal_return", "literal_assignment", "literal_statement", "uninitialized_iteration", "uninitialized_catch", "uninitialized_interface", "uninitialized_append", "uninitialized_map_entry", "lazy_initialized", "lazy_read", "lazy_field", "lazy_static", "lazy_default", "scanner_initialized", "scanner_var", "scanner_var_uninitialized"} {
+		extension := ".ts"
+		if name == "scanner_var" || name == "scanner_var_uninitialized" {
+			extension = ".a"
+		}
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{checkedViewFixturePath("internal/oracle/testdata/non_null_" + name + ".a"), true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized" && name != "scanner_initialized" && name != "scanner_var"})
+		}{"internal/oracle/testdata/non_null_" + name + extension, true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized" && name != "scanner_initialized" && name != "scanner_var"})
 	}
 }
 
@@ -69,7 +73,11 @@ func TestReadinessMutants(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".a")))
+			extension := ".ts"
+			if probe.fixture == "scanner_var_uninitialized" {
+				extension = ".a"
+			}
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+extension))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -169,7 +177,7 @@ func TestReadinessMutants(t *testing.T) {
 
 func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts")))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -243,7 +251,7 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 // Pin both observations, including this assertion's expression-specific native diagnostic.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts")))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -283,7 +291,7 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 
 func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts")))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

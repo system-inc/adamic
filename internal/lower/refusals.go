@@ -25,6 +25,7 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -80,10 +81,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
-		if node.Kind == ast.KindNonNullExpression && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
-			found = &Refused{Where: l.program.Where(node), What: "the non-null assertion !", Fix: "prove presence with a guard, or use a checked assertion in .ts"}
-			return true
-		}
 		if err := l.dictionaryWriteRefusal(node); err != nil {
 			found = err
 			return true
@@ -132,7 +129,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
+		// FileName restores the loader .a alias; real .ts sources keep checked !.
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) && (node.Kind != ast.KindNonNullExpression || l.program.FileName(module) != module.FileName().AsString()) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}

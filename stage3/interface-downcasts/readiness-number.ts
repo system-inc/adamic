@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 interface Node { readonly kind: string; }
 interface NumberNode extends Node { readonly kind: 'number'; value: number; }
 function createNumber(): NumberNode {

@@ -2,8 +2,6 @@
 // the host owns only temporary buffers and returned counted values.
 #define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
-// macOS hides st_atimespec, st_mtimespec and mkdtemp once _POSIX_C_SOURCE is set, unless Darwin's
-// own extensions are asked for too. glibc ignores this macro.
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>

@@ -81,7 +81,7 @@ func TestOmittedOriginalProbePolicy(t *testing.T) {
 	}
 	_, err = lowered(t, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "prove presence with a guard, or use a checked assertion in .ts" {
+	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
 		t.Fatalf("want .a non-null assertion refusal, got %v", err)
 	}
 }

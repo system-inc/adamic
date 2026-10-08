@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-v",
+    "-json",
+    "-timeout=60m"
+  ],
+  "wall_seconds": 2918.936799222007,
+  "exit": 0,
+  "profile": "/workspace/scratch/compiler-shards-profile.2huf_ti1",
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "clean_before": true,
+  "clean_after": true,
+  "load": [
+    1.77001953125,
+    1.4951171875,
+    2.0712890625
+  ],
+  "cpus": 5
+}

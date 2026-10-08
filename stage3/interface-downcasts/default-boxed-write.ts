@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 interface Node { readonly kind: 'number' | 'identifier'; }
 interface NumberNode extends Node { readonly kind: 'number'; value: number; }
 const raw: { kind: 'number'; value: string | number } = {kind:'number', value:undefined!};
