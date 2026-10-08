@@ -214,8 +214,13 @@ for line in references:
     if line.endswith("/full-main"):
         name = line.split("\t")[1].removeprefix("refs/heads/")
         logs.setdefault(name.split("/")[1], []).append(name)
-mains = subprocess.run(["git", "rev-list", "--first-parent", "-n", "200", "origin/main"], capture_output=True, text=True, check=True).stdout.split()
+# Every commit main holds, newest first. Not --first-parent: a landing that fast-forwards main to an
+# area's tip puts the area's own history on main's first-parent line, and a walk along it never
+# reaches the mains before (the first fast-gate landing hid 8b388310's full-main this way).
+mains = subprocess.run(["git", "rev-list", "--topo-order", "origin/main"], capture_output=True, text=True, check=True).stdout.split()
 for main in mains:
+    if main[:12] not in logs:
+        continue
     for name in sorted(logs.get(main[:12], []), reverse=True):
         subprocess.run(["git", "fetch", "-q", "origin", f"+refs/heads/{name}:refs/remotes/origin/{name}"], check=True)
         status = subprocess.run(["git", "show", f"origin/{name}:status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
