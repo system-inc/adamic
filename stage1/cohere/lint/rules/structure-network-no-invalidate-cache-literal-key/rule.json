@@ -1,0 +1,13 @@
+{
+  "name": "structure/network-no-invalidate-cache-literal-key",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNetworkNoInvalidateCacheLiteralKey",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestNetworkNoInvalidateCacheLiteralKey",
+  "factory": "create",
+  "class": "Rule",
+  "node": true
+}

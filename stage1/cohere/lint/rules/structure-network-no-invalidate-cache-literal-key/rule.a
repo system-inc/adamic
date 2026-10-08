@@ -1,0 +1,46 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Result, emptyResults, publish } from '../no-multi-str/retired-wave15/typescript-no-unnecessary-type-constraint/results.a';
+import { noArrayWithStringLiteralInvalidateCache, noStringLiteralInvalidateCache, noTemplateLiteralInvalidateCache } from './messages.a';
+
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) { this.context = context; }
+    report(index: number, array: boolean): void {
+        const kind = this.context.node(this.context.unwrap(index)).kind;
+        let id = '';
+        let message = '';
+        if(kind === 'StringLiteral') {
+            id = array ? 'noArrayWithStringLiteralInvalidateCache' : 'noStringLiteralInvalidateCache';
+            message = array ? noArrayWithStringLiteralInvalidateCache : noStringLiteralInvalidateCache;
+        }
+        if(kind === 'TemplateExpression' || kind === 'NoSubstitutionTemplateLiteral') {
+            id = 'noTemplateLiteralInvalidateCache';
+            message = noTemplateLiteralInvalidateCache;
+        }
+        if(id !== '') { this.results = [...this.results, new Result(index, 'structure/network-no-invalidate-cache-literal-key', id, message)]; }
+    }
+    evaluate(node: ParseNode, index: number): void {
+        if(node.list < 1) { return; }
+        const callee = this.context.node(this.context.unwrap(node.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression' || this.context.node(callee.children[callee.children.length - 1] ?? -1).text !== 'invalidate') { return; }
+        const cache = this.context.node(this.context.unwrap(callee.children[0] ?? -1));
+        if(cache.kind !== 'PropertyAccessExpression' || this.context.node(cache.children[cache.children.length - 1] ?? -1).text !== 'cache') { return; }
+        const argument = this.context.unwrap(node.children[node.children.length - node.list] ?? -1);
+        if(this.context.node(argument).kind === 'ArrayLiteralExpression') {
+            for(const element of this.context.node(argument).children) { this.report(element, true); }
+        }
+        else { this.report(argument, false); }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

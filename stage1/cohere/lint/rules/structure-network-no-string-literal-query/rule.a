@@ -1,0 +1,76 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Result, emptyResults, publish } from '../no-multi-str/retired-wave15/typescript-no-unnecessary-type-constraint/results.a';
+import { noStringLiteralGraphQlQuery } from './messages.a';
+
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) { this.context = context; }
+    initializer(index: number): number {
+        const children = this.context.node(index).children;
+        if(children.length < 2) { return -1; }
+        const before = children[children.length - 2] ?? -1;
+        const last = children[children.length - 1] ?? -1;
+        const scanner = this.context.scanner;
+        scanner.pos = this.context.node(before).end;
+        while(scanner.scan() !== 'EndOfFile' && scanner.start < this.context.node(last).pos) {
+            if(scanner.kind === 'EqualsToken') { return last; }
+        }
+        return -1;
+    }
+    binding(reference: number, name: string): number {
+        let scope = this.context.parents[reference] ?? -1;
+        while(scope >= 0) {
+            for(const statement of this.context.node(scope).children) {
+                if(this.context.node(statement).kind !== 'VariableStatement') { continue; }
+                for(const list of this.context.node(statement).children) {
+                    if(this.context.node(list).kind !== 'VariableDeclarationList') { continue; }
+                    for(const declaration of this.context.node(list).children) {
+                        const declared = this.context.node(declaration).children[0] ?? -1;
+                        if(declared >= 0 && this.context.node(declared).kind === 'Identifier' && this.context.node(declared).text === name) {
+                            const initializer = this.initializer(declaration);
+                            if(initializer >= 0) { return initializer; }
+                        }
+                    }
+                }
+            }
+            scope = this.context.parents[scope] ?? -1;
+        }
+        return -1;
+    }
+    literal(index: number, visited: number[]): boolean {
+        if(index < 0) { return false; }
+        const unwrapped = this.context.unwrap(index);
+        if(visited.includes(unwrapped)) { return false; }
+        visited.push(unwrapped);
+        const node = this.context.node(unwrapped);
+        if(node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral' || node.kind === 'TemplateExpression') { return true; }
+        if(node.kind === 'AsExpression') { return this.literal(node.children[0] ?? -1, visited); }
+        if(node.kind === 'TypeAssertionExpression') { return this.literal(node.children[node.children.length - 1] ?? -1, visited); }
+        if(node.kind === 'Identifier') { return this.literal(this.binding(unwrapped, node.text), visited); }
+        return false;
+    }
+    evaluate(node: ParseNode, index: number): void {
+        if(node.list < 1) { return; }
+        const callee = this.context.node(this.context.unwrap(node.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return; }
+        const method = this.context.node(callee.children[callee.children.length - 1] ?? -1);
+        if(method.kind !== 'Identifier' || !['useGraphQlQuery', 'useGraphQlMutation', 'useSuspenseGraphQlQuery', 'graphQlRequest'].includes(method.text)) { return; }
+        const argument = node.children[node.children.length - node.list] ?? -1;
+        const visited: number[] = [];
+        if(this.literal(argument, visited)) {
+            this.results = [...this.results, new Result(argument, 'structure/network-no-string-literal-query', 'noStringLiteralGraphQlQuery', noStringLiteralGraphQlQuery)];
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

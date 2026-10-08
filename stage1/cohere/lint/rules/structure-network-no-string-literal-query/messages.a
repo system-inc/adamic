@@ -1,0 +1,1 @@
+export const noStringLiteralGraphQlQuery = "This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).";

@@ -1,0 +1,54 @@
+import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../suggestions.a';
+import type { RuleContext } from '../../context.ts';
+
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    constructor(id: string, message: string, edits: readonly Edit[]) {
+        this.id = id;
+        this.message = message;
+        this.edits = edits;
+    }
+}
+export class Result {
+    readonly index: number;
+    readonly start: number;
+    readonly end: number;
+    readonly rule: string;
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    readonly suggestions: readonly Suggestion[];
+    constructor(index: number, rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[] = emptySuggestions()) {
+        this.index = index; this.rule = rule; this.id = id; this.message = message;
+        this.start = start; this.end = end; this.edits = emptyEdits(); this.suggestions = suggestions;
+    }
+
+}
+// Preserve complete edit ranges through the published shared finding model.
+export function publish(context: RuleContext, result: Result): void {
+    const edits: SuggestionEdit[] = [];
+    for(const edit of result.edits) { edits.push(new SuggestionEdit(edit.start, edit.end, edit.text)); }
+    const suggestions: SharedSuggestion[] = [];
+    for(const suggestion of result.suggestions) {
+        const replacements: SuggestionEdit[] = [];
+        for(const edit of suggestion.edits) { replacements.push(new SuggestionEdit(edit.start, edit.end, edit.text)); }
+        suggestions.push(new SharedSuggestion(suggestion.id, suggestion.message, replacements));
+    }
+    context.reportRange(result.start, result.end, result.rule, result.id, result.message, edits, suggestions);
+}
+
+export function emptyEdits(): Edit[] { const edits: Edit[] = []; return edits; }
+export function emptySuggestions(): readonly Suggestion[] { const suggestions: Suggestion[] = []; return suggestions; }
+export function emptyResults(): readonly Result[] { const results: Result[] = []; return results; }

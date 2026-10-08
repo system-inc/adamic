@@ -1,0 +1,47 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Result, Suggestion, Edit, emptyResults, publish } from '../no-multi-str/results.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) { this.context = context; }
+    evaluate(node: ParseNode, index: number): void {
+        const start = this.context.start(index);
+        const raw = this.context.source.slice(start, node.end);
+        if(raw.length < 4) { return; }
+        let previousNull = false;
+        for(let position = 0; position < raw.length;) {
+            if(raw.slice(position, position + 1) !== '\\' || position + 1 >= raw.length) {
+                previousNull = false; position++; continue;
+            }
+            const digit = raw.slice(position + 1, position + 2);
+            if(digit === '8' || digit === '9') {
+                const escape = raw.slice(position, position + 2);
+                const escapeStart = start + position;
+                const escapeEnd = escapeStart + 2;
+                const suggestions: Suggestion[] = [];
+                if(previousNull) {
+                    suggestions.push(new Suggestion('nonoctalDecimalEscape', `Replace \`\\0${escape}\` with \`\\u0000${digit}\`, which matches the same characters without turning the repair into a legacy octal escape.`, [new Edit(escapeStart - 2, escapeEnd, '\\u0000' + digit)]));
+                    suggestions.push(new Suggestion('nonoctalDecimalEscape', `Replace \`${escape}\` with \`\\u003${digit}\`, keeping the digit and leaving the null escape before it alone.`, [new Edit(escapeStart, escapeEnd, '\\u003' + digit)]));
+                } else {
+                    suggestions.push(new Suggestion('nonoctalDecimalEscape', `Replace \`${escape}\` with \`${digit}\` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.`, [new Edit(escapeStart, escapeEnd, digit)]));
+                }
+                suggestions.push(new Suggestion('nonoctalDecimalEscape', `Replace \`${escape}\` with \`\\${escape}\` if a literal backslash before the digit is what was meant. This one does change the string.`, [new Edit(escapeStart, escapeEnd, '\\' + escape)]));
+                this.results = [...this.results, new Result(index, 'no-nonoctal-decimal-escape', 'nonoctalDecimalEscape', message, escapeStart, escapeEnd, suggestions)];
+                previousNull = false;
+            } else { previousNull = digit === '0'; }
+            position += 2;
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,13 @@
+{
+  "name": "no-nonoctal-decimal-escape",
+  "kinds": [
+    "StringLiteral"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoNonoctalDecimalEscape",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoNonoctalDecimalEscape",
+  "factory": "create",
+  "class": "Rule",
+  "node": true
+}

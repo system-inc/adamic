@@ -1,0 +1,6 @@
+{
+  "name": "optional_parameter_ignored",
+  "file": "rule.a",
+  "from": "this.defaulted(parameter) || this.flag(parameter, 'QuestionToken')",
+  "to": "this.defaulted(parameter) || this.flag(parameter, 'NeverQuestion')"
+}

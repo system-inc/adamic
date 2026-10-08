@@ -1,0 +1,6 @@
+{
+  "name": "structure-network-no-string-literal-query_semantic",
+  "file": "rule.a",
+  "from": "this.binding(unwrapped, node.text)",
+  "to": "-1"
+}

@@ -1,0 +1,26 @@
+{
+  "base": "95968dd93ad0876245f181af63931c3134e14b3d",
+  "lint_area": "334509eea8a49b8085187e206c495cc6aa24c5c4",
+  "typescript_source": "/tmp/lint-wave1-15-typescript",
+  "typescript_version": "6.0.3",
+  "profile_dir": "/tmp/wave15-wave2-profile",
+  "profile_snapshots": "/tmp/wave15-wave2-profile",
+  "bench": "1",
+  "command": "go test ./stage1/cohere/lint -count=1 -json -parallel=2 -timeout=100m",
+  "package_exit": 0,
+  "top_level": {
+    "pass": 41,
+    "fail": 0,
+    "skip": 1
+  },
+  "subtests": {
+    "pass": 113,
+    "fail": 0,
+    "skip": 0
+  },
+  "skip": "TestCheckerBridgeRefusalPending: awaits TSGoError error values",
+  "elapsed_seconds": 1707.44,
+  "authored_scope": "eight rule directories only",
+  "delivery_equivalence": "parser/compiler/lint baseline identical to tested merge; active owned modules, descriptors, adapters and witnesses byte-identical",
+  "not_covered": "complete repository gate; four formerly claimed duplicate rules retired by DEDUP_LEDGER"
+}
