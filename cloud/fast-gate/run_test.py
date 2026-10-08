@@ -442,5 +442,140 @@ class ShardCoordinator(unittest.TestCase):
             self.assertTrue((Path(args.out) / "status.txt").read_text().startswith("red:"))
 
 
+class OracleSelection(unittest.TestCase):
+    """A fixture-only change to internal/oracle runs its fixtures in the lanes, plus every test over a
+    table of its own that names a changed fixture; a table filled outside its literal runs it whole."""
+
+    lanes = 'package oracle\n\nvar fixtures = []string{\n\t"internal/oracle/testdata/a.a",\n\t"internal/oracle/testdata/c.a",\n}\n\nfunc TestNativeAgreesWithNode(t *testing.T) {\n\tfor _, fixture := range fixtures {\n\t}\n}\n'
+    cast = 'package oracle\n\nvar castFixtures = []string{\n\t"c",\n}\n\nfunc TestCast(t *testing.T) {\n\tfor _, fixture := range castFixtures {\n\t}\n}\n'
+
+    def setUp(self):
+        self.tree = tempfile.mkdtemp()
+        os.makedirs(os.path.join(self.tree, "internal/oracle/testdata"))
+        self.git("init", "-q")
+        self.write("internal/oracle/oracle_test.go", self.lanes)
+        self.write("internal/oracle/cast_test.go", self.cast)
+        for name in ("a", "c"):
+            self.write("internal/oracle/testdata/%s.a" % name, "console.log(1)\n")
+        self.base = self.commit()
+
+    def git(self, *arguments):
+        return realRun(["git", "-C", self.tree] + list(arguments), check=True, capture_output=True, text=True).stdout.strip()
+
+    def write(self, path, text, mode="w"):
+        with open(os.path.join(self.tree, path), mode) as handle:
+            handle.write(text)
+
+    def commit(self):
+        self.git("add", "-A")
+        self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "change")
+        return self.git("rev-parse", "HEAD")
+
+    def select(self, base):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit())
+        return gate.selectOracle()
+
+    def test_a_fixture_no_table_names_skips_that_tables_test(self):
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertEqual(selection["fixtures"], ["internal/oracle/testdata/a.a"])
+        self.assertNotIn("TestCast", selection["tests"])
+
+    def test_a_fixture_a_table_names_runs_that_tables_test(self):
+        self.write("internal/oracle/testdata/c.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertIn("TestCast", selection["tests"])
+
+    def test_a_table_filled_outside_its_literal_runs_whole(self):
+        self.write("internal/oracle/cast_test.go", "\nfunc init() { castFixtures = append(castFixtures, \"a\") }\n", "a")
+        base = self.commit()
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(base)
+        self.assertTrue(selection["whole"], selection)
+        self.assertIn("castFixtures", selection["reason"])
+
+
+class FullGateLoop(unittest.TestCase):
+    """Exercise shell control flow with local stubs; no fleet or network access."""
+    def shell(self, body, sharded=True):
+        source = (Path(__file__).resolve().parents[1] / "full-gate-main.sh").read_text()
+        functions = source[source.index("heartbeat() {"):source.index('if [ -n "${once}" ]; then')]
+        with tempfile.TemporaryDirectory() as directory:
+            prelude = """set -euo pipefail
+state=$1
+here=$2
+box=home
+boxes='home server'
+box_list=(home server)
+share=all
+sharded=""" + ("true" if sharded else "false") + """
+mkdir -p "${state}/heartbeat-records"
+git() {
+  case " $* " in
+    *' rev-parse '*) echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
+  esac
+  return 0
+}
+ssh() { echo 'unexpected SSH' >&2; return 99; }
+scp() { echo 'unexpected SCP' >&2; return 99; }
+"""
+            result = realRun(["bash", "-s", "--", directory, str(Path(__file__).resolve().parents[2])], input=prelude + functions + body, capture_output=True, text=True, timeout=5)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            return result.stdout
+
+    def test_sharded_red_returns_zero_and_running_heartbeat_fires(self):
+        output = self.shell("""
+heartbeat() { echo "$1 ${box_list[*]}" >> "${state}/events"; }
+publish() { echo local-log-commit; }
+python3() { return 0; }
+kill() { return 0; }
+polls=0
+sleep() {
+  polls=$((polls + 1))
+  if [ "${polls}" -eq 20 ]; then
+    for run_out in "${state}"/out/*; do
+      if [ ! -f "${run_out}/full.json" ]; then
+        echo 'red: test failure' > "${run_out}/status.txt"
+        echo '{"finished":true}' > "${run_out}/full.json"
+      fi
+    done
+  fi
+}
+run aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+echo survived-red
+# A following run uses a fresh output directory, as the real loop's next main does.
+polls=0
+run bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+echo survived-next-red
+# Wait locally for the tiny background heartbeat stubs to finish writing.
+for attempt in {1..100}; do
+  if [ "$(wc -l < "${state}/events")" -ge 4 ]; then break; fi
+  command sleep 0.01
+done
+cat "${state}/events"
+""")
+        self.assertIn("survived-red", output)
+        self.assertIn("survived-next-red", output)
+        self.assertEqual(output.count("start home server"), 2)
+        self.assertEqual(output.count("running home server"), 2)
+
+    def test_heartbeat_rows_name_fleet_and_preserve_single_box(self):
+        body = """
+heartbeat start aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+heartbeat running aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+heartbeat idle ''
+cat "${state}/heartbeat-records/documentation/velocity/full-gate-heartbeat.csv"
+"""
+        for sharded, boxes in ((True, "home server"), (False, "home")):
+            rows = self.shell(body, sharded=sharded).splitlines()
+            self.assertEqual(rows[0], "utc,event,main,box,last_started_utc,last_started_main")
+            self.assertEqual([row.split(',')[1] for row in rows[1:]], ["start", "running", "idle"])
+            self.assertEqual([row.split(',')[3] for row in rows[1:]], [boxes] * 3)
+            self.assertTrue(all(row.split(',')[5] == "a" * 40 for row in rows[1:]))
+
+
 if __name__ == "__main__":
     unittest.main()
