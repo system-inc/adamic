@@ -1,0 +1,25 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly	298.90	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTrees	214.20	pass
+github.com/system-inc/adamic/internal/oracle	TestCountsAreRecorded (setup)	204.74	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline (setup)	161.82	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeMatchesNode/points	160.93	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere	160.05	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	151.65	pass
+github.com/system-inc/adamic/internal/native	TestSplitTSGoAgrees	119.00	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	65.69	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeRandomNode	63.54	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity	61.69	pass
+github.com/system-inc/adamic/internal/native	TestCaseMappingMatchesNode/points	50.40	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	45.17	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	43.88	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	43.48	pass
+github.com/system-inc/adamic/internal/flow	TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95	41.03	pass
+github.com/system-inc/adamic/internal/flow	TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95	41.02	pass
+github.com/system-inc/adamic/internal/flow	TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95	40.99	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_final_newline	38.14	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_colon_space	38.11	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/wrong_filename_parser	36.96	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere	35.36	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/escaped_delimiter_parity	32.94	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestCachedWidthMutantIsCaught	30.89	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeRandomMatchesNode	30.07	pass
