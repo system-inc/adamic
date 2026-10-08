@@ -139,3 +139,38 @@ func TestCheckedViewCallableShareCCounts(t *testing.T) {
 		}
 	}
 }
+
+// Refused original declarations remain outside the certification/count totals.
+func TestCheckedViewCallableShareCCodeBoundaries(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-c/code-blocked.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []struct {
+		Rank                   int
+		Read, Refusal, Variant string
+	}
+	if err = json.Unmarshal(data, &rows); err != nil {
+		t.Fatal(err)
+	}
+	for _, row := range rows {
+		t.Run(fmt.Sprintf("rank-%d", row.Rank), func(t *testing.T) {
+			variant := row.Variant
+			if variant == "" {
+				variant = "good"
+			}
+			path, pathErr := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, fmt.Sprintf("stage3/interface-downcasts/lane5/share-c/families/rank-%d/%s.a", row.Rank, variant))))
+			if pathErr != nil {
+				t.Fatal(pathErr)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != "completed\n" {
+				t.Fatalf("Node: %#v", truth)
+			}
+			_, err := lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), row.Refusal) {
+				t.Fatalf("%s: wanted refusal %q; got %v", row.Read, row.Refusal, err)
+			}
+		})
+	}
+}

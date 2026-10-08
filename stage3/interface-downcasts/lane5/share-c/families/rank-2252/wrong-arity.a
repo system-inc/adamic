@@ -1,0 +1,12 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type HasInvalidatedResolutions = (sourceFile: Path) => boolean;
+type Path = string & { __pathBrand: any; };
+type HasInvalidatedLibResolutions = (libFileName: string) => boolean;
+interface HasInvalidatedFromResolutionCache {readonly value:number;}
+interface Base {readonly createHasInvalidatedResolutions:unknown;}
+interface Target {createHasInvalidatedResolutions(
+        customHasInvalidatedResolutions: HasInvalidatedResolutions,
+        customHasInvalidatedLibResolutions: HasInvalidatedLibResolutions,
+    ): HasInvalidatedFromResolutionCache;}
+function probe(value:Base):void {const resolutionCache=value as Target;const witnessResult=resolutionCache.createHasInvalidatedResolutions((sourceFile: Path):boolean=>(true),(libFileName: string):boolean=>(true));console.log("completed");}
+probe({createHasInvalidatedResolutions:(): HasInvalidatedFromResolutionCache=>({value:3})});

@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;
+interface DiagnosticMessage {readonly value:number;}
+interface Base {readonly setOnError:unknown;}
+interface Target {setOnError(onError: ErrorCallback | undefined): void;}
+function probe(value:Base):void {const scanner=value as Target;scanner.setOnError((message: DiagnosticMessage,length: number,arg0?: any):void=>{});console.log("completed");}
+probe({setOnError:(onError: ErrorCallback | undefined):void=>{}});

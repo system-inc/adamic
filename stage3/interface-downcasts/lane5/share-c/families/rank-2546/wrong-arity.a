@@ -1,0 +1,18 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface MultiMap<T0,T1> {readonly value:number;}
+type Path = string & { __pathBrand: any; };
+type FileIncludeReason =
+    | RootFile
+    | LibFile
+    | ProjectReferenceFile
+    | ReferencedFile
+    | AutomaticTypeDirectiveFile;
+interface RootFile {readonly value:number;readonly kind:0;}
+interface LibFile {readonly value:number;readonly kind:6;}
+interface ProjectReferenceFile {readonly value:number;}
+interface ReferencedFile {readonly value:number;}
+interface AutomaticTypeDirectiveFile {readonly value:number;readonly kind:8;}
+interface Base {readonly getFileIncludeReasons:unknown;}
+interface Target {getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;}
+function probe(value:Base):void {const host=value as Target;const witnessResult=host.getFileIncludeReasons();console.log("completed");}
+probe({getFileIncludeReasons:(extra:number): MultiMap<Path, FileIncludeReason>=>({value:3})});

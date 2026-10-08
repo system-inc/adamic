@@ -1,0 +1,13 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ResolvedTypeReferenceDirectiveWithFailedLookupLocations {readonly value:number;}
+type ResolutionMode = ModuleKind.ESNext | ModuleKind.CommonJS | undefined;
+const enum ModuleKind {None=0,CommonJS=1,AMD=2,UMD=3,System=4,ES2015=5,ES2020=6,ES2022=7,ESNext=99,Node16=100,Node18=101,Node20=102,NodeNext=199,Preserve=200}
+type Path = string & { __pathBrand: any; };
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface Base {readonly forEachResolvedTypeReferenceDirective:unknown;}
+interface Target {forEachResolvedTypeReferenceDirective(
+        callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void,
+        file?: SourceFile,
+    ): void;}
+function probe(value:Base):void {const program=value as Target;program.forEachResolvedTypeReferenceDirective((resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations,moduleName: string,mode: ResolutionMode,filePath: Path):void=>{},{value:3,kind:308});console.log("completed");}
+probe({forEachResolvedTypeReferenceDirective:(callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void,file?: SourceFile):void=>{}});

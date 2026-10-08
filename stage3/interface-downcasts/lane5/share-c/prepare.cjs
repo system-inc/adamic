@@ -33,7 +33,7 @@ for (const pair of ledger.filter(p => p.rank % 3 === 2 && !p.certified)) {
  visit(source);
  if (!read) throw Error('missing read ' + pair.rank);
  const symbol = ts.isPropertyAccessExpression(read) ? checker.getSymbolAtLocation(read.name) : ts.isBindingElement(read) ? checker.getPropertyOfType(checker.getTypeAtLocation(read.parent), pair.field) : checker.getSymbolAtLocation(read);
- const declarations = (symbol?.declarations || []).map(d => ({text:(ts.isFunctionDeclaration(d) || ts.isMethodDeclaration(d)) && d.body ? d.getSourceFile().text.slice(d.getStart(), d.body.getStart()).trim()+';' : d.getText(), file:path.relative(root,d.getSourceFile().fileName), sha256:hash(d.getSourceFile().fileName)}));
+ const declarations = (symbol?.declarations || []).map(d => ({kind:ts.SyntaxKind[d.kind], inferred:ts.isPropertyAssignment(d), text:ts.isPropertyAssignment(d) ? d.name.getText()+': '+checker.typeToString(checker.getTypeAtLocation(d.initializer),d,ts.TypeFormatFlags.NoTruncation)+';' : (ts.isFunctionDeclaration(d) || ts.isMethodDeclaration(d)) && d.body ? d.getSourceFile().text.slice(d.getStart(), d.body.getStart()).trim()+';' : d.getText(), file:path.relative(root,d.getSourceFile().fileName), sha256:hash(d.getSourceFile().fileName)}));
  evidence.push({...pair, read:read.getText(source), start:read.getStart(source), end:read.end, fileSha256:hash(source.fileName), declarations});
 }
 fs.writeFileSync(path.join(__dirname,'original-members.json'), JSON.stringify({pin, members:evidence}, null, 2)+'\n');

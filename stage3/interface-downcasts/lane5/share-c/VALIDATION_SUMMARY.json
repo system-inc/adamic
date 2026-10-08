@@ -1,0 +1,20 @@
+{
+  "certifiedPairs": 246,
+  "certifiedCandidateReads": 673,
+  "mutantBackendComparisons": 492,
+  "sourceVerifiedFixtures": 492,
+  "codeBoundaryPairs": 15,
+  "uncoveredPairs": 639,
+  "finalOracle": {
+    "command": "go test ./internal/oracle -run '^TestCheckedViewCallableShareC($|Mutants$|Array(Intrinsics|Mutants)$|CodeBoundaries$|Counts$)' -count=1 -timeout=30m -v",
+    "result": "PASS",
+    "seconds": 343.197,
+    "log": "/tmp/lane5-c-final-validation.log"
+  },
+  "requiredCounts": {
+    "result": "FAIL",
+    "inheritedFixtureFailures": 60,
+    "seconds": 41.403,
+    "log": "/tmp/lane5-c-required-counts.log"
+  }
+}

@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface Identifier {readonly value:number;readonly kind:80;}
+const enum ScriptTarget {ES3=0,ES5=1,ES2015=2,ES2016=3,ES2017=4,ES2018=5,ES2019=6,ES2020=7,ES2021=8,ES2022=9,ES2023=10,ES2024=11,ES2025=12,ESNext=99,JSON=100,Latest=99,LatestStandard=12}
+interface CallBinding {readonly value:number;}
+interface Base {readonly createCallBinding:unknown;}
+interface Target {createCallBinding(expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget, cacheIdentifiers?: boolean): CallBinding;}
+function probe(value:Base):void {const factory=value as Target;const witnessResult=factory.createCallBinding({value:3},(temp: Identifier):void=>{},0,true);console.log("completed");}
+probe({createCallBinding:(expression: Expression,recordTempVariable: (temp: Identifier) => void,languageVersion?: ScriptTarget,cacheIdentifiers?: boolean):CallBinding=>({value:3})});

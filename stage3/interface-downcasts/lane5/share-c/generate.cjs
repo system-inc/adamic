@@ -14,6 +14,7 @@ for (const member of evidence.members.filter(m=>m.rank<=maximum)) {
  if (/Set</.test(member.type)) {row.status='delegated Set intrinsic';continue;}
  if (/\[\]|Map<|Map$|SymbolTable|Array<|RegExp|Math|ObjectConstructor|Buffer/.test(member.type)) {row.status='original intrinsic receiver requires dedicated witness';continue;}
  if (member.declarations.length!==1) {row.status='overloaded original member';continue;}
+ if(member.declarations[0].inferred){row.status='original inferred implementation requires separate context';continue;}
  const declaration=member.declarations[0].text;
  if (/^static\s/.test(declaration)||member.read.startsWith('this.')){row.status='original class or this receiver requires separate context';continue;}
  if (/\{/.test(declaration) && !declaration.trim().endsWith(';')) {row.status='original class receiver requires method witness';continue;}
@@ -41,7 +42,7 @@ for (const member of evidence.members.filter(m=>m.rank<=maximum)) {
    if(alias.typeParameters?.length) throw Error('generic alias '+name);
    definitions.set(name,original.text); visitType(alias.type);
   } else if (original?.kind==='EnumDeclaration') {
-   definitions.set(name,'enum '+name+' {'+Object.entries(original.values).map(([k,v])=>k+'='+JSON.stringify(v)).join(',')+'}');
+   definitions.set(name,'const enum '+name+' {'+Object.entries(original.values).map(([k,v])=>k+'='+JSON.stringify(v)).join(',')+'}');
   } else {
    const generic=args?.length?'<' + args.map((_,i)=>'T'+i).join(',')+'>':'';
    definitions.set(name,'interface '+name+generic+' {readonly value:number;'+(original?.kindValue!==undefined?'readonly kind:'+original.kindValue+';':'')+'}');

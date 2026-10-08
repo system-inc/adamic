@@ -1,0 +1,140 @@
+[
+  {
+    "rank": 236,
+    "reads": 7,
+    "type": "NodeFactory",
+    "read": "factory.createCallBinding",
+    "declaration": "createCallBinding(expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget, cacheIdentifiers?: boolean): CallBinding;",
+    "refusal": "Adamic 0.1 refuses checked view read of field createCallBinding with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 380,
+    "reads": 5,
+    "type": "Scanner",
+    "read": "scanner.setOnError",
+    "declaration": "setOnError(onError: ErrorCallback | undefined): void;",
+    "refusal": "stage 0 can't lower a value of type any yet",
+    "change": "Provide a checked representation for the original ErrorCallback optional any parameter."
+  },
+  {
+    "rank": 395,
+    "reads": 4,
+    "type": "CompilerHost",
+    "read": "host.getSourceFile",
+    "declaration": "getSourceFile(fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;",
+    "refusal": "Adamic 0.1 refuses checked view read of field getSourceFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 1082,
+    "reads": 2,
+    "type": "SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "read": "builder.build",
+    "declaration": "build(project?: string, cancellationToken?: CancellationToken, writeFile?: WriteFileCallback, getCustomTransformers?: (project: string) => CustomTransformers): ExitStatus;",
+    "refusal": "Adamic 0.1 refuses checked view read of field build with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 1322,
+    "reads": 1,
+    "type": "CompilerHost & ReadBuildProgramHost",
+    "read": "compilerHost.getSourceFile",
+    "declaration": "getSourceFile(fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;",
+    "refusal": "Adamic 0.1 refuses checked view read of field getSourceFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 1328,
+    "reads": 1,
+    "type": "CompilerHost & ReadBuildProgramHost",
+    "read": "compilerHost.writeFile",
+    "declaration": "writeFile: WriteFileCallback;",
+    "refusal": "Adamic 0.1 refuses checked view read of field writeFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 1853,
+    "reads": 1,
+    "type": "ModeAwareCache<T>",
+    "read": "resolutions.forEach",
+    "declaration": "forEach(cb: (elem: T, key: string, mode: ResolutionMode) => void): void;",
+    "variant": "wrong-arity",
+    "refusal": "Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70."
+  },
+  {
+    "rank": 2078,
+    "reads": 1,
+    "type": "ParenthesizerRules",
+    "read": "parenthesizer.getParenthesizeLeftSideOfBinaryForOperator",
+    "declaration": "getParenthesizeLeftSideOfBinaryForOperator(binaryOperator: SyntaxKind): (leftSide: Expression) => Expression;",
+    "variant": "wrong-arity",
+    "refusal": "Adamic 0.1 refuses checked view read of field getParenthesizeLeftSideOfBinaryForOperator with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70."
+  },
+  {
+    "rank": 2138,
+    "reads": 1,
+    "type": "Program",
+    "read": "program.forEachResolvedTypeReferenceDirective",
+    "declaration": "forEachResolvedTypeReferenceDirective(\r\n        callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void,\r\n        file?: SourceFile,\r\n    ): void;",
+    "refusal": "Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "change": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void."
+  },
+  {
+    "rank": 2162,
+    "reads": 1,
+    "type": "Program",
+    "read": "state.program.writeFile",
+    "declaration": "writeFile: WriteFileCallback;",
+    "refusal": "Adamic 0.1 refuses checked view read of field writeFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 2252,
+    "reads": 1,
+    "type": "ResolutionCache",
+    "read": "resolutionCache.createHasInvalidatedResolutions",
+    "declaration": "createHasInvalidatedResolutions(\r\n        customHasInvalidatedResolutions: HasInvalidatedResolutions,\r\n        customHasInvalidatedLibResolutions: HasInvalidatedLibResolutions,\r\n    ): HasInvalidatedFromResolutionCache;",
+    "refusal": "Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "change": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void."
+  },
+  {
+    "rank": 2273,
+    "reads": 1,
+    "type": "ResolutionCacheHost",
+    "read": "resolutionHost.watchDirectoryOfFailedLookupLocation",
+    "declaration": "watchDirectoryOfFailedLookupLocation(directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags): FileWatcher;",
+    "variant": "wrong-arity",
+    "refusal": "Adamic 0.1 refuses checked view read of field watchDirectoryOfFailedLookupLocation with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70."
+  },
+  {
+    "rank": 2387,
+    "reads": 1,
+    "type": "SolutionBuilderState<T>",
+    "read": "state.watchDirectory",
+    "declaration": "watchDirectory: (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher;",
+    "refusal": "Adamic 0.1 refuses checked view read of field watchDirectory with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  },
+  {
+    "rank": 2546,
+    "reads": 1,
+    "type": "TypeCheckerHost",
+    "read": "host.getFileIncludeReasons",
+    "declaration": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;",
+    "refusal": "Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "change": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void."
+  },
+  {
+    "rank": 2594,
+    "reads": 1,
+    "type": "WatchFactoryHost",
+    "read": "host.watchDirectory",
+    "declaration": "watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;",
+    "refusal": "Adamic 0.1 refuses checked view read of field watchDirectory with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "change": "Implement a checked producer certificate and invocation adapter for the complete original callable signature."
+  }
+]
