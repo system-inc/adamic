@@ -93,12 +93,16 @@ func TestProductionCompositeKeepsProjectRoots(t *testing.T) {
 	}
 }
 
-func TestProductionProjectOverlayRefused(t *testing.T) {
+func TestProductionProjectOverlayAttributed(t *testing.T) {
 	t.Parallel()
 	paths := writeProgram(t,
 		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
 		[2]string{"main.ts", `export const value = 1;`})
-	if _, err := LoadOverlay(paths[1:], map[string]string{paths[1]: `const items: number[] = []; const first: number = items[0];`}); err == nil || !strings.Contains(err.Error(), "source overlays") {
-		t.Fatalf("disk audit must not attest to unchecked overlay sites: %v", err)
+	loaded, err := LoadOverlay(paths[1:], map[string]string{paths[1]: `const items: number[] = []; const first: number = items[0];`})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(loaded.OptionSites()) != 1 || loaded.OptionSites()[0].Options[0] != "noUncheckedIndexedAccess" {
+		t.Fatalf("overlay read was not attributed: %v", loaded.OptionSites())
 	}
 }

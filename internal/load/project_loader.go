@@ -28,6 +28,9 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 	var project string
 	var adamic, standalone bool
 	for _, root := range roots {
+		if root.IsDeclarationFile() {
+			continue
+		}
 		if _, isAdamic := fs.adamicFile(root); isAdamic {
 			adamic = true
 			continue
@@ -38,7 +41,7 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 			continue
 		}
 		if project != "" && project != owner {
-			return nil, "", fmt.Errorf("load: separate checker ownership is not implemented for projects %s and %s", project, owner)
+			return nil, "", fmt.Errorf("load: separate checker ownership is not implemented for different projects %s and %s", project, owner)
 		}
 		project = owner
 	}
@@ -68,7 +71,7 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 		included[file] = true
 	}
 	for _, root := range roots {
-		if !included[root] {
+		if !included[root] && !root.IsDeclarationFile() {
 			return nil, "", fmt.Errorf("load: %s is outside its project's root files; option attribution for explicit extra roots is not implemented yet", root)
 		}
 	}

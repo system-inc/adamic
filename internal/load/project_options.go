@@ -12,6 +12,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 )
@@ -52,11 +53,15 @@ var stricterOptionNames = []string{
 // out of option attribution. The production loader still refuses these sites
 // until their checks have a backend and runtime witness.
 func AuditProjectOptions(ctx context.Context, configName string) (*ProjectOptionReport, error) {
+	return auditProjectOptions(ctx, configName, osvfs.FS(), nil)
+}
+
+func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, additionalRoots []tspath.RootedFilePath) (*ProjectOptionReport, error) {
 	absolute, err := filepath.Abs(configName)
 	if err != nil {
 		return nil, err
 	}
-	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
+	fs := cachedvfs.From(bundled.WrapFS(source))
 	configPath := tspath.RootedFilePathFromAbsolute(absolute)
 	if !fs.FileExists(configPath) {
 		return nil, fmt.Errorf("load: no tsconfig at %s", absolute)
@@ -76,10 +81,21 @@ func AuditProjectOptions(ctx context.Context, configName string) (*ProjectOption
 	if config == nil {
 		return nil, fmt.Errorf("load: %s parsed to no project", absolute)
 	}
+	roots := append([]tspath.RootedFilePath{}, config.FileNames()...)
+	included := make(map[tspath.RootedFilePath]bool)
+	for _, root := range roots {
+		included[root] = true
+	}
+	for _, root := range additionalRoots {
+		if !included[root] {
+			roots = append(roots, root)
+			included[root] = true
+		}
+	}
 	base := config.CompilerOptions().Clone()
 	directory := tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(absolute))
 	run := func(options *core.CompilerOptions) ([]*ast.Diagnostic, error) {
-		parsed := tsoptions.NewParsedCommandLine(options, config.FileNames(), config.ProjectReferences(), directory, fs.CaseSensitivity())
+		parsed := tsoptions.NewParsedCommandLine(options, roots, config.ProjectReferences(), directory, fs.CaseSensitivity())
 		parsed.ConfigFile = config.ConfigFile
 		host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
 		program := compiler.NewProgram(compiler.ProgramOptions{Config: parsed, Host: host, SingleThreaded: core.TSTrue})
