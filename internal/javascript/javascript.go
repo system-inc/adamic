@@ -894,6 +894,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.ArrayHoles:
+		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {

@@ -446,6 +446,9 @@ adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *arra
 bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_has_index(const adamic_array *array, size_t index);
+void adamic_array_mark_index(adamic_array *array, size_t index);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
 adamic_array *adamic_class_object_keys(const adamic_object *object);
 const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
@@ -589,7 +592,8 @@ static inline adamic_value *adamic_array_at_integer(const adamic_array *array, i
 	if (index < 0 || (uint64_t)index >= array->length) {
 		return NULL;
 	}
-	return &array->elements[index];
+	if (array->properties != NULL && !adamic_array_has_index(array, (size_t)index)) { return NULL; }
+ return &array->elements[index];
 }
 
 static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
@@ -600,7 +604,8 @@ static inline adamic_value *adamic_array_at(const adamic_array *array, double in
 	if ((double)whole != index) {
 		return NULL;
 	}
-	return &array->elements[whole];
+	if (array->properties != NULL && !adamic_array_has_index(array, whole)) { return NULL; }
+ return &array->elements[whole];
 }
 
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array

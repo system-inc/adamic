@@ -3,8 +3,8 @@
 Built project options/lib loading, supported indexed guards and JSON use guards in both backends, with explain counts.
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
 Measured 0 project errors and all 173 exact updated-ledger sites, with no missing, extra or wrongly attributed sites.
-Six audit, four loader, eight indexed, three JSON and one inherited iterator mutant were run and caught.
-Catch checks, mixed checker ownership, unsupported indexed representations and individual 99-site native witnesses remain unfinished; optional checks belong to another worker.
+Six audit, four loader, thirteen indexed (including five sparse), three JSON and one inherited iterator mutant were run and caught.
+Catch and optional checks and the individual 99-site witnesses belong to other workers. This branch owns indexed representations; typed arrays and records remain unsupported.
 
 ## What is built
 
@@ -341,3 +341,56 @@ explicit refusals, not checked counts. A firm whole-106 date remains dependent o
 that work; no completion claim is made.
 
 Latest whole-106 planning range communicated after the fresh reproduction: October 9 to 12 MDT, assuming caught-value representation work is split out and indexed representation gaps close. This supersedes the October 8 to 9 estimate. First 50: 4 to 8 hours for census and supported-case proof, with record reads still gating all-50 completion. All six audit mutants and all four loader mutants completed their reruns and were caught by assertions.
+
+
+## Sparse array representation batch, October 7 at 21:35 MDT
+
+The worker scope changed: four indexed workers own the 99 per-site witnesses;
+this branch only supplies the representations they need. D155/D156 were
+previously misclassified above as records. Inspecting the adapted transformer
+shows `enabledSyntaxKindFeatures = new Array<SyntaxKindFeatureFlags>(SyntaxKind.Count)`:
+these sites are holes, so sparse arrays were built first.
+
+`new Array<T>(length)` now lowers when length is a statically proven valid
+integer, with presence stored separately from zeroed payload. Presence travels
+with the array across aliases. Ordinary and optimized integer indexed reads use
+the existing bounds lookup plus its presence test; they do not add another
+bounds check. Indexed writes within the length, push and fill create presence.
+Reference payloads and the presence table use existing counted cleanup.
+Both backends share the site guard. Compound numeric indexed updates now use
+that same guard, after evaluating receiver and index once.
+
+Nine representation fixtures cover missing number/string slots, an optimized
+integer loop, a compound read, a partial fill through an alias, successful alias
+writes and fills, allocated reference writes and observation of undefined.
+Five erased-guard mutants all build and are caught by loss of the required
+site-named exit 70. Number/loop/compound/partial-fill mutants exit 0; the string
+mutant exits 1 under ASan. Each required guard reports indexed-presence=1 and
+trusted=0; observing undefined reports zero guards.
+
+Conservative assumption: a program containing sparse construction refuses
+operations whose implementation still assumes dense arrays, even when a
+particular operand is dense. This includes other array methods, array iterators,
+for...of, spread, array-based library iteration and collection construction,
+and JSON.stringify arrays. Eight boundary fixtures prove explicit refusals.
+Dynamic/invalid lengths and omitted array-literal elements remain unsupported.
+The existing immediate `new Array(length).fill(value)` dense construction is
+preserved. Typed arrays and record reads are the next representation groups.
+
+The production ledger rerun remains exact: 0 ordinary project errors; 173 sites,
+99 indexed + 67 optional + 5 catch + 2 JSON; missing=0, extra=0, attribution=0.
+72 sites remain checker errors on this branch. Deferred rows are not emitted
+check counts and do not claim the whole compiler lowers.
+
+Validation logs:
+
+- `/tmp/stricter-options-sparse-witness.log`: all 21 indexed fixtures pass, including thirteen guard mutants.
+- `/tmp/stricter-options-sparse-packages.log`: load, lower, ir and native pass; the new Set boundary fixture initially hit an unrelated statement refusal.
+- `/tmp/stricter-options-sparse-boundaries.log`: all eight corrected boundaries pass.
+- `/tmp/stricter-options-sparse-final-fixtures.log`: the complete representation/JSON fixture package passes after correction.
+- `/tmp/stricter-options-sparse-vet.log`: vet passes for all six touched packages.
+- `/tmp/stricter-options-sparse-ledger-validation.log`: exact 173-site reproduction above.
+- `/tmp/stricter-options-sparse-filtered-oracle.log`: indexing, string indexing and RegExp result arrays.
+
+Current origin/main 855d114e is merged as 736410fc. Main's compiler files did
+not change in that merge. The complete repository gate was not run.
