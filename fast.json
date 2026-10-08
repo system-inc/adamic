@@ -1,0 +1,222 @@
+{
+  "sha": "8787772dd40cb376caf321487fc6829424736de4",
+  "branch": "codex/clock-5-03-global-isnan-isfinite",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "679af4dfe11f7495ae5e17596deeb743851117dd",
+  "tools_sha": "90fc862b2ea7ffa2e8b315c5e4eb19ffc5cafcde",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "oracle_selection": {
+    "whole": true,
+    "reason": "TestCheckedCastFailureContract ranges over checkedCastFixtures, a fixture table the selection doesn't know"
+  },
+  "reads": [
+    {
+      "line": 117,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/library_math_number_global_is_nan.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 141,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/library_math_number_global_is_nan.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 165,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/object.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 538,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "docs/0.1.md",
+        "internal/lower/object.go",
+        "internal/oracle/counts.md",
+        "internal/oracle/library_math_number_global_is_nan_test.go",
+        "internal/oracle/testdata/library_math_number_global_is_nan.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1153,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "docs/0.1.md",
+        "internal/oracle/counts.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 1
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "docs/0.1.md",
+    "internal/lower/object.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/library_math_number_global_is_nan_test.go",
+    "internal/oracle/testdata/library_math_number_global_is_nan.a"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline"
+  ],
+  "unowned_files": [
+    "docs/0.1.md"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "catalog_apply": {
+    "checked": [
+      "08-narrowed-number-field.patch",
+      "09-literal-undefined-field.patch"
+    ],
+    "staled_by_this_change": [],
+    "already_stale": [
+      "08-narrowed-number-field.patch"
+    ]
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/lower": 109,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/internal/fresh": 4,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/internal/ir": 3,
+    "github.com/system-inc/adamic/internal/oracle": 66
+  },
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 7,
+    "planned": 191,
+    "passed": 191,
+    "touched": 7
+  },
+  "wall_seconds": 808.6,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "catalog-apply": 0.2,
+    "vet": 40.1,
+    "build": 65.5,
+    "smoke": 71.6,
+    "tests": 807.0,
+    "census": 0.6
+  },
+  "pass": 4701,
+  "fail": 0,
+  "skip": 3,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "catalog-apply"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "catalog-apply": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "tests": 0,
+    "census": 0
+  },
+  "finished": true
+}
