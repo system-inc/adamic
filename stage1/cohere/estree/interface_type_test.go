@@ -12,6 +12,7 @@ import (
 )
 
 func TestInterfaceTypeMethodGap(t *testing.T) {
+	t.Parallel()
 	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
 	if err != nil {
 		t.Fatal(err)

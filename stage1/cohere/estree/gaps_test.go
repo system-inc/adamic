@@ -15,6 +15,7 @@ import (
 )
 
 func TestPostfixValueGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/postfixValue.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -35,6 +36,7 @@ func TestPostfixValueGap(t *testing.T) {
 }
 
 func TestMethodReplacementGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/methodReplacement.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -54,6 +56,7 @@ func TestMethodReplacementGap(t *testing.T) {
 }
 
 func TestRawInputGap(t *testing.T) {
+	t.Parallel()
 	dir := t.TempDir()
 	first := filepath.Join(dir, "malformed.ts")
 	second := filepath.Join(dir, "replacement.ts")
@@ -88,6 +91,7 @@ func TestRawInputGap(t *testing.T) {
 }
 
 func TestParserRecoveryGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -113,6 +117,7 @@ func TestParserRecoveryGap(t *testing.T) {
 }
 
 func TestInterfaceDefaultGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/interfaceDefault.ts")
 	if err != nil {
 		t.Fatal(err)
