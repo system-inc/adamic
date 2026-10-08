@@ -1,0 +1,3 @@
+class C extends React.Component { state = {}; }
+class P extends (React.PureComponent) { #state = {}; }
+class Plain { state = {}; }

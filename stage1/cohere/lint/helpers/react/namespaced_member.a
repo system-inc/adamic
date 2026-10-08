@@ -1,0 +1,14 @@
+import { panic } from 'adamic';
+import { isIdentifierNamed } from './react_identifier_named.a';
+import type { HelperNode } from './nodes.a';
+
+export function isNamespacedMember(nodes: readonly HelperNode[], node: number,
+    matches: (name: string) => boolean): boolean {
+    if (node === -1) { return false; }
+    const access = nodes[node] ?? panic('missing member node');
+    if (access.kind !== 'PropertyAccessExpression') { return false; }
+    if (!isIdentifierNamed(nodes, access.expression, 'React')) { return false; }
+    if (access.name === -1) { return false; }
+    const name = nodes[access.name] ?? panic('missing member name');
+    return name.kind === 'Identifier' && matches(name.text);
+}
