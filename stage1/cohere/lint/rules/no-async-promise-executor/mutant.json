@@ -1,0 +1,6 @@
+{
+  "name": "async_executor_ignored",
+  "file": "rule.a",
+  "from": ".text !== 'Promise'",
+  "to": ".text !== 'PromiseName'"
+}

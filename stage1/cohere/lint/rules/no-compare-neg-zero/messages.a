@@ -1,0 +1,1 @@
+export function message(operator: string): string { return `Comparing against \`-0\` with \`${operator}\`: every comparison operator treats \`-0\` and \`0\` as the same number, so this is true for positive zero too and does not test what it looks like it tests. \`Object.is(x, -0)\` is the only comparison that distinguishes them.`; }

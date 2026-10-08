@@ -1,0 +1,60 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic, publish } from '../typescript-no-unused-expressions/records.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    disallowed(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'NumericLiteral': case 'BigIntLiteral': case 'StringLiteral':
+            case 'NoSubstitutionTemplateLiteral': case 'TemplateExpression': case 'RegularExpressionLiteral':
+            case 'TrueKeyword': case 'FalseKeyword': case 'NullKeyword': case 'Identifier':
+            case 'ThisKeyword': case 'SuperKeyword': case 'MetaProperty': case 'ArrayLiteralExpression':
+            case 'ObjectLiteralExpression': case 'FunctionExpression': case 'ArrowFunction':
+            case 'ClassExpression': case 'PropertyAccessExpression': case 'ElementAccessExpression':
+            case 'TypeOfExpression': return true;
+            case 'PrefixUnaryExpression': return node.operator !== 'PlusPlusToken' && node.operator !== 'MinusMinusToken';
+            case 'BinaryExpression': {
+                const operator = this.context.node(node.children[1] ?? -1).kind;
+                if(['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) { return false; }
+                if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) && this.context.settings.read('allowshortcircuit', 'false') === 'true') { return this.disallowed(node.children[2] ?? -1); }
+                return true;
+            }
+            case 'ConditionalExpression': return this.context.settings.read('allowternary', 'false') !== 'true' || this.disallowed(node.children[2] ?? -1) || this.disallowed(node.children[4] ?? -1);
+            case 'TaggedTemplateExpression': return this.context.settings.read('allowtaggedtemplates', 'false') !== 'true';
+            case 'JsxElement': case 'JsxSelfClosingElement': case 'JsxFragment': return this.context.settings.read('enforceforjsx', 'false') === 'true';
+            case 'TypeAssertionExpression': return this.disallowed(node.children[1] ?? -1);
+            case 'ParenthesizedExpression': case 'AsExpression': case 'NonNullExpression': case 'ExpressionWithTypeArguments': return this.disallowed(node.children[0] ?? -1);
+            default: return false;
+        }
+    }
+    directive(index: number): boolean {
+        const parent = this.context.parents[index] ?? -1;
+        if(parent < 0) { return false; }
+        const container = this.context.node(parent);
+        if(container.kind === 'Block') {
+            const outer = this.context.parents[parent] ?? -1;
+            if(outer < 0 || !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(this.context.node(outer).kind)) { return false; }
+        }
+        else if(container.kind !== 'SourceFile' && container.kind !== 'ModuleBlock') { return false; }
+        for(const child of container.children) {
+            const statement = this.context.node(child);
+            const expression = statement.children[0] ?? -1;
+            if(statement.kind !== 'ExpressionStatement' || expression < 0 || this.context.node(expression).kind !== 'StringLiteral') { return false; }
+            if(child === index) { return true; }
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(!this.disallowed(node.children[0] ?? -1) || this.directive(index)) { return; }
+        const record = new Diagnostic(this.context, index, '@typescript-eslint/no-unused-expressions', 'unusedExpression', message);
+        this.records.push(record);
+        publish(this.context, index, record);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

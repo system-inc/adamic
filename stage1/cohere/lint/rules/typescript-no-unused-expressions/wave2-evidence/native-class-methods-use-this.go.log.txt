@@ -1,0 +1,6 @@
+case 0
+/tmp/lint03-wave2-native-proof/class-methods-use-this-witness.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+range 10 13 missingThis 			10 13
+fixed	class A { foo() {} }\u000a

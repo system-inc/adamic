@@ -1,0 +1,41 @@
+{
+  "test_results": {
+    "pass": 152,
+    "skip": 1
+  },
+  "top_level_test_results": {
+    "pass": 41,
+    "skip": 1
+  },
+  "package": {
+    "Time": "2026-10-08T13:27:26.776850803Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Elapsed": 1537.006
+  },
+  "required_checks": {
+    "TestRulesAgree": {
+      "action": "pass",
+      "elapsed": 287.94
+    },
+    "TestOwnedWitnesses": {
+      "action": "pass",
+      "elapsed": 14.02
+    },
+    "TestCompilerAndStage1Agree": {
+      "action": "pass",
+      "elapsed": 439.95
+    },
+    "TestProfileSnapshotsAgree": {
+      "action": "pass",
+      "elapsed": 256.7
+    },
+    "TestMutants": {
+      "action": "pass",
+      "elapsed": 0.04
+    }
+  },
+  "skipped_tests": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}

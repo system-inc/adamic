@@ -1,0 +1,6 @@
+PASS typescript-no-unused-expressions: identifier_expression_ignored caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr
+PASS typescript-unified-signatures: parameter_difference_silenced caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr
+PASS class-methods-use-this: empty_method_silenced caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr
+PASS no-async-promise-executor: async_executor_ignored caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr
+PASS no-case-declarations: closing_brace_missing caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr
+PASS no-compare-neg-zero: negative_zero_ignored caught on ASan/UBSan native; baseline equals Go; both exit 0 with empty stderr

@@ -1,0 +1,176 @@
+{
+  "@typescript-eslint/no-unused-expressions": {
+    "prefix": "TestNoUnusedExpressions",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsFires"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsStaysSilent"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsUnderOptions"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsReportsTwiceInAClassStaticBlock"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsPointsAtTheStatement"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsSeparatesBinaryOperators"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsTreatsNullishAsShortCircuit"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsRecursesThroughAllowedForms"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsChecksBothTernaryBranches"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsDivergesFromOxcOnSatisfies"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsIgnoreDirectivesIsInertHere"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsSeparatesUnaryFormsByKind"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsLeavesUnrecognisedFormsAlone"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_expressions_test.go",
+        "test": "TestNoUnusedExpressionsReadsOptionsFromJSON"
+      }
+    ]
+  },
+  "@typescript-eslint/unified-signatures": {
+    "prefix": "TestUnifiedSignatures",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/typescript/unified_signatures_test.go",
+        "test": "TestUnifiedSignaturesValid"
+      },
+      {
+        "path": "cohere/internal/lint/rules/typescript/unified_signatures_test.go",
+        "test": "TestUnifiedSignaturesInvalid"
+      },
+      {
+        "path": "cohere/internal/lint/rules/typescript/unified_signatures_test.go",
+        "test": "TestUnifiedSignaturesOptionsArriveThroughTheDecoder"
+      }
+    ]
+  },
+  "class-methods-use-this": {
+    "prefix": "TestClassMethodsUseThis",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/core/class_methods_use_this_test.go",
+        "test": "TestClassMethodsUseThisFires"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/class_methods_use_this_test.go",
+        "test": "TestClassMethodsUseThisStaysSilent"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/class_methods_use_this_test.go",
+        "test": "TestClassMethodsUseThisSkipsBodilessMembers"
+      }
+    ]
+  },
+  "no-async-promise-executor": {
+    "prefix": "TestNoAsyncPromiseExecutor",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_async_promise_executor_test.go",
+        "test": "TestNoAsyncPromiseExecutorFires"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_async_promise_executor_test.go",
+        "test": "TestNoAsyncPromiseExecutorStaysSilent"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_async_promise_executor_test.go",
+        "test": "TestNoAsyncPromiseExecutorFiresOnCasesUpstreamDoesNotCover"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_async_promise_executor_test.go",
+        "test": "TestNoAsyncPromiseExecutorStaysSilentOnCasesUpstreamDoesNotCover"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_async_promise_executor_test.go",
+        "test": "TestNoAsyncPromiseExecutorPointsAtTheKeyword"
+      }
+    ]
+  },
+  "no-case-declarations": {
+    "prefix": "TestNoCaseDeclarations",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_case_declarations_test.go",
+        "test": "TestNoCaseDeclarationsReportsLexicalDeclarations"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_case_declarations_test.go",
+        "test": "TestNoCaseDeclarationsAcceptsScopedAndHoistedDeclarations"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_case_declarations_test.go",
+        "test": "TestNoCaseDeclarationsReportsTheDeclarationWithoutTrivia"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_case_declarations_test.go",
+        "test": "TestNoCaseDeclarationsSuggestsWrappingTheWholeClause"
+      }
+    ]
+  },
+  "no-compare-neg-zero": {
+    "prefix": "TestNoCompareNegZero",
+    "tests": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_compare_neg_zero_test.go",
+        "test": "TestNoCompareNegZeroReportsComparisons"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_compare_neg_zero_test.go",
+        "test": "TestNoCompareNegZeroSeesThroughParentheses"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_compare_neg_zero_test.go",
+        "test": "TestNoCompareNegZeroMatchesEveryZeroSpelling"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_compare_neg_zero_test.go",
+        "test": "TestNoCompareNegZeroReportsOncePerComparison"
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_compare_neg_zero_test.go",
+        "test": "TestNoCompareNegZeroStaysSilentOnCorrectCode"
+      }
+    ]
+  }
+}

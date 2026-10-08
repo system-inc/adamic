@@ -1,0 +1,38 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic, publish } from '../typescript-no-unused-expressions/records.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    negative(index: number): boolean {
+        if(index < 0) { return false; }
+        const outer = this.context.node(this.context.unwrap(index));
+        if(outer.kind !== 'PrefixUnaryExpression' || outer.operator !== 'MinusToken') { return false; }
+        const child = outer.children[0] ?? -1;
+        if(child < 0) { return false; }
+        const literal = this.context.node(this.context.unwrap(child));
+        return literal.kind === 'NumericLiteral' && literal.text === '0';
+    }
+    operator(kind: string): string {
+        switch(kind) {
+            case 'LessThanToken': return '<'; case 'LessThanEqualsToken': return '<=';
+            case 'GreaterThanToken': return '>'; case 'GreaterThanEqualsToken': return '>=';
+            case 'EqualsEqualsToken': return '=='; case 'EqualsEqualsEqualsToken': return '===';
+            case 'ExclamationEqualsToken': return '!='; case 'ExclamationEqualsEqualsToken': return '!==';
+            default: return '';
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const token = node.children[1] ?? -1;
+        if(token < 0) { return; }
+        const operator = this.operator(this.context.node(token).kind);
+        if(operator === '' || (!this.negative(node.children[0] ?? -1) && !this.negative(node.children[2] ?? -1))) { return; }
+        const record = new Diagnostic(this.context, index, 'no-compare-neg-zero', 'unexpected', message(operator));
+        this.records.push(record);
+        publish(this.context, index, record);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

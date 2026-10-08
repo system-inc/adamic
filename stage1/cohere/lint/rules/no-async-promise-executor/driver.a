@@ -1,0 +1,106 @@
+// Owned validation driver. It carries full repairs while shared serialization is pending.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { create as constraint } from './rule.a';
+import { create as asConst } from '../no-case-declarations/rule.a';
+import { create as enumInitializers } from '../no-compare-neg-zero/rule.a';
+import { Diagnostic, Edit } from '../typescript-no-unused-expressions/records.a';
+
+function bytes(source: string, end: number): number {
+    let result = 0;
+    for(let index = 0; index < end; index++) {
+        const code = source.codePointAt(index) ?? 0;
+        result += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        if(code > 65535) { index++; }
+    }
+    return result;
+}
+function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+    parents[index] = parent;
+    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+}
+function fixed(source: string, path: string, records: readonly Diagnostic[]): string {
+    const edits: Edit[] = [];
+    for(const record of records) {
+        for(const edit of record.fixes) { edits.push(edit); }
+    }
+    edits.sort((left, right) => left.start === right.start ? left.end - right.end : left.start - right.start);
+    let result = source;
+    let previous = source.length;
+    for(let index = edits.length - 1; index >= 0; index--) {
+        const edit = edits[index] ?? panic('missing edit');
+        if(edit.end > previous) { panic('overlapping owned fixes'); }
+        result = result.slice(0, edit.start) + edit.text + result.slice(edit.end);
+        previous = edit.start;
+    }
+    if(result !== source) { new Parser(result, path).file(); }
+    return result;
+}
+function run(row: string, countOnly: boolean): number {
+    const fields = row.split('\t');
+    const path = fields[0] ?? panic('missing path');
+    const data = readTextFile(path);
+    if(data.kind === 'Error') { panic(data.message); }
+    const parser = new Parser(data.text, path);
+    const root = parser.file();
+    const parents: number[] = [];
+    for(const node of parser.nodes) { parents.push(-1); }
+    const context = new RuleContext(data.text, parser, new Scanner(data.text), fields[1] ?? '', '', '', false, parents, new Settings());
+    ancestry(context, parents, root, -1);
+    const first = constraint(context);
+    const second = asConst(context);
+    const third = enumInitializers(context);
+    // Table indexes are allocated after their children, so use preorder explicitly.
+    const pending = [root];
+    while(pending.length > 0) {
+        const index = pending.pop() ?? panic('missing node');
+        if(context.enabled('no-async-promise-executor')) { first.visit(index); }
+        if(context.enabled('no-case-declarations')) { second.visit(index); }
+        if(context.enabled('no-compare-neg-zero')) { third.visit(index); }
+        const children = context.node(index).children;
+        for(let child = children.length - 1; child >= 0; child--) { pending.push(children[child] ?? -1); }
+    }
+    const records: Diagnostic[] = [];
+    for(const record of first.records) { records.push(record); }
+    for(const record of second.records) { records.push(record); }
+    for(const record of third.records) { records.push(record); }
+    records.sort((left, right) => left.start - right.start);
+    if(countOnly) { return records.length; }
+    for(const record of records) {
+        const start = bytes(data.text, record.start);
+        const end = bytes(data.text, record.end);
+        const prefix = data.text.slice(0, record.start);
+        const line = prefix.split('\n').length;
+        const column = start - bytes(data.text, prefix.lastIndexOf('\n') + 1) + 1;
+        console.log(`${path}:${line}:${column}\n  ${record.rule}  ${record.message}\n`);
+        console.log(`shape ${start} ${end} ${record.id} fixes=${record.fixes.length} suggestions=${record.suggestions.length}`);
+        for(const edit of record.fixes) {
+            console.log(`fix ${bytes(data.text, edit.start)} ${bytes(data.text, edit.end)}\t${written(edit.text)}`);
+        }
+        for(const suggestion of record.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits) {
+                console.log(`edit ${bytes(data.text, edit.start)} ${bytes(data.text, edit.end)}\t${written(edit.text)}`);
+            }
+        }
+    }
+    console.log(`fixed\t${written(fixed(data.text, path, records))}`);
+    return records.length;
+}
+const args = programArguments();
+const path = args[1] ?? panic('usage: driver.a --manifest file [--count]');
+const manifest = readTextFile(path);
+if(manifest.kind === 'Error') { panic(manifest.message); }
+let count = 0;
+let index = 0;
+for(const row of manifest.text.split('\n')) {
+    if(row === '') { continue; }
+    if(!args.includes('--count')) { console.log(`case ${index}`); }
+    count += run(row, args.includes('--count'));
+    index++;
+}
+if(args.includes('--count')) { console.log(`${count}`); }

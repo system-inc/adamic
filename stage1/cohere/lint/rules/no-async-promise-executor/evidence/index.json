@@ -1,0 +1,832 @@
+[
+  {
+    "name": "no-compare-neg-zero-round2-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-Node.stderr.txt",
+    "archive": "no-compare-neg-zero-round2-Node.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round2-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-Node.stdout.txt",
+    "archive": "no-compare-neg-zero-round2-Node.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round2-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-native.stderr.txt",
+    "archive": "no-compare-neg-zero-round2-native.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round2-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-native.stdout.txt",
+    "archive": "no-compare-neg-zero-round2-native.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round2-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-Go.stderr.txt",
+    "archive": "no-compare-neg-zero-round2-Go.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round2-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round2-Go.stdout.txt",
+    "archive": "no-compare-neg-zero-round2-Go.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-Node.stderr.txt",
+    "archive": "no-compare-neg-zero-round1-Node.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-Node.stdout.txt",
+    "archive": "no-compare-neg-zero-round1-Node.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-native.stderr.txt",
+    "archive": "no-compare-neg-zero-round1-native.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-native.stdout.txt",
+    "archive": "no-compare-neg-zero-round1-native.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-Go.stderr.txt",
+    "archive": "no-compare-neg-zero-round1-Go.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round1-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round1-Go.stdout.txt",
+    "archive": "no-compare-neg-zero-round1-Go.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-Node.stderr.txt",
+    "archive": "no-compare-neg-zero-round0-Node.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-Node.stdout.txt",
+    "archive": "no-compare-neg-zero-round0-Node.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-native.stderr.txt",
+    "archive": "no-compare-neg-zero-round0-native.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-native.stdout.txt",
+    "archive": "no-compare-neg-zero-round0-native.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-Go.stderr.txt",
+    "archive": "no-compare-neg-zero-round0-Go.stderr.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-round0-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-round0-Go.stdout.txt",
+    "archive": "no-compare-neg-zero-round0-Go.stdout.txt"
+  },
+  {
+    "name": "no-compare-neg-zero-benchmark.txt",
+    "bytes": 6543,
+    "sha256": "8e95d81d592b643b4ba26943a3bd64904d5a8fae9882e932c13002c60666b326",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-compare-neg-zero-benchmark.txt",
+    "archive": "no-compare-neg-zero-benchmark.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-Node.stderr.txt",
+    "archive": "no-case-declarations-round2-Node.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-Node.stdout.txt",
+    "archive": "no-case-declarations-round2-Node.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-native.stderr.txt",
+    "archive": "no-case-declarations-round2-native.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-native.stdout.txt",
+    "archive": "no-case-declarations-round2-native.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-Go.stderr.txt",
+    "archive": "no-case-declarations-round2-Go.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round2-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round2-Go.stdout.txt",
+    "archive": "no-case-declarations-round2-Go.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-Node.stderr.txt",
+    "archive": "no-case-declarations-round1-Node.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-Node.stdout.txt",
+    "archive": "no-case-declarations-round1-Node.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-native.stderr.txt",
+    "archive": "no-case-declarations-round1-native.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-native.stdout.txt",
+    "archive": "no-case-declarations-round1-native.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-Go.stderr.txt",
+    "archive": "no-case-declarations-round1-Go.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round1-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round1-Go.stdout.txt",
+    "archive": "no-case-declarations-round1-Go.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-Node.stderr.txt",
+    "archive": "no-case-declarations-round0-Node.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-Node.stdout.txt",
+    "archive": "no-case-declarations-round0-Node.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-native.stderr.txt",
+    "archive": "no-case-declarations-round0-native.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-native.stdout.txt",
+    "archive": "no-case-declarations-round0-native.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-Go.stderr.txt",
+    "archive": "no-case-declarations-round0-Go.stderr.txt"
+  },
+  {
+    "name": "no-case-declarations-round0-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "1150ae9e7261e708c8d42d5ec592f9ad6c2105e5117e1392f50c8e49d3a0ed22",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-round0-Go.stdout.txt",
+    "archive": "no-case-declarations-round0-Go.stdout.txt"
+  },
+  {
+    "name": "no-case-declarations-benchmark.txt",
+    "bytes": 6622,
+    "sha256": "6061c9bc002a7256d763236dbb9b7372a119dd4034c266f42bab7677dc0b331a",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-case-declarations-benchmark.txt",
+    "archive": "no-case-declarations-benchmark.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-Node.stderr.txt",
+    "archive": "no-async-promise-executor-round2-Node.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-Node.stdout.txt",
+    "archive": "no-async-promise-executor-round2-Node.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-native.stderr.txt",
+    "archive": "no-async-promise-executor-round2-native.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-native.stdout.txt",
+    "archive": "no-async-promise-executor-round2-native.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-Go.stderr.txt",
+    "archive": "no-async-promise-executor-round2-Go.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round2-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round2-Go.stdout.txt",
+    "archive": "no-async-promise-executor-round2-Go.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-Node.stderr.txt",
+    "archive": "no-async-promise-executor-round1-Node.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-Node.stdout.txt",
+    "archive": "no-async-promise-executor-round1-Node.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-native.stderr.txt",
+    "archive": "no-async-promise-executor-round1-native.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-native.stdout.txt",
+    "archive": "no-async-promise-executor-round1-native.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-Go.stderr.txt",
+    "archive": "no-async-promise-executor-round1-Go.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round1-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round1-Go.stdout.txt",
+    "archive": "no-async-promise-executor-round1-Go.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-Node.stderr.txt",
+    "archive": "no-async-promise-executor-round0-Node.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-Node.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-Node.stdout.txt",
+    "archive": "no-async-promise-executor-round0-Node.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-native.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-native.stderr.txt",
+    "archive": "no-async-promise-executor-round0-native.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-native.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-native.stdout.txt",
+    "archive": "no-async-promise-executor-round0-native.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-Go.stderr.txt",
+    "archive": "no-async-promise-executor-round0-Go.stderr.txt"
+  },
+  {
+    "name": "no-async-promise-executor-round0-Go.stdout.txt",
+    "bytes": 5,
+    "sha256": "83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-round0-Go.stdout.txt",
+    "archive": "no-async-promise-executor-round0-Go.stdout.txt"
+  },
+  {
+    "name": "no-async-promise-executor-benchmark.txt",
+    "bytes": 7017,
+    "sha256": "f0a1a69effb438ae7ac63046e4ddfa45c1d18370e68a3370b139f77a2ab88499",
+    "scratch": "/tmp/lint-wave1-03-next-final/no-async-promise-executor-benchmark.txt",
+    "archive": "no-async-promise-executor-benchmark.txt"
+  },
+  {
+    "name": "negative_zero_ignored-sanitized.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-sanitized.stderr.txt",
+    "archive": "negative_zero_ignored-sanitized.stderr.txt"
+  },
+  {
+    "name": "negative_zero_ignored-sanitized.stdout.txt",
+    "bytes": 29,
+    "sha256": "4417c7343ab53a78528a86a31bfd7501a56495a1bb05ca608a6c141761f37c6f",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-sanitized.stdout.txt",
+    "archive": "negative_zero_ignored-sanitized.stdout.txt"
+  },
+  {
+    "name": "negative_zero_ignored-emitted.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-emitted.stderr.txt",
+    "archive": "negative_zero_ignored-emitted.stderr.txt"
+  },
+  {
+    "name": "negative_zero_ignored-emitted.stdout.txt",
+    "bytes": 29,
+    "sha256": "4417c7343ab53a78528a86a31bfd7501a56495a1bb05ca608a6c141761f37c6f",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-emitted.stdout.txt",
+    "archive": "negative_zero_ignored-emitted.stdout.txt"
+  },
+  {
+    "name": "negative_zero_ignored-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-Node.stderr.txt",
+    "archive": "negative_zero_ignored-Node.stderr.txt"
+  },
+  {
+    "name": "negative_zero_ignored-Node.stdout.txt",
+    "bytes": 29,
+    "sha256": "4417c7343ab53a78528a86a31bfd7501a56495a1bb05ca608a6c141761f37c6f",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-Node.stdout.txt",
+    "archive": "negative_zero_ignored-Node.stdout.txt"
+  },
+  {
+    "name": "negative_zero_ignored-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-Go.stderr.txt",
+    "archive": "negative_zero_ignored-Go.stderr.txt"
+  },
+  {
+    "name": "negative_zero_ignored-Go.stdout.txt",
+    "bytes": 414,
+    "sha256": "8d98ebe9e122152b2a158208bcf3b0fa53ff8966f8f865e7c070139081881f2b",
+    "scratch": "/tmp/lint-wave1-03-next-final/negative_zero_ignored-Go.stdout.txt",
+    "archive": "negative_zero_ignored-Go.stdout.txt"
+  },
+  {
+    "name": "build-negative_zero_ignored.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-negative_zero_ignored.stderr.txt",
+    "archive": "build-negative_zero_ignored.stderr.txt"
+  },
+  {
+    "name": "build-negative_zero_ignored.stdout.txt",
+    "bytes": 63,
+    "sha256": "56e08552d26ea29836273535a5539be8f2e2724ddab06326eab216e652427c58",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-negative_zero_ignored.stdout.txt",
+    "archive": "build-negative_zero_ignored.stdout.txt"
+  },
+  {
+    "name": "closing_brace_missing-sanitized.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-sanitized.stderr.txt",
+    "archive": "closing_brace_missing-sanitized.stderr.txt"
+  },
+  {
+    "name": "closing_brace_missing-sanitized.stdout.txt",
+    "bytes": 638,
+    "sha256": "ede9f8a8cdc2ce5648ba6cb81576f71da0dc3b592e43925097af47a1b5b78e57",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-sanitized.stdout.txt",
+    "archive": "closing_brace_missing-sanitized.stdout.txt"
+  },
+  {
+    "name": "closing_brace_missing-emitted.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-emitted.stderr.txt",
+    "archive": "closing_brace_missing-emitted.stderr.txt"
+  },
+  {
+    "name": "closing_brace_missing-emitted.stdout.txt",
+    "bytes": 638,
+    "sha256": "ede9f8a8cdc2ce5648ba6cb81576f71da0dc3b592e43925097af47a1b5b78e57",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-emitted.stdout.txt",
+    "archive": "closing_brace_missing-emitted.stdout.txt"
+  },
+  {
+    "name": "closing_brace_missing-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-Node.stderr.txt",
+    "archive": "closing_brace_missing-Node.stderr.txt"
+  },
+  {
+    "name": "closing_brace_missing-Node.stdout.txt",
+    "bytes": 638,
+    "sha256": "ede9f8a8cdc2ce5648ba6cb81576f71da0dc3b592e43925097af47a1b5b78e57",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-Node.stdout.txt",
+    "archive": "closing_brace_missing-Node.stdout.txt"
+  },
+  {
+    "name": "closing_brace_missing-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-Go.stderr.txt",
+    "archive": "closing_brace_missing-Go.stderr.txt"
+  },
+  {
+    "name": "closing_brace_missing-Go.stdout.txt",
+    "bytes": 640,
+    "sha256": "c34410fb0da99491ddbaed6010dd641de33807892e7310252759941471a7fae8",
+    "scratch": "/tmp/lint-wave1-03-next-final/closing_brace_missing-Go.stdout.txt",
+    "archive": "closing_brace_missing-Go.stdout.txt"
+  },
+  {
+    "name": "build-closing_brace_missing.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-closing_brace_missing.stderr.txt",
+    "archive": "build-closing_brace_missing.stderr.txt"
+  },
+  {
+    "name": "build-closing_brace_missing.stdout.txt",
+    "bytes": 63,
+    "sha256": "56e08552d26ea29836273535a5539be8f2e2724ddab06326eab216e652427c58",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-closing_brace_missing.stdout.txt",
+    "archive": "build-closing_brace_missing.stdout.txt"
+  },
+  {
+    "name": "async_executor_ignored-sanitized.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-sanitized.stderr.txt",
+    "archive": "async_executor_ignored-sanitized.stderr.txt"
+  },
+  {
+    "name": "async_executor_ignored-sanitized.stdout.txt",
+    "bytes": 48,
+    "sha256": "dc0bf66d019ad11fac16cdf20b6ec98470e308384eeda0e6ebbe84d306a61a27",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-sanitized.stdout.txt",
+    "archive": "async_executor_ignored-sanitized.stdout.txt"
+  },
+  {
+    "name": "async_executor_ignored-emitted.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-emitted.stderr.txt",
+    "archive": "async_executor_ignored-emitted.stderr.txt"
+  },
+  {
+    "name": "async_executor_ignored-emitted.stdout.txt",
+    "bytes": 48,
+    "sha256": "dc0bf66d019ad11fac16cdf20b6ec98470e308384eeda0e6ebbe84d306a61a27",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-emitted.stdout.txt",
+    "archive": "async_executor_ignored-emitted.stdout.txt"
+  },
+  {
+    "name": "async_executor_ignored-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-Node.stderr.txt",
+    "archive": "async_executor_ignored-Node.stderr.txt"
+  },
+  {
+    "name": "async_executor_ignored-Node.stdout.txt",
+    "bytes": 48,
+    "sha256": "dc0bf66d019ad11fac16cdf20b6ec98470e308384eeda0e6ebbe84d306a61a27",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-Node.stdout.txt",
+    "archive": "async_executor_ignored-Node.stdout.txt"
+  },
+  {
+    "name": "async_executor_ignored-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-Go.stderr.txt",
+    "archive": "async_executor_ignored-Go.stderr.txt"
+  },
+  {
+    "name": "async_executor_ignored-Go.stdout.txt",
+    "bytes": 625,
+    "sha256": "76f00982578e8862cc8beca5c5386d4d636f33cc50a9dfa05188ea26f458740f",
+    "scratch": "/tmp/lint-wave1-03-next-final/async_executor_ignored-Go.stdout.txt",
+    "archive": "async_executor_ignored-Go.stdout.txt"
+  },
+  {
+    "name": "build-async_executor_ignored.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-async_executor_ignored.stderr.txt",
+    "archive": "build-async_executor_ignored.stderr.txt"
+  },
+  {
+    "name": "build-async_executor_ignored.stdout.txt",
+    "bytes": 63,
+    "sha256": "56e08552d26ea29836273535a5539be8f2e2724ddab06326eab216e652427c58",
+    "scratch": "/tmp/lint-wave1-03-next-final/build-async_executor_ignored.stdout.txt",
+    "archive": "build-async_executor_ignored.stdout.txt"
+  },
+  {
+    "name": "corpus-sanitized.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-sanitized.stderr.txt",
+    "archive": "corpus-sanitized.stderr.txt"
+  },
+  {
+    "name": "corpus-sanitized.stdout.txt",
+    "bytes": 36843665,
+    "sha256": "99b4377ad148ee9c4b55ab1fddb74c8b661f8b485636ec87ae78b871d1cd4473",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-sanitized.stdout.txt"
+  },
+  {
+    "name": "corpus-emitted.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-emitted.stderr.txt",
+    "archive": "corpus-emitted.stderr.txt"
+  },
+  {
+    "name": "corpus-emitted.stdout.txt",
+    "bytes": 36843665,
+    "sha256": "99b4377ad148ee9c4b55ab1fddb74c8b661f8b485636ec87ae78b871d1cd4473",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-emitted.stdout.txt"
+  },
+  {
+    "name": "corpus-Node.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-Node.stderr.txt",
+    "archive": "corpus-Node.stderr.txt"
+  },
+  {
+    "name": "corpus-Node.stdout.txt",
+    "bytes": 36843665,
+    "sha256": "99b4377ad148ee9c4b55ab1fddb74c8b661f8b485636ec87ae78b871d1cd4473",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-Node.stdout.txt"
+  },
+  {
+    "name": "corpus-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-Go.stderr.txt",
+    "archive": "corpus-Go.stderr.txt"
+  },
+  {
+    "name": "corpus-Go.stdout.txt",
+    "bytes": 36843665,
+    "sha256": "99b4377ad148ee9c4b55ab1fddb74c8b661f8b485636ec87ae78b871d1cd4473",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-Go.stdout.txt",
+    "archive": "corpus-Go.stdout.txt.gz"
+  },
+  {
+    "name": "corpus-manifest.txt",
+    "bytes": 44927,
+    "sha256": "c80b2de3c7145474aaa6fadd27b0e0b9158d14d5efa548f4a06ec3e86d19aff6",
+    "scratch": "/tmp/lint-wave1-03-next-final/corpus-manifest.txt",
+    "archive": "corpus-manifest.txt"
+  },
+  {
+    "name": "sanitized-output.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/sanitized-output.stderr.txt",
+    "archive": "sanitized-output.stderr.txt"
+  },
+  {
+    "name": "sanitized-output.stdout.txt",
+    "bytes": 33108,
+    "sha256": "579e7f61c33b8339e1c46d2ae64e022a01cf987d87babf3e2a87c254ca3d7192",
+    "scratch": "/tmp/lint-wave1-03-next-final/sanitized-output.stdout.txt",
+    "archive": "sanitized-output.stdout.txt"
+  },
+  {
+    "name": "emitted-output.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/emitted-output.stderr.txt",
+    "archive": "emitted-output.stderr.txt"
+  },
+  {
+    "name": "emitted-output.stdout.txt",
+    "bytes": 33108,
+    "sha256": "579e7f61c33b8339e1c46d2ae64e022a01cf987d87babf3e2a87c254ca3d7192",
+    "scratch": "/tmp/lint-wave1-03-next-final/emitted-output.stdout.txt",
+    "archive": "emitted-output.stdout.txt"
+  },
+  {
+    "name": "Node-output.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/Node-output.stderr.txt",
+    "archive": "Node-output.stderr.txt"
+  },
+  {
+    "name": "Node-output.stdout.txt",
+    "bytes": 33108,
+    "sha256": "579e7f61c33b8339e1c46d2ae64e022a01cf987d87babf3e2a87c254ca3d7192",
+    "scratch": "/tmp/lint-wave1-03-next-final/Node-output.stdout.txt",
+    "archive": "Node-output.stdout.txt"
+  },
+  {
+    "name": "go-output.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/go-output.stderr.txt",
+    "archive": "go-output.stderr.txt"
+  },
+  {
+    "name": "go-output.stdout.txt",
+    "bytes": 33108,
+    "sha256": "579e7f61c33b8339e1c46d2ae64e022a01cf987d87babf3e2a87c254ca3d7192",
+    "scratch": "/tmp/lint-wave1-03-next-final/go-output.stdout.txt",
+    "archive": "go-output.stdout.txt"
+  },
+  {
+    "name": "gap-13-sanitized.stderr.txt",
+    "bytes": 106,
+    "sha256": "afb73c572f78f61a5b6365e9e891f609ae606f88468b49e9cbbb50a93a354aac",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-sanitized.stderr.txt",
+    "archive": "gap-13-sanitized.stderr.txt"
+  },
+  {
+    "name": "gap-13-sanitized.stdout.txt",
+    "bytes": 7,
+    "sha256": "58f8ea6c898ceb9ce71d2ecfb42504b444cb4b704dd8788626c2899f944d2401",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-sanitized.stdout.txt",
+    "archive": "gap-13-sanitized.stdout.txt"
+  },
+  {
+    "name": "gap-13-emitted.stderr.txt",
+    "bytes": 106,
+    "sha256": "afb73c572f78f61a5b6365e9e891f609ae606f88468b49e9cbbb50a93a354aac",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-emitted.stderr.txt",
+    "archive": "gap-13-emitted.stderr.txt"
+  },
+  {
+    "name": "gap-13-emitted.stdout.txt",
+    "bytes": 7,
+    "sha256": "58f8ea6c898ceb9ce71d2ecfb42504b444cb4b704dd8788626c2899f944d2401",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-emitted.stdout.txt",
+    "archive": "gap-13-emitted.stdout.txt"
+  },
+  {
+    "name": "gap-13-Node.stderr.txt",
+    "bytes": 106,
+    "sha256": "afb73c572f78f61a5b6365e9e891f609ae606f88468b49e9cbbb50a93a354aac",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-Node.stderr.txt",
+    "archive": "gap-13-Node.stderr.txt"
+  },
+  {
+    "name": "gap-13-Node.stdout.txt",
+    "bytes": 7,
+    "sha256": "58f8ea6c898ceb9ce71d2ecfb42504b444cb4b704dd8788626c2899f944d2401",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-Node.stdout.txt",
+    "archive": "gap-13-Node.stdout.txt"
+  },
+  {
+    "name": "gap-13-Go.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-Go.stderr.txt",
+    "archive": "gap-13-Go.stderr.txt"
+  },
+  {
+    "name": "gap-13-Go.stdout.txt",
+    "bytes": 46,
+    "sha256": "ff3cfae4325c4f3f9c72254e8164d04f901283841f1fe9e91e8686dd61d8829a",
+    "scratch": "/tmp/lint-wave1-03-next-final/gap-13-Go.stdout.txt",
+    "archive": "gap-13-Go.stdout.txt"
+  },
+  {
+    "name": "port-build.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/port-build.stderr.txt",
+    "archive": "port-build.stderr.txt"
+  },
+  {
+    "name": "port-build.stdout.txt",
+    "bytes": 63,
+    "sha256": "56e08552d26ea29836273535a5539be8f2e2724ddab06326eab216e652427c58",
+    "scratch": "/tmp/lint-wave1-03-next-final/port-build.stdout.txt",
+    "archive": "port-build.stdout.txt"
+  },
+  {
+    "name": "manifest.txt",
+    "bytes": 9557,
+    "sha256": "43b0b735cb95ea1a045ca49c214409b425db921dbb3df602cb805eb9afe88372",
+    "scratch": "/tmp/lint-wave1-03-next-final/manifest.txt",
+    "archive": "manifest.txt"
+  },
+  {
+    "name": "upstream.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/upstream.stderr.txt",
+    "archive": "upstream.stderr.txt"
+  },
+  {
+    "name": "upstream.stdout.txt",
+    "bytes": 25123,
+    "sha256": "c6489f87a633d487f32708b816ff46576866939af4b490e2555de2e0ea09ac0a",
+    "scratch": "/tmp/lint-wave1-03-next-final/upstream.stdout.txt",
+    "archive": "upstream.stdout.txt"
+  },
+  {
+    "name": "oracle-build.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/oracle-build.stderr.txt",
+    "archive": "oracle-build.stderr.txt"
+  },
+  {
+    "name": "oracle-build.stdout.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scratch": "/tmp/lint-wave1-03-next-final/oracle-build.stdout.txt",
+    "archive": "oracle-build.stdout.txt"
+  }
+]
