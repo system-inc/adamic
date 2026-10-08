@@ -2,5 +2,31 @@
   "stage1/cohere/markdownblocks": {
     "exit": null,
     "status": "interrupted by environment reconnect; partial JSON log; single solo attempt retained"
+  },
+  "stage1/cohere/lint": {
+    "exit": 0,
+    "wall_seconds": 3042.643,
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "60m",
+      "-json",
+      "./stage1/cohere/lint"
+    ]
+  },
+  "stage1/cohere/typeaware": {
+    "exit": 0,
+    "wall_seconds": 1285.239,
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "60m",
+      "-json",
+      "./stage1/cohere/typeaware"
+    ]
   }
 }
