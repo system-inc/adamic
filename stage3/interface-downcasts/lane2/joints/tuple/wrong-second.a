@@ -1,0 +1,5 @@
+import type { IncrementalBuildInfoEmitSignature } from 'original-tsc-builder';
+type Target = Exclude<IncrementalBuildInfoEmitSignature, number>;
+function read(node: Target): string { return typeof node[1]; }
+const base: (number | string)[] = [1, 2];
+console.log(read(base as Target));

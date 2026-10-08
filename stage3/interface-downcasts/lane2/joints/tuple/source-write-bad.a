@@ -1,0 +1,7 @@
+interface Base { readonly tag: string; }
+interface Target extends Base { readonly values: (number | string | boolean)[]; }
+function read(node: Target): string { node.values[0] = true; return typeof node.values[0]; }
+const values: (number | string)[] = [1, 'sig'];
+const raw = {tag: 'x', values};
+const base: Base = raw;
+console.log(read(base as Target));
