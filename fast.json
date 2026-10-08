@@ -1,0 +1,297 @@
+{
+  "sha": "69385a98a6685431cf10852e499ff876578c0ccf",
+  "branch": "devtools/port-refusalprobe",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "base_name": "main",
+  "tools_sha": "3e339bbf06e0695f1b1223065ee8d4eef4813ba8",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "cmd/adamic-refusals/main.go",
+        "internal/refusalprobe/RULINGS.md",
+        "internal/refusalprobe/catalog.go",
+        "internal/refusalprobe/probe.go",
+        "internal/refusalprobe/probe_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "internal/refusalprobe/RULINGS.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "cmd/adamic-refusals/main.go",
+    "internal/refusalprobe/RULINGS.md",
+    "internal/refusalprobe/catalog.go",
+    "internal/refusalprobe/probe.go",
+    "internal/refusalprobe/probe_test.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/cmd/adamic-refusals",
+    "github.com/system-inc/adamic/internal/refusalprobe",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-4",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestCatalogCoverage",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestCatalogAuditCanFail",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestWrongDiagnosticIsAFinding",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestExecutableNeighbors",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestNeighborFailureIsNotACompilerHole",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestStrictDiagnosticWithRealLowering",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestDirectRefusalAuditCanFail",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestGeneratedRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestEnumNotYetBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestAcceptedProgramIsAFindingWithRealLowering",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestAcceptedCatalogPairs",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 748.0384,
+      "slots": 4,
+      "after_seconds": 37.107
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 12.35968,
+      "slots": 1,
+      "after_seconds": 37.107
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestAcceptedCatalogPairs",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.146
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestAcceptedProgramIsAFindingWithRealLowering",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.147
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestCatalogAuditCanFail",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.149
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/refusalprobe",
+      "test": "TestCatalogCoverage",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.15
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/cmd/adamic-refusals": 0,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/internal/refusalprobe": 11
+  },
+  "gate_samples": [
+    "TestMarkdownInline 44/1354 files, stride 32, offset 5"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 3,
+    "planned": 13,
+    "passed": 1,
+    "touched": 4
+  },
+  "wall_seconds": 47.1,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 36.5,
+    "build": 41.2,
+    "smoke": 44.0,
+    "tests": 46.3
+  },
+  "pass": 48,
+  "fail": 1,
+  "failed_tests": [
+    "github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage"
+  ],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "tests",
+    "detail": "github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage\n=== RUN   TestCatalogCoverage\n    probe_test.go:16: refusal catalog is incomplete: helper nodeLibraryRefusal, helper typedArrayUnsupported, helper predicateArguments, helper namespaceRefusal, helper argumentsRefusal, helper nodeBufferUnsupportedUse, helper libraryMethod\n--- FAIL: TestCatalogCoverage (0.00s)\n",
+    "after_seconds": 47.1
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "tests": 1
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 1,
+    "failed": 0,
+    "not run": 12
+  }
+}
