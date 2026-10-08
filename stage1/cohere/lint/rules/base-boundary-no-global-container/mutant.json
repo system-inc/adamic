@@ -1,0 +1,5 @@
+{
+  "name": "global container name judgement reversed",
+  "from": "node.text !== 'getGlobalContainer'",
+  "to": "node.text === 'getGlobalContainer'"
+}

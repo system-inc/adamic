@@ -69,9 +69,9 @@ An object or undefined (`Disable | undefined`, here) lowers and runs right.
 
 The cycle finder (mediaquery's GAPS.md, "The cycle rule's cost") had nothing to say here: a Directive holds strings and numbers, the Index holds lists of Directives and a closure over a list of numbers, and nothing reaches back.
 
-## Go cohere and ESLint disagree on two whitespace characters
+## Go cohere and ESLint disagreed on two whitespace characters (fixed by cohere 8e30b756)
 
-Not a stage 0 gap, and not the port's: the port answers as Go cohere does, which is what it's held to. But the port is where it showed, and it matters to cohere's own doctrine ("the parity doctrine is never worse than ESLint").
+The bump to cohere `cbe755d3` carries `8e30b756`, which fixes the grammar to JavaScript whitespace: U+FEFF is trimmed, U+0085 is retained, and all JavaScript whitespace ends a directive word, for disables and enables alike. The port now uses that same set. Its mutants restore Go whitespace and the old space-or-tab word boundary, and the comparison must catch both. The observations below describe the earlier disagreement.
 
 directives.go trims a comment's body, its rule names and its reason with Go's `strings.TrimSpace`, which trims what Go's `unicode.IsSpace` calls space. ESLint is JavaScript and trims with JavaScript's whitespace. The two sets differ by two characters: Go takes U+0085 (NEL) and leaves U+FEFF; JavaScript takes U+FEFF and leaves U+0085. The natural TypeScript port, calling `trim()`, answers as ESLint does; this port writes Go's trim as `goTrimSpace` (directives.ts), on purpose, and the test's U+0085 mutant shows the cases reach the difference.
 
@@ -88,7 +88,7 @@ Measured on ESLint 10.12.0 (`npm install eslint`; `testdata/eslint_whitespace.cj
 | `//` U+FEFF `eslint-disable-next-line no-debugger` | suppressed | reported |
 | `/*` U+00A0 `eslint-disable no-debugger */` | suppressed | suppressed |
 
-Six of eight differ, every one where the two whitespace sets do. cohere's tests measured ESLint 10.8.1; this is 10.12.0, and I haven't checked the earlier version. The fix in cohere is one function, a trim over JavaScript's whitespace in place of `strings.TrimSpace` in directives.go; when cohere makes it, the port's `goTrimSpace` becomes `trim()` and the U+0085 mutant changes sides. Sent to Ahra with this report, not fixed from here (this stream's access is the adamic repository).
+Six of eight differ, every one where the two whitespace sets do. cohere's tests measured ESLint 10.8.1; this is 10.12.0, and I haven't checked the earlier version. cohere fixed both trimming and word boundaries in `8e30b756`, with 19 ESLint-measured fixtures. The port now mirrors those answers with `trimWhitespace` and `isJavaScriptSpace`.
 
 ## Not a stage 0 gap: Node's stdout into a Go pipe
 

@@ -14,7 +14,7 @@ import (
 )
 
 func TestFrontMatterStage(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -150,15 +150,14 @@ func TestFrontMatterStage(t *testing.T) {
 			}
 			mutantMain := filepath.Join(scratch, "testdata/frontmatter_probe.ts")
 			write(t, mutantMain, source)
-			mutant := lowered(t, mutantMain)
-			answer := nativelyRun(t, mutant, cases)
-			clean(t, "native output-only mutant", answer)
+			answer := onNode(t, mutantMain, cases)
+			clean(t, "source Node output-only mutant", answer)
 			if bytes.Equal(answer.stdout, want.stdout) {
 				t.Fatal("mutant survived")
 			}
 			offset := firstDifference(string(answer.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("native output-only mutant caught at output byte %d by %s", offset, inputs[index].Name)
+			t.Logf("source Node output-only mutant caught at output byte %d by %s", offset, inputs[index].Name)
 		})
 	}
 	fast := filepath.Join(dir, "native-fast")

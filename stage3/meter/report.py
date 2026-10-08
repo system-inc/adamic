@@ -10,37 +10,42 @@ import sys
 
 
 MEASUREMENT = 'measured on a checker-rejected program'
+ENTRY_MEASUREMENT = 'measured on a checker-clean entry-root program'
 
 
 def reason_owner(reason, owners):
+    # The variance family owns every such message, including ones that also
+    # begin with a mapped type or generic-return prefix.
+    if ' seen as ' in reason and 'seen as' in owners:
+        return owners['seen as']
     if reason in owners:
         return owners[reason]
     for prefix in sorted(owners, key=lambda key: (-len(key), key)):
         if prefix != 'seen as' and reason.startswith(prefix):
             return owners[prefix]
-    # Variance messages put the source type before this phrase, so a prefix
-    # cannot match them. The explicit map entry owns this diagnostic family.
-    if ' seen as ' in reason and 'seen as' in owners:
-        return owners['seen as']
     return 'OWNER BLANK'
 
 
 def latent_summary(tree, run):
     records = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
-    if not records or records[0].get('measurement') != MEASUREMENT or records[0].get('status') != 'measurement':
-        raise ValueError('invalid latent measurement header')
     expected = {str(path.resolve()) for path in (tree / 'src/compiler').rglob('*')
                 if path.is_file() and path.suffix in ('.ts', '.a')}
+    return lowering_summary(records, expected, MEASUREMENT)
+
+
+def lowering_summary(records, expected, measurement):
+    if not records or records[0].get('measurement') != measurement or records[0].get('status') != 'measurement':
+        raise ValueError('invalid latent measurement header')
     seen = set()
     sites = set()
     events = 0
     for record in records[1:]:
         name = str(Path(record['file']).resolve())
-        if name not in expected or name in seen or record.get('measurement') != MEASUREMENT:
+        if name not in expected or name in seen or record.get('measurement') != measurement:
             raise ValueError('invalid or duplicate latent census file')
         seen.add(name)
         for finding in record.get('findings') or []:
-            if finding.get('measurement') != MEASUREMENT or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic'):
+            if finding.get('measurement') != measurement or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic'):
                 raise ValueError('invalid latent finding')
             sites.add(tuple(finding[key] for key in ('kind', 'where', 'reason', 'text')))
             events += 1
@@ -58,7 +63,7 @@ def latent_summary(tree, run):
         row['count'] += count
     reason_rows = sorted(groups.values(), key=lambda row: (-row['count'], row['reason']))
     return {
-        'measurement': MEASUREMENT,
+        'measurement': measurement,
         'checker_rejected': records[0]['checker_rejected'],
         'count_definition': 'unique (kind, where, reason, text) sites across all attempts',
         'totals': {kind: counts[kind] for kind in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic')},
@@ -70,6 +75,65 @@ def latent_summary(tree, run):
         'source_files': len(seen),
         'recorded_events': events,
     }
+
+
+def entry_summary(tree, run):
+    entry = (tree / 'src/tsc/tsc.ts').resolve()
+    if not entry.is_file():
+        raise ValueError(f'tsc entry missing: {entry}')
+    records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
+    # A single file produces its ordinary per-file and aggregate observations.
+    if len(records) != 2 or any(record.get('roots') != [str(entry)] for record in records):
+        raise ValueError('invalid tsc entry census roots or coverage')
+    comparable = [{key: value for key, value in record.items() if key != 'seconds'} for record in records]
+    if comparable[0] != comparable[1]:
+        raise ValueError('tsc entry observations disagree')
+    record = records[-1]
+    if record.get('kind') not in ('accepted', 'checker', 'NotYet', 'Refused'):
+        raise ValueError('invalid tsc entry checker outcome: ' + str(record.get('kind')))
+    checked = record['kind'] != 'checker'
+    diagnostics = record.get('diagnostics', [])
+    if (checked and diagnostics) or (not checked and not diagnostics):
+        raise ValueError('tsc entry checker outcome disagrees with diagnostics')
+    latent = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+    if not latent or latent[0].get('roots') != [str(entry)]:
+        raise ValueError('invalid tsc entry lowering roots')
+    header = latent[0]
+    if header.get('checker_rejected') != (not checked) or sorted(header.get('diagnostics', [])) != sorted(diagnostics):
+        raise ValueError('tsc entry checker and lowering diagnostics disagree')
+    result = {'root': 'src/tsc/tsc.ts', 'checker_whole_program': checked,
+              'whole_program_diagnostics': len(diagnostics), 'diagnostics': diagnostics,
+              'outcome': record['kind'], 'lowering_attempted': checked, 'lowering_census': None}
+    if not checked:
+        if len(latent) != 1 or header.get('status') != 'blocked':
+            raise ValueError('tsc entry lowering ran despite checker diagnostics')
+        return result
+    sources = header.get('sources', [])
+    expected = {str(Path(name).resolve()) for name in sources}
+    if len(expected) != len(sources) or str(entry) not in expected or any(not Path(name).is_file() for name in expected):
+        raise ValueError('invalid tsc entry resolved reach')
+    result['lowering_census'] = lowering_summary(latent, expected, ENTRY_MEASUREMENT)
+    return result
+
+
+def entry_table(label, entry):
+    summary = entry['lowering_census']
+    if summary is None:
+        return ['', f'tsc entry lowering, {label}: blocked by checker diagnostics.']
+    lines = ['', f'tsc entry lowering, {label}: {ENTRY_MEASUREMENT}.',
+             f"Resolved source files: {summary['source_files']}; "
+             f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
+             f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
+             f"skipped dependencies: {summary['totals']['SkippedDependency']}.", '',
+             '| Reason | Owner | NotYet | Refused | Total |', '| --- | --- | ---: | ---: | ---: | ---: |']
+    for row in summary['reason_rows'][:10]:
+        reason = escape(row['reason']).replace('|', '&#124;').replace('\n', ' ')
+        lines.append(f"| {reason} | {row['owner']} | {row['NotYet']} | {row['Refused']} | {row['count']} |")
+    if not summary['reason_rows']:
+        lines.append('| No NotYet or Refused findings | | 0 | 0 | 0 |')
+    lines += ['', 'Counts cover the entry root and its resolved implementation dependencies, excluding declarations.',
+              'Errors and panics are retained separately in JSON. This census does not establish native output.']
+    return lines
 
 
 def latent_table(label, summary):
@@ -120,7 +184,7 @@ def unowned_table(trees):
     return ordered, lines
 
 
-def report(tree, run, stamp):
+def report(tree, run, stamp, compiler_commit=None):
     compiler = tree / 'src/compiler'
     expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}
     records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
@@ -183,7 +247,7 @@ def report(tree, run, stamp):
     }
     result = {
         'timestamp_utc': stamp,
-        'adamic_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'adamic_commit': compiler_commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
         'profile': 'unmodified stage 0 checker options and prelude',
         'adapted_tree': str(tree),
         'unlocated_diagnostics': len(unlocated),
@@ -210,26 +274,51 @@ def report(tree, run, stamp):
 
 
 def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
+    metadata_path = run / 'compiler-mode.json'
+    metadata = json.loads(metadata_path.read_text()) if metadata_path.exists() else None
+    mode = metadata['mode'] if metadata else 'single'
+    if mode not in ('single', 'per-ref'):
+        raise ValueError('invalid compiler mode')
+    if metadata:
+        commits = metadata['commits']
+        if set(commits) != {'main', 'area'} or any(not re.fullmatch(r'[0-9a-f]{40}', sha) for sha in commits.values()):
+            raise ValueError('invalid compiler commits')
+        if mode == 'per-ref' and commits != {'main': main_commit, 'area': area_commit}:
+            raise ValueError('per-ref compiler commits do not match source pins')
+        if mode == 'single' and commits['main'] != commits['area']:
+            raise ValueError('single compiler commits differ')
     trees = {}
     for label, tree, commit in [('main', main_tree, main_commit), ('area', area_tree, area_commit)]:
-        trees[label] = report(tree, run / label, stamp)
+        trees[label] = report(tree, run / label, stamp, metadata['commits'][label] if metadata else None)
         trees[label]['tree_ref'] = 'origin/main' if label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
+        trees[label]['tsc_entry'] = entry_summary(tree, run / label / 'tsc')
         with (run / label / 'report.md').open('a') as output:
-            output.write('\n'.join(latent_table(label, trees[label]['latent_lowering'])) + '\n')
+            output.write('\n'.join(entry_table(label, trees[label]['tsc_entry']) +
+                                   latent_table(label, trees[label]['latent_lowering'])) + '\n')
         (run / label / 'report.json').write_text(json.dumps(trees[label], indent=2) + '\n')
     # Preserve the existing area's single-tree fields for JSON consumers.
     unowned, unowned_lines = unowned_table(trees)
-    result = dict(trees['area'], trees=trees, unowned_reasons=unowned)
+    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode)
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = []
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
         values = [f"{label}: {trees[label]['totals'][key]}/{trees[label]['totals']['source_files']}" for label in trees]
         lines.append(f"{title}: " + '; '.join(values))
+    lines.append('tsc entry: ' + '; '.join(f"{label}: {'pass' if tree['tsc_entry']['checker_whole_program'] else 'fail'}"
+                                        for label, tree in trees.items()))
+    lines.append('tsc entry diagnostics: ' + '; '.join(f"{label}: {tree['tsc_entry']['whole_program_diagnostics']}"
+                                                    for label, tree in trees.items()))
+    if mode == 'single':
+        compilers = f"Both measured with Adamic {result['adamic_commit']} and ordinary stage 0 options."
+    else:
+        compilers = (f"Main measured with Adamic {trees['main']['adamic_commit']}; "
+                     f"area measured with Adamic {trees['area']['adamic_commit']}. "
+                     'Each compiler is built from its pinned ref with ordinary stage 0 options.')
     lines += ['', f'Stage 3 meter {stamp}', '',
               f'Main: origin/main at {main_commit}. Area: origin/area/stage3 at {area_commit}.',
-              f"Both measured with Adamic {result['adamic_commit']} and ordinary stage 0 options.", '',
+              compilers, '',
               '| File | Main whole program | Main own file | Area whole program | Area own file |',
               '| --- | --- | --- | --- | --- |']
     rows = {label: {row['file']: row for row in tree['files']} for label, tree in trees.items()}
@@ -240,6 +329,8 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
             for key in ['checker_whole_program', 'checker_own_file']:
                 cells.append('absent' if row is None else 'pass' if row[key] else 'fail')
         lines.append('| ' + ' | '.join([name, *cells]) + ' |')
+    for label in trees:
+        lines += entry_table(label, trees[label]['tsc_entry'])
     lines += unowned_lines
     for label in trees:
         lines += latent_table(label, trees[label]['latent_lowering'])

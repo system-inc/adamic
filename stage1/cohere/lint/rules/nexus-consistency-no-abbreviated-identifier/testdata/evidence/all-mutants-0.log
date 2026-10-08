@@ -1,0 +1,533 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:759: debugger fix suppressed caught on Node: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t\t0 9", Go "range 0 9 unexpectedDebugger fix\t\t\t0 9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 			16 25
+    lint_test.go:759: debugger fix suppressed caught on emitted JavaScript: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t\t0 9", Go "range 0 9 unexpectedDebugger fix\t\t\t0 9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 			16 25
+    lint_test.go:759: debugger fix suppressed caught on native: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t\t0 9", Go "range 0 9 unexpectedDebugger fix\t\t\t0 9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3981640186/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 			16 25
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:759: empty function body reported caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:759: empty function body reported caught on emitted JavaScript: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:759: empty function body reported caught on native: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1001608704/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/no-unused-private-class-members_mutant_from_batch_8
+    lint_test.go:759: no-unused-private-class-members mutant from batch 8 caught on Node: case 145 line 2762: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+    lint_test.go:759: no-unused-private-class-members mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+    lint_test.go:759: no-unused-private-class-members mutant from batch 8 caught on native: case 145 line 2762: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82434360975/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+=== RUN   TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+    lint_test.go:759: react-forward-ref-uses-ref mutant from batch 8 caught on Node: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+    lint_test.go:759: react-forward-ref-uses-ref mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+    lint_test.go:759: react-forward-ref-uses-ref mutant from batch 8 caught on native: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83494634829/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+=== RUN   TestMutants/react-no-is-mounted_mutant_from_batch_8
+    lint_test.go:759: react-no-is-mounted mutant from batch 8 caught on Node: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:62
+    lint_test.go:759: react-no-is-mounted mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:62
+    lint_test.go:759: react-no-is-mounted mutant from batch 8 caught on native: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83157635802/016/react-no-is-mounted-0.ts:1:62
+=== RUN   TestMutants/method_listener_lost
+    lint_test.go:759: method listener lost caught on Node: case 140 line 2680: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389
+    lint_test.go:759: method listener lost caught on emitted JavaScript: case 140 line 2680: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389
+    lint_test.go:759: method listener lost caught on native: case 140 line 2680: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2757968402/015/options.ts:1:389
+=== RUN   TestMutants/predicate_finding_widened_to_its_owner
+    lint_test.go:759: predicate finding widened to its owner caught on Node: case 140 line 2652: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:183
+    lint_test.go:759: predicate finding widened to its owner caught on emitted JavaScript: case 140 line 2652: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:183
+    lint_test.go:759: predicate finding widened to its owner caught on native: case 140 line 2652: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner2256312942/015/options.ts:1:183
+=== RUN   TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed
+    lint_test.go:759: nexus-abbreviated-identifier whole-word finding suppressed caught on Node: case 145 line 2762: port "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24", Go "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7
+          nexus/consistency-no-abbreviated-identifier  Identifier "props" should not be abbreviated. Use "properties" or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 6 11 abbreviatedIdentifier 			6 11
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24
+    lint_test.go:759: nexus-abbreviated-identifier whole-word finding suppressed caught on emitted JavaScript: case 145 line 2762: port "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24", Go "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7
+          nexus/consistency-no-abbreviated-identifier  Identifier "props" should not be abbreviated. Use "properties" or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 6 11 abbreviatedIdentifier 			6 11
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24
+    lint_test.go:759: nexus-abbreviated-identifier whole-word finding suppressed caught on native: case 145 line 2762: port "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24", Go "/tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:7
+          nexus/consistency-no-abbreviated-identifier  Identifier "props" should not be abbreviated. Use "properties" or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 6 11 abbreviatedIdentifier 			6 11
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp235504034/016/nexus-consistency-no-abbreviated-identifier-0.ts:1:24
+=== RUN   TestMutants/await_crosses_function_boundary
+    lint_test.go:759: await crosses function boundary caught on Node: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:108
+    lint_test.go:759: await crosses function boundary caught on emitted JavaScript: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:108
+    lint_test.go:759: await crosses function boundary caught on native: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1892881037/007/generated-6.ts:1:108
+=== RUN   TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+    lint_test.go:759: parentheses around a discarded construction not seen through caught on Node: case 145 line 2766: port "fixed\tnew Widget();\\u000a(new Gadget());\\u000a", Go "/tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:1:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 0 13 noNewStatement 			0 13
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 14 29 noNewStatement 			14 29
+        fixed	new Widget();\u000a(new Gadget());\u000a
+    lint_test.go:759: parentheses around a discarded construction not seen through caught on emitted JavaScript: case 145 line 2766: port "fixed\tnew Widget();\\u000a(new Gadget());\\u000a", Go "/tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:1:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 0 13 noNewStatement 			0 13
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 14 29 noNewStatement 			14 29
+        fixed	new Widget();\u000a(new Gadget());\u000a
+    lint_test.go:759: parentheses around a discarded construction not seen through caught on native: case 145 line 2766: port "fixed\tnew Widget();\\u000a(new Gadget());\\u000a", Go "/tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:1:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 0 13 noNewStatement 			0 13
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2228557573/016/no-new-0.ts:2:1
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 14 29 noNewStatement 			14 29
+        fixed	new Widget();\u000a(new Gadget());\u000a
+=== RUN   TestMutants/return_parentheses_option_reversed
+    lint_test.go:759: return parentheses option reversed caught on Node: case 140 line 2720: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+    lint_test.go:759: return parentheses option reversed caught on emitted JavaScript: case 140 line 2720: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+    lint_test.go:759: return parentheses option reversed caught on native: case 140 line 2720: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed836350408/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+=== RUN   TestMutants/empty_placeholder_reported
+    lint_test.go:759: empty placeholder reported caught on Node: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:94
+    lint_test.go:759: empty placeholder reported caught on emitted JavaScript: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:94
+    lint_test.go:759: empty placeholder reported caught on native: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported795608191/009/generated-8.ts:1:94
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:759: comment self directive exemption removed caught on Node: case 104 line 2304: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+    lint_test.go:759: comment self directive exemption removed caught on emitted JavaScript: case 104 line 2304: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+    lint_test.go:759: comment self directive exemption removed caught on native: case 104 line 2304: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed756861951/011/generated-10.ts:3:1
+=== RUN   TestMutants/bom_removes_two_marks
+    lint_test.go:759: bom removes two marks caught on Node: case 110 line 2399: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:759: bom removes two marks caught on emitted JavaScript: case 110 line 2399: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:759: bom removes two marks caught on native: case 110 line 2399: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks2863279567/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+--- PASS: TestMutants (313.99s)
+    --- PASS: TestMutants/debugger_fix_suppressed (23.15s)
+    --- PASS: TestMutants/empty_function_body_reported (24.40s)
+    --- PASS: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (23.03s)
+    --- PASS: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (23.34s)
+    --- PASS: TestMutants/react-no-is-mounted_mutant_from_batch_8 (22.92s)
+    --- PASS: TestMutants/method_listener_lost (21.39s)
+    --- PASS: TestMutants/predicate_finding_widened_to_its_owner (21.93s)
+    --- PASS: TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed (23.16s)
+    --- PASS: TestMutants/await_crosses_function_boundary (21.88s)
+    --- PASS: TestMutants/parentheses_around_a_discarded_construction_not_seen_through (20.97s)
+    --- PASS: TestMutants/return_parentheses_option_reversed (22.53s)
+    --- PASS: TestMutants/empty_placeholder_reported (20.94s)
+    --- PASS: TestMutants/comment_self_directive_exemption_removed (21.80s)
+    --- PASS: TestMutants/bom_removes_two_marks (20.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	314.010s

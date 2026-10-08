@@ -1,0 +1,8 @@
+export function callerWitness() {
+    const first = arguments.callee;
+    const second = ((arguments)).caller;
+    const optional = arguments?.callee;
+    const clean = { callee: 1 }.callee;
+    const computed = arguments['caller'];
+    return [first, second, optional, clean, computed];
+}

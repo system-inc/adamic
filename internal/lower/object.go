@@ -979,12 +979,32 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 // switchStatement lowers switch, whose cases 0.1 requires to be constants.
 func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsSwitchStatement()
+	if err := l.enumSwitch(node); err != nil {
+		return nil, err
+	}
 	value, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
 	lowered := ir.Switch{Value: value}
+	groups := []switchGroup{}
+	prefix := []ir.Statement{}
+	identity := l.enumIdentity(l.checker.GetTypeAtLocation(statement.Expression))
+	checkedDefault := l.numericEnum(identity) && l.enumSwitchCovered(node) && !l.enumDefaultUnreachable(node)
+	var neverCheck ir.Statement
+	if checkedDefault {
+		// The unmatched edge is never to the checker, including an implicit default. Hold the
+		// scrutinee once so the check names the original value without repeating its effects.
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_switch_value", Type: value.Type(), Function: l.functionIndex})
+		prefix = append(prefix, ir.Declare{Local: local, Value: value})
+		value = ir.Read{Local: local, Of: value.Type()}
+		lowered.Value = value
+		neverCheck = ir.Evaluate{Value: l.enumNeverCheck(statement.Expression, value, identity)}
+		lowered.Default = []ir.Statement{neverCheck}
+	}
 	tests := []ir.Expression{}
+	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
 			if inner.Kind == ast.KindVariableStatement {
@@ -994,6 +1014,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 		isDefault := clause.Kind == ast.KindDefaultClause
+		if isDefault && len(tests) == 0 && l.enumDefaultUnreachable(node) && (len(groups) == 0 || switchBodyLeaves(groups[len(groups)-1].body)) {
+			continue
+		}
 		if !isDefault {
 			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
@@ -1002,7 +1025,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			switch test.(type) {
 			case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
 			default:
-				return nil, l.notYet(clause, "a case that isn't a constant")
+				if l.enumMember(clause.AsCaseOrDefaultClause().Expression) == nil {
+					return nil, l.notYet(clause, "a case that isn't a constant")
+				}
 			}
 			if test.Type() != value.Type() {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")
@@ -1013,19 +1038,40 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		if len(body) == 0 && !isDefault {
-			// case 'a': case 'b': share the next body.
+		defaultPending = defaultPending || isDefault
+		if len(body) == 0 {
+			// Empty labels enter the next body, including labels on either side of default.
 			continue
 		}
-		if isDefault {
-			// Cases grouped with default run its body, which is what not matching does anyway.
+		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
+		if defaultPending {
 			lowered.Default = body
-		} else {
+		}
+		if len(tests) > 0 {
+			// Default is a fallback position, but its grouped tests still compete in source order.
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
+		defaultPending = false
 	}
-	return []ir.Statement{lowered}, nil
+	if len(tests) > 0 {
+		// A trailing empty label matches and leaves the switch without running default.
+		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
+	}
+	if len(tests) > 0 || defaultPending {
+		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+	}
+	if checkedDefault {
+		return append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...), nil
+	}
+	for index, group := range groups {
+		// A default with tests must also have one body, rather than sharing statement
+		// addresses between two branches (flow instrumentation identifies those addresses).
+		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+			return append(prefix, l.fallthroughSwitch(value, groups, nil)...), nil
+		}
+	}
+	return append(prefix, lowered), nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).
@@ -1467,7 +1513,11 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if slotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
-	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
+	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
+	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
+		return l.enumNeverCheck(property.Name(), read, identity), nil
+	}
+	return read, nil
 }
 
 // stringMethods are the string methods stringCall lowers: the types of their arguments, and how many

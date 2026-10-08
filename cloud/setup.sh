@@ -53,6 +53,11 @@ esac
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
+# Some cloud boxes reach proxy.golang.org but not storage.googleapis.com, where it redirects module
+# downloads, and answer 403. The default proxy list falls back to direct only on 404 and 410, so a
+# module the box hasn't cached fails setup. The pipe falls back on any error, fetching from the
+# module's own source instead; go.sum still checks every module's hash either way.
+export GOPROXY="https://proxy.golang.org|direct"
 prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
 realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
@@ -129,6 +134,9 @@ prepareSubmodules() {
 # cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
 cd "$repository"
 git config submodule.cohere.url https://github.com/system-inc/cohere.git
+# A fresh worker box restores cohere from the gate box's cache in R2 (keyed by the gitlink, every part
+# hash-checked) instead of cloning 81,500 files; with no cache, or any doubt, the clone below does it.
+bash "$repository/cloud/submodule-cache.sh" restore "$repository" || true
 git submodule update --init --recursive --depth 1 --filter=blob:none
 step "submodules ready"
 
@@ -167,6 +175,7 @@ fi
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
+export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV

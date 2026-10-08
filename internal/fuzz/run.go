@@ -497,17 +497,31 @@ func difference(expected Run, actual Run) string {
 	return ""
 }
 
-// execute runs a command in its own process group, killed whole at the deadline, so a program that
-// loops is stopped rather than orphaned. environment is appended to the parent environment.
+// execute limits child CPU time, with a wall backstop for blocked children.
+// Cancellation kills the whole process group so descendants are not orphaned.
+// environment is appended to the parent environment.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
 	return executeIsolated(directory, append(os.Environ(), environment...), limit, name, arguments...)
 }
 
 // executeIsolated is execute with exactly the environment it is given.
 func executeIsolated(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	path, err := exec.LookPath(name)
+	if err != nil {
+		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	// Set both limits so children that ignore SIGXCPU (including Go programs)
+	// are still stopped by the kernel. Some kernels send SIGKILL at the hard
+	// limit; distinguish that CPU death using the child's recorded CPU usage.
+	// The portable shell interface accepts whole seconds, rounded up.
+	seconds := limit / time.Second
+	if limit%time.Second != 0 {
+		seconds++
+	}
+	script := fmt.Sprintf(`ulimit -t %d || exit; exec "$0" "$@"`, seconds)
+	command := exec.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	command.Dir = directory
 	command.Env = environment
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -518,12 +532,18 @@ func executeIsolated(directory string, environment []string, limit time.Duration
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err = command.Run()
 	run := Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), TimedOut: ctx.Err() != nil}
 	var exitError *exec.ExitError
 	switch {
 	case err == nil || errors.As(err, &exitError):
 		run.ExitCode = command.ProcessState.ExitCode()
+		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
+			cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
+			if status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
+				run.TimedOut = true
+			}
+		}
 	default:
 		run.ExitCode = -1
 		run.Stderr = append(run.Stderr, []byte(err.Error())...)

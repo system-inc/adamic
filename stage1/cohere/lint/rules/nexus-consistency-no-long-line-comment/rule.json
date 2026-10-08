@@ -1,0 +1,13 @@
+{
+  "name": "nexus/consistency-no-long-line-comment",
+  "kinds": [
+    "SourceFile"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNexusConsistencyNoLongLineComment",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoLongLineComment"
+}
