@@ -69,9 +69,6 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 				}
 			}
 		}
-		if stored.IsReference() && l.includesUndefined(l.checker.GetTypeOfSymbol(field)) && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
-			return nil, l.notYet(node, "a narrowed computed reference field requiring a presence check")
-		}
 		names = append(names, name)
 		tests = append(tests, test)
 		fields = append(fields, field)
@@ -100,5 +97,36 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 		b.body = append(b.body, ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]}, Then: []ir.Statement{ir.Return{Value: read}}})
 	}
 	b.body = append(b.body, ir.Panic{Message: ir.StringConstant{Index: l.constant("computed object key outside its proven finite union")}})
-	return l.defined(node, b.finish("element_access_fields", read)), nil
+	value := b.finish("element_access_fields", read)
+	if result.IsReference() && result != ir.Union && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
+		for _, field := range fields {
+			if l.includesUndefined(l.checker.GetTypeOfSymbol(field)) {
+				return l.computedFieldPresence(node, value), nil
+			}
+		}
+	}
+	return l.defined(node, value), nil
+}
+
+// Indexed narrowing needs the declared field types: a computed access does not
+// necessarily have the symbol that the named-read presence helper uses.
+func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
+	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+	at := node
+	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
+		at = at.Parent
+	}
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
+		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+			return value
+		}
+		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+	}
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindElementAccessExpression && parent.AsElementAccessExpression().Expression == at {
+		key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
+		if key.Kind == ast.KindNumericLiteral || key.Kind == ast.KindStringLiteral {
+			message = "TypeError: Cannot read properties of undefined (reading '" + key.Text() + "')"
+		}
+	}
+	return ir.Defined{Value: value, Message: message}
 }
