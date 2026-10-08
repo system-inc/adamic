@@ -899,7 +899,25 @@ func TestMutants(t *testing.T) {
 					rows = append(rows, row)
 				}
 			}
-			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			if descriptor.Typed {
+				// Typed witnesses need a real project; syntax-only rows would skip the mutant.
+				rows = ownedWitnessRows(t, ".", descriptor)
+				files := make([]string, 0, len(rows))
+				for _, row := range rows {
+					files = append(files, strings.SplitN(row, "\t", 2)[0])
+				}
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options, err := json.Marshal(map[string]any{"compilerOptions": map[string]bool{"strict": true}, "files": files})
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(config, options, 0644); err != nil {
+					t.Fatal(err)
+				}
+				rows = append([]string{"program " + config}, rows...)
+			} else {
+				rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			}
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
@@ -913,10 +931,24 @@ func TestMutants(t *testing.T) {
 				defer func() { <-mutantBuilds }()
 				return buildPort(t, directory, true)
 			}()
-			for _, side := range []struct {
+			type runtimeSide struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+			}
+			var sides []runtimeSide
+			if descriptor.Typed {
+				prefix := filepath.Join(t.TempDir(), "transcript")
+				live := execute(t, "", binary, "--manifest", path, "--record", prefix)
+				runner := filepath.Join(repository, "oracle/node.mjs")
+				sides = []runtimeSide{
+					{"native", live},
+					{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+					{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix)},
+				}
+			} else {
+				sides = []runtimeSide{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}}
+			}
+			for _, side := range sides {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}

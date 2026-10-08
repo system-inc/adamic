@@ -15,7 +15,14 @@ import (
 var checkerBuildMutex sync.Mutex
 var checkerArchives = map[bool]string{}
 var checkerBinaryMutex sync.Mutex
-var checkerBinaries = map[string]string{}
+
+type checkerBuiltBinary struct {
+	path  string
+	err   error
+	ready chan struct{}
+}
+
+var checkerBinaries = map[string]*checkerBuiltBinary{}
 var checkerBuildDirectories []string
 
 // A single archive per instrumentation mode and test process, with its sources from the landed tree.
@@ -63,13 +70,30 @@ func checkerBinary(t *testing.T, source, archive string, sanitize bool) string {
 	t.Helper()
 	key := fmt.Sprintf("%x:%s:%t", sha256.Sum256([]byte(source)), archive, sanitize)
 	checkerBinaryMutex.Lock()
-	defer checkerBinaryMutex.Unlock()
-	if path := checkerBinaries[key]; path != "" {
-		return path
+	built, found := checkerBinaries[key]
+	if !found {
+		built = &checkerBuiltBinary{ready: make(chan struct{})}
+		checkerBinaries[key] = built
 	}
+	checkerBinaryMutex.Unlock()
+	if found {
+		<-built.ready
+	} else {
+		// Share identical builds while allowing the existing bounded mutant workers
+		// to compile different sources independently. Publish failures before t.Fatal.
+		built.path, built.err = compileCheckerBinary(source, archive, sanitize)
+		close(built.ready)
+	}
+	if built.err != nil {
+		t.Fatal(built.err)
+	}
+	return built.path
+}
+
+func compileCheckerBinary(source, archive string, sanitize bool) (string, error) {
 	directory, err := os.MkdirTemp("", "adamic-lint-native-")
 	if err != nil {
-		t.Fatal(err)
+		return "", err
 	}
 	checkerBuildMutex.Lock()
 	checkerBuildDirectories = append(checkerBuildDirectories, directory)
@@ -80,12 +104,9 @@ func checkerBinary(t *testing.T, source, archive string, sanitize bool) string {
 	} else {
 		err = native.Build(source, path, native.Options{Sanitize: sanitize})
 	}
-	if err != nil {
-		t.Fatal(err)
-	}
-	checkerBinaries[key] = path
-	return path
+	return path, err
 }
+
 func cleanupCheckerArchives() {
 	for _, directory := range checkerBuildDirectories {
 		os.RemoveAll(directory)
