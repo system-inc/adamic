@@ -1,0 +1,32 @@
+| Test | Own active wall (s) | Go reported (s) |
+|---|---:|---:|
+| TestCompilerAndStage1Agree | 681.156 | 681.160 |
+| TestShardsAgree | 286.590 | 286.590 |
+| TestProfileSnapshotsAgree | 260.407 | 260.410 |
+| TestMutants | 227.758 | 0.150 |
+| TestDotARename | 148.547 | 148.550 |
+| TestCompleteSuggestionSerialization | 106.008 | 106.010 |
+| TestJsxLintTrees | 74.867 | 74.870 |
+| TestEmittedJavaScriptMismatch | 70.938 | 70.940 |
+| TestWitnessScriptKind | 70.442 | 70.440 |
+| TestSuggestionAlongsideAutomaticFix | 65.755 | 65.750 |
+| TestFactoryHooks | 59.279 | 59.280 |
+| TestProfileCompilation | 55.335 | 55.340 |
+| TestProfileArtifacts | 55.162 | 55.160 |
+| TestNodeTableIsLinkOnly | 29.187 | 29.180 |
+| TestRulesAgree | 28.721 | 28.720 |
+| TestCountGuardMutant | 12.921 | 12.920 |
+| TestDecorationOptionMutant | 12.915 | 9.770 |
+| TestPositionIndexMutant | 9.768 | 9.660 |
+| TestCommentFoldMutant | 9.657 | 9.430 |
+| TestOptionAndComparatorGaps | 9.403 | 0.960 |
+| TestLegacyMutants | 5.209 | 5.210 |
+| TestDecodedOptionsAndMutant | 4.855 | 4.850 |
+| TestOwnedWitnesses | 4.325 | 4.330 |
+| TestRegistrationMutant | 3.849 | 3.850 |
+| TestNestedOutsideModuleCopy | 0.795 | 0.800 |
+| TestNestedConstructorGap | 0.258 | 0.260 |
+| TestExecuteFailsOnStderrOtherThanModuleDownloads | 0.128 | 0.130 |
+| TestJsxLintReleaseAndThroughput | 0.001 | 0.000 |
+| TestCommandDiagnosticsDropOnlyModuleDownloads | 0.001 | 0.000 |
+| TestThroughput | 0.000 | 0.000 |

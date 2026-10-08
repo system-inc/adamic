@@ -77,6 +77,13 @@ func TestTSCCorpusAgreement(t *testing.T) {
 			if err := os.WriteFile(path, []byte(batch.String()), 0644); err != nil {
 				t.Fatal(err)
 			}
+			encoded, err := json.Marshal(cases)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0644); err != nil {
+				t.Fatal(err)
+			}
 			port, _ := filepath.Abs(entry)
 			program := lowered(t, port)
 			native, binary := natively(t, program, "--cases", path, "80")

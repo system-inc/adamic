@@ -74,6 +74,14 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
+	if result, ok := executeShards(t, environment, name, arguments); ok {
+		return result
+	}
+	return executeOne(t, environment, name, arguments...)
+}
+
+func executeOne(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
 	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
