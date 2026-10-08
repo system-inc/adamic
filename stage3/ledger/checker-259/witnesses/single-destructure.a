@@ -1,0 +1,3 @@
+declare function transform<T, U>(items: Iterable<T>, callback: (item: T) => U): U[];
+declare const values: Iterable<[string, number] | undefined>;
+transform(values, ([key, value]) => value);

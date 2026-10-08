@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Create a fresh pinned tree and measure each successive adaptation."""
+import argparse
 import json
 import os
 import shutil
@@ -10,9 +11,12 @@ import tempfile
 
 stage = Path(__file__).resolve().parent
 pin = json.loads((stage / 'source.json').read_text())
-if len(sys.argv) != 2:
-    sys.exit('usage: stage3/apply.sh <new-output-directory>')
-out = Path(sys.argv[1]).resolve()
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('output', type=Path, help='new adapted-tree directory')
+parser.add_argument('--write-table', action='store_true',
+                    help='also update the checked-in stage3/patch-set.md')
+args = parser.parse_args()
+out = args.output.resolve()
 if out.exists():
     sys.exit(f'refusing to replace existing output: {out}')
 cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))).resolve()
@@ -76,5 +80,7 @@ with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
     for name, files, added, removed in rows:
         text += f'| {name} | {files} | {added} | {removed} |\n'
     text += f'| **Total** | {total[0]} | {total[1]} | {total[2]} |\n'
-    (stage / 'patch-set.md').write_text(text)
+    (out / 'patch-set.md').write_text(text)
+    if args.write_table:
+        (stage / 'patch-set.md').write_text(text)
 print(out)
