@@ -14,9 +14,9 @@ type Program struct {
 	ViewOrigins     []Expression
 	MapCertificates [][2]ViewContractID
 
-	// PredicateChecks counts overload-result directions, per emitted call site.
+	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
-	PredicateChecks struct{ Proven, Checked, Unobservable int }
+	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
@@ -54,6 +54,23 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int // Zero for an ordinary predicate call.
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.

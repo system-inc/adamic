@@ -194,6 +194,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		if node.Kind == ast.KindCallExpression {
+			l.recordOrdinaryPredicateChecks(node.AsCallExpression())
+		}
 	}
 	if l.isNever(node) {
 		return value, err
@@ -798,7 +801,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			// Scalars cannot hold null. IsNull still evaluates its operand, and a
+			// generic reference must consult this instantiation before erasing the test.
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().IsReference() || !l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand)))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -825,7 +830,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) && !l.includesUndefined(l.checker.GetTypeAtLocation(operand)) {
+			concrete := l.concrete(l.checker.GetTypeAtLocation(operand))
+			if l.includesNull(concrete) && !l.includesUndefined(concrete) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {

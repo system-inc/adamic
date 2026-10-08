@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-194 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+208 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -710,3 +710,76 @@ Final callable gates: lower 15.494s, native 23.472s, JavaScript 1.615s; full IR
 30.111s; uncached filtered Node oracle 261.199s; vet exit 0. Original declaration
 controls enabled; no new exclusions or failures. The existing array-callback
 proof baseline and optional-boolean hold remain.
+
+
+Prioritized proven predicates dependency, b131a36dc50163896dbbdd0ef6d304223454fd0a
+
+Twenty conflict hunks in eleven files resolved individually. docs/0.1.md keeps
+supported labels out of the refused list. ir.go preserves ViewOrigins and
+MapCertificates while using the structured ordinary/overload predicate count
+records. cast.go (two) and cast_proof.go (three) retain integrated deferred/lazy
+views, structural certification, marker proof and writable-source guards rather
+than restoring the older eager interfaceView path. invariance.go retains its
+qualified-name guard; refusals.go retains deferred/view cast classification.
+expression.go keeps allocation provenance and never-expression handling while
+recording ordinary calls; its comparison hunk uses concrete specialization AND
+retains !includesUndefined, preserving both null and undefined alternatives.
+
+optional_widening_test.go retains checked-view admission instead of obsolete
+blanket optional-widening refusals. Its census three hunks retain schema disposition
+and diagnostics and adopt typed normalized file paths. field_access_paths.a keeps
+the incoming readonly declaration, with the same field order and runtime output.
+The four counts hunks preserve all measured integration rows, equal common rows
+and the new independent predicate table at the end. No whole-file choice was used.
+
+Parser callback/assertion proof and CLI explain-checks preflight passes: lower
+10.453s, CLI 3.749s, load .007s. The three census panic controls initially fail only
+computed_relation.a's stale optional-field diagnostic: integrated lazy admission
+reaches the named computed-field NotYet. The pin now records that actual refusal;
+no production capability or guard was weakened. Restored three controls pass .139s.
+
+The previously excluded library_array_holes_callbacks.a now matches Node under
+independent callback-body proofs. The boundary oracle passes 1.025s, also verifying
+predicate count rows. Its exclusion has been removed from all subsequent required
+gates. Debug.assert still stops at adamic/no-type-predicate for the property callback
+declaration; merging proven direct assertions does not certify a viewed producer
+with that unsupported contract. The unbound intrinsic read also remains refused.
+The optional-boolean storage hold remains until the user explicitly lifts it.
+
+Fourteen new predicate/conflict mutations executed and restored. Six proof mutants:
+callback body bypass (ParserCallbackLie), assertion normal-return bypass and helper
+termination bypass (ParserAssertionProofErasure), erased specialized null check,
+erased specialized undefined/null distinction and dropped scalar operand evaluation
+(ParserAssertionBackends, both backends except undefined distinction native-only).
+Four census guards: qualified cast, qualified widening, computed-name and early
+generic cleanup; their reduced controls catch the original Go compiler panic.
+Two report erasures fail exact CLI stderr goldens for ordinary/callback and assertion
+calls. Union-slot admission fails both MixedUnionCallbackABIIsPending refusal pins.
+Removing !includesUndefined fails source Node agreement for string-both in valid
+native code. Total 208 implementation/component mutants. Panic witnesses are kept
+separate from valid emitted-code observations. The ambiguous union-runner anchor
+stopped before mutation, was corrected and only the two pending cases rerun; it is
+not a mutant kill. Evidence: predicates-mutants/ and predicates-extra-mutants/.
+
+Final predicate required gates: lower 13.307s, native 18.174s, JavaScript 1.967s;
+full IR 23.823s; uncached filtered Node oracle 276.136s; vet exit 0. Array-callback
+fixture is included with no skip. Full CLI 15.401s and load 8.229s pass; restored
+predicate/parser/assertion/census proof selection passes 20.392s.
+
+Supplemental predicate/census/generic/regex/output oracle fails three fixtures in
+48.390s. An isolated unmodified pushed-parent 8afdc710 reproduces all three in
+.098s after its cold checker build. census_overload_contracts.a:13:16 retains the
+more-arguments-than-implementation NotYet; census_small_boolean.a:19:16 retains
+unsupported template interpolation. maybe_number_slots.a:29:33 previously stops
+at the unproven inferred predicate argument `(value) => value === undefined`.
+Its independent proof now passes, exposing a later native C build failure: passing
+adamic_object* to show(adamic_maybe_number). No binary is admitted by that failed
+build. This is a changed frontier on an already-failing supplemental fixture,
+not a green full-oracle claim. Both logs are retained. The required checked-view
+selection has no failure or exclusion; whole repository remains unclaimed.
+
+Publication note: callable merge 8afdc710 initially failed HTTPS username lookup
+twice. The requested first-parent fallback patch remains at
+/tmp/views-integration-8afdc7102bbf5c9cdad9f4471923003cac7f8a6f.patch.
+The installed GitHub credential helper then pushed it successfully. That helper
+is configured only in this repository; no credential value was read or logged.

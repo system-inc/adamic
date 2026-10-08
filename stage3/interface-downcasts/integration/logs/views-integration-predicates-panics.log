@@ -1,0 +1,17 @@
+=== RUN   TestCensusQualifiedCast
+=== PAUSE TestCensusQualifiedCast
+=== RUN   TestCensusGenericRefusalInsideClosure
+=== PAUSE TestCensusGenericRefusalInsideClosure
+=== RUN   TestCensusComputedRelation
+=== PAUSE TestCensusComputedRelation
+=== CONT  TestCensusQualifiedCast
+=== CONT  TestCensusGenericRefusalInsideClosure
+=== CONT  TestCensusComputedRelation
+--- PASS: TestCensusQualifiedCast (0.15s)
+=== NAME  TestCensusComputedRelation
+    census_panics_test.go:79: want named optional-field proof refusal, got /tmp/adamic-gate/TestCensusComputedRelation519473115/001/main.a:2:17: stage 0 can't lower a computed field name yet
+--- FAIL: TestCensusComputedRelation (0.16s)
+--- PASS: TestCensusGenericRefusalInsideClosure (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.185s
+FAIL
