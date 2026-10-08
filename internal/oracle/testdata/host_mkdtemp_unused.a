@@ -1,0 +1,4 @@
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+console.log(join(tmpdir(), 'adamic-mkdtemp-unused'));
+console.log('#define ADAMIC_NODE_MKDTEMP 1\n');

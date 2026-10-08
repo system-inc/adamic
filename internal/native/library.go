@@ -30,6 +30,9 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 }
 
 func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
+	if err := validateNodeMkdtempTarget(source, options); err != nil {
+		return "", err
+	}
 	var flags []string
 	if strings.Contains(source, "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
 		flags = append(flags, "-DADAMIC_CLOSURE_CONVENTION=1")

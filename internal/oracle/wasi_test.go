@@ -54,6 +54,10 @@ func onWASI(t *testing.T, source string) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program.wasm")
 	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		var refused *native.WASIMkdtempRefusal
+		if errors.As(err, &refused) {
+			t.Skipf("target refused: %v", refused)
+		}
 		t.Fatal(err)
 	}
 	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)

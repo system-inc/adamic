@@ -1,0 +1,22 @@
+import { programArguments } from 'adamic';
+import { existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+const prefix = programArguments()[0] ?? '/tmp/adamic-mkdtemp-';
+const first = mkdtempSync(prefix);
+const second = mkdtempSync(prefix, { encoding: 'utf8' });
+try {
+ console.log(String(first.startsWith(prefix)));
+ console.log(String(first.length - prefix.length));
+ console.log(String(second.length - prefix.length));
+ console.log(String(first !== second));
+ console.log(String(statSync(first).isDirectory()));
+ console.log(String(statSync(second).isDirectory()));
+ writeFileSync(first + '/file', 'one');
+ writeFileSync(second + '/file', 'two');
+ console.log(readFileSync(first + '/file', 'utf8'));
+ console.log(readFileSync(second + '/file', 'utf8'));
+} finally {
+ rmSync(first, { recursive: true });
+ rmSync(second, { recursive: true });
+}
+console.log(String(existsSync(first)));
+console.log(String(existsSync(second)));

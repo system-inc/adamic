@@ -8,6 +8,9 @@ import (
 )
 
 func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+	if call.Operation == "mkdtemp" {
+		e.line("#define ADAMIC_NODE_MKDTEMP 1")
+	}
 	args := make([]string, len(call.Arguments))
 	for i, argument := range call.Arguments {
 		args[i] = e.value(argument)

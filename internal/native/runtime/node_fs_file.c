@@ -497,6 +497,9 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
 }
 
 #ifdef ADAMIC_NODE_HOST
+// Preview 1 has no directory permission control. The target gate refuses
+// mkdtemp programs before clang; other host programs still build this unit.
+#if !defined(ADAMIC_TARGET_WASI) || !ADAMIC_TARGET_WASI
 // libc mkdtemp atomically creates a private directory with a six-byte suffix.
 adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
     adamic_output_flush();
@@ -515,6 +518,8 @@ adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
     free(name);
     return result;
 }
+
+#endif
 
 // Node's native rmSync uses filesystem removal errors after its lstat check.
 static void remove_error(int error, const char *operation, const char *name) {
