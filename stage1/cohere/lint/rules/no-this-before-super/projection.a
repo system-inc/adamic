@@ -1,0 +1,27 @@
+import type { RuleContext } from '../../context.ts';
+import { CoreArena, CoreNode } from '../../helpers/core/nodes.a';
+// Project structural fields consumed by the core exit/evaluation helpers.
+export function project(context: RuleContext): CoreArena {
+    const nodes: CoreNode[] = [];
+    for(const parsed of context.parser.nodes) {
+        const node = new CoreNode(); node.kind = parsed.kind; node.children = parsed.children.slice();
+        switch(parsed.kind) {
+            case 'Block': node.statements = parsed.children.slice(); break;
+            case 'IfStatement': node.thenNode = parsed.children[1] ?? -1; node.elseNode = parsed.children[2] ?? -1; break;
+            case 'TryStatement':
+                node.tryBlock = parsed.children[0] ?? -1;
+                for(let i = 1; i < parsed.children.length; i++) {
+                    const child = parsed.children[i] ?? -1;
+                    if(context.kind(child) === 'CatchClause') { const children = context.node(child).children; node.catchBlock = children[children.length - 1] ?? -1; }
+                    else { node.finallyBlock = child; }
+                }
+                break;
+            case 'SwitchStatement': { const block = parsed.children[1] ?? -1; if(block >= 0) { node.clauses = context.node(block).children.slice(); } break; }
+            case 'CaseClause': node.statements = parsed.children.slice(1); break;
+            case 'DefaultClause': node.statements = parsed.children.slice(); break;
+            case 'LabeledStatement': case 'WithStatement': node.statement = parsed.children[parsed.children.length - 1] ?? -1; break;
+        }
+        nodes.push(node);
+    }
+    return new CoreArena(context.source, nodes);
+}

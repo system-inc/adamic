@@ -1,0 +1,5 @@
+{
+  "name": "no-this-before-super-violation-reversed",
+  "from": "if(!violated) { return; }",
+  "to": "if(violated) { return; }"
+}

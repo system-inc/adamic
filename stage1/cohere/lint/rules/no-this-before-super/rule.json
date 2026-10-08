@@ -1,0 +1,14 @@
+{
+  "name": "no-this-before-super",
+  "kinds": [
+    "Constructor"
+  ],
+  "node": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoThisBeforeSuper",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoThisBeforeSuper"
+}
