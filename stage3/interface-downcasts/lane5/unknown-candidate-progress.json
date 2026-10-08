@@ -1811,6 +1811,93 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "resolution-scan-lexical-space",
+      "pairs": 4,
+      "candidateReads": 43,
+      "members": [
+        {
+          "receiver_type_id": 98911,
+          "type": "ResolutionCacheHost",
+          "field": "getCompilationSettings",
+          "declared_types": [
+            "() => CompilerOptions"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 608,
+            "column": 9
+          },
+          "rank": 163,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "scan",
+          "declared_types": [
+            "() => SyntaxKind"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2513,
+            "column": 5
+          },
+          "rank": 164,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "startLexicalEnvironment",
+          "declared_types": [
+            "() => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 383,
+            "column": 5
+          },
+          "rank": 166,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10351,
+          "type": "EmitTextWriter",
+          "field": "writeSpace",
+          "declared_types": [
+            "(text: string) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 10,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 6457,
+            "column": 13
+          },
+          "rank": 170,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
