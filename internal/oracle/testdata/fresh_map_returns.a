@@ -1,0 +1,17 @@
+function rows<T>(values: T[]): T[][] { return values.map(() => []); }
+function paths<T>(values: T[]): T[][] { return values.map((_, index) => index === 0 ? [] : []); }
+function blocks<T>(values: T[]): T[][] {
+    return values.map((_, index) => { if (index === 0) { return []; } return []; });
+}
+function copies<T>(values: T[]): T[][] { return values.map(() => ([] as T[]).slice()); }
+const numbers = rows([1, 2]);
+let next = 3;
+for (const row of numbers) { row.push(next); next += 1; }
+console.log(numbers.map(row => row.join(",")).join(";"));
+const objects = rows([{ name: "Kirk" }, { name: "Ahra" }]);
+let index = 0;
+for (const row of objects) { row.push({ name: "owned:" + index.toString() }); index += 1; }
+console.log(objects.map(row => row.map(item => item.name).join(",")).join(";"));
+for (const row of paths([1, 2])) { row.push(5); console.log(row.join(",")); }
+for (const row of blocks([1, 2])) { row.push(6); console.log(row.join(",")); }
+for (const row of copies(["a"])) { row.push("owned:" + next.toString()); console.log(row.join(",")); }

@@ -309,3 +309,18 @@ func (l *lowering) typedArraySetArgument(node *ast.Node) bool {
 	}
 	return l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != 0
 }
+
+func (l *lowering) numericTypedArray(proven *checker.Type) bool {
+	return proven != nil && l.typedArrayKind(l.concrete(l.checker.GetNonNullableType(proven))) != 0
+}
+func (l *lowering) newTypedArray(node *ast.Node) (ir.Expression, bool, error) {
+	return l.typedArrayExpression(node)
+}
+func (l *lowering) typedArrayCall(node *ast.Node) error { return nil }
+func (l *lowering) typedArrayIndex(node *ast.Node, object ir.Expression) (ir.Expression, error) {
+	value, handled, err := l.typedArrayExpression(node)
+	if !handled {
+		return nil, l.notYet(node, "typed array indexing outside the host representation")
+	}
+	return value, err
+}

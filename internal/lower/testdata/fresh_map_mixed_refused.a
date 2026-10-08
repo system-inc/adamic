@@ -1,0 +1,5 @@
+const shared: never[] = [];
+function rows<T>(values: T[]): T[][] { return values.map((_, index) => index === 0 ? [] : shared); }
+const result = rows([1, 2]);
+for (const row of result) { row.push(7); }
+console.log(shared.length.toString());

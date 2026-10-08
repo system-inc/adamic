@@ -1,0 +1,191 @@
+=== RUN   TestRecordBoundaries
+=== PAUSE TestRecordBoundaries
+=== RUN   TestRecordPrototypeMiss
+=== PAUSE TestRecordPrototypeMiss
+=== RUN   TestRecordAliases
+=== PAUSE TestRecordAliases
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/number
+=== RUN   TestLedgerWitnesses/number/present
+    witness_test.go:197: adamic: counts: allocations 4 frees 4 retains 2 releases 6 peak 4 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/number/absent
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean
+=== RUN   TestLedgerWitnesses/boolean/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 2 releases 5 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean/absent
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="false\n"
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="false\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string
+=== RUN   TestLedgerWitnesses/string/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string/absent
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131
+=== RUN   TestLedgerWitnesses/D129-D131/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 6 releases 9 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131/absent
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key
+=== RUN   TestLedgerWitnesses/prototype-own-key/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key/absent
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data
+=== RUN   TestLedgerWitnesses/proto-data/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 8 releases 10 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data/absent
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array
+=== RUN   TestLedgerWitnesses/record-array/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 5 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array/absent
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 8 releases 10 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:213: erase D119 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase D119 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-inner
+=== RUN   TestLedgerWitnesses/nested-inner/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 9 releases 11 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-inner/absent
+    witness_test.go:213: erase nested-inner guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase nested-inner guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-array
+=== RUN   TestLedgerWitnesses/nested-array/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 10 releases 12 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-array/absent
+    witness_test.go:213: erase nested-array guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase nested-array guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+--- PASS: TestLedgerWitnesses (18.78s)
+    --- PASS: TestLedgerWitnesses/number (1.63s)
+        --- PASS: TestLedgerWitnesses/number/present (0.81s)
+        --- PASS: TestLedgerWitnesses/number/absent (0.82s)
+    --- PASS: TestLedgerWitnesses/boolean (1.72s)
+        --- PASS: TestLedgerWitnesses/boolean/present (0.80s)
+        --- PASS: TestLedgerWitnesses/boolean/absent (0.92s)
+    --- PASS: TestLedgerWitnesses/string (1.63s)
+        --- PASS: TestLedgerWitnesses/string/present (0.78s)
+        --- PASS: TestLedgerWitnesses/string/absent (0.84s)
+    --- PASS: TestLedgerWitnesses/D129-D131 (1.64s)
+        --- PASS: TestLedgerWitnesses/D129-D131/present (0.81s)
+        --- PASS: TestLedgerWitnesses/D129-D131/absent (0.83s)
+    --- PASS: TestLedgerWitnesses/prototype-own-key (1.39s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/present (0.76s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/absent (0.63s)
+    --- PASS: TestLedgerWitnesses/proto-data (1.60s)
+        --- PASS: TestLedgerWitnesses/proto-data/present (0.77s)
+        --- PASS: TestLedgerWitnesses/proto-data/absent (0.83s)
+    --- PASS: TestLedgerWitnesses/record-array (1.69s)
+        --- PASS: TestLedgerWitnesses/record-array/present (0.80s)
+        --- PASS: TestLedgerWitnesses/record-array/absent (0.89s)
+    --- PASS: TestLedgerWitnesses/D119 (1.81s)
+        --- PASS: TestLedgerWitnesses/D119/present (0.86s)
+        --- PASS: TestLedgerWitnesses/D119/absent (0.95s)
+    --- PASS: TestLedgerWitnesses/nested-inner (1.77s)
+        --- PASS: TestLedgerWitnesses/nested-inner/present (0.77s)
+        --- PASS: TestLedgerWitnesses/nested-inner/absent (0.99s)
+    --- PASS: TestLedgerWitnesses/nested-array (1.70s)
+        --- PASS: TestLedgerWitnesses/nested-array/present (0.81s)
+        --- PASS: TestLedgerWitnesses/nested-array/absent (0.89s)
+=== CONT  TestRecordBoundaries
+=== CONT  TestRecordAliases
+=== RUN   TestRecordBoundaries/record_cast
+=== CONT  TestRecordPrototypeMiss
+=== NAME  TestRecordBoundaries/record_cast
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_cast2833583873/001/main.ts:1:70: stage 0 can't lower a cast between incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/nested_cast
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_cast3664049132/001/main.ts:1:102: stage 0 can't lower a cast between incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/expanding_generic
+=== NAME  TestRecordPrototypeMiss
+    boundaries_test.go:117: prototype guard erasure caught by exact named stderr and exit 70; mutant exits 0 printing undefined
+--- PASS: TestRecordPrototypeMiss (0.64s)
+--- PASS: TestRecordAliases (0.65s)
+=== NAME  TestRecordBoundaries/expanding_generic
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesexpanding_generic200081819/001/main.ts:1:21: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/nested_array_widening
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_array_widening3611022821/001/main.ts:1:166: stage 0 can't lower a { readonly [key: string]: { readonly [path: string]: "a"[]; }; } seen as a { readonly [key: string]: { readonly [path: string]: string[]; }; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/undefined
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesundefined759969066/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/reflection
+    boundaries_test.go:68: Node stdout="\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesreflection982873741/001/main.ts:1:80: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/mutual_recursive
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmutual_recursive1364704968/001/main.ts:1:15: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/mutable
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmutable4004995506/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/fixed_to_record
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesfixed_to_record3303365314/001/main.ts:1:80: stage 0 can't lower a { entry: number; } seen as a { readonly [key: string]: number; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/nested_nullable
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_nullable1190474150/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/nested_record_view
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_record_view1186406506/001/main.ts:1:99: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/mixed
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmixed3284918090/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/nested_view
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_view3298759800/001/main.ts:1:127: stage 0 can't lower a { readonly record: { readonly [key: string]: number; }; } seen as a { readonly record: {}; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/array_widening
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesarray_widening1372202735/001/main.ts:1:108: stage 0 can't lower a { readonly [key: string]: "a"[]; } seen as a { readonly [key: string]: string[]; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/named_read
+    boundaries_test.go:68: Node stdout="undefined\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnamed_read119106230/001/main.ts:1:68: stage 0 can't lower a named property or prototype member on a record; read an own string key with brackets yet
+=== RUN   TestRecordBoundaries/proto_literal
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesproto_literal416772794/001/main.ts:1:54: stage 0 can't lower __proto__ in a record literal changes JavaScript's prototype yet
+=== RUN   TestRecordBoundaries/nested_mutable
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_mutable3680517866/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/nullable
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnullable2495998450/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/recursive
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecursive450787494/001/main.ts:1:24: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/record_to_fixed
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_to_fixed727604083/001/main.ts:1:74: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/spread
+    boundaries_test.go:68: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesspread3329832971/001/main.ts:1:107: stage 0 can't lower a record literal with spread, methods or accessors yet
+--- PASS: TestRecordBoundaries (5.11s)
+    --- PASS: TestRecordBoundaries/record_cast (0.33s)
+    --- PASS: TestRecordBoundaries/nested_cast (0.28s)
+    --- PASS: TestRecordBoundaries/expanding_generic (0.26s)
+    --- PASS: TestRecordBoundaries/nested_array_widening (0.24s)
+    --- PASS: TestRecordBoundaries/undefined (0.22s)
+    --- PASS: TestRecordBoundaries/reflection (0.22s)
+    --- PASS: TestRecordBoundaries/mutual_recursive (0.22s)
+    --- PASS: TestRecordBoundaries/mutable (0.22s)
+    --- PASS: TestRecordBoundaries/fixed_to_record (0.23s)
+    --- PASS: TestRecordBoundaries/nested_nullable (0.23s)
+    --- PASS: TestRecordBoundaries/nested_record_view (0.24s)
+    --- PASS: TestRecordBoundaries/mixed (0.23s)
+    --- PASS: TestRecordBoundaries/nested_view (0.23s)
+    --- PASS: TestRecordBoundaries/array_widening (0.22s)
+    --- PASS: TestRecordBoundaries/named_read (0.23s)
+    --- PASS: TestRecordBoundaries/proto_literal (0.25s)
+    --- PASS: TestRecordBoundaries/nested_mutable (0.26s)
+    --- PASS: TestRecordBoundaries/nullable (0.23s)
+    --- PASS: TestRecordBoundaries/recursive (0.24s)
+    --- PASS: TestRecordBoundaries/record_to_fixed (0.23s)
+    --- PASS: TestRecordBoundaries/spread (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-records	23.896s

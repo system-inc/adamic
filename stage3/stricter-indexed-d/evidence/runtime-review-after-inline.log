@@ -1,0 +1,9 @@
+=== RUN   TestNullableGuardTiming
+    runtime_timing_test.go:40: after-inline trial=1 iterations=100000000 elapsed=0.826715s Node="150000000\n"
+    runtime_timing_test.go:40: after-inline trial=2 iterations=100000000 elapsed=0.788082s Node="150000000\n"
+    runtime_timing_test.go:40: after-inline trial=3 iterations=100000000 elapsed=0.810806s Node="150000000\n"
+    runtime_timing_test.go:40: after-inline trial=4 iterations=100000000 elapsed=0.793662s Node="150000000\n"
+    runtime_timing_test.go:40: after-inline trial=5 iterations=100000000 elapsed=0.794983s Node="150000000\n"
+--- PASS: TestNullableGuardTiming (7.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	7.095s

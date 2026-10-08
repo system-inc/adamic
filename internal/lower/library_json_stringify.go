@@ -71,6 +71,12 @@ func jsonScalar(s *ir.JSONSchema) bool {
 // through an object type is refused: that type can hide additional fields or a toJSON method.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(node)) {
+		return nil, nil, l.notYet(node, "JSON.stringify typed arrays requires their own numeric keys")
+	}
+	if l.program.ContainsSparseArrays() && (n.Kind == ast.KindArrayLiteralExpression || l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))) {
+		return nil, nil, l.notYet(node, "JSON.stringify arrays in a program with sparse arrays")
+	}
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
@@ -162,6 +168,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	}
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
+	}
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return &ir.JSONSchema{Kind: "null"}, nil
 	}
 	if t.Flags()&checker.TypeFlagsUndefined != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil

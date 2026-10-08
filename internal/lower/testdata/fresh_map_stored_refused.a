@@ -1,0 +1,7 @@
+const published: never[][] = [];
+function rows<T>(values: T[]): T[][] {
+    return values.map(() => { const value: never[] = []; published.push(value); return value; });
+}
+const result = rows([1]);
+for (const row of result) { row.push(7); }
+console.log(published.map(row => row.length.toString()).join(","));

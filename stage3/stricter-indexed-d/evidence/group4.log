@@ -1,0 +1,59 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D193
+=== RUN   TestLedgerWitnesses/D193/present
+    witness_test.go:185: PRESENT D193 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D193/absent
+    witness_test.go:183: PROVEN D193 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D193/hole
+    witness_test.go:111: HOLE BLOCKED D193 readonly array of object: /tmp/adamic-gate/TestLedgerWitnessesD193hole1260288785/001/D193.ts:2:37: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D194
+=== RUN   TestLedgerWitnesses/D194/present
+    witness_test.go:185: PRESENT D194 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D194/absent
+    witness_test.go:183: PROVEN D194 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D194/hole
+    witness_test.go:111: HOLE BLOCKED D194 readonly array of object: /tmp/adamic-gate/TestLedgerWitnessesD194hole2050552285/001/D194.ts:2:37: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D225
+=== RUN   TestLedgerWitnesses/D225/present
+    witness_test.go:185: PRESENT D225 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D225/absent
+    witness_test.go:183: PROVEN D225 read=nonWhitespaceChildren[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D225/hole
+    witness_test.go:111: HOLE BLOCKED D225 readonly array of object: /tmp/adamic-gate/TestLedgerWitnessesD225hole1307871230/001/D225.ts:2:48: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D226
+=== RUN   TestLedgerWitnesses/D226/present
+    witness_test.go:185: PRESENT D226 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D226/absent
+    witness_test.go:183: PROVEN D226 read=expressions[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D226/hole
+    witness_test.go:111: HOLE BLOCKED D226 array of object: /tmp/adamic-gate/TestLedgerWitnessesD226hole3605540955/001/D226.ts:2:29: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D227
+=== RUN   TestLedgerWitnesses/D227/present
+    witness_test.go:185: PRESENT D227 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D227/absent
+    witness_test.go:183: PROVEN D227 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D227/hole
+    witness_test.go:111: HOLE BLOCKED D227 NodeArray of object: /tmp/adamic-gate/TestLedgerWitnessesD227hole2535119355/001/D227.ts:2:68: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+--- PASS: TestLedgerWitnesses (13.27s)
+    --- PASS: TestLedgerWitnesses/D193 (1.80s)
+        --- PASS: TestLedgerWitnesses/D193/present (0.64s)
+        --- PASS: TestLedgerWitnesses/D193/absent (0.92s)
+        --- PASS: TestLedgerWitnesses/D193/hole (0.24s)
+    --- PASS: TestLedgerWitnesses/D194 (1.69s)
+        --- PASS: TestLedgerWitnesses/D194/present (0.66s)
+        --- PASS: TestLedgerWitnesses/D194/absent (0.80s)
+        --- PASS: TestLedgerWitnesses/D194/hole (0.23s)
+    --- PASS: TestLedgerWitnesses/D225 (1.62s)
+        --- PASS: TestLedgerWitnesses/D225/present (0.63s)
+        --- PASS: TestLedgerWitnesses/D225/absent (0.76s)
+        --- PASS: TestLedgerWitnesses/D225/hole (0.23s)
+    --- PASS: TestLedgerWitnesses/D226 (1.61s)
+        --- PASS: TestLedgerWitnesses/D226/present (0.63s)
+        --- PASS: TestLedgerWitnesses/D226/absent (0.77s)
+        --- PASS: TestLedgerWitnesses/D226/hole (0.21s)
+    --- PASS: TestLedgerWitnesses/D227 (1.62s)
+        --- PASS: TestLedgerWitnesses/D227/present (0.62s)
+        --- PASS: TestLedgerWitnesses/D227/absent (0.77s)
+        --- PASS: TestLedgerWitnesses/D227/hole (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	13.280s

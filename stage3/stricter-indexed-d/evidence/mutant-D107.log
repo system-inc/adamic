@@ -1,0 +1,15 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/present
+    witness_test.go:185: PRESENT D107 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D107/absent
+    witness_test.go:183: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3924931348/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3924931348/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:111: HOLE BLOCKED D107 array of string: /tmp/adamic-gate/TestLedgerWitnessesD107hole3090892806/001/D107.ts:1:24: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+--- PASS: TestLedgerWitnesses (3.59s)
+    --- PASS: TestLedgerWitnesses/D107 (1.65s)
+        --- PASS: TestLedgerWitnesses/D107/present (0.66s)
+        --- PASS: TestLedgerWitnesses/D107/absent (0.78s)
+        --- PASS: TestLedgerWitnesses/D107/hole (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	3.595s

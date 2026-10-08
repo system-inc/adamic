@@ -1,5 +1,5 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
-// type-checked by typescript-go in this process, under the one set of options Adamic 0.1 allows.
+// type-checked by typescript-go in this process, under Adamic options or the owning TypeScript project options.
 //
 // A program either loads clean or Load returns an error naming every diagnostic. There is no
 // half-loaded state, because a compiler that lowers a program the checker rejected is lowering a
@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -36,8 +37,12 @@ type Program struct {
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
-	compiler *compiler.Program
-	fs       *sourceFS
+	compiler       *compiler.Program
+	projectOptions bool
+	optionSites    []OptionSite
+	fs             *sourceFS
+	sparseOnce     sync.Once
+	sparseArrays   bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
@@ -46,14 +51,15 @@ type Program struct {
 // CheckError is a program the checker rejected, with every diagnostic it gave.
 type CheckError struct {
 	Diagnostics []string
+	// OptionSites remain errors until lowering can insert their runtime checks.
+	OptionSites []OptionSite
 }
 
 func (e *CheckError) Error() string {
 	return strings.Join(e.Diagnostics, "\n")
 }
 
-// compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
-// rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+// compilerOptions supplies standalone Adamic defaults, including unconfigured inputs.
 func compilerOptions() *core.CompilerOptions {
 	return &core.CompilerOptions{
 		Strict:                     core.TSTrue,
@@ -111,12 +117,42 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 		roots = append(roots, root)
 	}
-	roots = append(roots, preludePath)
+	userRoots := roots
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	options, project, err := projectOptionsForRoots(fs, roots)
+	if err != nil {
+		return nil, err
+	}
+	fs.projectConsole = project != ""
+	checkRoots := append([]tspath.RootedFilePath{}, roots...)
+	var projectConfig *tsoptions.ParsedCommandLine
+	if project != "" {
+		projectConfig, _ = tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(project), &core.CompilerOptions{}, nil, fs, nil)
+		if options.Composite == core.TSTrue {
+			checkRoots = append([]tspath.RootedFilePath{}, projectConfig.FileNames()...)
+		} else {
+			for _, name := range projectConfig.FileNames() {
+				if name.IsDeclarationFile() {
+					text, _ := fs.ReadFile(name)
+					if text != prelude {
+						checkRoots = append(checkRoots, name)
+					}
+				}
+			}
+		}
+	}
+	checkRoots = append(checkRoots, preludePath)
+	if project == "" {
+		checkRoots = append(checkRoots, setPreludePath)
+	}
+	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	if projectConfig != nil {
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(project)), fileSystem.CaseSensitivity())
+		config.ConfigFile = projectConfig.ConfigFile
+	}
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
 		Config:         config,
@@ -143,9 +179,87 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 	}
 
-	loaded := &Program{compiler: program, fs: fs}
-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
-		return nil, &CheckError{Diagnostics: diagnostics}
+	loaded := &Program{compiler: program, fs: fs, projectOptions: project != ""}
+	var sites []OptionSite
+	if project == "" {
+		for _, file := range program.GetSourceFiles() {
+			if file.IsDeclarationFile || IsLibrary(file) || IsPrelude(file) {
+				continue
+			}
+			if _, isAdamic := fs.adamicFile(file.FileName()); !isAdamic && nearestProject(file.FileName().AsString()) != "" {
+				return nil, fmt.Errorf("load: project .ts imported into an Adamic-option program needs separate checker ownership, not implemented yet: %s", loaded.FileName(file))
+			}
+		}
+	}
+	if project != "" {
+		// A project checker must never assign relaxed types to an imported .a file,
+		// or to a file owned by another project. Refuse until separate checker
+		// ownership is supported; sharing the FS host does not share parsed ASTs.
+		for _, file := range program.GetSourceFiles() {
+			if file.IsDeclarationFile || IsLibrary(file) || IsPrelude(file) {
+				continue
+			}
+			if _, isAdamic := fs.adamicFile(file.FileName()); isAdamic {
+				return nil, fmt.Errorf("load: mixed .a and project .ts checking is not implemented: %s", loaded.FileName(file))
+			}
+			if owner := nearestProject(file.FileName().AsString()); owner != project {
+				return nil, fmt.Errorf("load: separate checker ownership is not implemented for %s (project %s)", loaded.FileName(file), owner)
+			}
+		}
+		report := &ProjectOptionReport{}
+		if !alreadyStricter(options) {
+			report, err = auditProjectOptions(context.Background(), project, fs, userRoots)
+			if err != nil {
+				return nil, err
+			}
+		}
+		loadedFiles := make(map[string]bool)
+		for _, file := range program.GetSourceFiles() {
+			loadedFiles[file.FileName().AsString()] = true
+		}
+		for _, site := range report.Sites {
+			if loadedFiles[site.File] {
+				sites = append(sites, site)
+			}
+		}
+	}
+	jsonSites, err := loaded.jsonContractSites(config)
+	if err != nil {
+		return nil, err
+	}
+	if project != "" {
+		sites = append(sites, jsonSites...)
+	}
+	loaded.optionSites = sites
+	diagnostics := loaded.diagnostics(context.Background())
+	for _, site := range jsonSites {
+		for i, message := range diagnostics {
+			if message == site.Message {
+				if project != "" {
+					diagnostics = append(diagnostics[:i], diagnostics[i+1:]...)
+				} else {
+					diagnostics[i] += "\n  Fix: JSON.stringify can return undefined; narrow the result or provide a fallback with ??."
+				}
+				break
+			}
+		}
+	}
+	for _, site := range sites {
+		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
+			continue
+		}
+		// Every successfully lowered project indexed read requiring presence is
+		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
+		// before emission. For a joint optional/index site the recorded ancestor
+		// also forces the read guard through its permissive contextual type.
+		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes") {
+			continue
+		}
+		diagnostics = append(diagnostics, site.Message)
+	}
+	if len(diagnostics) > 0 {
+		sort.Strings(diagnostics)
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
@@ -153,9 +267,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	// The Node declarations' index follows the prelude when the program imports node:*, so only
-	// the named paths are checked here.
-	for _, root := range roots[:len(paths)] {
+	for _, root := range userRoots {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
@@ -191,7 +303,7 @@ func (p *Program) Where(node *ast.Node) string {
 // IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
 // so a local named console is never mistaken for the real one.
 func IsPrelude(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && sourceFile.FileName() == preludePath
+	return sourceFile != nil && (sourceFile.FileName() == preludePath || sourceFile.FileName() == setPreludePath)
 }
 
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
@@ -233,6 +345,9 @@ func (p *Program) diagnostics(ctx context.Context) []string {
 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
 		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
 		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+		if p.compiler.Options().GetEmitDeclarations() {
+			all = append(all, p.compiler.GetDeclarationDiagnostics(ctx, nil)...)
+		}
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {
@@ -282,3 +397,17 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, 
 
 // CompilerProgram exposes the checked program to public checker and lint adapters.
 func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
+
+// UsesProjectOptions reports whether source types come from a project tsconfig.
+// Mixed ownership is refused, so this fact holds for every own source file.
+func (p *Program) UsesProjectOptions() bool { return p.projectOptions }
+
+// RequiresIndexedPresenceChecks reports a project whose indexed-read types omit
+// the absence introduced by Adamic's stricter option.
+func (p *Program) RequiresIndexedPresenceChecks() bool {
+	return p.projectOptions && p.compiler.Options().NoUncheckedIndexedAccess != core.TSTrue
+}
+
+// OptionSites returns the option audit sites; an accepted load still needs
+// lowering to emit their checks or explicitly refuse their representation.
+func (p *Program) OptionSites() []OptionSite { return append([]OptionSite(nil), p.optionSites...) }

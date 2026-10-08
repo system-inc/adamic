@@ -1,0 +1,15 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151present1409479077/001/D151.ts:2:30: stage 0 can't lower an indexed presence check on nullable array elements (the lookup needs to retain its presence slot) yet; Node "7\n"
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151absent3585188964/001/D151.ts:2:30: stage 0 can't lower an indexed presence check on nullable array elements (the lookup needs to retain its presence slot) yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151null1210754624/001/D151.ts:2:30: stage 0 can't lower an indexed presence check on nullable array elements (the lookup needs to retain its presence slot) yet; Node "null\n"
+--- PASS: TestLedgerWitnesses (5.39s)
+    --- PASS: TestLedgerWitnesses/D151 (0.64s)
+        --- PASS: TestLedgerWitnesses/D151/present (0.22s)
+        --- PASS: TestLedgerWitnesses/D151/absent (0.21s)
+        --- PASS: TestLedgerWitnesses/D151/null (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	5.401s

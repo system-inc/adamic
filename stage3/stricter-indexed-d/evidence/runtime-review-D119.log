@@ -1,0 +1,13 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:242: PRESENT D119 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:231: PROVEN D119 read=typesVersions[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=false: exit 0 stdout="undefined\n" stderr=""
+    witness_test.go:231: PROVEN D119 read=typesVersions[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (7.48s)
+    --- PASS: TestLedgerWitnesses/D119 (1.71s)
+        --- PASS: TestLedgerWitnesses/D119/present (0.78s)
+        --- PASS: TestLedgerWitnesses/D119/absent (0.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	7.488s

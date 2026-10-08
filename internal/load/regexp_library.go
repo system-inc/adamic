@@ -7,8 +7,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 )
 
-// Stock TypeScript declares captures as string even when they did not
-// participate. Correct that type before the checker proves program types.
+// Add runtime facts only to libraries selected by the project. Stock TypeScript
+// declares unmatched captures as strings; collection completion is undefined.
 type regexpLibraryFS struct{ vfs.FS }
 
 func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
@@ -28,6 +28,12 @@ func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if strings.HasSuffix(path.AsString(), "/lib.es2015.symbol.wellknown.d.ts") {
 		text = strings.ReplaceAll(text, "[Symbol.split](string: string, limit?: number): string[]", "[Symbol.split](string: string, limit?: number): (string | undefined)[]")
 		text = strings.ReplaceAll(text, "split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): string[];", "split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): (string | undefined)[];")
+	}
+	if strings.HasSuffix(path.AsString(), "/lib.es2015.iterable.d.ts") {
+		for _, name := range []string{"MapIterator", "SetIterator"} {
+			declaration := "interface " + name + "<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {"
+			text = strings.ReplaceAll(text, declaration, declaration+"\n    next(): IteratorResult<T, undefined>;")
+		}
 	}
 	return text, ok
 }

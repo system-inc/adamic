@@ -89,5 +89,8 @@ func build(path, output string, arguments []string) int {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1
 	}
+	if explain {
+		explainChecks(program, os.Stderr)
+	}
 	return 0
 }

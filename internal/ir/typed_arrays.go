@@ -34,3 +34,7 @@ func (v TypedArrayNew) Type() Type      { return v.Of }
 func (v TypedArrayFill) Type() Type     { return v.Array.Type() }
 func (TypedArraySet) Type() Type        { return 0 }
 func (v TypedArraySubarray) Type() Type { return v.Array.Type() }
+
+type TypedArrayData struct{ Value Expression }
+
+func (TypedArrayData) Type() Type { return Array }

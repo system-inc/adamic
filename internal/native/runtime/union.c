@@ -49,6 +49,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 	if (value == NULL) {
 		return &adamic_string_undefined;
 	}
+	if (adamic_reference_is_sentinel(value)) {
+		return adamic_reference_null_text();
+	}
 	switch (value->kind) {
 	case adamic_kind_null:
 		return &adamic_box_null_text;
@@ -70,6 +73,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	// Unknown uses a distinct null sentinel; it has no object payload to inspect.
 	if (value == &adamic_null) { return &adamic_typeof_object; }
+	if (adamic_reference_is_sentinel(value)) {
+		return &adamic_typeof_object;
+	}
 	if (value == NULL) {
 		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}

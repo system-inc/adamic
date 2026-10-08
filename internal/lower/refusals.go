@@ -24,7 +24,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
@@ -126,6 +125,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if node.Kind == ast.KindIndexSignature {
+			if _, supported := l.recordInfo(l.checker.GetTypeAtLocation(node.Parent)); !supported {
+				found = l.notYet(node, recordLimit)
+				return true
+			}
+		}
 		if node.Kind == ast.KindTypePredicate {
 			if err := l.predicateRefusal(node); err != nil {
 				found = err
@@ -152,7 +157,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.nullishComparison(node) && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
