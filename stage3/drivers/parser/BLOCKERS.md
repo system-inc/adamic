@@ -1,3 +1,38 @@
+# Front-3 retry: integration merge blocked before build
+
+Fresh unpushed scratch starts at origin/compiler/stage3-front-3 21243ee4.
+All eleven requested fix SHAs were checked individually against this base with
+merge-base --is-ancestor: none are ancestors. Namespace 47a6fabe was merged
+with scratch-only resolutions, yielding ebaa8d7d. These touch
+lowering, JS and native readiness handling; gofmt succeeds, but the resolution
+has not been built or validated. Exact patch/script retained.
+
+The next ancestry-checked merge, host-blockers b788e96e, exits 1 with 38
+unresolved files. It conflicts across lowering, IR, library loading, native
+emission and runtime. Two observed representation conflicts explain why this
+is an integration stop rather than a source blocker:
+
+- front-3 closure/method ABI is `(self, argument_count, arguments)`;
+  host-blockers is `(self, arguments, argument_count)`. Both runtime headers,
+  emitted definitions and call sites conflict.
+- front-3 IR uses `Break{Depth int}` and `Continue{}`;
+  host-blockers uses `Break{Label string}` and `Continue{Label string}`.
+
+No new wrong-output result is claimed. The scratch merge remains unresolved;
+no compiler build or probe rerun was performed. Thus I did not confirm the
+expected enum-initialization stop on this scratch, run either split mode, or
+run new byte mutants. The remaining nine merges have not been attempted.
+This avoids claiming a compiled compiler from an incomplete ABI integration.
+Arguments-length 9534e8ab is absent from both the committed scratch and incoming
+host-blockers branch. Quarantined scratch, published slice and references remain
+unchanged. No compiler scratch merge is pushed.
+
+[Evidence](evidence/front28/report.json) records every ancestry result, the
+38 paths, merge logs, namespace resolution and unresolved conflict patch.
+Holding for compiler's reconciled enum/convention or front-3 update.
+
+---
+
 # Fresh fixes: targeted probes green, earlier integration stops remain
 
 Fresh unpushed scratch 1b382081 plus proven-predicates-2 0f722679,
