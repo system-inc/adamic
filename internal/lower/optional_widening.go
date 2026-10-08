@@ -195,11 +195,11 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 
 // Resolve the import binding rather than trusting the callee's spelling.
 func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
-	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-	if callee.Kind == ast.KindPropertyAccessExpression {
-		callee = ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+	target := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if target.Kind == ast.KindPropertyAccessExpression {
+		target = ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
 	}
-	symbol := l.checker.GetSymbolAtLocation(callee)
+	symbol := l.checker.GetSymbolAtLocation(target)
 	if symbol == nil {
 		return false
 	}
