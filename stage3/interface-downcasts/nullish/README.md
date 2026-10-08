@@ -303,3 +303,48 @@ nullable union alternatives retain their named selector refusal. Production
 inventory stays 2,018 pairs/9,101 reads awaiting whole-program lowering and shared
 reaching-view proof. Ledger checks remain with worker 01a118d0. The whole
 repository gate was not run.
+
+## Mixed and null-containing Map storage, October 8
+
+Integration 9b768f65 is merged in 3c3665e1, preserving ArrayReadonly and the
+callable lane's DiscardResult metadata. Map entries now use existing owned boxed
+union references: numbers own boxes, booleans use immortal boxes, references
+retain their producer objects, null is adamic_null and undefined is NULL. Map
+constructors, set/get, cloning, values iteration, replacement, deletion, clear
+and forEach retain the shared runtime ownership paths. Tagged boolean|undefined
+entries now decode through maybeSlot, preserving false/true/undefined separately.
+Function-value slots accept boxed union references so Map callbacks can consume
+these entries without inventing a second callback ABI.
+
+Producer-to-view comparison checks every source union alternative, the allowed
+null/undefined alternatives, finite values, and nested array variance. Writable
+Map schemas retain invariance. Physical storage must still match: a numeric Map
+cannot be reinterpreted as a boxed-union Map. Cross-representation read adapters
+are not supplied by this batch; such reads stop at the Map certificate boundary.
+
+Twelve positives cover nullable number, boolean, string, object, array and mixed
+scalar entries with null and null|undefined forms. Three schema mutants stop at
+node.value: wrong mixed member, forbidden null and forbidden undefined. The
+boolean|undefined control prints false, true, undefined, true, undefined. Clone
+and lifecycle iteration matches Node; clearing a Map during its first callback
+prints number, 7, 0 and remains sanitizer/leak-clean. A first lifecycle probe
+used unguarded String on a union containing null; the existing ToPrimitive
+boundary refused it, so the final control narrows its numeric value first.
+
+Five implementation mutations were caught independently: ignore union members,
+allow forbidden null, allow forbidden undefined, collapse null's sentinel, and
+skip tagged-boolean unpacking. All fail behavioral assertions without a compiler
+warning kill. Restored Map/nullish/selection/callable-source oracles pass in
+78.426s; the live mutation control passes in 0.755s. Scoped IR/lower/native/JS
+View|Map|Contract|Callable checks pass in 0.016s/4.024s/31.072s/0.799s; vet passes.
+The broader Census selection still fails five groups. Reverting the callable-slot
+change for a baseline comparison reproduces four failing groups, including a
+predicate-marker boundary that previously failed with NotYet instead of Refused.
+One old predicate-marker test instead expected the now-removed union-slot NotYet;
+stored marker calls retain integration's producer arity check at runtime. Both
+current and baseline logs are retained; no full gate pass is claimed.
+
+After this push the production table remains 2,018 pairs/9,101 reads awaiting
+whole-program lowering and reaching-view proof. Callable entries, tuples,
+nominal/phantom witnesses and cross-representation read conversion remain;
+ledger-driven checks are untouched.

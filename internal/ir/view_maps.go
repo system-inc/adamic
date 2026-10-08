@@ -6,17 +6,67 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	c := program.ViewContracts[target-1]
 	pairs := [][2]ViewContractID{}
 	active := map[[2]ViewContractID]bool{}
+	var allowsNullish func(ViewContractID, ViewKind) bool
+	allowsNullish = func(id ViewContractID, kind ViewKind) bool {
+		if id == 0 {
+			return false
+		}
+		c := program.ViewContracts[id-1]
+		if c.Kind == kind || kind == ViewNull && c.Null || kind == ViewUndefined && c.Undefined {
+			return true
+		}
+		for _, member := range c.Members {
+			if allowsNullish(member, kind) {
+				return true
+			}
+		}
+		return false
+	}
+	sameStorage := func(from, to ViewContractID) bool {
+		return from != 0 && to != 0 && program.ViewContracts[from-1].Of == program.ViewContracts[to-1].Of
+	}
 	var accepts func(ViewContractID, ViewContractID) bool
 	accepts = func(from, to ViewContractID) bool {
 		if from == 0 || to == 0 {
 			return false
 		}
-		if program.ViewContracts[from-1].Of != program.ViewContracts[to-1].Of {
-			return false
-		}
 		// Readonly arrays permit element covariance; writable arrays require both
 		// directions. Every recursive step also preserves physical storage.
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
+		if source.Kind == ViewNull || source.Kind == ViewUndefined {
+			return allowsNullish(to, source.Kind)
+		}
+		if source.Kind == ViewNullable {
+			if source.Null && !allowsNullish(to, ViewNull) || source.Undefined && !allowsNullish(to, ViewUndefined) {
+				return false
+			}
+			if source.Element == 0 {
+				return true
+			}
+			if target.Kind == ViewNullable {
+				return accepts(source.Element, target.Element)
+			}
+			return accepts(source.Element, to)
+		}
+		if source.Kind == ViewUnion {
+			for _, member := range source.Members {
+				if !accepts(member, to) {
+					return false
+				}
+			}
+			return len(source.Members) != 0
+		}
+		if target.Kind == ViewNullable {
+			return accepts(from, target.Element)
+		}
+		if target.Kind == ViewUnion {
+			for _, member := range target.Members {
+				if accepts(from, member) {
+					return true
+				}
+			}
+			return false
+		}
 		if source.Undefined && !target.Undefined {
 			return false
 		}
@@ -50,7 +100,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 					return false
 				}
 			}
-			return accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
+			return sameStorage(source.Element, target.Element) && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
 			if id == to {
@@ -61,7 +111,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	}
 	for _, pair := range program.MapCertificates {
 		key, value := pair[0], pair[1]
-		if accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
+		if sameStorage(key, c.Key) && sameStorage(value, c.Element) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
 			pairs = append(pairs, pair)
 		}
 	}

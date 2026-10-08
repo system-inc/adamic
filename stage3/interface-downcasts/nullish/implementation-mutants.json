@@ -152,5 +152,75 @@
     ],
     "exit": 1,
     "log": "evidence/map-nested-brand-mutant.log.gz"
+  },
+  {
+    "mutant": "ignore-union-alternatives",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^entry-mixed-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-union-mutant-ignore-union-alternatives.log.gz"
+  },
+  {
+    "mutant": "allow-forbidden-null-entry",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^entry-null-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-union-mutant-allow-forbidden-null-entry.log.gz"
+  },
+  {
+    "mutant": "allow-forbidden-undefined-entry",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^entry-undefined-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-union-mutant-allow-forbidden-undefined-entry.log.gz"
+  },
+  {
+    "mutant": "collapse-null-entry",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapUnionEntryStorage$/^number-both$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-union-mutant-collapse-null-entry.log.gz"
+  },
+  {
+    "mutant": "skip-boolean-entry-unpack",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^entry-boolean-undefined$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-union-mutant-skip-boolean-entry-unpack.log.gz"
   }
 ]

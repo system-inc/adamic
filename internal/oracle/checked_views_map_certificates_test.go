@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckedViewMapCertificates(t *testing.T) {
-	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object"}
+	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object", "entry-mixed-schema", "entry-null-schema", "entry-undefined-schema", "entry-boolean-undefined", "entry-lifecycle", "entry-live-mutation"}
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-value-schema", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
@@ -106,7 +106,7 @@ func mapReadField(name string) string {
 }
 
 func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
-	for _, family := range []string{"nullable-entry", "mixed-entry", "callable-entry", "tuple-entry", "nested-array-brand", "nested-object-brand"} {
+	for _, family := range []string{"callable-entry", "tuple-entry", "nested-array-brand", "nested-object-brand"} {
 		for _, use := range []string{"read", "unread"} {
 			t.Run(family+"-"+use, func(t *testing.T) {
 				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a"))
@@ -134,6 +134,27 @@ func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
 				if report := leaks(t, program, binary); report != "" {
 					t.Fatal(report)
 				}
+			})
+		}
+	}
+}
+
+func TestCheckedViewMapUnionEntryStorage(t *testing.T) {
+	for _, family := range []string{"number", "boolean", "string", "object", "array", "mixed"} {
+		for _, form := range []string{"null", "both"} {
+			t.Run(family+"-"+form, func(t *testing.T) {
+				program, path := interfaceFixture(t, "nullish/maps/entry-"+family+"-"+form)
+				truth := onNode(t, path)
+				native, binary := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatalf("%s: %#v", diff, got)
+					}
+				}
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Logf("Node stdout=%q", truth.stdout)
 			})
 		}
 	}

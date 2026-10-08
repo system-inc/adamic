@@ -325,8 +325,10 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	return value, nil
 }
 
-// Callable slots use the same tagged boolean representation as fields.
-func censusCallableSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }
+// Callable slots hold tagged booleans or owned boxed union references.
+func censusCallableSlotless(of ir.Type) bool {
+	return slotless(of) && of != ir.MaybeBoolean && of != ir.Union
+}
 
 // A default's body-local type excludes undefined, but its incoming argument can be undefined.
 func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {

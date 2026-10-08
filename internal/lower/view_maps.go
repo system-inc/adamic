@@ -50,7 +50,7 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 // slotContract has already checked every member recursively. Unknown or lazy
 // descriptors cannot certify entries merely because their storage is a pointer.
 func mapEntryContract(contract ir.ViewContract) bool {
-	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray)
+	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray || contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewNullable || contract.Kind == ir.ViewNull || contract.Kind == ir.ViewUndefined)
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
@@ -60,11 +60,11 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 	present := l.checker.GetNonNullableType(target)
 	array := l.viewArrayBase(present) != nil
 	optionalObject := l.includesUndefined(target) && !l.includesNull(target) && present.Flags()&checker.TypeFlagsObject != 0
-	if !array && !optionalObject {
+	if !array && !optionalObject && target.Flags()&checker.TypeFlagsUnion == 0 && target.Flags()&checker.TypeFlagsNull == 0 {
 		return l.slotContract(node, target)
 	}
 	id, err := l.viewContract(node, target)
-	if err != nil || !supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
+	if err != nil || !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) {
 		return 0
 	}
 	return id
@@ -104,6 +104,34 @@ func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Ty
 				return false
 			}
 		}
+	}
+	return true
+}
+
+func mapEntryDescriptorProven(program *ir.Program, id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
+	if id == 0 {
+		return false
+	}
+	if seen[id] {
+		return true
+	}
+	seen[id] = true
+	c := program.ViewContracts[id-1]
+	if !mapEntryContract(c) {
+		return false
+	}
+	for _, f := range c.Fields {
+		if !mapEntryDescriptorProven(program, f.Contract, seen) {
+			return false
+		}
+	}
+	for _, member := range c.Members {
+		if !mapEntryDescriptorProven(program, member, seen) {
+			return false
+		}
+	}
+	if c.Element != 0 && !mapEntryDescriptorProven(program, c.Element, seen) {
+		return false
 	}
 	return true
 }
