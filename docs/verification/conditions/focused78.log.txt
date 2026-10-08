@@ -1,0 +1,171 @@
+=== RUN   TestTypeScriptConditionsAgreeWithNode
+=== PAUSE TestTypeScriptConditionsAgreeWithNode
+=== RUN   TestConditionNaNMutant
+=== PAUSE TestConditionNaNMutant
+=== RUN   TestConditionLedgerMissingSiteMutant
+=== PAUSE TestConditionLedgerMissingSiteMutant
+=== RUN   TestConditionLedgerNullMutant
+=== PAUSE TestConditionLedgerNullMutant
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestTypeScriptConditionsAgreeWithNode
+=== RUN   TestTypeScriptConditionsAgreeWithNode/number
+=== CONT  TestConditionLedgerNullMutant
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/number
+=== CONT  TestConditionLedgerMissingSiteMutant
+=== RUN   TestTypeScriptConditionsAgreeWithNode/string
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/string
+=== CONT  TestConditionNaNMutant
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestTypeScriptConditionsAgreeWithNode/object
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/object
+=== RUN   TestTypeScriptConditionsAgreeWithNode/array
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/array
+=== RUN   TestTypeScriptConditionsAgreeWithNode/function
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/function
+=== RUN   TestTypeScriptConditionsAgreeWithNode/optional_reference
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/optional_reference
+=== RUN   TestTypeScriptConditionsAgreeWithNode/optional_number
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/optional_number
+=== RUN   TestTypeScriptConditionsAgreeWithNode/optional_boolean
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/optional_boolean
+=== RUN   TestTypeScriptConditionsAgreeWithNode/optional_string
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/optional_string
+=== RUN   TestTypeScriptConditionsAgreeWithNode/null
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/null
+=== RUN   TestTypeScriptConditionsAgreeWithNode/union
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/union
+=== RUN   TestTypeScriptConditionsAgreeWithNode/sites
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/sites
+=== RUN   TestTypeScriptConditionsAgreeWithNode/evaluation
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/evaluation
+=== RUN   TestTypeScriptConditionsAgreeWithNode/ledger78
+=== PAUSE TestTypeScriptConditionsAgreeWithNode/ledger78
+=== CONT  TestTypeScriptConditionsAgreeWithNode/number
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_reference.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_reference.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_sites.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_sites.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_evaluation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_evaluation.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a
+=== CONT  TestTypeScriptConditionsAgreeWithNode/ledger78
+=== NAME  TestConditionLedgerMissingSiteMutant
+    conditions_test.go:204: missing-site source mutant caught by the independent historical-site coverage check
+--- PASS: TestConditionLedgerMissingSiteMutant (0.36s)
+=== CONT  TestTypeScriptConditionsAgreeWithNode/evaluation
+=== NAME  TestConditionNaNMutant
+    conditions_test.go:99: NaN-as-truthy mutant caught in both backends by stdout; changed 5 conditions
+--- PASS: TestConditionNaNMutant (0.46s)
+=== CONT  TestTypeScriptConditionsAgreeWithNode/sites
+=== NAME  TestTypeScriptConditionsAgreeWithNode/number
+    conditions_test.go:61: Node stdout "false:false:true:0\nfalse:false:true:0\nfalse:false:true:0\ntrue:true:false:2\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/union
+=== NAME  TestTypeScriptConditionsAgreeWithNode/evaluation
+    conditions_test.go:61: Node stdout "false\nfalse\nwhile\nfor\ndo\ndo\n9\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/null
+=== NAME  TestTypeScriptConditionsAgreeWithNode/sites
+    conditions_test.go:61: Node stdout "file\nfile.ts\nsensitive\nsensitive\ninsensitive\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/optional_string
+=== NAME  TestTypeScriptConditionsAgreeWithNode/union
+    conditions_test.go:61: Node stdout "false:false:true:0\nfalse:false:true:0\nfalse:false:true:0\ntrue:true:false:2\ntrue:true:false:2\nfalse:false:true:0\ntrue:true:false:2\nfalse:false:true:0\ntrue:true:false:2\nfalse:false:true:0\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/optional_boolean
+=== NAME  TestConditionLedgerNullMutant
+    conditions_test.go:240: null-as-truthy mutant at commandLineParser.ts:4176:9 caught only by stdout in both backends
+--- PASS: TestConditionLedgerNullMutant (1.31s)
+=== CONT  TestTypeScriptConditionsAgreeWithNode/optional_number
+=== NAME  TestTypeScriptConditionsAgreeWithNode/null
+    conditions_test.go:61: Node stdout "false:false:true:0\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/optional_reference
+=== NAME  TestTypeScriptConditionsAgreeWithNode/optional_string
+    conditions_test.go:61: Node stdout "false:false:true:0\nfalse:false:true:0\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/function
+=== NAME  TestTypeScriptConditionsAgreeWithNode/optional_boolean
+    conditions_test.go:61: Node stdout "false:false:true:0\nfalse:false:true:0\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/array
+=== NAME  TestTypeScriptConditionsAgreeWithNode/ledger78
+    conditions_test.go:59: 78 original conditions, 241 samples; Node, both backends and leak checks agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/object
+=== NAME  TestTypeScriptConditionsAgreeWithNode/optional_number
+    conditions_test.go:61: Node stdout "false:false:true:0\nfalse:false:true:0\nfalse:false:true:0\nfalse:false:true:0\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestTypeScriptConditionsAgreeWithNode/string
+=== NAME  TestTypeScriptConditionsAgreeWithNode/optional_reference
+    conditions_test.go:61: Node stdout "false:false:true:0\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_number.a
+=== NAME  TestTypeScriptConditionsAgreeWithNode/function
+    conditions_test.go:61: Node stdout "true:true:false:2\nfalse:false:true:0\n"; both backends agree
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_boolean.a
+=== NAME  TestTypeScriptConditionsAgreeWithNode/array
+    conditions_test.go:61: Node stdout "true:true:false:2\ntrue:true:false:2\n"; both backends agree
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a
+=== NAME  TestTypeScriptConditionsAgreeWithNode/object
+    conditions_test.go:61: Node stdout "true:true:false:2\n"; both backends agree
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_evaluation.a
+=== NAME  TestTypeScriptConditionsAgreeWithNode/string
+    conditions_test.go:61: Node stdout "false:false:true:0\ntrue:true:false:2\ntrue:true:false:2\n"; both backends agree
+--- PASS: TestTypeScriptConditionsAgreeWithNode (0.00s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/number (0.59s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/evaluation (0.59s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/sites (0.57s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/union (0.58s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/null (0.55s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/optional_string (0.52s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/optional_boolean (0.52s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/ledger78 (1.75s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/optional_number (0.53s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/optional_reference (0.55s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/function (0.55s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/array (0.52s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/object (0.54s)
+    --- PASS: TestTypeScriptConditionsAgreeWithNode/string (0.63s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_sites.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_function.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_number.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_reference.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_object.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/conditions_string.a
+--- PASS: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_boolean.a (0.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_number.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_evaluation.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_sites.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_null.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_union.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_string.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_function.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_reference.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a (1.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_optional_number.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_object.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_array.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/conditions_string.a (0.38s)
+PASS
+gate cache: native hits=0 misses=42
+gate cache: node hits=0 misses=61
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.106s

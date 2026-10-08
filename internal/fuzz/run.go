@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
@@ -98,6 +99,8 @@ const (
 	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
 	// the generator's fault.
 	Unfit Verdict = "unfit"
+	// Flaked: an execution failure under load disappeared on one exclusive rerun.
+	Flaked Verdict = "flaked under load"
 	// Finding: a disagreement, a sanitizer report, a leak, a compiler crash, or C that clang refused.
 	Finding Verdict = "finding"
 )
@@ -111,7 +114,37 @@ type Outcome struct {
 	Node    Run
 	Native  Run
 	Backend Run
+	retry   bool // execution failures that need one exclusive confirmation
 }
+
+// programRuns covers all checkouts in this process, including shrinking and
+// reduction. A waiting confirmation blocks new attempts until it has run alone.
+var programRuns sync.RWMutex
+
+func confirm(run func() Outcome) Outcome {
+	first := func() Outcome {
+		programRuns.RLock()
+		defer programRuns.RUnlock()
+		return run()
+	}()
+	if first.Verdict != Finding || !first.retry {
+		return first
+	}
+	programRuns.Lock()
+	defer programRuns.Unlock()
+	second := run()
+	if second.Verdict == Agreed {
+		first.Verdict = Flaked
+		return first
+	}
+	// The exclusive attempt is authoritative; retain both diagnostics when it
+	// produces a different failure rather than losing the initial evidence.
+	second.Detail = fmt.Sprintf("first attempt: %s %s\n%s\nexclusive rerun: %s %s\n%s",
+		first.Verdict, first.Key, first.Detail, second.Verdict, second.Key, second.Detail)
+	return second
+}
+
+func runnerDied(run Run) bool { return run.ExitCode < 0 || run.TimedOut }
 
 // Try runs a program's source three ways in a directory of its own, the way the oracle does.
 func (c *Checkout) Try(source string, directory string) Outcome {
@@ -127,6 +160,11 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 
 // TryFile runs a program file three ways, building in directory.
 func (c *Checkout) TryFile(path string, directory string) Outcome {
+	return confirm(func() Outcome { return c.tryFile(path, directory) })
+}
+
+// tryFile performs exactly one attempt; callers hold programRuns throughout it.
+func (c *Checkout) tryFile(path string, directory string) Outcome {
 	// The refusal a program expects, and whether it reaches a task boundary, are in its comments.
 	contents, err := os.ReadFile(path)
 	if err != nil {
@@ -141,14 +179,17 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 		return Outcome{Verdict: Finding, Key: "invalid move expectation"}
 	}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
-		refusal := compilerRefusal(lowered)
-		if moveWhat != "" {
-			return judgeMoveRefusal(moveWhat, moveFix, lowered)
+		var outcome Outcome
+		switch {
+		case moveWhat != "":
+			outcome = judgeMoveRefusal(moveWhat, moveFix, lowered)
+		case expected == "":
+			outcome = compilerRefusal(lowered)
+		default:
+			outcome = judgeParallelRefusal(expected, compilerRefusal(lowered), lowered)
 		}
-		if expected == "" {
-			return refusal
-		}
-		return judgeParallelRefusal(expected, refusal, lowered)
+		outcome.retry = outcome.Verdict == Finding
+		return outcome
 	}
 	if expected != "" || moveWhat != "" {
 		if moveWhat != "" {
@@ -161,7 +202,7 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 	}
 	javascript := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
 	if javascript.ExitCode != 0 || javascript.TimedOut {
-		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr)}
+		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr), retry: true}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
@@ -179,7 +220,11 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 		if warning := clangWarning.FindSubmatch(output); warning != nil {
 			key += ": " + string(warning[1])
 		}
-		return Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12)}
+		detail := strings.TrimSpace(string(output))
+		if detail == "" {
+			detail = err.Error()
+		}
+		return Outcome{Verdict: Finding, Key: key, Detail: detail, retry: true}
 	}
 
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
@@ -222,6 +267,7 @@ var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 var javascriptError = regexp.MustCompile(`^adamic: panic: (RangeError|TypeError|ReferenceError|SyntaxError|Error|InternalError)\b`)
 
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
+	outcome.retry = runnerDied(outcome.Node) || runnerDied(outcome.Native) || runnerDied(outcome.Backend)
 	switch {
 	case outcome.Node.TimedOut:
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", ""
@@ -275,7 +321,8 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	if outcome.Node.ExitCode == 0 {
 		report, err := c.leaks(binary, directory, "")
 		if err != nil {
-			report = err.Error()
+			// A leak check that never finished says nothing about the program: run it again alone.
+			report, outcome.retry = err.Error(), true
 		}
 		if report != "" {
 			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(report, 20)

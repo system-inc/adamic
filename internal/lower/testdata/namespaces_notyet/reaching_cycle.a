@@ -1,0 +1,4 @@
+function one(n:number):boolean {return n > 0 ? two(n-1) : Debug.ready;}
+function two(n:number):boolean {return n > 0 ? one(n-1) : Debug.ready;}
+console.log(`${two(3)}`);
+namespace Debug {export let ready=true;}

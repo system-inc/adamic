@@ -10,6 +10,9 @@ import (
 // Receiver-optional, zero-argument library methods need one saved receiver and
 // a missing result. An optional function call has a different guard and ABI.
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.optionalMapGet(node); handled {
+		return value, true, err
+	}
 	call := node.AsCallExpression()
 	if call.QuestionDotToken != nil || len(call.Arguments.Nodes) != 0 {
 		return nil, false, nil

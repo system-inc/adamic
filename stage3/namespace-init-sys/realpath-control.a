@@ -1,0 +1,6 @@
+// Structural control for sys.ts selection. The exact host reduction is realpath.a.
+const fs = { realpathSync: { native: (): string => 'path'.repeat(2) } };
+function fallback(): string { return 'fallback'; }
+const fsRealpath = !!fs.realpathSync.native ? fs.realpathSync.native : fallback;
+namespace Debug { export let enabled = false; }
+console.log(`${fsRealpath()}:${Debug.enabled}`);

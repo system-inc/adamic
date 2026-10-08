@@ -1,0 +1,7 @@
+type Signature = string | [signature: string];
+function signature(value?: Signature): string {
+    if (value === undefined) return "missing";
+    return typeof value === "string" ? value : value[0];
+}
+const read = signature;
+console.log(`${read()}:${read(undefined)}:${read(`plain${1}`)}:${read([`tuple${2}`])}`);

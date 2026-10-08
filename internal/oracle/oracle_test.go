@@ -788,11 +788,18 @@ func TestNativeAgreesWithNode(t *testing.T) {
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
+			if runtime.GOOS == "darwin" && fixture.path == "internal/oracle/testdata/navigation.a" {
+				t.Skip("darwin navigation.a: Node arm64 fused multiply-adds change the last bit (#myatdyv); checked by the Linux x64 oracle lane")
+			}
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if refusedAdamicNonNullFixture(fixture.path) {
+				assertAdamicNonNullRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

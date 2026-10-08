@@ -448,12 +448,11 @@ Step 04's closures (compiler/area-next-fixtures 118579fc) merged into area/runti
 - `runtime-file:regexp_replace.c`: no mutable static storage.
 - `runtime-file:typed_array.c`: no mutable static storage; typed arrays are counted heap values, and share.c refuses one reaching a task as a compiler bug (typed arrays are not Shareable).
 
-## Typed arrays, October 7, 2026
+## Uint16Array extension, October 7, 2026
 
-typed_array.c adds no mutable static runtime storage. Uint16Array uses the existing
+This unit adds no mutable static runtime storage. Uint16Array uses the existing
 counted typed-array header and owner pattern, with a two-byte `uint16_t` buffer
 allocated per owning array. A subarray retains its ultimate owner and points
 into that buffer. The generic iterator retains the array. Existing heap freeing
 releases owners, buffers and iterators; no new global cache or static counter is
 introduced. This entry records this extension, not an inventory of earlier units.
-

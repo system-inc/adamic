@@ -1,0 +1,31 @@
+// Declaration shape only: external types, bodies and enum expressions are normalized.
+function shapeInitialize():number{return 1;}
+export namespace tracingEnabled {
+type Mode = number;
+let fs:number;
+let traceCount:number=1;
+let traceFd:number=1;
+let mode:number;
+const typeCatalog:number=1;
+let legendPath:number;
+const legend:number=1;
+interface Args {}
+export function startTracing(): number {return 0;}
+export function stopTracing(): number {return 0;}
+export function recordType(): number {return 0;}
+export const enum Phase {Parse=0,Program=1,Bind=2,Check=3,CheckTypes=4,Emit=5,Session=6}
+export function instant(): number {return 0;}
+const eventStack:number=1;
+export function push(): number {return 0;}
+export function pop(): number {return 0;}
+export function popAll(): number {return 0;}
+const sampleInterval:number=1;
+function writeStackEvent(): number {return 0;}
+function writeEvent(): number {return 0;}
+function getLocation(): number {return 0;}
+function dumpTypes(): number {return 0;}
+export function dumpLegend(): number {return 0;}
+interface TraceRecord {}
+}
+const tracing=tracingEnabled;
+console.log("shape:tracingEnabled");

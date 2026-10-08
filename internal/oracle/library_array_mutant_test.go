@@ -113,7 +113,10 @@ static adamic_array *array_mutant_reverse(adamic_array *array) { return array; }
 			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
-			got := executeWith(t, []string{leakSanitizer()}, binary)
+			if report := leakChecked(t, mutant, binary); report != "" {
+				t.Fatalf("mutant must not leak: %s", report)
+			}
+			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 			truth := onNode(t, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
