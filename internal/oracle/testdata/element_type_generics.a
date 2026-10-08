@@ -25,3 +25,43 @@ function nonNullableFirst<T>(array: readonly NonNullable<T>[], fallback: T): T {
 	return array[0] ?? fallback;
 }
 console.log(`${nonNullableFirst<string | undefined>(['present'], undefined)} ${nonNullableFirst<number | undefined>([17], undefined)}`);
+
+// These loops exercise the unresolved census names with concrete call-site types.
+function requireAll<T>(values: readonly T[], predicate: (value: T) => boolean): boolean {
+    for (const value of values) {
+        if (!predicate(value)) return false;
+    }
+    return true;
+}
+console.log(`${requireAll([2, 4], value => value > 0)} ${requireAll([true, false], value => value)}`);
+
+function projectPairs<T, U, V>(left: readonly T[], right: readonly U[], fallback: U, convert: (a: T, b: U) => V): V[] {
+    const output: V[] = [];
+    let index = 0;
+    for (const value of left) {
+        if (index >= right.length) break;
+        output.push(convert(value, right[index] ?? fallback));
+        index++;
+    }
+    return output;
+}
+console.log(projectPairs([2, 4], [10, 20], 0, (a, b) => a + b).join('/'));
+console.log(projectPairs(['a', 'b'], [true, false], false, (a, b) => `${a}:${b}`).join('/'));
+
+function preserveChildren<Child extends Entry>(values: readonly Child[]): Child[] {
+    return values.slice();
+}
+const children = preserveChildren([{ text: 'child', rank: 7 }]);
+console.log(`${children.length} ${first(children, { text: 'fallback', rank: 0 }).rank}`);
+
+function visitStates<TState>(initial: TState, count: number, advance: (state: TState) => TState): TState[] {
+    const states: TState[] = [];
+    let state = initial;
+    for (let step = 0; step < count; step++) {
+        states.push(state);
+        state = advance(state);
+    }
+    return states;
+}
+console.log(visitStates(3, 3, state => state + 2).join('/'));
+console.log(visitStates(false, 3, state => !state).join('/'));
