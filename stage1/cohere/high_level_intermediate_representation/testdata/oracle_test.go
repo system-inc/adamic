@@ -4,13 +4,18 @@
 package high_level_intermediate_representation
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/system-inc/cohere/static_single_assignment"
 	"os"
+	"reflect"
+	"sort"
 	"strings"
 	"testing"
+	"unicode/utf16"
 )
 
 func oraclePlace(p Place) string {
@@ -45,8 +50,12 @@ func oracleDump(f *Function) string {
 			preds = append(preds, fmt.Sprint(p))
 		}
 		fmt.Fprintf(&out, "block %d %s predecessors=%s\n", b.Id, b.Kind, strings.Join(preds, ","))
-		if len(b.Phis) > 0 {
-			panic("slice cannot dump phi")
+		for _, phi := range b.Phis {
+			fmt.Fprintf(&out, "phi %s", oraclePlace(phi.Place))
+			for _, operand := range phi.Operands {
+				fmt.Fprintf(&out, " %d=%s", operand.Predecessor, oraclePlace(operand.Place))
+			}
+			out.WriteByte('\n')
 		}
 		for _, id := range b.Instructions {
 			i := f.Instruction(id)
@@ -58,7 +67,7 @@ func oracleDump(f *Function) string {
 				case nil:
 					payload = "nil"
 				case string:
-					payload = "string:" + x
+					payload = "string:" + oracleText(x)
 				case bool:
 					payload = fmt.Sprintf("bool:%t", x)
 				default:
@@ -67,16 +76,46 @@ func oracleDump(f *Function) string {
 			case *LoadLocal:
 				kind = "LoadLocal"
 				payload = oraclePlace(v.Place)
+			case *UnaryExpression:
+				kind = "UnaryExpression"
+				payload = v.Operator + " " + oraclePlace(v.Value)
+			case *BinaryExpression:
+				kind = "BinaryExpression"
+				payload = oraclePlace(v.Left) + " " + v.Operator + " " + oraclePlace(v.Right)
 			default:
-				panic(fmt.Sprintf("instruction outside slice: %T", v))
+				kind = reflect.TypeOf(v).Elem().Name()
+				payload = oraclePayload(v)
 			}
 			fmt.Fprintf(&out, "instruction %d %d %s %d:%d %s %s\n", i.Id, i.Order, oraclePlace(i.LValue), i.Range.Pos(), i.Range.End(), kind, payload)
 		}
-		terminal, ok := b.Terminal.(*Return)
-		if !ok {
-			panic("terminal outside slice")
+		if terminal, ok := b.Terminal.(*Return); ok {
+			fmt.Fprintf(&out, "terminal %d Return %s\n", terminal.Order, oraclePlace(terminal.Value))
+		} else {
+			fmt.Fprintf(&out, "terminal %d %s %s\n", TerminalOrder(b.Terminal), reflect.TypeOf(b.Terminal).Elem().Name(), oraclePayload(b.Terminal))
 		}
-		fmt.Fprintf(&out, "terminal %d Return %s\n", terminal.Order, oraclePlace(terminal.Value))
+	}
+	if len(f.ContextDeclarations) > 0 {
+		ids := []int{}
+		for id, yes := range f.ContextDeclarations {
+			if yes {
+				ids = append(ids, int(id))
+			}
+		}
+		sort.Ints(ids)
+		fmt.Fprintf(&out, "context-declarations %v\n", ids)
+	}
+	if len(f.Outlined) > 0 {
+		ids := []int{}
+		for id := range f.Outlined {
+			ids = append(ids, int(id))
+		}
+		sort.Ints(ids)
+		for _, id := range ids {
+			fmt.Fprintf(&out, "outlined %d %d\n", id, f.Outlined[static_single_assignment.IdentifierId(id)])
+		}
+	}
+	for index, nested := range f.Functions {
+		fmt.Fprintf(&out, "nested %d\n%s", index, oracleDump(nested))
 	}
 	out.WriteString("scopes -\nend\n")
 	return out.String()
@@ -110,4 +149,83 @@ func TestStage1HIRDump(t *testing.T) {
 	if err := os.WriteFile(os.Getenv("HIR_OUTPUT"), []byte(output.String()), 0600); err != nil {
 		t.Fatal(err)
 	}
+}
+
+// Fixed UTF-16 escape alphabet shared with the stage 1 parser's written().
+func oracleText(text string) string {
+	var out strings.Builder
+	for _, code := range utf16.Encode([]rune(text)) {
+		if code >= 32 && code <= 126 && code != 92 {
+			out.WriteRune(rune(code))
+		} else {
+			fmt.Fprintf(&out, "\\u%04x", code)
+		}
+	}
+	return out.String()
+}
+
+// All currently declared payload variants are observed, including places in patterns.
+// AST nodes are represented by stable kind/span/text handles, never object addresses.
+func oracleValue(v reflect.Value) any {
+	if !v.IsValid() {
+		return nil
+	}
+	if v.Kind() == reflect.Interface {
+		if v.IsNil() {
+			return nil
+		}
+		return oracleValue(v.Elem())
+	}
+	if v.CanInterface() {
+		switch x := v.Interface().(type) {
+		case Place:
+			return oraclePlace(x)
+		case core.TextRange:
+			return fmt.Sprintf("%d:%d", x.Pos(), x.End())
+		case *ast.Node:
+			if x == nil {
+				return nil
+			}
+			return map[string]any{"kind": x.Kind.String(), "pos": x.Pos(), "end": x.End()}
+		}
+	}
+	if v.Kind() == reflect.Pointer {
+		if v.IsNil() {
+			return nil
+		}
+		return oracleValue(v.Elem())
+	}
+	switch v.Kind() {
+	case reflect.Struct:
+		fields := map[string]any{}
+		for i := 0; i < v.NumField(); i++ {
+			field := v.Type().Field(i)
+			if field.PkgPath != "" || field.Name == "Order" {
+				continue
+			}
+			fields[field.Name] = oracleValue(v.Field(i))
+		}
+		return fields
+	case reflect.Slice, reflect.Array:
+		values := []any{}
+		for i := 0; i < v.Len(); i++ {
+			values = append(values, oracleValue(v.Index(i)))
+		}
+		return values
+	case reflect.Map:
+		fields := map[string]any{}
+		for _, key := range v.MapKeys() {
+			fields[fmt.Sprint(key.Interface())] = oracleValue(v.MapIndex(key))
+		}
+		return fields
+	default:
+		return v.Interface()
+	}
+}
+func oraclePayload(value any) string {
+	data, err := json.Marshal(oracleValue(reflect.ValueOf(value)))
+	if err != nil {
+		panic(err)
+	}
+	return string(data)
 }

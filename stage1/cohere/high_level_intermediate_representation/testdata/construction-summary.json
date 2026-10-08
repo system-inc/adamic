@@ -1,0 +1,632 @@
+{
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "constructionCorpusFunctions": 1465,
+  "constructionCorpusFunctionsMatched": 51,
+  "pathProbes": 9,
+  "pathProbesMatched": 9,
+  "upstreamFixtures": 395,
+  "flowExcludedFixtures": [
+    "error.bug-context-variable-catch-in-lambda.js",
+    "error.bug-hir_loc_diff_2.js",
+    "error.bug-hir_structural_diff.js",
+    "error.bug-infer-mutation-aliasing-function-shadows-own-name.js",
+    "error.invalid-assign-current-inferred-ref-during-render.js",
+    "error.invalid-assing-to-ref-current-in-render.js",
+    "error.invalid-ref-access-render-unary.js",
+    "error.invalid-ref-initialization-unary-not.js",
+    "error.invalid-uncalled-function-capturing-mutable-values-memoizes-with-captures-values.js",
+    "error.ref-initialization-arbitrary.js",
+    "error.ref-initialization-call-2.js",
+    "error.ref-initialization-call.js",
+    "error.ref-initialization-linear.js",
+    "error.ref-initialization-nonif.js",
+    "error.ref-initialization-other.js",
+    "error.ref-initialization-post-access-2.js",
+    "error.ref-initialization-post-access.js",
+    "error.todo-hir_fn_type_mismatch.js",
+    "error.todo-hir_fn_type_mismatch_1.js",
+    "error.todo-hir_fn_type_mismatch_2.js",
+    "error.todo-hir_jsxtext_nbsp.js",
+    "error.todo-hir_loc_diff_1.js",
+    "error.todo-hir_silent_rust_fail.js",
+    "error.todo-pattern2_type_to_object.js",
+    "error.todo-pattern3_type_to_poly.js",
+    "error.todo-repro-missed-memoization-from-capture-in-invoked-function-inferred-as-mutation.js",
+    "error.todo-repro-missed-memoization-from-inferred-mutation-in-logger.js",
+    "error.todo-round2_float_precision.js",
+    "error.todo-round2_fn_type_component_to_other.js",
+    "error.todo-round2_id_numbering.js",
+    "error.todo-round2_identifier_diff.js",
+    "error.todo-round2_severity_diff.js",
+    "error.todo-update-expression-context-variable-via-type-annotation.js",
+    "new-mutability/error.invalid-referencing-frozen-hoisted-storecontext-const.js",
+    "new-mutability/repro-internal-compiler-shared-mutablerange-bug.js",
+    "preserve-memo-validation/error.useMemo-with-refs.flow.js",
+    "repro-missing-memoization-lack-of-phi-types.js",
+    "return-ref-callback-structure.js",
+    "return-ref-callback.js",
+    "useCallback-ref-in-render.js"
+  ],
+  "skippedGoTests": [
+    "TestBuildReactiveFunctionCorpusConservation",
+    "TestMergeRegistersScopesFromTerminals",
+    "TestMergeSortComparatorReachability",
+    "TestMergeIsDeterministic",
+    "TestMergeAssumesMonotoneEvaluationOrder",
+    "TestMergeFunctionOperandSkipUpperBound",
+    "TestMergeLeavesBlockScopeAlignmentUnclosed",
+    "TestMergePreservesScopeWidthAndMembership",
+    "TestMergeDrivesNonNestedOverlapToZero",
+    "TestMergeReactiveScopesRecordsAbsorbedIds",
+    "TestMergeReactiveScopesPreservesEveryStatement",
+    "TestFindLastUsageCorpus",
+    "TestLowerRealCodebase",
+    "TestLowerRealCodebaseIsDeterministic",
+    "TestPruneNonEscapingScopesPrunesAndKeeps",
+    "TestPruneAlwaysInvalidatingPrunesSomethingAndKeepsSomething",
+    "TestPruneUnusedScopesPrunesSomethingAndKeepsSomething",
+    "TestHoistableCorpusDistribution",
+    "TestDisjointClassSizesAreNotAllSingletons",
+    "TestPruneNonReactiveDependenciesKeepsAndPrunes",
+    "TestPruneNonEscapingScopesReportsWhatItReplaced",
+    "TestDeclarationOriginDiffersFromHoldingScope",
+    "TestDependencyDistributionIsReal",
+    "TestPostDominatorFrontiersMatchTheChainWalk/pinned_corpus",
+    "TestConstructionIsIdempotent",
+    "TestSSAOverRealCodebase",
+    "TestScopeMatchesTheDisjointSetPartition",
+    "TestScopeRangesSatisfyUpstreamsInvariant",
+    "TestScopeWidthAndMembershipAgree",
+    "TestScopeTerminalsRecoverEveryScopeFromTheGraph",
+    "TestPruneNonEscapingScopesIsDeterministic",
+    "TestPruneNonEscapingScopesResolvesLoadLocalIndirection",
+    "TestIsAlwaysInvalidatingTypeHandlesNodelessIdentifiers",
+    "TestReactiveVisitorCorpus",
+    "TestReactiveTransformCorpus",
+    "TestAlignIsDeterministic",
+    "TestAlignIsASingleSweep",
+    "TestReactReversePostorderClosesFallthroughSelfNesting",
+    "TestAlignVoidsTheMergesComparatorVerdicts",
+    "TestAlignPreservesScopeWidthAndMembership",
+    "TestAlignReDerivesMemberRanges",
+    "TestAlignFallthroughsAreUniqueOnceBranchesAreExcluded",
+    "TestAlignMustRunBeforeTheMerge",
+    "TestAlignClosesTheFullBlockNestingAssertion",
+    "TestAlignMethodCallScopesReachesTheCorpus"
+  ],
+  "matchedFunctions": [
+    {
+      "key": "0c9a7a38603f926ed047ee27fb5e277aeec307047565b26cc1e79034ee36b6fe",
+      "start": 215,
+      "end": 224,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-kitchensink.js/nested"
+      ]
+    },
+    {
+      "key": "0f21fe3bede429c5aff77ee649f2a246353d33bdaa7e90a96d0051e0563f2596",
+      "start": 180,
+      "end": 189,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:ref-like-name-in-useCallback-2.js/nested"
+      ]
+    },
+    {
+      "key": "18cda18affeb87c6351061ed7d55a02df2e591d24f8fb6c0f0b0f5069f174f7c",
+      "start": 82,
+      "end": 90,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "1d3fe8dc76383d8d3d17d042704045e9eb200cfe6ccfcba40122fc6d76ec3fa2",
+      "start": 90,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
+      "start": 93,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "25936d83c9d84508972ba916dd193c07e5d107604458cff83f5fdf6d8193582e",
+      "start": 83,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "2b6044fce6a2c99d94b491844d7a40bc94a42712ea8ed3e1236ea3d0fcbf585d",
+      "start": 39,
+      "end": 77,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoist-function-decls.js/nested"
+      ]
+    },
+    {
+      "key": "2e69c108620f27288e9a4eada14b29bed91b7e8ade5f39d2fbeaebb8bcb20c5a",
+      "start": 392,
+      "end": 400,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested"
+      ]
+    },
+    {
+      "key": "437009a3c204c1846ea29417934a8c115ccf51400d3bfc61a8902ad6ba9ad29b",
+      "start": 180,
+      "end": 189,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:ref-like-name-in-useCallback.js/nested"
+      ]
+    },
+    {
+      "key": "47d7ccd78a8ee145e1a50016d3224a6151c30c079bb26c92b98ad0ed3bff7349",
+      "start": 0,
+      "end": 65,
+      "checker": true,
+      "calls": [
+        "upstream:error.handle-unexpected-exception-pipeline.ts"
+      ]
+    },
+    {
+      "key": "48e10ff447d83f42488d7d26d5097b3ec6fab5c61ec5c9376ff0488c62ab1b86",
+      "start": 86,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "5dd1d62ac14b217eb06b23a774f14dd2ea9905a2b29b74c351d2eee9afd70693",
+      "start": 91,
+      "end": 99,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "5edbaac60cc3d39f385001fcb10bc14e20663b6cc034d7d9e9961c85d9758f1e",
+      "start": 92,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "67abff8a4eb767d36b7da1ade67f20fc25fa95d7b3795f51296c15ca367de8e8",
+      "start": 178,
+      "end": 187,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:ref-like-name-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "68f13b89cda6613332a57d7f56982ed6c28327d72770a14bc1d4e4b31dd06394",
+      "start": 95,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "70030bdeb703397d6a6a988729ef7f1d6b8b599cffc00568e2aa49bc211fbced",
+      "start": 88,
+      "end": 96,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "78ab67786f77523af38a9fbc6b890023077c64e61016c8a970f1de55d559a47d",
+      "start": 316,
+      "end": 324,
+      "checker": true,
+      "calls": [
+        "always_invalidating_test.go:176/nested"
+      ]
+    },
+    {
+      "key": "78e2b8fa7fd9e7f0e2bccfa5705e44e4041f5a34d38fe35889a36235670f0a04",
+      "start": 89,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7b6bf968ba190dae65b5130aa0a901541f3566f16c2221771ec00cdf466ebcc6",
+      "start": 149,
+      "end": 157,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7ce9630bd591eca223888c8b5c3d505aa647e06c3ffb8b43e1f4c434ed055845",
+      "start": 85,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7efc2207dd27c6398d678a497e615548691925b5a79f00024a7024210be76aa8",
+      "start": 36,
+      "end": 68,
+      "checker": true,
+      "calls": [
+        "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "80890874d455243aa871d69008689a6344cf50f61e64e2fe7df07fd4beed9789",
+      "start": 922,
+      "end": 1019,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-kitchensink.js/nested/nested"
+      ]
+    },
+    {
+      "key": "810c973a693134db34b087b9098e5cf40c8cc92bd775de21f2be7616067c02c8",
+      "start": 83,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "852a5855fc11922aa22fed6628d308a0fb900b657df2bd7a0d3a4842fad585e2",
+      "start": 152,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "871bc7ed3fb5383afd0af9255a6774ff7b05cff526881d2cf6c335b6a7e70db5",
+      "start": 79,
+      "end": 87,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "8acc64e65dbddda2593bd4faa94f7a0be8c4c0c3cd6b8c6903442d6841236a50",
+      "start": 93,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "90831659ae926e617c3bf317273a78d5ff12be2ad02994f57928e588327329a4",
+      "start": 153,
+      "end": 161,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "95c00db51bf77c6ae95ad5a770ef3e8473c2c5b2532d42a88f7080cd248bf2e4",
+      "start": 87,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "95fed9489e91ddfdf0603271eda9223f6d0f2912bfb12277906ead7c60d6d8d1",
+      "start": 89,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "a5f846d6ed230ee31d3400761365ae0b4ab67ed162391e643e65864f9f6b8382",
+      "start": 68,
+      "end": 167,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoisted-function-in-unreachable-code.js/nested"
+      ]
+    },
+    {
+      "key": "a79294bf6f334f4bf02b9ff78d5fac75e211428ba9cd48a9c7b322c155ed9085",
+      "start": 143,
+      "end": 151,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "b0943422302f9c513ab06dc3803c8546a093140bbbf8fdfb71e91779f347c5c0",
+      "start": 192,
+      "end": 201,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:error.ref-like-name-not-Ref.js/nested"
+      ]
+    },
+    {
+      "key": "b0ef32db238a98dee67e78b8e7d8505947294ac8f1d3a37ecb10e5708edf6231",
+      "start": 86,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "bb0c2fda812b926b4b328203595cd6288cab05d94215e1ff8d50a88431ecf5df",
+      "start": 92,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "c0a8dcc0ae3909667e926dc2efcec5bbd6779086fd1a87103d8b53176d54f7a9",
+      "start": 379,
+      "end": 417,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-valid-functiondecl-hoisting.tsx/nested"
+      ]
+    },
+    {
+      "key": "c8f61ae314da1c12bf4df076ba446c07f93ee01bc72aff98f96a0c8fcc3e1010",
+      "start": 73,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "cbd47c2357a22c48d6ce9cae4535150bcc0ae95863fe6ee6ddbe01c6e2c631eb",
+      "start": 545,
+      "end": 553,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested/nested"
+      ]
+    },
+    {
+      "key": "d1d2048b59ca968e084ac33a1da0c562fa03121efba88f8bf311881b01c3e660",
+      "start": 102,
+      "end": 123,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassign-global-fn-arg.js"
+      ]
+    },
+    {
+      "key": "d2c3b74581299800b3f0406a9ffb317367dff7b5f0dc52cdaf60fca393a0804a",
+      "start": 462,
+      "end": 470,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested"
+      ]
+    },
+    {
+      "key": "d57ee7de3ca8034990c0924bbd1360f2a9e0c39c79f56495a8a9d81acdadd956",
+      "start": 78,
+      "end": 86,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "d825fe2baea8422ee9d2d288c4646152dff8ef2f78fee07f91691b5b28e8fbe9",
+      "start": 0,
+      "end": 20,
+      "checker": true,
+      "calls": [
+        "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "e187b72bb140bb605f3ea4173f709bafbe7aacb5a9d7d8c86391c564623c95ec",
+      "start": 73,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "e48bb74f6cea39cd71e25e811fab2ee5ce745400791090fe406bb293c2019c19",
+      "start": 61,
+      "end": 70,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-function-expression-references-later-variable-declaration.js/nested/nested"
+      ]
+    },
+    {
+      "key": "ebb712997f3c06f911e65514bd6eaf4a13d78601caf194e3afadef6ca67122f6",
+      "start": 325,
+      "end": 367,
+      "checker": true,
+      "calls": [
+        "always_invalidating_test.go:176/nested"
+      ]
+    },
+    {
+      "key": "ed9777e82579f8d0a5b02815e088543113f86a7f3e33cd9fe24629987ab23034",
+      "start": 84,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "ef06c3858e02a7a87a012d9e91937d38370ce41026da02b2851fba52f1bae2cc",
+      "start": 80,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "f41f135afbb9f5d2b01449fb4ea71af5f27afe0691ac8733aea815a6bbec5739",
+      "start": 106,
+      "end": 114,
+      "checker": true,
+      "calls": [
+        "upstream:error.hook-ref-value.js/nested"
+      ]
+    },
+    {
+      "key": "f85742482a2b8ca6fd4bb45606de2163807e383cdf49ebada1f7715d13bfa90f",
+      "start": 582,
+      "end": 591,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/maybe-invalid-useMemo-no-memoblock-sideeffect.ts"
+      ]
+    },
+    {
+      "key": "f8ea070c209338a3b6c2d2281da8252381b8794af408dffbd66f8d0ff367d31c",
+      "start": 53,
+      "end": 61,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85/nested"
+      ]
+    },
+    {
+      "key": "fd9f4b2c4aa9906182760694c49f913646ebe0a05729f614ee90d8cace21035b",
+      "start": 96,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "fe0473bc5577f2bca2722f12870b3243feb7472c747963cf936325efc934ecb8",
+      "start": 192,
+      "end": 201,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:error.ref-like-name-not-a-ref.js/nested"
+      ]
+    }
+  ],
+  "instructionKinds": {
+    "ArrayExpression": 594,
+    "Await": 7,
+    "BinaryExpression": 359,
+    "CallExpression": 998,
+    "ComputedDelete": 1,
+    "ComputedLoad": 20,
+    "ComputedStore": 5,
+    "DeclareLocal": 33,
+    "Destructure": 232,
+    "FunctionExpression": 584,
+    "GetIterator": 45,
+    "IteratorNext": 45,
+    "JsxExpression": 246,
+    "JsxFragment": 5,
+    "JsxText": 18,
+    "LoadContext": 548,
+    "LoadGlobal": 1393,
+    "LoadLocal": 3419,
+    "MetaProperty": 1,
+    "MethodCall": 378,
+    "NewExpression": 34,
+    "NextPropertyOf": 3,
+    "ObjectExpression": 197,
+    "ObjectMethod": 8,
+    "PostfixUpdate": 25,
+    "PrefixUpdate": 4,
+    "Primitive": 1492,
+    "PropertyDelete": 3,
+    "PropertyLoad": 858,
+    "PropertyStore": 96,
+    "RegExpLiteral": 5,
+    "StoreContext": 47,
+    "StoreGlobal": 35,
+    "StoreLocal": 1472,
+    "TaggedTemplateExpression": 3,
+    "TemplateLiteral": 5,
+    "TypeCastExpression": 11,
+    "UnaryExpression": 17,
+    "UnsupportedNode": 6
+  }
+}

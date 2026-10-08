@@ -1,0 +1,247 @@
+package high_level_intermediate_representation
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"go/scanner"
+	"go/token"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"testing"
+)
+
+// Rebind test calls to observer functions. Only test identifiers are replaced, never Go HIR code.
+func observeTestCalls(data []byte) []byte {
+	var scan scanner.Scanner
+	files := token.NewFileSet()
+	file := files.AddFile("test.go", files.Base(), len(data))
+	scan.Init(file, data, nil, 0)
+	type edit struct {
+		start, end int
+		text       string
+	}
+	var edits []edit
+	for {
+		pos, tok, text := scan.Scan()
+		if tok == token.EOF {
+			break
+		}
+		if tok == token.IDENT && (text == "Lower" || text == "ForFunction" || text == "ForFunctionWithoutManualMemoization") {
+			offset := file.Offset(pos)
+			edits = append(edits, edit{offset, offset + len(text), "stage1Observed" + text})
+		}
+	}
+	for index := len(edits) - 1; index >= 0; index-- {
+		e := edits[index]
+		data = append(append(append([]byte{}, data[:e.start]...), []byte(e.text)...), data[e.end:]...)
+	}
+	return data
+}
+func TestWholeConstructionCensus(t *testing.T) {
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
+	temp := t.TempDir()
+	destination := os.Getenv("HIR_CENSUS_EXPORT")
+	if destination == "" {
+		destination = filepath.Join(temp, "census")
+	}
+	upstream := filepath.Join(root, "cohere/internal/lint/ecmascript/high_level_intermediate_representation")
+	replacements := map[string]string{
+		filepath.Join(upstream, "stage1_hir_oracle_test.go"): filepath.Join(lane, "testdata/oracle_test.go"),
+		filepath.Join(upstream, "stage1_hir_census_test.go"): filepath.Join(lane, "testdata/census_test.go"),
+	}
+	files, err := filepath.Glob(filepath.Join(upstream, "*_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		observed := observeTestCalls(data)
+		copy := filepath.Join(temp, filepath.Base(file))
+		if err := os.WriteFile(copy, observed, 0600); err != nil {
+			t.Fatal(err)
+		}
+		replacements[file] = copy
+	}
+	encoded, err := json.Marshal(map[string]any{"Replace": replacements})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay := filepath.Join(temp, "overlay.json")
+	if err := os.WriteFile(overlay, encoded, 0600); err != nil {
+		t.Fatal(err)
+	}
+	c := exec.Command("go", "test", "-v", "-count=1", "-timeout=15m", "-tags=lintoracle", "-overlay", overlay, "./internal/lint/ecmascript/high_level_intermediate_representation")
+	c.Dir = filepath.Join(root, "cohere")
+	c.Env = append(os.Environ(), []string{"GOWORK=" + filepath.Join(root, "cohere/go.work"), "HIR_CENSUS=" + destination, "HIR_CORPUS=" + filepath.Join(lane, "testdata/corpus.txt"), "HIR_OUTPUT=" + filepath.Join(temp, "small.dump")}...)
+	output, runErr := c.CombinedOutput()
+	if err := os.MkdirAll(destination, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(destination, "go-tests.log"), output, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if runErr != nil {
+		t.Fatalf("Go construction suite failed: %v; full log: %s", runErr, filepath.Join(destination, "go-tests.log"))
+	}
+
+	for _, line := range strings.Split(string(output), "\n") {
+		if strings.HasPrefix(line, "HIR construction census:") {
+			t.Log(line)
+		}
+	}
+	manifest := filepath.Join(destination, "manifest.tsv")
+	node := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(lane, "main.ts"), "--coverage", manifest)
+	matched, total := compareConstructionCensus(t, node, manifest, false)
+	binary := filepath.Join(temp, "hir")
+	command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(lane, "main.ts"), "-o", binary)
+	native := command(t, root, nil, binary, "--coverage", manifest)
+	if !bytes.Equal(native, node) {
+		t.Fatal("native and Node census outputs differ: " + firstDifference(native, node))
+	}
+	t.Logf("%d/%d context-distinct functions match Go on Node and natively; remaining rows are explicit declines", matched, total)
+	t.Logf("%d Go tests skipped; names recorded in go-tests.log", strings.Count(string(output), "--- SKIP:"))
+	if matched == 0 || total == 0 {
+		t.Fatal("empty construction coverage would prove nothing")
+	}
+	checkConstructionMutants(t, root, lane, manifest, node, true)
+}
+func compareConstructionCensus(t *testing.T, output []byte, manifest string, mutant bool) (int, int) {
+	t.Helper()
+	data, err := os.ReadFile(manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases := map[string]string{}
+	for _, chunk := range strings.Split(string(output), "case\t")[1:] {
+		key, payload, ok := strings.Cut(chunk, "\n")
+		if !ok {
+			t.Fatal("missing case payload")
+		}
+		if _, exists := cases[key]; exists {
+			t.Fatal("duplicate output key")
+		}
+		cases[key] = payload
+	}
+	total, matched := 0, 0
+	for _, line := range strings.Split(string(data), "\n") {
+		if line == "" {
+			continue
+		}
+		fields := strings.Split(line, "\t")
+		n, err := strconv.Atoi(fields[6])
+		if err != nil {
+			t.Fatal(err)
+		}
+		total += n
+		got, ok := cases[fields[0]]
+		if !ok {
+			t.Fatal("missing census case: " + fields[0])
+		}
+		delete(cases, fields[0])
+		if fields[7] != "true" {
+			if got != "decline\n" {
+				t.Fatal("out-of-slice case was silently admitted")
+			}
+			continue
+		}
+		want, err := os.ReadFile(fields[5])
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal([]byte(got), want) {
+			if mutant {
+				continue
+			}
+			t.Fatalf("case %s (%s %s:%s checker=%s): %s", fields[0], fields[1], fields[2], fields[3], fields[4], firstDifference([]byte(got), want))
+		}
+		matched += n
+	}
+	if len(cases) != 0 {
+		t.Fatal("unexpected extra census cases")
+	}
+	return matched, total
+}
+
+type constructionMutant struct{ name, file, from, to string }
+
+var constructionMutants = []constructionMutant{
+	{"concise arrow returns unused slot", "lower.ts", "if(conciseId >= 0) { block.terminal = builder.expression(conciseId); }", "if(conciseId >= 0) { builder.expression(conciseId); block.terminal = fn.returns; }"},
+	{"anonymous assignment name disappears", "lower.ts", "if(name === '') {", "if(name !== '') {"},
+
+	{"return store to nil", "lower.ts", "builder.emit(value, id, fn.returns);", "builder.emit({ kind: 'Primitive', literal: 'nil' }, id, fn.returns);"},
+	{"binary right operand becomes left", "lower.ts", "left, operator: operators.get(operator) ?? panic('unsupported binary'), right", "left, operator: operators.get(operator) ?? panic('unsupported binary'), right: left"},
+	{"unary operator becomes plus", "lower.ts", "{ kind: 'UnaryExpression', operator, value }", "{ kind: 'UnaryExpression', operator: '+', value }"},
+	{"comma returns left operand", "lower.ts", "if(operator === 'CommaToken') { return right; }", "if(operator === 'CommaToken') { return left; }"},
+	{"literal boolean flips", "lower.ts", "return 'bool:true';", "return 'bool:false';"},
+	{"parameter becomes capture", "lower.ts", "fn.params.push(fn.named(", "fn.context.push(fn.named("},
+}
+
+func checkConstructionMutants(t *testing.T, root, lane, input string, want []byte, census bool) {
+	t.Helper()
+	// The old corpus has no binary/unary/comma/parameter witnesses; the full census plus probes does.
+	for index, mutant := range constructionMutants {
+		if !census && mutant.name != "return store to nil" {
+			continue
+		}
+		t.Run("catches "+mutant.name, func(t *testing.T) {
+			directory, err := os.MkdirTemp(filepath.Dir(lane), "hir-mutant-")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer os.RemoveAll(directory)
+			files, err := filepath.Glob(filepath.Join(lane, "*.ts"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, file := range files {
+				data, err := os.ReadFile(file)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if filepath.Base(file) == mutant.file {
+					if strings.Count(string(data), mutant.from) != 1 {
+						t.Fatalf("mutant anchor moved: %s", mutant.name)
+					}
+					data = []byte(strings.Replace(string(data), mutant.from, mutant.to, 1))
+				}
+				if err := os.WriteFile(filepath.Join(directory, filepath.Base(file)), data, 0600); err != nil {
+					t.Fatal(err)
+				}
+			}
+			args := []string{"node", "--no-warnings", "oracle/node.mjs", filepath.Join(directory, "main.ts")}
+			if census {
+				args = append(args, "--coverage")
+			}
+			args = append(args, input)
+			badNode := command(t, root, nil, args...)
+			if bytes.Equal(badNode, want) {
+				t.Fatal("semantic mutant survived on Node")
+			}
+			binary := filepath.Join(t.TempDir(), fmt.Sprintf("mutant-%d", index))
+			command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(directory, "main.ts"), "-o", binary)
+			args = []string{binary}
+			if census {
+				args = append(args, "--coverage")
+			}
+			args = append(args, input)
+			badNative := command(t, root, nil, args...)
+			if !bytes.Equal(badNative, badNode) {
+				t.Fatal("mutant differs between Node and native")
+			}
+			if bytes.Equal(badNative, want) {
+				t.Fatal("semantic mutant survived natively")
+			}
+		})
+	}
+}

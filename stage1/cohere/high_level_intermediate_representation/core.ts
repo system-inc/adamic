@@ -14,7 +14,9 @@ export interface IdentifierInterface {
     readonly name: string;
 }
 // The slice admits only these variants; unsupported syntax is declined before lowering.
-export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal'; place: PlaceInterface };
+export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal'; place: PlaceInterface }
+    | { readonly kind: 'UnaryExpression'; readonly operator: string; value: PlaceInterface }
+    | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface };
 export class Instruction {
     readonly id: number;
     order: EvaluationOrderType = 0;
@@ -54,6 +56,11 @@ export class HIRFunction {
         this.returns = { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 };
         this.blocks = [new BasicBlock(1, this.returns)];
         this.identifiers.push({ id: 0, declaration: 1, name: '' });
+    }
+    named(name: string, start: number, end: number): PlaceInterface {
+        const id = this.identifiers.length;
+        this.identifiers.push({ id, declaration: id + 1, name });
+        return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
     temporary(start: number, end: number): PlaceInterface {
         const id = this.identifiers.length;

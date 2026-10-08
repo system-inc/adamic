@@ -93,3 +93,7 @@ Run `source /workspace/adamic-tools/env.sh; go test -v -count=1 -timeout 20m ./s
 
 
 Native compilation feedback during this slice was on port expressions, not an unavoidable Go language gap: an optional method call in classification was rejected (`core.ts:51:52: stage 0 can't lower a call through ?. (an optional call) yet`), and a constructor called a method before initializing its fields (`core.ts:52:24: Adamic 0.1 refuses this escaping a constructor before every field is set`). The final port uses Go lower.go:1366's direct ASCII classification and initializes every field before method calls; no required Go operation was bypassed. No confirmed blocking language gap remains in the slice.
+
+## Unit 2 continuation
+
+See [PROGRESS.md](PROGRESS.md) for the current clean seam and exact remaining construction/rule work. Its executed-test census supersedes the first landing's source-text selector for unit 2 coverage: 51/1,465 corpus functions, plus 9/9 path probes. Unit 2 and static-components remain unfinished. The owner confirms mutation_aliasing is scheduled for tonight's area pin bump and is not required before unit 4.

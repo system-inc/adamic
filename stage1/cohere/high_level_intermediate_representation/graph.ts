@@ -24,6 +24,11 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     eachInstructionPlace: function(fn, block, index, visit) {
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
         if(instruction.value.kind === 'LoadLocal') { instruction.value.place = visit(instruction.value.place, 'Use'); }
+        if(instruction.value.kind === 'UnaryExpression') { instruction.value.value = visit(instruction.value.value, 'Use'); }
+        if(instruction.value.kind === 'BinaryExpression') {
+            instruction.value.left = visit(instruction.value.left, 'Use');
+            instruction.value.right = visit(instruction.value.right, 'Use');
+        }
         instruction.lvalue = visit(instruction.lvalue, 'Define');
     },
     isContextStore: (_fn, _block, _index) => false,

@@ -11,7 +11,12 @@ export function dump(fn: HIRFunction): string {
         out += `block ${block.id} block predecessors=${block.predecessors.join(',')}\n`;
         for(const id of block.instructions) {
             const instruction = fn.instructions[id] ?? panic('missing instruction');
-            const payload = instruction.value.kind === 'Primitive' ? instruction.value.literal : placeText(instruction.value.place);
+            let payload = '';
+            const value = instruction.value;
+            if(value.kind === 'Primitive') { payload = value.literal; }
+            else if(value.kind === 'LoadLocal') { payload = placeText(value.place); }
+            else if(value.kind === 'UnaryExpression') { payload = `${value.operator} ${placeText(value.value)}`; }
+            else { payload = `${placeText(value.left)} ${value.operator} ${placeText(value.right)}`; }
             out += `instruction ${instruction.id} ${instruction.order} ${placeText(instruction.lvalue)} ${instruction.start}:${instruction.end} ${instruction.value.kind} ${payload}\n`;
         }
         out += `terminal ${block.terminalOrder} Return ${placeText(block.terminal)}\n`;
