@@ -18,12 +18,13 @@ set -euo pipefail
 
 sha=${1:?usage: cloud/fast-gate.sh <full sha> [--branch <name>] [--session <id>]}
 shift
-branch="" branchSource=given session="" sessionSource=given cpus=""
+branch="" branchSource=given session="" sessionSource=given cpus="" class=""
 while [ $# -gt 0 ]; do
   case $1 in
     --branch) branch=$2; shift 2 ;;
     --session) session=$2; shift 2 ;;
     --cpus) cpus=$2; shift 2 ;;
+    --class) class=$2; shift 2 ;;
     *) echo "unknown argument $1" >&2; exit 2 ;;
   esac
 done
@@ -47,22 +48,30 @@ if [ -z "${session}" ] && [ -n "${branch}" ] && [ -f "${database}" ]; then
   sessionSource="ai.db reply naming the branch"
 fi
 [ -n "${session}" ] || sessionSource=none
+# The watcher passes the class it queued with; a direct gate (integration's landings) gets the same judgment.
+if [ -z "${class}" ]; then
+  . "${here}/cloud/fast-gate-classify.sh"
+  class=$(classify "${branch:-}" "${sha}")
+fi
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 out=fast-gate/out/${sha:0:12}-${stamp}
 
-echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}"
+echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}, class ${class}"
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
-ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}")" <<'BOX'
+ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}")" <<'BOX'
 set -euo pipefail
-sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-}
+sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B}
 mkdir -p ~/fast-gate
 # Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
 # stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
 # With both busy it takes whichever frees first, never waiting on one while the other is idle.
 slot=""
 while [ -z "${slot}" ]; do
-  for candidate in 1 2; do
+  # Slot 1 is the area slot (landings and anything big); slots 2 and 3 take small changes only
+  # (@system_adamic, Oct 8 00:10), so a worker's tip never waits behind an area.
+  candidates=$([ "${class}" = S ] && echo "2 3" || echo "1")
+  for candidate in ${candidates}; do
     exec 9> ~/fast-gate/lock$([ "${candidate}" = 1 ] && echo "" || echo "-${candidate}")
     if flock -n 9; then slot=${candidate}; break; fi
     exec 9>&-
@@ -81,7 +90,9 @@ for directory in tools tree; do
 done
 # Holding the slot's lock means nothing else uses this tree, so any git lock in it is stale: a gate
 # killed mid-switch left one (Oct 7 23:02), and every later gate in the slot failed in 12 s on it.
-find ~/fast-gate/tree${suffix}/.git -maxdepth 4 -name index.lock -print -delete 2>/dev/null | sed 's/^/removed stale /'
+# The deepest is the nested submodule's, .git/modules/cohere/modules/TypeScript/index.lock (depth 5):
+# at depth 4 the sweep missed it, and slot 1 voided gates on it from 09:45Z (Oct 8).
+find ~/fast-gate/tree${suffix}/.git -maxdepth 6 -name index.lock -print -delete 2>/dev/null | sed 's/^/removed stale /'
 git -C ~/fast-gate/tools${suffix} fetch -q origin "${tools}"
 git -C ~/fast-gate/tools${suffix} switch -q --detach "${tools}"
 git -C ~/fast-gate/tree${suffix} fetch -q origin "${sha}" "${base}"
@@ -89,12 +100,18 @@ git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
-# The box is partitioned, not time-shared: each slot owns three eighths of the CPUs (24 of 64; Go
-# sizes GOMAXPROCS from the affinity) and the full gate the last quarter (cloud/full-gate-main.sh), all
+# The box is partitioned, not time-shared: the area slot owns three eighths of the CPUs (24 of 64; Go
+# sizes GOMAXPROCS from the affinity), the two small slots three sixteenths each (12: a one-function
+# edit gated in 19.8 to 21.1 s there), and the full gate the last quarter (cloud/full-gate-main.sh), all
 # at normal priority, so no side's timing can starve another's (a shared box decided verdicts tonight).
 cpus=$(nproc --all)
-share=$((cpus * 3 / 8))
-first=$([ "${slot}" = 1 ] && echo 0 || echo "${share}")
+area=$((cpus * 3 / 8))
+small=$((cpus * 3 / 16))
+case ${slot} in
+  1) first=0 share=${area} ;;
+  2) first=${area} share=${small} ;;
+  *) first=$((area + small)) share=${small} ;;
+esac
 # --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
 range="${first}-$((first + ${width:-${share}} - 1))"
 echo "cpus=${range}" >> ~/"${out}"/box.txt

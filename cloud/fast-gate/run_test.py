@@ -228,5 +228,61 @@ class Coverage(FailClosed):
         self.assertEqual(result["executors"], {"stage3": 2})
 
 
+class OracleSelection(unittest.TestCase):
+    """A fixture-only change to internal/oracle runs its fixtures in the lanes, plus every test over a
+    table of its own that names a changed fixture; a table filled outside its literal runs it whole."""
+
+    lanes = 'package oracle\n\nvar fixtures = []string{\n\t"internal/oracle/testdata/a.a",\n\t"internal/oracle/testdata/c.a",\n}\n\nfunc TestNativeAgreesWithNode(t *testing.T) {\n\tfor _, fixture := range fixtures {\n\t}\n}\n'
+    cast = 'package oracle\n\nvar castFixtures = []string{\n\t"c",\n}\n\nfunc TestCast(t *testing.T) {\n\tfor _, fixture := range castFixtures {\n\t}\n}\n'
+
+    def setUp(self):
+        self.tree = tempfile.mkdtemp()
+        os.makedirs(os.path.join(self.tree, "internal/oracle/testdata"))
+        self.git("init", "-q")
+        self.write("internal/oracle/oracle_test.go", self.lanes)
+        self.write("internal/oracle/cast_test.go", self.cast)
+        for name in ("a", "c"):
+            self.write("internal/oracle/testdata/%s.a" % name, "console.log(1)\n")
+        self.base = self.commit()
+
+    def git(self, *arguments):
+        return realRun(["git", "-C", self.tree] + list(arguments), check=True, capture_output=True, text=True).stdout.strip()
+
+    def write(self, path, text, mode="w"):
+        with open(os.path.join(self.tree, path), mode) as handle:
+            handle.write(text)
+
+    def commit(self):
+        self.git("add", "-A")
+        self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "change")
+        return self.git("rev-parse", "HEAD")
+
+    def select(self, base):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit())
+        return gate.selectOracle()
+
+    def test_a_fixture_no_table_names_skips_that_tables_test(self):
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertEqual(selection["fixtures"], ["internal/oracle/testdata/a.a"])
+        self.assertNotIn("TestCast", selection["tests"])
+
+    def test_a_fixture_a_table_names_runs_that_tables_test(self):
+        self.write("internal/oracle/testdata/c.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertIn("TestCast", selection["tests"])
+
+    def test_a_table_filled_outside_its_literal_runs_whole(self):
+        self.write("internal/oracle/cast_test.go", "\nfunc init() { castFixtures = append(castFixtures, \"a\") }\n", "a")
+        base = self.commit()
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(base)
+        self.assertTrue(selection["whole"], selection)
+        self.assertIn("castFixtures", selection["reason"])
+
+
 if __name__ == "__main__":
     unittest.main()

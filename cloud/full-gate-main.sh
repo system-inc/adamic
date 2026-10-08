@@ -23,6 +23,27 @@ mkdir -p "${state}"
 here=$(cd "$(dirname "$0")/.." && pwd)
 once=${1:-}
 
+# The heartbeat (@system_adamic, Oct 8 03:36): one row when a run starts and one every 10 minutes
+# while the loop lives, to documentation/velocity/full-gate-heartbeat.csv on records/full-gate-heartbeat,
+# so the witness charts the age of the last started whole gate from an artifact. A dead loop is a gap.
+heartbeat() {
+  local event=$1 sha=${2:-} records=${state}/heartbeat-records file=documentation/velocity/full-gate-heartbeat.csv
+  if [ ! -d "${records}" ]; then
+    if git -C "${here}" ls-remote --exit-code origin refs/heads/records/full-gate-heartbeat > /dev/null; then
+      git -C "${here}" fetch -q origin records/full-gate-heartbeat && git -C "${here}" worktree add -q --detach "${records}" FETCH_HEAD
+    else
+      git -C "${here}" worktree add -q --detach "${records}" "$(git -C "${here}" commit-tree "$(git -C "${here}" hash-object -t tree /dev/null)" -m "Start the whole gate's heartbeat")"
+    fi
+  fi
+  mkdir -p "$(dirname "${records}/${file}")"
+  [ -f "${records}/${file}" ] || echo "utc,event,main,box,last_started_utc,last_started_main" > "${records}/${file}"
+  [ "${event}" = start ] && echo "$(date -u +%FT%TZ) ${sha}" > "${state}/last-started"
+  echo "$(date -u +%FT%TZ),${event},${sha},${box},$(cut -d' ' -f1 "${state}/last-started" 2>/dev/null),$(cut -d' ' -f2 "${state}/last-started" 2>/dev/null)" >> "${records}/${file}"
+  git -C "${records}" add "${file}"
+  git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Whole-gate heartbeat: ${event} ${sha:0:12}" -m "Co-Authored-By: Ahra <ahra@ahra.ai>"
+  git -C "${records}" push -q origin "HEAD:refs/heads/records/full-gate-heartbeat" || true
+}
+
 publish() {
   local sha=$1 stamp=$2 out=$3 parent=$4
   local copy index gitDirectory tree commit branch=gate-logs/${sha:0:12}/${stamp}/full-main
@@ -46,6 +67,7 @@ run() {
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
   out=full-gate/out/${sha:0:12}-${stamp}
   echo "$(date -u +%H:%M:%S) full gate of main ${sha} (tools ${tools}) on ${box}"
+  (heartbeat start "${sha}" > /dev/null 2>&1 &)
   ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" <<'BOX'
 set -euo pipefail
 sha=$1 tools=$2 out=$3 share=${4:-all}
@@ -71,8 +93,10 @@ RUN
 echo "running: full gate of ${sha}, waiting for the box" > ~/"${out}"/status.txt
 tmux new -d -s "full-${sha:0:12}" "bash ~/${out}/run.sh > ~/${out}/driver.log 2>&1"
 BOX
+  local beats=0
   while true; do
     sleep 30
+    beats=$((beats + 1)); [ $((beats % 20)) -eq 0 ] && (heartbeat running "${sha}" > /dev/null 2>&1 &)
     status=$(ssh "${box}" "head -1 ~/${out}/status.txt" 2>/dev/null || true)
     if [ -n "${status}" ] && [ "${status}" != "${previous}" ]; then
       parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
@@ -92,8 +116,10 @@ BOX
       parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
       final=$(ssh "${box}" "head -1 ~/${out}/status.txt")
       echo "$(date -u +%H:%M:%S) finished: ${final}"
-      [[ ${final} == green:* ]] && echo "${sha}" > "${state}/last-green"
-      return
+      if [[ ${final} == green:* ]]; then echo "${sha}" > "${state}/last-green"; fi
+      # Explicitly 0: a bare return took the status of the green test above, so after every red run
+      # (06:55Z and 08:30Z on Oct 8) set -e ended the loop and no main got a whole gate.
+      return 0
     fi
   done
 }
@@ -103,10 +129,11 @@ if [ -n "${once}" ]; then
   exit
 fi
 while true; do
-  git -C "${here}" fetch -q origin
-  main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
-  if ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
-    run "${main}"
+  # A network blip or one failed run never ends the loop: it says so and tries again next minute.
+  main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1) || main=""
+  if [ -n "${main}" ] && ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
+    run "${main}" || echo "$(date -u +%H:%M:%S) run of ${main} failed (exit $?); trying again next minute"
   fi
+  idle=$((${idle:-0} + 1)); [ $((idle % 10)) -eq 0 ] && (heartbeat idle "${main}" > /dev/null 2>&1 &)
   sleep 60
 done
