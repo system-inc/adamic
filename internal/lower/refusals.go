@@ -68,10 +68,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
-			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
-			return true
-		}
 		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
