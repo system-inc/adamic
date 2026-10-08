@@ -1,0 +1,13 @@
+# V3 compiling checkpoint
+
+This is a partial V3 candidate on rehearsal predecessor 1bf89669. It contains independent array contract callbacks and JavaScript read hooks, 21 array-only runtime acceptance cases, and original B declaration witnesses. It does not register the array adapter or admit array reads. Existing admissions and refusals remain unchanged. Runtime acceptance pins have not been weakened to make this checkpoint green.
+
+The arrays/parser net is 4dbf3b6a to 7cd02813. The B net is 70522aa1 to 7676bf57. Each was applied once. The first net conflicted in shared files; those files retain the predecessor exactly. The second net's counts file is absent on the predecessor; its witness-only diff applies without that dependency. Historical results, counts and worker reports are excluded, as are callables, fresh_refused and graph_regions. No protected file or cohere source is changed.
+
+The standalone array callback propagates a child's error; optional/rest tuples stay NotYet. JavaScript hooks check actual array kind, then check only the selected element and evaluate receiver/index once. They are tested independently, not wired into generated programs yet.
+
+The full final-tree array adapter cannot be taken unchanged: internal/lower/view_array_adapter.go:16 calls tupleViewSlot; lines 41-42 require callableViewContract and ir.ArrayCallableContract. Array lowering also calls prepareUntaggedStructuralRead, tupleScalarUnionType and viewCallableCall. Array writes call mapNominalEntrySlot, prepareViewCallableRead and runtimeViewCallableShape. Native and JavaScript array consumers call nominalViewRead, tuple-array helpers and callable comparators. These are dependency observations, not permission to admit V4/V5 families. The scoped net also requires missing Narrow.Tuple, ScalarWriteContracts, Program.PrimitiveArrayReads, PrimitiveArrayContract and array consumer View metadata.
+
+Approved merge judgments: the representation amendment preserves the predecessor's named representation table and typed callback layouts; next judgments 19 and 21 preserve target evidence, freshness and cycle refusal; judgment 23 preserves ordinary boxed union arrays without erasing checked element contracts. Shared files are unchanged in this checkpoint, so no historical layout or admission is imported. The prior plan and full conflict receipts remain on compiler/views-v3-dry-run at 7551a279.
+
+Build and vet passed. TestViewArrayContract, TestViewArraysNode and TestViewArrayFieldPresence passed. The complete comparison sweep, counts, standalone file audit and omission mutants follow this compiling push. No moved existing result or full semantic success is claimed here.
