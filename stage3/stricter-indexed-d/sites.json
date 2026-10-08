@@ -193,5 +193,70 @@
     "present": "[{ kind: 7 }]",
     "absent": "[]",
     "blocked": false
+  },
+  {
+    "id": "D193",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 767,
+    "expression": "statements[i]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "statements[i]",
+    "receiver": "readonly array of object",
+    "source": "interface Item { readonly kind: number }\nconst statements: readonly Item[] = @VALUES@; const i = 0;\nconst value: Item = statements[i];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D194",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 767,
+    "expression": "statements[i]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "statements[i]",
+    "receiver": "readonly array of object",
+    "source": "interface Item { readonly kind: number }\nconst statements: readonly Item[] = @VALUES@; const i = 0;\nconst value: Item = statements[i];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D225",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 309,
+    "expression": "nonWhitespaceChildren[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "nonWhitespaceChildren[0]",
+    "receiver": "readonly array of object",
+    "source": "interface Item { readonly kind: number }\nconst nonWhitespaceChildren: readonly Item[] = @VALUES@;\nconst value: Item = nonWhitespaceChildren[0];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D226",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 502,
+    "expression": "expressions[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "expressions[0]",
+    "receiver": "array of object",
+    "source": "interface Item { readonly kind: number }\nconst expressions: Item[] = @VALUES@;\nconst value: Item = expressions[0];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D227",
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "line": 100,
+    "expression": "node.arguments",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "node.arguments[0]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly text: string }\nconst node: { readonly arguments: readonly Item[] } = { arguments: @VALUES@ };\nconst value: Item = node.arguments[0];\nconsole.log(value === undefined ? 'undefined' : `${value.text}`);\n",
+    "present": "[{ text: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
   }
 ]
