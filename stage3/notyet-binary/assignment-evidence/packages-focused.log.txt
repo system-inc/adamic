@@ -1,0 +1,10 @@
+ok  	github.com/system-inc/adamic/internal/ir	1.598s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+--- FAIL: TestEveryFunctionIsInSingleAssignment (59.63s)
+    flow_test.go:94: ../oracle/testdata/assignment_value_order.a, function 0 (local): the graph reads tracked locals 0 times, the IR 2
+    flow_test.go:113: 4383 functions: 648 phis, 4535 values, 12789 uses checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	92.361s
+ok  	github.com/system-inc/adamic/internal/fresh	63.036s
+ok  	github.com/system-inc/adamic/internal/lower	44.102s
+FAIL

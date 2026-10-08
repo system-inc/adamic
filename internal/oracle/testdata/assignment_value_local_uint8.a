@@ -1,0 +1,9 @@
+let target: Uint8Array = new Uint8Array([1]);
+function show(value: Uint8Array): string { return `${value[0]}`; }
+const assigned = (target = new Uint8Array([7]));
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = new Uint8Array([7]));
+target = new Uint8Array([1]);
+console.log(show(saved));

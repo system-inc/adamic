@@ -1,0 +1,12 @@
+const holder: (Map<string, string>)[] = [new Map<string, string>()];
+let calls = 0;
+function receiver(): (Map<string, string>)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: Map<string, string>): string { return `${value.get('key')}`; }
+const assigned = (receiver()[index()] = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+holder[0] = new Map<string, string>();
+console.log(show(saved));

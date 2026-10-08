@@ -1,0 +1,11 @@
+const holder: { item: Map<string, string> } = { item: new Map<string, string>() };
+let calls = 0;
+function receiver(): { item: Map<string, string> } { calls += 1; return holder; }
+function show(value: Map<string, string>): string { return `${value.get('key')}`; }
+const assigned = (receiver().item = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+console.log(show(assigned));
+console.log(show(holder.item));
+console.log(`calls:${calls}`);
+const saved = (receiver().item = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+holder.item = new Map<string, string>();
+console.log(show(saved));

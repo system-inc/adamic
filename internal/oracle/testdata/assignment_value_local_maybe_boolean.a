@@ -1,0 +1,9 @@
+let target: boolean | undefined = undefined;
+function show(value: boolean | undefined): string { return `${value}`; }
+const assigned = (target = true);
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = true);
+target = undefined;
+console.log(show(saved));

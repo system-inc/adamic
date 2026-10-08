@@ -1,0 +1,12 @@
+const holder: (number | undefined)[] = [1];
+let calls = 0;
+function receiver(): (number | undefined)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: number | undefined): string { return `${value}`; }
+const assigned = (receiver()[index()] = 7);
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = 7);
+holder[0] = undefined;
+console.log(show(saved));

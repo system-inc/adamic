@@ -1,0 +1,205 @@
+where,reason,operator,left,right,whole,expression
+src/compiler/builder.ts:1424:16,a BinaryExpression with a number and a number,=,number,number,number,root.length = root.length - 1
+src/compiler/builder.ts:2030:21,a BinaryExpression with a value and a value,=,AffectedFileResult<EmitResult>,AffectedFileResult<EmitResult>,AffectedFileResult<EmitResult>,"affectedEmitResult = emitNextAffectedFile(
+                        writeFile,
+                        cancellationToken,
+                        emitOnlyDtsFiles,
+                        customTransformers,
+                    )"
+src/compiler/builder.ts:2096:17,a BinaryExpression with a value and a value,=,AffectedFileResult<EmitResult>,AffectedFileResult<EmitResult>,AffectedFileResult<EmitResult>,"affectedEmitResult = emitNextAffectedFileOrDtsErrors(
+                    /*writeFile*/ undefined,
+                    cancellationToken,
+                    /*emitOnlyDtsFiles*/ undefined,
+                    /*customTransformers*/ undefined,
+                    /*isForDtsErrors*/ true,
+                )"
+src/compiler/builderState.ts:288:34,a BinaryExpression with a value and a value,=,Set<Path> | undefined,Set<Path>,Set<Path>,referencedFiles = new Set()
+src/compiler/checker.ts:12798:34,a BinaryExpression with a value and a value,=,Type | undefined,Type,Type,links.type = getTypeOfFuncClassEnumModuleWorker(symbol)
+src/compiler/checker.ts:12841:31,a BinaryExpression with a value and a value,=,Type | undefined,Type,Type,links.type = getDeclaredTypeOfEnumMember(symbol)
+src/compiler/checker.ts:12875:31,a BinaryExpression with a value and a value,=,Type | undefined,Type,Type,"links.type = instantiateType(getTypeOfSymbol(links.target!), links.mapper)"
+src/compiler/checker.ts:12880:36,a BinaryExpression with a value and a value,=,Type,Type,Type,"links.writeType = instantiateType(getWriteTypeOfSymbol(links.target!), links.mapper)"
+src/compiler/checker.ts:13212:24,a BinaryExpression with a value and a value,=,Type,IntrinsicType,IntrinsicType,type.resolvedBaseConstructorType = undefinedType
+src/compiler/checker.ts:13321:20,a BinaryExpression with a value and a value,=,BaseType[],never[],never[],type.resolvedBaseTypes = emptyArray
+src/compiler/checker.ts:13351:20,a BinaryExpression with a value and a value,=,BaseType[],never[],never[],type.resolvedBaseTypes = emptyArray
+src/compiler/checker.ts:13358:20,a BinaryExpression with a value and a value,=,BaseType[],never[],never[],type.resolvedBaseTypes = emptyArray
+src/compiler/checker.ts:13362:20,a BinaryExpression with a value and a value,=,BaseType[],never[],never[],type.resolvedBaseTypes = emptyArray
+src/compiler/checker.ts:13371:16,a BinaryExpression with a value and a value,=,BaseType[],BaseType[],BaseType[],type.resolvedBaseTypes = [reducedBaseType]
+src/compiler/checker.ts:13475:55,a BinaryExpression with a value and a value,=,Type,InterfaceType,InterfaceType,"links.declaredType = createObjectType(kind, symbol) as InterfaceType"
+src/compiler/checker.ts:13602:39,a BinaryExpression with a value and a value,=,Type,TypeParameter,TypeParameter,links.declaredType = createTypeParameter(symbol)
+src/compiler/checker.ts:13607:39,a BinaryExpression with a value and a value,=,Type,Type,Type,links.declaredType = getDeclaredTypeOfSymbol(resolveAlias(symbol))
+src/compiler/checker.ts:13896:62,a BinaryExpression with a value and a value,=,TransientSymbol | undefined,TransientSymbol,TransientSymbol,"lateSymbol = createSymbol(SymbolFlags.None, memberName, CheckFlags.Late)"
+src/compiler/checker.ts:13918:24,a BinaryExpression with a value and a value,=,Symbol | undefined,TransientSymbol,TransientSymbol,links.resolvedSymbol = lateSymbol
+src/compiler/checker.ts:14338:37,a BinaryExpression with a value and a value,=,Signature[] | undefined,never[],never[],result = []
+src/compiler/checker.ts:14914:14,a BinaryExpression with a value and a value,=,TypeParameter,TypeParameter,TypeParameter,type.typeParameter = getDeclaredTypeOfTypeParameter(getSymbolOfDeclaration(type.declaration.typeParameter))
+src/compiler/checker.ts:14924:31,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.nameType = instantiateType(getTypeFromTypeNode(type.declaration.nameType), type.mapper)"
+src/compiler/checker.ts:14930:14,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.templateType = type.declaration.type ?
+                instantiateType(addOptionality(getTypeFromTypeNode(type.declaration.type), /*isProperty*/ true, !!(getMappedTypeModifiers(type) & MappedTypeModifiers.IncludeOptional)), type.mapper) :
+                errorType"
+src/compiler/checker.ts:15327:16,a BinaryExpression with a value and a value,=,Type,Type,Type,type.resolvedBaseConstraint = getImmediateBaseConstraint(type)
+src/compiler/checker.ts:15450:50,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.resolvedApparentType = getTypeWithThisArgument(type, thisArgument, /*needApparentType*/ true)"
+src/compiler/checker.ts:15504:46,a BinaryExpression with a value and a value,=,Type,Type,Type,type.resolvedApparentType = getResolvedApparentTypeOfMappedType(type)
+src/compiler/checker.ts:15867:72,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.uniqueLiteralFilledInstantiation = instantiateType(type, uniqueLiteralMapper)"
+src/compiler/checker.ts:15999:42,a BinaryExpression with a value and a value,=,IndexInfo[] | undefined,IndexInfo[],IndexInfo[],applicableInfos = [applicableInfo]
+src/compiler/checker.ts:16579:61,a BinaryExpression with a value and a value,=,"Map<string, Signature>","Map<string, Signature>","Map<string, Signature>","signature.instantiations = new Map<string, Signature>()"
+src/compiler/checker.ts:16602:48,a BinaryExpression with a value and a value,=,Signature,Signature,Signature,signature.erasedSignatureCache = createErasedSignature(signature)
+src/compiler/checker.ts:16613:51,a BinaryExpression with a value and a value,=,Signature,Signature,Signature,signature.canonicalSignatureCache = createCanonicalSignature(signature)
+src/compiler/checker.ts:17040:43,a BinaryExpression with a value and a value,=,Type | undefined,Type,Type,"instantiation = instantiateTypeWithAlias(type, createTypeMapper(typeParameters, fillMissingTypeArguments(typeArguments, typeParameters, getMinTypeArgumentCount(typeParameters), isInJSFile(symbol.valueDeclaration))), aliasSymbol, aliasTypeArguments)"
+src/compiler/checker.ts:17145:45,a BinaryExpression with a value and a value,=,TransientSymbol | undefined,TransientSymbol,TransientSymbol,"result = createSymbol(SymbolFlags.TypeAlias, text, CheckFlags.Unresolved)"
+src/compiler/checker.ts:17376:24,a BinaryExpression with a value and a value,=,Type,Type,Type,links.resolvedType = checkExpressionCached(node.parent.expression)
+src/compiler/checker.ts:18873:46,a BinaryExpression with a value and a value,=,IndexType,IndexType,IndexType,"type.resolvedStringIndexType = createIndexType(type, IndexFlags.StringsOnly)"
+src/compiler/checker.ts:19160:40,a BinaryExpression with a value and a value,=,StringMappingType | undefined,StringMappingType,StringMappingType,"result = createStringMappingType(symbol, type)"
+src/compiler/checker.ts:19922:42,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.resolvedTrueType = instantiateType(getTypeFromTypeNode(type.root.node.trueType), type.mapper)"
+src/compiler/checker.ts:19926:43,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.resolvedFalseType = instantiateType(getTypeFromTypeNode(type.root.node.falseType), type.mapper)"
+src/compiler/checker.ts:19930:50,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.resolvedInferredTrueType = type.combinedMapper ? instantiateType(getTypeFromTypeNode(type.root.node.trueType), type.combinedMapper) : getTrueTypeFromConditionalType(type)"
+src/compiler/checker.ts:20003:24,a BinaryExpression with a value and a value,=,Type,IntrinsicType,IntrinsicType,links.resolvedType = errorType
+src/compiler/checker.ts:20297:81,a BinaryExpression with a value and a value,=,UnionType,UnionType,UnionType,"(type as UnionType).regularType = mapType(type, getRegularTypeOfLiteralType) as UnionType"
+src/compiler/checker.ts:20360:53,a BinaryExpression with a value and a value,=,Type,UniqueESSymbolType,UniqueESSymbolType,links.uniqueESSymbolType = createUniqueESSymbolType(symbol)
+src/compiler/checker.ts:20428:39,a BinaryExpression with a value and a value,=,Type,Type,Type,"links.resolvedType = node.dotDotDotToken ? getTypeFromRestTypeNode(node) :
+            addOptionality(getTypeFromTypeNode(node.type), /*isProperty*/ true, !!node.questionToken)"
+src/compiler/checker.ts:21154:46,a BinaryExpression with a value and a value,=,Type,Type,Type,"type.permissiveInstantiation = instantiateType(type, permissiveMapper)"
+src/compiler/checker.ts:23563:25,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo((source as IndexedAccessType).objectType, (target as IndexedAccessType).objectType, RecursionFlags.Both, /*reportErrors*/ false)"
+src/compiler/checker.ts:23571:29,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo((source as ConditionalType).checkType, (target as ConditionalType).checkType, RecursionFlags.Both, /*reportErrors*/ false)"
+src/compiler/checker.ts:23583:25,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo((source as SubstitutionType).baseType, (target as SubstitutionType).baseType, RecursionFlags.Both, /*reportErrors*/ false)"
+src/compiler/checker.ts:23654:88,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo(getTypeArguments(source)[0]!, target, RecursionFlags.Source)"
+src/compiler/checker.ts:23690:25,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo(targetType, (source as IndexType).type, RecursionFlags.Both, /*reportErrors*/ false)"
+src/compiler/checker.ts:23697:25,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo(source, getKnownKeysOfTupleType(targetType), RecursionFlags.Target, reportErrors)"
+src/compiler/checker.ts:23742:25,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo((source as IndexedAccessType).objectType, (target as IndexedAccessType).objectType, RecursionFlags.Both, reportErrors)"
+src/compiler/checker.ts:24125:21,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = typeArgumentsRelatedTo(sourceTypeArguments, targetTypeArguments, variances, reportErrors, intersectionState)"
+src/compiler/checker.ts:24177:21,a BinaryExpression with a number and a number,=,Ternary,Ternary,Ternary,"result = isRelatedTo(targetConstraint, sourceConstraint, RecursionFlags.Both, reportErrors)"
+src/compiler/checker.ts:28648:55,a BinaryExpression with a value and a value,=,EvolvingArrayType,EvolvingArrayType,EvolvingArrayType,evolvingArrayTypes[elementType.id] = createEvolvingArrayType(elementType)
+src/compiler/checker.ts:28671:53,a BinaryExpression with a value and a value,=,Type,Type,Type,evolvingArrayType.finalArrayType = createFinalArrayType(evolvingArrayType.elementType)
+src/compiler/checker.ts:29376:50,a BinaryExpression with a value and a value,=,"Map<string, Type>","Map<string, Type>","Map<string, Type>","flowLoopCaches[id] = new Map<string, Type>()"
+src/compiler/checker.ts:33413:27,a BinaryExpression with a value and a value,=,TypeReference,TypeReference,TypeReference,(type as TypeReference).literalType = cloneTypeReference(type as TypeReference)
+src/compiler/checker.ts:33447:24,a BinaryExpression with a value and a value,=,Type,IntrinsicType,IntrinsicType,links.resolvedType = errorType
+src/compiler/checker.ts:34272:24,a BinaryExpression with a value and a value,=,Type,IntrinsicType,IntrinsicType,links.resolvedJsxElementAttributesType = errorType
+src/compiler/checker.ts:36844:53,a BinaryExpression with a value and a value,=,Signature[] | undefined,never[],never[],candidatesForArgumentError = []
+src/compiler/checker.ts:36864:57,a BinaryExpression with a value and a value,=,Signature[] | undefined,never[],never[],candidatesForArgumentError = []
+src/compiler/checker.ts:37521:52,a BinaryExpression with a value and a value,=,Type,IntrinsicType,IntrinsicType,sourceFileLinks.jsxFragmentType = anyType
+src/compiler/checker.ts:41700:45,a BinaryExpression with a value and a value,=,Type[] | undefined,never[],never[],flowTypeCache = []
+src/compiler/checker.ts:41748:22,a BinaryExpression with a value and a value,=,Type,Type,Type,"links.contextFreeType = checkExpression(node, CheckMode.SkipContextSensitive)"
+src/compiler/checker.ts:49673:48,a BinaryExpression with a value and a value,=,Node[],never[],never[],links.potentialThisCollisions = []
+src/compiler/checker.ts:49674:53,a BinaryExpression with a value and a value,=,Node[],never[],never[],links.potentialNewTargetCollisions = []
+src/compiler/checker.ts:49675:54,a BinaryExpression with a value and a value,=,Node[],never[],never[],links.potentialWeakMapSetCollisions = []
+src/compiler/checker.ts:49676:51,a BinaryExpression with a value and a value,=,Node[],never[],never[],links.potentialReflectCollisions = []
+src/compiler/checker.ts:49677:69,a BinaryExpression with a value and a value,=,BindingElement[],never[],never[],links.potentialUnusedRenamedBindingElementsInTypes = []
+src/compiler/checker.ts:5020:16,a BinaryExpression with a value and a value,=,Symbol,Symbol,Symbol,links.cjsExportMerged = merged
+src/compiler/checker.ts:50586:16,a BinaryExpression with a value and a value,=,Symbol | undefined,Symbol | undefined,Symbol | undefined,next = getSymbolLinks(next).target
+src/compiler/checker.ts:5341:48,a BinaryExpression with a value and a value,=,Symbol[] | undefined,Symbol[] | undefined,Symbol[] | undefined,results = links.extendedContainersByFile.get(id)
+src/compiler/checker.ts:5753:44,a BinaryExpression with a value and a value,=,SymbolTable[] | undefined,never[],never[],visitedSymbolTables = []
+src/compiler/commandLineParser.ts:1993:117,a BinaryExpression with a value and a value,=,WatchOptions | undefined,{},{},watchOptions = {}
+src/compiler/commandLineParser.ts:2159:41,a BinaryExpression with a value and a value,=,OptionsNameMap,OptionsNameMap,OptionsNameMap,buildOptionsNameMapCache = createOptionNameMap(buildOpts)
+src/compiler/commandLineParser.ts:2318:41,a BinaryExpression with a value and a value,=,OptionsNameMap,OptionsNameMap,OptionsNameMap,watchOptionsNameMapCache = createOptionNameMap(optionsForWatch)
+src/compiler/commandLineParser.ts:2330:51,a BinaryExpression with a value and a value,=,"Map<string, CommandLineOption>","Map<string, CommandLineOption>","Map<string, CommandLineOption>",commandLineCompilerOptionsMapCache = commandLineOptionsToMap(optionDeclarations)
+src/compiler/commandLineParser.ts:2334:48,a BinaryExpression with a value and a value,=,"Map<string, CommandLineOption>","Map<string, CommandLineOption>","Map<string, CommandLineOption>",commandLineWatchOptionsMapCache = commandLineOptionsToMap(optionsForWatch)
+src/compiler/commandLineParser.ts:2338:51,a BinaryExpression with a value and a value,=,"Map<string, CommandLineOption>","Map<string, CommandLineOption>","Map<string, CommandLineOption>",commandLineTypeAcquisitionMapCache = commandLineOptionsToMap(typeAcquisitionDeclarations)
+src/compiler/commandLineParser.ts:3698:33,a BinaryExpression with a value and a value,=,ExtendedConfigCacheEntry | undefined,ExtendedConfigCacheEntry | undefined,ExtendedConfigCacheEntry | undefined,value = extendedConfigCache.get(path)
+src/compiler/debug.ts:1045:20,a BinaryExpression with a number and a number,=,number,number,number,node.level = level
+src/compiler/emitter.ts:1386:30,a BinaryExpression with a value and a value,=,EmitTextWriter,EmitTextWriter,EmitTextWriter,ownWriter = createTextWriter(newLine)
+src/compiler/emitter.ts:602:26,a BinaryExpression with a value and a value,=,string[] | undefined,never[],never[],outputs = []
+src/compiler/parser.ts:10761:16,a BinaryExpression with a value and a value,=,RegExpExecArray | null,RegExpExecArray | null,RegExpExecArray | null,multiLineMatch = multiLinePragmaRegEx.exec(text)
+src/compiler/parser.ts:5389:40,a BinaryExpression with a value and a value,=,Set<number> | undefined,Set<number>,Set<number>,notParenthesizedArrow = new Set()
+src/compiler/program.ts:1303:35,a BinaryExpression with a value and a value,=,ResolvedProjectReference[] | undefined,never[],never[],seenResolvedRefs = []
+src/compiler/program.ts:2685:32,a BinaryExpression with a value and a value,=,TypeChecker,TypeChecker,TypeChecker,typeChecker = createTypeChecker(program)
+src/compiler/program.ts:3396:50,a BinaryExpression with a value and a value,=,(Identifier | StringLiteral)[] | undefined,never[],never[],moduleAugmentations = []
+src/compiler/program.ts:3401:49,a BinaryExpression with a value and a value,=,string[] | undefined,never[],never[],ambientModules = []
+src/compiler/scanner.ts:1824:28,a BinaryExpression with a number and a number,=,SyntaxKind,KeywordSyntaxKind,KeywordSyntaxKind,token = keyword
+src/compiler/scanner.ts:1828:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.Identifier,SyntaxKind.Identifier,token = SyntaxKind.Identifier
+src/compiler/scanner.ts:1898:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EndOfFileToken,SyntaxKind.EndOfFileToken,token = SyntaxKind.EndOfFileToken
+src/compiler/scanner.ts:1910:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ShebangTrivia,SyntaxKind.ShebangTrivia,token = SyntaxKind.ShebangTrivia
+src/compiler/scanner.ts:1931:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.NewLineTrivia,SyntaxKind.NewLineTrivia,token = SyntaxKind.NewLineTrivia
+src/compiler/scanner.ts:1963:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.WhitespaceTrivia,SyntaxKind.WhitespaceTrivia,token = SyntaxKind.WhitespaceTrivia
+src/compiler/scanner.ts:1973:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ExclamationToken,SyntaxKind.ExclamationToken,token = SyntaxKind.ExclamationToken
+src/compiler/scanner.ts:1977:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.StringLiteral,SyntaxKind.StringLiteral,token = SyntaxKind.StringLiteral
+src/compiler/scanner.ts:1979:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = scanTemplateAndSetTokenValue(/*shouldEmitInvalidEscapeError*/ false)
+src/compiler/scanner.ts:1985:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.PercentToken,SyntaxKind.PercentToken,token = SyntaxKind.PercentToken
+src/compiler/scanner.ts:1997:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.AmpersandToken,SyntaxKind.AmpersandToken,token = SyntaxKind.AmpersandToken
+src/compiler/scanner.ts:2000:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenParenToken,SyntaxKind.OpenParenToken,token = SyntaxKind.OpenParenToken
+src/compiler/scanner.ts:2003:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseParenToken,SyntaxKind.CloseParenToken,token = SyntaxKind.CloseParenToken
+src/compiler/scanner.ts:2024:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.AsteriskToken,SyntaxKind.AsteriskToken,token = SyntaxKind.AsteriskToken
+src/compiler/scanner.ts:2033:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.PlusToken,SyntaxKind.PlusToken,token = SyntaxKind.PlusToken
+src/compiler/scanner.ts:2036:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CommaToken,SyntaxKind.CommaToken,token = SyntaxKind.CommaToken
+src/compiler/scanner.ts:2045:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.MinusToken,SyntaxKind.MinusToken,token = SyntaxKind.MinusToken
+src/compiler/scanner.ts:2049:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.NumericLiteral,SyntaxKind.NumericLiteral,token = SyntaxKind.NumericLiteral
+src/compiler/scanner.ts:2055:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.DotToken,SyntaxKind.DotToken,token = SyntaxKind.DotToken
+src/compiler/scanner.ts:2079:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.SingleLineCommentTrivia,SyntaxKind.SingleLineCommentTrivia,token = SyntaxKind.SingleLineCommentTrivia
+src/compiler/scanner.ts:2123:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.MultiLineCommentTrivia,SyntaxKind.MultiLineCommentTrivia,token = SyntaxKind.MultiLineCommentTrivia
+src/compiler/scanner.ts:2132:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.SlashToken,SyntaxKind.SlashToken,token = SyntaxKind.SlashToken
+src/compiler/scanner.ts:2144:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = checkBigIntSuffix()
+src/compiler/scanner.ts:2155:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = checkBigIntSuffix()
+src/compiler/scanner.ts:2166:32,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = checkBigIntSuffix()
+src/compiler/scanner.ts:2178:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = scanNumber()
+src/compiler/scanner.ts:2181:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ColonToken,SyntaxKind.ColonToken,token = SyntaxKind.ColonToken
+src/compiler/scanner.ts:2184:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.SemicolonToken,SyntaxKind.SemicolonToken,token = SyntaxKind.SemicolonToken
+src/compiler/scanner.ts:2192:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ConflictMarkerTrivia,SyntaxKind.ConflictMarkerTrivia,token = SyntaxKind.ConflictMarkerTrivia
+src/compiler/scanner.ts:2213:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.LessThanToken,SyntaxKind.LessThanToken,token = SyntaxKind.LessThanToken
+src/compiler/scanner.ts:2221:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ConflictMarkerTrivia,SyntaxKind.ConflictMarkerTrivia,token = SyntaxKind.ConflictMarkerTrivia
+src/compiler/scanner.ts:2235:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EqualsToken,SyntaxKind.EqualsToken,token = SyntaxKind.EqualsToken
+src/compiler/scanner.ts:2243:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ConflictMarkerTrivia,SyntaxKind.ConflictMarkerTrivia,token = SyntaxKind.ConflictMarkerTrivia
+src/compiler/scanner.ts:2248:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.GreaterThanToken,SyntaxKind.GreaterThanToken,token = SyntaxKind.GreaterThanToken
+src/compiler/scanner.ts:2260:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.QuestionToken,SyntaxKind.QuestionToken,token = SyntaxKind.QuestionToken
+src/compiler/scanner.ts:2263:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenBracketToken,SyntaxKind.OpenBracketToken,token = SyntaxKind.OpenBracketToken
+src/compiler/scanner.ts:2266:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseBracketToken,SyntaxKind.CloseBracketToken,token = SyntaxKind.CloseBracketToken
+src/compiler/scanner.ts:2272:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CaretToken,SyntaxKind.CaretToken,token = SyntaxKind.CaretToken
+src/compiler/scanner.ts:2275:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenBraceToken,SyntaxKind.OpenBraceToken,token = SyntaxKind.OpenBraceToken
+src/compiler/scanner.ts:2283:36,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ConflictMarkerTrivia,SyntaxKind.ConflictMarkerTrivia,token = SyntaxKind.ConflictMarkerTrivia
+src/compiler/scanner.ts:2297:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.BarToken,SyntaxKind.BarToken,token = SyntaxKind.BarToken
+src/compiler/scanner.ts:2300:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseBraceToken,SyntaxKind.CloseBraceToken,token = SyntaxKind.CloseBraceToken
+src/compiler/scanner.ts:2303:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.TildeToken,SyntaxKind.TildeToken,token = SyntaxKind.TildeToken
+src/compiler/scanner.ts:2306:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.AtToken,SyntaxKind.AtToken,token = SyntaxKind.AtToken
+src/compiler/scanner.ts:2415:15,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = fullStartPos
+src/compiler/scanner.ts:2420:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.Identifier | KeywordSyntaxKind,SyntaxKind.Identifier | KeywordSyntaxKind,token = identifierKind
+src/compiler/scanner.ts:2430:50,a BinaryExpression with a number and a number,=,number,number,number,ch = codePointUnchecked(pos)
+src/compiler/scanner.ts:2453:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.GreaterThanGreaterThanToken,SyntaxKind.GreaterThanGreaterThanToken,token = SyntaxKind.GreaterThanGreaterThanToken
+src/compiler/scanner.ts:2457:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.GreaterThanEqualsToken,SyntaxKind.GreaterThanEqualsToken,token = SyntaxKind.GreaterThanEqualsToken
+src/compiler/scanner.ts:2466:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EqualsToken,SyntaxKind.EqualsToken,token = SyntaxKind.EqualsToken
+src/compiler/scanner.ts:3662:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = scanTemplateAndSetTokenValue(!isTaggedTemplate)
+src/compiler/scanner.ts:3667:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind,SyntaxKind,token = scanTemplateAndSetTokenValue(/*shouldEmitInvalidEscapeError*/ true)
+src/compiler/scanner.ts:3671:15,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = fullStartPos
+src/compiler/scanner.ts:3672:16,a BinaryExpression with a number and a number,=,SyntaxKind,JsxTokenSyntaxKind,JsxTokenSyntaxKind,token = scanJsxToken(allowMultilineJsxText)
+src/compiler/scanner.ts:3678:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.LessThanToken,SyntaxKind.LessThanToken,token = SyntaxKind.LessThanToken
+src/compiler/scanner.ts:3686:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.HashToken,SyntaxKind.HashToken,token = SyntaxKind.HashToken
+src/compiler/scanner.ts:3694:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.QuestionToken,SyntaxKind.QuestionToken,token = SyntaxKind.QuestionToken
+src/compiler/scanner.ts:3698:24,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = pos
+src/compiler/scanner.ts:3701:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EndOfFileToken,SyntaxKind.EndOfFileToken,token = SyntaxKind.EndOfFileToken
+src/compiler/scanner.ts:3708:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.LessThanSlashToken,SyntaxKind.LessThanSlashToken,token = SyntaxKind.LessThanSlashToken
+src/compiler/scanner.ts:3711:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.LessThanToken,SyntaxKind.LessThanToken,token = SyntaxKind.LessThanToken
+src/compiler/scanner.ts:3716:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenBraceToken,SyntaxKind.OpenBraceToken,token = SyntaxKind.OpenBraceToken
+src/compiler/scanner.ts:3733:28,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.ConflictMarkerTrivia,SyntaxKind.ConflictMarkerTrivia,token = SyntaxKind.ConflictMarkerTrivia
+src/compiler/scanner.ts:3803:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.StringLiteral,SyntaxKind.StringLiteral,token = SyntaxKind.StringLiteral
+src/compiler/scanner.ts:3811:15,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = fullStartPos
+src/compiler/scanner.ts:3816:24,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = pos
+src/compiler/scanner.ts:3819:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EndOfFileToken,SyntaxKind.EndOfFileToken,token = SyntaxKind.EndOfFileToken
+src/compiler/scanner.ts:3840:16,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.JSDocCommentTextToken,SyntaxKind.JSDocCommentTextToken,token = SyntaxKind.JSDocCommentTextToken
+src/compiler/scanner.ts:3844:24,a BinaryExpression with a number and a number,=,number,number,number,tokenStart = pos
+src/compiler/scanner.ts:3847:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EndOfFileToken,SyntaxKind.EndOfFileToken,token = SyntaxKind.EndOfFileToken
+src/compiler/scanner.ts:3860:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.WhitespaceTrivia,SyntaxKind.WhitespaceTrivia,token = SyntaxKind.WhitespaceTrivia
+src/compiler/scanner.ts:3862:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.AtToken,SyntaxKind.AtToken,token = SyntaxKind.AtToken
+src/compiler/scanner.ts:3870:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.NewLineTrivia,SyntaxKind.NewLineTrivia,token = SyntaxKind.NewLineTrivia
+src/compiler/scanner.ts:3872:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.AsteriskToken,SyntaxKind.AsteriskToken,token = SyntaxKind.AsteriskToken
+src/compiler/scanner.ts:3874:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenBraceToken,SyntaxKind.OpenBraceToken,token = SyntaxKind.OpenBraceToken
+src/compiler/scanner.ts:3876:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseBraceToken,SyntaxKind.CloseBraceToken,token = SyntaxKind.CloseBraceToken
+src/compiler/scanner.ts:3878:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenBracketToken,SyntaxKind.OpenBracketToken,token = SyntaxKind.OpenBracketToken
+src/compiler/scanner.ts:3880:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseBracketToken,SyntaxKind.CloseBracketToken,token = SyntaxKind.CloseBracketToken
+src/compiler/scanner.ts:3882:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.OpenParenToken,SyntaxKind.OpenParenToken,token = SyntaxKind.OpenParenToken
+src/compiler/scanner.ts:3884:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CloseParenToken,SyntaxKind.CloseParenToken,token = SyntaxKind.CloseParenToken
+src/compiler/scanner.ts:3886:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.LessThanToken,SyntaxKind.LessThanToken,token = SyntaxKind.LessThanToken
+src/compiler/scanner.ts:3888:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.GreaterThanToken,SyntaxKind.GreaterThanToken,token = SyntaxKind.GreaterThanToken
+src/compiler/scanner.ts:3890:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.EqualsToken,SyntaxKind.EqualsToken,token = SyntaxKind.EqualsToken
+src/compiler/scanner.ts:3892:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.CommaToken,SyntaxKind.CommaToken,token = SyntaxKind.CommaToken
+src/compiler/scanner.ts:3894:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.DotToken,SyntaxKind.DotToken,token = SyntaxKind.DotToken
+src/compiler/scanner.ts:3896:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.BacktickToken,SyntaxKind.BacktickToken,token = SyntaxKind.BacktickToken
+src/compiler/scanner.ts:3898:24,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.HashToken,SyntaxKind.HashToken,token = SyntaxKind.HashToken
+src/compiler/scanner.ts:3920:50,a BinaryExpression with a number and a number,=,number,number,number,char = codePointUnchecked(pos)
+src/compiler/scanner.ts:3925:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.Identifier | KeywordSyntaxKind,SyntaxKind.Identifier | KeywordSyntaxKind,token = getIdentifierToken()
+src/compiler/scanner.ts:3928:20,a BinaryExpression with a number and a number,=,SyntaxKind,SyntaxKind.Unknown,SyntaxKind.Unknown,token = SyntaxKind.Unknown
+src/compiler/scanner.ts:504:35,a BinaryExpression with a value and a value,=,readonly number[],number[],number[],sourceFile.lineMap = computeLineStarts(sourceFile.text)
+src/compiler/scanner.ts:994:31,a BinaryExpression with a number and a number,=,number,number,number,"ch = codePointAt(name, i)"
+src/compiler/sourcemap.ts:760:57,a BinaryExpression with a value and a value,=,SourceMappedPosition[] | undefined,never[],never[],list = []
+src/compiler/sys.ts:156:35,a BinaryExpression with a value and a value,=,Partial<Levels> | undefined,{},{},customLevels = {}
+src/compiler/sys.ts:875:34,a BinaryExpression with a value and a value,=,ChildDirectoryWatcher[] | undefined,never[],never[],newChildWatches = []
+src/compiler/transformer.ts:623:46,a BinaryExpression with a value and a value,=,Identifier[],never[],never[],blockScopedVariableDeclarations = []
+src/compiler/transformers/destructuring.ts:113:28,a BinaryExpression with a value and a value,=,VariableDeclaration | DestructuringAssignment,DestructuringAssignment,DestructuringAssignment,node = value
+src/compiler/transformers/es2015.ts:3611:48,a BinaryExpression with a value and a value,=,VariableDeclaration[] | undefined,never[],never[],extraVariableDeclarations = []
+src/compiler/transformers/es2015.ts:3633:48,a BinaryExpression with a value and a value,=,VariableDeclaration[] | undefined,never[],never[],extraVariableDeclarations = []
+src/compiler/transformers/module/system.ts:206:22,a BinaryExpression with a value and a value,=,ExternalModuleInfo,ExternalModuleInfo,ExternalModuleInfo,"moduleInfoMap[id] = collectExternalModuleInfo(context, node)"
+src/compiler/utilities.ts:7692:21,a BinaryExpression with a number and a number,=,number,64,64,byte4 = 64

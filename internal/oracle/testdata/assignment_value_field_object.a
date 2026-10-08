@@ -1,0 +1,11 @@
+const holder: { item: { name: string } } = { item: { name: 'old' } };
+let calls = 0;
+function receiver(): { item: { name: string } } { calls += 1; return holder; }
+function show(value: { name: string }): string { return value.name; }
+const assigned = (receiver().item = { name: ['new', 'built'].join('/') });
+console.log(show(assigned));
+console.log(show(holder.item));
+console.log(`calls:${calls}`);
+const saved = (receiver().item = { name: ['new', 'built'].join('/') });
+holder.item = { name: 'old' };
+console.log(show(saved));

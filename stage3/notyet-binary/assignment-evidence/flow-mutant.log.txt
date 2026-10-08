@@ -1,0 +1,5 @@
+--- FAIL: TestAssignmentOperandTrackingBoundary (0.00s)
+    flow_test.go:293: assignment operand: the graph reads tracked locals 1 times, the IR 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	0.007s
+FAIL

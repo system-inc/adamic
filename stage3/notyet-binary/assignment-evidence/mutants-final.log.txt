@@ -1,0 +1,9 @@
+double-right caught, exit 1 log /tmp/assignment-mutants/double-right.log
+double-field-receiver caught, exit 1 log /tmp/assignment-mutants/double-field-receiver.log
+double-element-receiver caught, exit 1 log /tmp/assignment-mutants/double-element-receiver.log
+double-element-index caught, exit 1 log /tmp/assignment-mutants/double-element-index.log
+old-local caught, exit 1 log /tmp/assignment-mutants/old-local.log
+old-field caught, exit 1 log /tmp/assignment-mutants/old-field.log
+old-element caught, exit 1 log /tmp/assignment-mutants/old-element.log
+late-local-read caught, exit 1 log /tmp/assignment-mutants/late-local-read.log
+lose-result-alias caught, exit 1 log /tmp/assignment-mutants/lose-result-alias.log

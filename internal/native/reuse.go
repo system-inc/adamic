@@ -60,6 +60,9 @@ type reusePlan struct {
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
+	if hasAssignmentValues(program) {
+		return plan
+	}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -302,6 +305,9 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 // touches reports whether a function, or anything it calls, reads or writes a global, or calls a
 // function value (which might).
 func touches(program *ir.Program, function int, global int, seen map[int]bool) bool {
+	if hasAssignmentValues(program) {
+		return true
+	}
 	if seen[function] {
 		return false
 	}

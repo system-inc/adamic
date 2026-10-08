@@ -8,6 +8,9 @@ import "github.com/system-inc/adamic/internal/ir"
 // captured bindings, assignments, joins and property reads remain unbounded.
 // This emission proof does not narrow any ownership or exception summary.
 func (e *emitter) exactReceiverClass(value ir.Expression) int {
+	if hasAssignmentValues(e.program) {
+		return 0
+	}
 	switch value := value.(type) {
 	case ir.Call:
 		if value.Virtual != 0 {

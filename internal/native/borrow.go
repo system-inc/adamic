@@ -239,6 +239,9 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
 // root and fields survive the whole function. Stores and owned returns still go
 // through kept/retained; a declaration borrows only when its planner says so.
 func (e *emitter) borrowChain(expression ir.Expression) bool {
+	if hasAssignmentValues(e.program) {
+		return false
+	}
 	if _, ok := expression.(ir.Property); !ok || e.function == nil {
 		return false
 	}

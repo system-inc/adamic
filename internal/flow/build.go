@@ -80,7 +80,10 @@ type jump struct {
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
 func (b *builder) tracked(local int) bool {
 	declared := b.program.Locals[local]
-	return !declared.Global && !declared.Captured
+	// A store within an operand has neither a single unconditional definition
+	// nor a statement boundary. Treat its local as externally mutable until
+	// the graph splits expression effects into their own instructions.
+	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.
@@ -323,8 +326,8 @@ func (b *builder) defines(local int) []Place {
 // The walk is by reflection rather than a switch over the IR's expressions, which grow with every
 // stream's work: a switch that missed a new expression would silently drop its reads, and a missing
 // use is a wrong answer from every analysis built on this, while the reflective walk can't miss one.
-// It never meets a statement inside an expression, because the IR has none (only statements hold
-// statements), so the only reads it can find are ir.Read.
+// AssignmentValue holds a store within an expression. Its written local is untracked;
+// reads in its receiver, index and right side are still found by this walk.
 func (b *builder) uses(node any) []Place {
 	var places []Place
 	var walk func(value reflect.Value)

@@ -1,0 +1,9 @@
+let target: number = 1;
+function show(value: number): string { return `${value}`; }
+const assigned = (target = 7);
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = 7);
+target = 1;
+console.log(show(saved));

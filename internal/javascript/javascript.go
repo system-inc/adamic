@@ -540,6 +540,9 @@ var operators = map[ir.Operator]string{
 // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
+	if assignment, ok := expression.(ir.AssignmentValue); ok {
+		return e.assignmentValue(assignment)
+	}
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"

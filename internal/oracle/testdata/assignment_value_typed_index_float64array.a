@@ -1,0 +1,7 @@
+const values = new Float64Array(1);
+let calls = 0;
+function receiver(): Float64Array { calls += 1; return values; }
+function index(): number { calls += 10; return 0; }
+console.log(`${receiver()[index()] = 300.75}:${values[0]}:${calls}`);
+console.log(`${receiver()[index()] = -0}:${1 / (values[0] ?? 1)}:${calls}`);
+console.log(`${receiver()[index()] = NaN}:${values[0]}:${calls}`);

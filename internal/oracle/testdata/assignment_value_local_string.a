@@ -1,0 +1,9 @@
+let target: string = ['old'].join('');
+function show(value: string): string { return value; }
+const assigned = (target = ['new', 'built'].join('/'));
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = ['new', 'built'].join('/'));
+target = ['old'].join('');
+console.log(show(saved));

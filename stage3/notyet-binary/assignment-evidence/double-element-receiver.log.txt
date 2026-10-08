@@ -1,0 +1,63 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_int32.a (0.73s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:11\n7\n", stderr ""
+            native: exit 0, stdout "7\n7\ncalls:12\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_float64.a (0.74s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:11\n7\n", stderr ""
+            native: exit 0, stdout "7\n7\ncalls:12\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_typed_index_int32array.a (0.63s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "300.75:300:11\n0:Infinity:22\nNaN:0:33\n", stderr ""
+            native: exit 0, stdout "300.75:300:12\n0:Infinity:24\nNaN:0:36\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_typed_index_float64array.a (0.55s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "300.75:300.75:11\n0:-Infinity:22\nNaN:NaN:33\n", stderr ""
+            native: exit 0, stdout "300.75:300.75:12\n0:-Infinity:24\nNaN:NaN:36\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_typed_index_uint8array.a (0.78s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "300.75:44:11\n0:Infinity:22\nNaN:0:33\n", stderr ""
+            native: exit 0, stdout "300.75:44:12\n0:Infinity:24\nNaN:0:36\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_number.a (0.64s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:11\n7\n", stderr ""
+            native: exit 0, stdout "7\n7\ncalls:12\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_uint8.a (0.65s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:11\n7\n", stderr ""
+            native: exit 0, stdout "7\n7\ncalls:12\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_closure.a (0.66s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/built\nnew/built\ncalls:11\nnew/built\n", stderr ""
+            native: exit 0, stdout "new/built\nnew/built\ncalls:12\nnew/built\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_map.a (0.60s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/built\nnew/built\ncalls:11\nnew/built\n", stderr ""
+            native: exit 0, stdout "new/built\nnew/built\ncalls:12\nnew/built\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_array.a (0.59s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/built\nnew/built\ncalls:11\nnew/built\n", stderr ""
+            native: exit 0, stdout "new/built\nnew/built\ncalls:12\nnew/built\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_string.a (0.60s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/built\nnew/built\ncalls:11\nnew/built\n", stderr ""
+            native: exit 0, stdout "new/built\nnew/built\ncalls:12\nnew/built\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_object.a (0.73s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/built\nnew/built\ncalls:11\nnew/built\n", stderr ""
+            native: exit 0, stdout "new/built\nnew/built\ncalls:12\nnew/built\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_maybe_number.a (0.69s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:11\n7\n", stderr ""
+            native: exit 0, stdout "7\n7\ncalls:12\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_element_boolean.a (0.78s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "true\ntrue\ncalls:11\ntrue\n", stderr ""
+            native: exit 0, stdout "true\ntrue\ncalls:12\ntrue\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=129
+gate cache: node hits=0 misses=86
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.800s
+FAIL

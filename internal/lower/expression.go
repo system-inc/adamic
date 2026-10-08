@@ -532,6 +532,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindEqualsToken {
+			return l.assignmentValue(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}

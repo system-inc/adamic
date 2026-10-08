@@ -1,0 +1,11 @@
+const holder: { item: number | undefined } = { item: undefined };
+let calls = 0;
+function receiver(): { item: number | undefined } { calls += 1; return holder; }
+function show(value: number | undefined): string { return `${value}`; }
+const assigned = (receiver().item = 7);
+console.log(show(assigned));
+console.log(show(holder.item));
+console.log(`calls:${calls}`);
+const saved = (receiver().item = 7);
+holder.item = undefined;
+console.log(show(saved));

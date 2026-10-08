@@ -1,0 +1,14 @@
+let receiverCalls = 0;
+let setterCalls = 0;
+let getterCalls = 0;
+class Holder {
+ stored: string = ['old'].join('');
+ get item(): string { getterCalls += 1; return this.stored; }
+ set item(value: string) { setterCalls += 1; this.stored = value; }
+}
+const holder = new Holder();
+function receiver(): Holder { receiverCalls += 1; return holder; }
+const assigned = (receiver().item = ['new', 'built'].join('/'));
+console.log(`${assigned}:${holder.stored}:${receiverCalls}:${setterCalls}:${getterCalls}`);
+holder.item = ['later'].join('');
+console.log(`${assigned}:${holder.item}:${setterCalls}:${getterCalls}`);

@@ -1,0 +1,12 @@
+const holder: (boolean)[] = [false];
+let calls = 0;
+function receiver(): (boolean)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: boolean): string { return `${value}`; }
+const assigned = (receiver()[index()] = true);
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = true);
+holder[0] = false;
+console.log(show(saved));

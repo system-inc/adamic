@@ -1,0 +1,3 @@
+replay load/register/lower: 2.196481235s
+reproduced NotYet: a BinaryExpression with a value and a value at /tmp/notyet-binary-adapted/src/compiler/sys.ts:156:35
+replay total (including overlay and Go build): 17.247949781s

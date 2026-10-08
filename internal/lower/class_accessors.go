@@ -291,6 +291,32 @@ func (l *lowering) finishAccessors() error {
 			if value.IsNil() {
 				return value
 			}
+			if assignment, ok := value.Interface().(ir.AssignmentValue); ok {
+				if store, ok := assignment.Store.(ir.SetProperty); ok && names[store.Name] {
+					receiver := transform(reflect.ValueOf(&store.Object).Elem()).Interface().(ir.Expression)
+					raw := assignment.Value
+					if raw == nil {
+						raw = store.Value
+					}
+					raw = transform(reflect.ValueOf(&raw).Elem()).Interface().(ir.Expression)
+					setter := dispatch(store.Name, store.Value.Type(), true, store.Site)
+					index := len(l.result.Functions)
+					object := len(l.result.Locals)
+					incoming := object + 1
+					l.result.Locals = append(l.result.Locals,
+						ir.Local{Name: "object", Type: ir.Object, Function: index},
+						ir.Local{Name: "value", Type: raw.Type(), Function: index})
+					read := ir.Read{Local: incoming, Of: raw.Type()}
+					call := ir.Call{Function: setter, Arguments: []ir.Expression{
+						ir.Read{Local: object, Of: ir.Object}, fit(read, store.Value.Type())}}
+					l.result.Functions = append(l.result.Functions, ir.Function{
+						Name: "assignment_setter", Parameters: []int{object, incoming}, Returns: raw.Type(),
+						Body: []ir.Statement{ir.Evaluate{Value: call}, ir.Return{Value: read}}})
+					result := reflect.New(value.Type()).Elem()
+					result.Set(reflect.ValueOf(ir.Call{Function: index, Arguments: []ir.Expression{receiver, raw}, Returns: raw.Type()}))
+					return result
+				}
+			}
 			mapped := transform(value.Elem())
 			node := mapped.Interface()
 			switch expression := node.(type) {

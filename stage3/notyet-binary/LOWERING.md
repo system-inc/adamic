@@ -67,3 +67,7 @@ The existing documented October 7 ruling already admits non-boolean conditions; 
 No protected orchestration/emitter/native/oracle file was edited. No code was copied from cohere. No whole-package tests or full repository gate were run. The required counts refresh was the named TestCountsAreRecorded test. The reports and lowering groups were pushed separately to `codex/notyet-binary`, with no pull request and no push to main or an area branch.
 
 Delivery main is `6f16a1693ff41bc102c4d9bfac83b6330277c479`, verified against the remote. It is already an ancestor of this branch; the final merge reports `Already up to date.`
+
+## Assignment continuation
+
+The subsequent assignment-value group is recorded in [ASSIGNMENTS.md](ASSIGNMENTS.md), including 43 fixtures, ten killed mutants, exact before/after replays, touched-package tests, 190 original operator-family sites and the known array-length target boundary. The earlier 190-site deferral above describes the logical/equality commits, not the current branch.

@@ -1015,6 +1015,25 @@ func (a *analysis) value(expression ir.Expression) value {
 		return held
 	}
 	switch expression := expression.(type) {
+	case ir.AssignmentValue:
+		switch store := expression.Store.(type) {
+		case ir.Assign:
+			held, stored := a.assignmentOperands(expression, store.Value)
+			a.define(store.Local, stored)
+			return held
+		case ir.SetProperty:
+			holder := a.value(store.Object)
+			held, stored := a.assignmentOperands(expression, store.Value)
+			a.write(WriteField, store.Site, store.Name, holder, stored, store.Name)
+			return held
+		case ir.SetIndex:
+			holder := a.value(store.Array)
+			a.value(store.Index)
+			held, stored := a.assignmentOperands(expression, store.Value)
+			a.write(WriteElement, store.Site, "", holder, stored, elementKey)
+			return held
+		}
+		panic("fresh: assignment value without a store")
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
@@ -1037,7 +1056,11 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	case ir.Binary:
 		a.value(expression.Left)
+		before := a.state.copy()
 		a.value(expression.Right)
+		if expression.Operator == ir.And || expression.Operator == ir.Or {
+			a.state.join(before)
+		}
 		return value{}
 	case ir.IsNull:
 		a.value(expression.Value)
@@ -1081,13 +1104,19 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	case ir.Conditional:
 		a.value(expression.Condition)
+		before := a.state.copy()
 		result := a.value(expression.WhenTrue)
+		left := a.state
+		a.state = before
 		result.merge(a.value(expression.WhenNot))
+		a.state.join(left)
 		return result
 	case ir.Coalesce:
 		result := a.value(expression.Value)
+		before := a.state.copy()
 		result.merge(a.value(expression.Fallback))
 		a.value(expression.Panic)
+		a.state.join(before)
 		return result
 	case ir.Box:
 		return a.value(expression.Value)
@@ -1877,4 +1906,23 @@ func sortedKeys(set map[int]bool) []int {
 // (whose cells can), a union that may be one, or a Weak. Numbers, booleans and strings can't.
 func mutable(valueType ir.Type) bool {
 	return valueType.IsReference() && valueType != ir.String
+}
+
+func (a *analysis) assignmentOperands(expression ir.AssignmentValue, fitted ir.Expression) (value, value) {
+	raw := expression.Value
+	if raw == nil {
+		raw = fitted
+	}
+	held := a.value(raw)
+	stored := held
+	if fitted.Type() == ir.Weak && raw.Type() != ir.Weak {
+		stored = value{}
+		for object := range held.strong {
+			stored.addWeak(object)
+		}
+		for object := range held.weak {
+			stored.addWeak(object)
+		}
+	}
+	return held, stored
 }

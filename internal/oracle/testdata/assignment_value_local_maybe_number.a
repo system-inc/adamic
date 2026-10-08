@@ -1,0 +1,9 @@
+let target: number | undefined = undefined;
+function show(value: number | undefined): string { return `${value}`; }
+const assigned = (target = 7);
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = 7);
+target = undefined;
+console.log(show(saved));

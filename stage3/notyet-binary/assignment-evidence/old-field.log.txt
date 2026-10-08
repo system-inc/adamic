@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_field_number.a (0.76s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\ncalls:1\n7\n", stderr ""
+            native: exit 0, stdout "1\n7\ncalls:1\n7\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=129
+gate cache: node hits=0 misses=86
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.230s
+FAIL

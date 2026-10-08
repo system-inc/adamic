@@ -128,7 +128,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured {
+		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}
@@ -277,5 +277,23 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 				}
 			}
 		}
+	}
+}
+
+// A local stored within an operand can have multiple definitions in one instruction,
+// or a conditional definition. The statement CFG must not promise a single SSA value.
+func TestAssignmentOperandTrackingBoundary(t *testing.T) {
+	program := &ir.Program{
+		Locals: []ir.Local{{Name: "value", Type: ir.Number, Function: 0, ExpressionAssigned: true}},
+		Functions: []ir.Function{{Name: "probe", Parameters: []int{0}, Returns: ir.Number,
+			Body: []ir.Statement{ir.Return{Value: ir.Binary{Operator: ir.Add,
+				Left:  ir.Read{Local: 0, Of: ir.Number},
+				Right: ir.AssignmentValue{Store: ir.Assign{Local: 0, Value: ir.NumberConstant{Value: 7}}}}}}}},
+	}
+	checkReads(t, "assignment operand", program, 0)
+	graph := Build(program, 0)
+	Construct(graph)
+	for _, violation := range VerifySSA(graph) {
+		t.Error(violation)
 	}
 }

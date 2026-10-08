@@ -1,0 +1,9 @@
+let number: number | undefined = 1;
+let boolean: boolean | undefined = true;
+let text: string | undefined = ['built'].join('');
+let mixed: number | string | undefined = 7;
+console.log(typeof (number = undefined));
+console.log(typeof (boolean = undefined));
+console.log(typeof (text = undefined));
+console.log(typeof (mixed = undefined));
+console.log(`${typeof number}:${typeof boolean}:${typeof text}:${typeof mixed}`);

@@ -1,0 +1,17 @@
+import type { Weak } from 'adamic';
+interface Item { readonly name: string; }
+interface Holder { item: Weak<Item>; }
+function make(): Item { return { name: ['new', 'built'].join('/') }; }
+let local: Weak<Item> = undefined;
+const holder: Holder = { item: undefined };
+const elements: Weak<Item>[] = [undefined];
+const first = (local = make());
+console.log(`${first.name}:${local?.name}`);
+const second = (holder.item = make());
+console.log(`${second.name}:${holder.item?.name}`);
+const third = (elements[0] = make());
+console.log(`${third.name}:${elements[0]?.name}`);
+local = undefined;
+holder.item = undefined;
+elements[0] = undefined;
+console.log(`${first.name}:${second.name}:${third.name}`);

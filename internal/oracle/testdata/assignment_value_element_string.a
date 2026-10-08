@@ -1,0 +1,12 @@
+const holder: (string)[] = [['old'].join('')];
+let calls = 0;
+function receiver(): (string)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: string): string { return value; }
+const assigned = (receiver()[index()] = ['new', 'built'].join('/'));
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = ['new', 'built'].join('/'));
+holder[0] = ['old'].join('');
+console.log(show(saved));

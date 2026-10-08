@@ -42,6 +42,9 @@ type regionPlan struct {
 
 func planRegions(program *ir.Program) *regionPlan {
 	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+	if hasAssignmentValues(program) {
+		return plan
+	}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {

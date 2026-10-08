@@ -1,0 +1,9 @@
+let target: Float64Array = new Float64Array([1]);
+function show(value: Float64Array): string { return `${value[0]}`; }
+const assigned = (target = new Float64Array([7]));
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = new Float64Array([7]));
+target = new Float64Array([1]);
+console.log(show(saved));

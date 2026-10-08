@@ -1,0 +1,5 @@
+--- FAIL: TestAssignmentValuePreservesCycleChecks (0.03s)
+    assignment_value_test.go:22: want assignment-result cycle refused, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
+FAIL

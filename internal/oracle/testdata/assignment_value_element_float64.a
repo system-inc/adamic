@@ -1,0 +1,12 @@
+const holder: (Float64Array)[] = [new Float64Array([1])];
+let calls = 0;
+function receiver(): (Float64Array)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: Float64Array): string { return `${value[0]}`; }
+const assigned = (receiver()[index()] = new Float64Array([7]));
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = new Float64Array([7]));
+holder[0] = new Float64Array([1]);
+console.log(show(saved));

@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// AssignmentValues requires ownership plans that account for stores within operands.
+	AssignmentValues bool
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -181,6 +183,9 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+
+	// ExpressionAssigned can change between two operands of the same statement.
+	ExpressionAssigned bool
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out

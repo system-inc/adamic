@@ -12,6 +12,8 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.AssignmentValue:
+		return e.assignmentValue(expression)
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
 	case ir.RegExpNew:

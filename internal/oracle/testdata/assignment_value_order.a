@@ -1,0 +1,22 @@
+let number = 1;
+console.log(`${number + (number = 7)}:${number}`);
+let text = ['old', 'built'].join('/');
+console.log(`${text}:${text = ['new', 'built'].join('/')}:${text}`);
+function local(value: string): string { return `${value}:${value = ['changed'].join('')}:${value}`; }
+console.log(local(['before'].join('')));
+function captured(): void {
+ let value = ['before'].join('');
+ const change = (): string => value = ['after'].join('');
+ console.log(`${value}:${change()}:${value}`);
+}
+captured();
+let array = [1];
+const other = [2];
+console.log(`${array[0] = (array = other)[0] ?? 0}:${array[0]}`);
+console.log(`${other[0]}`);
+let flag = false;
+console.log(`${flag && (number = 99)}:${number}`);
+console.log(`${true ? (number = 11) : (number = 12)}:${number}`);
+let rightCalls = 0;
+function right(): number { rightCalls += 1; return 17; }
+console.log(`${number = right()}:${rightCalls}`);

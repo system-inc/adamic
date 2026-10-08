@@ -1,0 +1,9 @@
+let target: Map<string, string> = new Map<string, string>();
+function show(value: Map<string, string>): string { return `${value.get('key')}`; }
+const assigned = (target = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+console.log(show(assigned));
+console.log(show(target));
+
+const saved = (target = new Map<string, string>([['key', ['new', 'built'].join('/')]]));
+target = new Map<string, string>();
+console.log(show(saved));

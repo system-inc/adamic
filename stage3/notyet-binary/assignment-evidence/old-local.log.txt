@@ -1,0 +1,15 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_local_number.a (0.55s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "7\n7\n7\n", stderr ""
+            native: exit 0, stdout "1\n7\n7\n", stderr ""
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_value_order.a (0.69s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "8:7\nold/built:new/built:new/built\nbefore:changed:changed\nbefore:after:after\n2:2\n2\nfalse:7\n11:11\n17:1\n", stderr ""
+            native: exit 0, stdout "2:7\nold/built:new/built:new/built\nbefore:changed:changed\nbefore:after:after\n2:2\n2\nfalse:7\n7:11\n11:1\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=129
+gate cache: node hits=0 misses=86
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.343s
+FAIL

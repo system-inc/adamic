@@ -1,0 +1,11 @@
+const holder: { item: Int32Array } = { item: new Int32Array([1]) };
+let calls = 0;
+function receiver(): { item: Int32Array } { calls += 1; return holder; }
+function show(value: Int32Array): string { return `${value[0]}`; }
+const assigned = (receiver().item = new Int32Array([7]));
+console.log(show(assigned));
+console.log(show(holder.item));
+console.log(`calls:${calls}`);
+const saved = (receiver().item = new Int32Array([7]));
+holder.item = new Int32Array([1]);
+console.log(show(saved));

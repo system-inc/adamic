@@ -292,6 +292,26 @@ func (n *inference) value(expression ir.Expression) shape {
 		return shape{}
 	}
 	switch expression := expression.(type) {
+	case ir.AssignmentValue:
+		switch store := expression.Store.(type) {
+		case ir.Assign:
+			value := n.assignmentValue(expression, store.Value)
+			n.escape(value)
+			n.mutateEscaped()
+			return value
+		case ir.SetProperty:
+			holder := n.value(store.Object)
+			value := n.assignmentValue(expression, store.Value)
+			n.store(holder, value)
+			return value
+		case ir.SetIndex:
+			holder := n.value(store.Array)
+			n.value(store.Index)
+			value := n.assignmentValue(expression, store.Value)
+			n.store(holder, value)
+			return value
+		}
+		panic("flow: assignment value without a store")
 	case ir.TypedArrayNew:
 		n.value(expression.Source)
 		return shape{fresh: true}
@@ -321,7 +341,7 @@ func (n *inference) value(expression ir.Expression) shape {
 		if !mutable(expression.Of) {
 			return shape{}
 		}
-		if declared.Global || declared.Captured {
+		if declared.Global || declared.Captured || declared.ExpressionAssigned {
 			return shape{unknown: true}
 		}
 		value, ok := n.current[DeclarationId(expression.Local+1)]
@@ -457,4 +477,11 @@ func callsBack(expression ir.Expression) bool {
 		return true
 	}
 	return false
+}
+
+func (n *inference) assignmentValue(expression ir.AssignmentValue, fitted ir.Expression) shape {
+	if expression.Value != nil {
+		return n.value(expression.Value)
+	}
+	return n.value(fitted)
 }

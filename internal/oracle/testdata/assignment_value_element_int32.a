@@ -1,0 +1,12 @@
+const holder: (Int32Array)[] = [new Int32Array([1])];
+let calls = 0;
+function receiver(): (Int32Array)[] { calls += 1; return holder; }
+function index(): number { calls += 10; return 0; }
+function show(value: Int32Array): string { return `${value[0]}`; }
+const assigned = (receiver()[index()] = new Int32Array([7]));
+console.log(show(assigned));
+console.log(show(holder[0] ?? assigned));
+console.log(`calls:${calls}`);
+const saved = (receiver()[index()] = new Int32Array([7]));
+holder[0] = new Int32Array([1]);
+console.log(show(saved));
