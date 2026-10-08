@@ -1,5 +1,0 @@
-{
-  "name": "wave14-no_mock_on_module_namespace",
-  "from": "tracker = ['node:test', 'test'].includes(signature.names[at] ?? '');",
-  "to": "tracker = ['other'].includes(signature.names[at] ?? '');"
-}

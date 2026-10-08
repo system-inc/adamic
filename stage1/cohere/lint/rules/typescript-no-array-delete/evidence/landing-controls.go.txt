@@ -56,7 +56,7 @@ func TestWave14UnifiedRuleCases(t *testing.T) {
 			original[record.Rule+"\n"+record.Source+"\n"+string(options)] = len(record.Findings)
 		}
 	}
-	names := []string{"@typescript-eslint/no-array-delete", "@typescript-eslint/no-base-to-string", "@typescript-eslint/no-extraneous-class", "nexus/correctness-no-global-listener-target-assertion", "nexus/correctness-no-leaked-number-render", "nexus/correctness-no-mock-on-module-namespace", "no-label-var"}
+	names := []string{"@typescript-eslint/no-array-delete", "@typescript-eslint/no-base-to-string", "@typescript-eslint/no-extraneous-class", "nexus/correctness-no-global-listener-target-assertion", "nexus/correctness-no-leaked-number-render", "no-label-var"}
 	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
 			count := 0

@@ -4,7 +4,7 @@ Merged `origin/area/stage1-lint` at 9b7547976bea1b00f8b04508b9102d03511f65b3 int
 
 ## Changes
 
-Seven existing owned ports now have node listeners in the unified registry, named kinds, verbatim messages, independent upstream Go adapters and owned witnesses. Their queries go through `RuleContext.checker.ask`: no private program, fake answers or rule-owned recording. Source Node and emitted JavaScript replay the shared native checker transcript. The facade maps byte offsets to UTF-16 at diagnostic construction and preserves every automatic and suggestion edit.
+Six existing owned ports now have node listeners (the namespace descriptor was removed on hold) in the unified registry, named kinds, verbatim messages, independent upstream Go adapters and owned witnesses. Their queries go through `RuleContext.checker.ask`: no private program, fake answers or rule-owned recording. Source Node and emitted JavaScript replay the shared native checker transcript. The facade maps byte offsets to UTF-16 at diagnostic construction and preserves every automatic and suggestion edit.
 
 The old standalone proofs are retained, with mechanical updates for current rooted path APIs and named kinds. Existing checker question registrations are retained; shared `facts.go` has only the required rooted-path cast. No shared registration generator or test harness was changed. The additional fidelity check is an owned Go-overlay test in `../lint/rules/typescript-no-array-delete/evidence/landing-controls.go.txt`.
 
@@ -26,7 +26,7 @@ These two old partial ports are not claimed complete and do not have new unified
 
 ## Shared package blockers
 
-The JSX inventory check has a fixed expected set at `stage1/cohere/lint/jsx_integration_test.go:61`; this branch adds 51 genuine upstream JSX sources, so both JSX integration checks fail despite the rule's original-case comparison passing. The source corpus also includes previously committed raw negative regex evidence, `validation-wave-14-constructors/upstream/upstream-067.a`: `new RegExp("[ \\ufe\60f]")`. The Go corpus guard correctly rejects its octal escape. That input is preserved and the guard is not relaxed.
+The JSX inventory check has a fixed expected set at `stage1/cohere/lint/jsx_integration_test.go:61`; this branch adds 51 genuine upstream JSX sources, so both JSX integration checks fail despite the rule's original-case comparison passing. Before the hold cleanup, the source corpus also included previously committed raw negative regex evidence, `validation-wave-14-constructors/upstream/upstream-067.a`: `new RegExp("[ \\ufe\60f]")`. The Go corpus guard correctly rejects its octal escape. That input is preserved and the guard is not relaxed.
 
 `TestCheckerBridgeRefusalPending` still skips at `stage1/cohere/lint/checker_pending_test.go:49`: `TSGoError` is absent pending `codex/tsgo-errors-as-values`. No optional input was omitted to induce a skip. Full package result, timings, machine load and retained logs follow in `validation-wave-14-shared-checker/RESULTS.md`.
 
@@ -67,3 +67,17 @@ The per-rule original-case run logged the following paired times (milliseconds).
 `go test ./stage1/cohere/typeaware -run '^TestWave14' -count=1 -v -timeout=30m` passes all five top-level tests in 1187.684 seconds. Both compiler and repository manifest inputs were set for the original and next suites. The log proves 21 semantic mutants, nine named-kind declaration mutants and three released-handle registry controls caught. Normal and sanitized corpus comparisons pass, and the old partial regex/label parser refusals remain explicit checked outcomes. These retained proofs do not certify the two partial regex ports as complete.
 
 `go test ./bridge/tsgo/checker -count=1 -v` passes eight tests; lint-registry, gofmt, go vet on the touched checker/typeaware/lint packages and git diff --check pass. The corrected class diagnostic mutant is caught on native, Node and emitted JavaScript (`wave14-shared-class-mutant.log`); its first full-gate attempt failed to compile and remains retained. The namespace shared mutant is blocked by the missing ESM witness configuration described above.
+
+## October 8 hold cleanup
+
+Renamed all 423 archived source inputs under this unit's `validation-wave-14*` directories from `.a` to `.a.txt`, including controls, upstream captures, pattern inputs and the dynamic-RegExp reproducer. No archived source bytes changed; `validation-wave-14-shared-checker/archived-fixture-renames.json` records every old/new path and SHA-256. Archived logs and manifests retain their original run paths as historical evidence. The live test generators still create their temporary source inputs independently. The corpus walk is unchanged.
+
+Removed the entire `stage1/cohere/lint/rules/nexus-no-mock-on-module-namespace/` registered port and its entry in the owned overlay control. The removed port can be recovered from parent commit `f60d20f7fe4bf692b43d115e205302329785d6bd`. Old standalone proof code and historical evidence remain; the namespace rule is no longer installed in the unified lint driver or its witness/mutant inventory.
+
+### Namespace harness requirement
+
+Per-witness and per-upstream-case compiler settings must reach both Go and the shared native checker, and then its Node/emitted-JavaScript replay. Rule options are not compiler options. For a positive `.ts` namespace witness, choose `module: "esnext"` (also tested positive: `"es2020"` and `"preserve"`). Preserve the full upstream configuration: `strict: true`, `target: "ES2022"`, `lib: ["ES2022"]`, `moduleDetection: "force"`, `types: []`, with `include: ["**/*.ts", "**/*.mts", "**/*.cts"]`.
+
+Cohere sets this configuration in `correctnessNoMockOnModuleNamespaceRunUnder`, `cohere/internal/lint/rules/nexus/correctness_no_mock_on_module_namespace_test.go:92`; compiler options start at line 95, `module` is set at 99, and the setup writes `tsconfig.json` at 108. `TestCorrectnessNoMockOnModuleNamespaceReadsTheModuleOption`, line 290, tests the positive module values at 298 and negative `commonjs`/`nodenext` values at 302. `TestCorrectnessNoMockOnModuleNamespaceReadsTheFileExtension`, line 273, proves `.mts` positive under `commonjs` at 281 and `.cts` negative under `esnext` at 284. The harness must preserve filenames/extensions as well as options. The multi-file fixture also needs the actual `node.d.ts` and `Store.ts` source contents supplied by `correctnessNoMockOnModuleNamespaceFiles`, line 74, rather than just an other-files count. Default typed tests receive the shared `defaultTsConfig` at `cohere/internal/lint/testing/program.go:22`; the explicit module matrix uses the per-test setup above.
+
+Hold this branch for parser recovery and `lint-fix/jsx-inventory-discovery` to reach the area. No merge or full lint rerun was made for this cleanup. If the label failure persists after that merge, reduce the observed upstream input `undefined: for(;;) { break undefined; }` and give the smallest reproducing input to #ykgsvgn.

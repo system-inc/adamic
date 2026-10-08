@@ -1,5 +1,0 @@
-declare module "node:test" { export interface MockTracker { method(object: object, name: string): void; } export const mock: MockTracker; }
-declare module "store" { export function load(): string; }
-import { mock } from "node:test";
-import * as store from "store";
-mock.method(store, "load");
