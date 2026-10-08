@@ -198,9 +198,13 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 	}
 	switch node.Kind {
 	case ast.KindNumericLiteral:
-		return m.materialize(node, ir.NumberConstant{})
+		value, err := strconv.ParseFloat(node.Text(), 64)
+		if err != nil { return m.unmodeled(node) }
+		return m.materialize(node, ir.NumberConstant{Value:value})
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
-		return m.materialize(node, ir.StringConstant{})
+		index := len(m.IR.Strings)
+		m.IR.Strings = append(m.IR.Strings, node.Text())
+		return m.materialize(node, ir.StringConstant{Index:index})
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return m.materialize(node, ir.BooleanConstant{})
 	case ast.KindIdentifier:
@@ -322,7 +326,7 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 				return m.materialize(node, ir.ArrayIndex{Array: m.expression(access.Expression), Index: ir.NumberConstant{Value: value}, Element: ir.Object})
 			}
 		}
-		return m.unknown(node, "flow the graph can't see", "dynamic element key not modeled", text)
+		return m.materialize(node, shapeDynamicProjection{Receiver:m.expression(access.Expression), Key:m.expression(key)})
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindEqualsToken {
@@ -458,6 +462,10 @@ func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Ex
 		switch access := value.(type) {
 		case ir.Property:
 			receiver, name, projection = access.Object, access.Name, true
+		case shapeDynamicProjection:
+			receiver, projection = access.Receiver, true
+			name = fmt.Sprintf("[dynamic:%v]", access.Key)
+			pending = append(pending, access.Key)
 		case ir.ArrayIndex:
 			receiver, projection = access.Array, true
 			name = fmt.Sprintf("[%v]", access.Index)
@@ -589,6 +597,12 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindBinaryExpression {
 				binary := node.AsBinaryExpression()
+                if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && binary.Left.Kind == ast.KindElementAccessExpression {
+                    category := "flow the graph can't see"
+                    if m.Diagnosed[node] { category = "diagnosed body" }
+                    boundary := latentShapeUnknown{Category:category, Reason:"indexed store effects not certified at "+program.Where(node), Diagnostics:m.diagnosticCauses(node)}
+                    m.IR.Main = append(m.IR.Main, ir.Evaluate{Value:shapeDynamicMutation{Value:boundary}})
+                }
 				if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && binary.Left.Kind == ast.KindPropertyAccessExpression {
 					if m.Diagnosed[node] || binary.OperatorToken.Kind != ast.KindEqualsToken {
 						category := "flow the graph can't see"
@@ -848,7 +862,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 					site.Fields = append(site.Fields, latentShapeField{Name: property.Name, Reason: "declared field type requires a value guard", Declared: checked.TypeToString(declared), Expected: checked.TypeToString(expected)})
 				}
 
-				if m.Deinitialized[property.Name] {
+				if m.Deinitialized[property.Name] || len(graph.projectionIndex().dynamicStores) != 0 {
 					unsupported = true
 					site.Detail = append(site.Detail, "mutation effects on field certificate unavailable: "+property.Name)
 				}
@@ -903,7 +917,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		hosts = append(hosts, name)
 	}
 	sort.Strings(hosts)
-	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Opaque callback protocols, generic callable identities, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Opaque callback protocols, generic callable identities, constructor and whole-array contracts remain unknown; dynamic key producers join slots with membership and mutation obligations. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
 }
 
 // Only syntax represented by this source adapter closes a callback reference.

@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
+function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
+function read(index: number): string {
+ const values: readonly Base[] = [create(), create()];
+ const held = values[index]!;
+ return (held as Identifier).name;
+}
+console.log(read(0));
+console.log(read(1));

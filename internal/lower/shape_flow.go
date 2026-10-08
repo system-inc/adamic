@@ -142,13 +142,17 @@ func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Sta
 
 // Projection is queried only by shape proofs. Graph-regions traversal stays unchanged.
 type allocationProjection struct {
-	records       map[int]ir.ObjectLiteral
-	arrays        map[int]ir.ArrayLiteral
-	stores        map[int]map[string][]ir.Expression
-	opaque        map[string]bool
-	opaqueSources map[string][]ir.Expression
-	arrayMutation bool
-	opaqueCalls   bool
+	records            map[int]ir.ObjectLiteral
+	arrays             map[int]ir.ArrayLiteral
+	stores             map[int]map[string][]ir.Expression
+	opaque             map[string]bool
+	opaqueSources      map[string][]ir.Expression
+	arrayMutation      bool
+	opaqueCalls        bool
+	dynamicStores      []ir.Expression
+	dynamicCache       map[[3]int]shapeDynamicProjectionResult
+	dynamicCacheWeight int
+	recordSlots        map[int]map[string][]ir.Expression
 }
 
 func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
@@ -168,6 +172,8 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 			if len(value.GraphTypes) > 0 {
 				index.arrays[value.GraphTypes[len(value.GraphTypes)-1]] = value
 			}
+		case shapeDynamicMutation:
+			index.dynamicStores = append(index.dynamicStores, value.Value)
 		case ir.SetProperty:
 			stores = append(stores, value)
 		case ir.SetIndex, ir.ArrayPush, ir.ArraySplice, ir.ArrayPop:
@@ -203,6 +209,14 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 // projectedSources joins initial fields and all visible stores across all paths.
 // An opaque receiver can alias any allocation; its field name stays unknown.
 func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
+	if value, ok := expression.(shapeDynamicProjection); ok {
+		return graph.dynamicProjectionSources(value.Receiver, value.Key, depth)
+	}
+	if value, ok := expression.(ir.ArrayIndex); ok && !value.Relative {
+		if _, constant := value.Index.(ir.NumberConstant); !constant {
+			return graph.dynamicProjectionSources(value.Array, value.Index, depth)
+		}
+	}
 	var receiver ir.Expression
 	name := ""
 	array := false
@@ -226,6 +240,9 @@ func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, dep
 	index := graph.projectionIndex()
 	sources := []ir.Expression{}
 	reasons := []string{}
+	if len(index.dynamicStores) != 0 {
+		reasons = append(reasons, "indexed store effects not certified")
+	}
 	if index.opaqueCalls {
 		reasons = append(reasons, "opaque call may mutate projected fields")
 	}
@@ -550,3 +567,181 @@ func (graph *allocationFlowGraph) shapeFollow(expression ir.Expression, allocati
 func (graph *allocationFlowGraph) shapeClosureTargets(call ir.CallClosure) ir.FunctionTargets {
 	return graph.program.ClosureTargetsWithFlow(call, graph.shapeFunctionTargets)
 }
+
+// shapeDynamicProjection is a query-only source adapter node. Executable IR
+// already supplies ArrayIndex; this node also preserves record key provenance.
+type shapeDynamicProjection struct{ Receiver, Key ir.Expression }
+
+func (shapeDynamicProjection) Type() ir.Type { return ir.Object }
+
+// projectionKeys uses value producers, never the asserted or declared key type.
+// An open producer keeps Unknown even when other producers supply finite keys.
+func (graph *allocationFlowGraph) projectionKeys(expression ir.Expression) ([]string, bool) {
+	keys := map[string]bool{}
+	seen := map[int]bool{}
+	pending := []ir.Expression{expression}
+	unknown := false
+	for len(pending) > 0 {
+		value := pending[len(pending)-1]
+		pending = pending[:len(pending)-1]
+		switch value := value.(type) {
+		case ir.NumberConstant:
+			if value.Value < 0 || value.Value != float64(int(value.Value)) {
+				unknown = true
+			} else {
+				keys[strconv.Itoa(int(value.Value))] = true
+			}
+		case ir.StringConstant:
+			if value.Index < 0 || value.Index >= len(graph.program.Strings) {
+				unknown = true
+			} else {
+				keys[graph.program.Strings[value.Index]] = true
+			}
+		case ir.Read:
+			node := value.Local + 1
+			if seen[node] {
+				continue
+			}
+			seen[node] = true
+			if graph.callbacks.unknownParameters[node] || len(graph.callbacks.sources[node]) == 0 {
+				unknown = true
+			}
+			pending = append(pending, graph.callbacks.sources[node]...)
+		case ir.Conditional:
+			pending = append(pending, value.WhenTrue, value.WhenNot)
+		default:
+			unknown = true
+		}
+	}
+	result := []string{}
+	for key := range keys {
+		result = append(result, key)
+	}
+	sort.Strings(result)
+	return result, unknown || len(result) == 0
+}
+
+// dynamicProjectionSources joins every possible selected slot. An unbounded key
+// joins all known slots and remains Unknown because membership is not proven.
+type shapeDynamicProjectionResult struct {
+	sources []ir.Expression
+	reasons []string
+}
+
+func (graph *allocationFlowGraph) dynamicProjectionSources(receiver, key ir.Expression, depth int) (sources []ir.Expression, reasons []string, recognized bool) {
+	if depth >= 32 {
+		return nil, []string{"recursive dynamic projection depth not certified"}, true
+	}
+	index := graph.projectionIndex()
+	// The immutable proof graph reuses projections across cast queries. Include
+	// depth so memoization never bypasses the recursion obligation; cap retained
+	// entries by weight, without changing any result when caching is skipped.
+	receiverRead, receiverOK := receiver.(ir.Read)
+	keyRead, keyOK := key.(ir.Read)
+	if receiverOK && keyOK {
+		cacheKey := [3]int{receiverRead.Local, keyRead.Local, depth}
+		if cached, ok := index.dynamicCache[cacheKey]; ok {
+			return cached.sources, cached.reasons, true
+		}
+		defer func() {
+			weight := len(sources) + len(reasons) + 1
+			if index.dynamicCacheWeight+weight > 65536 {
+				return
+			}
+			if index.dynamicCache == nil {
+				index.dynamicCache = map[[3]int]shapeDynamicProjectionResult{}
+			}
+			index.dynamicCache[cacheKey] = shapeDynamicProjectionResult{sources, reasons}
+			index.dynamicCacheWeight += weight
+		}()
+	}
+	names, open := graph.projectionKeys(key)
+	bases := graph.reachingAllocations(receiver, true, depth+1)
+	sources = []ir.Expression{}
+	reasons = append([]string{}, bases.Reasons...)
+	if open {
+		reasons = append(reasons, "dynamic key membership not proven")
+	}
+	if len(index.dynamicStores) != 0 {
+		reasons = append(reasons, "indexed store effects not certified")
+	}
+	if index.opaqueCalls {
+		reasons = append(reasons, "opaque call may mutate projected fields")
+	}
+	for _, site := range bases.Sites {
+		selected := append([]string{}, names...)
+		if open {
+			if record, ok := index.records[site]; ok {
+				for _, field := range record.Fields {
+					selected = append(selected, field.Name)
+				}
+			}
+			if array, ok := index.arrays[site]; ok {
+				for i := range array.Elements {
+					selected = append(selected, strconv.Itoa(i))
+				}
+			}
+			for name := range index.stores[site] {
+				selected = append(selected, name)
+			}
+		}
+		if len(selected) == 0 {
+			reasons = append(reasons, "dynamic projection allocation has no modeled slots")
+		}
+		seenNames := map[string]bool{}
+		for _, name := range selected {
+			if seenNames[name] {
+				continue
+			}
+			seenNames[name] = true
+			found := false
+			if record, ok := index.records[site]; ok {
+				if record.Spread != nil {
+					reasons = append(reasons, "spread field projection not certified")
+				}
+				if index.recordSlots == nil {
+					index.recordSlots = map[int]map[string][]ir.Expression{}
+				}
+				slots, present := index.recordSlots[site]
+				if !present {
+					slots = map[string][]ir.Expression{}
+					for _, field := range record.Fields {
+						slots[field.Name] = append(slots[field.Name], field.Value)
+					}
+					index.recordSlots[site] = slots
+				}
+				if values, present := slots[name]; present {
+					sources = append(sources, values...)
+					found = true
+				}
+			}
+			if array, ok := index.arrays[site]; ok {
+				if index.arrayMutation {
+					reasons = append(reasons, "array mutation prevents element certificate")
+				}
+				if len(array.Spread) > 0 {
+					reasons = append(reasons, "spread element projection not certified")
+				}
+				i, err := strconv.Atoi(name)
+				if err == nil && i >= 0 && i < len(array.Elements) && strconv.Itoa(i) == name {
+					sources = append(sources, array.Elements[i])
+					found = true
+				}
+			}
+			if !found {
+				reasons = append(reasons, "dynamic projected slot absent or allocation not modeled: "+name)
+			}
+			sources = append(sources, index.stores[site][name]...)
+			sources = append(sources, index.opaqueSources[name]...)
+			if index.opaque[name] {
+				reasons = append(reasons, "field store has opaque receiver or clears readiness: "+name)
+			}
+		}
+	}
+	return sources, reasons, true
+}
+
+// Query-only marker for indexed stores whose alias effects are not modeled.
+type shapeDynamicMutation struct{ Value ir.Expression }
+
+func (shapeDynamicMutation) Type() ir.Type { return ir.Object }

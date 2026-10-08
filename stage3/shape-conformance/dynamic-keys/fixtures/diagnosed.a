@@ -1,0 +1,6 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function make():Ready {return {kind:'ok',ready:true};}
+function badKey():string {const rejected:number='bad';return 'first';}
+function diagnosedKey():Ready {const holder:Record<string,Base>={first:make()};const key=badKey();const node:Base=holder[key]!;return node as Ready;}

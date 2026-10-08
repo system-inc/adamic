@@ -1,0 +1,11 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
+function good(): Identifier { return {kind: 'identifier', ready: true}; }
+function read(index: number): boolean {
+ const wrong = {kind: 'identifier' as const, ready: 0};
+ const values: readonly Base[] = [good(), wrong];
+ const held = values[index]!;
+ return (held as Identifier).ready;
+}
+console.log(`${read(0)}`);
+console.log(`${read(1)}`);
