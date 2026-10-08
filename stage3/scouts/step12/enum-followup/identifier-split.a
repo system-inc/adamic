@@ -1,0 +1,27 @@
+// a-check: pass; Node equality is required.
+// From TypeScript 6.0.3 src/compiler/scanner.ts:1815-1828.
+// Equivalent split statements; keeps lookup result as the return value.
+const enum SyntaxKind { Unknown = 0, Identifier = 80, AbstractKeyword = 128, BreakKeyword = 83 }
+type KeywordSyntaxKind = SyntaxKind.AbstractKeyword | SyntaxKind.BreakKeyword;
+const textToKeyword = new Map<string, KeywordSyntaxKind>([["abstract", SyntaxKind.AbstractKeyword], ["break", SyntaxKind.BreakKeyword]]);
+let token: SyntaxKind = SyntaxKind.Unknown;
+let tokenValue = "";
+function getIdentifierToken(): SyntaxKind.Identifier | KeywordSyntaxKind {
+    const len = tokenValue.length;
+    if (len >= 2 && len <= 12) {
+        const ch = tokenValue.charCodeAt(0);
+        if (ch >= 97 && ch <= 122) {
+            const keyword = textToKeyword.get(tokenValue);
+            if (keyword !== undefined) {
+                token = keyword;
+                return keyword;
+            }
+        }
+    }
+    token = SyntaxKind.Identifier;
+    return SyntaxKind.Identifier;
+}
+for (const value of ["abstract", "break", "name", "Abstract", "x"]) {
+    tokenValue = value;
+    console.log(`${getIdentifierToken()} ${token}`);
+}

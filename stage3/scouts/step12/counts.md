@@ -24,3 +24,20 @@ one computed name, one Uint16Array call and 16 generic signatures. Assertion syn
 2,136 expressions, including 2,130 same-type generated diagnostic assertions and
 one as const. Five unchecked expressions form Error/String/Set families. The exact
 claimed enum-slot count is unavailable, not zero. See RESEARCH.md for qualifications.
+
+## Enum follow-up counts
+
+Four additional checked-in .a witnesses bring the scout total to **16**, with
+16 source mutants caught on Node across the two runs. The original enum-slot.a
+remains a historical open-enum control, not the exact expression reproduction.
+The new run has 15 control build expectations plus three mutant builds over
+three compiler revisions, six native
+controls (including three derived proven-constant variants), and three native
+mutant executions. Exact return and full-enum return: NotYet on all three;
+split return: native-equal on all three; unproven member: refused on all three.
+One keyword return-assignment site and one Identifier fallback are pinned in
+getIdentifierToken; 84 keyword alias members and 84 upstream table entries.
+See enum-followup/REPORT.md for every new mutation, limitation and question.
+
+One additional audit-only mutant changes the copied Identifier value to 79;
+source provenance verification fails with `full type copy mismatch`, exit 1.

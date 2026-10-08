@@ -1,5 +1,10 @@
 # Scanner stop research
 
+Follow-up: [enum slot report](enum-followup/REPORT.md) now pins the requested
+expression to scanner.ts:1823 and measures both enum-tag-narrowing revisions.
+The original table below records the ebaf1bc0 investigation; its missing enum
+expression is superseded by that report. The historical refusal remains unreproduced.
+
 Observations below use origin/main 45487a809f89885a3fc651cd590e7dabf31362dc,
 TypeScript 6.0.3 source 050880ce59e30b356b686bd3144efe24f875ebc8,
 and cohere 7945d102a6c18dd36adf9114a758ce646e8b2359. Go paths below are

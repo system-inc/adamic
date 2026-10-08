@@ -2,9 +2,15 @@ Built an isolated exact-byte comparator and an undecided Object.entries design.
 Base: origin/main 45487a809f89885a3fc651cd590e7dabf31362dc; branch codex/step12-scout.
 Focused checks pass: 12 Node goldens/mutants, two native controls, 168 source-span audits.
 Six output mutants and two comparator implementation mutants are caught.
-No native scanner claim; land-area-next and the exact enum-stop reproduction are missing.
+No native scanner claim; enum follow-up pins the expression but not the historical refusal.
 
 # Step 12 scout
+
+The [enum-slot follow-up](enum-followup/REPORT.md) pins upstream scanner.ts:1823,
+tests both distinct enum-tag-narrowing tips, and records four new witnesses.
+The exact assignment expression remains NotYet; split statements match Node.
+It supersedes the original enum candidate as the expression witness, while
+keeping the historical full-closure refusal explicitly unconfirmed.
 
 Read [RESEARCH.md](RESEARCH.md) for upstream locations, counts, Node behavior,
 Go alternatives, spec references and hard cases. [ENTRIES.md](ENTRIES.md) keeps
