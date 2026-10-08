@@ -319,7 +319,7 @@ var strictAloneTypedCases = map[string]bool{
 
 // capturedTypedCases is how many typed upstream cases replay under their captured programs. A new typed rule
 // changes it on purpose; a drop means the capture lost programs.
-const capturedTypedCases = 261
+const capturedTypedCases = 305
 
 // typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
 // when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
