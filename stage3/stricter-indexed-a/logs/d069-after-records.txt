@@ -1,0 +1,15 @@
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+    witness_test.go:161: native sanitize=false: {stdout: stderr:adamic: panic: compiler bug: a field the checker proved is there is missing
+         code:70}, want {stdout:7
+         stderr: code:0}
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:187: [D069] receiver=returned readonly object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+--- FAIL: TestCheckerIndexedWitnesses (45.82s)
+    --- FAIL: TestCheckerIndexedWitnesses/D069 (35.36s)
+        --- FAIL: TestCheckerIndexedWitnesses/D069/absent=false (5.85s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=true (29.51s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-a	45.841s
+FAIL
