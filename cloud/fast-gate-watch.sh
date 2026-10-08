@@ -112,16 +112,39 @@ countVoid() {
 # Worker and canary gates share slot selection and launch. Canary logs are separate
 # even when a queued worker has main's sha, and carry the tools version they test.
 dispatch() {
-  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 started whole=""
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
   started=$(date -u +%s)
   lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
-  ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
+  # Staged tools: while new tools wait for their first real green, only the canary box runs them.
+  if staging && [ "${box}" != "$(cat "${state}/canary-box")" ]; then
+    script=${goodTree}/cloud/fast-gate.sh token="$(cat "${state}/tools-good"):good"
+  fi
+  ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   local pid=$!
   echo "${started}" > "${state}/running-started/${pid}"
-  echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/${pid}"
+  echo "${branch} ${sha} ${slot} ${box} ${class} ${token} ${log}" > "${state}/running/${pid}"
   if slotReserved "${branch}" "${box}" "${slot}"; then
     echo "${box}" > "${state}/reserved-running/${pid}"
+  fi
+}
+# Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents): with a box named
+# in ${state}/canary-box, new tools run on that box only, while every other box gates with the last good
+# tools (${state}/tools-good, checked out in their own worktree); the first real tip gated green on the
+# canary box with the new tools promotes them everywhere. No canary-box file: one tools version, as before.
+goodTree=${ADAMIC_FAST_GATE_GOOD_TREE:-${state}/tools-good-tree}
+staging() {
+  [ -s "${state}/canary-box" ] && [ -s "${state}/tools-good" ] && [ "$(cat "${state}/tools-good")" != "${toolsHead}" ] &&
+    [ -f "${goodTree}/cloud/fast-gate.sh" ]
+}
+placeGoodTree() {
+  local good
+  good=$(cat "${state}/tools-good")
+  [ -n "${ADAMIC_FAST_GATE_GOOD_TREE:-}" ] && return 0
+  if [ -d "${goodTree}" ]; then
+    git -C "${goodTree}" switch -q --detach "${good}"
+  else
+    git -C "${here}" worktree add -q --detach "${goodTree}" "${good}"
   fi
 }
 freeSlots() {
@@ -377,6 +400,10 @@ echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (t
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
 canaryRequired=1
+[ -s "${state}/tools-good" ] || echo "${toolsHead}" > "${state}/tools-good"
+[ -s "${state}/canary-box" ] && placeGoodTree
+# Staged, the other boxes keep gating on the good tools: no fleet-wide deploy barrier to wait out.
+staging && canaryRequired=0
 while true; do
   now=$(date -u +%s)
   if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
@@ -396,6 +423,10 @@ while true; do
     canaryToken=${toolsHead}:$$
     canaryRequired=1
     rm -f "${state}/canary-started"
+    if staging; then
+      canaryRequired=0
+      echo "$(date -u +%H:%M:%S) staging tools ${toolsHead:0:9} on $(cat "${state}/canary-box"); the other boxes stay on $(cut -c1-9 "${state}/tools-good")"
+    fi
   fi
   if tips > "${state}/now.tmp" && [ -s "${state}/now.tmp" ]; then
     # New or moved tips, queued by kind: workers' branches first.
@@ -443,6 +474,12 @@ while true; do
     if [ -z "${cause}" ]; then
       verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
       echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
+      # A real tip green on the canary box with the staged tools promotes them to every box.
+      if staging && [[ ${testedHead} == "${toolsHead}:"* && ${verdict} == "green: ${sha} "* ]]; then
+        echo "${toolsHead}" > "${state}/tools-good"
+        placeGoodTree
+        echo "$(date -u +%H:%M:%S) promoted tools ${toolsHead:0:9} to every box after ${branch} ${sha} green on ${box}"
+      fi
       # The verdict reaches the branch's owner (and integration for landings and areas) as it exists.
       (python3 "${here}/cloud/verdict-notify.py" "${branch}" "${sha}" "${gateLog}" >> "${state}/logs/verdict-notify.log" 2>&1 &)
       if [[ ${branch} == codex/* && ${verdict} == "green: ${sha} "* ]] && [ -f "${state}/auto-area-merge" ]; then

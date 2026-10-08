@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False):
+    def __init__(self, count=6, staleLock=False, canaryBox=None):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -106,7 +106,16 @@ else
   echo 'VOID FAILURE'; echo 'void: no result'
 fi
 ''')
-        env = dict(os.environ, PATH=str(self.bin) + ':' + os.environ['PATH'],
+        extra = {}
+        if canaryBox:
+            # Staged tools: the good version is tools-zero, the checkout (head) is tools-one.
+            (self.state / 'canary-box').write_text(canaryBox + '\n')
+            (self.state / 'tools-good').write_text('tools-zero\n')
+            good = self.root / 'good' / 'cloud'
+            good.mkdir(parents=True)
+            (good / 'fast-gate.sh').write_text((cloud / 'fast-gate.sh').read_text().replace('"$TEST_ROOT/starts"', '"$TEST_ROOT/good-starts"'))
+            extra['ADAMIC_FAST_GATE_GOOD_TREE'] = str(self.root / 'good')
+        env = dict(os.environ, **extra, PATH=str(self.bin) + ':' + os.environ['PATH'],
                    TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
                    ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.output = open(self.root / 'output', 'w')
@@ -467,6 +476,30 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: len([x for x in w.read('starts').splitlines() if x.startswith('codex/')]) == 3)
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
+
+    def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
+        w = Watcher(0, canaryBox='box1')
+        self.addCleanup(w.close)
+        w.wait(lambda: 'watching' in w.read('output'))
+        w.put('mode', 'hold')
+        (w.state / 'slots').write_text('box0 S\nbox1 S\n')
+        tips = [('codex/a', 'a' * 40), ('codex/b', 'b' * 40)]
+        (w.state / 'seen').write_text(''.join('%s %s\n' % t for t in tips))
+        w.put('tips', ''.join('%s\trefs/heads/%s\n' % (sha, b) for b, sha in tips))
+        (w.state / 'queue').write_text('S 900 codex/a %s\nS 901 codex/b %s\n' % (tips[0][1], tips[1][1]))
+        # No fleet-wide deploy barrier while staged: both start at once, one per box and version.
+        w.wait(lambda: w.read('starts').strip() and w.read('good-starts').strip())
+        self.assertNotIn('canary/main', w.read('starts') + w.read('good-starts'))
+        self.assertTrue(w.read('starts').strip().endswith(' box1'), w.read('starts'))
+        self.assertTrue(w.read('good-starts').strip().endswith(' box0'), w.read('good-starts'))
+        w.put('mode', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-one')
+        # Promoted, every box runs the new tools.
+        (w.state / 'seen').write_text((w.state / 'seen').read_text() + 'codex/c %s\n' % ('c' * 40))
+        (w.state / 'queue').write_text('S 950 codex/c %s\n' % ('c' * 40))
+        w.wait(lambda: 'codex/c ' in w.read('starts'))
+        self.assertNotIn('codex/c ', w.read('good-starts'))
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
