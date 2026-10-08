@@ -1,0 +1,6 @@
+'use server';
+/* Préambule 🦊 */
+import z from 'zebra';
+import a from 'alpha'; /* Keeps its trailing
+ * multiline note */
+export function after() { return '/* not a comment */'; }

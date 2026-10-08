@@ -1,4 +1,5 @@
 import type { RuleContext } from '../../context.ts';
+import { isLineBreak } from '../../../../typescript/scanner/characters.ts';
 import { SuggestionEdit } from '../../suggestions.a';
 import { utf8At, utf8Length } from 'adamic';
 import { fileComments } from './comments.a';
@@ -27,6 +28,25 @@ function trails(source: string, start: number): boolean {
         if(c !== 32 && c !== 9) { return true; }
     }
     return false;
+}
+// Only the import preamble and its first trailing comment can affect this rule.
+function commentPrefixEnd(source: string, end: number): number {
+    let cursor = end;
+    while(cursor < source.length) {
+        const character = source.slice(cursor, cursor + 1);
+        if(character === '\r' || character === '\n' || character.trim() !== '') { break; }
+        cursor++;
+    }
+    const opening = source.slice(cursor, cursor + 2);
+    if(opening === '//') {
+        while(cursor < source.length && !isLineBreak(source.charCodeAt(cursor))) { cursor++; }
+        return cursor;
+    }
+    if(opening === '/*') {
+        const close = source.indexOf('*/', cursor + 2);
+        return close < 0 ? source.length : close + 2;
+    }
+    return end;
 }
 function endOfSection(source: string, end: number): number {
     let cursor = end;
@@ -57,7 +77,7 @@ export class Rule {
         const first = imports[0] ?? -1;
         const last = imports[imports.length - 1] ?? -1;
         if(first < 0 || last < 0) { return; }
-        const comments = fileComments(context, context.node(index));
+        const comments = fileComments(context, context.node(index), commentPrefixEnd(source, context.node(last).end));
         let directive = '';
         let directiveNode = -1;
         const firstStatement = statements[0] ?? -1;

@@ -126,9 +126,11 @@ function isBracedListKind(kind: string): boolean {
             return false;
     }
 }
-function commentAnchors(context: RuleContext, node: ParseNode, anchors: boolean[]): void {
+function commentAnchors(context: RuleContext, node: ParseNode, anchors: boolean[], limit: number): void {
+        if(node.pos > limit) { return; }
         anchors[node.pos] = true;
-        anchors[node.end] = true;
+        if(node.end <= limit) { anchors[node.end] = true; }
+        if(node.kind !== 'SourceFile' && node.end > limit) { return; }
         const parameterList = isParameterListKind(node.kind);
         const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
         const bracedList = isBracedListKind(node.kind);
@@ -185,7 +187,7 @@ function commentAnchors(context: RuleContext, node: ParseNode, anchors: boolean[
             }
         }
         for(const child of node.children) {
-            commentAnchors(context, context.node(child), anchors);
+            commentAnchors(context, context.node(child), anchors, limit);
         }
     }
 
@@ -239,9 +241,10 @@ function reachableComments(source: string, anchors: readonly boolean[]): boolean
     }
 
 // The comment collector is private to this rule; no shared context or harness is changed.
-export function fileComments(context: RuleContext, root: ParseNode): CommentRange[] {
-    const anchors = new Array<boolean>(context.source.length + 1).fill(false);
-    commentAnchors(context, root, anchors);
+export function fileComments(context: RuleContext, root: ParseNode, limit: number): CommentRange[] {
+    const source = context.source.slice(0, limit);
+    const anchors = new Array<boolean>(source.length + 1).fill(false);
+    commentAnchors(context, root, anchors, limit);
     anchors[0] = true;
-    return comments(context.source, context.literalEnds(), reachableComments(context.source, anchors));
+    return comments(source, context.literalEnds(), reachableComments(source, anchors));
 }
