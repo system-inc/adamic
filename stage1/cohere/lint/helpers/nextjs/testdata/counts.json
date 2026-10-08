@@ -1,0 +1,36 @@
+{
+  "consumerCalls": {
+    "IsDocumentFile": 90,
+    "lastSeparator": 180,
+    "splitPath": 90,
+    "IsDocumentPage": 58,
+    "IsInApplicationDirectory": 55,
+    "IsInPagesDirectory": 54,
+    "splitSegments": 399,
+    "RouteContractExports": 345,
+    "buildRouteFileContracts": 3
+  },
+  "allCalls": {
+    "IsDocumentFile": 138,
+    "lastSeparator": 338,
+    "splitPath": 161,
+    "IsDocumentPage": 101,
+    "IsInApplicationDirectory": 86,
+    "IsInPagesDirectory": 101,
+    "splitSegments": 513,
+    "RouteContractExports": 389,
+    "buildRouteFileContracts": 5
+  },
+  "upstreamCases": {
+    "nexus/consistency-no-abbreviated-identifier": 183,
+    "nexus/consistency-require-constant-casing": 122,
+    "@next/next/no-head-import-in-document": 34,
+    "@next/next/no-page-custom-font": 35,
+    "@next/next/no-typos": 50,
+    "@next/next/no-styled-jsx-in-document": 19,
+    "@next/next/no-before-interactive-script-outside-document": 47,
+    "@next/next/no-document-import-in-page": 34,
+    "structure/next-no-near-miss-route-export": 40,
+    "@next/next/no-head-element": 8
+  }
+}

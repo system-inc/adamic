@@ -1,0 +1,30 @@
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { lastSeparator } from './last_separator.a';
+import { splitPath } from './split_path.a';
+import { isDocumentFile } from './is_document_file.a';
+import { isDocumentPage } from './is_document_page.a';
+import { isInApplicationDirectory } from './is_in_application_directory.a';
+import { isInPagesDirectory } from './is_in_pages_directory.a';
+import { splitSegments } from './split_segments.a';
+import { routeContractExports } from './route_contract_exports.a';
+import { buildRouteFileContracts } from './build_route_file_contracts.a';
+function bytes(text: string): string { const a:string[]=[]; for(let i=0;i<utf8Length(text);i++) { a.push(`${utf8At(text,i)}`); } return a.join(','); }
+function list(a: readonly string[]): string { const b:string[]=[];for(const s of a) { b.push(bytes(s)); } return b.join(':'); }
+function names(a: readonly string[] | undefined): string { if(a===undefined) { return 'nil'; } const copy=a.slice();copy.sort((a,b) => a < b ? -1 : a > b ? 1 : 0);return copy.join(','); }
+function contracts(): string { const m=buildRouteFileContracts(); const keys:string[]=[];for(const key of m.keys()) { keys.push(key); } keys.sort((a,b) => a < b ? -1 : a > b ? 1 : 0);const a:string[]=[];for(const key of keys) { a.push(`${key}=${names(m.get(key))}`); } return a.join(';'); }
+const args=programArguments();const input=readTextFile(args[0] ?? panic('cases'));if(input.kind==='Error') { panic(input.message); }
+const reader=new OptionsJson(input.text);const root=reader.parse();if(root<0) { panic(reader.error); }
+for(const row of reader.node(root).children) {
+ const kind=reader.node(reader.field(row,'Kind')).text;const path=reader.node(reader.field(row,'Path')).text;
+ if(kind==='IsDocumentFile') { console.log(`${isDocumentFile(path)}`); }
+ else if(kind==='lastSeparator') { console.log(`${lastSeparator(path)}`); }
+ else if(kind==='splitPath') { const parts=splitPath(path);console.log(`${bytes(parts.baseName)}/${bytes(parts.parentName)}`); }
+ else if(kind==='IsDocumentPage') { console.log(`${isDocumentPage(path)}`); }
+ else if(kind==='IsInApplicationDirectory') { console.log(`${isInApplicationDirectory(path)}`); }
+ else if(kind==='IsInPagesDirectory') { console.log(`${isInPagesDirectory(path)}`); }
+ else if(kind==='splitSegments') { console.log(list(splitSegments(path))); }
+ else if(kind==='RouteContractExports') { console.log(names(routeContractExports(path))); }
+ else if(kind==='buildRouteFileContracts') { console.log(contracts()); }
+ else { panic(kind); }
+}

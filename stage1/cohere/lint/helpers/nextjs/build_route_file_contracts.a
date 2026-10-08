@@ -1,0 +1,10 @@
+export function buildRouteFileContracts(): Map<string, string[]> {
+ const segment=['config','generateStaticParams','unstable_instant','unstable_dynamicStaleTime','revalidate','dynamic','dynamicParams','fetchCache','preferredRegion','runtime','maxDuration'];
+ const page=segment.concat(['metadata','generateMetadata','viewport','generateViewport']);
+ const image=segment.concat(['alt','size','contentType','generateImageMetadata']);
+ const result=new Map<string,string[]>();
+ result.set('page',page); result.set('layout',page); result.set('route',segment.concat(['GET','HEAD','OPTIONS','POST','PUT','DELETE','PATCH']));
+ result.set('icon',image); result.set('apple-icon',image); result.set('opengraph-image',image); result.set('twitter-image',image);
+ result.set('sitemap',segment.concat(['generateSitemaps'])); result.set('robots',segment); result.set('manifest',segment);
+ return result;
+}
