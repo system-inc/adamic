@@ -163,6 +163,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value, err = l.checkedIndexedRead(node, value)
+		if err == nil {
+			value = l.checkedJSONStringifyUse(node, value)
+		}
 	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of

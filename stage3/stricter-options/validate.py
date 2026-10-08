@@ -11,22 +11,27 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('report', type=Path)
 parser.add_argument('tree', type=Path)
 parser.add_argument('--ledger-ref', default='3f0926c0a55a7b5f64f037b1745e0e984e08c8be')
+parser.add_argument('--ledger-file', default='rows.csv')
+parser.add_argument('--include-json', action='store_true')
 parser.add_argument('--save', type=Path)
 parser.add_argument('--disposition', type=Path)
 parser.add_argument('--allow-project-errors', action='store_true', help='Compare sites while retaining production prelude/soundness errors.')
 args = parser.parse_args()
 repository = Path(__file__).resolve().parents[2]
-ledger = subprocess.check_output(['git', 'show', args.ledger_ref + ':stage3/ledger/checker-259/rows.csv'], cwd=repository, text=True)
+ledger = subprocess.check_output(['git', 'show', args.ledger_ref + ':stage3/ledger/checker-259/' + args.ledger_file], cwd=repository, text=True)
 rows = list(csv.DictReader(io.StringIO(ledger)))
 options = ['noUncheckedIndexedAccess', 'exactOptionalPropertyTypes', 'useUnknownInCatchVariables', 'strictBindCallApply']
+if args.include_json:
+    options.append('JSON.stringify')
 expected = {}
 for row in rows:
-    if row['option'] not in options:
+    json_site = args.include_json and row['option'] == 'other' and 'JSON.stringify overload' in row['cause']
+    if row['option'] not in options and not json_site:
         continue
     key = (row['file'], int(row['line']), int(row['column']), int(row['code'][2:]))
     if key in expected:
         raise SystemExit(f'duplicate ledger site: {key}')
-    expected[key] = {option for option in options if option in row['removed_by']}
+    expected[key] = {'JSON.stringify'} if json_site else {option for option in options if option in row['removed_by']}
 report = json.loads(args.report.read_text())
 if report['project_errors'] and not args.allow_project_errors:
     raise SystemExit(f"project errors: {report['project_errors']}")
@@ -61,7 +66,7 @@ if args.disposition:
     if not remaining.issubset(actual):
         raise SystemExit('remaining error sites must be recorded sites')
     with args.disposition.open('w', newline='') as output:
-        writer = csv.writer(output)
+        writer = csv.writer(output, lineterminator="\n")
         writer.writerow(['file', 'line', 'column', 'code', 'options', 'disposition'])
         for site in report['sites']:
             key = (site['file'], site['line'], site['column'], site['code'])

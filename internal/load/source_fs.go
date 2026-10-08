@@ -34,8 +34,9 @@ var setPrelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay        map[tspath.RootedFilePath]string
-	projectConsole bool
+	overlay          map[tspath.RootedFilePath]string
+	projectConsole   bool
+	jsonAssumeString bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -71,15 +72,19 @@ func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 
 func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
+		text := prelude
+		if s.jsonAssumeString {
+			text = strings.ReplaceAll(text, "stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;", "stringify(value?: unknown, replacer?: unknown, space?: unknown): string;")
+		}
 		if s.projectConsole {
 			// Project console declarations can accept arbitrary data. This true
 			// runtime signature must not shadow an inherited Node console method
 			// with the narrower standalone Adamic signature.
-			text := strings.ReplaceAll(prelude, "log(message: string): void;", "log(...data: any[]): void;")
+			text = strings.ReplaceAll(text, "log(message: string): void;", "log(...data: any[]): void;")
 			text = strings.ReplaceAll(text, "error(message: string): void;", "error(...data: any[]): void;")
 			return text, true
 		}
-		return prelude, true
+		return text, true
 	}
 	if path == setPreludePath {
 		return setPrelude, true

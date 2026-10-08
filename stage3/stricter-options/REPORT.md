@@ -1,10 +1,10 @@
 # Stricter checker options: verified audit, incomplete conversion
 
-Built project options/lib loading and supported indexed presence guards in both backends, with explain counts.
+Built project options/lib loading, supported indexed guards and JSON use guards in both backends, with explain counts.
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
-Measured 0 project errors and all 171 exact stricter-option sites, with no missing or extra sites.
-Six audit and four loader mutants were caught; eight erase-runtime-check mutants built and were caught.
-Mixed checker ownership, catch/JSON checks, optional checks and unsupported indexed representations remain unfinished.
+Measured 0 project errors and all 173 exact updated-ledger sites, with no missing, extra or wrongly attributed sites.
+Six audit, four loader, eight indexed, three JSON and one inherited iterator mutant were run and caught.
+Catch checks, mixed checker ownership, unsupported indexed representations and individual 99-site native witnesses remain unfinished; optional checks belong to another worker.
 
 ## What is built
 
@@ -148,8 +148,7 @@ Standalone .ts files without a tsconfig keep the existing Adamic fallback.
 
 Mixed .a/project-.ts ownership in either import direction and separate project
 ownership are explicitly refused until distinct checker/AST ownership is built.
-Project overlays and explicit extra roots outside the config are refused until
-the audit can attest to exactly those inputs. These conservative refusals are
+At b651b305 project overlays and explicit extra roots were refused. The library integration now audits overlay inputs and explicit ambient roots; extra implementation roots remain refused. These conservative refusals are
 limitations, not completion of general per-file options. The compiler host caches
 filesystem reads but parses fresh ASTs for each program; reusing it does not solve
 cross-program symbol identity.
@@ -237,3 +236,108 @@ for a later merge at 7e7464e6 after the current steps, not yet merged here.
 This worker owns 106 sites: indexed 99, catch 5 and JSON.stringify 2. The optional worker owns the other 67. The updated ledger at a1a16427 records 173 after the library iterator fix; this indexed commit still reports the earlier 171 comparison, and has not yet integrated that fix or reproduced 173. Planning estimate: October 8 to 9 by 21:30 MDT; first 50 take 4 to 8 hours assuming their representations already lower. Catch representation support, JSON use checks, per-site witnesses and the updated ledger remain work, not measured completion. The previous optional-merge estimates are superseded.
 
 Final generic-read verification: internal/lower passes in 18.045s and stage3/stricter-options in 11.040s; log /tmp/stricter-options-indexed-generic-final.log.
+
+## Current verified result after library and JSON integration
+
+The library dependency 24d980a7 is merged at 5d074f12. This worker has not merged
+optional-field-write-2: the latest scope assigns its 67 rows to
+codex/stricter-optional-writes. The indexed slice was pushed at 5aef91ae.
+
+The fresh adapted tree comes from area/stage3 3b255125, applied with its apply.sh.
+Its patch-set total is 78 files, 5128 lines added and 5102 removed. The isolated
+ledger merge 8c50a0a9 could not be fetched (remote: not our ref); the published
+adaptation parent was fetched and applied instead. The library changes affect
+Adamic, not those upstream adaptations. The production probe on this fresh tree
+matches every site in a1a16427's rows-2026-10-08.csv:
+
+| Measurement | Result |
+|---|---:|
+| Ordinary project errors | 0 |
+| All recorded sites | 173 |
+| Indexed | 99 |
+| Optional | 67 |
+| Catch | 5 |
+| JSON.stringify | 2 |
+| Missing / extra / wrong attribution | 0 / 0 / 0 |
+| Remaining checker errors | 72 |
+| Deferred to guarded lowering or explicit refusal | 101 |
+
+The 90 previous prelude rows are gone. The two JSON errors are now recorded
+contract sites, not ordinary errors. These 101 deferred rows are not a count of
+101 guards emitted from the whole adapted compiler. The compiler's entire native
+build and one native witness per ledger row remain unverified. sites-173.json and
+disposition.csv retain the comparison and disposition.
+
+JSON.stringify retains string | undefined in the production checker. A separate
+checker changes only that declaration to identify diagnostics caused solely by
+the truthful result type. Diagnostics at the same file/position/code that survive
+remain errors. In .a, the diagnostic names narrowing or ?? as the fix. In project
+.ts, a string-requiring use gets a Coalesce panic with the message
+`JSON.stringify result is undefined: file:line:column`. The original result may
+still be stored or observed as string | undefined.
+
+Five JSON fixtures pass: undefined, function, held result, present number and
+observed undefined. The first three give undefined on Node; both backends stop
+at the use with the same named message and exit 70. Each emitted-C erase-panic
+mutant successfully builds under sanitizers, then exits 1 after the missing value
+reaches the unguarded string use. The named exit-70 assertion catches each mutant.
+The present fixture has one actual JSON guard; observation has none. Together
+with the twelve indexed fixtures, seventeen runtime fixtures pass.
+
+The CLI fixture with one indexed read and one JSON use prints:
+
+```
+checked: indexed-presence=1 catch-error=0 json-stringify-defined=1 optional-write=0
+trusted: 0
+```
+
+The final touched packages pass: load 24.310s, lower 51.632s, ir 40.306s,
+cmd/adamic 4.337s, runtime fixtures 31.475s. Vet exits 0 without diagnostics.
+The filtered existing oracle passes eight fixtures (three JSON, indexing,
+string index, exceptions, class-inheritance exceptions, fallthrough exceptions).
+The integrated iterator oracle also passes six project fixtures, six standalone
+fixtures and TestLibraryIteratorDoneMutant. That mutant replaces omitted done's
+false fallback with true; it exits 0 cleanly and Node's stdout comparison catches
+it. WASI and the full repository gate were not run.
+
+The four loader mutants were rerun and caught by their intended assertions, not
+build failures: replace-project-options, erase-recorded-sites, waive-optional-sites
+and erase-mixed-file-refusal. The six audit mutants listed earlier are rerun after
+the filesystem-aware attribution refactor. The runtime mutants are the eight
+indexed fixtures listed earlier, three JSON fixtures above and the inherited
+iterator mutant. No catch mutant is claimed.
+
+Current commands and logs:
+
+```sh
+bash /tmp/stricter-options-stage3-current/stage3/apply.sh /tmp/stricter-options-adapted-current > /tmp/stricter-options-apply-current.log 2>&1
+npm ci --prefix /tmp/stricter-options-adapted-current --ignore-scripts --no-audit --no-fund > /tmp/stricter-options-npm-current.log 2>&1
+go run ./stage3/stricter-options/probe.go --production /tmp/stricter-options-adapted-current/src/compiler/checker.ts > /tmp/stricter-options-173-current.json 2> /tmp/stricter-options-173-current-probe.log
+python3 stage3/stricter-options/validate.py /tmp/stricter-options-173-current.json /tmp/stricter-options-adapted-current --ledger-ref a1a16427 --ledger-file rows-2026-10-08.csv --include-json --save stage3/stricter-options/sites-173.json --disposition stage3/stricter-options/disposition.csv > /tmp/stricter-options-173-current-validation.log 2>&1
+go test ./internal/load ./internal/lower ./internal/ir ./cmd/adamic ./stage3/stricter-options -count=1 -timeout 10m > /tmp/stricter-options-json-final-packages.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/ir ./cmd/adamic ./stage3/stricter-options > /tmp/stricter-options-json-final-vet.log 2>&1
+python3 stage3/stricter-options/production_mutants.py > /tmp/stricter-options-json-production-mutants.log 2>&1
+python3 stage3/stricter-options/mutants.py > /tmp/stricter-options-json-audit-mutants.log 2>&1
+```
+
+Additional proof logs: /tmp/stricter-options-json-runtime-final.log (first four
+JSON fixtures), /tmp/stricter-options-json-cli.log, /tmp/stricter-options-json-filtered-oracle.log
+and /tmp/stricter-options-library-oracle-final.log. The final package run includes
+the fifth JSON observation fixture.
+
+Catch bindings keep the project's declared type, as ruled. All five catch sites
+remain errors. Lowering currently refuses non-Error throws and treats caught
+instanceof Error as constant true. Converting these sites before a runtime
+thrown-value representation can distinguish a non-Error would have no honest
+failing witness. Recommended split: a caught-value representation and Error-use
+check worker; this worker can continue indexed representations and site witnesses.
+
+The October 8 to 9 estimate is conditional on that representation work and
+supported indexed representations. It is not a verified delivery of all 106.
+The first 50 ledger rows include record reads (for example D155/D156), so the
+4 to 8 hour estimate covers the census and initial supported guards; completing
+all 50 needs those representation gaps closed. Unsupported witnesses are still
+explicit refusals, not checked counts. A firm whole-106 date remains dependent on
+that work; no completion claim is made.
+
+Latest whole-106 planning range communicated after the fresh reproduction: October 9 to 12 MDT, assuming caught-value representation work is split out and indexed representation gaps close. This supersedes the October 8 to 9 estimate. First 50: 4 to 8 hours for census and supported-case proof, with record reads still gating all-50 completion. All six audit mutants and all four loader mutants completed their reruns and were caught by assertions.
