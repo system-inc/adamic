@@ -1,0 +1,6 @@
+{
+  "name": "no-uncleared-race-timeout-decision",
+  "file": "no_uncleared_race_timeout.a",
+  "from": "this.globalTimer(index)",
+  "to": "!this.globalTimer(index)"
+}

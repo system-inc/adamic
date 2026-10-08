@@ -1,0 +1,342 @@
+import type { Rules } from './context.a';
+import { Bindings } from './bindings.a';
+import { Reassign } from './reassign.a';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+interface ConditionInterface {
+    readonly identifier: number;
+    readonly loop: number;
+    readonly group: number;
+    readonly modified: boolean;
+}
+export class UnmodifiedLoop {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly writes: Reassign;
+    readonly references = new Map<number, number[]>();
+    readonly tests = new Map<number, number>();
+    readonly initializers = new Map<number, number>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.writes = new Reassign(rules);
+    }
+    referenceList(index: number): number[] {
+        return this.references.get(index) ?? [];
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    nearest(index: number, declarationOnly = false): number {
+        let current = this.parent(index);
+        while(current >= 0) {
+            const kind = this.rules.parser.node(current).kind;
+            if(declarationOnly ? kind === 'FunctionDeclaration' : this.bindings.functionKind(kind)) {
+                return current;
+            }
+            current = this.parent(current);
+        }
+        return -1;
+    }
+    dynamic(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(
+            [
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(['ArrowFunction', 'FunctionExpression', 'ClassExpression'].includes(node.kind)) {
+            return false;
+        }
+        return node.children.some((child) => this.dynamic(child));
+    }
+    group(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return (
+            node.kind === 'ConditionalExpression' ||
+            (node.kind === 'BinaryExpression' &&
+                !['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken', 'CommaToken'].includes(
+                    this.rules.parser.node(node.children[1] ?? -1).kind,
+                ))
+        );
+    }
+    sentinel(kind: string): boolean {
+        return (
+            kind.endsWith('Statement') ||
+            [
+                'VariableDeclaration',
+                'ClassDeclaration',
+                'FunctionDeclaration',
+                'InterfaceDeclaration',
+                'TypeAliasDeclaration',
+                'EnumDeclaration',
+                'ModuleDeclaration',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'YieldExpression',
+                'ClassExpression',
+                'FunctionExpression',
+                'ArrowFunction',
+            ].includes(kind)
+        );
+    }
+    condition(index: number): number[] {
+        let child = index;
+        let group = -1;
+        let current = this.parent(index);
+        while(current >= 0) {
+            const node = this.rules.parser.node(current);
+            if(this.sentinel(node.kind)) {
+                return this.tests.get(current) === child ? [current, group] : [];
+            }
+            if(this.group(current)) {
+                if(this.dynamic(current)) {
+                    return [];
+                }
+                group = current;
+            }
+            child = current;
+            current = this.parent(current);
+        }
+        return [];
+    }
+    inLoop(loop: number, index: number): boolean {
+        const initializer = this.initializers.get(loop) ?? -1;
+        return this.bindings.contains(loop, index) && (initializer < 0 || !this.bindings.contains(initializer, index));
+    }
+    suspends(index: number, initializer: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(index === initializer || this.bindings.functionKind(node.kind)) {
+            return false;
+        }
+        return (
+            ['AwaitExpression', 'YieldExpression'].includes(node.kind) ||
+            node.children.some((child) => this.suspends(child, initializer))
+        );
+    }
+    suspendedWriter(loop: number, modifier: number): boolean {
+        const loopFunction = this.nearest(loop);
+        if(this.nearest(modifier) === loopFunction) {
+            return false;
+        }
+        let closure = -1;
+        let current = this.parent(modifier);
+        while(current >= 0) {
+            if(this.bindings.functionKind(this.rules.parser.node(current).kind)) {
+                if(this.bindings.contains(current, loop)) {
+                    break;
+                }
+                closure = current;
+            }
+            current = this.parent(current);
+        }
+        if(closure >= 0) {
+            const local = this.nearest(closure) === loopFunction;
+            const node = this.rules.parser.node(closure);
+            if(node.kind === 'FunctionDeclaration') {
+                const name = this.bindings.shape.name(closure);
+                if(
+                    !this.referenceList(closure).some(
+                        (occurrence) =>
+                            occurrence !== name &&
+                            (!local || this.rules.parser.node(occurrence).pos < this.rules.parser.node(loop).end),
+                    )
+                ) {
+                    return false;
+                }
+            }
+            else if(local && node.pos >= this.rules.parser.node(loop).end) {
+                return false;
+            }
+        }
+        return this.suspends(loop, this.initializers.get(loop) ?? -1);
+    }
+    modified(loop: number, modifier: number): boolean {
+        if(this.inLoop(loop, modifier) || this.suspendedWriter(loop, modifier)) {
+            return true;
+        }
+        const declaration = this.nearest(modifier, true);
+        return (
+            declaration >= 0 &&
+            this.bindings.shape.name(declaration) >= 0 &&
+            this.referenceList(declaration).some((reference) => this.inLoop(loop, reference))
+        );
+    }
+    write(index: number, declaration: number): boolean {
+        const parent = this.parent(index);
+        if(
+            parent >= 0 &&
+            this.rules.parser.node(parent).kind === 'VariableDeclaration' &&
+            this.bindings.shape.name(parent) === index
+        ) {
+            const list = this.parent(declaration);
+            const declared = this.rules.parser.node(parent);
+            const name = this.bindings.shape.name(parent);
+            const last = declared.children[declared.children.length - 1] ?? -1;
+            const initialized =
+                last >= 0 &&
+                last !== name &&
+                this.rules.scanner.text
+                    .slice(this.rules.parser.node(name).end, this.rules.start(this.rules.parser.node(last)))
+                    .includes('=');
+            if(initialized) {
+                return (
+                    list >= 0 &&
+                    this.rules.parser.node(list).kind === 'VariableDeclarationList' &&
+                    this.rules.text(this.rules.parser.node(list)).startsWith('var')
+                );
+            }
+        }
+        // Pattern declarations and for-in/of heads are writes too.
+        let current = index;
+        while(this.parent(current) >= 0) {
+            const above = this.parent(current);
+            const node = this.rules.parser.node(above);
+            if(node.kind === 'VariableDeclaration' && this.bindings.shape.name(above) === current) {
+                const list = this.parent(above);
+                const owner = this.parent(list);
+                if(owner >= 0 && ['ForInStatement', 'ForOfStatement'].includes(this.rules.parser.node(owner).kind)) {
+                    return true;
+                }
+                return node.children.length > 1 && this.rules.text(node).includes('=');
+            }
+            if(!['BindingElement', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(node.kind)) {
+                break;
+            }
+            current = above;
+        }
+        return this.writes.writes(index);
+    }
+    loop(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'WhileStatement') {
+            this.tests.set(index, node.children[0] ?? -1);
+        }
+        if(node.kind === 'DoStatement') {
+            this.tests.set(index, node.children[node.children.length - 1] ?? -1);
+        }
+        if(node.kind !== 'ForStatement') {
+            return;
+        }
+        this.rules.scanner.pos = node.pos;
+        let depth = 0;
+        const semicolons: number[] = [];
+        while(this.rules.scanner.pos < node.end) {
+            const kind = this.rules.scanner.scan();
+            if(kind === 'OpenParenToken') {
+                depth++;
+            }
+            if(kind === 'CloseParenToken') {
+                depth--;
+                if(depth === 0) {
+                    break;
+                }
+            }
+            if(kind === 'SemicolonToken' && depth === 1) {
+                semicolons.push(this.rules.scanner.start);
+            }
+        }
+        const first = semicolons[0] ?? -1;
+        const second = semicolons[1] ?? -1;
+        for(const child of node.children.slice(0, -1)) {
+            const part = this.rules.parser.node(child);
+            if(part.end <= first) {
+                this.initializers.set(index, child);
+            }
+            else if(part.pos >= first && part.end <= second) {
+                this.tests.set(index, child);
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.parent(index) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(['ForStatement', 'WhileStatement', 'DoStatement'].includes(node.kind)) {
+                this.loop(index);
+            }
+            if(node.kind !== 'Identifier') {
+                continue;
+            }
+            const parent = this.parent(index);
+            const above = this.rules.parser.node(parent);
+            const propertyName = ['PropertyAccessExpression', 'QualifiedName'].includes(above.kind)
+                ? (above.children[above.children.length - 1] ?? -1)
+                : this.bindings.shape.name(parent);
+            if(
+                ([
+                    'PropertyAccessExpression',
+                    'QualifiedName',
+                    'PropertyAssignment',
+                    'PropertyDeclaration',
+                    'MethodDeclaration',
+                    'GetAccessor',
+                    'SetAccessor',
+                ].includes(above.kind) &&
+                    propertyName === index) ||
+                ['BreakStatement', 'ContinueStatement', 'LabeledStatement'].includes(above.kind)
+            ) {
+                continue;
+            }
+            const declarations = this.bindings.list(index, 'binding-declarations', false);
+            let earliest = -1;
+            for(const declaration of declarations) {
+                if(earliest < 0 || this.rules.parser.node(declaration).pos < this.rules.parser.node(earliest).pos) {
+                    earliest = declaration;
+                }
+            }
+            if(earliest < 0) {
+                continue;
+            }
+            if(!this.references.has(earliest)) {
+                this.references.set(earliest, []);
+            }
+            this.referenceList(earliest).push(index);
+        }
+        const conditions: ConditionInterface[] = [];
+        for(const [declaration, references] of this.references) {
+            const modifiers = references.filter((reference) => this.write(reference, declaration));
+            for(const reference of references) {
+                const pair = this.condition(reference);
+                const loop = pair[0] ?? -1;
+                if(loop >= 0) {
+                    conditions.push({
+                        identifier: reference,
+                        loop,
+                        group: pair[1] ?? -1,
+                        modified: modifiers.some((modifier) => this.modified(loop, modifier)),
+                    });
+                }
+            }
+        }
+        for(const condition of conditions) {
+            if(
+                condition.modified ||
+                (condition.group >= 0 && conditions.some((other) => other.group === condition.group && other.modified))
+            ) {
+                continue;
+            }
+            const node = this.rules.parser.node(condition.identifier);
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-unmodified-loop-condition',
+                    'loopConditionNotModified',
+                    `This variable is read by the loop condition and never changed inside the loop, so the condition evaluates to the same thing every time and the loop either runs forever or never runs at all. Whatever was meant to end the loop is not happening: either the variable should be updated in the body, or the condition should be reading something that does change. The variable is '${node.text}'.`,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

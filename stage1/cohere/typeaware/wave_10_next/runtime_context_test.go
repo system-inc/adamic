@@ -10,6 +10,7 @@ import (
 	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	bridge "github.com/system-inc/adamic/bridge/tsgo/checker"
 	adapter "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next"
 )
@@ -60,7 +61,7 @@ func TestRuntimeContextFactsAndLiveDispatch(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	loaded := p.Compiler.GetSourceFile(file)
+	loaded := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(file)))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), loaded)
 	defer release()
 	nodes := map[string]*ast.Node{}
@@ -137,7 +138,7 @@ func TestSyntaxMembershipAndDestructuringAncestry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	loaded := p.Compiler.GetSourceFile(file)
+	loaded := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(file)))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), loaded)
 	defer release()
 	staticBody := false

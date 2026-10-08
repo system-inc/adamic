@@ -1,0 +1,47 @@
+import type { Rules } from './context.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+export class MemberParameters {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    parameters(frames: Frames): string[] | undefined {
+        if(!frames.yes()) {
+            return undefined;
+        }
+        const result: string[] = [];
+        const count = frames.natural();
+        for(let index = 0; index < count; index++) {
+            result.push(frames.field());
+        }
+        return result;
+    }
+    matches(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'member-parameters'));
+        header(frames, 'member-parameters');
+        const count = frames.natural();
+        let result = count > 0;
+        for(let at = 0; at < count; at++) {
+            const parameters = this.parameters(frames);
+            let matched = false;
+            const candidates = frames.natural();
+            for(let candidate = 0; candidate < candidates; candidate++) {
+                const other = this.parameters(frames);
+                if(
+                    parameters !== undefined &&
+                    other !== undefined &&
+                    parameters.length === other.length &&
+                    parameters.every((text, position) => text === other[position])
+                ) {
+                    matched = true;
+                }
+            }
+            if(!matched) {
+                result = false;
+            }
+        }
+        frames.end();
+        return result;
+    }
+}

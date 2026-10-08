@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,7 +30,7 @@ func TestRequireAwaitRawQuestions(t *testing.T) {
 		nodes[node.Kind] = node
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
-	walk(program.Compiler.GetSourceFile(file).AsNode())
+	walk(program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(file))).AsNode())
 	ask := func(kind ast.Kind, question string) []string {
 		t.Helper()
 		node := nodes[kind]

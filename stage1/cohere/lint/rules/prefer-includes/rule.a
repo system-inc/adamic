@@ -1,0 +1,18 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './context.a';
+import { PreferIncludes } from './prefer_includes.a';
+export class Rule {
+    readonly shared: RuleContext;
+    context: Rules | undefined = undefined;
+    port: PreferIncludes | undefined = undefined;
+    constructor(shared: RuleContext) { this.shared = shared; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context ?? new Rules(this.shared);
+        const port = this.port ?? new PreferIncludes(context);
+        this.context = context; this.port = port;
+        if(node.kind === 'BinaryExpression') { port.comparison(index, node); } else { port.regex(index, node); }
+        context.emit();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

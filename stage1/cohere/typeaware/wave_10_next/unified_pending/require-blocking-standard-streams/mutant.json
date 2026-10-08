@@ -1,0 +1,6 @@
+{
+  "name": "require-blocking-standard-streams-decision",
+  "file": "require_blocking_standard_streams.a",
+  "from": "if(exits.length === 0) {",
+  "to": "if(exits.length >= 0) {"
+}

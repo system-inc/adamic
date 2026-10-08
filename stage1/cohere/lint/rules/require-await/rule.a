@@ -1,0 +1,114 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Context } from './context.a';
+import { RequireAwaitFacts } from './require_await_facts.a';
+import { Contracts } from './contracts.a';
+import { report } from './reporting.a';
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { Diagnostic } from '../../../typeaware/diagnostic.ts';
+
+import type { FunctionFactsInterface, BodyNodeFactsInterface } from './function_facts.a';
+
+function boundary(kind: string): boolean {
+    return [
+        'FunctionDeclaration',
+        'FunctionExpression',
+        'ArrowFunction',
+        'MethodDeclaration',
+        'GetAccessor',
+        'SetAccessor',
+        'Constructor',
+        'ClassDeclaration',
+        'ClassExpression',
+    ].includes(kind);
+}
+function awaits(node: BodyNodeFactsInterface): boolean {
+    return (
+        node.kind === 'AwaitExpression' ||
+        (node.kind === 'ForOfStatement' && node.awaitModifier) ||
+        (node.kind === 'VariableDeclarationList' && (node.flags & 7) === 6)
+    );
+}
+export function containsAwait(node: FunctionFactsInterface): boolean {
+    let stopDepth = -1;
+    // Match production's initial ForEachChild walk; the body's own boundary
+    // does not stop this first pass, including when it is a concise expression.
+    for(const child of node.bodyNodes) {
+        if(child.depth === 0) {
+            continue;
+        }
+        if(stopDepth >= 0 && child.depth > stopDepth) {
+            continue;
+        }
+        stopDepth = -1;
+        if(awaits(child)) {
+            return true;
+        }
+        if(boundary(child.kind)) {
+            stopDepth = child.depth;
+        }
+    }
+    if(node.bodyKind !== 'Block') {
+        const body = node.bodyNodes[0];
+        return body !== undefined && awaits(body);
+    }
+    return false;
+}
+export function mayNeedReport(node: FunctionFactsInterface): boolean {
+    return (
+        (node.modifierFlags & 1024) !== 0 &&
+        (node.functionFlags & 1) === 0 &&
+        node.bodyPresent &&
+        !(node.bodyKind === 'Block' && node.statementCount === 0) &&
+        !containsAwait(node)
+    );
+}
+export function visit(node: FunctionFactsInterface): Diagnostic | undefined {
+    if(!mayNeedReport(node)) {
+        return undefined;
+    }
+    // Never turn the absent contextual-signature/source-token adapter into a
+    // clean result. Candidate handling needs those raw facts before reporting.
+    panic(
+        'NotYet: require-await supplied-node adapter must provide contextual signatures, declared generic targets, heritage member types and source token spans',
+    );
+}
+
+class Decision {
+    readonly context: Context;
+    readonly shared: RuleContext;
+    readonly facts: RequireAwaitFacts;
+    readonly contracts: Contracts;
+    constructor(shared: RuleContext, context: Context, facts: RequireAwaitFacts, contracts: Contracts) {
+        this.shared = shared;
+        this.context = context;
+        this.facts = facts;
+        this.contracts = contracts;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(!node.children.some((child) => this.facts.node(child).kind === 'AsyncKeyword')) {
+            return;
+        }
+        if(!mayNeedReport(this.facts.functionFacts(node, index)) || this.contracts.satisfies(node, index)) {
+            return;
+        }
+        this.context.emit(report(this.context, node, index, this.facts.parents));
+    }
+}
+// A syntax-only run constructs descriptors but must never acquire typed state.
+export class Rule {
+    readonly shared: RuleContext;
+    decision: Decision | undefined = undefined;
+    constructor(shared: RuleContext) { this.shared = shared; }
+    visit(node: ParseNode, index: number): void {
+        let decision = this.decision;
+        if(decision === undefined) {
+            const context = new Context(this.shared);
+            const facts = new RequireAwaitFacts(context);
+            decision = new Decision(this.shared, context, facts, new Contracts(facts));
+            this.decision = decision;
+        }
+        decision.visit(node, index);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

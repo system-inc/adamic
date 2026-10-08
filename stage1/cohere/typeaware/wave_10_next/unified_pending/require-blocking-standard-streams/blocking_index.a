@@ -1,0 +1,71 @@
+import type { RuntimeFileInterface } from './runtime_context.a';
+
+export class RequireBlockingStandardStreamsIndex {
+    readonly discriminator = 'blocking-index';
+    readonly files = new Map<string, RuntimeFileInterface>();
+    readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>();
+    readonly edges = new Map<string, string[]>();
+    constructor(files: readonly RuntimeFileInterface[]) {
+        const queue: string[] = [];
+        for(const file of files) {
+            this.files.set(file.path, file);
+            if(
+                file.path.endsWith('/source/system/StandardStreams.ts') ||
+                file.path.endsWith('/source/system/StandardStreams.d.ts')
+            ) {
+                queue.push(file.path);
+                this.canBlock.add(file.path);
+            }
+        }
+        const importers = new Map<string, string[]>();
+        for(const file of files) {
+            if(file.declarationFile) {
+                continue;
+            }
+            const targets: string[] = [];
+            for(const edge of file.edges) {
+                if(edge.typeOnly) {
+                    continue;
+                }
+                const dynamic = ['dynamic-import', 'require'].includes(edge.kind);
+                if(dynamic && !file.text.includes('import(') && !file.text.includes('require(')) {
+                    continue;
+                }
+                if(edge.computed) {
+                    if(dynamic && !this.canBlock.has(file.path)) {
+                        queue.push(file.path);
+                        this.canBlock.add(file.path);
+                    }
+                    continue;
+                }
+                if(edge.target === '' || edge.target === file.path || !this.files.has(edge.target)) {
+                    continue;
+                }
+                targets.push(edge.target);
+                this.imported.add(edge.target);
+                if(!importers.has(edge.target)) {
+                    importers.set(edge.target, []);
+                }
+                const sources: string[] = importers.get(edge.target) ?? [];
+                sources.push(file.path);
+            }
+            this.edges.set(file.path, targets);
+        }
+        let at = 0;
+        while(at < queue.length) {
+            const current = queue[at] ?? '';
+            at++;
+            const parents: string[] = importers.get(current) ?? [];
+            for(const importer of parents) {
+                if(!this.canBlock.has(importer)) {
+                    this.canBlock.add(importer);
+                    queue.push(importer);
+                }
+            }
+        }
+    }
+    entry(path: string, text: string): boolean {
+        return text.startsWith('#!') || !this.imported.has(path);
+    }
+}

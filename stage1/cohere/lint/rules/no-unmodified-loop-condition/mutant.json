@@ -1,0 +1,6 @@
+{
+  "name": "no-unmodified-loop-condition-decision",
+  "file": "no_unmodified_loop_condition.a",
+  "from": "other.group === condition.group && other.modified",
+  "to": "other.group === condition.group && !other.modified"
+}

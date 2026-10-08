@@ -1,0 +1,18 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './context.a';
+import { UnmodifiedLoop } from './no_unmodified_loop_condition.a';
+export class Rule {
+    readonly shared: RuleContext;
+    context: Rules | undefined = undefined;
+    port: UnmodifiedLoop | undefined = undefined;
+    constructor(shared: RuleContext) { this.shared = shared; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context ?? new Rules(this.shared);
+        const port = this.port ?? new UnmodifiedLoop(context);
+        this.context = context; this.port = port;
+        port.run();
+        context.emit();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

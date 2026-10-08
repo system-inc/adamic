@@ -1,0 +1,6 @@
+{
+  "name": "prefer-includes-decision",
+  "file": "prefer_includes.a",
+  "from": "if(negative) {",
+  "to": "if(positive) {"
+}

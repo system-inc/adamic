@@ -1,0 +1,192 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Context } from './context.a';
+import type { FunctionFactsInterface, BodyNodeFactsInterface } from './function_facts.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { unionFlag } from '../../../typeaware/flags.ts';
+import type { Types } from '../../../typeaware/types.ts';
+import type { TypeFact } from '../../../typeaware/type_fact.ts';
+
+export interface SignatureFactsInterface {
+    readonly rest: boolean;
+    readonly parameters: readonly number[];
+    readonly returned: number;
+}
+export interface ResolvedFactsInterface {
+    readonly present: boolean;
+    readonly target: boolean;
+    readonly typeParameters: readonly number[];
+    readonly declared: SignatureFactsInterface;
+    readonly resolved: SignatureFactsInterface;
+}
+export interface CallSignatureFactsInterface {
+    readonly returned: number;
+    readonly parameters: readonly number[];
+    readonly locations: readonly number[];
+    readonly rests: readonly boolean[];
+}
+
+// IDs belong to the live bridge program. All decoded objects are native owned
+// records; no record holds its parent or another checker/native object.
+export class RequireAwaitFacts {
+    readonly context: Context;
+    readonly parents: number[] = [];
+    readonly spans = new Map<string, number>();
+    readonly rolesCache = new Map<number, ReadonlyMap<string, number[]>>();
+    readonly records = new Map<number, TypeFact>();
+    readonly functionCache = new Map<number, FunctionFactsInterface>();
+    constructor(context: Context) {
+        this.context = context;
+        while(this.parents.length < context.parser.nodes.length) {
+            this.parents.push(-1);
+        }
+        for(let index = 0; index < context.parser.nodes.length; index++) {
+            const node = this.node(index);
+            this.spans.set(`${node.kind}:${context.byte(node.pos)}:${context.byte(node.end)}`, index);
+            for(const child of node.children) {
+                this.parents[child] = index;
+            }
+        }
+    }
+    node(index: number): ParseNode {
+        return this.context.parser.nodes[index] ?? panic('missing require-await node');
+    }
+    parent(index: number): number {
+        return this.parents[index] ?? -1;
+    }
+    open(node: ParseNode, action: string): Frames {
+        const frames = new Frames(this.context.ask(node, `require-await\n${action}`));
+        header(frames, 'require-await');
+        const name = action.split('\n')[0] ?? '';
+        if(frames.field() !== name) {
+            panic('require-await action mismatch');
+        }
+        return frames;
+    }
+    remember(graph: Types): Types {
+        for(const record of graph.records) {
+            this.records.set(record.id, record);
+        }
+        return graph;
+    }
+    graph(frames: Frames): Types {
+        return this.remember(types(`1\n113\nrequire-await${frames.text.slice(frames.cursor)}`, 'require-await'));
+    }
+    type(id: number): TypeFact {
+        return this.records.get(id) ?? panic('missing require-await type identity');
+    }
+    parts(id: number): readonly number[] {
+        const record = this.type(id);
+        return (record.flags & unionFlag) !== 0 ? record.parts : [id];
+    }
+    shape(node: ParseNode, question: string): Types {
+        const name = question.split('\n')[0] ?? '';
+        return this.remember(types(this.context.ask(node, question), name));
+    }
+    value(node: ParseNode, id: number, operation: string): Types {
+        return this.graph(this.open(node, `type\n${id}\n${operation}`));
+    }
+    signatures(node: ParseNode, id: number): CallSignatureFactsInterface[] {
+        const frames = this.open(node, `type\n${id}\nsignatures`);
+        const result: CallSignatureFactsInterface[] = [];
+        const count = frames.natural();
+        for(let index = 0; index < count; index++) {
+            const returned = frames.natural();
+            const parameters: number[] = [];
+            const locations: number[] = [];
+            const rests: boolean[] = [];
+            const length = frames.natural();
+            for(let at = 0; at < length; at++) {
+                parameters.push(frames.natural());
+                locations.push(frames.natural());
+                rests.push(frames.yes());
+            }
+            result.push({ returned, parameters, locations, rests });
+        }
+        this.graph(frames);
+        return result;
+    }
+    signature(frames: Frames): SignatureFactsInterface {
+        return { rest: frames.yes(), parameters: frames.ids(), returned: frames.natural() };
+    }
+    resolved(node: ParseNode): ResolvedFactsInterface {
+        const frames = this.open(node, 'resolved');
+        const present = frames.yes();
+        const target = frames.yes();
+        const typeParameters = frames.ids();
+        const declared = this.signature(frames);
+        const resolved = this.signature(frames);
+        this.graph(frames);
+        return { present, target, typeParameters, declared, resolved };
+    }
+    heritage(node: ParseNode): Types {
+        return this.graph(this.open(node, 'heritage'));
+    }
+    functionFacts(node: ParseNode, index: number): FunctionFactsInterface {
+        const held = this.functionCache.get(index);
+        if(held !== undefined) {
+            return held;
+        }
+        const frames = this.open(node, 'function');
+        const modifierFlags = frames.natural();
+        const functionFlags = frames.natural();
+        const bodyPresent = frames.yes();
+        const bodyKind = frames.field();
+        const statementCount = frames.natural();
+        const bodyNodes: BodyNodeFactsInterface[] = [];
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            bodyNodes.push({
+                kind: frames.field(),
+                depth: frames.natural(),
+                flags: frames.natural(),
+                awaitModifier: frames.yes(),
+            });
+        }
+        frames.end();
+        const result = { modifierFlags, functionFlags, bodyPresent, bodyKind, statementCount, bodyNodes };
+        this.functionCache.set(index, result);
+        return result;
+    }
+    roles(node: ParseNode, index: number): ReadonlyMap<string, number[]> {
+        const held = this.rolesCache.get(index);
+        if(held !== undefined) {
+            return held;
+        }
+        const frames = new Frames(this.context.ask(node, 'runtime-context\nsyntax'));
+        header(frames, 'runtime-context');
+        if(frames.field() !== 'syntax') {
+            panic('require-await syntax mode mismatch');
+        }
+        frames.yes();
+        frames.yes();
+        frames.yes();
+        frames.yes();
+        const result = new Map<string, number[]>();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const name = frames.field();
+            const children: number[] = [];
+            const length = frames.natural();
+            for(let child = 0; child < length; child++) {
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                children.push(
+                    this.spans.get(`${kind}:${start}:${end}`) ?? panic('require-await role absent from native tree'),
+                );
+            }
+            result.set(name, children);
+        }
+        frames.end();
+        this.rolesCache.set(index, result);
+        return result;
+    }
+    list(index: number, role: string): readonly number[] {
+        return index < 0 ? [] : (this.roles(this.node(index), index).get(role) ?? []);
+    }
+    one(index: number, role: string): number {
+        return this.list(index, role)[0] ?? -1;
+    }
+}

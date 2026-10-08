@@ -1,0 +1,63 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../../../lint/context.ts';
+import type { Parser } from '../../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../../../lint/suggestions.a';
+import { FileQuestion } from '../../../../lint/checker.a';
+export class Rules {
+    readonly shared: RuleContext;
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly path: string;
+    readonly parents: number[];
+    readonly findings: Diagnostic[] = [];
+    readonly offsets: readonly number[];
+    constructor(shared: RuleContext, path: string | undefined = undefined, parser: Parser | undefined = undefined, scanner: Scanner | undefined = undefined, offsets: readonly number[] | undefined = undefined) {
+        this.shared = shared; this.parser = parser ?? shared.parser; this.scanner = scanner ?? shared.scanner;
+        this.parents = parser === undefined ? shared.parents.slice() : [];
+        const checker = shared.checker ?? panic('typed rule needs checker');
+        this.path = path ?? checker.path; this.offsets = offsets ?? checker.offsets;
+    }
+    byte(position: number): number { return this.offsets[position] ?? panic('source position absent'); }
+    unit(position: number): number { const index = this.offsets.indexOf(position); if(index < 0) { panic('byte position absent'); } return index; }
+    start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    text(node: ParseNode): string { return this.scanner.text.slice(this.start(node), node.end); }
+    ask(index: number, question: string): string {
+        const checker = this.shared.checker ?? panic('checker absent');
+        const node = this.parser.node(index);
+        const answer = this.parser !== this.shared.parser
+            ? checker.askFile(new FileQuestion('ReadsOtherFiles', `foreign-node\n${this.path}\n${this.byte(node.pos)}\n${this.byte(node.end)}\n${node.kind}\n${question}`))
+            : question === 'runtime-context\nprogram'
+              ? checker.askFile(new FileQuestion('ReadsOtherFiles', question))
+              : checker.ask(index, question);
+        return answer?.value ?? panic(answer?.reason ?? 'checker absent');
+    }
+    add(rule: string, id: string, message: string, index: number): Diagnostic {
+        const node = this.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
+        this.findings.push(finding); return finding;
+    }
+    skip(index: number, kind = 'ParenthesizedExpression'): number {
+        let current = index;
+        while(this.parser.node(current).kind === kind) { current = this.parser.node(current).children[0] ?? panic('empty parentheses'); }
+        return current;
+    }
+    links(index: number, parent: number): void { this.parents[index] = parent; for(const child of this.parser.node(index).children) { this.links(child, index); } }
+    emit(): void {
+        for(const finding of this.findings) {
+            const edits: SuggestionEdit[] = [];
+            if(finding.fixStart >= 0) { edits.push(new SuggestionEdit(this.unit(finding.fixStart), this.unit(finding.fixEnd), finding.replacement)); }
+            for(const repair of finding.repairs) { edits.push(new SuggestionEdit(this.unit(repair.start), this.unit(repair.end), repair.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of finding.suggestions) {
+                const repairs: SuggestionEdit[] = [];
+                for(const repair of suggestion.repairs) { repairs.push(new SuggestionEdit(this.unit(repair.start), this.unit(repair.end), repair.text)); }
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, repairs));
+            }
+            this.shared.reportRange(this.unit(finding.start), this.unit(finding.end), finding.rule, finding.id, finding.message, edits, suggestions);
+        }
+        this.findings.splice(0);
+    }
+}

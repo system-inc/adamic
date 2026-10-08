@@ -1,0 +1,14 @@
+{
+  "name": "structure/react-hook-no-any-type",
+  "node": true,
+  "typed": true,
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactHookNoAnyType",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestReactHookAnyType"
+}

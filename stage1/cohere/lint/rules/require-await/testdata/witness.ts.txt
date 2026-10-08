@@ -1,0 +1,2 @@
+/* 🌍 */ async function pending() { return 1; }
+async function waits() { await Promise.resolve(1); }

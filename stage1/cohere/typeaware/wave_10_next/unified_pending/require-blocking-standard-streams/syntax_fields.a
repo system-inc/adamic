@@ -1,0 +1,124 @@
+import { panic } from 'adamic';
+import type { Rules } from './context.a';
+import { Frames, header } from '../../../frames.ts';
+
+export interface SyntaxFieldsInterface {
+    readonly statement: boolean;
+    readonly chain: boolean;
+    readonly outermost: boolean;
+    readonly chainRoot: boolean;
+    readonly roles: ReadonlyMap<string, number[]>;
+}
+export class SyntaxFields {
+    readonly discriminator = 'syntax-fields';
+    readonly rules: Rules;
+    readonly spans = new Map<string, number>();
+    readonly cache = new Map<number, SyntaxFieldsInterface>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            this.spans.set(`${node.kind}:${rules.byte(node.pos)}:${rules.byte(node.end)}`, index);
+        }
+    }
+    fields(index: number): SyntaxFieldsInterface {
+        const held = this.cache.get(index);
+        if(held !== undefined) {
+            return held;
+        }
+        const frames = new Frames(this.rules.ask(index, 'runtime-context\nsyntax'));
+        header(frames, 'runtime-context');
+        if(frames.field() !== 'syntax') {
+            panic('syntax mode mismatch');
+        }
+        const statement = frames.yes();
+        const chain = frames.yes();
+        const outermost = frames.yes();
+        const chainRoot = frames.yes();
+        const roles = new Map<string, number[]>();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const name = frames.field();
+            const length = frames.natural();
+            const children: number[] = [];
+            for(let child = 0; child < length; child++) {
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                children.push(
+                    this.spans.get(`${kind}:${start}:${end}`) ?? panic('syntax child absent from native tree'),
+                );
+            }
+            roles.set(name, children);
+        }
+        frames.end();
+        const result = { statement, chain, outermost, chainRoot, roles };
+        this.cache.set(index, result);
+        return result;
+    }
+    list(index: number, role: string): number[] {
+        return index < 0 ? [] : (this.fields(index).roles.get(role) ?? []);
+    }
+    one(index: number, role: string): number {
+        return this.list(index, role)[0] ?? -1;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    functionKind(kind: string): boolean {
+        return [
+            'FunctionDeclaration',
+            'FunctionExpression',
+            'ArrowFunction',
+            'MethodDeclaration',
+            'Constructor',
+            'GetAccessor',
+            'SetAccessor',
+        ].includes(kind);
+    }
+    isRoot(index: number): boolean {
+        const kind = this.kind(index);
+        return (
+            kind === 'SourceFile' ||
+            kind === 'ClassStaticBlockDeclaration' ||
+            this.functionKind(kind) ||
+            (kind === 'PropertyDeclaration' && this.one(index, 'initializer') >= 0)
+        );
+    }
+    rootOf(index: number): number {
+        let previous = index;
+        let decorator = -1;
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            const kind = this.kind(current);
+            if(kind === 'Decorator') {
+                decorator = current;
+            }
+            if(kind === 'SourceFile') {
+                return current;
+            }
+            if(this.isRoot(current)) {
+                if(kind === 'PropertyDeclaration') {
+                    if(this.one(current, 'initializer') === previous) {
+                        return current;
+                    }
+                }
+                else if(kind === 'ClassStaticBlockDeclaration') {
+                    if(this.one(current, 'body') === previous) {
+                        return current;
+                    }
+                }
+                else if(
+                    this.one(current, 'name') !== previous &&
+                    (decorator < 0 || (this.parent(decorator) !== current && this.parent(decorator) !== previous))
+                ) {
+                    return current;
+                }
+            }
+            previous = current;
+        }
+        return -1;
+    }
+}

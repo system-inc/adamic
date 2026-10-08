@@ -1,0 +1,20 @@
+{
+  "name": "require-await",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor",
+    "Constructor"
+  ],
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "typed": true,
+  "oracle": "oracleRequireAwait",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestRequireAwait"
+}

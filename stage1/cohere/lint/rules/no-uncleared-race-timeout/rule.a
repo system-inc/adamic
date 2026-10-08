@@ -1,0 +1,18 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './context.a';
+import { NoUnclearedRaceTimeout } from './no_uncleared_race_timeout.a';
+export class Rule {
+    readonly shared: RuleContext;
+    context: Rules | undefined = undefined;
+    port: NoUnclearedRaceTimeout | undefined = undefined;
+    constructor(shared: RuleContext) { this.shared = shared; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context ?? new Rules(this.shared);
+        const port = this.port ?? new NoUnclearedRaceTimeout(context);
+        this.context = context; this.port = port;
+        port.race(index, node);
+        context.emit();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,27 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(node.list > 0 || node.children.length === 0) { return; }
+        const callee = this.context.unwrap(node.children[0] ?? index);
+        const expression = this.context.node(callee);
+        if(expression.kind !== 'Identifier' || expression.text !== 'Symbol') { return; }
+        const answer = this.context.checker?.ask(callee, 'runtime-context\norigin');
+        if(answer?.value === undefined) { return; }
+        const frames = new Frames(answer.value);
+        header(frames, 'runtime-context');
+        frames.field();
+        if(!frames.yes()) { return; }
+        frames.natural(); frames.field();
+        if(frames.natural() === 0) { return; }
+        frames.field(); frames.field(); frames.natural(); frames.natural();
+        const declarationFile = frames.yes();
+        if(!declarationFile) { return; }
+        this.context.report(index, 'symbol-description', 'expected', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

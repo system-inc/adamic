@@ -1,0 +1,11 @@
+import type { RuleContext } from '../../../../lint/context.ts';
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
+import { Rules } from './context.a';
+import { NoProcessExitAfterOutput } from './no_process_exit_after_output.a';
+export class Rule {
+    readonly context: Rules;
+    readonly port: NoProcessExitAfterOutput;
+    constructor(shared: RuleContext) { this.context = new Rules(shared); this.port = new NoProcessExitAfterOutput(this.context); }
+    visit(node: ParseNode, index: number): void { this.port.run(); this.context.emit(); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

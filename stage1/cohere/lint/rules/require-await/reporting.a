@@ -1,0 +1,190 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Context } from './context.a';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Suggestion } from '../../../typeaware/suggestion.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+
+// Called only after the body and contextual-contract checks decide to report.
+// This module ports source spans, descriptions and suggestions independently of
+// the incomplete contextual-contract adapter.
+function space(character: string): boolean {
+    return character === ' ' || character === '\t' || character === '\n' || character === '\r';
+}
+function start(context: Context, node: ParseNode): number {
+    return context.tokenStart(node);
+}
+function skipSpaces(text: string, position: number): number {
+    let result = position;
+    while(result < text.length && space(text.slice(result, result + 1))) {
+        result++;
+    }
+    return result;
+}
+function name(context: Context, node: ParseNode): ParseNode | undefined {
+    for(const index of node.children) {
+        const child = context.parser.node(index);
+        if(
+            [
+                'Identifier',
+                'PrivateIdentifier',
+                'StringLiteral',
+                'NumericLiteral',
+                'NoSubstitutionTemplateLiteral',
+                'ComputedPropertyName',
+            ].includes(child.kind)
+        ) {
+            return child;
+        }
+        if(!child.kind.endsWith('Keyword') && child.kind !== 'Decorator' && child.kind !== 'AsteriskToken') {
+            return undefined;
+        }
+    }
+    return undefined;
+}
+function readable(node: ParseNode): boolean {
+    return [
+        'Identifier',
+        'PrivateIdentifier',
+        'StringLiteral',
+        'NumericLiteral',
+        'NoSubstitutionTemplateLiteral',
+    ].includes(node.kind);
+}
+function describe(context: Context, node: ParseNode, parent: ParseNode | undefined): string {
+    if(node.kind === 'ArrowFunction') {
+        return 'Async arrow function';
+    }
+    if(node.kind === 'Constructor') {
+        return "Async method 'constructor'";
+    }
+    let kind = ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind) ? 'method' : 'function';
+    let holder = node;
+    if(parent?.kind === 'PropertyAssignment') {
+        holder = parent;
+        kind = 'method';
+    }
+    const selected = name(context, holder);
+    return selected !== undefined && readable(selected) ? `Async ${kind} '${selected.text}'` : `Async ${kind}`;
+}
+function parametersStart(context: Context, node: ParseNode, position: number): number {
+    const found = context.scanner.text.indexOf('(', position);
+    return found >= 0 && found < node.end ? found : position;
+}
+function head(
+    context: Context,
+    node: ParseNode,
+    parent: ParseNode | undefined,
+): { readonly start: number; readonly end: number } {
+    if(parent !== undefined && ['PropertyAssignment', 'PropertyDeclaration'].includes(parent.kind)) {
+        const position = start(context, parent);
+        return { start: position, end: parametersStart(context, node, position) };
+    }
+    if(node.kind === 'ArrowFunction') {
+        for(const index of node.children) {
+            const child = context.parser.node(index);
+            if(child.kind === 'EqualsGreaterThanToken') {
+                return { start: start(context, child), end: child.end };
+            }
+        }
+    }
+    let position = start(context, node);
+    for(const index of node.children) {
+        const child = context.parser.node(index);
+        if(['ExportKeyword', 'DefaultKeyword', 'DeclareKeyword'].includes(child.kind)) {
+            position = Math.max(position, child.end);
+        }
+        else {
+            break;
+        }
+    }
+    position = skipSpaces(context.scanner.text, position);
+    const selected = name(context, node);
+    const ending = selected === undefined ? parametersStart(context, node, position) : selected.end;
+    return { start: position, end: ending <= position ? position + 5 : ending };
+}
+function asyncRange(context: Context, node: ParseNode): { readonly start: number; readonly end: number } | undefined {
+    for(const index of node.children) {
+        const child = context.parser.node(index);
+        if(child.kind === 'AsyncKeyword') {
+            return { start: start(context, child), end: skipSpaces(context.scanner.text, child.end) };
+        }
+    }
+    return undefined;
+}
+function previous(context: Context, index: number, parents: readonly number[]): ParseNode | undefined {
+    let subject = index;
+    while(subject >= 0) {
+        const parentIndex = parents[subject] ?? -1;
+        if(parentIndex < 0) {
+            return undefined;
+        }
+        const parent = context.parser.node(parentIndex);
+        if(['ClassDeclaration', 'ClassExpression', 'Block', 'SourceFile'].includes(parent.kind)) {
+            const at = parent.children.indexOf(subject);
+            return at <= 0
+                ? undefined
+                : context.parser.node(parent.children[at - 1] ?? panic('missing previous sibling'));
+        }
+        subject = parentIndex;
+    }
+    return undefined;
+}
+function replacement(context: Context, index: number, end: number, parents: readonly number[]): string {
+    const rest = context.scanner.text.slice(end);
+    if(!/^(?:\[|\(|(?:instanceof|in)(?![a-zA-Z0-9_$]))/u.test(rest)) {
+        return '';
+    }
+    const sibling = previous(context, index, parents);
+    if(sibling === undefined) {
+        return '';
+    }
+    let continued = ['ExpressionStatement', 'VariableStatement'].includes(sibling.kind);
+    if(sibling.kind === 'PropertyDeclaration') {
+        for(let at = 1; at < sibling.children.length; at++) {
+            const before = context.parser.node(sibling.children[at - 1] ?? panic('missing property prefix'));
+            if(context.scanAt(before.end) === 'EqualsToken') {
+                continued = true;
+                break;
+            }
+        }
+    }
+    if(!continued) {
+        return '';
+    }
+    let ending = sibling.end;
+    while(ending > 0 && space(context.scanner.text.slice(ending - 1, ending))) {
+        ending--;
+    }
+    return ending === 0 || context.scanner.text.slice(ending - 1, ending) !== ';' ? ';' : '';
+}
+export function report(context: Context, node: ParseNode, index: number, parents: readonly number[]): Diagnostic {
+    const parentIndex = parents[index] ?? -1;
+    const parent = parentIndex < 0 ? undefined : context.parser.node(parentIndex);
+    const range = head(context, node, parent);
+    const finding = new Diagnostic(
+        'require-await',
+        'missingAwait',
+        `${describe(context, node, parent)} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`,
+        context.byte(range.start),
+        context.byte(range.end),
+        '',
+    );
+    const keyword = asyncRange(context, node);
+    if(keyword !== undefined) {
+        finding.suggestions.push(
+            new Suggestion(
+                'removeAsync',
+                "Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.",
+                [
+                    new Repair(
+                        context.byte(keyword.start),
+                        context.byte(keyword.end),
+                        replacement(context, index, keyword.end, parents),
+                    ),
+                ],
+            ),
+        );
+    }
+    return finding;
+}

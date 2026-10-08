@@ -1,0 +1,5 @@
+{
+  "name": "require-await-body-await",
+  "from": "!containsAwait(node)",
+  "to": "containsAwait(node)"
+}

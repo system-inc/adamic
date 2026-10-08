@@ -1,0 +1,5 @@
+{
+  "name": "symbol-description-first-declaration",
+  "from": "if(!declarationFile) { return; }",
+  "to": "if(declarationFile) { return; }"
+}

@@ -1,0 +1,46 @@
+// Rule-local raw grammar adapter. All checker traffic uses the run-owned checker.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { noEdits } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import type { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+export class Context {
+    readonly shared: RuleContext;
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly offsets: readonly number[];
+    readonly indexes = new Map<string, number>();
+    constructor(shared: RuleContext) {
+        this.shared = shared; this.parser = shared.parser; this.scanner = shared.scanner;
+        const checker = shared.checker ?? panic('typed require-await needs checker');
+        this.offsets = checker.offsets;
+        for(let index = 0; index < this.parser.nodes.length; index++) {
+            const node = this.parser.node(index);
+            this.indexes.set(`${node.kind}:${node.pos}:${node.end}`, index);
+        }
+    }
+    byte(position: number): number { return this.offsets[position] ?? panic('position outside source'); }
+    unit(position: number): number {
+        const index = this.offsets.indexOf(position);
+        if(index < 0) { panic('byte position outside source'); } return index;
+    }
+    tokenStart(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    scanAt(position: number): string { this.scanner.pos = position; return this.scanner.scan(); }
+    ask(node: ParseNode, question: string): string {
+        const index = this.indexes.get(`${node.kind}:${node.pos}:${node.end}`) ?? panic('checker node absent');
+        const answer = this.shared.checker?.ask(index, question);
+        return answer?.value ?? panic(answer?.reason ?? 'checker absent');
+    }
+    emit(finding: Diagnostic): void {
+        const suggestions: Suggestion[] = [];
+        for(const suggestion of finding.suggestions) {
+            const edits: SuggestionEdit[] = [];
+            for(const edit of suggestion.repairs) { edits.push(new SuggestionEdit(this.unit(edit.start), this.unit(edit.end), edit.text)); }
+            suggestions.push(new Suggestion(suggestion.id, suggestion.message, edits));
+        }
+        this.shared.reportRange(this.unit(finding.start), this.unit(finding.end), finding.rule, finding.id, finding.message, noEdits, suggestions);
+    }
+}

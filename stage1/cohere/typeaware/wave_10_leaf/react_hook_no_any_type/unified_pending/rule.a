@@ -1,0 +1,103 @@
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
+
+export interface HookCallFactsInterface {
+    readonly start: number;
+    readonly end: number;
+    readonly hasChecker: boolean;
+    readonly hasExpression: boolean;
+    readonly calleeKind: string;
+    readonly calleeName: string;
+    readonly receiverKind: string;
+    readonly receiverName: string;
+    readonly propertyKind: string;
+    readonly propertyName: string;
+    readonly resultPresent: boolean;
+    readonly resultFlags: number;
+    readonly blindedRules: readonly string[];
+}
+export function isHookName(name: string): boolean {
+    return /^use[A-Z0-9]/u.test(name);
+}
+export function namedRules(names: readonly string[]): string {
+    if(names.length === 0) {
+        return '';
+    }
+    if(names.length === 1) {
+        return `\`${names[0] ?? ''}\``;
+    }
+    if(names.length === 2) {
+        return `\`${names[0] ?? ''}\` and \`${names[1] ?? ''}\``;
+    }
+    let result = '';
+    for(let index = 0; index < names.length; index++) {
+        const name = names[index] ?? '';
+        result += index === names.length - 1 ? `and \`${name}\`` : `\`${name}\`, `;
+    }
+    return result;
+}
+export function description(hook: string, blinded: readonly string[]): string {
+    const cost =
+        blinded.length === 0
+            ? 'Every rule that identifies a React value by its type is disabled for this file, and this build linked none of them so none can be named. '
+            : `These rules identify a React value by asking the checker for its type, so they cannot analyse this file and will report nothing in it: ${namedRules(blinded)}. Suppressing this finding turns those off for the file rather than tidying a type. `;
+    return `\`${hook}\` here resolves to \`any\`, so the type checker cannot see what this hook returns. ${cost}React's types are probably not resolving here: check that \`@types/react\` is installed and current, that no ambient declaration is shadowing it, and that the path mapping for \`react\` resolves.`;
+}
+export function visit(node: HookCallFactsInterface): Diagnostic | undefined {
+    if(!node.hasChecker || !node.hasExpression) {
+        return undefined;
+    }
+    let hook = '';
+    if(node.calleeKind === 'Identifier' && isHookName(node.calleeName)) {
+        hook = node.calleeName;
+    }
+    if(
+        node.calleeKind === 'PropertyAccessExpression' &&
+        node.receiverKind === 'Identifier' &&
+        node.receiverName === 'React' &&
+        node.propertyKind === 'Identifier' &&
+        isHookName(node.propertyName)
+    ) {
+        hook = `React.${node.propertyName}`;
+    }
+    if(hook === '' || !node.resultPresent || (node.resultFlags & 1) === 0) {
+        return undefined;
+    }
+    return new Diagnostic(
+        'structure/react-hook-no-any-type',
+        'reactHookNoAnyType',
+        description(hook, node.blindedRules),
+        node.start,
+        node.end,
+        '',
+    );
+}
+
+import { panic } from 'adamic';
+import type { RuleContext } from '../../../../lint/context.ts';
+import { types } from '../../../facts.ts';
+export class Rule {
+    readonly context: RuleContext;
+    readonly catalog: readonly string[];
+    constructor(context: RuleContext, catalog: readonly string[]) { this.context = context; this.catalog = catalog; }
+    visit(node: ParseNode, index: number): void {
+        const callee = this.context.node(node.children[0] ?? index);
+        let hook = '';
+        if(callee.kind === 'Identifier' && isHookName(callee.text)) { hook = callee.text; }
+        if(callee.kind === 'PropertyAccessExpression') {
+            const receiver = this.context.node(this.context.unwrap(callee.children[0] ?? index));
+            const property = this.context.node(callee.children[callee.children.length - 1] ?? index);
+            if(receiver.kind === 'Identifier' && receiver.text === 'React' && property.kind === 'Identifier' && isHookName(property.text)) { hook = `React.${property.text}`; }
+        }
+        if(hook === '') { return; }
+        const answer = this.context.checker?.ask(index, 'raw-shape');
+        if(answer?.value === undefined) { return; }
+        const facts = types(answer.value, 'raw-shape');
+        if(facts.present && (facts.root().flags & 1) !== 0) {
+            this.context.report(index, 'structure/react-hook-no-any-type', 'reactHookNoAnyType', description(hook, this.catalog), '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule {
+    panic('NotYet: RuleContext must supply linked rule.Registered ResolvesReactValueTypes names in registry order');
+}

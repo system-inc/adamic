@@ -1,0 +1,321 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from './context.a';
+import { MemberParameters } from './member_parameters.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+export class PreferIncludes {
+    readonly rules: Rules;
+    readonly members: MemberParameters;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.members = new MemberParameters(rules);
+    }
+    numeric(index: number, value: string): boolean {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'NumericLiteral' && node.text === value;
+    }
+    comparison(index: number, supplied: ParseNode | undefined = undefined): void {
+        const node = supplied ?? this.rules.parser.node(index);
+        const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+        const right = node.children[2] ?? -1;
+        const sentinel = this.rules.parser.node(right);
+        const minus =
+            sentinel.kind === 'PrefixUnaryExpression' &&
+            sentinel.operator === 'MinusToken' &&
+            this.numeric(sentinel.children[0] ?? -1, '1');
+        const zero = this.numeric(right, '0');
+        const positive = ['ExclamationEqualsEqualsToken', 'ExclamationEqualsToken', 'GreaterThanToken'].includes(
+            operator,
+        )
+            ? minus
+            : operator === 'GreaterThanEqualsToken' && zero;
+        const negative = ['EqualsEqualsEqualsToken', 'EqualsEqualsToken', 'LessThanEqualsToken'].includes(operator)
+            ? minus
+            : operator === 'LessThanToken' && zero;
+        if(!positive && !negative) {
+            return;
+        }
+        const callIndex = node.children[0] ?? -1;
+        const call = this.rules.parser.node(callIndex);
+        if(call.kind !== 'CallExpression') {
+            return;
+        }
+        const callee = this.rules.parser.node(call.children[0] ?? -1);
+        if(callee.kind !== 'PropertyAccessExpression') {
+            return;
+        }
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        if(this.rules.parser.node(name).text !== 'indexOf' || !this.members.matches(name)) {
+            return;
+        }
+        const finding = this.rules.add(
+            'prefer-includes',
+            'preferIncludes',
+            'This compares an `indexOf` result against a sentinel to ask a yes-or-no question, so a reader has to remember which comparison means present and which means absent, and an off-by-one in the sentinel reverses the answer silently. `includes` asks the question directly and returns a boolean.',
+            index,
+        );
+        if(callee.optional || call.optional) {
+            return;
+        }
+        if(negative) {
+            const start = this.rules.byte(this.rules.start(call));
+            finding.repairs.push(new Repair(start, start, '!'));
+        }
+        const property = this.rules.parser.node(name);
+        finding.repairs.push(
+            new Repair(this.rules.byte(this.rules.start(property)), this.rules.byte(property.end), 'includes'),
+        );
+        finding.repairs.push(new Repair(this.rules.byte(call.end), this.rules.byte(node.end), ''));
+    }
+    hex(text: string): number {
+        if(text === '' || ![...text].every((character) => '0123456789abcdefABCDEF'.includes(character))) {
+            return -1;
+        }
+        const number = Number.parseInt(text, 16);
+        return Number.isFinite(number) && number <= 1114111 ? number : -1;
+    }
+    pattern(pattern: string, flags: string): string | undefined {
+        if(flags.includes('i') || flags.includes('g')) {
+            return undefined;
+        }
+        let text = '';
+        for(let index = 0; index < pattern.length; index++) {
+            let character = pattern.slice(index, index + 1);
+            if('|()[]{}^$*+?.'.includes(character)) {
+                return undefined;
+            }
+            if(character !== '\\') {
+                text += character;
+                continue;
+            }
+            index++;
+            character = pattern.slice(index, index + 1);
+            if(character === '' || 'dDsSwWbBpPkq'.includes(character)) {
+                return undefined;
+            }
+            if(character === 'x' || character === 'u') {
+                const braced = character === 'u' && pattern.slice(index + 1, index + 2) === '{';
+                const end = braced ? pattern.indexOf('}', index + 2) : index + (character === 'x' ? 2 : 4);
+                if(end < 0 || end >= pattern.length || (braced && !flags.includes('u') && !flags.includes('v'))) {
+                    return undefined;
+                }
+                const value = this.hex(pattern.slice(index + (braced ? 2 : 1), end + (braced ? 0 : 1)));
+                if(value < 0) {
+                    return undefined;
+                }
+                text += value >= 55296 && value <= 57343 ? '\ufffd' : String.fromCodePoint(value);
+                index = end;
+            }
+            else if(character === 'c') {
+                index++;
+                const letter = pattern.slice(index, index + 1);
+                if(letter === '' || !'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(letter)) {
+                    return undefined;
+                }
+                text += String.fromCharCode(letter.charCodeAt(0) % 32);
+            }
+            else if(character === '0') {
+                text += '\0';
+            }
+            else {
+                // Identity escapes in Unicode regexes must be syntax characters.
+                if((flags.includes('u') || flags.includes('v')) && !'^$\\.*+?()[]{}|/nrtvf'.includes(character)) {
+                    return undefined;
+                }
+                text +=
+                    character === 'n'
+                        ? '\n'
+                        : character === 'r'
+                          ? '\r'
+                          : character === 't'
+                            ? '\t'
+                            : character === 'v'
+                              ? '\v'
+                              : character === 'f'
+                                ? '\f'
+                                : character;
+            }
+        }
+        return text;
+    }
+    literal(text: string): string | undefined {
+        const end = text.lastIndexOf('/');
+        return end <= 0 ? undefined : this.pattern(text.slice(1, end), text.slice(end + 1));
+    }
+    initializer(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'RegularExpressionLiteral') {
+            return this.literal(node.text);
+        }
+        if(node.kind !== 'NewExpression' || node.list !== 1) {
+            return undefined;
+        }
+        const callee = this.rules.parser.node(node.children[0] ?? -1);
+        const argument = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+        return callee.kind === 'Identifier' &&
+            callee.text === 'RegExp' &&
+            ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(argument.kind)
+            ? this.pattern(argument.text, '')
+            : undefined;
+    }
+    receiver(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'RegularExpressionLiteral') {
+            return this.literal(node.text);
+        }
+        if(node.kind !== 'Identifier') {
+            return undefined;
+        }
+        let result = '';
+        let found = false;
+        const root = this.rules.parser.nodes.find((candidate) => candidate.kind === 'SourceFile');
+        if(root === undefined) {
+            return undefined;
+        }
+        for(const statement of root.children) {
+            const part = this.rules.parser.node(statement);
+            if(part.kind !== 'VariableStatement') {
+                continue;
+            }
+            for(const list of part.children) {
+                const declarations = this.rules.parser.node(list);
+                if(declarations.kind !== 'VariableDeclarationList') {
+                    continue;
+                }
+                for(const declaration of declarations.children) {
+                    const variable = this.rules.parser.node(declaration);
+                    const name = this.rules.parser.node(variable.children[0] ?? -1);
+                    if(name.kind !== 'Identifier' || name.text !== node.text || variable.children.length < 2) {
+                        continue;
+                    }
+                    const candidate = this.initializer(variable.children[variable.children.length - 1] ?? -1);
+                    if(candidate !== undefined) {
+                        result = candidate;
+                        found = true;
+                    }
+                }
+            }
+        }
+        return found ? result : undefined;
+    }
+    escape(text: string): string {
+        let result = '';
+        for(const character of text) {
+            result +=
+                character === '\0'
+                    ? '\\0'
+                    : character === '\t'
+                      ? '\\t'
+                      : character === '\n'
+                        ? '\\n'
+                        : character === '\v'
+                          ? '\\v'
+                          : character === '\f'
+                            ? '\\f'
+                            : character === '\r'
+                              ? '\\r'
+                              : character === "'"
+                                ? "\\'"
+                                : character === '\\'
+                                  ? '\\\\'
+                                  : character;
+        }
+        return result;
+    }
+    regex(index: number, supplied: ParseNode | undefined = undefined): void {
+        const call = supplied ?? this.rules.parser.node(index);
+        if(call.list !== 1) {
+            return;
+        }
+        const callee = this.rules.parser.node(call.children[0] ?? -1);
+        if(
+            callee.kind !== 'PropertyAccessExpression' ||
+            this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1).text !== 'test'
+        ) {
+            return;
+        }
+        const text = this.receiver(callee.children[0] ?? -1);
+        if(text === undefined) {
+            return;
+        }
+        const argumentIndex = call.children[call.children.length - 1] ?? -1;
+        const facts = types(this.rules.ask(argumentIndex, 'type-shape'), 'type-shape');
+        const frames = new Frames(this.rules.ask(argumentIndex, `property-declarations\n${facts.root().id}\nincludes`));
+        header(frames, 'property-declarations');
+        let declarations = 0;
+        if(frames.yes()) {
+            frames.natural();
+            frames.natural();
+            frames.field();
+            declarations = frames.natural();
+            for(let at = 0; at < declarations; at++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                frames.yes();
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        if(declarations === 0) {
+            return;
+        }
+        const finding = this.rules.add(
+            'prefer-includes',
+            'preferStringIncludes',
+            'This pattern matches one fixed string, so the regular expression buys nothing over a substring test and costs a reader the work of confirming it holds no metacharacters. `String#includes` says the same thing in a form that cannot hide one.',
+            index,
+        );
+        const argument = this.rules.parser.node(this.rules.skip(argumentIndex));
+        const wrap = ![
+            'StringLiteral',
+            'NumericLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateExpression',
+            'Identifier',
+            'PropertyAccessExpression',
+            'ElementAccessExpression',
+            'CallExpression',
+        ].includes(argument.kind);
+        const source = this.rules.text(argument);
+        finding.repairs.push(
+            new Repair(
+                finding.start,
+                finding.end,
+                `${wrap ? '(' : ''}${source}${wrap ? ')' : ''}${callee.optional ? '?.' : '.'}includes('${this.escape(text)}')`,
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const kind = this.rules.parser.node(index).kind;
+            if(kind === 'BinaryExpression') {
+                this.comparison(index);
+            }
+            if(kind === 'CallExpression') {
+                this.regex(index);
+            }
+        }
+    }
+}

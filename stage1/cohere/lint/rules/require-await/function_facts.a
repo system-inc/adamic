@@ -1,0 +1,16 @@
+// Preorder raw body nodes, with the body itself at depth 0. No record owns a
+// parent. Canonical kinds and numeric flags are the pinned parser's observations.
+export interface BodyNodeFactsInterface {
+    readonly kind: string;
+    readonly depth: number;
+    readonly flags: number;
+    readonly awaitModifier: boolean;
+}
+export interface FunctionFactsInterface {
+    readonly modifierFlags: number;
+    readonly functionFlags: number;
+    readonly bodyPresent: boolean;
+    readonly bodyKind: string;
+    readonly statementCount: number;
+    readonly bodyNodes: readonly BodyNodeFactsInterface[];
+}

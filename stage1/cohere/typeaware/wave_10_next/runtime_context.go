@@ -26,12 +26,12 @@ func (f *fields) yes(b bool) {
 }
 func (f *fields) declaration(p *compiler.Program, n *ast.Node) {
 	file := ast.GetSourceFileOfNode(n)
-	f.text(file.FileName())
+	f.text(file.FileName().AsString())
 	f.text(strings.TrimPrefix(n.Kind.String(), "Kind"))
 	f.number(uint64(n.Pos()))
 	f.number(uint64(n.End()))
 	f.yes(file.IsDeclarationFile)
-	f.yes(p.IsSourceFileDefaultLibrary(file.Path()))
+	f.yes(p.IsSourceFileDefaultLibrary(file.PathKey()))
 	f.yes(ast.IsExternalModule(file))
 	f.text(file.Text())
 	f.number(uint64(n.Flags))
@@ -119,7 +119,7 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 		files := p.GetSourceFiles()
 		out.number(uint64(len(files)))
 		for _, source := range files {
-			out.text(source.FileName())
+			out.text(source.FileName().AsString())
 			out.yes(source.IsDeclarationFile)
 			out.yes(ast.IsExternalModule(source))
 			out.text(source.Text())
@@ -138,7 +138,7 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 					resolved := p.GetResolvedModuleFromModuleSpecifier(source, n)
 					if resolved != nil && resolved.IsResolved() {
 						if target := p.GetSourceFile(resolved.ResolvedFileName); target != nil {
-							e.target = target.FileName()
+							e.target = target.FileName().AsString()
 						}
 					}
 				}

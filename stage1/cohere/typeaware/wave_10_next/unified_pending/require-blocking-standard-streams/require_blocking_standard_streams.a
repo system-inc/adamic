@@ -1,0 +1,587 @@
+import { RequireBlockingStandardStreamsIndex } from './blocking_index.a';
+// Import reachability and ordered process execution are native decisions.
+import { RuntimeContext, type RuntimeDeclarationInterface, type RuntimeSymbolInterface } from './runtime_context.a';
+import { panic } from 'adamic';
+import type { Rules } from './context.a';
+import { Diagnostic } from '../../../diagnostic.ts';
+import type { NoProcessExitAfterOutput } from './no_process_exit_after_output.a';
+import { SyntaxFields } from './syntax_fields.a';
+import { ControlFlow } from './control_flow.a';
+
+interface BlockingEventInterface {
+    readonly kind: string;
+    readonly node: number;
+    readonly runs: readonly number[];
+    readonly handsOn: readonly number[];
+    readonly argumentsMayBlock: boolean;
+}
+export class RequireBlockingStandardStreams {
+    readonly discriminator = 'blocking-streams';
+    readonly rules: Rules;
+    readonly output: NoProcessExitAfterOutput;
+    readonly sources = new Map<string, Rules>();
+    readonly syntaxes = new Map<string, SyntaxFields>();
+    readonly functionMayBlock = new Map<string, number>();
+    index: RequireBlockingStandardStreamsIndex | undefined;
+    ordered = false;
+    constructor(rules: Rules, output: NoProcessExitAfterOutput) {
+        this.rules = rules;
+        this.output = output;
+        this.index = undefined;
+        this.sources.set(rules.path, rules);
+        this.syntaxes.set(rules.path, this.output.syntax);
+    }
+    held(): RequireBlockingStandardStreamsIndex {
+        return this.index ?? panic('missing blocking index');
+    }
+    syntax(source: Rules): SyntaxFields {
+        if(!this.syntaxes.has(source.path)) {
+            this.syntaxes.set(source.path, new SyntaxFields(source));
+        }
+        return this.syntaxes.get(source.path) ?? panic('missing source syntax');
+    }
+    source(declaration: RuntimeDeclarationInterface): Rules {
+        if(!this.sources.has(declaration.file)) {
+            this.sources.set(declaration.file, this.output.foreign(declaration));
+        }
+        return this.sources.get(declaration.file) ?? panic('missing source rules');
+    }
+    file(path: string): Rules {
+        const known = this.sources.get(path);
+        if(known !== undefined) {
+            return known;
+        }
+        const file = this.held().files.get(path) ?? panic('missing source file');
+        const declaration: RuntimeDeclarationInterface = {
+            file: path,
+            kind: 'SourceFile',
+            start: 0,
+            end: 0,
+            declarationFile: file.declarationFile,
+            library: false,
+            external: file.external,
+            text: file.text,
+            flags: 0,
+            functionFlags: 0,
+            ancestors: [],
+        };
+        return this.source(declaration);
+    }
+    facts(index: number, source: Rules, followAlias = true): RuntimeSymbolInterface {
+        const context = source === this.rules ? this.output.context : new RuntimeContext(source);
+        return context.symbol(index, followAlias);
+    }
+    callLike(index: number, source: Rules = this.rules): boolean {
+        return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(source.parser.node(index).kind);
+    }
+    functionWithBody(index: number, source: Rules): boolean {
+        const syntax = this.syntax(source);
+        return syntax.functionKind(syntax.kind(index)) && syntax.one(index, 'body') >= 0;
+    }
+    skip(index: number, source: Rules): number {
+        return index < 0 ? -1 : source.skip(index);
+    }
+    localFunction(index: number): number {
+        const syntax = this.syntax(this.rules);
+        const selected = this.skip(index, this.rules);
+        const kind = syntax.kind(selected);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) {
+            return selected;
+        }
+        if(kind !== 'Identifier') {
+            return -1;
+        }
+        const symbol = this.facts(selected, this.rules, false);
+        for(const declaration of symbol.declarations) {
+            if(declaration.file !== this.rules.path) {
+                continue;
+            }
+            const declared = this.output.declarationNode(declaration);
+            if(declaration.kind === 'FunctionDeclaration' && syntax.one(declared, 'body') >= 0) {
+                return declared;
+            }
+            if(declaration.kind === 'VariableDeclaration') {
+                const list = syntax.parent(declared);
+                const initializer = this.skip(syntax.one(declared, 'initializer'), this.rules);
+                if(
+                    syntax.kind(list) === 'VariableDeclarationList' &&
+                    this.rules.parser.node(list).semantic === '2' &&
+                    ['FunctionExpression', 'ArrowFunction'].includes(syntax.kind(initializer))
+                ) {
+                    return initializer;
+                }
+            }
+        }
+        return -1;
+    }
+    generator(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.rules.parser.node(child).kind === 'AsteriskToken') {
+                return true;
+            }
+        }
+        return false;
+    }
+    startedFunctions(index: number): { readonly runs: number[]; readonly handsOn: number[] } {
+        const syntax = this.syntax(this.rules);
+        const runs: number[] = [];
+        const handsOn: number[] = [];
+        if(syntax.kind(index) !== 'NewExpression') {
+            const functionNode = this.localFunction(syntax.one(index, 'expression'));
+            if(functionNode >= 0) {
+                if(this.generator(functionNode)) {
+                    handsOn.push(functionNode);
+                }
+                else {
+                    runs.push(functionNode);
+                }
+            }
+        }
+        for(const argument of syntax.list(index, 'arguments')) {
+            const functionNode = this.localFunction(argument);
+            if(functionNode >= 0) {
+                handsOn.push(functionNode);
+            }
+        }
+        return { runs, handsOn };
+    }
+    declarationMayBlock(declaration: RuntimeDeclarationInterface, name: string, declarationName: string): boolean {
+        if(!this.held().canBlock.has(declaration.file)) {
+            return declaration.declarationFile && name === 'require';
+        }
+        if(
+            declaration.declarationFile ||
+            (declaration.kind === 'FunctionDeclaration' &&
+                declarationName === 'blockStandardStreams' &&
+                (declaration.file.endsWith('/source/system/StandardStreams.ts') ||
+                    declaration.file.endsWith('/source/system/StandardStreams.d.ts')))
+        ) {
+            return true;
+        }
+        const source = this.source(declaration);
+        const syntax = this.syntax(source);
+        const selected =
+            syntax.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ??
+            panic('blocking declaration absent');
+        if(
+            ['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(
+                declaration.kind,
+            )
+        ) {
+            if(syntax.one(selected, 'body') < 0) {
+                return declaration.kind !== 'FunctionDeclaration' || (declaration.flags & 8388608) !== 0;
+            }
+            return this.mayBlockWhenRun(selected, source);
+        }
+        if(declaration.kind === 'VariableDeclaration') {
+            const initializer = this.skip(syntax.one(selected, 'initializer'), source);
+            if(['FunctionExpression', 'ArrowFunction'].includes(syntax.kind(initializer))) {
+                return this.mayBlockWhenRun(initializer, source);
+            }
+        }
+        if(['ClassDeclaration', 'ClassExpression'].includes(declaration.kind)) {
+            return this.mayBlockWhenRun(selected, source);
+        }
+        return true;
+    }
+    symbolMayBlock(symbol: RuntimeSymbolInterface, name: string): boolean {
+        if(!symbol.present || symbol.declarations.length === 0) {
+            return true;
+        }
+        for(const declaration of symbol.declarations) {
+            if(this.declarationMayBlock(declaration, name, symbol.name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    handsOnMayBlock(index: number, source: Rules): boolean {
+        const selected = this.skip(index, source);
+        const syntax = this.syntax(source);
+        const kind = syntax.kind(selected);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) {
+            return this.mayBlockWhenRun(selected, source);
+        }
+        if(kind !== 'Identifier') {
+            return false;
+        }
+        const symbol = this.facts(selected, source);
+        return (
+            symbol.present &&
+            (symbol.flags & 16) !== 0 &&
+            this.symbolMayBlock(symbol, source.parser.node(selected).text)
+        );
+    }
+    callMayBlock(index: number, source: Rules = this.rules): boolean {
+        const syntax = this.syntax(source);
+        const kind = syntax.kind(index);
+        if(!this.callLike(index, source)) {
+            return false;
+        }
+        const callee = this.skip(syntax.one(index, 'expression'), source);
+        if(kind === 'CallExpression' && syntax.kind(callee) === 'ImportKeyword') {
+            return true;
+        }
+        for(const argument of syntax.list(index, 'arguments')) {
+            if(this.handsOnMayBlock(argument, source)) {
+                return true;
+            }
+        }
+        if(['FunctionExpression', 'ArrowFunction'].includes(syntax.kind(callee))) {
+            return this.mayBlockWhenRun(callee, source);
+        }
+        let name = callee;
+        if(syntax.kind(callee) === 'PropertyAccessExpression') {
+            name = syntax.one(callee, 'name');
+        }
+        else if(syntax.kind(callee) !== 'Identifier') {
+            return true;
+        }
+        return this.symbolMayBlock(this.facts(name, source), source.parser.node(name).text);
+    }
+    nestedMayBlock(index: number, source: Rules, skipFunctions: boolean): boolean {
+        if(skipFunctions && this.functionWithBody(index, source)) {
+            return false;
+        }
+        if(this.callLike(index, source) && this.callMayBlock(index, source)) {
+            return true;
+        }
+        for(const child of source.parser.node(index).children) {
+            if(this.nestedMayBlock(child, source, skipFunctions)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    mayBlockWhenRun(index: number, source: Rules): boolean {
+        const key = `${source.path}:${index}`;
+        const known = this.functionMayBlock.get(key) ?? 0;
+        if(known !== 0) {
+            return known === 1;
+        }
+        this.functionMayBlock.set(key, 3);
+        let blocks = false;
+        for(const child of source.parser.node(index).children) {
+            if(this.nestedMayBlock(child, source, false)) {
+                blocks = true;
+                break;
+            }
+        }
+        this.functionMayBlock.set(key, blocks ? 1 : 2);
+        return blocks;
+    }
+    topLevelMayBlock(source: Rules): boolean {
+        const root = source.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        for(const child of source.parser.node(root).children) {
+            if(this.nestedMayBlock(child, source, true)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    importsBlockAtLoad(entry: string): boolean {
+        const seen = new Set<string>();
+        seen.add(entry);
+        const queue = [entry];
+        let at = 0;
+        while(at < queue.length) {
+            const current = queue[at] ?? '';
+            at++;
+            const targets: string[] = this.held().edges.get(current) ?? [];
+            for(const target of targets) {
+                if(seen.has(target)) {
+                    continue;
+                }
+                seen.add(target);
+                queue.push(target);
+                if(!this.held().canBlock.has(target)) {
+                    continue;
+                }
+                const file = this.held().files.get(target);
+                if(file === undefined || file.declarationFile || this.topLevelMayBlock(this.file(target))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    argumentMayBlock(index: number): boolean {
+        if(this.functionWithBody(index, this.rules)) {
+            return false;
+        }
+        if(this.output.syntax.kind(index) === 'AwaitExpression' || (this.callLike(index) && this.callMayBlock(index))) {
+            return true;
+        }
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.argumentMayBlock(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    argumentsMayBlock(index: number): boolean {
+        for(const argument of this.output.syntax.list(index, 'arguments')) {
+            if(this.argumentMayBlock(argument)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    inRun(index: number, root: number): boolean {
+        const syntax = this.syntax(this.rules);
+        for(let current = syntax.parent(index); current >= 0; current = syntax.parent(current)) {
+            if(current === root) {
+                return true;
+            }
+            if(this.functionWithBody(current, this.rules)) {
+                return false;
+            }
+        }
+        return false;
+    }
+    event(kind: string, node: number): BlockingEventInterface {
+        return { kind, node, runs: [], handsOn: [], argumentsMayBlock: false };
+    }
+    analyze(root: number): { readonly exits: number[]; readonly started: number[] } {
+        const syntax = this.syntax(this.rules);
+        const graph = new ControlFlow(syntax);
+        graph.build(root);
+        const recorded = new Set<number>();
+        const events: BlockingEventInterface[][] = [];
+        for(const block of graph.blocks) {
+            const converted: BlockingEventInterface[] = [];
+            for(const event of block.events) {
+                const kind = syntax.kind(event.node);
+                if(event.kind === 'Statement') {
+                    if(kind === 'Block' && syntax.kind(syntax.parent(event.node)) === 'CatchClause') {
+                        converted.push(this.event('catch', syntax.parent(syntax.parent(event.node))));
+                    }
+                    if(
+                        this.ordered &&
+                        ((kind === 'ForOfStatement' && syntax.one(event.node, 'await') >= 0) ||
+                            (kind === 'VariableStatement' &&
+                                this.rules.parser.node(syntax.one(event.node, 'declarations')).semantic === '6'))
+                    ) {
+                        converted.push(this.event('block', event.node));
+                    }
+                    continue;
+                }
+                if(
+                    (!this.callLike(event.node) && kind !== 'AwaitExpression') ||
+                    this.output.inCatchBinding(event.node, root)
+                ) {
+                    continue;
+                }
+                if(kind === 'AwaitExpression') {
+                    if(this.ordered) {
+                        recorded.add(event.node);
+                        converted.push(this.event('block', event.node));
+                    }
+                    continue;
+                }
+                if(kind === 'CallExpression' && this.output.exit(event.node)) {
+                    recorded.add(event.node);
+                    converted.push(this.event('exit', event.node));
+                    continue;
+                }
+                if(kind === 'CallExpression' && this.output.write(event.node) && !this.output.holdsExit(event.node)) {
+                    converted.push(this.event('write', event.node));
+                }
+                const functions = this.startedFunctions(event.node);
+                if(functions.runs.length > 0 || functions.handsOn.length > 0) {
+                    converted.push({
+                        kind: 'call',
+                        node: event.node,
+                        runs: functions.runs,
+                        handsOn: functions.handsOn,
+                        argumentsMayBlock:
+                            this.ordered && functions.runs.length > 0 && this.argumentsMayBlock(event.node),
+                    });
+                }
+                if(this.ordered && this.callMayBlock(event.node)) {
+                    recorded.add(event.node);
+                    converted.push(this.event('block', event.node));
+                }
+            }
+            events.push(converted);
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(index === root || syntax.parent(index) < 0) {
+                continue;
+            }
+            // A subtree test is needed as this table also contains other roots.
+            let inside = false;
+            for(let parent = syntax.parent(index); parent >= 0; parent = syntax.parent(parent)) {
+                if(parent === root) {
+                    inside = true;
+                    break;
+                }
+            }
+            if(!inside) {
+                continue;
+            }
+            if(this.output.exit(index) && syntax.rootOf(index) === root && !recorded.has(index)) {
+                return { exits: [], started: [] };
+            }
+            if(
+                this.ordered &&
+                !recorded.has(index) &&
+                this.inRun(index, root) &&
+                (syntax.kind(index) === 'AwaitExpression' || (this.callLike(index) && this.callMayBlock(index)))
+            ) {
+                return { exits: [], started: [] };
+            }
+        }
+        const reported = new Set<number>();
+        const started = new Set<number>();
+        const startedOrder: number[] = [];
+        const visited = new Set<string>();
+        const queue: { readonly block: number; readonly state: readonly string[] }[] = [{ block: 0, state: [] }];
+        visited.add('0:');
+        let at = 0;
+        while(at < queue.length) {
+            const current = queue[at];
+            at++;
+            if(current === undefined) {
+                continue;
+            }
+            let state: readonly string[] = current.state;
+            let ended = false;
+            const blockEvents: BlockingEventInterface[] = events[current.block] ?? [];
+            for(const event of blockEvents) {
+                if(event.kind === 'write') {
+                    state = this.output.withWrite(state, this.output.chain(event.node, root));
+                }
+                else if(event.kind === 'catch') {
+                    state = this.output.enterCatch(state, event.node);
+                }
+                else if(event.kind === 'call') {
+                    const functions: number[] = [];
+                    if(!event.argumentsMayBlock) {
+                        for(const functionNode of event.runs) {
+                            functions.push(functionNode);
+                        }
+                    }
+                    if(!this.ordered) {
+                        for(const functionNode of event.handsOn) {
+                            functions.push(functionNode);
+                        }
+                    }
+                    for(const functionNode of functions) {
+                        if(!started.has(functionNode)) {
+                            started.add(functionNode);
+                            startedOrder.push(functionNode);
+                        }
+                    }
+                }
+                else if(event.kind === 'exit') {
+                    if(state.length > 0) {
+                        reported.add(event.node);
+                    }
+                    ended = true;
+                }
+                else if(event.kind === 'block') {
+                    ended = true;
+                }
+                if(ended) {
+                    break;
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const successor of graph.block(current.block).successors) {
+                const key = `${successor}:${state.join('|')}`;
+                if(!graph.block(successor).reachable || visited.has(key)) {
+                    continue;
+                }
+                visited.add(key);
+                queue.push({ block: successor, state });
+            }
+        }
+        return { exits: [...reported], started: startedOrder };
+    }
+    reached(root: number): number[] {
+        const queued = new Set<number>();
+        queued.add(root);
+        const queue = [root];
+        const reported = new Set<number>();
+        const exits: number[] = [];
+        let at = 0;
+        while(at < queue.length) {
+            const current = queue[at] ?? -1;
+            at++;
+            const result = this.analyze(current);
+            for(const exit of result.exits) {
+                if(!reported.has(exit)) {
+                    reported.add(exit);
+                    exits.push(exit);
+                }
+            }
+            for(const functionNode of result.started) {
+                if(!queued.has(functionNode)) {
+                    queued.add(functionNode);
+                    queue.push(functionNode);
+                }
+            }
+        }
+        return exits;
+    }
+    hasCandidate(): boolean {
+        const exits = new Set<number>();
+        const writes = new Set<number>();
+        const syntax = this.syntax(this.rules);
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(syntax.parent(index) < 0 || syntax.kind(index) !== 'CallExpression') {
+                continue;
+            }
+            const root = syntax.rootOf(index);
+            if(this.output.exit(index)) {
+                exits.add(root);
+                if(writes.has(root)) {
+                    return true;
+                }
+            }
+            else if(this.output.write(index)) {
+                writes.add(root);
+                if(exits.has(root)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    run(): void {
+        if(!this.hasCandidate()) {
+            return;
+        }
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        this.index = new RequireBlockingStandardStreamsIndex(this.output.context.program(root));
+        const text = this.rules.scanner.text.slice(0);
+        if(!this.held().entry(this.rules.path, text)) {
+            return;
+        }
+        this.ordered = this.held().canBlock.has(this.rules.path);
+        if(this.ordered && this.importsBlockAtLoad(this.rules.path)) {
+            return;
+        }
+        const exits = this.reached(root);
+        if(exits.length === 0) {
+            return;
+        }
+        exits.sort((left, right) => this.rules.parser.node(left).pos - this.rules.parser.node(right).pos);
+        const reason = text.startsWith('#!') ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = exits.length > 1 ? `, the first of ${exits.length} such exits in this file` : '';
+        const node = this.rules.parser.node(exits[0] ?? -1);
+        this.rules.findings.push(
+            new Diagnostic(
+                'nexus/correctness-require-blocking-standard-streams',
+                'exitBeforeBlockingStandardStreams',
+                `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+}

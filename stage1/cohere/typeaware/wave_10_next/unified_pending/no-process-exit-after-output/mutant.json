@@ -1,0 +1,6 @@
+{
+  "name": "no-process-exit-after-output-decision",
+  "file": "no_process_exit_after_output.a",
+  "from": "state.length > 0",
+  "to": "state.length === 0"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "no-unmodified-loop-condition",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnmodifiedLoopCondition",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnmodifiedLoopCondition"
+}

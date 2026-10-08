@@ -1,0 +1,55 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+export class Rules {
+    readonly shared: RuleContext;
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly path: string;
+    readonly parents: readonly number[];
+    readonly findings: Diagnostic[] = [];
+    readonly offsets: readonly number[];
+    constructor(shared: RuleContext) {
+        this.shared = shared; this.parser = shared.parser; this.scanner = shared.scanner;
+        this.parents = shared.parents;
+        const checker = shared.checker ?? panic('typed rule needs checker');
+        this.path = checker.path; this.offsets = checker.offsets;
+    }
+    byte(position: number): number { return this.offsets[position] ?? panic('source position absent'); }
+    unit(position: number): number { const index = this.offsets.indexOf(position); if(index < 0) { panic('byte position absent'); } return index; }
+    start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    text(node: ParseNode): string { return this.scanner.text.slice(this.start(node), node.end); }
+    ask(index: number, question: string): string {
+        const answer = this.shared.checker?.ask(index, question);
+        return answer?.value ?? panic(answer?.reason ?? 'checker absent');
+    }
+    add(rule: string, id: string, message: string, index: number): Diagnostic {
+        const node = this.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
+        this.findings.push(finding); return finding;
+    }
+    skip(index: number, kind = 'ParenthesizedExpression'): number {
+        let current = index;
+        while(this.parser.node(current).kind === kind) { current = this.parser.node(current).children[0] ?? panic('empty parentheses'); }
+        return current;
+    }
+    emit(): void {
+        for(const finding of this.findings) {
+            const edits: SuggestionEdit[] = [];
+            if(finding.fixStart >= 0) { edits.push(new SuggestionEdit(this.unit(finding.fixStart), this.unit(finding.fixEnd), finding.replacement)); }
+            for(const repair of finding.repairs) { edits.push(new SuggestionEdit(this.unit(repair.start), this.unit(repair.end), repair.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of finding.suggestions) {
+                const repairs: SuggestionEdit[] = [];
+                for(const repair of suggestion.repairs) { repairs.push(new SuggestionEdit(this.unit(repair.start), this.unit(repair.end), repair.text)); }
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, repairs));
+            }
+            this.shared.reportRange(this.unit(finding.start), this.unit(finding.end), finding.rule, finding.id, finding.message, edits, suggestions);
+        }
+        this.findings.splice(0);
+    }
+}

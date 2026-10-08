@@ -1,0 +1,175 @@
+import { panic } from 'adamic';
+import type { Rules } from './context.a';
+import { Frames, header } from '../../../frames.ts';
+
+export interface AncestorInterface {
+    readonly kind: string;
+    readonly name: string;
+    readonly flags: number;
+    readonly start: number;
+    readonly end: number;
+    readonly global: boolean;
+    readonly nameKind: string;
+}
+export interface RuntimeDeclarationInterface {
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly declarationFile: boolean;
+    readonly library: boolean;
+    readonly external: boolean;
+    readonly text: string;
+    readonly flags: number;
+    readonly functionFlags: number;
+    readonly ancestors: readonly AncestorInterface[];
+}
+export interface RuntimeSymbolInterface {
+    readonly present: boolean;
+    readonly flags: number;
+    readonly name: string;
+    readonly declarations: readonly RuntimeDeclarationInterface[];
+}
+export interface RuntimeEdgeInterface {
+    readonly kind: string;
+    readonly typeOnly: boolean;
+    readonly computed: boolean;
+    readonly specifier: string;
+    readonly target: string;
+}
+export interface RuntimeFileInterface {
+    readonly path: string;
+    readonly declarationFile: boolean;
+    readonly external: boolean;
+    readonly text: string;
+    readonly edges: readonly RuntimeEdgeInterface[];
+}
+export class RuntimeContext {
+    readonly discriminator = 'runtime-context';
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    open(index: number, mode: string): Frames {
+        const frames = new Frames(this.rules.ask(index, `runtime-context\n${mode}`));
+        header(frames, 'runtime-context');
+        if(frames.field() !== mode) {
+            panic('runtime context mode mismatch');
+        }
+        return frames;
+    }
+    declaration(frames: Frames): RuntimeDeclarationInterface {
+        const file = frames.field();
+        const kind = frames.field();
+        const start = frames.natural();
+        const end = frames.natural();
+        const declarationFile = frames.yes();
+        const library = frames.yes();
+        const external = frames.yes();
+        const text = frames.field();
+        const flags = frames.natural();
+        const functionFlags = frames.natural();
+        const ancestors: AncestorInterface[] = [];
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            ancestors.push({
+                kind: frames.field(),
+                name: frames.field(),
+                flags: frames.natural(),
+                start: frames.natural(),
+                end: frames.natural(),
+                global: frames.yes(),
+                nameKind: frames.field(),
+            });
+        }
+        return { file, kind, start, end, declarationFile, library, external, text, flags, functionFlags, ancestors };
+    }
+    symbol(index: number, followAlias = false): RuntimeSymbolInterface {
+        const frames = this.open(index, followAlias ? 'alias-origin' : 'origin');
+        const present = frames.yes();
+        let flags = 0;
+        let name = '';
+        const declarations: RuntimeDeclarationInterface[] = [];
+        if(present) {
+            flags = frames.natural();
+            name = frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                declarations.push(this.declaration(frames));
+            }
+        }
+        frames.end();
+        return { present, flags, name, declarations };
+    }
+    signature(index: number): {
+        readonly declaration: RuntimeDeclarationInterface | undefined;
+        readonly flags: number;
+    } {
+        const frames = this.open(index, 'signature');
+        const declaration = frames.yes() ? this.declaration(frames) : undefined;
+        const flags = declaration === undefined ? 0 : frames.natural();
+        frames.end();
+        return { declaration, flags };
+    }
+    program(index: number): RuntimeFileInterface[] {
+        const frames = this.open(index, 'program');
+        const result: RuntimeFileInterface[] = [];
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const path = frames.field();
+            const declarationFile = frames.yes();
+            const external = frames.yes();
+            const text = frames.field();
+            const edges: RuntimeEdgeInterface[] = [];
+            const length = frames.natural();
+            for(let edge = 0; edge < length; edge++) {
+                edges.push({
+                    kind: frames.field(),
+                    typeOnly: frames.yes(),
+                    computed: frames.yes(),
+                    specifier: frames.field(),
+                    target: frames.field(),
+                });
+            }
+            result.push({ path, declarationFile, external, text, edges });
+        }
+        frames.end();
+        return result;
+    }
+    libraryMember(index: number, name: string): boolean {
+        const symbol = this.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every(
+                (declaration) =>
+                    declaration.library &&
+                    declaration.ancestors[0]?.kind === 'InterfaceDeclaration' &&
+                    declaration.ancestors[0]?.name === name,
+            )
+        );
+    }
+    timerDeclaration(declaration: RuntimeDeclarationInterface): boolean {
+        if(!declaration.declarationFile) {
+            return false;
+        }
+        const owner = declaration.ancestors[0];
+        if(owner?.kind === 'SourceFile') {
+            return !declaration.external;
+        }
+        if(owner?.kind === 'ModuleBlock') {
+            return declaration.ancestors[1]?.global === true;
+        }
+        return (
+            owner?.kind === 'InterfaceDeclaration' && owner.name === 'WindowOrWorkerGlobalScope' && declaration.library
+        );
+    }
+    timer(index: number): boolean {
+        const symbol = this.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every((declaration) => this.timerDeclaration(declaration))
+        );
+    }
+}

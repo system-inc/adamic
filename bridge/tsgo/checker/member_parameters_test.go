@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
 func TestMemberParameterSourceText(t *testing.T) {
@@ -36,7 +37,7 @@ declare const methods: Methods; methods.indexOf('x');`
 		}
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
-	walk(program.Compiler.GetSourceFile(file).AsNode())
+	walk(program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(file))).AsNode())
 	wire, err := program.Inspect(file, uint64(selected.Pos()), uint64(selected.End()), "Identifier", "member-parameters")
 	if err != nil {
 		t.Fatal(err)

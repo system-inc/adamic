@@ -1,0 +1,19 @@
+{
+  "name": "nexus/correctness-require-blocking-standard-streams",
+  "typed": true,
+  "programReads": [
+    "ReadsOtherFiles",
+    "ReadsModuleResolution",
+    "ReadsCompilerOptions"
+  ],
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCorrectnessRequireBlockingStandardStreams",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessRequireBlockingStandardStreams"
+}
