@@ -115,6 +115,7 @@ func exportConstructionCensus(t *testing.T, destination string) string {
 	return destination
 }
 func TestWholeConstructionCensus(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -257,7 +258,7 @@ var constructionMutants = []constructionMutant{
 	{"switch cases stop falling through", "lower.ts", "this.jump(blocks[index + 1] ?? fallthrough.id, 0);", "this.jump(fallthrough.id, 0);"},
 	{"label terminal targets exit", "lower.ts", "kind: 'Label', block: block.id, fallthrough: fallthrough.id", "kind: 'Label', block: fallthrough.id, fallthrough: fallthrough.id"},
 	{"try completion loses variant", "lower.ts", "this.statement(node.children[0] ?? -1); this.jump(normal.id, 2);", "this.statement(node.children[0] ?? -1); this.jump(normal.id, 0);"},
-	{"for condition disappears", "lower.ts", "const condition = node.slots[1] ?? -1;", "const condition = -1;"},
+	{"for condition disappears", "lower.ts", "const condition = slots[1] ?? -1;", "const condition = -1;"},
 
 	{"capture read becomes local", "lower.ts", "kind: 'LoadContext', place:", "kind: 'LoadLocal', place:"},
 	{"capture pairing loses outer value", "lower.ts", "const place = this.locals.get(symbol) ?? this.captureOf(symbol);", "const place = this.fn.returns;"},
@@ -305,6 +306,7 @@ func checkConstructionMutants(t *testing.T, root, lane, input string, want []byt
 // The full census always requires native. This separate opt-in Node certificate is
 // useful while a documented native compiler gap is pending; it cannot green that gate.
 func TestNodeConstructionReplay(t *testing.T) {
+	t.Parallel()
 	manifest := os.Getenv("HIR_NODE_CENSUS")
 	if manifest == "" {
 		t.Skip("set HIR_NODE_CENSUS to the independently exported Go census")
@@ -437,6 +439,7 @@ func checkArenaIndexMutant(t *testing.T, root, lane, manifest string) {
 }
 
 func TestArenaIndexBrands(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -463,6 +466,7 @@ func TestArenaIndexBrands(t *testing.T) {
 }
 
 func TestArenaOwnerIdentity(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)

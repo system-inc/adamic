@@ -15,6 +15,7 @@ import (
 )
 
 func TestStage1FileCacheOracle(t *testing.T) {
+	t.Parallel()
 	destination := os.Getenv("HIR_CACHE_ORACLE")
 	if destination == "" {
 		t.Skip("set HIR_CACHE_ORACLE")

@@ -441,6 +441,7 @@ var constructionFixtures int
 var constructionFlow []string
 
 func TestStage1AllConstructionFixtures(t *testing.T) {
+	t.Parallel()
 	fixtures, err := react_conformance.Load("../../rules/react/conformance/testdata/fixtures")
 	if err != nil {
 		t.Fatal(err)
@@ -552,6 +553,7 @@ func uniqueConstructionCalls(values []string) []string {
 }
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
+	t.Parallel()
 	sources := []string{
 		"function Patterns({a: {b = 1}, [key()]: c, ...rest}, [x, , y = 2, ...tail]) { const {q = 3, renamed: r} = rest; let [z, , ...end] = tail; for (const {item} of end) { z = item; } return [b,c,x,y,q,r,z]; }",
 		"function MethodShapes(value) { return { get x() { return value; }, set x(next) { value = next; }, async *[value]() { return value; }, method() { return value; } }; }",

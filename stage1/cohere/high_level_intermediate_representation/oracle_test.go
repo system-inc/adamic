@@ -22,6 +22,7 @@ func command(t *testing.T, dir string, env []string, args ...string) []byte {
 	return out
 }
 func TestStraightLineOracle(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)

@@ -1,0 +1,7 @@
+// a-check: refused a function taking number seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take
+// Reduced from TypeScript 6.0.3, Debug.shouldAssertFunction.
+// Namespace-free callable marker witness matching views-callables parser-cache.a.
+type AnyFunction = (...args: never[]) => void;
+function shouldLog(level: number): boolean { return level > 0; }
+const cache: { assertion: AnyFunction } = { assertion: shouldLog };
+console.log("function view loaded");

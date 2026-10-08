@@ -9,6 +9,7 @@ import (
 	"testing"
 	"unicode/utf16"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -122,7 +123,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	}
 	cmd := bounded(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "go-printer"), "./internal/format/css")
 	cmd.Dir = filepath.Join(repo, "cohere")
-	if output, err := cmd.CombinedOutput(); err != nil {
+	if output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall}); err != nil {
 		t.Fatalf("Go benchmark build: %v %s", err, output)
 	}
 	t.Logf("saved %d shared inputs and %d profile inputs, %d output units", len(shared), len(sample), totalUnits)

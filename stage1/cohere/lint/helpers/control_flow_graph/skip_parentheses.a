@@ -1,0 +1,4 @@
+import { needNode } from './support.a';
+import { AstArena } from './ast.a';
+import type { AstNode } from './ast.a';
+export function SkipParentheses(ast: AstArena,node: AstNode | undefined): AstNode | undefined { while(needNode(node).Kind === 'ParenthesizedExpression') node=ast.maybe(needNode(node).Expression); return node; }

@@ -17,6 +17,7 @@ import (
 // Roadmap step 28: assert both meaning and the exact pending compiler refusal.
 // A successful lowering fails this test so the ruling and certificate are revisited.
 func TestOptionalBooleanGapStandsWhereGapsMdSays(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -101,6 +102,7 @@ func recordOptionalBooleanImpact(t *testing.T, destination string) {
 }
 
 func TestStaticConstructorSpreadGapStandsWhereGapsMdSays(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)

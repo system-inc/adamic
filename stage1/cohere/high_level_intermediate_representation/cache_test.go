@@ -10,6 +10,7 @@ import (
 )
 
 func TestFileFunctionCacheOracle(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)

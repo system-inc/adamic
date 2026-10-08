@@ -102,6 +102,7 @@ func oracleDump(f *Function) string {
 	return out.String()
 }
 func TestStage1HIRDump(t *testing.T) {
+	t.Parallel()
 	input, err := os.ReadFile(os.Getenv("HIR_CORPUS"))
 	if err != nil {
 		t.Fatal(err)
@@ -251,6 +252,7 @@ func oracleInstruction(i *Instruction) string {
 }
 
 func TestStage1CentralInstructionVariants(t *testing.T) {
+	t.Parallel()
 	destination := os.Getenv("HIR_CENSUS")
 	if destination == "" {
 		t.Skip("census exporter only")

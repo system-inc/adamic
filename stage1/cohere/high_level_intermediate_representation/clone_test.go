@@ -10,6 +10,7 @@ import (
 
 // Gap 2 remains proven; the authorized explicit-record workaround restores native.
 func TestCloneFunctionOracle(t *testing.T) {
+	t.Parallel()
 	manifest := os.Getenv("HIR_CLONE_CENSUS")
 	if manifest == "" {
 		manifest = filepath.Join(exportConstructionCensus(t, os.Getenv("HIR_CENSUS_EXPORT")), "manifest.tsv")

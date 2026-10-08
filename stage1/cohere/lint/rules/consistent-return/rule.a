@@ -1,0 +1,34 @@
+import { propertyName, Static } from '../../helpers/property_name.a';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import type { RuleContext } from '../../context.ts';
+import { fromContext } from './adapter.a';
+import { child, fallsThrough, returnsIn, scope, arrow, tokenEnd } from './support.a';
+import { missingReturn,missingReturnValue,unexpectedReturnValue } from './messages.a';
+function staticName(nodes: readonly HelperNode[],i: number): string {if(i<0)return '';const answer=propertyName(nodes,i,Static);return answer.named?answer.name:'';}
+function nameNode(c: RuleContext,i: number): number {const p=c.parent(i);if(c.kind(i)==='FunctionExpression'&&['PropertyAssignment','PropertyDeclaration'].includes(c.kind(p)))return c.name(p);return c.name(i);}
+function display(c: RuleContext,nodes: readonly HelperNode[],i: number,capital: boolean): string {
+ const k=c.kind(i);if(k==='SourceFile')return capital?'Program':'program';if(k==='Constructor')return capital?'Constructor':'constructor';
+ const words: string[]=[];if(c.has(i,'StaticKeyword'))words.push('static');const own=c.name(i);const privateName=own>=0&&c.kind(own)==='PrivateIdentifier';if(privateName)words.push('private');if(c.has(i,'AsyncKeyword'))words.push('async');if(c.has(i,'AsteriskToken'))words.push('generator');
+ let kind=k==='GetAccessor'?'getter':k==='SetAccessor'?'setter':k==='MethodDeclaration'?'method':'function';if(k==='ArrowFunction')words.push('arrow');if(k==='FunctionExpression'&&['PropertyAssignment','PropertyDeclaration'].includes(c.kind(c.parent(i))))kind='method';words.push(kind);
+ const n=privateName?c.node(own).text:staticName(nodes,nameNode(c,i));if(n!=='')words.push(privateName?n:"'"+n+"'");const result=words.join(' ');return capital?result.slice(0,1).toUpperCase()+result.slice(1):result;
+}
+function hasValue(c: RuleContext,i: number,treat: boolean): boolean {const arg=child(c,i,0);return arg>=0&&(!treat||(c.kind(arg)!=='VoidExpression'&&!(c.kind(arg)==='Identifier'&&c.node(arg).text==='undefined')));}
+export class Rule {
+ readonly context: RuleContext;
+ readonly names: HelperNode[]=[];
+ constructor(context: RuleContext){this.context=context;for(const node of context.parser.nodes)this.names.push({kind:node.kind,text:node.text,expression:node.children[0] ?? -1,name:-1});}
+ visit(index: number): void {
+  const c=this.context;const ast=fromContext(c);const treat=c.settings.read('treatundefinedasunspecified','false')==='true';
+  for(let i=0;i<c.parser.nodes.length;i++){
+   if(i!==index&&c.parent(i)<0)continue;
+   if(c.kind(i)!=='SourceFile'&&!scope(c,i))continue;const returns: number[]=[];returnsIn(c,i,returns);const first=returns[0];if(first===undefined)continue;const valued=hasValue(c,first,treat);
+   for(const r of returns.slice(1))if(hasValue(c,r,treat)!==valued){const id=valued?'missingReturnValue':'unexpectedReturnValue';const verb=valued?'expected a return value.':'expected no return value.';c.reportNode(r,'consistent-return',id,display(c,this.names,i,true)+' '+verb+' '+(valued?missingReturnValue:unexpectedReturnValue));}
+   if(!valued||c.kind(i)==='Constructor')continue;const own=c.name(i);const text=own<0?'':c.node(own).text;const firstByte=text.slice(0,1);if(['FunctionDeclaration','FunctionExpression'].includes(c.kind(i))&&firstByte!==firstByte.toLowerCase())continue;
+   if(!fallsThrough(ast,i))continue;
+   let start=0;let end=0;if(c.kind(i)!=='SourceFile'){let n=nameNode(c,i);if(c.kind(i)==='ArrowFunction')n=arrow(c,i);if(n<0)n=i;start=c.start(n);end=tokenEnd(c,n);}
+   c.reportRange(start,end,'consistent-return','missingReturn','Expected to return a value at the end of '+display(c,this.names,i,false)+'. '+missingReturn);
+  }
+  ast.dispose();
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

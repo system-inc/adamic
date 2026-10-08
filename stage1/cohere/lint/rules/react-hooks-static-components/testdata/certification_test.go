@@ -11,6 +11,7 @@ import (
 
 // Overlay this owned test beside the shared harness; no shared source is edited.
 func TestHIRStaticComponentsCertificate(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)

@@ -1,0 +1,16 @@
+import { emptyNodes } from './support.a';
+import { AstArena } from './ast.a';
+import type { AstNode } from './ast.a';
+import { IsRoot } from './is_root.a';
+export interface RootSummary { Node: AstNode; BareReturn: boolean; Loops: string[]; }
+function visit(ast: AstArena,node: AstNode, roots: RootSummary[], owner: number): void {
+ for(const child of ast.list(node.children) ?? emptyNodes) {
+ let current=owner;
+ if(IsRoot(child)) { roots.push({Node:child, BareReturn:false, Loops:[]}); current=roots.length-1; }
+ const summary=roots[current]; if(summary === undefined) throw new Error('missing CFG root');
+ if(child.Kind === 'ReturnStatement' && child.Expression === undefined) summary.BareReturn=true;
+ if(child.Kind === 'WhileStatement' || child.Kind === 'DoStatement' || child.Kind === 'ForStatement' || child.Kind === 'ForInStatement' || child.Kind === 'ForOfStatement') { if(!summary.Loops.includes(child.Kind)) summary.Loops.push(child.Kind); }
+ visit(ast,child,roots,current);
+ }
+}
+export function IndexRoots(ast: AstArena,sourceFile: AstNode): RootSummary[] { const roots: RootSummary[] = [{Node:sourceFile, BareReturn:false, Loops:[]}]; visit(ast,sourceFile,roots,0); return roots; }

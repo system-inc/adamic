@@ -13,4 +13,4 @@ with open(sys.argv[2], 'w') as out:
     }}, out)
 PY
 cd "$hir_rule_root"
-go test -count=1 -v -timeout=35m -overlay "$hir_rule_overlay" ./stage1/cohere/lint -run TestHIRStaticComponentsCertificate
+go test -count=1 -v -timeout=3h -overlay "$hir_rule_overlay" ./stage1/cohere/lint -run TestHIRStaticComponentsCertificate

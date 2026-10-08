@@ -114,6 +114,20 @@ function supportedList(parser: Parser, id: number): boolean {
     for(const child of list.children) { const declaration = parser.node(child); const initializer = declarationInitializer(parser, child); if((initializer !== undefined && !supportedExpression(parser, initializer))) { return false; } }
     return true;
 }
+// Recover for-header roles from existing child spans without modifying the parser.
+// Scan only gaps between complete AST children: nested semicolons, templates and
+// regular expressions are skipped with their child, never interpreted as separators.
+function forHeaderSlots(parser: Parser, id: number): number[] {
+    const node = parser.node(id); const slots: number[] = [-1, -1, -1, node.children.at(-1) ?? -1];
+    const scanner = new Scanner(parser.scanner.text); scanner.pos = node.pos; let role = 0;
+    for(let i = 0; i + 1 < node.children.length; i++) {
+        const child = node.children[i] ?? -1; const part = parser.node(child);
+        while(scanner.pos < part.pos) { if(scanner.scan() === 'SemicolonToken') { role++; } }
+        if(role > 2) { panic('invalid for-header roles'); }
+        slots[role] = child; scanner.pos = part.end;
+    }
+    return slots;
+}
 function supportedStatement(parser: Parser, id: number): boolean {
     const statement = parser.node(id);
     if(statement.kind === 'FunctionDeclaration') { return supportedFunction(parser, id); }
@@ -123,8 +137,8 @@ function supportedStatement(parser: Parser, id: number): boolean {
     }
     if(statement.kind === 'DoStatement') { return supportedStatement(parser, statement.children[0] ?? -1) && supportedExpression(parser, statement.children[1] ?? -1); }
     if(statement.kind === 'ForStatement') {
-        const init = statement.slots[0] ?? -1;
-        return (init < 0 || (parser.node(init).kind === 'VariableDeclarationList' ? supportedList(parser, init) : supportedExpression(parser, init))) && statement.slots.slice(1, 3).every((child) => child < 0 || supportedExpression(parser, child)) && supportedStatement(parser, statement.slots[3] ?? -1);
+        const slots = forHeaderSlots(parser, id); const init = slots[0] ?? -1;
+        return (init < 0 || (parser.node(init).kind === 'VariableDeclarationList' ? supportedList(parser, init) : supportedExpression(parser, init))) && slots.slice(1, 3).every((child) => child < 0 || supportedExpression(parser, child)) && supportedStatement(parser, slots[3] ?? -1);
     }
     if(statement.kind === 'ForOfStatement' || statement.kind === 'ForInStatement') {
         const offset = parser.node(statement.children[0] ?? -1).kind === 'AwaitKeyword' ? 1 : 0;
@@ -440,13 +454,14 @@ class StraightLineBuilder {
             const value = this.expression(node.children[1] ?? -1); this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id }); this.current = fallthrough; return;
         }
         if(node.kind === 'ForStatement') {
+            const slots = forHeaderSlots(this.parser, id);
             const init = this.fn.newBlock('block'); const test = this.fn.newBlock('block'); const loop = this.fn.newBlock('loop'); const fallthrough = this.fn.newBlock('block');
-            const increment = node.slots[2] ?? -1; const update = increment < 0 ? undefined : this.fn.newBlock('block');
+            const increment = slots[2] ?? -1; const update = increment < 0 ? undefined : this.fn.newBlock('block');
             if(update === undefined) { this.close({ kind: 'For', init: init.id, testBlock: test.id, loop: loop.id, fallthrough: fallthrough.id }); } else { this.close({ kind: 'For', init: init.id, testBlock: test.id, loop: loop.id, update: update.id, fallthrough: fallthrough.id }); } this.current = init;
-            const initializer = node.slots[0] ?? -1; if(initializer >= 0) { if(this.parser.node(initializer).kind === 'VariableDeclarationList') { this.declarationList(initializer); } else { this.expression(initializer); } }
-            this.jump(test.id, 0); this.current = test; const condition = node.slots[1] ?? -1;
+            const initializer = slots[0] ?? -1; if(initializer >= 0) { if(this.parser.node(initializer).kind === 'VariableDeclarationList') { this.declarationList(initializer); } else { this.expression(initializer); } }
+            this.jump(test.id, 0); this.current = test; const condition = slots[1] ?? -1;
             if(condition < 0) { this.jump(loop.id, 0); } else { const value = this.expression(condition); this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id }); }
-            const continueBlock = update?.id ?? test.id; this.current = loop; this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock }); this.statement(node.slots[3] ?? -1); this.jumps.pop();
+            const continueBlock = update?.id ?? test.id; this.current = loop; this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock }); this.statement(slots[3] ?? -1); this.jumps.pop();
             this.jump(continueBlock, 1); if(update !== undefined) { this.current = update; this.expression(increment); this.jump(test.id, 0); }
             this.current = fallthrough; return;
         }

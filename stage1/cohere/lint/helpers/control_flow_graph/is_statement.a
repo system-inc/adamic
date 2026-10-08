@@ -1,0 +1,3 @@
+import { needNode } from './support.a';
+import type { AstNode } from './ast.a';
+export function IsStatement(node: AstNode | undefined): boolean { return needNode(node).isStatement; }

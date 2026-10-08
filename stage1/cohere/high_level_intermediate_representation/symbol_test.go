@@ -38,6 +38,7 @@ func symbolFields(t *testing.T, wire string) []string {
 	return fields
 }
 func TestResidentSymbolFacts(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
