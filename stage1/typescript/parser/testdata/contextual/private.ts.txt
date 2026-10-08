@@ -1,0 +1,17 @@
+{
+    private = true;
+    private();
+    private.value;
+    private
+}
+{
+    private
+    class C {}
+}
+{
+    private
+    function f() {}
+}
+{
+    private class D {}
+}

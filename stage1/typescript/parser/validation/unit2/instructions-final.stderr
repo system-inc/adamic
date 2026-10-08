@@ -1,0 +1,14 @@
+==71501== Callgrind, a call-graph generating cache profiler
+==71501== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==71501== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==71501== Command: /workspace/scratch/parser-unit2/release-final/parser-native --manifest /workspace/scratch/parser-unit2/release-final/compiler.manifest --whole --count
+==71501== 
+==71501== For interactive control, run 'callgrind_control -h'.
+==71501== brk segment overflow in thread #1: can't grow to 0x4843000
+==71501== (see section Limitations in user manual)
+==71501== NOTE: further instances of this message will not be shown
+==71501== 
+==71501== Events    : Ir
+==71501== Collected : 6340677060
+==71501== 
+==71501== I   refs:      6,340,677,060

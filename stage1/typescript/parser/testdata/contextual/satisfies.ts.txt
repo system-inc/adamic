@@ -1,0 +1,14 @@
+{
+    satisfies = true;
+    satisfies();
+    satisfies.value;
+    satisfies
+}
+{
+    satisfies
+    class C {}
+}
+{
+    satisfies
+    function f() {}
+}

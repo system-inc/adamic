@@ -1,0 +1,19 @@
+{
+  "parser": {
+    "result": "pass",
+    "seconds": 893.542
+  },
+  "counts": {
+    "top_level": {
+      "pass_": 35,
+      "fail": 0,
+      "skip": 0
+    },
+    "all_tests": {
+      "pass_": 173,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "timing_method": "run-to-pause plus cont-to-pass; excludes the paused queue; includes parallel child completion"
+}
