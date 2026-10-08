@@ -1,0 +1,13 @@
+{
+  "name": "no-lone-blocks",
+  "kinds": [
+    "Block"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoLoneBlocks",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoLoneBlocks",
+  "node": true
+}

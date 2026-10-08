@@ -1,0 +1,108 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { panic } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import type { RuleContext } from '../../context.ts';
+import { StrictOptions } from '../../helpers/strict_options.ts';
+import { descriptor } from './options.a';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { PolicyMessage } from '../../helpers/policy_message.ts';
+import { catalog } from './messages.a';
+
+interface Alias {
+    readonly name: string;
+    readonly style: string;
+}
+// Go merges repeated struct/map keys; the shared JSON arena keeps only the last.
+// Refuse this unsupported shape rather than silently applying different settings.
+function uniqueOptions(raw: string): void {
+    const parser = new Parser(`(${raw});`);
+    parser.file();
+    for(const node of parser.nodes) {
+        if(node.kind === 'ObjectLiteralExpression') {
+            const keys = new Set<string>();
+            for(const property of node.children) {
+                const name = parser.node(property).children[0] ?? panic('option property without name');
+                const key = parser.node(name).text;
+                if(keys.has(key)) { panic('NotYet: repeated module alias option keys require Go merge semantics'); }
+                keys.add(key);
+            }
+        }
+    }
+}
+const ruleName = 'nexus/import-require-module-alias';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly aliases = new Map<string, Alias>();
+    readonly messages = new PolicyMessage(catalog);
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.aliases.set('react', { name: 'React', style: 'Default' });
+        this.aliases.set('typescript', { name: 'TypeScript', style: 'Namespace' });
+        const raw = context.settings.text;
+        if(context.enabled(ruleName) && raw !== '' && raw !== 'null') {
+            uniqueOptions(raw);
+            const options = new OptionsJson(raw);
+            const root = options.parse();
+            if(root < 0) { panic(`invalid module alias options: ${options.error}`); }
+            if(options.node(root).kind !== 'object') { panic('module alias options must be an object'); }
+            const modules = options.field(root, 'modules');
+            if(modules >= 0 && options.node(modules).kind !== 'null') {
+                if(options.node(modules).kind !== 'object') { panic('module aliases must be an object'); }
+                for(const source of options.node(modules).keys) {
+                    const alias = options.field(modules, source);
+                    const name = options.field(alias, 'name');
+                    const style = options.field(alias, 'style');
+                    const expected = name < 0 || options.node(name).kind === 'null' ? '' : options.node(name).text;
+                    const form = style < 0 || options.node(style).kind === 'null' ? '' : options.node(style).text;
+                    if(expected !== '') {
+                        this.aliases.set(source, { name: expected, style: form === '' ? 'Default' : form });
+                    }
+                }
+            }
+        }
+    }
+    report(index: number, id: string, source: string, expected: string, actual: string): void {
+        const values = new Map<string, string>([['source', source], ['expected', expected]]);
+        if(id === 'requireAliasName') { values.set('actual', actual); }
+        const message = this.messages.render(ruleName, id, values, []);
+        this.context.report(index, ruleName, id, message, '', '', '');
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        let clause = -1;
+        let source = '';
+        for(const child of node.children) {
+            const node = context.node(child);
+            if(node.kind === 'ImportClause') { clause = child; }
+            if(node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') { source = node.text; }
+        }
+        const alias = this.aliases.get(source);
+        if(alias === undefined || clause < 0) { return; }
+        const expectsNamespace = alias.style === 'Namespace';
+        for(const child of context.node(clause).children) {
+            const node = context.node(child);
+            if(node.kind === 'Identifier') {
+                if(expectsNamespace) { this.report(child, 'requireNamespaceStyle', source, alias.name, ''); }
+                else if(node.text !== alias.name) { this.report(child, 'requireAliasName', source, alias.name, node.text); }
+            }
+            if(node.kind === 'NamespaceImport') {
+                const name = node.children[0] ?? panic('namespace import without name');
+                if(!expectsNamespace) {
+                    this.report(child, 'requireDefaultStyle', source, alias.name, '');
+                }
+                else if(context.node(name).text !== alias.name) {
+                    this.report(name, 'requireAliasName', source, alias.name, context.node(name).text);
+                }
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule {
+    if(context.selected === ruleName && context.settings.text !== '') {
+        const validator = new StrictOptions(descriptor);
+        const verdict = validator.check(context.settings.text);
+        if(verdict !== 'valid') { panic(`module alias options: ${verdict}`); }
+    }
+    return new Rule(context);
+}

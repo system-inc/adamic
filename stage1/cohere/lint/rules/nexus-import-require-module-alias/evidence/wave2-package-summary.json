@@ -1,0 +1,27 @@
+{
+  "command": "go test -json -count=1 -timeout 85m -parallel 2 ./stage1/cohere/lint",
+  "package": {
+    "Time": "2026-10-08T13:41:52.926715158Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Elapsed": 1684.243
+  },
+  "results_including_subtests": {
+    "pass": 156,
+    "skip": 1
+  },
+  "top_level_results": {
+    "pass": 41,
+    "skip": 1
+  },
+  "required_gates": {
+    "TestOwnedWitnesses": "pass",
+    "TestMutants": "pass",
+    "TestRulesAgree": "pass",
+    "TestCompilerAndStage1Agree": "pass",
+    "TestThroughput": "pass",
+    "TestProfileArtifacts": "pass",
+    "TestProfileSnapshotsAgree": "pass"
+  },
+  "skip": "TestCheckerBridgeRefusalPending awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+}

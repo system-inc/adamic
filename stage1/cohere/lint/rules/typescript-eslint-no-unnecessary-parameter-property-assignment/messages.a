@@ -1,0 +1,2 @@
+// Verbatim description from the upstream Go rule.
+export const message = 'A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.';

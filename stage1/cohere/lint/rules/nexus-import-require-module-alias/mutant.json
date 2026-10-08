@@ -1,0 +1,6 @@
+{
+  "name": "namespace style silently accepted",
+  "file": "rule.a",
+  "from": "if(!expectsNamespace) {",
+  "to": "if(!expectsNamespace && source === '') {"
+}

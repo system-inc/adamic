@@ -1,0 +1,41 @@
+python3 stage1/cohere/lint/rules/nexus-import-require-module-alias/verification/native_mutants.py --repo /workspace/adamic-landing-wave14 --records /tmp/wave14-unpark-upstream-records.json --oracle /tmp/wave14-unpark-oracle --builder /tmp/wave14-unpark-native-builder --archive /tmp/wave14-unpark-checker.a --logs /tmp/wave14-unpark-native-logs
+nexus-import-require-module-alias: namespace style silently accepted caught only by Go byte comparison on Node; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+nexus-import-require-module-alias: namespace style silently accepted caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+nexus-import-require-module-alias: namespace style silently accepted caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+typescript-eslint-no-confusing-non-null-assertion: wrap close parenthesis changed caught only by Go byte comparison on Node; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+typescript-eslint-no-confusing-non-null-assertion: wrap close parenthesis changed caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+typescript-eslint-no-confusing-non-null-assertion: wrap close parenthesis changed caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 29 upstream/witness inputs and 1116 total inputs
+typescript-eslint-no-duplicate-enum-values: numeric duplicate anchor advances caught only by Go byte comparison on Node; exit zero, stderr empty; 58 upstream/witness inputs and 1145 total inputs
+typescript-eslint-no-duplicate-enum-values: numeric duplicate anchor advances caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 58 upstream/witness inputs and 1145 total inputs
+typescript-eslint-no-duplicate-enum-values: numeric duplicate anchor advances caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 58 upstream/witness inputs and 1145 total inputs
+typescript-eslint-no-dynamic-delete: unary plus accepted as static key caught only by Go byte comparison on Node; exit zero, stderr empty; 43 upstream/witness inputs and 1130 total inputs
+typescript-eslint-no-dynamic-delete: unary plus accepted as static key caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 43 upstream/witness inputs and 1130 total inputs
+typescript-eslint-no-dynamic-delete: unary plus accepted as static key caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 43 upstream/witness inputs and 1130 total inputs
+typescript-eslint-no-extra-non-null-assertion: extra bang deleted from wrong position caught only by Go byte comparison on Node; exit zero, stderr empty; 20 upstream/witness inputs and 1107 total inputs
+typescript-eslint-no-extra-non-null-assertion: extra bang deleted from wrong position caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 20 upstream/witness inputs and 1107 total inputs
+typescript-eslint-no-extra-non-null-assertion: extra bang deleted from wrong position caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 20 upstream/witness inputs and 1107 total inputs
+typescript-eslint-no-misused-new: getter named new silently skipped caught only by Go byte comparison on Node; exit zero, stderr empty; 46 upstream/witness inputs and 1133 total inputs
+typescript-eslint-no-misused-new: getter named new silently skipped caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 46 upstream/witness inputs and 1133 total inputs
+typescript-eslint-no-misused-new: getter named new silently skipped caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 46 upstream/witness inputs and 1133 total inputs
+typescript-eslint-no-unnecessary-parameter-property-assignment: trailing semicolon retained caught only by Go byte comparison on Node; exit zero, stderr empty; 94 upstream/witness inputs and 1181 total inputs
+typescript-eslint-no-unnecessary-parameter-property-assignment: trailing semicolon retained caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 94 upstream/witness inputs and 1181 total inputs
+typescript-eslint-no-unnecessary-parameter-property-assignment: trailing semicolon retained caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 94 upstream/witness inputs and 1181 total inputs
+no-lone-blocks: bound sole block exemption widened caught only by Go byte comparison on Node; exit zero, stderr empty; 78 upstream/witness inputs and 1165 total inputs
+no-lone-blocks: bound sole block exemption widened caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 78 upstream/witness inputs and 1165 total inputs
+no-lone-blocks: bound sole block exemption widened caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 78 upstream/witness inputs and 1165 total inputs
+no-lonely-if: BOM_is_not_whitespace caught only by Go byte comparison on Node; exit zero, stderr empty; 35 upstream/witness inputs and 1122 total inputs
+no-lonely-if: BOM_is_not_whitespace caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 35 upstream/witness inputs and 1122 total inputs
+no-lonely-if: BOM_is_not_whitespace caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 35 upstream/witness inputs and 1122 total inputs
+no-loss-of-precision: normalized text hides lost precision caught only by Go byte comparison on Node; exit zero, stderr empty; 154 upstream/witness inputs and 1241 total inputs
+no-loss-of-precision: normalized text hides lost precision caught only by Go byte comparison on emitted-JavaScript; exit zero, stderr empty; 154 upstream/witness inputs and 1241 total inputs
+no-loss-of-precision: normalized text hides lost precision caught only by Go byte comparison on sanitized-native; exit zero, stderr empty; 154 upstream/witness inputs and 1241 total inputs
+nexus-import-require-module-alias: restored source matches Go on all three runtimes; 1116 inputs
+typescript-eslint-no-confusing-non-null-assertion: restored source matches Go on all three runtimes; 1116 inputs
+typescript-eslint-no-duplicate-enum-values: restored source matches Go on all three runtimes; 1145 inputs
+typescript-eslint-no-dynamic-delete: restored source matches Go on all three runtimes; 1130 inputs
+typescript-eslint-no-extra-non-null-assertion: restored source matches Go on all three runtimes; 1107 inputs
+typescript-eslint-no-misused-new: restored source matches Go on all three runtimes; 1133 inputs
+typescript-eslint-no-unnecessary-parameter-property-assignment: restored source matches Go on all three runtimes; 1181 inputs
+no-lone-blocks: restored source matches Go on all three runtimes; 1165 inputs
+no-lonely-if: restored source matches Go on all three runtimes; 1122 inputs
+no-loss-of-precision: restored source matches Go on all three runtimes; 1241 inputs

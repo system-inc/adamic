@@ -1,0 +1,145 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, Suggestion, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
+import { message } from './messages.a';
+function operatorOf(context: RuleContext, index: number): string {
+    const token = context.node(index).children[1];
+    return token === undefined ? '' : context.node(token).kind;
+}
+function assignment(operator: string): boolean {
+    return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+}
+function nameOf(context: RuleContext, index: number): string {
+    for(const child of context.node(index).children) {
+        const node = context.node(child);
+        if(node.kind === 'Decorator' || node.kind.endsWith('Keyword') || node.kind === 'DotDotDotToken') { continue; }
+        return node.kind === 'Identifier' ? node.text : '';
+    }
+    return '';
+}
+function targetName(context: RuleContext, index: number): string {
+    const node = context.node(context.unwrap(index));
+    const receiver = node.children[0]; const key = node.children[1];
+    if(receiver === undefined || key === undefined || context.node(receiver).kind !== 'ThisKeyword') { return ''; }
+    const name = context.node(key);
+    if(node.kind === 'PropertyAccessExpression' && name.kind === 'Identifier') { return name.text; }
+    if(node.kind === 'ElementAccessExpression' && name.kind === 'StringLiteral') { return name.text; }
+    return '';
+}
+function inner(context: RuleContext, index: number): number {
+    let current = index;
+    while(true) {
+        const node = context.node(current);
+        if(node.kind === 'TypeAssertionExpression') { current = node.children[1] ?? panic('assertion without expression'); }
+        else if(['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'ExpressionWithTypeArguments'].includes(node.kind)) { current = node.children[0] ?? panic('wrapper without expression'); }
+        else { return current; }
+    }
+}
+function shadowed(context: RuleContext, identifier: number, name: string): boolean {
+    let current = context.parents[identifier] ?? -1;
+    while(current >= 0) {
+        const node = context.node(current);
+        if(node.kind === 'Constructor') { return false; }
+        if(node.kind === 'Block' || node.kind === 'SourceFile' || node.kind === 'ModuleBlock') {
+            for(const statement of node.children) {
+                if(context.node(statement).kind !== 'VariableStatement') { continue; }
+                for(const list of context.node(statement).children) {
+                    if(context.node(list).kind !== 'VariableDeclarationList') { continue; }
+                    for(const declaration of context.node(list).children) {
+                        if(nameOf(context, declaration) === name) { return true; }
+                    }
+                }
+            }
+        }
+        if(node.kind === 'ArrowFunction') {
+            for(const parameter of node.children) {
+                if(context.node(parameter).kind === 'Parameter' && nameOf(context, parameter) === name) { return true; }
+            }
+        }
+        current = context.parents[current] ?? -1;
+    }
+    return false;
+}
+function appendAssignment(context: RuleContext, index: number, assigned: string[]): void {
+    const node = context.node(index);
+    if(node.kind !== 'BinaryExpression' || !assignment(operatorOf(context, index))) { return; }
+    const left = node.children[0]; if(left === undefined) { return; }
+    const name = targetName(context, left); if(name !== '') { assigned.push(name); }
+}
+function initializerAssignments(context: RuleContext, index: number, assigned: string[]): void {
+    const node = context.node(context.unwrap(index));
+    if(node.kind === 'BinaryExpression') { appendAssignment(context, context.unwrap(index), assigned); return; }
+    if(node.kind !== 'CallExpression') { return; }
+    const first = node.children[0]; if(first === undefined) { return; }
+    const callee = context.node(context.unwrap(first));
+    if(callee.kind !== 'ArrowFunction' && callee.kind !== 'FunctionExpression') { return; }
+    const body = callee.children[callee.children.length - 1]; if(body === undefined) { return; }
+    if(context.node(body).kind !== 'Block') { appendAssignment(context, body, assigned); return; }
+    for(const statement of context.node(body).children) {
+        if(context.node(statement).kind !== 'ExpressionStatement') { continue; }
+        const expression = context.node(statement).children[0];
+        if(expression !== undefined) { appendAssignment(context, expression, assigned); }
+    }
+}
+function classAssignments(context: RuleContext, index: number): string[] {
+    const assigned: string[] = [];
+    for(const member of context.node(index).children) {
+        const node = context.node(member);
+        if(node.kind !== 'PropertyDeclaration' || node.children.length < 2) { continue; }
+        const last = node.children[node.children.length - 1]; const previous = node.children[node.children.length - 2];
+        if(last === undefined || previous === undefined) { continue; }
+        context.scanner.pos = context.node(previous).end;
+        const end = context.start(last);
+        context.scanner.pos = context.node(previous).end;
+        let initialized = false;
+        while(context.scanner.scan() !== 'EndOfFile' && context.scanner.start < end) {
+            if(context.scanner.kind === 'EqualsToken') { initialized = true; }
+        }
+        if(initialized) { initializerAssignments(context, last, assigned); }
+    }
+    return assigned;
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    descend(index: number, properties: readonly string[], earlier: string[], initialized: readonly string[]): void {
+        const node = this.context.node(index);
+        if(['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(node.kind)) { return; }
+        if(node.kind === 'BinaryExpression' && assignment(operatorOf(this.context, index))) {
+            const left = node.children[0]; const right = node.children[2];
+            if(left === undefined || right === undefined) { return; }
+            const name = targetName(this.context, left);
+            if(name === '') { return; }
+            if(!['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operatorOf(this.context, index))) { earlier.push(name); return; }
+            const value = inner(this.context, right);
+            if(this.context.node(value).kind !== 'Identifier' || this.context.node(value).text !== name || !properties.includes(name) || shadowed(this.context, value, name) || earlier.includes(name) || initialized.includes(name)) { return; }
+            // Go deliberately deletes one raw trailing byte; refuse a split UTF-8 character.
+            if(this.context.source.charCodeAt(node.end) > 127) { panic('NotYet: parameter-property suggestion splits a UTF-8 character'); }
+            this.diagnostics.push(report(this.context, node, 'unnecessaryAssign', message, [], [new Suggestion('removeAssignment', 'Remove the unnecessary assignment.', [new Edit(this.context.start(index), node.end + 1, '')])], '@typescript-eslint/no-unnecessary-parameter-property-assignment'));
+            return;
+        }
+        for(const child of node.children) { this.descend(child, properties, earlier, initialized); }
+    }
+    visit(node: ParseNode, index: number): void {
+        const body = node.children[node.children.length - 1];
+        const parent = this.context.parents[index] ?? -1;
+        if(body === undefined || this.context.node(body).kind !== 'Block' || parent < 0) { return; }
+        const properties: string[] = [];
+        for(const parameter of node.children) {
+            const declaration = this.context.node(parameter);
+            if(declaration.kind !== 'Parameter') { continue; }
+            let property = false;
+            for(const child of declaration.children) {
+                if(['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(this.context.node(child).kind)) { property = true; }
+            }
+            const name = nameOf(this.context, parameter);
+            if(property && name !== '') { properties.push(name); }
+        }
+        if(properties.length > 0) { this.descend(body, properties, [], classAssignments(this.context, parent)); }
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

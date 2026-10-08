@@ -1,0 +1,84 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { interfaceConstruct, interfaceConstructor, classNew } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    declarationName(index: number): string {
+        for(const child of this.context.node(index).children) {
+            const node = this.context.node(child);
+            if(node.kind === 'Identifier') {
+                return node.text;
+            }
+        }
+        return '';
+    }
+    memberName(index: number): number {
+        for(const child of this.context.node(index).children) {
+            const kind = this.context.node(child).kind;
+            if(kind === 'Decorator' || kind === 'AsteriskToken' || kind.endsWith('Keyword')) {
+                continue;
+            }
+            return child;
+        }
+        return -1;
+    }
+    returnName(index: number): string {
+        const children = this.context.node(index).children;
+        const last = children[children.length - 1];
+        if(last === undefined) {
+            return '';
+        }
+        const type = this.context.node(last);
+        if(type.kind !== 'TypeReference') {
+            return '';
+        }
+        const name = type.children[0];
+        if(name === undefined || this.context.node(name).kind !== 'Identifier') {
+            return '';
+        }
+        return this.context.node(name).text;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.kind === 'MethodSignature') {
+            const name = this.memberName(index);
+            if(name >= 0 && this.context.node(name).kind === 'Identifier' && this.context.node(name).text === 'constructor') {
+                this.context.report(name, '@typescript-eslint/no-misused-new', 'interfaceConstructor', interfaceConstructor, '', '', '');
+            }
+            return;
+        }
+        const name = this.declarationName(index);
+        if(name === '') {
+            return;
+        }
+        for(const member of node.children) {
+            const kind = this.context.node(member).kind;
+            if(node.kind === 'InterfaceDeclaration') {
+                if(kind === 'ConstructSignature' && this.returnName(member) === name) {
+                    const start = this.context.start(member);
+                    this.context.findings.push(new Finding('@typescript-eslint/no-misused-new', 'interfaceConstruct', interfaceConstruct, start, start + 3, '', '', ''));
+                }
+                continue;
+            }
+            // Go deliberately excludes setters, including parser recovery nodes.
+            if(kind !== 'MethodDeclaration' && kind !== 'GetAccessor') {
+                continue;
+            }
+            const key = this.memberName(member);
+            if(key < 0 || this.context.node(key).kind !== 'Identifier' || this.context.node(key).text !== 'new') {
+                continue;
+            }
+            if(this.returnName(member) === name) {
+                this.context.report(key, '@typescript-eslint/no-misused-new', 'classNew', classNew, '', '', '');
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

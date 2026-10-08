@@ -1,0 +1,105 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Rule as BlockRule } from '../no-lone-blocks/rule.a';
+import { Rule as IfRule } from './rule.a';
+import { Rule as PrecisionRule } from '../no-loss-of-precision/rule.a';
+import { Edit } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
+function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+    parents[index] = parent;
+    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+}
+function walk(context: RuleContext, index: number, selected: string, blocks: BlockRule, lonely: IfRule, precision: PrecisionRule): void {
+    if(selected === 'no-lone-blocks') { blocks.visit(index); }
+    else if(selected === 'no-lonely-if') { lonely.visit(index); }
+    else if(selected === 'no-loss-of-precision') { precision.visit(index); }
+    else { panic('unknown owned rule'); }
+    for(const child of context.node(index).children) { walk(context, child, selected, blocks, lonely, precision); }
+}
+function prepare(source: string, path: string, selected: string): RuleContext {
+    const parser = new Parser(source, path); const parents: number[] = [];
+    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, new Settings());
+    const root = parser.file();
+    for(const node of parser.nodes) { parents.push(-1); }
+    ancestry(context, parents, root, -1);
+    return context;
+}
+function visitIf(context: RuleContext, index: number, rule: IfRule): void {
+    rule.visit(index);
+    for(const child of context.node(index).children) { visitIf(context, child, rule); }
+}
+function byteOffset(source: string, end: number): number {
+    let bytes = 0;
+    for(let i = 0; i < end; i++) {
+        const code = source.codePointAt(i) ?? 0;
+        if(code > 65535) { i++; }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+    }
+    return bytes;
+}
+function apply(source: string, edits: readonly Edit[]): string {
+    const ordered = edits.slice(); ordered.sort((left, right) => right.start - left.start);
+    let text = source;
+    for(const edit of ordered) { text = text.slice(0, edit.start) + edit.text + text.slice(edit.end); }
+    return text;
+}
+class Fixed {
+    readonly text: string; readonly state: string;
+    constructor(text: string, state: string) { this.text = text; this.state = state; }
+}
+function fixed(source: string, path: string): Fixed {
+    let current = source;
+    for(let pass = 0; pass < 10; pass++) {
+        const context = prepare(current, path, 'no-lonely-if');
+        const rule = new IfRule(context);
+        visitIf(context, context.parser.nodes.length - 1, rule);
+        const proposals: Edit[] = [];
+        for(const diagnostic of rule.diagnostics) { for(const edit of diagnostic.fixes) { proposals.push(edit); } }
+        if(proposals.length === 0) { return new Fixed(current, pass === 0 ? 'not-needed' : 'converged'); }
+        proposals.sort((left, right) => {
+            const order = left.start - right.start;
+            return order !== 0 ? order : left.end - right.end;
+        });
+        const selected: Edit[] = []; let end = -1;
+        for(const edit of proposals) {
+            if(edit.start >= end) {
+                if(current.slice(edit.start, edit.end) !== edit.text) { selected.push(edit); }
+                end = edit.end;
+            }
+        }
+        if(selected.length === 0) { return new Fixed(current, 'converged'); }
+        current = apply(current, selected);
+    }
+    return new Fixed(source, 'budget-exhausted');
+}
+function run(row: string, countOnly: boolean): number {
+    const fields = row.split('\t'); const path = fields[0] ?? panic('missing path'); const selected = fields[1] ?? panic('missing rule');
+    const read = readTextFile(path); if(read.kind === 'Error') { panic(read.message); }
+    const semantic = fields[2] ?? path;
+    const context = prepare(read.text, semantic, selected);
+    const blocks = new BlockRule(context); const lonely = new IfRule(context); const precision = new PrecisionRule(context);
+    walk(context, context.parser.nodes.length - 1, selected, blocks, lonely, precision);
+    const diagnostics = selected === 'no-lone-blocks' ? blocks.diagnostics : selected === 'no-lonely-if' ? lonely.diagnostics : precision.diagnostics;
+    diagnostics.sort((left, right) => left.start - right.start);
+    if(countOnly) { return diagnostics.length; }
+    for(const diagnostic of diagnostics) {
+        console.log(`range ${byteOffset(read.text, diagnostic.start)} ${byteOffset(read.text, diagnostic.end)} ${diagnostic.id}\t${written(diagnostic.message)}`);
+        for(const edit of diagnostic.fixes) { console.log(`fix ${byteOffset(read.text, edit.start)} ${byteOffset(read.text, edit.end)}\t${written(edit.text)}`); }
+    }
+    const result = selected === 'no-lonely-if' ? fixed(read.text, semantic) : new Fixed(read.text, 'not-needed');
+    console.log(`fixed-state\t${result.state}`);
+    console.log(`fixed\t${written(result.text)}`);
+    return diagnostics.length;
+}
+const args = programArguments(); const manifest = readTextFile(args[0] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+let count = 0; let index = 0; const countOnly = args.includes('--count');
+for(const row of manifest.text.split('\n')) {
+    if(row === '') { continue; }
+    if(!countOnly) { console.log(`case ${index}`); }
+    count += run(row, countOnly); index++;
+}
+if(countOnly) { console.log(`${count}`); }

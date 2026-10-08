@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "numeric duplicate anchor advances",
+  "from": "earlier === undefined || value.kind === 'StringLiteral'",
+  "to": "true"
+}

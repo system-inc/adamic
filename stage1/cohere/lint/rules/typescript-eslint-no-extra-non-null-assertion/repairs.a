@@ -1,0 +1,49 @@
+// Preserve owned diagnostic evidence while reporting through the shared finding model.
+import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../suggestions.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    constructor(id: string, message: string, edits: readonly Edit[]) {
+        this.id = id;
+        this.message = message;
+        this.edits = edits;
+    }
+}
+export class Diagnostic {
+    readonly start: number;
+    readonly end: number;
+    readonly id: string;
+    readonly message: string;
+    readonly fixes: readonly Edit[];
+    readonly suggestions: readonly Suggestion[];
+    constructor(start: number, end: number, id: string, message: string, fixes: readonly Edit[], suggestions: readonly Suggestion[]) {
+        this.start = start;
+        this.end = end;
+        this.id = id;
+        this.message = message;
+        this.fixes = fixes;
+        this.suggestions = suggestions;
+    }
+}
+export function report(context: RuleContext, node: ParseNode, id: string, message: string, fixes: readonly Edit[], suggestions: readonly Suggestion[], rule: string): Diagnostic {
+    const edits = fixes.map((edit) => new SuggestionEdit(edit.start, edit.end, edit.text));
+    const choices = suggestions.map((suggestion) => new SharedSuggestion(suggestion.id, suggestion.message, suggestion.edits.map((edit) => new SuggestionEdit(edit.start, edit.end, edit.text))));
+    context.scanAt(node.pos);
+    const start = context.scanStart();
+    context.reportRange(start, node.end, rule, id, message, edits, choices);
+    return new Diagnostic(start, node.end, id, message, fixes, suggestions);
+}

@@ -1,0 +1,13 @@
+{
+  "name": "no-loss-of-precision",
+  "kinds": [
+    "NumericLiteral"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoLossOfPrecision",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoLossOfPrecision",
+  "node": true
+}

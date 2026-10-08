@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "normalized text hides lost precision",
+  "from": "const raw = this.context.source.slice(this.context.start(index), node.end);",
+  "to": "const raw = node.text;"
+}
