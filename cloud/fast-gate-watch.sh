@@ -68,8 +68,10 @@ while true; do
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
     big=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "B"' | wc -l)
+    # At most one big gate at a time, always: the other slot is small-only, so a worker's tip never
+    # waits behind areas (@system_adamic, 21:42; with no small change waiting it stays free).
     only=""
-    if [ "${big}" -ge 1 ] && awk '$1 == "S"' "${state}/queue" | grep -q .; then only=S; fi
+    if [ "${big}" -ge 1 ]; then only=S; fi
     next=$(while read -r class queued branch sha; do
       [ -n "${only}" ] && [ "${class}" != "${only}" ] && continue
       if [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
