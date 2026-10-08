@@ -32,3 +32,14 @@ func TestClassWrongOutputIteratorReceiver(t *testing.T) {
 		}
 	}
 }
+
+func TestClassWrongOutputKeysRepair(t *testing.T) {
+	source, err := os.ReadFile("../oracle/testdata/iterators_sym_keys_view.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	repaired := strings.Replace(string(source), "Object.keys(view)", "Object.keys({ value: view.value })", 1)
+	if _, err := lowerSource(t, repaired); err != nil {
+		t.Fatalf("explicit string-key copy refused: %v", err)
+	}
+}

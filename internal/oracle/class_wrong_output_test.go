@@ -54,3 +54,19 @@ func TestClassWrongOutput107(t *testing.T) {
 		})
 	}
 }
+
+func TestClassWrongOutput108(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/iterators_sym_keys_view.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || string(observed.stdout) != "value\n1,2\nvalue\nvalue\n" || len(observed.stderr) != 0 {
+		t.Fatalf("Node: %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refusal *lower.Refused
+	if !errors.As(err, &refusal) || refusal.What != "a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view)" || refusal.Fix != "pass a new plain object containing only the desired string-keyed fields to Object.keys" {
+		t.Fatalf("want pinned symbol-key-view refusal, got %v", err)
+	}
+}
