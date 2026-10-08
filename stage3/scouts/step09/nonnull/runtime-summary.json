@@ -1,0 +1,48 @@
+{
+  "projects": 301,
+  "control": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/step09-nonnull-bundle/control.cjs"
+    ],
+    "cases": 301,
+    "passed": 301,
+    "failed": [],
+    "seconds": 227.667
+  },
+  "instrumented": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/step09-nonnull-bundle-final/instrumented.cjs"
+    ],
+    "cases": 301,
+    "passed": 301,
+    "failed": [],
+    "seconds": null,
+    "cloud_interruption": true,
+    "completed_before_interrupt": 285,
+    "resumed_report": {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/tmp/step09-nonnull-bundle-final/instrumented.cjs"
+      ],
+      "cases": 16,
+      "passed": 16,
+      "failed": [],
+      "seconds": 13.583
+    },
+    "all_outputs_recompared_after_resume": true
+  },
+  "byte_identical_project_outputs": 301,
+  "instrumented_sites": 1119,
+  "reached_sites": 322,
+  "unvisited_sites": 797,
+  "nullish_sites": 72,
+  "nullish_evaluations": 61952884,
+  "null_evaluations": 0,
+  "undefined_evaluations": 61952884,
+  "projects_with_nullish": 301,
+  "first_nullish_sites": [
+    "src/compiler/scanner.ts:4097:24@218730-218740:undefined"
+  ]
+}
