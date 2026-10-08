@@ -3,7 +3,7 @@
 Decision for Kirk, October 6, 2026: a sound qualified-name subset exists, and
 this branch implements it. Admit a single module-scope declaration, nested
 namespaces, interfaces/type aliases, ordinary or generic functions, exported
-constants, and initialized private `let`/`const` bindings. Namespace functions
+constants, classes, and initialized private `let`/`const` bindings. Namespace functions
 can be called, detached and compared by identity. Names can coexist with an
 interface or type alias of the same spelling. Type-only namespaces erase.
 
@@ -112,3 +112,16 @@ reads and then mutates its object's flags, separately from Debug's flags. A muta
 substituting Debug's flags for the method receiver is caught by Node stdout in
 both backends. [Parser-stop evidence](../stage3/namespace-parser-stops/REPORT.md)
 records the exact programs, baseline refusals, validation and remaining scope.
+
+## Namespace class declarations (October 8)
+
+Classes inside a namespace use the existing class registration, instance layouts,
+methods and constructor lowering. Their constructor binding becomes ready in
+declaration order, including classes with no static members. Construction reads
+that binding before its arguments run. Scope remains the checker's symbol scope.
+Existing class limitations and the conservative early namespace initialization
+refusals remain in force; class/namespace merging remains NotYet.
+
+The parser's DebugTypeMapper declaration probe and an executed two-instance
+fixture match Node in both backends. Removing the actual constructor registration
+must trigger the existing readiness check. See [the parser-stop report](../stage3/namespace-parser-stops/REPORT.md).
