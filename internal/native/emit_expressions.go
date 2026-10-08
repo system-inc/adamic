@@ -114,6 +114,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Of == ir.Union {
+			return e.unionField(expression)
+		}
 		if taken, ok := e.take(expression); ok {
 			return taken
 		}
@@ -604,6 +607,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
+		if expression.Function == "unionFieldKind" {
+			return e.unionFieldKind(expression)
+		}
 		if value, known := e.libraryNumberCall(expression); known {
 			return value
 		}

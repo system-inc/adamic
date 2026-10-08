@@ -1,0 +1,8 @@
+class Counter {
+    value(): number { return 1; }
+}
+const first = new Counter();
+const second = new Counter();
+console.log(`${first.value()} ${second.value()}`);
+first.value = () => 2;
+console.log(`${first.value()} ${second.value()}`);

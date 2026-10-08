@@ -709,6 +709,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
+		if expression.Function == "unionFieldKind" {
+			return e.unionFieldKind(expression)
+		}
 		if expression.Function == "toBoolean" {
 			return "Boolean(" + e.values(expression.Arguments) + ")"
 		}

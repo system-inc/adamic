@@ -106,8 +106,10 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
-// Boolean fields have a tagged byte; other slotless representations remain refused.
-func censusFieldSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }
+// Boolean fields have a tagged byte; unions have an owned heap reference.
+func censusFieldSlotless(of ir.Type) bool {
+	return slotless(of) && of != ir.MaybeBoolean && of != ir.Union
+}
 
 // Only the implementation of a named overload set has executable code.
 func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {

@@ -1,0 +1,15 @@
+interface NumberView { readonly member: string | number; }
+interface BooleanView { readonly member: string | boolean; }
+const numberSource = { member: 42 };
+const booleanSource = { member: true };
+function numberView(view: NumberView): void { console.log(`${view.member}`); }
+function booleanView(view: BooleanView): void { console.log(`${view.member}`); }
+numberView(numberSource);
+booleanView(booleanSource);
+const text: NumberView = { member: 'owned'.repeat(2) };
+numberView(text);
+interface OptionalView { readonly member?: string | number; }
+function optionalView(view: OptionalView | undefined): void { console.log(`${view?.member}`); }
+optionalView(undefined);
+optionalView({});
+optionalView({ member: 7 });

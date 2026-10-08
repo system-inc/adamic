@@ -500,6 +500,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+	if read, handled := l.unionFieldRead(node, property); handled {
+		return read
+	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
 		return property
