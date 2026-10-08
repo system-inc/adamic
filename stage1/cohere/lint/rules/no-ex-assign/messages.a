@@ -1,0 +1,3 @@
+export const messageUnexpectedExceptionAssignment =
+    'This assigns to the caught exception, which discards the only reference to what actually went wrong. Anything after this point in the handler reports the new value rather than the error, so a rethrow rethrows the wrong thing and a log line describes something that never happened. The usual intent is a second binding: declare one instead of overwriting the parameter.';
+

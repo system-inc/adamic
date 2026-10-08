@@ -14,6 +14,7 @@ import (
 )
 
 func TestMicromarkInputChunks(t *testing.T) {
+	parallelMarkdownMemory(t, 1)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -148,7 +149,7 @@ func TestMicromarkInputChunks(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), data)
 			}
-			result := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/chunks_probe.ts")), cases)
+			result := onNode(t, filepath.Join(scratch, "testdata/chunks_probe.ts"), cases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("survived")

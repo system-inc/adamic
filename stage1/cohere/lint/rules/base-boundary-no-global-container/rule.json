@@ -1,0 +1,13 @@
+{
+  "name": "base/boundary-no-global-container",
+  "kinds": [
+    "Identifier"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleBaseBoundaryNoGlobalContainer",
+  "upstreamPackage": "base",
+  "upstreamTest": "TestNoGlobalContainer",
+  "factory": "create",
+  "class": "Rule"
+}
