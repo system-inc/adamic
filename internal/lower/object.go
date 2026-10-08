@@ -1455,7 +1455,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown {
+	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1521,7 +1521,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
 		entryKey = fit(entryKey, key)
-		entryValue = l.fitMapEntry(elements[1], entryValue, value)
+		entryValue = fit(entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
@@ -1576,7 +1576,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 		want = 2
 	}
 	if name == "set" && len(arguments) == 2 {
-		arguments[1] = l.fitMapEntry(node.AsCallExpression().Arguments.Nodes[1], arguments[1], value)
+		arguments[1] = fit(arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")
@@ -1585,7 +1585,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver), ValueContract: l.mapEntrySlot(node, l.concrete(l.typeArguments(l.checker.GetTypeAtLocation(receiver))[1])), ValueWhere: sourceExpression(node)}, true, nil
+		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}
@@ -1850,7 +1850,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if slotless(of) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
-	return l.readTupleViewElement(node, object, index.Text(), of), nil
+	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
 }
 
 // setIndex lowers array[index] = value, as a statement.

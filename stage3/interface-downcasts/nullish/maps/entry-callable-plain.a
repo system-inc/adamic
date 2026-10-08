@@ -1,7 +1,0 @@
-interface Base{readonly kind:string}
-interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,((value:number)=>number)>|null}
-const first=(value:number):number=>value+1;
-const map=new Map<string,((value:number)=>number)>([['key',first]]);map.set('key',(value:number)=>value+2);
-const raw={kind:'box',value:map};const base:Base=raw;
-function read(node:Target):void{const map=node.value;if(map!==null){const callback=map.get('key');if(callback!==null&&callback!==undefined){console.log(String(callback(5)));}console.log(typeof map.get('missing'));}}
-read(base as Target);

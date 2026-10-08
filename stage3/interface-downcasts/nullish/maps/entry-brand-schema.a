@@ -1,6 +1,0 @@
-type Brand='yes'&{readonly __brand:void};
-interface Base{readonly kind:string}
-interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Brand>|null}
-const raw={kind:'box',value:new Map<string,string>([['key','no']])};const base:Base=raw;
-function read(node:Target):void{console.log(typeof node.value);}
-read(base as Target);

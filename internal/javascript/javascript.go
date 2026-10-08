@@ -963,12 +963,6 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
-		if expression.Undefined {
-			return "((value) => value === undefined ? undefined : panic(" + quote("undefined storage conversion failed: "+expression.UndefinedWhere+" expected undefined, found present reference") + "))(" + e.value(expression.Value) + ")"
-		}
-		if expression.Tuple {
-			return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), ir.Array)
-		}
 		return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), expression.To)
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
@@ -1126,10 +1120,10 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapNew:
 		entries := []string{}
 		for _, entry := range expression.Entries {
-			entries = append(entries, "["+e.value(entry[0])+", "+e.mapEntryCallableCertificate(expression.ValueContract, e.value(entry[1]), "Map constructor entry")+"]")
+			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
 		}
 		if expression.Pairs != nil {
-			return fmt.Sprintf("adamicMapProducer(new Map(%s),%d,%d,%s)", "("+e.value(expression.Pairs)+").map((pair) => [pair[0], "+e.mapEntryCallableCertificate(expression.ValueContract, "pair[1]", "Map constructor entry")+"])", expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
+			return fmt.Sprintf("adamicMapProducer(new Map(%s),%d,%d,%s)", e.value(expression.Pairs), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 		}
 		return fmt.Sprintf("adamicMapProducer(new Map([%s]),%d,%d,%s)", strings.Join(entries, ", "), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 	case ir.MapKeys:
@@ -1143,7 +1137,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapGet:
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
-		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.mapEntryCallableCertificate(expression.ValueContract, e.value(expression.Value), expression.ValueWhere) + ")"
+		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {
 			return "new Set()"

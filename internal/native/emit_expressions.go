@@ -454,7 +454,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
-		return e.graphArray(fmt.Sprintf("adamic_map_entries_as(%s, &%s, %d, %d)", e.value(expression.Map), pair, expression.KeyType, expression.ValueType), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}
@@ -506,7 +506,6 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
-		e.line("%s->value_type = %d;", created, expression.Value)
 		e.line("%s->key_contract = %d; %s->value_contract = %d; %s->contract_name = %s;", created, expression.KeyContract, created, expression.ValueContract, created, cString(func() string {
 			if expression.ContractName == "" {
 				return "uncertified Map"
@@ -515,18 +514,16 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		}()))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
-			e.mapEntryCallableCertificate(expression.ValueContract, entry[1], "Map constructor entry")
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
 		}
 		if expression.Pairs != nil {
-			e.mapPairCallableCertificates(expression.ValueContract, pairs)
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
 		}
 		return created
 	case ir.MapKeys:
 		return e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapValues:
-		return e.graphArray(fmt.Sprintf("adamic_map_values_as(%s, %d)", e.value(expression.Map), expression.Value), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapClear:
 		e.line("adamic_map_clear(%s);", e.value(expression.Map))
 		return "0"
@@ -555,13 +552,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}
-		// The read adapter owns its reference before a later set can release the entry.
-		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : %s->%s", slot, slot, member(expression.ValueType)))
+		// Retained, so a set later in the same statement can't free it from under its reader.
+		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
 	case ir.MapSet:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
-		e.mapEntryCallableCertificate(expression.ValueContract, value, expression.ValueWhere)
 		e.line("adamic_map_set(%s, %s, %s);", object, e.heldIn(object, expression.KeyType, key), e.heldIn(object, expression.ValueType, value))
 		return object
 	case ir.MapHas:

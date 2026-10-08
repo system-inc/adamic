@@ -1,7 +1,0 @@
-const good=():number=>7;
-const wrong=():string=>'wrong';
-console.log(typeof wrong);
-const map=new Map<string,()=>number>([['key',good]]);
-map.set('key',good);
-const callback=map.get('key');
-if(callback!==undefined){console.log(String(callback()));}

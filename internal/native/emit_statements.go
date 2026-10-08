@@ -436,12 +436,6 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		e.declareLocal(local, reading, false)
 	}
 	if overMap {
-		if statement.MapPart != "keys" {
-			e.line("%s = adamic_map_read_value(%s,%s,%d);", entryValue, iterable, entryValue, statement.Value)
-			if statement.Value.IsReference() {
-				e.hold(entryValue + ".reference")
-			}
-		}
 		switch statement.MapPart {
 		case "keys":
 			bindEntry(statement.Local, entryKey, statement.Key)

@@ -1156,6 +1156,17 @@ entry-live-mutation.a:5:82 fails with NotYet function value taking
 string | number | null (.047s). The optional-reference conversion follow-up
 still does not scope that callable ABI change. No clean resolution preserves
 both existing refusals and every new Node agreement. Entire owner item is
-left out and merge aborted; no owner code retained. Exact logs are preserved.
+left out of the final tree; see corrective publication below. Exact logs are preserved.
 Continue with newest array tip 257568b0eb90669bd0585f04e81f8b1e11039760.
 This is a semantic integration failure, not an automatic approval rejection.
+
+Publication correction: abort failed because the temporary census_small.go
+experiment was unstaged. The command incorrectly continued, committing and
+pushing ff1c994d687d972d108cc4784da055883040aabf with rejected owner changes.
+Immediately revert that merge against its first parent, preserving these logs.
+The corrected compiler/runtime/docs tree is byte-identical to green a7623448c;
+only integration evidence changes. ff1c994d6 must not be consumed. Owner remains
+in history but its entire source change is reverted. A later repaired owner tip
+will require explicit reapplication of the reverted changes before gating.
+No history rewrite or force push. This was an integrator command error, not a
+reviewer rejection. All subsequent mutating sequences stop on the first error.
