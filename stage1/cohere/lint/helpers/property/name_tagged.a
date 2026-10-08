@@ -1,0 +1,24 @@
+import { panic } from 'adamic';
+import type { HelperNode } from '../slot02_ast.a';
+import { propertyName, type PropertyNameResult } from '../property_name.a';
+
+// Reuse Name's accept-set and computed-key judgment. Only the settled value's
+// spelling kind decides the extra tag; numeric text is a parser fact.
+export function NameTagged(nodes: readonly HelperNode[], key: number, accept: number): PropertyNameResult {
+    const result = propertyName(nodes, key, accept);
+    if(!result.named) { return result; }
+    let current = key;
+    let remaining = nodes.length;
+    while((nodes[current] ?? panic('missing tagged key')).kind === 'ComputedPropertyName') {
+        current = (nodes[current] ?? panic('missing computed key')).expression;
+        while((nodes[current] ?? panic('missing computed expression')).kind === 'ParenthesizedExpression') {
+            if(remaining <= 0) { panic('invalid tagged key cycle'); }
+            remaining--;
+            current = (nodes[current] ?? panic('missing parentheses')).expression;
+        }
+        if(remaining <= 0) { panic('invalid tagged key cycle'); }
+        remaining--;
+    }
+    const tag = (nodes[current] ?? panic('missing tagged value')).kind === 'NumericLiteral' ? 'number:' : 'string:';
+    return { name: tag + result.name, named: true };
+}

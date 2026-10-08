@@ -1,0 +1,11 @@
+=== RUN   TestNameTaggedConsumerAgreementAndMutant
+    tagged_test.go:108: live Go capture: {"core": {"calls": 101, "passing_test_events": 40}, "typescript": {"calls": 55, "passing_test_events": 35}, "react": {"calls": 83, "passing_test_events": 51}, "property": {"calls": 974, "passing_test_events": 8}}
+    tagged_test.go:126: Node source identical to Go: 1213 calls, 12448 bytes
+    tagged_test.go:126: sanitized native identical to Go: 1213 calls, 12448 bytes
+    tagged_test.go:126: emitted JavaScript identical to Go: 1213 calls, 12448 bytes
+    tagged_test.go:152: NameTagged number-tag mutant caught on Node source: compiled, ran and disagreed with Go
+    tagged_test.go:152: NameTagged number-tag mutant caught on sanitized native: compiled, ran and disagreed with Go
+    tagged_test.go:152: NameTagged number-tag mutant caught on emitted JavaScript: compiled, ran and disagreed with Go
+--- PASS: TestNameTaggedConsumerAgreementAndMutant (57.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/property	57.850s
