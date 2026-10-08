@@ -74,7 +74,7 @@ entry, not a claim that the TypeScript compiler builds. No output was emitted.
 | NotYet | `iterating a value` | 1 | 1 | 0 | `programDiagnostics.ts:219:39` |
 | Refused | `a generator function` | 12 | 12 | unmeasured | `checker.ts:21677:5`; `checker.ts:21685:5`; `checker.ts:21781:30` |
 | Refused | `a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read` | 14 | 1 | unmeasured | `sourcemap.ts:504:48`; `sourcemap.ts:505:52`; `sourcemap.ts:511:52` |
-| Refused | `optional property return in ArrayIterator<JSDocLink | JSDocLinkCode | JSDocLinkPlain | JSDocText> absent from structural source ArrayIterator<JSDocComment>, which can hide fields` | 1 | 1 | unmeasured | `parser.ts:9508:101` |
+| Refused | `optional property return in ArrayIterator<JSDocLink \| JSDocLinkCode \| JSDocLinkPlain \| JSDocText> absent from structural source ArrayIterator<JSDocComment>, which can hide fields` | 1 | 1 | unmeasured | `parser.ts:9508:101` |
 | Refused | `optional property return in ArrayIterator<Node> absent from structural source ArrayIterator<JSDocComment>, which can hide fields` | 13 | 5 | unmeasured | `parser.ts:1054:92`; `parser.ts:1060:89`; `parser.ts:1073:89` |
 | Refused | `optional property return in ArrayIterator<Statement> absent from structural source ArrayIterator<JsonObjectExpressionStatement>, which can hide fields` | 14 | 9 | unmeasured | `commandLineParser.ts:2445:13`; `commandLineParser.ts:2498:65`; `commandLineParser.ts:2503:65` |
 | Refused | `yield (generators)` | 15 | 12 | unmeasured | `checker.ts:21681:13`; `checker.ts:21693:17`; `checker.ts:21782:33` |
@@ -263,3 +263,50 @@ for (const value of single(1)) { console.log(String(value)); break; }
 Every implemented piece needs source Node, both backends, native sanitizers, release
 and leak checks, and a mutant caught by the specific acceptance check. Report other
 implementation boundaries directly; do not relabel them as a new policy decision.
+
+## Acceptance fixtures on the base
+
+The 16 fixtures in [outcomes.json](../stage3/fixtures/iteration/outcomes.json)
+record exact Node output and compiler outcomes on the delivery base. Two shapes
+already compile: concrete Map/Set iterators and strings by code point. Four
+readonly-array fixtures stop at object iteration, three object-binding fixtures
+stop at destructuring, two generators are Refused, and the structural iterable
+and iterator-forwarding reductions retain their exact NotYet reasons. Three
+intrinsic override counterexamples record the base's earlier boundaries.
+
+The fixture [README](../stage3/fixtures/iteration/README.md) distinguishes source
+reductions from authored stress and ownership probes. The immutable base snapshot
+is [baseline-outcomes.json](../stage3/fixtures/iteration/baseline-outcomes.json).
+The accepted fixtures pass source Node, the JavaScript backend, native ASan/UBSan,
+release builds and leak checks. The wrong-reason snapshot mutant is killed by the
+exact diagnostic comparison. The four original test262 cases pass independently
+on Node in default and strict modes; this is eight runs, not full-suite coverage.
+
+Verification commands, with complete output redirected to separate files:
+
+```sh
+go test ./internal/oracle -run '^TestStep20IterationOutcomes$|^TestNativeAgreesWithNode$/stage3/fixtures/iteration/(collections|strings).a$' -count=1 -timeout 30m -v
+python3 stage3/fixtures/iteration/check_snapshot_mutant.py
+node stage3/fixtures/iteration/test262_originals.mjs /tmp/scout-test262
+npm ci --prefix stage3/api
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+```
+
+The first counts attempt stopped at missing `@types/node` 25.3.3. The setup script
+had not installed `stage3/api`'s locked dependencies; `npm ci --prefix stage3/api`
+installed them. The final refresh is recorded separately. An earlier positive
+snapshot run overlapped a temporary expected-reason mutation and therefore failed;
+the final positive run passed after restoration. The committed mutant runner uses
+a Go overlay and never changes the fixture snapshot.
+
+Setup output and verification transcripts are in
+[evidence](step-20-iteration/evidence/). Setup reported `nproc=5` and cgroup
+`cpu.max=400000 100000`. Its timing lines are retained verbatim in
+[setup.txt](step-20-iteration/evidence/setup.txt), including the cold build and
+successful environment path. No full package test or full gate was run.
+
+The final base counts refresh passed. It adds the two accepted iteration fixtures
+with balanced allocations/frees. It also reconciles the inherited area-tip fixture
+registry: `logical_and_reference_maybe.a` moves with its init registration and
+`taste/17_binder_flow.a` is omitted because that fixture is registered as not
+lowering. No count values for pre-existing counted fixtures change.
