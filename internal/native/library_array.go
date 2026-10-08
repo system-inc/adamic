@@ -12,7 +12,18 @@ func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
 	if search.From != nil {
 		from = e.value(search.From)
 	}
-	found := fmt.Sprintf("adamic_array_search_from(%s, %s, %s, %t, %s, %t, %t)", array, borrowed(search.Element, value), equality(search.Element), search.Includes, from, search.From != nil, search.Last)
+	element := search.Element
+	if element == ir.MaybeBoolean {
+		// Search compares the three tagged values, including present undefined. Use numerical
+		// tags in a temporary dense array so no uninitialized union padding enters equality.
+		copy := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, false)", array))
+		index := e.temporary()
+		e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, array, index)
+		e.line("\tadamic_array_push(%s, (adamic_value){.number = %s->elements[%s].maybe_boolean});", copy, array, index)
+		e.line("}")
+		array, value, element = copy, fmt.Sprintf("(double)adamic_maybe_boolean_pack(%s)", value), ir.Number
+	}
+	found := fmt.Sprintf("adamic_array_search_from(%s, %s, %s, %t, %s, %t, %t)", array, borrowed(element, value), equality(element), search.Includes, from, search.From != nil, search.Last)
 	if search.Includes {
 		return e.snapshot(ir.Boolean, found+" != -1")
 	}

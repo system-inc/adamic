@@ -1,0 +1,8 @@
+// Optional never fields let the source construct the branded scalar without a cast.
+// The element still has an intersection type, and its runtime value is a string.
+type Name = string & { readonly marker?: never };
+const names: Name[] = ['first', 'second'];
+console.log(`${names.length} ${names.slice().length}`);
+console.log(names.join('/'));
+names.reverse();
+console.log(names.join('/'));

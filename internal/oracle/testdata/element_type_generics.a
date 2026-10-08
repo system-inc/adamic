@@ -1,0 +1,27 @@
+// Census generic declarations have no call-site specialization. These calls do.
+function first<T>(array: readonly T[], fallback: T): T {
+	return array[0] ?? fallback;
+}
+
+function copy<U>(array: readonly U[]): U[] {
+	return array.slice();
+}
+
+function append<V>(array: V[], value: V): void {
+	array.push(value);
+}
+
+interface Entry {
+	readonly text: string;
+}
+
+const words = copy(['one', 'two']);
+append(words, 'three');
+console.log(`${first([7, 9], 0)} ${first(words, 'empty')} ${words.join('/')}`);
+console.log(`${first([false, true], true)} ${first<Entry>([{ text: 'held' }], { text: 'fallback' }).text}`);
+console.log(`${first<number>([], 42)} ${first<string>([], 'missing')}`);
+
+function nonNullableFirst<T>(array: readonly NonNullable<T>[], fallback: T): T {
+	return array[0] ?? fallback;
+}
+console.log(`${nonNullableFirst<string | undefined>(['present'], undefined)} ${nonNullableFirst<number | undefined>([17], undefined)}`);

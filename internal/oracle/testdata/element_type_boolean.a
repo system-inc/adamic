@@ -1,0 +1,19 @@
+const values: (boolean | undefined)[] = [false, undefined, true];
+console.log(`${values[0]} ${values[1]} ${values[2]} ${values[9]}`);
+values[1] = true;
+values.push(undefined);
+const copied = values.slice();
+console.log(`${copied.pop()} ${copied.pop()} ${copied.pop()} ${copied.pop()} ${copied.pop()}`);
+console.log(`${values.indexOf(undefined)} ${values.includes(false)} ${values.lastIndexOf(true)} ${values.includes(undefined, -1)}`);
+let seen = '';
+for (const value of values) {
+	seen += `${value}/`;
+}
+console.log(seen);
+console.log(`${values.find((value) => value === false)} ${values.find((value) => value === undefined)} ${values.find((value) => value === true)}`);
+function compare(left: boolean | undefined, right: boolean | undefined): number {
+	console.log(`compare ${left} ${right}`);
+	return (left === true ? 1 : 0) - (right === true ? 1 : 0);
+}
+values.sort(compare);
+console.log(`${values[0]} ${values[1]} ${values[2]} ${values[3]}`);
