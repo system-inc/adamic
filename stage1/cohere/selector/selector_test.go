@@ -1,13 +1,11 @@
 package selector
 
 import (
-	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -243,10 +242,10 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/selector")
+	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/selector")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := command.CombinedOutput()
+	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
 	}
@@ -317,18 +316,17 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded configures a child command; Run and CombinedOutput below guard its output progress.
+// Silent builds and buffered children use childguard's 30-minute FirstOutput window;
+// after output starts, the default two-minute Stall allows over 3x the measured loaded gaps.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
+	command := exec.Command(name, arguments...)
+	t.Cleanup(func() {
+		if command.Process != nil && command.ProcessState == nil {
+			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		}
+	})
 	return command
 }
 
@@ -341,7 +339,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -555,6 +553,25 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	}
 }
 
+// parserEntry forwards the first stdout line while retaining all output for the proof.
+// Only the stdout copy goroutine writes it; the test reads the buffer after Run finishes.
+type parserEntry struct {
+	bytes.Buffer
+	entered chan string
+	sent    bool
+}
+
+func (output *parserEntry) Write(data []byte) (int, error) {
+	n, err := output.Buffer.Write(data)
+	if !output.sent {
+		if end := bytes.IndexByte(output.Bytes(), '\n'); end >= 0 {
+			output.sent = true
+			output.entered <- string(output.Bytes()[:end+1])
+		}
+	}
+	return n, err
+}
+
 // The explicit exception to JS agreement is observable, not an inference from Go.
 func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	t.Parallel()
@@ -565,53 +582,35 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	for _, text := range []string{"a| b", ":is(a|)", "a|@x", "*|)"} {
 		t.Run(text, func(t *testing.T) {
 			t.Parallel()
-			// The second is counted from "entering parser", not from launch, so a slow node start on a
-			// loaded box can't decide the test. Starting gets its own generous bound and fails by name.
-			command := exec.Command("node", "testdata/nontermination.mjs", library, text)
-			stdout, err := command.StdoutPipe()
-			if err != nil {
-				t.Fatal(err)
-			}
+			// Startup uses the ordinary progress guard. The one-second observation after
+			// "entering parser" deliberately proves nontermination, rather than speed.
+			command := bounded(t, "node", "testdata/nontermination.mjs", library, text)
+			stdout := &parserEntry{entered: make(chan string, 1)}
 			var stderr bytes.Buffer
-			command.Stderr = &stderr
-			if err := command.Start(); err != nil {
-				t.Fatal(err)
+			command.Stdout, command.Stderr = stdout, &stderr
+			ended := make(chan error, 1)
+			go func() { ended <- childguard.Run(command, childguard.Options{}) }()
+			stop := func() error {
+				_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+				return <-ended
 			}
-			reader := bufio.NewReader(stdout)
-			entered := make(chan string, 1)
-			go func() {
-				line, _ := reader.ReadString('\n')
-				entered <- line
-			}()
 			select {
-			case line := <-entered:
+			case line := <-stdout.entered:
 				if line != "entering parser\n" {
-					_ = command.Process.Kill()
-					_ = command.Wait()
+					_ = stop()
 					t.Fatalf("expected %q first, got %q, stderr %q", "entering parser\n", line, stderr.String())
 				}
-			case <-time.After(60 * time.Second):
-				_ = command.Process.Kill()
-				_ = command.Wait()
-				t.Fatalf("node never printed %q within 60s of launch, stderr %q", "entering parser\n", stderr.String())
+			case err := <-ended:
+				t.Fatalf("node stopped before entering the parser: %v, stdout %q, stderr %q", err, stdout.String(), stderr.String())
 			}
-			type ending struct {
-				rest []byte
-				err  error
-			}
-			ended := make(chan ending, 1)
-			go func() {
-				rest, _ := io.ReadAll(reader)
-				ended <- ending{rest, command.Wait()}
-			}()
 			select {
-			case end := <-ended:
-				t.Fatalf("the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q", end.err, end.rest, stderr.String())
+			case err := <-ended:
+				t.Fatalf("the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q", err, strings.TrimPrefix(stdout.String(), "entering parser\n"), stderr.String())
 			case <-time.After(time.Second):
 			}
-			_ = command.Process.Kill()
-			if end := <-ended; len(end.rest) != 0 {
-				t.Fatalf("output after entering the parser: %q", end.rest)
+			_ = stop()
+			if rest := strings.TrimPrefix(stdout.String(), "entering parser\n"); len(rest) != 0 {
+				t.Fatalf("output after entering the parser: %q", rest)
 			}
 			t.Log("entered parser, no return within 1s of entering, killed")
 		})
