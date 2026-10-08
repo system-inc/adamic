@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6):
+    def __init__(self, count=6, staleLock=False):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -24,6 +24,11 @@ class Watcher:
             shutil.copy(ROOT / 'cloud' / name, cloud / name)
         self.state = self.root / 'state'
         self.state.mkdir()
+        if staleLock:
+            # As a watcher killed mid-pass leaves it, with or without the holder line it records now.
+            (self.state / 'slot-table.lock').mkdir()
+            if isinstance(staleLock, str):
+                (self.state / 'slot-table.lock' / 'holder').write_text(staleLock + ' 1000\n')
         self.bin = self.root / 'bin'
         self.bin.mkdir()
         self.put('clock', '1000')
@@ -325,6 +330,41 @@ class WatchTests(unittest.TestCase):
         self.assertTrue(w.read('starts').splitlines()[0].endswith(' S server'), w.read('starts'))
         w.put('initial', 'pass')
         w.wait(lambda: 'cloud/land-area-next-auto-1' in w.read('starts'))
+
+    def test_a_lock_left_by_a_killed_watcher_is_cleared_at_start(self):
+        w = Watcher(0, staleLock=True)
+        self.addCleanup(w.close)
+        w.wait(lambda: 'canary/main' in w.read('starts'))
+        self.assertIn('cleared a slot-table lock', w.read('output'))
+
+    def test_a_dead_holder_s_lock_is_taken_over_and_a_live_one_is_not(self):
+        dead = subprocess.Popen(['true'])
+        dead.wait()
+        w = Watcher(0, staleLock=str(dead.pid))
+        self.addCleanup(w.close)
+        w.wait(lambda: 'canary/main' in w.read('starts'))
+        self.assertIn('took over a slot-table lock whose holder %d' % dead.pid, w.read('output'))
+        live = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(live.kill)
+        w2 = Watcher(0, staleLock=str(live.pid))
+        self.addCleanup(w2.close)
+        time.sleep(.4)
+        self.assertNotIn('canary/main', w2.read('starts'))
+
+    def test_a_stall_alarms_once(self):
+        w = self.reservation('busy S\n', [('codex/waiting', 'S')])
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old ' + 'c' * 40 + ' S busy S x ' + str(w.state / 'logs/old.log') + '\n')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        messages = w.read('messages')
+        w.put('clock', '1950')
+        w.wait(lambda: 'stall alarm sent' in w.read('output'))
+        time.sleep(.2)
+        new = w.read('messages')[len(messages):]
+        self.assertEqual(new.count('fast gate stall'), 2, new)  # developer tools and integration, once
+        self.assertIn('nothing dispatched for', new)
+        self.assertIn('queue head: codex/waiting', new)
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',

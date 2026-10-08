@@ -30,7 +30,7 @@ git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
 # Release only this watcher's scheduling guard on an ordinary shutdown.
-trap '[ "${slotTableOwned:-}" = yes ] && rmdir "${state}/slot-table.lock" 2>/dev/null || true' EXIT
+trap '[ "${slotTableOwned:-}" = yes ] && rm -f "${state}/slot-table.lock/holder" && rmdir "${state}/slot-table.lock" 2>/dev/null || true' EXIT
 
 . "${here}/cloud/fast-gate-classify.sh"
 
@@ -114,6 +114,7 @@ countVoid() {
 dispatch() {
   local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 started whole=""
   started=$(date -u +%s)
+  lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
   ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   local pid=$!
@@ -271,12 +272,37 @@ reservedBoxes() {
   done < "${state}/slots"
 }
 
+# The slot-table lock is held for one scheduling pass by this watcher or a moment by auto-area-merge.py.
+# One left by a watcher killed mid-pass (a launchd restart, Oct 8 17:21Z) skipped every pass after it:
+# nothing dispatched for 17 minutes. A lock no live auto-area-merge process can hold is cleared at start,
+# and in a pass once it is two minutes old.
+clearStaleSlotLock() {
+  local age holder since
+  [ -d "${state}/slot-table.lock" ] || return 0
+  # The watcher's own pass writes its pid and start: a dead holder's lock is taken over at once.
+  if [ -f "${state}/slot-table.lock/holder" ]; then
+    read -r holder since < "${state}/slot-table.lock/holder"
+    kill -0 "${holder}" 2> /dev/null && return 0
+    rm -f "${state}/slot-table.lock/holder"
+    rmdir "${state}/slot-table.lock" 2> /dev/null && echo "$(/bin/date -u +%H:%M:%S) took over a slot-table lock whose holder ${holder} (since ${since}) is dead"
+    return 0
+  fi
+  # No holder file: auto-area-merge.py's moment, or a lock older than holders.
+  pgrep -f "auto-area-merge" > /dev/null 2>&1 && return 0
+  if [ "${1:-}" != start ]; then
+    age=$(python3 -c 'import os, sys, time; print(int(time.time() - os.stat(sys.argv[1]).st_mtime))' "${state}/slot-table.lock" 2> /dev/null || echo 0)
+    [ "${age}" -ge 120 ] || return 0
+  fi
+  rmdir "${state}/slot-table.lock" 2> /dev/null && echo "$(/bin/date -u +%H:%M:%S) cleared a slot-table lock no live process held"
+}
 tips() {
   git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' 'refs/heads/cloud/land-*' |
     awk '{sub("refs/heads/", "", $2); print $2, $1}' | sort
 }
 
 [ -s "${state}/seen" ] || tips > "${state}/seen"
+clearStaleSlotLock start
+watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
 mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running"
@@ -374,8 +400,10 @@ while true; do
   done
   # Shared with the dispatcher: checking free slots and recording a PID is one transaction.
   # If a merge is claiming a slot, leave scheduling to the next poll.
+  clearStaleSlotLock
   if mkdir "${state}/slot-table.lock" 2>/dev/null; then
   slotTableOwned=yes
+  echo "$$ $(/bin/date -u +%s)" > "${state}/slot-table.lock/holder"
   # A deploy barrier persists until this tools version gets a real main verdict.
   # A running probe is never duplicated, including across watcher restarts.
   # An old watcher's result cannot satisfy this startup's deploy barrier.
@@ -468,8 +496,23 @@ while true; do
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}$([ "${slot}" = "${class}" ] || echo " in an ${slot} slot") on ${box}, waited $(( now - queued )) s, log ${log})"
     (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
   done
+  rm -f "${state}/slot-table.lock/holder"
   rmdir "${state}/slot-table.lock"
   slotTableOwned=""
+  fi
+  # An alarm, once a stall: a queue and no dispatch anywhere for five minutes with a slot free (fifteen
+  # with every slot busy, since long gates can hold them all), to developer tools and integration.
+  pollEnd=$(date -u +%s)
+  # A void storm pauses dispatch on purpose and sends its own alarm.
+  if [ -s "${state}/queue" ] && [ ! -f "${state}/storm" ]; then
+    freeCount=$(freeSlots | grep -c .)
+    stallLimit=900
+    [ "${freeCount}" -gt 0 ] && stallLimit=300
+    if [ $(( pollEnd - ${lastDispatch:-${watchStart}} )) -ge "${stallLimit}" ] && [ -z "${stallAlarmed:-}" ]; then
+      stallAlarmed=1
+      notifyStorm "fast gate stall: nothing dispatched for $(( pollEnd - ${lastDispatch:-${watchStart}} )) s with $(grep -c . "${state}/queue") queued and ${freeCount} slots free (tools ${toolsHead:0:8}$([ "${canaryRequired}" = 1 ] && echo ', deploy canary not yet run')$([ -d "${state}/slot-table.lock" ] && echo ', slot-table lock held')). queue head: $(head -3 "${state}/queue" | awk '{print $3}' | tr '\n' ' ')"
+      echo "$(date -u +%H:%M:%S) stall alarm sent"
+    fi
   fi
   # A durable queue survives restarts. The dispatcher and area-merge's own locks serialize merges;
   # a locked area stays queued, and removing the switch prevents the next attempt.

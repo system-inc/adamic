@@ -242,7 +242,9 @@ class Wiring(unittest.TestCase):
     def test_reaping_enqueues_only_real_matching_green_worker_with_switch(self):
         watcher = Path(__file__).with_name('fast-gate-watch.sh').read_text()
         void_function = watcher[watcher.index('voidCause() {'):watcher.index('\ntips() {')]
-        loop = watcher[watcher.index('  for file in "${state}"/running/*; do'):watcher.index('  # Shared with the dispatcher:')]
+        # The reap loop inside the main loop; stopStaleRed walks the same running files earlier in the file.
+        reap = watcher.index('  for file in "${state}"/running/*; do', watcher.index('\nwhile true; do'))
+        loop = watcher[reap:watcher.index('  # Shared with the dispatcher:')]
         sha = 'a' * 40
         cases = [('codex/worker', f'green: {sha} passed\n', True, True),
                  ('codex/worker', f'green: {sha} passed\n', False, False),
@@ -462,7 +464,8 @@ bundle = pathlib.Path(sys.argv[-1]) / token
         (running / '999999999').write_text('area-merge/compiler ' + 'a' * 40 + ' B threadripper B\n')
         queued = 'B 1 codex/compiler-fix ' + 'b' * 40 + '\n'
         (self.state / 'queue').write_text(queued)
-        script = 'state=$1; here=$1\n' + scheduling
+        # The section calls the watcher's lock and slot helpers; nothing is free and no lock is stale here.
+        script = 'state=$1; here=$1\nclearStaleSlotLock() { :; }\nfreeSlots() { :; }\nwatchStart=$(date -u +%s)\n' + scheduling
         result = subprocess.run(['bash', '-c', script, 'schedule-test', str(self.state)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((self.state / 'queue').read_text(), queued)
