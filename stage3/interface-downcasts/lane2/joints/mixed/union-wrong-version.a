@@ -1,0 +1,6 @@
+import type { IncrementalMultiFileEmitBuildInfo, IncrementalBuildInfo } from 'original-tsc-builder';
+interface Base { readonly fileNames: readonly string[]; }
+function read(node: IncrementalBuildInfo): string { node.fileInfos.forEach(file => console.log(typeof file)); return 'done'; }
+const concrete = {fileNames:['a'], root:[1], emitSignatures:[1], outSignature:'sig', fileInfos:[{version:42,signature:'s',affectsGlobalScope:undefined,impliedFormat:undefined}]};
+const base: Base = concrete;
+console.log(read(base as IncrementalMultiFileEmitBuildInfo));

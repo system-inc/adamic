@@ -2723,3 +2723,21 @@ lane 2 ownership of mixed-array joints, tuple storage admission and fileNames
 untagged admission before resuming the ranked list. Callable-array map and
 replacement frontiers remain pending without pair credit. See
 stage3/interface-downcasts/lane2/RANKED22-ARRAYS-REPORT.md.
+
+## Lane 2 mixed-array storage and consumer joints
+
+Original bundle, multi-file and union fileInfos storage and consumer reads now
+retain the source array and validate each reached scalar or flat structural
+member. Alias mutation and early-stopping consumers are held to Node in native
+release, sanitized native and JavaScript. Complete structural element selection
+uses a dedicated shared union adapter and existing readiness bytes, including
+optional boolean storage. Ordinary object selector laziness is unchanged.
+Twenty-nine source/control probes and nine executed descriptor mutants pass;
+twenty source finishes and nine mutant finishes pass leak checks. Twenty-one
+owned fixture counts are measured. Cross-lane changes have separate commits:
+union adapters b2aa9c9c, lane 7 controls 0acf7c6c and lane 4b controls 998de79f.
+The three new array-field certificates account for three reads: cumulative
+182 / 2895, remaining 152 / 294. The two overlapping consumer pairs add no
+duplicate array credit or production reachability. Null/object storage, tuples,
+fileNames admission and pending callback map/writes are outside this group.
+See `stage3/interface-downcasts/lane2/joints/MIXED-ARRAYS-REPORT.md`.

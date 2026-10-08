@@ -1,0 +1,21 @@
+// Verify original storage fields and consumer reads without reducing declarations.
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),crypto=require('node:crypto'),zlib=require('node:zlib');
+const ts=require('../../../../api/node_modules/typescript');
+const [root,out]=process.argv.slice(2).map(p=>path.resolve(p));
+if(!root||!out) throw Error('usage: prepare.cjs <pristine-upstream> <declarations>');
+cp.execFileSync(process.execPath,[path.resolve(__dirname,'../../../lane7/original/prepare.cjs'),root,out],{stdio:'inherit'});
+const manifest=JSON.parse(fs.readFileSync(path.join(out,'original-manifest.json')));
+const options={target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,strict:true,types:[]};
+const program=ts.createProgram([path.join(root,'src/compiler/builder.ts')],options),checker=program.getTypeChecker();
+const exported=(file,name)=>{const source=program.getSourceFile(path.join(root,file));const symbol=checker.getExportsOfModule(checker.getSymbolAtLocation(source)).find(s=>s.name===name);if(!symbol)throw Error('missing '+name);return checker.getDeclaredTypeOfSymbol(symbol);};
+manifest.fields={};
+for(const name of ['IncrementalBundleEmitBuildInfo','IncrementalMultiFileEmitBuildInfo','IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo']) manifest.fields[name]=checker.getPropertiesOfType(exported('src/compiler/builder.ts',name)).map(s=>s.name).sort();
+const source=program.getSourceFile(path.join(root,'src/compiler/builderState.ts'));
+const namespace=checker.getExportsOfModule(checker.getSymbolAtLocation(source)).find(s=>s.name==='BuilderState');
+const fileInfo=checker.getExportsOfModule(namespace).find(s=>s.name==='FileInfo');
+manifest.fields.FileInfo=checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(fileInfo)).map(s=>s.name).sort();
+const inventory=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(__dirname,'../../../lane4/read-demand-pairs.json.gz'))));
+const consumer=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../../lane7/original-read-witnesses.json'))).witnesses;
+manifest.pairs=[97922,97934,97937,97923,98493].map(id=>{const pair=inventory.find(p=>p.receiver_type_id===id&&p.field===(id===97922||id===97934||id===97937?'fileInfos':'forEach'));if(!pair||pair.reads!==1)throw Error('pair drift '+id);const file=program.getSourceFile(path.join(root,pair.witness.file));let access;const visit=node=>{if(ts.isPropertyAccessExpression(node)&&node.name.text===pair.field){const position=file.getLineAndCharacterOfPosition(node.getStart(file));if(position.line+1===pair.witness.line&&position.character+1===pair.witness.column)access=node;}ts.forEachChild(node,visit);};visit(file);if(!access)throw Error('site absent '+id);const actual=checker.typeToString(checker.getTypeAtLocation(access),undefined,ts.TypeFormatFlags.NoTruncation);if(!pair.declared_types.some(expected=>expected.split(' | ').sort().join(' | ')===actual.split(' | ').sort().join(' | ')))throw Error('original read contract drift '+id+': '+actual);const text=file.text;const hash=crypto.createHash('sha256').update(fs.readFileSync(file.fileName)).digest('hex');const site={file:pair.witness.file,start:access.getStart(file),end:access.end,text:text.slice(access.getStart(file),access.end),source_sha256:hash};const old=consumer.find(p=>p.type_id===id);if(old&&(old.start!==site.start||old.end!==site.end||old.source_sha256!==hash))throw Error('consumer witness drift');return {...pair,sites:[site]};});
+fs.writeFileSync(path.join(out,'mixed-array-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
+console.log('Complete mixed array fields, 5 owned/overlapping pairs and 5 original reads verified');
