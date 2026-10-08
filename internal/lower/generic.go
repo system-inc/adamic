@@ -220,10 +220,49 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 	// binder that the resolved overload exposes directly. Infer from the present
 	// member; an absent argument supplies no evidence about that binder.
 	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
-		present := l.checker.GetNonNullableType(declared)
-		given := l.checker.GetNonNullableType(instantiated)
-		if present.Flags()&checker.TypeFlagsUnion == 0 && given.Flags()&checker.TypeFlagsNever == 0 {
-			l.inferTypes(present, given, into)
+		present := []*checker.Type{}
+		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined == 0 {
+				present = append(present, member)
+			}
+		}
+		given := instantiated
+		if l.censusHasUndefined(given) && given.Flags()&checker.TypeFlagsUnion != 0 {
+			members := []*checker.Type{}
+			for _, member := range given.Types() {
+				if member.Flags()&checker.TypeFlagsUndefined == 0 {
+					members = append(members, member)
+				}
+			}
+			given = l.checker.GetUnionType(members)
+		}
+		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+		// the optional member preserves the binder we are trying to infer.
+		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
+			l.inferTypes(present[0], given, into)
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		var missing *checker.Type
+		for _, member := range declared.Types() {
+			known, found := into[member]
+			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+				if missing != nil {
+					return // More than one unknown binder has no unique witness.
+				}
+				missing = member
+				continue
+			}
+			if !found {
+				known = l.concrete(member)
+			}
+			if !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {
+				return
+			}
+		}
+		if missing != nil {
+			into[missing] = l.concrete(instantiated)
 		}
 		return
 	}
