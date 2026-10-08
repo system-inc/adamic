@@ -3,35 +3,35 @@ index ce4d1f6f4,5dddc0441..000000000
 --- a/internal/lower/expression.go
 +++ b/internal/lower/expression.go
 @@@ -201,23 -163,9 +201,29 @@@ func (l *lowering) expression(node *ast
-  	if err := l.regexUnsupportedUse(node); err != nil {
-  		return nil, err
-  	}
+    if err := l.regexUnsupportedUse(node); err != nil {
+        return nil, err
+    }
 ++<<<<<<< HEAD
- +	value, err := l.value(node)
- +	if err == nil {
- +		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
- +			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
- +				return nil, err
- +			}
- +		}
- +	}
- +	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
- +		if _, constant := value.(ir.Undefined); !constant {
- +			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
- +				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
- +					// Keep the read or call's effects when converting its only possible value.
- +					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
- +				}
- +			}
- +		}
+ +  value, err := l.value(node)
+ +  if err == nil {
+ +      if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+ +          if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+ +              return nil, err
+ +          }
+ +      }
+ +  }
+ +  if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+ +      if _, constant := value.(ir.Undefined); !constant {
+ +          if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+ +              if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+ +                  // Keep the read or call's effects when converting its only possible value.
+ +                  value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+ +              }
+ +          }
+ +      }
 ++=======
-+ 	value, handled, err := l.classInterfaceValue(node)
-+ 	if !handled {
-+ 		value, err = l.value(node)
++   value, handled, err := l.classInterfaceValue(node)
++   if !handled {
++       value, err = l.value(node)
 ++>>>>>>> 490aadcdd (Lower ruled class and interface literals with actual receiver dispatch)
-  	}
-  	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
-  		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
+    }
+    if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
+        // The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 diff --cc internal/oracle/counts.md
 index 521c6e1ff,520e200c0..000000000
 --- a/internal/oracle/counts.md

@@ -3,36 +3,36 @@ index ce4d1f6f4,c09978da6..000000000
 --- a/internal/lower/expression.go
 +++ b/internal/lower/expression.go
 @@@ -1299,12 -1157,23 +1302,29 @@@ func (l *lowering) callClosure(node *as
-  		property.Method = true
-  		closure = property
-  	}
+        property.Method = true
+        closure = property
+    }
 ++<<<<<<< HEAD
- +	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
- +	if err != nil {
- +		return nil, err
+ +  arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+ +  if err != nil {
+ +      return nil, err
 ++=======
-+ 	arguments := []ir.Expression{}
-+ 	if len(signatures) == 1 && restParameterIndex(signatures[0]) >= 0 {
-+ 		arguments, err = l.packRestArguments(node.AsCallExpression(), l.checker.GetResolvedSignature(node))
-+ 		if err != nil {
-+ 			return nil, err
-+ 		}
-+ 	} else {
-+ 		for _, argument := range node.AsCallExpression().Arguments.Nodes {
-+ 			lowered, err := l.expression(argument)
-+ 			if err != nil {
-+ 				return nil, err
-+ 			}
-+ 			arguments = append(arguments, lowered)
-+ 		}
++   arguments := []ir.Expression{}
++   if len(signatures) == 1 && restParameterIndex(signatures[0]) >= 0 {
++       arguments, err = l.packRestArguments(node.AsCallExpression(), l.checker.GetResolvedSignature(node))
++       if err != nil {
++           return nil, err
++       }
++   } else {
++       for _, argument := range node.AsCallExpression().Arguments.Nodes {
++           lowered, err := l.expression(argument)
++           if err != nil {
++               return nil, err
++           }
++           arguments = append(arguments, lowered)
++       }
 ++>>>>>>> 6415c4cf0 (Pack rest arrays for callable and generic calls)
-  	}
-  	var returns ir.Type
- -	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
- +	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
-  		var isKnown bool
-  		if returns, isKnown = l.representation(result); !isKnown {
-  			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
+    }
+    var returns ir.Type
+ -  if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+ +  if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+        var isKnown bool
+        if returns, isKnown = l.representation(result); !isKnown {
+            return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
 diff --cc internal/oracle/counts.md
 index 09817e6af,1c4a94c51..000000000
 --- a/internal/oracle/counts.md

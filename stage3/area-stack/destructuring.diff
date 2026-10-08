@@ -3,24 +3,24 @@ index bd8774058,c6fb621a5..000000000
 --- a/internal/lower/collections.go
 +++ b/internal/lower/collections.go
 @@@ -351,15 -364,7 +364,19 @@@ func (l *lowering) destructureFrom(patt
-  		if err != nil {
-  			return nil, err
-  		}
+        if err != nil {
+            return nil, err
+        }
 ++<<<<<<< HEAD
- +		of := l.result.Locals[local].Type
- +		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
- +			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
- +		}
- +		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
- +		value.View = sourceExpression(binding) + " (field " + field + ")"
- +		value.ViewType = l.checker.TypeToString(fieldType)
- +		value.ViewAllowed = l.viewLiterals(fieldType)
- +		statements = append(statements, l.initializeLocal(local, value)...)
+ +      of := l.result.Locals[local].Type
+ +      if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
+ +          return nil, l.notYet(binding, "a destructured name held otherwise than its field")
+ +      }
+ +      value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+ +      value.View = sourceExpression(binding) + " (field " + field + ")"
+ +      value.ViewType = l.checker.TypeToString(fieldType)
+ +      value.ViewAllowed = l.viewLiterals(fieldType)
+ +      statements = append(statements, l.initializeLocal(local, value)...)
 ++=======
-+ 		statements = append(statements, declaredStatements...)
++       statements = append(statements, declaredStatements...)
 ++>>>>>>> 2fc6f0ee8 (Lower array and nested bindings with lazy defaults and boxed slots)
-  	}
-  	return statements, nil
+    }
+    return statements, nil
   }
 diff --cc internal/oracle/counts.md
 index 20a466c4e,5ec3b6cab..000000000

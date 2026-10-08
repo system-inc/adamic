@@ -3,201 +3,201 @@ index a85031a0e,60adf3da0..000000000
 --- a/internal/fresh/library_language.go
 +++ b/internal/fresh/library_language.go
 @@@ -9,10 -9,8 +9,15 @@@ func (a *analysis) libraryLanguage(expr
-  	if value, known := a.typedArray(expression); known {
-  		return value, true
-  	}
+    if value, known := a.typedArray(expression); known {
+        return value, true
+    }
 ++<<<<<<< HEAD
- +	switch expression := expression.(type) {
- +	case ir.NodeBufferCall:
- +		return a.nodeBufferCall(expression), true
- +	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
+ +  switch expression := expression.(type) {
+ +  case ir.NodeBufferCall:
+ +      return a.nodeBufferCall(expression), true
+ +  case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 ++=======
-+ 	switch expression.(type) {
-+ 	case ir.ObjectKeys, ir.ForInOwn, ir.ClosureSelf, ir.LibraryGlobal:
++   switch expression.(type) {
++   case ir.ObjectKeys, ir.ForInOwn, ir.ClosureSelf, ir.LibraryGlobal:
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  		return a.call(a.operands(expression), expression.Type()), true
-  	}
-  	return value{}, false
+        return a.call(a.operands(expression), expression.Type()), true
+    }
+    return value{}, false
 diff --cc internal/native/emit_functions.go
 index 568a2b677,ad87f9fe4..000000000
 --- a/internal/native/emit_functions.go
 +++ b/internal/native/emit_functions.go
 @@@ -261,27 -198,14 +261,31 @@@ func (e *emitter) arguments(call ir.Cal
-  			}
-  			value = boxed
-  		}
+            }
+            value = boxed
+        }
 ++<<<<<<< HEAD
- +		if index < len(parameters) {
- +			arguments = append(arguments, value)
- +		} else {
- +			e.line("(void)%s;", value)
- +		}
+ +      if index < len(parameters) {
+ +          arguments = append(arguments, value)
+ +      } else {
+ +          e.line("(void)%s;", value)
+ +      }
 ++=======
-+ 		arguments = append(arguments, e.enumerationArgument(parameters[index], argument.Type(), value))
++       arguments = append(arguments, e.enumerationArgument(parameters[index], argument.Type(), value))
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  	}
-  	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
- -		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
- -			arguments = append(arguments, zero(of))
- -		} else {
- -			arguments = append(arguments, "NULL")
- +		arguments = append(arguments, absent(e.program.Locals[parameter].Type))
- +	}
- +	if function.ArgumentsCount != 0 {
- +		count := fmt.Sprint(len(call.Arguments))
- +		if function.Receiver {
- +			count = fmt.Sprint(len(call.Arguments) - 1)
- +		}
- +		if call.ArgumentCount != nil {
- +			count = e.value(call.ArgumentCount)
- +		}
- +		if call.ForwardCount {
- +			count = e.localName(e.function.ArgumentsCount - 1)
-  		}
- +		arguments = append(arguments, count)
-  	}
-  	return arguments
+    }
+    for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
+ -      if of := e.program.Locals[parameter].Type; of.IsMaybe() {
+ -          arguments = append(arguments, zero(of))
+ -      } else {
+ -          arguments = append(arguments, "NULL")
+ +      arguments = append(arguments, absent(e.program.Locals[parameter].Type))
+ +  }
+ +  if function.ArgumentsCount != 0 {
+ +      count := fmt.Sprint(len(call.Arguments))
+ +      if function.Receiver {
+ +          count = fmt.Sprint(len(call.Arguments) - 1)
+ +      }
+ +      if call.ArgumentCount != nil {
+ +          count = e.value(call.ArgumentCount)
+ +      }
+ +      if call.ForwardCount {
+ +          count = e.localName(e.function.ArgumentsCount - 1)
+        }
+ +      arguments = append(arguments, count)
+    }
+    return arguments
   }
 diff --cc internal/native/emit_objects.go
 index b417bd748,7ecb9da66..000000000
 --- a/internal/native/emit_objects.go
 +++ b/internal/native/emit_objects.go
 @@@ -136,13 -136,10 +136,20 @@@ func (e *emitter) objectLiteral(litera
-  		}
-  		for index, field := range literal.Fields {
-  			slot := e.temporary()
+        }
+        for index, field := range literal.Fields {
+            slot := e.temporary()
 ++<<<<<<< HEAD
- +			cache := e.cache()
- +			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
- +			if e.fieldTypesNeeded() {
- +				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
- +			}
- +			if e.fieldReadinessNeeded(field.Name) {
- +				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+ +          cache := e.cache()
+ +          e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+ +          if e.fieldTypesNeeded() {
+ +              e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+ +          }
+ +          if e.fieldReadinessNeeded(field.Name) {
+ +              e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 ++=======
-+ 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
-+ 			if e.enumeratesKeys() {
-+ 				e.forInDeclarations()
-+ 				e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
++           e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
++           if e.enumeratesKeys() {
++               e.forInDeclarations()
++               e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  			}
-  			if field.Value.Type().IsReference() {
-  				e.line("adamic_release(%s->reference);", slot)
+            }
+            if field.Value.Type().IsReference() {
+                e.line("adamic_release(%s->reference);", slot)
 diff --cc internal/native/emit_statements.go
 index d1d2d9c3b,5445d9dae..000000000
 --- a/internal/native/emit_statements.go
 +++ b/internal/native/emit_statements.go
 @@@ -136,12 -110,7 +137,16 @@@ func (e *emitter) statement(statement i
-  			break
-  		}
-  		value := e.value(statement.Value)
+            break
+        }
+        value := e.value(statement.Value)
 ++<<<<<<< HEAD
- +		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
- +			e.line("if (!%s_declared) {", readyName(statement.Local))
- +			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
- +			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
- +			e.line("}")
- +		}
+ +      if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+ +          e.line("if (!%s_declared) {", readyName(statement.Local))
+ +          message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
+ +          e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+ +          e.line("}")
+ +      }
 ++=======
-+ 		value = e.enumerationArgument(statement.Local, statement.Value.Type(), value)
++       value = e.enumerationArgument(statement.Local, statement.Value.Type(), value)
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  		if statement.Checked {
-  			// After the value, as JavaScript does: the right side runs, then the write throws.
-  			e.checkReady(statement.Local)
+        if statement.Checked {
+            // After the value, as JavaScript does: the right side runs, then the write throws.
+            e.checkReady(statement.Local)
 @@@ -201,29 -167,10 +206,36 @@@
-  		e.line("}")
-  		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
-  		slot := e.temporary()
+        e.line("}")
+        e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+        slot := e.temporary()
 ++<<<<<<< HEAD
- +		cache := ""
- +		if e.fieldTypesNeeded() {
- +			cache = e.cache()
- +		}
- +		if e.program.CheckedFields[statement.Name] {
- +			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
- +		}
- +		if e.fieldTypesNeeded() {
- +			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
- +		} else {
- +			e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
- +		}
- +		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
- +		if converted {
- +			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
- +			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
- +			if statement.Value.Type() == ir.Boolean {
- +				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
- +			}
- +			e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
- +			e.line("adamic_release(%s->reference);", slot)
- +			e.line("%s->reference = view_new_value;", slot)
- +			e.line("} else {")
+ +      cache := ""
+ +      if e.fieldTypesNeeded() {
+ +          cache = e.cache()
+ +      }
+ +      if e.program.CheckedFields[statement.Name] {
+ +          e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+ +      }
+ +      if e.fieldTypesNeeded() {
+ +          e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
+ +      } else {
+ +          e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+ +      }
+ +      converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
+ +      if converted {
+ +          e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+ +          boxed := fmt.Sprintf("adamic_box_number(%s)", value)
+ +          if statement.Value.Type() == ir.Boolean {
+ +              boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+ +          }
+ +          e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
+ +          e.line("adamic_release(%s->reference);", slot)
+ +          e.line("%s->reference = view_new_value;", slot)
+ +          e.line("} else {")
 ++=======
-+ 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
-+ 		if e.enumeratesKeys() {
-+ 			e.forInDeclarations()
-+ 			e.line("adamic_for_in_write(%s, %s);", object, cString(statement.Name))
++       e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
++       if e.enumeratesKeys() {
++           e.forInDeclarations()
++           e.line("adamic_for_in_write(%s, %s);", object, cString(statement.Name))
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  		}
-  		if statement.Value.Type().IsReference() {
-  			// The new reference is taken before the old is let go: they may be the same.
+        }
+        if statement.Value.Type().IsReference() {
+            // The new reference is taken before the old is let go: they may be the same.
 diff --cc internal/native/reuse.go
 index 8332a2bc0,7b3c59f42..000000000
 --- a/internal/native/reuse.go
 +++ b/internal/native/reuse.go
 @@@ -553,13 -542,10 +553,20 @@@ func (e *emitter) reused(literal ir.Obj
-  	e.taking = outer
-  	for index, field := range literal.Fields {
-  		slot := e.temporary()
+    e.taking = outer
+    for index, field := range literal.Fields {
+        slot := e.temporary()
 ++<<<<<<< HEAD
- +		cache := e.cache()
- +		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
- +		if e.fieldTypesNeeded() {
- +			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
- +		}
- +		if e.program.UninitializedFields[field.Name] {
- +			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+ +      cache := e.cache()
+ +      e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+ +      if e.fieldTypesNeeded() {
+ +          e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+ +      }
+ +      if e.program.UninitializedFields[field.Name] {
+ +          e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 ++=======
-+ 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
-+ 		if e.enumeratesKeys() {
-+ 			e.forInDeclarations()
-+ 			e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
++       e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
++       if e.enumeratesKeys() {
++           e.forInDeclarations()
++           e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
-  		}
-  		if field.Value.Type().IsReference() {
-  			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
+        }
+        if field.Value.Type().IsReference() {
+            // A field moved out of a unique object left NULL behind, and releasing that is nothing.
 @@@ -578,14 -564,21 +585,32 @@@
   // the source may be undefined and is, a new object with the source type's other fields and the
   // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
   func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 ++<<<<<<< HEAD
- +	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
- +	if literal.SpreadReadiness != "" {
- +		copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
- +	}
- +	if !literal.SpreadMaybeUndefined {
- +		return copy
- +	}
- +	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+ +  copy := fmt.Sprintf("adamic_object_copy(%s)", source)
+ +  if literal.SpreadReadiness != "" {
+ +      copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
+ +  }
+ +  if !literal.SpreadMaybeUndefined {
+ +      return copy
+ +  }
+ +  return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
 ++=======
-+ 	copy := "adamic_object_copy"
-+ 	shape := ""
-+ 	if e.enumeratesKeys() {
-+ 		e.forInDeclarations()
-+ 		copy = "adamic_for_in_copy"
-+ 	}
-+ 	if !literal.SpreadMaybeUndefined {
-+ 		return fmt.Sprintf("%s(%s)", copy, source)
-+ 	}
-+ 	if e.enumeratesKeys() {
-+ 		shape = e.forInEmptyShape(literal)
-+ 	} else {
-+ 		shape = e.shape(emptyFields(literal))
-+ 	}
-+ 	return fmt.Sprintf("(%s != NULL ? %s(%s) : adamic_object_new(&%s))", source, copy, source, shape)
++   copy := "adamic_object_copy"
++   shape := ""
++   if e.enumeratesKeys() {
++       e.forInDeclarations()
++       copy = "adamic_for_in_copy"
++   }
++   if !literal.SpreadMaybeUndefined {
++       return fmt.Sprintf("%s(%s)", copy, source)
++   }
++   if e.enumeratesKeys() {
++       shape = e.forInEmptyShape(literal)
++   } else {
++       shape = e.shape(emptyFields(literal))
++   }
++   return fmt.Sprintf("(%s != NULL ? %s(%s) : adamic_object_new(&%s))", source, copy, source, shape)
 ++>>>>>>> d90f6c61e (Lower runtime for-in keys and property presence)
   }
-  
+
   // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
 diff --cc internal/oracle/counts.md
 index 3cae1636d,9072ab2ad..000000000

@@ -3,29 +3,29 @@ index ce4d1f6f4,e71ae4826..000000000
 --- a/internal/lower/expression.go
 +++ b/internal/lower/expression.go
 @@@ -1299,12 -1154,16 +1299,16 @@@ func (l *lowering) callClosure(node *as
-  		property.Method = true
-  		closure = property
-  	}
- -	arguments := []ir.Expression{}
- -	for _, argument := range node.AsCallExpression().Arguments.Nodes {
- -		lowered, err := l.expression(argument)
- -		if err != nil {
- -			return nil, err
- -		}
- -		arguments = append(arguments, lowered)
- +	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
- +	if err != nil {
- +		return nil, err
-  	}
-  	var returns ir.Type
+        property.Method = true
+        closure = property
+    }
+ -  arguments := []ir.Expression{}
+ -  for _, argument := range node.AsCallExpression().Arguments.Nodes {
+ -      lowered, err := l.expression(argument)
+ -      if err != nil {
+ -          return nil, err
+ -      }
+ -      arguments = append(arguments, lowered)
+ +  arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+ +  if err != nil {
+ +      return nil, err
+    }
+    var returns ir.Type
 ++<<<<<<< HEAD
- +	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+ +  if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 ++=======
-+ 	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 && !optionalVoidResult(result) {
++   if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 && !optionalVoidResult(result) {
 ++>>>>>>> a2e3d8522 (Lower optional void calls for effects and preserve observed values)
-  		var isKnown bool
-  		if returns, isKnown = l.representation(result); !isKnown {
-  			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
+        var isKnown bool
+        if returns, isKnown = l.representation(result); !isKnown {
+            return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
 diff --cc internal/oracle/counts.md
 index 7e8c87669,aa822ca9e..000000000
 --- a/internal/oracle/counts.md

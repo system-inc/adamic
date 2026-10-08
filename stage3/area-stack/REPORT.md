@@ -241,3 +241,7 @@ Proposal: read `l.result.CallTargets(value)` once; retain the zero-argument requ
 ## Integration bookkeeping excluded
 
 The statements topic's checked-views trial merge and its revert `1ed18fad0` were excluded together: they import/undo another worker's integration, not a statements lesson. Their net effect on the topic snapshot is zero. The five statements-only commits (`1b185548`, `f5987c61`, `564175fb`, `041239f6`, `742bada3`) were replayed in order. No merged views code or reverse patch removing this base's views behavior was imported. The for-of trial merge/revert pair would receive the same treatment, but that whole topic is held for its failing library-view control.
+
+## Conflict evidence format
+
+Readable `.diff` copies normalize tabs and trailing spaces solely for presentation. Every adjacent `.diff.gz` preserves the original combined diff byte for byte, including both conflict sides and all hunk context. These are review artifacts, not patches applied to the compiler.

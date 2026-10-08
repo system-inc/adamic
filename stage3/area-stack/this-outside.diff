@@ -3,87 +3,87 @@ index f89bca775,d2f6aac8b..000000000
 --- a/internal/fresh/fresh.go
 +++ b/internal/fresh/fresh.go
 @@@ -1204,7 -1155,7 +1204,11 @@@ func (a *analysis) value(expression ir.
-  	case ir.MaybeToString:
-  		a.value(expression.Value)
-  		return value{}
+    case ir.MaybeToString:
+        a.value(expression.Value)
+        return value{}
 ++<<<<<<< HEAD
- +	case ir.ArrayIsArray:
+ +  case ir.ArrayIsArray:
 ++=======
-+ 	case ir.KindIs:
++   case ir.KindIs:
 ++>>>>>>> aa7041d50 (Check represented object kinds before narrowed union reads)
-  		a.value(expression.Value)
-  		return value{}
-  	case ir.TypeOf:
+        a.value(expression.Value)
+        return value{}
+    case ir.TypeOf:
 diff --cc internal/javascript/javascript.go
 index ff8bbe46e,95fa547de..000000000
 --- a/internal/javascript/javascript.go
 +++ b/internal/javascript/javascript.go
 @@@ -995,8 -759,19 +995,24 @@@ func (e *emitter) value(expression ir.E
-  		return e.value(expression.Value)
-  	case ir.Narrow:
-  		return e.value(expression.Value)
+        return e.value(expression.Value)
+    case ir.Narrow:
+        return e.value(expression.Value)
 ++<<<<<<< HEAD
- +	case ir.ArrayIsArray:
- +		return "Array.isArray(" + e.value(expression.Value) + ")"
+ +  case ir.ArrayIsArray:
+ +      return "Array.isArray(" + e.value(expression.Value) + ")"
 ++=======
-+ 	case ir.KindIs:
-+ 		kind := ""
-+ 		switch expression.Of {
-+ 		case ir.Array:
-+ 			kind = "Array.isArray(value)"
-+ 		case ir.Map:
-+ 			kind = "(value instanceof Map || value instanceof Set)"
-+ 		case ir.Object:
-+ 			kind = "(value !== null && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Map) && !(value instanceof Set) && !(value instanceof AdamicClosure) && !ArrayBuffer.isView(value))"
-+ 		default:
-+ 			panic("javascript: unsupported union object kind")
-+ 		}
-+ 		return "((value) => " + kind + ")(" + e.value(expression.Value) + ")"
++   case ir.KindIs:
++       kind := ""
++       switch expression.Of {
++       case ir.Array:
++           kind = "Array.isArray(value)"
++       case ir.Map:
++           kind = "(value instanceof Map || value instanceof Set)"
++       case ir.Object:
++           kind = "(value !== null && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Map) && !(value instanceof Set) && !(value instanceof AdamicClosure) && !ArrayBuffer.isView(value))"
++       default:
++           panic("javascript: unsupported union object kind")
++       }
++       return "((value) => " + kind + ")(" + e.value(expression.Value) + ")"
 ++>>>>>>> aa7041d50 (Check represented object kinds before narrowed union reads)
-  	case ir.TypeOf:
-  		return "adamicTypeOf(" + e.value(expression.Value) + ")"
-  	case ir.UnionToString:
+    case ir.TypeOf:
+        return "adamicTypeOf(" + e.value(expression.Value) + ")"
+    case ir.UnionToString:
 diff --cc internal/lower/expression.go
 index f91b152a5,b8fc7353c..000000000
 --- a/internal/lower/expression.go
 +++ b/internal/lower/expression.go
-@@@ -558,10 -492,10 +559,17 @@@ func (l *lowering) enumNeverValue(node 
-  				b := l.libraryArrayBuilder([]ir.Expression{read})
-  				held := b.read(b.parameters[0])
-  				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+@@@ -558,10 -492,10 +559,17 @@@ func (l *lowering) enumNeverValue(node
+                b := l.libraryArrayBuilder([]ir.Expression{read})
+                held := b.read(b.parameters[0])
+                matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
 ++<<<<<<< HEAD
- +				if narrowed == ir.Array {
- +					matches = ir.ArrayIsArray{Value: held}
- +				}
- +				if l.includesUndefined(l.arrayPredicateObservedType(node)) {
+ +              if narrowed == ir.Array {
+ +                  matches = ir.ArrayIsArray{Value: held}
+ +              }
+ +              if l.includesUndefined(l.arrayPredicateObservedType(node)) {
 ++=======
-+ 				if name == "object" && (narrowed == ir.Object || narrowed == ir.Array || narrowed == ir.Map) {
-+ 					matches = ir.KindIs{Value: held, Of: narrowed}
-+ 				}
-+ 				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
++               if name == "object" && (narrowed == ir.Object || narrowed == ir.Array || narrowed == ir.Map) {
++                   matches = ir.KindIs{Value: held, Of: narrowed}
++               }
++               if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 ++>>>>>>> aa7041d50 (Check represented object kinds before narrowed union reads)
-  					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
-  				}
-  				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
+                    matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
+                }
+                message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 diff --cc internal/native/emit_expressions.go
 index 3549a0f52,51dd124b1..000000000
 --- a/internal/native/emit_expressions.go
 +++ b/internal/native/emit_expressions.go
 @@@ -259,9 -209,8 +259,14 @@@ func (e *emitter) evaluate(expression i
-  		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
-  	case ir.Narrow:
-  		return e.narrow(expression)
+        return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
+    case ir.Narrow:
+        return e.narrow(expression)
 ++<<<<<<< HEAD
- +	case ir.ArrayIsArray:
- +		value := e.snapshot(ir.Union, e.value(expression.Value))
- +		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
+ +  case ir.ArrayIsArray:
+ +      value := e.snapshot(ir.Union, e.value(expression.Value))
+ +      return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
 ++=======
-+ 	case ir.KindIs:
-+ 		return e.kindIs(expression)
++   case ir.KindIs:
++       return e.kindIs(expression)
 ++>>>>>>> aa7041d50 (Check represented object kinds before narrowed union reads)
-  	case ir.TypeOf:
-  		return e.typeOf(expression)
-  	case ir.UnionToString:
+    case ir.TypeOf:
+        return e.typeOf(expression)
+    case ir.UnionToString:
 diff --cc internal/oracle/counts.md
 index f97051c08,d57be2d63..000000000
 --- a/internal/oracle/counts.md

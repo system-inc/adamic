@@ -2,20 +2,20 @@ diff --cc internal/lower/expression.go
 index 7acd7415c,32a847afc..000000000
 --- a/internal/lower/expression.go
 +++ b/internal/lower/expression.go
-@@@ -687,8 -567,8 +687,13 @@@ func (l *lowering) enumNeverValue(node 
-  	case ast.KindFunctionExpression:
-  		return l.functionExpression(node)
-  	case ast.KindCallExpression:
+@@@ -687,8 -567,8 +687,13 @@@ func (l *lowering) enumNeverValue(node
+    case ast.KindFunctionExpression:
+        return l.functionExpression(node)
+    case ast.KindCallExpression:
 ++<<<<<<< HEAD
- +		if value, known, err := l.optionalIntrinsic(node); known {
- +			return value, err
+ +      if value, known, err := l.optionalIntrinsic(node); known {
+ +          return value, err
 ++=======
-+ 		if err := l.genericFunctionIdentityCall(node); err != nil {
-+ 			return nil, err
++       if err := l.genericFunctionIdentityCall(node); err != nil {
++           return nil, err
 ++>>>>>>> 9d1d672cb (Specialize generic function values for concrete contextual signatures)
-  		}
-  		if err := l.optionalCall(node); err != nil {
-  			return nil, err
+        }
+        if err := l.optionalCall(node); err != nil {
+            return nil, err
 diff --cc internal/oracle/counts.md
 index f99b71b0d,7866e4f97..000000000
 --- a/internal/oracle/counts.md
