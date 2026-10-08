@@ -593,8 +593,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		text := e.value(expression.Text)
 		return e.own(ir.Object, fmt.Sprintf("adamic_write_text_file(%s, %s)", path, text))
 	case ir.ArrayPush:
-		array := e.value(expression.Array)
+		array := e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", e.value(expression.Array)))
 		value := e.value(expression.Value)
+		if e.program.CheckedElements {
+			e.line("adamic_array_check_never(%s, %d, %s, %s);", array, expression.Element, borrowed(expression.Element, value), cString(expression.WriteOrigin.Expression))
+		}
 		if expression.Element.IsReference() {
 			value = retained(value)
 		}
@@ -641,6 +644,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				element = retained(element)
 			}
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
+		}
+		if expression.Never {
+			e.line("%s->never_elements = true;", array)
 		}
 		return array
 	case ir.Length:

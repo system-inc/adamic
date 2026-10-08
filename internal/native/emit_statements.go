@@ -178,12 +178,18 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.returnStatement(statement)
 	case ir.SetIndex:
 		array := e.value(statement.Array)
+		if e.program.CheckedElements && statement.Array.Type() == ir.Array {
+			array = e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", array))
+		}
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
 			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
 			e.end()
 			break
+		}
+		if e.program.CheckedElements {
+			e.line("adamic_array_check_never(%s, %d, %s, %s);", array, statement.Element, borrowed(statement.Element, value), cString(statement.WriteOrigin.Expression))
 		}
 		if statement.Element.IsReference() {
 			value = retained(value)

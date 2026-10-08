@@ -208,7 +208,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/binder.ts:2353:30: Adamic 0.1 refuses a value of type ModuleDeclaration seen as Mutable\u003cModuleDeclaration | SourceFile\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/binder.ts:2353:30: Adamic 0.1 refuses a value of type ModuleDeclaration seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 23,
       "status": "stopped",
       "where": "src/compiler/binder.ts:2353:30"
@@ -262,7 +262,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/binder.ts:3109:30: Adamic 0.1 refuses a value of type SourceFile seen as Mutable\u003cModuleDeclaration | SourceFile\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/binder.ts:3109:30: Adamic 0.1 refuses a value of type SourceFile seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 29,
       "status": "stopped",
       "where": "src/compiler/binder.ts:3109:30"
@@ -449,7 +449,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:10280:75: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:10280:75: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 48,
       "status": "stopped",
       "where": "src/compiler/checker.ts:10280:75"
@@ -828,7 +828,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:13997:62: Adamic 0.1 refuses a value of type Map\u003c__String, TransientSymbol\u003e seen as SymbolTable | undefined, which can write Symbol where TransientSymbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:13997:62: Adamic 0.1 refuses a value of type Map<__String, TransientSymbol> seen as SymbolTable | undefined, which can write Symbol where TransientSymbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 87,
       "status": "stopped",
       "where": "src/compiler/checker.ts:13997:62"
@@ -846,7 +846,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:14225:38: Adamic 0.1 refuses a value of type Set\u003c__String\u003e seen as Set\u003c__String | undefined\u003e, which can write __String | undefined where __String is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:14225:38: Adamic 0.1 refuses a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 89,
       "status": "stopped",
       "where": "src/compiler/checker.ts:14225:38"
@@ -2086,7 +2086,7 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:31943:13: Adamic 0.1 refuses a value of type CallExpression | undefined seen as NodeArray\u003cExpression\u003e | undefined, whose readonly field transformFlags becomes writable: a readonly field may hold something narrower than TransformFlags, which a write of TransformFlags would replace; keep transformFlags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:31943:13: Adamic 0.1 refuses a value of type CallExpression | undefined seen as NodeArray<Expression> | undefined, whose readonly field transformFlags becomes writable: a readonly field may hold something narrower than TransformFlags, which a write of TransformFlags would replace; keep transformFlags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 203,
       "status": "stopped",
       "where": "src/compiler/checker.ts:31943:13"
@@ -2128,7 +2128,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:32650:21: Adamic 0.1 refuses a value of type (readonly [() =\u003e IntrinsicType, __String])[] seen as (readonly [() =\u003e Type, __String])[], which can write readonly [() =\u003e Type, __String] where readonly [() =\u003e IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:32650:21: Adamic 0.1 refuses a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 207,
       "status": "stopped",
       "where": "src/compiler/checker.ts:32650:21"
@@ -2137,7 +2137,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:32674:21: Adamic 0.1 refuses a value of type (readonly [() =\u003e IntrinsicType, __String])[] seen as (readonly [() =\u003e Type, __String])[], which can write readonly [() =\u003e Type, __String] where readonly [() =\u003e IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:32674:21: Adamic 0.1 refuses a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 208,
       "status": "stopped",
       "where": "src/compiler/checker.ts:32674:21"
@@ -3354,7 +3354,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:44643:40: Adamic 0.1 refuses a value of type Map\u003cstring, [VariableDeclarationList, VariableDeclaration[]]\u003e seen as Map\u003cstring, [CatchClause | VariableDeclarationList, VariableDeclaration[]]\u003e, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:44643:40: Adamic 0.1 refuses a value of type Map<string, [VariableDeclarationList, VariableDeclaration[]]> seen as Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 313,
       "status": "stopped",
       "where": "src/compiler/checker.ts:44643:40"
@@ -4026,7 +4026,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:53751:101: Adamic 0.1 refuses a value of type [() =\u003e Type, __String][] seen as (readonly [() =\u003e Type, __String])[], which can write readonly [() =\u003e Type, __String] where [() =\u003e Type, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:53751:101: Adamic 0.1 refuses a value of type [() => Type, __String][] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where [() => Type, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 373,
       "status": "stopped",
       "where": "src/compiler/checker.ts:53751:101"
@@ -4195,7 +4195,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:6483:418: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:6483:418: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 388,
       "status": "stopped",
       "where": "src/compiler/checker.ts:6483:418"
@@ -4204,7 +4204,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:6484:439: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:6484:439: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 389,
       "status": "stopped",
       "where": "src/compiler/checker.ts:6484:439"
@@ -4213,7 +4213,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:6485:373: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:6485:373: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 390,
       "status": "stopped",
       "where": "src/compiler/checker.ts:6485:373"
@@ -4233,7 +4233,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:7203:92: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:7203:92: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 392,
       "status": "stopped",
       "where": "src/compiler/checker.ts:7203:92"
@@ -4285,7 +4285,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:8352:170: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:8352:170: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 397,
       "status": "stopped",
       "where": "src/compiler/checker.ts:8352:170"
@@ -4327,7 +4327,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:9105:89: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:9105:89: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 401,
       "status": "stopped",
       "where": "src/compiler/checker.ts:9105:89"
@@ -4336,7 +4336,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:9112:92: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:9112:92: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 402,
       "status": "stopped",
       "where": "src/compiler/checker.ts:9112:92"
@@ -4345,7 +4345,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:9155:133: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:9155:133: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 403,
       "status": "stopped",
       "where": "src/compiler/checker.ts:9155:133"
@@ -4354,7 +4354,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:9338:77: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:9338:77: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 404,
       "status": "stopped",
       "where": "src/compiler/checker.ts:9338:77"
@@ -4363,7 +4363,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:9912:74: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required\u003cPick\u003cSymbolTracker, \"reportInferenceFallback\"\u003e\u003e where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/checker.ts:9912:74: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 405,
       "status": "stopped",
       "where": "src/compiler/checker.ts:9912:74"
@@ -4468,7 +4468,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:3233:53: Adamic 0.1 refuses a value of type (node: CommentRange) =\u003e boolean seen as (value: SynthesizedComment) =\u003e boolean, which can write number where -1 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:3233:53: Adamic 0.1 refuses a value of type (node: CommentRange) => boolean seen as (value: SynthesizedComment) => boolean, which can write number where -1 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 414,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:3233:53"
@@ -4525,7 +4525,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5461:39: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5461:39: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 419,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5461:39"
@@ -4534,7 +4534,7 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5461:90: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5461:90: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 420,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5461:90"
@@ -4543,7 +4543,7 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5774:155: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5774:155: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 421,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5774:155"
@@ -4552,7 +4552,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5776:34: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5776:34: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 422,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5776:34"
@@ -4561,7 +4561,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5780:28: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5780:28: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 423,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5780:28"
@@ -4570,7 +4570,7 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:5784:41: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:5784:41: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 424,
       "status": "stopped",
       "where": "src/compiler/emitter.ts:5784:41"
@@ -4648,7 +4648,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1354:32: Adamic 0.1 refuses a value of type Mutable\u003cGeneratedIdentifier\u003e seen as Identifier, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1354:32: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 432,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1354:32"
@@ -4657,7 +4657,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1364:16: Adamic 0.1 refuses a value of type Mutable\u003cGeneratedIdentifier\u003e seen as Identifier, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1364:16: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 433,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1364:16"
@@ -4666,7 +4666,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1372:16: Adamic 0.1 refuses a value of type Mutable\u003cGeneratedIdentifier\u003e seen as Identifier, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1372:16: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 434,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1372:16"
@@ -4675,7 +4675,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1380:99: Adamic 0.1 refuses a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) =\u003e string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) =\u003e string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1380:99: Adamic 0.1 refuses a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) => string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 435,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1380:99"
@@ -4684,7 +4684,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1385:16: Adamic 0.1 refuses a value of type Mutable\u003cGeneratedIdentifier\u003e seen as Identifier, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1385:16: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 436,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1385:16"
@@ -4693,7 +4693,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1424:107: Adamic 0.1 refuses a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) =\u003e string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) =\u003e string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1424:107: Adamic 0.1 refuses a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) => string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 437,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:1424:107"
@@ -5129,7 +5129,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4771:22: Adamic 0.1 refuses a value of type AssertClause seen as Mutable\u003cAssertClause\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:4771:22: Adamic 0.1 refuses a value of type AssertClause seen as Mutable<AssertClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 461,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:4771:22"
@@ -5156,7 +5156,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4804:22: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable\u003cImportTypeAssertionContainer\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:4804:22: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 463,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:4804:22"
@@ -5165,7 +5165,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4824:22: Adamic 0.1 refuses a value of type ImportAttributes seen as Mutable\u003cImportAttributes\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:4824:22: Adamic 0.1 refuses a value of type ImportAttributes seen as Mutable<ImportAttributes>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 464,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:4824:22"
@@ -5252,7 +5252,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5084:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5084:16: Adamic 0.1 refuses a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
       "id": 470,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5084:16"
@@ -5261,7 +5261,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5094:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5094:16: Adamic 0.1 refuses a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
       "id": 471,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5094:16"
@@ -5379,7 +5379,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5227:22: Adamic 0.1 refuses a value of type JSDocTemplateTag seen as Mutable\u003cJSDocTemplateTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5227:22: Adamic 0.1 refuses a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 478,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5227:22"
@@ -5388,7 +5388,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5249:22: Adamic 0.1 refuses a value of type JSDocTypedefTag seen as Mutable\u003cJSDocTypedefTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5249:22: Adamic 0.1 refuses a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 479,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5249:22"
@@ -5397,7 +5397,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5271:22: Adamic 0.1 refuses a value of type JSDocParameterTag seen as Mutable\u003cJSDocParameterTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5271:22: Adamic 0.1 refuses a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 480,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5271:22"
@@ -5406,7 +5406,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5293:22: Adamic 0.1 refuses a value of type JSDocPropertyTag seen as Mutable\u003cJSDocPropertyTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5293:22: Adamic 0.1 refuses a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 481,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5293:22"
@@ -5415,7 +5415,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:530:9: Adamic 0.1 refuses a value of type (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) =\u003e GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:530:9: Adamic 0.1 refuses a value of type (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 482,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:530:9"
@@ -5424,7 +5424,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5315:22: Adamic 0.1 refuses a value of type JSDocCallbackTag seen as Mutable\u003cJSDocCallbackTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5315:22: Adamic 0.1 refuses a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 483,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5315:22"
@@ -5433,7 +5433,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5331:22: Adamic 0.1 refuses a value of type JSDocOverloadTag seen as Mutable\u003cJSDocOverloadTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5331:22: Adamic 0.1 refuses a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 484,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5331:22"
@@ -5442,7 +5442,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5347:22: Adamic 0.1 refuses a value of type JSDocAugmentsTag seen as Mutable\u003cJSDocAugmentsTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5347:22: Adamic 0.1 refuses a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 485,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5347:22"
@@ -5451,7 +5451,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5370:22: Adamic 0.1 refuses a value of type JSDocSeeTag seen as Mutable\u003cJSDocSeeTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5370:22: Adamic 0.1 refuses a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 486,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5370:22"
@@ -5537,7 +5537,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5456:22: Adamic 0.1 refuses a value of type JSDocImplementsTag seen as Mutable\u003cJSDocImplementsTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5456:22: Adamic 0.1 refuses a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 492,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5456:22"
@@ -5546,7 +5546,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5524:22: Adamic 0.1 refuses a value of type JSDocUnknownTag seen as Mutable\u003cJSDocUnknownTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5524:22: Adamic 0.1 refuses a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 493,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5524:22"
@@ -5555,7 +5555,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5563:22: Adamic 0.1 refuses a value of type JSDocImportTag seen as Mutable\u003cJSDocImportTag\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:5563:22: Adamic 0.1 refuses a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 494,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:5563:22"
@@ -5598,7 +5598,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:6330:28: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:6330:28: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 498,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:6330:28"
@@ -5607,7 +5607,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:6354:28: Adamic 0.1 refuses a value of type GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:6354:28: Adamic 0.1 refuses a value of type GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 499,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:6354:28"
@@ -5634,7 +5634,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:6677:27: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:6677:27: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 502,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:6677:27"
@@ -5643,7 +5643,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:6698:27: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:6698:27: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 503,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:6698:27"
@@ -5652,7 +5652,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:7184:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:7184:16: Adamic 0.1 refuses a value of type Mutable<T> seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
       "id": 504,
       "status": "stopped",
       "where": "src/compiler/factory/nodeFactory.ts:7184:16"
@@ -5809,7 +5809,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/program.ts:2183:26: Adamic 0.1 refuses a value of type (resolution: ResolvedModuleWithFailedLookupLocations) =\u003e ResolvedModuleFull | undefined seen as (oldResolution: ResolvedModuleWithFailedLookupLocations) =\u003e ResolutionWithResolvedFileName | undefined, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/program.ts:2183:26: Adamic 0.1 refuses a value of type (resolution: ResolvedModuleWithFailedLookupLocations) => ResolvedModuleFull | undefined seen as (oldResolution: ResolvedModuleWithFailedLookupLocations) => ResolutionWithResolvedFileName | undefined, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 521,
       "status": "stopped",
       "where": "src/compiler/program.ts:2183:26"
@@ -6139,7 +6139,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/classFields.ts:2052:61: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/classFields.ts:2052:61: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 552,
       "status": "stopped",
       "where": "src/compiler/transformers/classFields.ts:2052:61"
@@ -6211,7 +6211,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/classFields.ts:928:71: Adamic 0.1 refuses a value of type LeftHandSideExpression \u0026 GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/classFields.ts:928:71: Adamic 0.1 refuses a value of type LeftHandSideExpression & GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 559,
       "status": "stopped",
       "where": "src/compiler/transformers/classFields.ts:928:71"
@@ -6280,7 +6280,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1051:127: Adamic 0.1 refuses a value of type SyntheticSuper seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1051:127: Adamic 0.1 refuses a value of type SyntheticSuper seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 565,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1051:127"
@@ -6289,7 +6289,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1308:59: Adamic 0.1 refuses a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1308:59: Adamic 0.1 refuses a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 566,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1308:59"
@@ -6298,7 +6298,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1349:54: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1349:54: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 567,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1349:54"
@@ -6307,7 +6307,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1355:20: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1355:20: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 568,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1355:20"
@@ -6316,7 +6316,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1504:17: Adamic 0.1 refuses a value of type ThisCapturingVariableDeclaration seen as VariableDeclaration, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1504:17: Adamic 0.1 refuses a value of type ThisCapturingVariableDeclaration seen as VariableDeclaration, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 569,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1504:17"
@@ -6325,7 +6325,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1505:17: Adamic 0.1 refuses a value of type Identifier \u0026 GeneratedIdentifier \u0026 { readonly escapedText: { __escapedIdentifier: void; } \u0026 \"__this\"; } seen as BindingName, which can write EmitNode | undefined where EmitNode \u0026 { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1505:17: Adamic 0.1 refuses a value of type Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & \"__this\"; } seen as BindingName, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
       "id": 570,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1505:17"
@@ -6334,7 +6334,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1591:29: Adamic 0.1 refuses a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1591:29: Adamic 0.1 refuses a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 571,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1591:29"
@@ -6343,7 +6343,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1708:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1708:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 572,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1708:21"
@@ -6352,7 +6352,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1828:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1828:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 573,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1828:21"
@@ -6361,7 +6361,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:1832:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:1832:21: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 574,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:1832:21"
@@ -6370,7 +6370,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:2165:21: Adamic 0.1 refuses a value of type CapturedThis seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:2165:21: Adamic 0.1 refuses a value of type CapturedThis seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 575,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:2165:21"
@@ -6433,7 +6433,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:4583:48: Adamic 0.1 refuses a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:4583:48: Adamic 0.1 refuses a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 581,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:4583:48"
@@ -6442,7 +6442,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:4832:54: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:4832:54: Adamic 0.1 refuses a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 582,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:4832:54"
@@ -6475,7 +6475,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:4837:16: Adamic 0.1 refuses a value of type PropertyAccessExpression | SyntheticSuper seen as LeftHandSideExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:4837:16: Adamic 0.1 refuses a value of type PropertyAccessExpression | SyntheticSuper seen as LeftHandSideExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 585,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:4837:16"
@@ -6484,7 +6484,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:5022:20: Adamic 0.1 refuses a value of type CapturedThis seen as PrimaryExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:5022:20: Adamic 0.1 refuses a value of type CapturedThis seen as PrimaryExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 586,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:5022:20"
@@ -6493,7 +6493,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/es2015.ts:822:62: Adamic 0.1 refuses a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/es2015.ts:822:62: Adamic 0.1 refuses a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 587,
       "status": "stopped",
       "where": "src/compiler/transformers/es2015.ts:822:62"
@@ -6574,7 +6574,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/module/module.ts:2486:78: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/module/module.ts:2486:78: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 594,
       "status": "stopped",
       "where": "src/compiler/transformers/module/module.ts:2486:78"
@@ -6595,7 +6595,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/module/system.ts:1998:71: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/module/system.ts:1998:71: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 596,
       "status": "stopped",
       "where": "src/compiler/transformers/module/system.ts:1998:71"
@@ -6628,7 +6628,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/utilities.ts:426:128: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/utilities.ts:426:128: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 599,
       "status": "stopped",
       "where": "src/compiler/transformers/utilities.ts:426:128"
@@ -6637,7 +6637,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/utilities.ts:426:47: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/utilities.ts:426:47: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 600,
       "status": "stopped",
       "where": "src/compiler/transformers/utilities.ts:426:47"
@@ -6646,7 +6646,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/utilities.ts:834:47: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/utilities.ts:834:47: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 601,
       "status": "stopped",
       "where": "src/compiler/transformers/utilities.ts:834:47"
@@ -6655,7 +6655,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/transformers/utilities.ts:846:45: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/transformers/utilities.ts:846:45: Adamic 0.1 refuses a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
       "id": 602,
       "status": "stopped",
       "where": "src/compiler/transformers/utilities.ts:846:45"

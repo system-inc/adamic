@@ -209,6 +209,13 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	literal := ir.ArrayLiteral{Element: element}
+	declared := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if declared == nil {
+		declared = l.checker.GetTypeAtLocation(node)
+	}
+	if l.checker.IsArrayType(declared) {
+		literal.Never = l.checker.GetElementTypeOfArrayType(declared).Flags()&checker.TypeFlagsNever != 0
+	}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
 		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
@@ -305,6 +312,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
+	}
+	if node.Kind == ast.KindArrayLiteralExpression && element.Flags()&checker.TypeFlagsNever != 0 && len(node.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+		return ir.Number, nil
 	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
@@ -1224,7 +1234,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+		return ir.ArrayPush{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
@@ -1268,7 +1278,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) == 0 || arguments[0].Type() != ir.Number || (len(arguments) > 1 && arguments[1].Type() != ir.Number) {
 			return nil, true, l.notYet(node, "splice without a start and a count that are numbers")
 		}
-		splice := ir.ArraySplice{Array: array, Start: arguments[0], Element: element, Site: l.writeSite(receiver)}
+		splice := ir.ArraySplice{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Start: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		if len(arguments) > 1 {
 			splice.Count = arguments[1]
 			for _, item := range arguments[2:] {
@@ -1822,7 +1832,7 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 		}
 		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
 	}
-	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
+	return []ir.Statement{ir.SetIndex{WriteOrigin: ir.WriteCheck{Where: l.program.Where(target), Expression: sourceExpression(target)}, Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
 
 // stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a

@@ -19,8 +19,9 @@ type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
 	// CheckedWrites marks fields whose wider TypeScript views require actual-shape checks.
-	CheckedWrites map[string]bool
-	WriteChecks   []WriteCheck
+	CheckedWrites   map[string]bool
+	CheckedElements bool
+	WriteChecks     []WriteCheck
 	// WriteContracts retain allocation declarations and their directional type proofs.
 	WriteContracts []*FieldContract
 
@@ -423,6 +424,7 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
+		Never    bool
 		Element  Type
 		Elements []Expression
 		Spread   []bool
@@ -484,9 +486,10 @@ type (
 
 	// ArrayPush is Array.push(Value): it appends and is the new length.
 	ArrayPush struct {
-		Array   Expression
-		Value   Expression
-		Element Type
+		WriteOrigin WriteCheck
+		Array       Expression
+		Value       Expression
+		Element     Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site int
@@ -625,6 +628,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		WriteOrigin         WriteCheck
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -1168,6 +1172,7 @@ type (
 	// SetIndex is array[index] = value, at an index the array has: anywhere else it panics, in both
 	// backends, where JavaScript would grow the array or leave a hole.
 	SetIndex struct {
+		WriteOrigin         WriteCheck
 		Array, Index, Value Expression
 		Element             Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

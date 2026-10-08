@@ -216,7 +216,7 @@ func (e *emitter) comparator(sort ir.ArraySort) string {
 
 // spliceArguments evaluates a splice's operands, in order, as the runtime's splice takes them.
 func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
-	array := e.value(splice.Array)
+	array := e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", e.value(splice.Array)))
 	start := e.value(splice.Start)
 	count := "0.0"
 	if splice.Count != nil {
@@ -225,6 +225,11 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	items := []string{}
 	for _, item := range splice.Items {
 		items = append(items, held(splice.Element, e.value(item)))
+	}
+	if e.program.CheckedElements {
+		for _, item := range items {
+			e.line("adamic_array_check_never(%s, %d, %s, %s);", array, splice.Element, item, cString(splice.WriteOrigin.Expression))
+		}
 	}
 	packed := "NULL"
 	if len(items) > 0 {

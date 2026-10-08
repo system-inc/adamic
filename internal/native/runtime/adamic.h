@@ -422,6 +422,7 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	bool never_elements;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
@@ -1095,5 +1096,8 @@ void *adamic_library_identity(size_t index);
 #endif
 
 void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression);
+
+void adamic_check_contract(const adamic_field_contract *, unsigned char, adamic_value, int, const char *);
+void adamic_array_check_never(const adamic_array *, unsigned char, adamic_value, const char *);
 
 #endif

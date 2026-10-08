@@ -15,3 +15,18 @@ Reproduce the adapted tree with `stage3/apply.sh` at `9b8ebd77`, then run `bash 
 Of the 515 class-d sites, 227 admit checked field relations, 263 retain a refusal, and 25 have no current relation refusal and no runtime admission. This group adds 200 checked relations: 146 diagnostics and 54 other. All 84 DiagnosticWithLocation-to-Diagnostic sites and all 58 DiagnosticWithLocation-to-DiagnosticRelatedInformation sites now admit checks. The 263 refusals include 166 other, 15 diagnostics and 82 shared-never cases. Their complete first reasons are in the JSON. Class-a and class-b rows are included for comparison; the unit does not claim to close all their remaining compiler limitations.
 
 The next largest exact first reason is 19 FlowNode-to-FlowNode-or-undefined sites, where a wider node field can hold BindingElement, Expression or VariableDeclaration but the actual slot reads BinaryExpression or CallExpression. These union-bearing structural contracts remain refused. The shared-never family remains 82 sites; its largest exact reason is 14 never[]-to-BaseType[] sites. A never-element container has no fitting element and needs allocation element contracts; it remains an explicit refusal control. Class allocation identities and unrestricted recursive or union-bearing schema fallback are not provided by this group. This delivers the diagnostic reference group toward roadmap step 10, task #63x2441.
+
+Shared-never group: the allocation records that its element type is never. Push,
+index assignment and splice check that allocation before storing. Runtime insertion
+helpers also fail closed for bottom allocations. The receiver stays alive while
+arguments are evaluated. Number, string and object views have empty-operation
+controls; no value inhabits never, so a fitting element-write witness is impossible.
+A separate broad-allocation control shows the guarded writer accepts a number slot.
+Removing the allocation contract admits the numeric insertion and reproduces Node.
+
+All 82 shared-never sites now have checked relation admission, including the nullable
+Symbol array view. The class-d split is 309 checked relations, 181 refusals, and 25
+sites without a current relation refusal. The next largest exact first reason is
+19 FlowNode structural-union sites. never-group-results.json records every remaining
+first reason and its sites. This census measures relations on checker-rejected
+adapted sources; it does not claim usable backend IR for the whole compiler.

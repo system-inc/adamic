@@ -264,10 +264,14 @@ void adamic_object_check_contract(adamic_object *object, const char *name, unsig
  adamic_slot_cache cache = {NULL, 0};
  adamic_value *slot = adamic_object_optional_field(object, name, &cache);
  const adamic_field_contract *contract = slot == NULL || object->shape->contracts == NULL ? NULL : &object->shape->contracts[cache.index];
+ adamic_check_contract(contract, kind, value, source_type, expression);
+}
+
+void adamic_check_contract(const adamic_field_contract *contract, unsigned char kind, adamic_value value, int source_type, const char *expression) {
  bool present = true;
  if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
  if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
- bool valid = contract != NULL && (contract->kind == kind || (contract->kind == 1 && kind == 7)) && (present || contract->nullable);
+ bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7)) && (present || contract->nullable);
  if (valid && present && contract->count != 0) {
   valid = false;
   for (size_t index = 0; index < contract->count; index++) {

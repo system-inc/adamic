@@ -9,6 +9,29 @@ import (
 // writer was lowered. Protect those allocation fields across every named alias,
 // including earlier function bodies. Initializers without a source origin stay trusted.
 func finishWriteContracts(program *ir.Program) {
+	if program.CheckedElements {
+		note := func(node any) bool {
+			var origin ir.WriteCheck
+			switch write := node.(type) {
+			case ir.ArrayPush:
+				origin = write.WriteOrigin
+			case ir.ArraySplice:
+				if len(write.Items) > 0 {
+					origin = write.WriteOrigin
+				}
+			case ir.SetIndex:
+				origin = write.WriteOrigin
+			}
+			if origin.Expression != "" {
+				program.WriteChecks = append(program.WriteChecks, origin)
+			}
+			return true
+		}
+		walk(program.Main, note)
+		for _, function := range program.Functions {
+			walk(function.Body, note)
+		}
+	}
 	if len(program.CheckedWrites) == 0 {
 		return
 	}

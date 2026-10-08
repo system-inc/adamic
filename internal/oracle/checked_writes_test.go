@@ -13,6 +13,17 @@ import (
 )
 
 var checkedWriteFixtures = []struct{ name, stdout, message string }{
+	{"never-nullable-fit", "0\n", ""},
+	{"never-nullable-misfit", "", "write failed: view[] expects never, got object"},
+	{"never-index-misfit", "", "write failed: values[0] expects never, got 0"},
+	{"never-splice-misfit", "", "write failed: values[] expects never, got 0"},
+	{"never-wide-fit", "0\n1\n", ""},
+	{"never-number-fit", "0\n0\n", ""},
+	{"never-number-misfit", "", "write failed: values[] expects never, got 0"},
+	{"never-string-fit", "0\n0\n", ""},
+	{"never-string-misfit", "", "write failed: values[] expects never, got badbad"},
+	{"never-object-fit", "0\n0\n", ""},
+	{"never-object-misfit", "", "write failed: values[] expects never, got object"},
 	{"diagnostic-alias-fit", "16\n", ""},
 	{"diagnostic-alias-misfit", "", "write failed: wide.flags expects 16, got 0"},
 	{"diagnostic-proof-fit", "newnew 16\n", ""},
@@ -186,7 +197,7 @@ func checkedWriteCounts(t *testing.T) []string {
 }
 
 func TestCheckedWiderWritesAdamicRefuses(t *testing.T) {
-	for _, name := range []string{"flags-fit", "string-fit", "boolean-fit", "diagnostic-fit", "parent-misfit"} {
+	for _, name := range []string{"flags-fit", "string-fit", "boolean-fit", "diagnostic-fit", "parent-misfit", "never-number-fit"} {
 		_, err := lowered(t, filepath.Join(repository, "stage3/checked-writes", name+".a"))
 		if err == nil || !strings.Contains(err.Error(), "refuses") {
 			t.Fatalf("%s .a: %v", name, err)
@@ -194,21 +205,38 @@ func TestCheckedWiderWritesAdamicRefuses(t *testing.T) {
 	}
 }
 
-// A never-element container has no fitting element. Whole-container views still need
-// element contracts, so admitting a scalar-field contract must not relax this refusal.
-func TestCheckedWiderWritesKeepContainerRefusals(t *testing.T) {
-	source, err := os.ReadFile(filepath.Join(repository, "stage3/checked-writes/shared-never.a"))
-	if err != nil {
-		t.Fatal(err)
+// Clearing the bottom allocation contract must admit the original Node store.
+func TestCheckedNeverContractMutant(t *testing.T) {
+	program, path := checkedWriteFixture(t, "never-number-misfit")
+	changes := 0
+	change := func(value ir.Expression) ir.Expression {
+		if literal, ok := value.(ir.ArrayLiteral); ok && literal.Never {
+			literal.Never = false
+			changes++
+			return literal
+		}
+		return value
 	}
-	path := filepath.Join(t.TempDir(), "shared-never.ts")
-	if err = os.WriteFile(path, source, 0644); err != nil {
-		t.Fatal(err)
+	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), change)
+	mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), change)
+	if changes == 0 {
+		t.Fatal("mutant changed no allocation contract")
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "which can write number where never is read") {
-		t.Fatalf("never[] refusal: %v", err)
+	truth := onNode(t, path)
+	got, binary := nativelyUncached(t, program)
+	if got.exitCode == 70 {
+		t.Fatal("mutant survived")
 	}
+	if d := disagreement(truth, got); d != "" {
+		t.Fatal(d)
+	}
+	if d := disagreement(truth, onJavaScriptBackend(t, program)); d != "" {
+		t.Fatal(d)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("caught drop never contract: expected exit 70, mutant exit %d stdout %q", got.exitCode, got.stdout)
 }
 
 func TestCheckedWiderWritesKeepSpreadOverrideRefusal(t *testing.T) {

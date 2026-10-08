@@ -3,7 +3,12 @@ package javascript
 import "fmt"
 
 // Hidden readiness state leaves own keys and object spread unchanged.
-const fieldReadinessRuntime = `const adamicFieldReadiness = new WeakMap();
+const fieldReadinessRuntime = `const adamicNeverArrays = new WeakSet();
+const adamicArrayNeverCheck = (array, value, expression) => { if (adamicNeverArrays.has(array)) panic("write failed: " + expression + " expects never, got " + (value == null ? "undefined" : typeof value === "object" ? "object" : String(value))); };
+const adamicNeverArray = (array) => { const result = new Proxy(array, {set(target, name, value) { if (name === "length") { if (value > 0) adamicArrayNeverCheck(result, undefined, "array[]"); } else if (/^(0|[1-9][0-9]*)$/.test(name)) adamicArrayNeverCheck(result, value, "array[]"); return Reflect.set(target, name, value); }}); adamicNeverArrays.add(result); return result; };
+const adamicArrayCheckedPush = (array, value, expression) => { adamicArrayNeverCheck(array, value, expression); return array.push(value); };
+const adamicArrayCheckedSplice = (array, expression, ...args) => { if (args.length > 2) adamicArrayNeverCheck(array, args[2], expression); return array.splice(...args); };
+const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicFieldContracts = new WeakMap();
 const adamicAllocationContracts = new WeakMap();

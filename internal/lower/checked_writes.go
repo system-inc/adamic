@@ -15,6 +15,10 @@ func (l *lowering) checkedWidening(node *ast.Node, from, to *checker.Type) bool 
 	if !strings.HasSuffix(l.program.FileName(module), ".ts") {
 		return false
 	}
+	if l.checkedNeverArray(from, to) {
+		l.result.CheckedElements = true
+		return true
+	}
 	fields := map[string]bool{}
 	if !l.checkedFieldRelation(from, to, fields, map[[2]*checker.Type]bool{}) {
 		return false
@@ -126,4 +130,19 @@ func (l *lowering) contractType(declared *checker.Type) *checker.Type {
 		}
 	}
 	return declared
+}
+
+// A never-element allocation remains empty through every alias. Its representation
+// is immaterial until a store, which the allocation contract always rejects.
+func (l *lowering) checkedNeverArray(from, to *checker.Type) bool {
+	from, to = l.withoutUndefined(l.contractType(from)), l.withoutUndefined(l.contractType(to))
+	if !l.checker.IsArrayType(from) || !l.checker.IsArrayType(to) {
+		return false
+	}
+	own := l.checker.GetElementTypeOfArrayType(from)
+	return own.Flags()&checker.TypeFlagsNever != 0
+}
+
+func (l *lowering) elementWriteOrigin(node *ast.Node) ir.WriteCheck {
+	return ir.WriteCheck{Where: l.program.Where(node), Expression: sourceExpression(node) + "[]"}
 }

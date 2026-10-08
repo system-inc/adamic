@@ -85,7 +85,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
-	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
+	builder.WriteString("const adamicSetIndex = (array, index, value, expression = \"array[]\") => {\n\tadamicArrayNeverCheck(array, value, expression);\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
@@ -484,7 +484,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
-		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
+		e.line("adamicSetIndex(%s, %s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value), quote(statement.WriteOrigin.Expression))
 	case ir.Return:
 		if statement.Value == nil {
 			e.line("return;")
@@ -924,7 +924,11 @@ func (e *emitter) value(expression ir.Expression) string {
 				elements = append(elements, e.value(element))
 			}
 		}
-		return "[" + strings.Join(elements, ", ") + "]"
+		value := "[" + strings.Join(elements, ", ") + "]"
+		if expression.Never {
+			value = "adamicNeverArray(" + value + ")"
+		}
+		return value
 	case ir.Length:
 		if expression.Optional {
 			return e.value(expression.Array) + "?.length"
@@ -1030,6 +1034,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedPush(" + e.value(expression.Array) + ", " + e.value(expression.Value) + ", " + quote(expression.WriteOrigin.Expression) + ")"
+		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
 	case ir.ArrayJoin:
 		return e.value(expression.Array) + ".join(" + e.value(expression.Separator) + ")"
@@ -1080,6 +1087,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Count != nil {
 			arguments = append(arguments, expression.Count)
 			arguments = append(arguments, expression.Items...)
+		}
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedSplice(" + e.value(expression.Array) + ", " + quote(expression.WriteOrigin.Expression) + ", " + e.values(arguments) + ")"
 		}
 		return e.value(expression.Array) + ".splice(" + e.values(arguments) + ")"
 	case ir.ArrayConcat:

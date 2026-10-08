@@ -13,6 +13,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
+	array->never_elements = false;
 	array->elements = NULL;
 	array->properties = NULL;
 	if (capacity > 0) {
@@ -25,7 +26,15 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	return array;
 }
 
+void adamic_array_check_never(const adamic_array *array, unsigned char kind, adamic_value value, const char *expression) {
+	if (array->never_elements) {
+		static const adamic_field_contract contract = {.declared = "never"};
+		adamic_check_contract(&contract, kind, value, 0, expression);
+	}
+}
+
 void adamic_array_push(adamic_array *array, adamic_value value) {
+	adamic_array_check_never(array, 0, value, "array[]");
 	if (array->length == array->capacity) {
 		size_t capacity = array->capacity == 0 ? 4 : array->capacity * 2;
 		adamic_value *grown = realloc(array->elements, capacity * sizeof *grown);
@@ -299,6 +308,7 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
 // a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
 static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
+	if (item_count > 0) { adamic_array_check_never(array, 0, items[0], "array[]"); }
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -397,6 +407,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 }
 
 void adamic_array_set(adamic_array *array, double index, adamic_value value) {
+	adamic_array_check_never(array, 0, value, "array[]");
 	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
 	// a hole is something 0.1 can't hold. push is how to append.
 	adamic_value *slot = adamic_array_at(array, index);
