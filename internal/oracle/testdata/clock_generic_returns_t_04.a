@@ -1,0 +1,7 @@
+interface Identifier { readonly text: string; }
+interface PropertyAccessEntityNameExpression { readonly text: string; readonly owner: string; }
+interface ExpressionWithTypeArguments { expression: object; readonly typeArguments: readonly string[]; }
+function expression(): ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression } {
+    return { expression: { text: ["en", "tity"].join(""), owner: "scope" }, typeArguments: ["string", "number"] };
+}
+console.log(`${typeof expression().expression}:${expression().typeArguments.join(",")}`);
