@@ -85,6 +85,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if branch := l.literalCallableBranch(node); branch != nil {
+			return visit(branch)
+		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil
