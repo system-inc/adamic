@@ -1,0 +1,14 @@
+{
+  "name": "no-iterator",
+  "kinds": [
+    "PropertyAccessExpression",
+    "ElementAccessExpression"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoIterator",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoIterator"
+}

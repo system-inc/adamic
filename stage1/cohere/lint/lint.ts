@@ -1,5 +1,6 @@
 // The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
 // stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+import type { Checker } from './checker.a';
 import { RuleContext } from './context.ts';
 import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 import { panic, utf8Length } from 'adamic';
@@ -33,6 +34,8 @@ function compareEdits(left: Finding, right: Finding): number {
 }
 
 export class Linter {
+    readonly checker: Checker | undefined;
+    readonly skipped: string[] = [];
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
@@ -62,7 +65,9 @@ export class Linter {
         nullPolicy: string,
         allowCatch: boolean,
         settings: Settings,
+        checker: Checker | undefined = undefined,
     ) {
+        this.checker = checker;
         this.settings = settings;
         this.source = source;
         this.parser = parser;
@@ -74,6 +79,7 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.checker !== undefined) { this.checker.root = this.root; }
         if(this.junkRows) {
             const attached = this.parser.nodes.length;
             for(let index = 0; index < attached; index++) {
@@ -93,11 +99,14 @@ export class Linter {
             this.parents,
             this.settings,
             this.root,
+            this.checker,
         );
         const rules = createRuleSet(context);
         rules.prepare(this.root);
         this.walk(this.root, -1, rules);
         rules.finish(this.root);
+        for(const skipped of context.skipped) { this.skipped.push(skipped); }
+        if(this.checker !== undefined) { this.checker.finish(); }
         for(const finding of context.findings) {
             this.findings.push(finding);
         }
@@ -172,11 +181,18 @@ export class Linter {
             if(applied.length === 0) {
                 return current;
             }
-            let result = current;
-            for(let index = applied.length - 1; index >= 0; index--) {
-                const finding = applied[index] ?? panic('missing fix');
-                result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
+            // The applied fixes are sorted and disjoint, so the new text is built in one pass from the pieces
+            // between them. Splicing each fix into the whole text instead copied the file once per fix, which
+            // on checker.ts (3.1 MB, 708 fixes) was most of the run's instructions.
+            const pieces: string[] = [];
+            let copied = 0;
+            for(const finding of applied) {
+                pieces.push(current.slice(copied, finding.editStart));
+                pieces.push(finding.replacement);
+                copied = finding.editEnd;
             }
+            pieces.push(current.slice(copied));
+            const result = pieces.join('');
             // The parser takes its JSX and JavaScript modes from the path, so each pass reparses under the
             // file's own path: a .tsx file's fixed source is still TSX.
             const parser = new Parser(result, this.parser.path);

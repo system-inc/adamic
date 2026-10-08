@@ -1,103 +1,103 @@
 [
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "CompilerHost",
     "name": "getDefaultLibLocation",
     "before": "getDefaultLibLocation?(): string;",
     "after": "getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\"getDefaultLibLocation\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates getDefaultLibLocation with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "CompilerHost",
     "name": "createHash",
     "before": "createHash?(data: string): string;",
     "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates createHash with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "CompilerHost",
     "name": "readDirectory",
     "before": "readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];",
     "after": "readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates readDirectory with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "ModuleResolutionHost",
     "name": "trace",
     "before": "trace?(s: string): void;",
     "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates trace with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "ModuleResolutionHost",
     "name": "directoryExists",
     "before": "directoryExists?(directoryName: string): boolean;",
     "after": "directoryExists?: { directoryExists(directoryName: string): boolean; }[\"directoryExists\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates directoryExists with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "ModuleResolutionHost",
     "name": "getDirectories",
     "before": "getDirectories?(path: string): string[];",
     "after": "getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates getDirectories with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "types.ts",
     "interface": "ModuleResolutionHost",
     "name": "realpath",
     "before": "realpath?(path: string): string;",
     "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates realpath with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "watchPublic.ts",
     "interface": "ProgramHost",
     "name": "createHash",
     "before": "createHash?(data: string): string;",
     "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates createHash with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "watchPublic.ts",
     "interface": "ProgramHost",
     "name": "realpath",
     "before": "realpath?(path: string): string;",
     "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates realpath with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
-    "kind": "public-method",
+    "kind": "restored-public-method",
     "file": "watchPublic.ts",
     "interface": "ProgramHost",
     "name": "getEnvironmentVariable",
     "before": "getEnvironmentVariable?(name: string): string | undefined;",
     "after": "getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\"getEnvironmentVariable\"] | undefined;",
     "public": true,
-    "proof": "watch.ts explicitly populates getEnvironmentVariable with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "Restore the original public method exactly under the 06:35 ruling. Its optional method slot must not be converted to a property. The watch host producers may store own undefined; public callbacks and returned host objects can observe key presence, so conditional omission is declined."
   },
   {
     "kind": "public-method",

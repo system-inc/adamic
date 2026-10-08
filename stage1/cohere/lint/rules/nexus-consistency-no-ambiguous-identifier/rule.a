@@ -1,0 +1,24 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { comparator, eventContext, foreignName, singleLowercaseLetter } from './helpers.a';
+import { messageNoAmbiguousE, messageNoSingleLetter, messageNoUnderscore } from './messages.a';
+const name = 'nexus/consistency-no-ambiguous-identifier';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const text = node.text;
+        if(text !== '_' && !singleLowercaseLetter.test(text)) { return; }
+        if(foreignName(this.context, index, node)) { return; }
+        if(text === 'x' || text === 'y' || text === 'z') { return; }
+        if(text === '_') { this.report(node, 'noUnderscore', messageNoUnderscore); return; }
+        if(text === 'e') { this.report(node, 'noAmbiguousE', messageNoAmbiguousE(eventContext(this.context, index))); return; }
+        if((text === 'a' || text === 'b') && comparator(this.context, index)) { return; }
+        this.report(node, 'noSingleLetter', messageNoSingleLetter(text));
+    }
+    report(node: ParseNode, id: string, message: string): void {
+        this.context.scanAt(node.pos);
+        this.context.reportRange(this.context.scanStart(), node.end, name, id, message);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,3 +1,4 @@
+import type { Checker } from './checker.a';
 import { panic } from 'adamic';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
@@ -66,6 +67,8 @@ export function space(character: string): boolean {
 }
 
 export class RuleContext {
+    readonly checker: Checker | undefined;
+    readonly skipped: string[] = [];
     readonly source: string;
     readonly settings: Settings;
     readonly parser: Parser;
@@ -93,7 +96,9 @@ export class RuleContext {
         parents: readonly number[],
         settings: Settings,
         root: number,
+        checker: Checker | undefined = undefined,
     ) {
+        this.checker = checker;
         this.source = source;
         this.parser = parser;
         this.scanner = scanner;
@@ -110,6 +115,11 @@ export class RuleContext {
     }
     enabled(name: string): boolean {
         return this.selected === 'all' || this.selected === name;
+    }
+    typed(name: string): boolean {
+        if(!this.enabled(name)) { return false; }
+        if(this.checker === undefined) { this.skipped.push(`skipped ${name} no program`); return false; }
+        return true;
     }
     start(index: number): number {
         const node = this.node(index);
