@@ -163,3 +163,10 @@
 {"Time":"2026-10-08T01:27:18.623100513Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree"}
 {"Time":"2026-10-08T01:27:18.623102696Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"=== RUN   TestCompilerAndStage1Agree\n","OutputType":"frame"}
 {"Time":"2026-10-08T01:27:18.628704742Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:528: compiler and stage1: 550 files\n"}
+{"Time":"2026-10-08T01:28:50.182060656Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:529: Go, Node, emitted JavaScript, native identical: 22112250 bytes\n"}
+{"Time":"2026-10-08T01:28:50.19298451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"--- PASS: TestCompilerAndStage1Agree (91.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:28:50.193015808Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Elapsed":91.57}
+{"Time":"2026-10-08T01:28:50.193028737Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLegacyMutants"}
+{"Time":"2026-10-08T01:28:50.193046133Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLegacyMutants","Output":"=== RUN   TestLegacyMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:28:52.837670892Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLegacyMutants/overlap_winner_misreported"}
+{"Time":"2026-10-08T01:28:52.83772247Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLegacyMutants/overlap_winner_misreported","Output":"=== RUN   TestLegacyMutants/overlap_winner_misreported\n","OutputType":"frame"}
