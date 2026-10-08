@@ -51,7 +51,7 @@ func TestTSCCorpusAgreement(t *testing.T) {
 			command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^"+oracle+"$", "./internal/format/javascript")
 			command.Dir = root + "/cohere"
 			command.Env = append(os.Environ(), variable+"="+requestPath)
-			if output, err := command.CombinedOutput(); err != nil {
+			if output, err := combinedOutput(command); err != nil {
 				t.Fatalf("Go %s corpus: %v\n%s", family, err, output)
 			} else {
 				t.Log(string(output))

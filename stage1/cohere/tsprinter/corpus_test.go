@@ -19,7 +19,7 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
 	}
 	command := bounded(t, "git", "-C", checkout, "ls-files", "-z", "--", root)
-	data, err := command.Output()
+	data, err := output(command)
 	if err != nil {
 		return nil, fmt.Errorf("corpus root %s: git ls-files: %w", root, err)
 	}
@@ -47,7 +47,7 @@ func printerCorpusFiles(t *testing.T) []string {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	command := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
-	if data, err := command.Output(); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+	if data, err := output(command); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
 		t.Fatalf("TypeScript pin: %q %v", data, err)
 	}
 	var files []string
