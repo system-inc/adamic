@@ -61,3 +61,18 @@ It rejects any changed member form, retains all ten JsxNames fields and React's
 Fragment, imports the full upstream __String declaration, and hashes both source
 and generated declarations. It does not compile tsc namespace implementations
 or weaken Adamic's namespace syntax refusal. Runtime values come from fixtures.
+
+Fifth group: original __String[] dynamic element pair / six reads certified;
+plain table now eighteen / 525 certified and twelve / 18 pending. Optional fields
+remain five / nine certified; combined twenty-three / 534 delivered.
+Uncached oracle passed in 5.769s. Built strings, internal names, undefined and
+bounds agree with Node in both backends and sanitized/leak-checked C. Number
+elements pin exit 70: element read failed: values[index] expected __String, found
+number. The element-check bypass runs valid C/JS release code and is caught by
+that pin. The complete original element descriptor is a ViewUnion represented
+as String, with the void phantom admitted as undefined; its primitive members
+are verified. An initial scalar-only oracle assertion was corrected after
+inspecting that actual descriptor. No compiler admission was changed.
+Null-only arrays remain a named compile refusal, not runtime coverage; that
+supplementary producer gap is retained. No broader primitive array adapter or
+null-array producer support is claimed.

@@ -3,10 +3,10 @@
   "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
   "total_pairs": 30,
   "total_reads": 543,
-  "certified_pairs": 17,
-  "certified_reads": 519,
-  "remaining_pairs": 13,
-  "remaining_reads": 24,
+  "certified_pairs": 18,
+  "certified_reads": 525,
+  "remaining_pairs": 12,
+  "remaining_reads": 18,
   "pairs": [
     {
       "receiver_type_id": 6997,
@@ -158,7 +158,7 @@
         "line": 14206,
         "column": 49
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 9228,
