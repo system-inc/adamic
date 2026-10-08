@@ -1,0 +1,13 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/builder.ts:610:119:as_cast; support types and driver are local.
+interface ReusableDiagnosticMessageChain { readonly message: string; }
+interface ReusableRepopulateInfoChain extends ReusableDiagnosticMessageChain { readonly info: number; }
+function select(chain: ReusableDiagnosticMessageChain): void {
+    console.log('before');
+    const result = chain as ReusableRepopulateInfoChain;
+    console.log('view');
+    console.log(`info=${result.info}`);
+    console.log('after');
+}
+const value = { message: 'diagnostic', info: 'wrong' };
+select(value);

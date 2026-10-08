@@ -1,0 +1,13 @@
+// a-check: checked
+// Reduced from src/compiler/binder.ts:669:70:as_cast; support types and driver are local.
+interface Identifier { readonly kind: 'Identifier'; readonly text: string; }
+interface StringLiteral { readonly kind: 'StringLiteral'; readonly text: string; }
+interface BindingPattern { readonly kind: 'BindingPattern'; readonly text: string; }
+type DeclarationName = Identifier | StringLiteral | BindingPattern;
+function select(name: DeclarationName): void {
+    console.log('before');
+    const result = name as Identifier | StringLiteral;
+    console.log(`kind=${result.kind}`);
+    console.log('after');
+}
+select({ kind: 'BindingPattern', text: 'Ken' });

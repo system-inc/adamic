@@ -1,0 +1,709 @@
+{
+  "compiler_revision": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "node_version": "v24.19.0",
+  "results": [
+    {
+      "file": "01_enum_declaration.a",
+      "sha256": "ce37977b9f3b437d70b2806a2b9ee97c78c9a09b9fde92846370c4a0faf6233f",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/01_enum_declaration.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=267\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration.a:8:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/01_enum_declaration.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nkind=267\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "01_enum_declaration_fails.a",
+      "sha256": "165c8179f7e2a0aff34303d54b04d4413bd5fc80da2b9d384f383e3da94d5799",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/01_enum_declaration_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=279\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration_fails.a:8:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/01_enum_declaration_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nkind=279\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "02_name_subunion.a",
+      "sha256": "9fe7e80dd4dea75c0d33467dd6acdc899760e1d06b589fcdb37623035dc6548b",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/02_name_subunion.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=Identifier\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-observations/02_name_subunion.a.native"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=Identifier\nafter\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/02_name_subunion.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=Identifier\nafter\n",
+        "stderr": ""
+      },
+      "contract": "passed",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/02_name_subunion.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nkind=Identifier\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "02_name_subunion_fails.a",
+      "sha256": "f04ee47f5e1593a5928bff5385126ab29ad6c22869b8cd15c6c6fa8cbffef667",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/02_name_subunion_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nkind=BindingPattern\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-observations/02_name_subunion_fails.a.native"
+        ],
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: cast failed: this DeclarationName is not a Identifier | StringLiteral\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/02_name_subunion_fails.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: cast failed: this DeclarationName is not a Identifier | StringLiteral\n"
+      },
+      "contract": "passed",
+      "mutants": [
+        {
+          "name": "remove real emitted cast failure call",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/02_name_subunion_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nkind=BindingPattern\nafter\n",
+            "stderr": ""
+          }
+        },
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/02_name_subunion_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nkind=BindingPattern\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "03_chain_info.a",
+      "sha256": "6612a2364985fca7c64018f4bfd71960ebc7ebf8c4fe9629aa8f4186b286f5d0",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/03_chain_info.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ninfo=12\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/03_chain_info.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/03_chain_info.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ninfo=12\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "03_chain_info_fails.a",
+      "sha256": "746288453ac37d467f38942005833375f91544ca4a11fc3020487c501f6f202d",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/03_chain_info_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ninfo=wrong\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/03_chain_info_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/03_chain_info_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ninfo=wrong\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "04_literal_payload.a",
+      "sha256": "ccb932534678ddbd1fb6e8a840447d0d06c75304703238da0d67e6a812b6031d",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/04_literal_payload.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/04_literal_payload.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "04_literal_payload_fails.a",
+      "sha256": "54799574adde514ade53eba9f179f9ac6a6e5ac836973e37eeab26bdbf68ad5b",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/04_literal_payload_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/04_literal_payload_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "05_extension.a",
+      "sha256": "f1d0e37700f841caab0876423932f17f31c1df4f1be898960a2fd07851a84583",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/05_extension.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nextension=.ts\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/05_extension.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/05_extension.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nextension=.ts\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "05_extension_fails.a",
+      "sha256": "fd28031adc47f14be8abd60db005cd3c62749458ede82411b478590afb7475e8",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/05_extension_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nextension=.wrong\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/05_extension_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/05_extension_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nextension=.wrong\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "06_parser_keyword.a",
+      "sha256": "6b631603a1bb70f4c7451352e64047e0af37c1cb754bcf11232f7037445c18e3",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/06_parser_keyword.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\ntoken=118\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/06_parser_keyword.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\ntoken=118\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "06_parser_keyword_fails.a",
+      "sha256": "7844c92afc90813f4ef59821c5c4c2b4acb68c423c2dbb61a334f7c46fd43c0c",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/06_parser_keyword_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\ntoken=80\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword_fails.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/06_parser_keyword_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\ntoken=80\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "07_generic_next.a",
+      "sha256": "2127d7066c44b249054192f13a607cb15cb38773356ccf0c339a0ce45dbd48b2",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/07_generic_next.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nelement=12\nagain=13\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/07_generic_next.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nelement=12\nagain=13\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "07_generic_next_fails.a",
+      "sha256": "eac6ce339061e0052a7768bab4471985fccca02e849cb4d7ac9320f6afe5ea1d",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/07_generic_next_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next_fails.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/07_generic_next_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "08_generic_node.a",
+      "sha256": "73bddb0722c1a679bb8d5ae052815863848c9aa62f13d544e20034023895d2ca",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/08_generic_node.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ntext=Ken\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/08_generic_node.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ntext=Ken\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "08_generic_node_fails.a",
+      "sha256": "eb727c48751847109cb185383fac30ccf1c2ebdb29104394ce24786f23c87457",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/08_generic_node_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ntext=42\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node_fails.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/08_generic_node_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ntext=42\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "09_primitive_string.a",
+      "sha256": "99e27e3ab6990a6e2e783950ee67a1fb254df0c98265f7eb1726f546c63c2b0a",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/09_primitive_string.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nvalue=Ken\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/09_primitive_string.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nvalue=Ken\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "09_primitive_string_fails.a",
+      "sha256": "9d5638884149a2e37556fc8f55bc5e2f5e8de2b3618bad8bfa9907ef158cfc93",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/09_primitive_string_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nvalue=42\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string_fails.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/09_primitive_string_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nvalue=42\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "10_generator_label.a",
+      "sha256": "7756b1f87417ea11fe08b24a3330a82c52242f0c6c086d3620143660959c5781",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/10_generator_label.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nlabel=12\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "change final output marker",
+          "caught_by": "Node stdout golden",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/10_generator_label.a.output-mutant.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nlabel=12\nmutant\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "file": "10_generator_label_fails.a",
+      "sha256": "c477bdf267b2590c43cd94837d2d85dbf08ba1f657b03d8b6e260c28f5a23845",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-observations/10_generator_label_fails.a.source.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nlabel=undefined\nafter\n",
+        "stderr": ""
+      },
+      "compiler_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "native": null,
+      "javascript": null,
+      "contract": "blocked",
+      "mutants": [
+        {
+          "name": "erased-cast negative control",
+          "caught_by": "panic exit and stdout contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-observations/10_generator_label_fails.a.source.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nlabel=undefined\nafter\n",
+            "stderr": ""
+          }
+        }
+      ]
+    }
+  ]
+}

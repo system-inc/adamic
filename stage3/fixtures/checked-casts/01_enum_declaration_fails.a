@@ -1,0 +1,12 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/binder.ts:359:34:as_cast; support types and driver are local.
+enum SyntaxKind { EnumDeclaration = 267, ExportDeclaration = 279 }
+interface Node { readonly kind: SyntaxKind; }
+interface EnumDeclaration extends Node { readonly kind: SyntaxKind.EnumDeclaration; }
+function select(node: Node): void {
+    console.log('before');
+    const result = node as EnumDeclaration;
+    console.log(`kind=${result.kind}`);
+    console.log('after');
+}
+select({ kind: SyntaxKind.ExportDeclaration });

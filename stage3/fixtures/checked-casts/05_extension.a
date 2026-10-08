@@ -1,0 +1,11 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/moduleNameResolver.ts:2118:54:as_cast; support types and driver are local.
+enum Extension { Ts = '.ts', Tsx = '.tsx', Js = '.js' }
+function tryExtractTSExtension(candidate: string): string | undefined { return candidate; }
+function select(candidate: string): void {
+    console.log('before');
+    const result = tryExtractTSExtension(candidate) as Extension;
+    console.log(`extension=${result}`);
+    console.log('after');
+}
+select('.ts');

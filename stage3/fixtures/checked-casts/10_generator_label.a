@@ -1,0 +1,11 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/transformers/generators.ts:3057:43:as_cast; support types and driver are local.
+type Label = number;
+interface Expression { readonly text: string; }
+function select(args: readonly (number | Expression | undefined)[]): void {
+    console.log('before');
+    const result = args[0] as Label;
+    console.log(`label=${result}`);
+    console.log('after');
+}
+select([12]);
