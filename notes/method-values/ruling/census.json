@@ -1,0 +1,1813 @@
+[
+  {
+    "classification": "this-reading body",
+    "file": "checker.ts",
+    "line": 6437,
+    "column": 29,
+    "expression": "context.tracker.reportLikelyUnsafeImportRequiredError",
+    "name": "reportLikelyUnsafeImportRequiredError",
+    "directBody": true,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 54388,
+        "this": true
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "checker.ts",
+    "line": 6770,
+    "column": 38,
+    "expression": "cancellationToken.throwIfCancellationRequested",
+    "name": "throwIfCancellationRequested",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "this-reading body",
+    "file": "checker.ts",
+    "line": 6874,
+    "column": 25,
+    "expression": "context.tracker.reportInaccessibleUniqueSymbolError",
+    "name": "reportInaccessibleUniqueSymbolError",
+    "directBody": true,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 54374,
+        "this": true
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "checker.ts",
+    "line": 7014,
+    "column": 53,
+    "expression": "factory.createTemplateMiddle",
+    "name": "createTemplateMiddle",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 3594,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "checker.ts",
+    "line": 7014,
+    "column": 84,
+    "expression": "factory.createTemplateTail",
+    "name": "createTemplateTail",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 3600,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-reading body",
+    "file": "checker.ts",
+    "line": 7684,
+    "column": 138,
+    "expression": "context.tracker.reportPrivateInBaseOfClassExpression",
+    "name": "reportPrivateInBaseOfClassExpression",
+    "directBody": true,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 54367,
+        "this": true
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "this-reading body",
+    "file": "checker.ts",
+    "line": 7687,
+    "column": 74,
+    "expression": "context.tracker.reportPrivateInBaseOfClassExpression",
+    "name": "reportPrivateInBaseOfClassExpression",
+    "directBody": true,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 54367,
+        "this": true
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "checker.ts",
+    "line": 8071,
+    "column": 38,
+    "expression": "cancellationToken.throwIfCancellationRequested",
+    "name": "throwIfCancellationRequested",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "checker.ts",
+    "line": 8388,
+    "column": 223,
+    "expression": "factory.cloneNode",
+    "name": "cloneNode",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6369,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-reading body",
+    "file": "checker.ts",
+    "line": 8719,
+    "column": 29,
+    "expression": "context.tracker.reportLikelyUnsafeImportRequiredError",
+    "name": "reportLikelyUnsafeImportRequiredError",
+    "directBody": true,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 54388,
+        "this": true
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "checker.ts",
+    "line": 9347,
+    "column": 95,
+    "expression": "factory.createPropertyDeclaration",
+    "name": "createPropertyDeclaration",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 1765,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "checker.ts",
+    "line": 9386,
+    "column": 30,
+    "expression": "oldcontext.tracker.inner?.trackSymbol",
+    "name": "trackSymbol",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 8102,
+        "this": false
+      },
+      {
+        "file": "checker.ts",
+        "line": 54348,
+        "this": true
+      },
+      {
+        "file": "transformers/declarations.ts",
+        "line": 369,
+        "this": false
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "checker.ts",
+    "line": 51508,
+    "column": 26,
+    "expression": "tracker.trackSymbol",
+    "name": "trackSymbol",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "checker.ts",
+        "line": 8102,
+        "this": false
+      },
+      {
+        "file": "checker.ts",
+        "line": 54348,
+        "this": true
+      },
+      {
+        "file": "transformers/declarations.ts",
+        "line": 369,
+        "this": false
+      }
+    ],
+    "status": "this-reading candidate"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 1278,
+    "column": 40,
+    "expression": "parenthesizer.parenthesizeLeadingTypeArgument",
+    "name": "parenthesizeLeadingTypeArgument",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 659,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2196,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeExpressionOfComputedPropertyName",
+    "name": "parenthesizeExpressionOfComputedPropertyName",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 320,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2233,
+    "column": 199,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2238,
+    "column": 46,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2414,
+    "column": 32,
+    "expression": "parenthesizer.parenthesizeNonArrayTypeOfPostfixType",
+    "name": "parenthesizeNonArrayTypeOfPostfixType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 573,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2427,
+    "column": 74,
+    "expression": "parenthesizer.parenthesizeElementTypeOfTupleType",
+    "name": "parenthesizeElementTypeOfTupleType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 617,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2441,
+    "column": 25,
+    "expression": "parenthesizer.parenthesizeTypeOfOptionalType",
+    "name": "parenthesizeTypeOfOptionalType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 633,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2446,
+    "column": 70,
+    "expression": "parenthesizer.parenthesizeConstituentTypeOfUnionType",
+    "name": "parenthesizeConstituentTypeOfUnionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 506,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2450,
+    "column": 77,
+    "expression": "parenthesizer.parenthesizeConstituentTypeOfIntersectionType",
+    "name": "parenthesizeConstituentTypeOfIntersectionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 524,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2454,
+    "column": 30,
+    "expression": "parenthesizer.parenthesizeCheckTypeOfConditionalType",
+    "name": "parenthesizeCheckTypeOfConditionalType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 483,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2458,
+    "column": 32,
+    "expression": "parenthesizer.parenthesizeExtendsTypeOfConditionalType",
+    "name": "parenthesizeExtendsTypeOfConditionalType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 493,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2490,
+    "column": 13,
+    "expression": "parenthesizer.parenthesizeOperandOfReadonlyTypeOperator",
+    "name": "parenthesizeOperandOfReadonlyTypeOperator",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 552,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2491,
+    "column": 13,
+    "expression": "parenthesizer.parenthesizeOperandOfTypeOperator",
+    "name": "parenthesizeOperandOfTypeOperator",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 544,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2496,
+    "column": 31,
+    "expression": "parenthesizer.parenthesizeNonArrayTypeOfPostfixType",
+    "name": "parenthesizeNonArrayTypeOfPostfixType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 573,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2605,
+    "column": 64,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2615,
+    "column": 103,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2639,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2690,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2705,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2711,
+    "column": 86,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2717,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeExpressionOfNew",
+    "name": "parenthesizeExpressionOfNew",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 372,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2719,
+    "column": 85,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2730,
+    "column": 34,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2743,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2779,
+    "column": 39,
+    "expression": "parenthesizer.parenthesizeConciseBodyOfArrowFunction",
+    "name": "parenthesizeConciseBodyOfArrowFunction",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 463,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2786,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2792,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2798,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2804,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2812,
+    "column": 38,
+    "expression": "parenthesizer.parenthesizeOperandOfPrefixUnary",
+    "name": "parenthesizeOperandOfPrefixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 417,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2835,
+    "column": 38,
+    "expression": "parenthesizer.parenthesizeOperandOfPostfixUnary",
+    "name": "parenthesizeOperandOfPostfixUnary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 412,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2952,
+    "column": 40,
+    "expression": "parenthesizer.parenthesizeConditionOfConditionalExpression",
+    "name": "parenthesizeConditionOfConditionalExpression",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 324,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2956,
+    "column": 39,
+    "expression": "parenthesizer.parenthesizeBranchOfConditionalExpression",
+    "name": "parenthesizeBranchOfConditionalExpression",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 334,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2962,
+    "column": 40,
+    "expression": "parenthesizer.parenthesizeBranchOfConditionalExpression",
+    "name": "parenthesizeBranchOfConditionalExpression",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 334,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2979,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 2988,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 3003,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeLeftSideOfAccess",
+    "name": "parenthesizeLeftSideOfAccess",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 391,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 3065,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeExpressionOfExpressionStatement",
+    "name": "parenthesizeExpressionOfExpressionStatement",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 435,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 3406,
+    "column": 119,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 3748,
+    "column": 17,
+    "expression": "parenthesizer.parenthesizeExpressionOfExportDefault",
+    "name": "parenthesizeExpressionOfExportDefault",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 355,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 3997,
+    "column": 41,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 4068,
+    "column": 37,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 4077,
+    "column": 62,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 4084,
+    "column": 45,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "emitter.ts",
+    "line": 4094,
+    "column": 64,
+    "expression": "parenthesizer.parenthesizeExpressionForDisallowedComma",
+    "name": "parenthesizeExpressionForDisallowedComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 427,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "emitter.ts",
+    "line": 4911,
+    "column": 13,
+    "expression": "writer.nonEscapingWrite",
+    "name": "nonEscapingWrite",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "emitter.ts",
+        "line": 4909,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "factory/nodeFactory.ts",
+    "line": 2560,
+    "column": 79,
+    "expression": "parenthesizerRules().parenthesizeConstituentTypesOfUnionType",
+    "name": "parenthesizeConstituentTypesOfUnionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 515,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "factory/nodeFactory.ts",
+    "line": 2565,
+    "column": 63,
+    "expression": "parenthesizerRules().parenthesizeConstituentTypesOfUnionType",
+    "name": "parenthesizeConstituentTypesOfUnionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 515,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "factory/nodeFactory.ts",
+    "line": 2570,
+    "column": 86,
+    "expression": "parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType",
+    "name": "parenthesizeConstituentTypesOfIntersectionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 533,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "factory/nodeFactory.ts",
+    "line": 2575,
+    "column": 63,
+    "expression": "parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType",
+    "name": "parenthesizeConstituentTypesOfIntersectionType",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "line": 533,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "factory/nodeFactory.ts",
+    "line": 6756,
+    "column": 39,
+    "expression": "factory.createComma",
+    "name": "createComma",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 1022,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1581,
+    "column": 32,
+    "expression": "host.getDefaultLibLocation",
+    "name": "getDefaultLibLocation",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "program.ts",
+        "line": 466,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1602,
+    "column": 39,
+    "expression": "host.hasInvalidatedResolutions",
+    "name": "hasInvalidatedResolutions",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1603,
+    "column": 9,
+    "expression": "host.resolveModuleNameLiterals",
+    "name": "resolveModuleNameLiterals",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1604,
+    "column": 42,
+    "expression": "host.resolveModuleNameLiterals",
+    "name": "resolveModuleNameLiterals",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1607,
+    "column": 14,
+    "expression": "host.resolveModuleNames",
+    "name": "resolveModuleNames",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1609,
+    "column": 13,
+    "expression": "host.resolveModuleNames",
+    "name": "resolveModuleNames",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1649,
+    "column": 9,
+    "expression": "host.resolveTypeReferenceDirectiveReferences",
+    "name": "resolveTypeReferenceDirectiveReferences",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 982,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1650,
+    "column": 58,
+    "expression": "host.resolveTypeReferenceDirectiveReferences",
+    "name": "resolveTypeReferenceDirectiveReferences",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 982,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1652,
+    "column": 14,
+    "expression": "host.resolveTypeReferenceDirectives",
+    "name": "resolveTypeReferenceDirectives",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1654,
+    "column": 13,
+    "expression": "host.resolveTypeReferenceDirectives",
+    "name": "resolveTypeReferenceDirectives",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1683,
+    "column": 42,
+    "expression": "host.hasInvalidatedLibResolutions",
+    "name": "hasInvalidatedLibResolutions",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1685,
+    "column": 9,
+    "expression": "host.resolveLibrary",
+    "name": "resolveLibrary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 1397,
+        "this": false
+      },
+      {
+        "file": "resolutionCache.ts",
+        "line": 1041,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1686,
+    "column": 32,
+    "expression": "host.resolveLibrary",
+    "name": "resolveLibrary",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 1397,
+        "this": false
+      },
+      {
+        "file": "resolutionCache.ts",
+        "line": 1041,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1734,
+    "column": 22,
+    "expression": "host.readFile",
+    "name": "readFile",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "sys.ts",
+        "line": 1787,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1834,
+    "column": 23,
+    "expression": "host.onReleaseOldSourceFile",
+    "name": "onReleaseOldSourceFile",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 822,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1846,
+    "column": 14,
+    "expression": "host.getParsedCommandLine",
+    "name": "getParsedCommandLine",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 983,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1849,
+    "column": 21,
+    "expression": "host.onReleaseOldSourceFile",
+    "name": "onReleaseOldSourceFile",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 822,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1856,
+    "column": 23,
+    "expression": "host.onReleaseParsedCommandLine",
+    "name": "onReleaseParsedCommandLine",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 1034,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1864,
+    "column": 21,
+    "expression": "host.onReleaseParsedCommandLine",
+    "name": "onReleaseParsedCommandLine",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 1034,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1950,
+    "column": 19,
+    "expression": "host.realpath",
+    "name": "realpath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 1956,
+    "column": 56,
+    "expression": "host.getGlobalTypingsCacheLocation",
+    "name": "getGlobalTypingsCacheLocation",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2045,
+    "column": 13,
+    "expression": "host.resolveModuleNameLiterals",
+    "name": "resolveModuleNameLiterals",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2045,
+    "column": 48,
+    "expression": "host.resolveModuleNames",
+    "name": "resolveModuleNames",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2119,
+    "column": 14,
+    "expression": "host.realpath",
+    "name": "realpath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2392,
+    "column": 33,
+    "expression": "host.getSourceFileByPath",
+    "name": "getSourceFileByPath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "program.ts",
+        "line": 2774,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2601,
+    "column": 39,
+    "expression": "program.getCommonSourceDirectory",
+    "name": "getCommonSourceDirectory",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "emitter.ts",
+        "line": 636,
+        "this": false
+      },
+      {
+        "file": "program.ts",
+        "line": 2143,
+        "this": false
+      },
+      {
+        "file": "programDiagnostics.ts",
+        "line": 141,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2602,
+    "column": 33,
+    "expression": "program.getCompilerOptions",
+    "name": "getCompilerOptions",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2604,
+    "column": 28,
+    "expression": "program.getSourceFile",
+    "name": "getSourceFile",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "program.ts",
+        "line": 2770,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2605,
+    "column": 34,
+    "expression": "program.getSourceFileByPath",
+    "name": "getSourceFileByPath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "program.ts",
+        "line": 2774,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2606,
+    "column": 29,
+    "expression": "program.getSourceFiles",
+    "name": "getSourceFiles",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2626,
+    "column": 39,
+    "expression": "host.realpath",
+    "name": "realpath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2631,
+    "column": 36,
+    "expression": "program.getFileIncludeReasons",
+    "name": "getFileIncludeReasons",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2632,
+    "column": 41,
+    "expression": "host.createHash",
+    "name": "createHash",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2634,
+    "column": 36,
+    "expression": "host.trace",
+    "name": "trace",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "debug.ts",
+        "line": 150,
+        "this": false
+      },
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 118,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 2635,
+    "column": 44,
+    "expression": "program.getGlobalTypingsCacheLocation",
+    "name": "getGlobalTypingsCacheLocation",
+    "directBody": false,
+    "candidates": [],
+    "status": "no body found"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 3555,
+    "column": 17,
+    "expression": "host.realpath",
+    "name": "realpath",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 4014,
+    "column": 13,
+    "expression": "host.getParsedCommandLine",
+    "name": "getParsedCommandLine",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 983,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "unresolved runtime origin",
+    "file": "program.ts",
+    "line": 4798,
+    "column": 13,
+    "expression": "host.getSymlinkCache",
+    "name": "getSymlinkCache",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "program.ts",
+        "line": 4797,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/classFields.ts",
+    "line": 2028,
+    "column": 73,
+    "expression": "factory.createExpressionStatement",
+    "name": "createExpressionStatement",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 3907,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/es2015.ts",
+    "line": 2950,
+    "column": 88,
+    "expression": "factory.liftToBlock",
+    "name": "liftToBlock",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6959,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/es2015.ts",
+    "line": 2998,
+    "column": 80,
+    "expression": "factory.liftToBlock",
+    "name": "liftToBlock",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6959,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/es2015.ts",
+    "line": 3099,
+    "column": 79,
+    "expression": "factory.liftToBlock",
+    "name": "liftToBlock",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6959,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/es2015.ts",
+    "line": 3479,
+    "column": 151,
+    "expression": "factory.liftToBlock",
+    "name": "liftToBlock",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6959,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  },
+  {
+    "classification": "this-free implementation family",
+    "file": "transformers/es2015.ts",
+    "line": 3780,
+    "column": 75,
+    "expression": "factory.liftToBlock",
+    "name": "liftToBlock",
+    "directBody": false,
+    "candidates": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 6959,
+        "this": false
+      }
+    ],
+    "status": "all named bodies this-free"
+  }
+]
