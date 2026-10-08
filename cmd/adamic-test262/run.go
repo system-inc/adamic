@@ -272,11 +272,11 @@ func (e *engine) attempt(test classified) result {
 	if dependentProgram(test.Program) {
 		cache = nil
 	}
-	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m", "16MiB")
+	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m-cpu", "10m-wall", "16MiB")
 	if e.compiler != nil {
 		// The worker executes this runner, not the scratch copy of adamic used for fallback.
 		// Its exact executable and protocol are already part of the runner context.
-		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")
+		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m-cpu", "10m-wall", "16MiB")
 	}
 	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, compilerCommand, e.context)
 	lowered := profile.observation("compile", cache, compilerKey, func() (execution, bool) {
@@ -313,7 +313,7 @@ func (e *engine) attempt(test classified) result {
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
 	arguments = append(arguments, e.runtime...)
 	arguments = append(arguments, "-lm")
-	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+	nativeCommand := cacheKey(cacheKey(arguments...), binary, "2m-compile-cpu", "10m-compile-wall", "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
@@ -368,22 +368,27 @@ const outputLimit = 256 << 10
 // Test programs get a CPU budget; time waiting for a core does not spend it.
 // Keep a wall-clock backstop for programs that block without consuming CPU.
 func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {
+	return runCPUCommand(cpuLimit, 2*time.Minute, extra, outputLimit, name, args...)
+}
+
+func runCommand(cpuLimit time.Duration, extra []string, name string, args ...string) execution {
+	return runCommandWithLimit(cpuLimit, extra, outputLimit, name, args...)
+}
+
+// Generated C is an artifact, not program output: give it room, and never compile a truncated one.
+func runCommandWithLimit(cpuLimit time.Duration, extra []string, limit int, name string, args ...string) execution {
+	return runCPUCommand(cpuLimit, 10*time.Minute, extra, limit, name, args...)
+}
+
+func runCPUCommand(cpuLimit, timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
 	seconds := int64((cpuLimit + time.Second - 1) / time.Second)
 	// Set only the soft limit so the kernel delivers SIGXCPU, not SIGKILL.
 	wrapper := fmt.Sprintf(`ulimit -S -t %d || exit; exec "$0" "$@"`, seconds)
 	arguments := append([]string{"-c", wrapper, name}, args...)
-	return runCommand(2*time.Minute, extra, "/bin/sh", arguments...)
-}
 
-func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
-	return runCommandWithLimit(timeout, extra, outputLimit, name, args...)
-}
-
-// Generated C is an artifact, not program output: give it room, and never compile a truncated one.
-func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(ctx, "/bin/sh", arguments...)
 	command.Env = append(os.Environ(), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer

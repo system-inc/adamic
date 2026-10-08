@@ -58,7 +58,7 @@ func TestCompilerWorkerTimeout(t *testing.T) {
 	if err := command.Start(); err != nil {
 		t.Fatal(err)
 	}
-	worker := &compilerWorker{command: command, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), timeout: 20 * time.Millisecond}
+	worker := &compilerWorker{command: command, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), wallTimeout: 20 * time.Millisecond}
 	defer worker.close()
 	result := worker.compile("unused.a")
 	if !result.TimedOut || result.Exit != -1 || worker.command != nil || command.ProcessState == nil {
