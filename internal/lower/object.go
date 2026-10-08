@@ -359,6 +359,11 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			return valueType, nil
 		}
 	}
+	// Ordinary arrays retain their boxed Union elements. A registered array
+	// view must keep its element contract; the paths above supply that proof.
+	if isKnown && valueType == ir.Union && l.result.ViewContractTypes[int(arrayType.Id())] == 0 {
+		return valueType, nil
+	}
 	if !isKnown || slotless(valueType) && !(valueType == ir.Union && l.tupleScalarUnionType(element)) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))

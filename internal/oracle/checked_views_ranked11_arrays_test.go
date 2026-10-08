@@ -91,3 +91,19 @@ func TestCheckedViewArrayRecordCycleRefused(t *testing.T) {
 		t.Fatalf("got %v, want cycle refusal through ArrayRecord", err)
 	}
 }
+
+func TestCheckedViewLogicalStringNullRefused(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, interfaceSource("lane2/logical-string-null")))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "null\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/logical-null") {
+		t.Fatalf("got %v, want null-bearing string logical refusal", err)
+	}
+}

@@ -2,4 +2,4 @@
 interface Link { links: Link[]; }
 const root: Link = {links: []};
 root.links = Object.assign([root], {pos: 0});
-console.log(root.links[0] === root);
+console.log(String(root.links[0] === root));

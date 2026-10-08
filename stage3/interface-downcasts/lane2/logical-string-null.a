@@ -1,0 +1,5 @@
+// a-check: refused adamic/logical-null
+function read(value: {key: string} | null): string | null {
+    return value && value.key;
+}
+console.log(String(read(null)));
