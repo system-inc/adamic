@@ -4,17 +4,16 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
-// These original aliases need boxed mixed-element array storage before a view
-// certificate can be reached. Keep their Node behavior and named refusal pinned.
-func TestCheckedViewIntersectionOriginalArrayBlockers(t *testing.T) {
+// Complete original aliases keep their source arrays while consumers check each
+// selected scalar or structural element before invoking the callback.
+func TestCheckedViewIntersectionOriginalMixedArrays(t *testing.T) {
 	declarations, _ := intersectionOriginalInputs(t)
-	for _, sample := range []struct{ name, target, refusal string }{
-		{"97923", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[]", "an array of IncrementalMultiFileEmitBuildInfoFileInfo"},
-		{"98493", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]", "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo"},
+	for _, sample := range []struct{ name, target string }{
+		{"97923", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[]"},
+		{"98493", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]"},
 	} {
 		for _, value := range []struct{ name, expression string }{
 			{"string", "'v'"},
@@ -30,11 +29,20 @@ func TestCheckedViewIntersectionOriginalArrayBlockers(t *testing.T) {
 				if difference := disagreement(run{stdout: []byte("item\n")}, onNode(t, path)); difference != "" {
 					t.Fatal("Node: " + difference)
 				}
-				_, err := lowered(t, path)
-				if err == nil || !strings.Contains(err.Error(), sample.refusal) {
-					t.Fatalf("expected original mixed-element storage refusal, got %v", err)
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
 				}
-				t.Log(err)
+				want := run{stdout: []byte("item\n")}
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(want, got); diff != "" {
+						t.Errorf("%s; stderr %q", diff, got.stderr)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
 			})
 		}
 	}
