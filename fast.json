@@ -1,0 +1,818 @@
+{
+  "sha": "d2651d953fa572193604eb636446b09d822877af",
+  "branch": "codex/stage3-hidden-d72728e5",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "base_name": "main",
+  "tools_sha": "80ebf8211eb242b31cf9d204715ec27005d8b46d",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "stage3/census/hidden-ranking/DELTA.json",
+        "stage3/census/hidden-ranking/README.md",
+        "stage3/census/hidden-ranking/RESULT.json",
+        "stage3/census/hidden-ranking/evidence/d72728e5/apply.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-double-count.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-file.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-checker-child.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-independent.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-headline.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-dependency.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-skipped.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-line.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ranking.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/build.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/cache-baseline.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/cache-proof-formatted.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/cache-removed-cache-entry.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/cache-skip-all-private.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/frozen-byte-mask.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/frozen-full.jsonl.gz",
+        "stage3/census/hidden-ranking/evidence/d72728e5/frozen-hidden.json.gz",
+        "stage3/census/hidden-ranking/evidence/d72728e5/frozen-ranking.json.gz",
+        "stage3/census/hidden-ranking/evidence/d72728e5/frozen-run.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/full-audit.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/hidden-tests.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/integration.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/latent-audit.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/main-byte-mask.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/measurement-mutants.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/provenance.json",
+        "stage3/census/hidden-ranking/evidence/d72728e5/ranking-tests.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/report.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/run.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/setup.log.txt",
+        "stage3/census/hidden-ranking/evidence/d72728e5/stock.log.txt",
+        "stage3/census/hidden/README.md",
+        "stage3/census/hidden/RESULT.json",
+        "stage3/census/hidden/evidence/full.jsonl.gz",
+        "stage3/census/hidden/evidence/stock.json.gz",
+        "stage3/census/latent/cache_copy_audit.py",
+        "stage3/census/latent/cache_copy_test.go.txt"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage3/census/hidden-ranking/DELTA.json",
+        "stage3/census/hidden-ranking/RESULT.json",
+        "stage3/census/hidden-ranking/evidence/d72728e5/provenance.json",
+        "stage3/census/hidden/RESULT.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage3/census/hidden-ranking/README.md",
+        "stage3/census/hidden/README.md",
+        "stage3/census/latent/README.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "stage3": 6,
+    "inert": 37
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage3/census/hidden-ranking/DELTA.json",
+    "stage3/census/hidden-ranking/README.md",
+    "stage3/census/hidden-ranking/RESULT.json",
+    "stage3/census/hidden-ranking/evidence/d72728e5/apply.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-double-count.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-file.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-checker-child.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-independent.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-headline.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-dependency.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-skipped.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-line.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ranking.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/build.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-baseline.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-proof-formatted.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-removed-cache-entry.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-skip-all-private.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-byte-mask.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-full.jsonl.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-hidden.json.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-ranking.json.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-run.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/full-audit.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/hidden-tests.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/integration.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/latent-audit.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/main-byte-mask.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/measurement-mutants.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/provenance.json",
+    "stage3/census/hidden-ranking/evidence/d72728e5/ranking-tests.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/report.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/run.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/setup.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/stock.log.txt",
+    "stage3/census/hidden/README.md",
+    "stage3/census/hidden/RESULT.json",
+    "stage3/census/hidden/evidence/full.jsonl.gz",
+    "stage3/census/hidden/evidence/stock.json.gz",
+    "stage3/census/latent/README.md",
+    "stage3/census/latent/cache_copy_audit.py",
+    "stage3/census/latent/cache_copy_test.go.txt",
+    "stage3/census/latent/full.go.txt"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "stage3/census/hidden-ranking/DELTA.json",
+    "stage3/census/hidden-ranking/README.md",
+    "stage3/census/hidden-ranking/RESULT.json",
+    "stage3/census/hidden-ranking/evidence/d72728e5/apply.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-double-count.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-file.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-checker-child.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-forget-independent.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-headline.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-dependency.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ignore-skipped.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-line.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/arithmetic-mutant-ranking.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/build.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-baseline.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-proof-formatted.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-removed-cache-entry.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/cache-skip-all-private.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-byte-mask.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-full.jsonl.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-hidden.json.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-ranking.json.gz",
+    "stage3/census/hidden-ranking/evidence/d72728e5/frozen-run.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/full-audit.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/hidden-tests.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/integration.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/latent-audit.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/main-byte-mask.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/measurement-mutants.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/provenance.json",
+    "stage3/census/hidden-ranking/evidence/d72728e5/ranking-tests.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/report.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/run.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/setup.log.txt",
+    "stage3/census/hidden-ranking/evidence/d72728e5/stock.log.txt",
+    "stage3/census/hidden/README.md",
+    "stage3/census/hidden/RESULT.json",
+    "stage3/census/hidden/evidence/full.jsonl.gz",
+    "stage3/census/hidden/evidence/stock.json.gz",
+    "stage3/census/latent/README.md",
+    "stage3/census/latent/cache_copy_audit.py",
+    "stage3/census/latent/cache_copy_test.go.txt",
+    "stage3/census/latent/full.go.txt"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownMutableContainerFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownForeignPointerFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+      "test": "TestMissingStatementFailsWithMethodName",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 156.041216,
+      "slots": 1,
+      "after_seconds": 5.969
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 69.13536,
+      "slots": 1,
+      "after_seconds": 5.999
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 67.53792,
+      "slots": 1,
+      "after_seconds": 6.028
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "expected_seconds": 39.47008,
+      "slots": 1,
+      "after_seconds": 6.039
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "expected_seconds": 27.15136,
+      "slots": 1,
+      "after_seconds": 6.052
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "expected_seconds": 4.6,
+      "slots": 1,
+      "after_seconds": 6.059
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "expected_seconds": 4.376,
+      "slots": 1,
+      "after_seconds": 6.069
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "expected_seconds": 4.072,
+      "slots": 1,
+      "after_seconds": 6.099
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "expected_seconds": 3.312,
+      "slots": 1,
+      "after_seconds": 6.103
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 502.008,
+      "slots": 1,
+      "after_seconds": 6.147
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 8.51968,
+      "slots": 1,
+      "after_seconds": 6.177
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "expected_seconds": 2.032,
+      "slots": 1,
+      "after_seconds": 6.181
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "expected_seconds": 0.168,
+      "slots": 1,
+      "after_seconds": 8.268
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "expected_seconds": 0.12006667,
+      "slots": 1,
+      "after_seconds": 8.975
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 9.127
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "expected_seconds": 0.016,
+      "slots": 1,
+      "after_seconds": 9.61
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "expected_seconds": 0.008,
+      "slots": 1,
+      "after_seconds": 10.1
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 10.551
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 11.23
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 11.465
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 11.632
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "expected_seconds": 14.858,
+      "slots": 1,
+      "after_seconds": 15.229
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 15.229
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 15.23
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 15.429
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "expected_seconds": 18.3,
+      "slots": 1,
+      "after_seconds": 15.487
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "expected_seconds": 0.024,
+      "slots": 1,
+      "after_seconds": 15.544
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "expected_seconds": 0.97,
+      "slots": 1,
+      "after_seconds": 16.573
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownMutableContainerFailsLoudly",
+      "expected_seconds": 0.3,
+      "slots": 1,
+      "after_seconds": 16.997
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownForeignPointerFailsLoudly",
+      "expected_seconds": 0.27,
+      "slots": 1,
+      "after_seconds": 17.154
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+      "test": "TestMissingStatementFailsWithMethodName",
+      "expected_seconds": 0.25,
+      "slots": 1,
+      "after_seconds": 17.339
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 17.493
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.008,
+      "slots": 1,
+      "after_seconds": 17.585
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 18.366
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 18.465
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0,
+    "github.com/system-inc/adamic/stage3/fixtures": 4,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite": 4,
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy": 2,
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite": 1
+  },
+  "gate_samples": [
+    "TestUpstreamRepositoryCorpusParity 422/3335 files, stride 8, offset 1",
+    "TestPortMatchesGoCohere 109/3335 files, stride 32, offset 25",
+    "TestCorpusPinBeforeSampling 105/3335 files, stride 32, offset 8",
+    "TestMarkdownInline 45/1355 files, stride 32, offset 25"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "stage3_exits": {
+    "stage3-lane-tests": 0,
+    "stage3-apply-tests": -9,
+    "stage3-lane": -9
+  },
+  "split_tally": {
+    "packages": 17,
+    "planned": 35,
+    "passed": 32,
+    "touched": 17
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Workshop",
+    "cpus": 64,
+    "load": [
+      21.7,
+      29.9,
+      24.7
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [
+    "github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity"
+  ],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere",
+    "github.com/system-inc/adamic/stage1/cohere/json TestAdditionalJSONBoundaries",
+    "github.com/system-inc/adamic/stage1/cohere/json TestCachedWidthMutantIsCaught",
+    "github.com/system-inc/adamic/stage1/cohere/json TestSingleFileStdoutDriver",
+    "github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/missing_colon_space",
+    "github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/missing_final_newline",
+    "github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/wrong_filename_parser",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline TestMarkdownInline/escaped_delimiter_parity"
+  ],
+  "wall_seconds": 81.4,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 0.9,
+    "smoke": 12.8,
+    "build": 16.3,
+    "stage3": 80.0,
+    "tests": 80.3
+  },
+  "pass": 731,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 2,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "stage3": 1,
+    "tests": 1
+  },
+  "finished": true,
+  "stopped": {
+    "reason": "preempted: the star takes workshop alone; queued again",
+    "at_seconds": 81.1
+  },
+  "long_test_threshold_seconds": 30,
+  "long_tests": 1,
+  "long_test_seconds": 30.8,
+  "planned_test_counts": {
+    "passed": 32,
+    "failed": 0,
+    "not run": 3
+  }
+}
