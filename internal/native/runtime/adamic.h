@@ -304,6 +304,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape);
 typedef struct adamic_region_block adamic_region_block;
 typedef struct adamic_region {
 	adamic_region_block *blocks;
+	// Diagnostic total, maintained only with ADAMIC_COUNT.
 	size_t count;
 	bool holds_outside;
 } adamic_region;

@@ -73,7 +73,11 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 		// the region must walk it, including the still-zero slots on its exceptional exit.
 		region->holds_outside = true;
 	}
+	// Only the counted report consumes this total. Release builds need the block
+	// cursors and holds_outside, but no read-modify-write per regional object.
+#ifdef ADAMIC_COUNT
 	region->count++;
+#endif
 	ADAMIC_COUNT_ALLOCATION();
 	return object;
 }

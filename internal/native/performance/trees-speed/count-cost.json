@@ -1,0 +1,105 @@
+{
+  "machine": "cb1632b4fc8c",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu.max": "400000 100000",
+  "load_before": [
+    0.3740234375,
+    2.48291015625,
+    3.849609375
+  ],
+  "commands": {
+    "final": [
+      "/tmp/trees-profile/final"
+    ],
+    "counted_lto": [
+      "/tmp/trees-profile/counted-lto"
+    ]
+  },
+  "sha256": {
+    "final": "a47645e7bef9b1b25dade6b941cfd9822ff1f92615819365ff7bcd8cf161948e",
+    "counted_lto": "c7ee2668a0650943b4b97ffae6e1ca278e70e86929d3b5dec63df253c07fa9c7"
+  },
+  "source_sha256": "743b83a8bce42948f155d02dd8e939c94a2d7f403274b2b1981da381aa6c7f50",
+  "load_after": [
+    0.58837890625,
+    2.36279296875,
+    3.7724609375
+  ],
+  "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287\n",
+  "samples": {
+    "final": [
+      {
+        "wall": 1.6006421540000701,
+        "user": 1.0003769999999998,
+        "system": 0.6007099999999999
+      },
+      {
+        "wall": 1.7429024069999741,
+        "user": 1.18722,
+        "system": 0.5516069999999997
+      },
+      {
+        "wall": 2.209605046999968,
+        "user": 1.3504690000000004,
+        "system": 0.8550420000000001
+      },
+      {
+        "wall": 1.8558518600000298,
+        "user": 1.1696469999999977,
+        "system": 0.6846180000000004
+      },
+      {
+        "wall": 1.735289813999998,
+        "user": 1.1519650000000006,
+        "system": 0.5810589999999998
+      }
+    ],
+    "counted_lto": [
+      {
+        "wall": 2.9832047499999135,
+        "user": 2.4353040000000004,
+        "system": 0.545804
+      },
+      {
+        "wall": 3.0857385109998177,
+        "user": 2.4739359999999992,
+        "system": 0.6097960000000002
+      },
+      {
+        "wall": 2.796378189999814,
+        "user": 2.122724,
+        "system": 0.6730369999999999
+      },
+      {
+        "wall": 2.674052506999942,
+        "user": 2.1116990000000015,
+        "system": 0.5599569999999998
+      },
+      {
+        "wall": 2.8157383089999257,
+        "user": 2.350708000000001,
+        "system": 0.46395799999999987
+      }
+    ]
+  },
+  "best": {
+    "final": {
+      "wall": 1.6006421540000701,
+      "user": 1.0003769999999998,
+      "system": 0.6007099999999999
+    },
+    "counted_lto": {
+      "wall": 2.674052506999942,
+      "user": 2.1116990000000015,
+      "system": 0.5599569999999998
+    }
+  }
+}

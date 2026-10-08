@@ -225,6 +225,11 @@ static void give(void *slot, uint32_t number) {
 }
 
 static void drain_remote(chunk *each) {
+	// Most allocations have no remote frees. Avoid a locked exchange on that path.
+	// A producer racing this check can wait for the next drain, just as it could
+	// publish immediately after the exchange. Only the exchange consumes nodes;
+	// its acquire still pairs with the producer's release before reading them.
+	if (atomic_load_explicit(&each->remote, memory_order_relaxed) == NULL) { return; }
 	remote_slot *node = atomic_exchange_explicit(&each->remote, NULL, memory_order_acquire);
 	while (node != NULL) {
 		remote_slot *next = node->next;
