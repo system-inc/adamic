@@ -1,0 +1,7 @@
+// a-check: refused an index signature
+// Reduced from TypeScript 6.0.3, Debug.setAssertionLevel/getOwnKeys.
+interface MapLike<T> { [index: string]: T; }
+function getOwnKeys<T>(map: MapLike<T>): string[] { return Object.keys(map); }
+type AssertionKeys = "first" | "second";
+const assertionCache: Partial<Record<AssertionKeys, number | undefined>> = {};
+console.log(`${getOwnKeys(assertionCache).length}`);

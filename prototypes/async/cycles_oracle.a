@@ -1,3 +1,4 @@
+// a-check: checked
 // Node-only event-loop witness; copied verbatim to .mjs by check_cycles.py.
 const ready = Promise.resolve();
 async function work() {
