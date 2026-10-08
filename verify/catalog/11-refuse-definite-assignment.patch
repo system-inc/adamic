@@ -1,22 +1,14 @@
---- a/internal/lower/refusals.go
-+++ b/internal/lower/refusals.go
-@@ -66,19 +66,6 @@
- 		}
- 		if refused, isRefused := refusals[node.Kind]; isRefused {
- 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
--			return true
--		}
--		var assertion *ast.Node
--		if node.Kind == ast.KindPropertyDeclaration {
--			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
--				assertion = token
--			}
--		}
--		if node.Kind == ast.KindVariableDeclaration {
--			assertion = node.AsVariableDeclaration().ExclamationToken
--		}
--		if assertion != nil {
--			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
- 			return true
- 		}
- 		if node.Kind == ast.KindBinaryExpression {
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -42,9 +42,9 @@
+ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+ 	switch node.Kind {
+ 	case ast.KindVariableDeclaration:
+-		return node.AsVariableDeclaration().ExclamationToken != nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
++		return l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+ 	case ast.KindPropertyDeclaration:
+-		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken || l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
++		return l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+ 	}
+ 	return false
+ }

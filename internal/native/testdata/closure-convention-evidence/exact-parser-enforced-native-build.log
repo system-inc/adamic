@@ -1,0 +1,6 @@
+adamic: native: compiling runtime array.c: exit status 1
+/home/agent/.cache/adamic/runtime/.build-883546401/array.c:202:72: error: too many arguments to function call, expected 2, have 3
+  202 |         double result = compare->code(compare, (adamic_value[]){left, right}, 2).number;
+      |                         ~~~~~~~~~~~~~                                         ^
+1 error generated.
+

@@ -1,0 +1,11 @@
+import { WORD, OTHER } from './constants.a';
+function kind(value: string): string {
+	switch (value) {
+		case WORD: return 'word';
+		case OTHER: return 'other word';
+		default: return 'missing';
+	}
+}
+for (const value of ['alpha', 'beta', 'other']) {
+	console.log(`${value}: ${kind(value)}`);
+}

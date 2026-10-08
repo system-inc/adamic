@@ -1,0 +1,38 @@
+interface State { readonly value: number; }
+namespace State {
+    export function left(value: number): number { return value + 1; }
+    export function right(value: number): number { return left(value) + 1; }
+}
+namespace First {
+    export const offset = 10;
+    let calls = 0;
+    const prefix = 'first';
+    export function read(value: number): number { calls += 1; return value + offset; }
+    export function count(): number { return calls; }
+    export function label(value: number): string { return `${prefix} ${value}`; }
+    export namespace Nested {
+        export function identity<T>(value: T): T { return value; }
+        export function label(value: number): string { return `nested ${value}`; }
+    }
+}
+namespace Second {
+    export const offset = 20;
+    export function read(value: number): number { return value + offset; }
+}
+namespace Types {
+    export interface Word { readonly text: string; }
+}
+const state: State = {value: 4};
+console.log(`${State.left(state.value)} ${State.right(state.value)}`);
+console.log(`${First.read(1)} ${Second.read(1)} ${First.offset} ${Second.offset} ${First.count()}`);
+console.log(`${First.label(2)} ${First.Nested.label(3)}`);
+console.log(`${First.Nested.identity<number>(7)} ${First.Nested.identity<string>('word')}`);
+const same = State.left;
+console.log(`${same === State.left} ${same(5)}`);
+const methods: readonly ((value: number) => number)[] = [First.read, Second.read];
+for (const method of methods) { console.log(`${method(2)}`); }
+const word: Types.Word = {text: First.label(First.count())};
+console.log(word.text);
+
+const copy: typeof State = {left: (value) => value + 100, right: (value) => value + 200};
+console.log(`copy ${copy.left(4)} ${copy.right(4)}`);

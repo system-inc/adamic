@@ -55,6 +55,9 @@ The comparator initially used `startDifference || endDifference || ruleDifferenc
 Workaround: test each numeric difference against zero and return explicitly.
 This is a stage 0 lowering limit; it does not change sorting semantics.
 
+Closed by compiler/area-next: numeric `||` lowers with JavaScript's ToBoolean, and native and the
+JavaScript backend print what Node prints (TestClosedComparatorGaps). The workaround can go.
+
 ## Go regex and Unicode services
 
 Warning-comment matching uses a fixed literal pattern shape rather than a
