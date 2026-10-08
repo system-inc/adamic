@@ -1,0 +1,68 @@
+{"Time":"2026-10-07T20:10:32.425995836-06:00","Action":"start","Package":"github.com/system-inc/adamic/cloud"}
+{"Time":"2026-10-07T20:10:32.436579472-06:00","Action":"run","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T20:10:32.436966176-06:00","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== RUN   TestLintWaveCheck\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.437220371-06:00","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== PAUSE TestLintWaveCheck\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.437259327-06:00","Action":"pause","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T20:10:32.437288445-06:00","Action":"cont","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T20:10:32.43732622-06:00","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== CONT  TestLintWaveCheck\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.6770644-06:00","Action":"start","Package":"github.com/system-inc/adamic/internal/dry"}
+{"Time":"2026-10-07T20:10:32.688204728-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants"}
+{"Time":"2026-10-07T20:10:32.688433248-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants","Output":"=== RUN   TestMirrorMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688571166-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants","Output":"=== PAUSE TestMirrorMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.68857638-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants"}
+{"Time":"2026-10-07T20:10:32.68858002-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants"}
+{"Time":"2026-10-07T20:10:32.688582774-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants","Output":"=== CONT  TestMirrorMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688601268-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header"}
+{"Time":"2026-10-07T20:10:32.688613959-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header","Output":"=== RUN   TestMirrorMutants/lifted_header\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688632256-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header","Output":"=== PAUSE TestMirrorMutants/lifted_header\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.68863806-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header"}
+{"Time":"2026-10-07T20:10:32.688645241-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source"}
+{"Time":"2026-10-07T20:10:32.688647799-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source","Output":"=== RUN   TestMirrorMutants/commit_source\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688654783-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source","Output":"=== PAUSE TestMirrorMutants/commit_source\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688660391-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source"}
+{"Time":"2026-10-07T20:10:32.688666588-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule"}
+{"Time":"2026-10-07T20:10:32.688669047-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule","Output":"=== RUN   TestMirrorMutants/unlisted_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688677507-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule","Output":"=== PAUSE TestMirrorMutants/unlisted_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688682721-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule"}
+{"Time":"2026-10-07T20:10:32.688685869-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule"}
+{"Time":"2026-10-07T20:10:32.688690689-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule","Output":"=== RUN   TestMirrorMutants/assembled_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688696001-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule","Output":"=== PAUSE TestMirrorMutants/assembled_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688702888-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule"}
+{"Time":"2026-10-07T20:10:32.688711249-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry"}
+{"Time":"2026-10-07T20:10:32.688716365-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry","Output":"=== RUN   TestMirrorMutants/removed_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688722759-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry","Output":"=== PAUSE TestMirrorMutants/removed_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.68872571-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry"}
+{"Time":"2026-10-07T20:10:32.68873053-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry"}
+{"Time":"2026-10-07T20:10:32.688733383-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry","Output":"=== RUN   TestMirrorMutants/stale_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.6887626-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry","Output":"=== PAUSE TestMirrorMutants/stale_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688769584-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry"}
+{"Time":"2026-10-07T20:10:32.688775683-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing"}
+{"Time":"2026-10-07T20:10:32.68877834-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing","Output":"=== RUN   TestMirrorMutants/retired_landing\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688785816-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing","Output":"=== PAUSE TestMirrorMutants/retired_landing\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.688788964-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing"}
+{"Time":"2026-10-07T20:10:32.688806277-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header"}
+{"Time":"2026-10-07T20:10:32.688811786-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/lifted_header","Output":"=== CONT  TestMirrorMutants/lifted_header\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.689532564-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry"}
+{"Time":"2026-10-07T20:10:32.689574176-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/removed_entry","Output":"=== CONT  TestMirrorMutants/removed_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.690208975-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule"}
+{"Time":"2026-10-07T20:10:32.690243307-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/assembled_rule","Output":"=== CONT  TestMirrorMutants/assembled_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.690525047-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule"}
+{"Time":"2026-10-07T20:10:32.690632273-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/unlisted_rule","Output":"=== CONT  TestMirrorMutants/unlisted_rule\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.690799409-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source"}
+{"Time":"2026-10-07T20:10:32.690814165-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/commit_source","Output":"=== CONT  TestMirrorMutants/commit_source\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.691339279-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing"}
+{"Time":"2026-10-07T20:10:32.691423191-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/retired_landing","Output":"=== CONT  TestMirrorMutants/retired_landing\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.69250421-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry"}
+{"Time":"2026-10-07T20:10:32.692756241-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestMirrorMutants/stale_entry","Output":"=== CONT  TestMirrorMutants/stale_entry\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.794034493-06:00","Action":"start","Package":"github.com/system-inc/adamic/internal/dry"}
+{"Time":"2026-10-07T20:10:32.813366226-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors"}
+{"Time":"2026-10-07T20:10:32.813501784-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Output":"=== RUN   TestCohereMirrors\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.813580777-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Output":"=== PAUSE TestCohereMirrors\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:32.813583531-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors"}
+{"Time":"2026-10-07T20:10:32.813598582-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors"}
+{"Time":"2026-10-07T20:10:32.813602517-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Output":"=== CONT  TestCohereMirrors\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:35.866722922-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Output":"    mirrors_test.go:39: internal/lower/optional_widening.go: emits cohere rule adamic/no-optional-widening without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json\n","OutputType":"error"}
+{"Time":"2026-10-07T20:10:35.866817203-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Output":"--- FAIL: TestCohereMirrors (3.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:35.86683318-06:00","Action":"fail","Package":"github.com/system-inc/adamic/internal/dry","Test":"TestCohereMirrors","Elapsed":3.06}
+{"Time":"2026-10-07T20:10:35.866847776-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/dry","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:10:35.880622782-06:00","Action":"fail","Package":"github.com/system-inc/adamic/internal/dry","Elapsed":3.087}
