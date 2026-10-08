@@ -1509,6 +1509,19 @@ union aliases are lane 4's and MapLike's dynamic key is an index signature. Fixt
 are `lane2/ranked13-*.a`, held by TestCheckedViewRanked13ArrayContracts; the report is
 `lane2/RANKED13_ARRAYS_REPORT.md`.
 
+### Lane 2 fourteenth ranked arrays
+
+The fourteenth ranked group (eighteen credited pairs: ConstructorTypeNode members,
+signature and declaration modifiers, JSDocSignature.parameters, JsxFragment.children,
+UnionTypeNode.types, DefaultClause.statements, EmitNode helpers and
+tokenSourceMapRanges, InterfaceType type parameters and declaredProperties,
+TransientSymbol.declarations, CircularBuildOrder.circularDiagnostics) needed no new
+hook. view_lazy.go's field-name fallback refuses any viewed `.text` read once an
+interface declares tsc's callable-or-string EmitHelper.text; that is pinned as a
+frontier for routing. Fixtures are `lane2/ranked14-*.a`, held by
+TestCheckedViewRanked14ArrayContracts and TestCheckedViewRanked14Frontiers; the report
+is `lane2/RANKED14_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
