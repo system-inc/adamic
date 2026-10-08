@@ -16,7 +16,7 @@ import (
 
 // Register this unit without editing the shared oracle's compiler-owned fixture list.
 func init() {
-	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host", "error_subclasses"} {
+	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host", "error_subclasses", "saved_error"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -30,13 +30,16 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/step21_soundness_terminal.a", true, true})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/step21_builtin_narrow_terminal.a", true, true})
 }
 
-// Proposals retain their current barriers; source Node independently establishes their meaning.
+// The unknown-read proposal retains its checker barrier; source Node establishes its meaning.
 func TestStep21ProposalOutcomes(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, diagnostic, stdout string }{
-		{"saved_error", "throwing an Error that isn't made", "saved1\n"},
 		{"unknown_read", "TS18046", "unknown\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -215,6 +218,9 @@ func TestStep21Uncaught(t *testing.T) {
 			for label, result := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
 				if original.exitCode != 1 || result.exitCode != 1 || !bytes.Equal(original.stdout, result.stdout) {
 					t.Fatalf("%s: stdout/exit differ: source %d %q, actual %d %q stderr %q", label, original.exitCode, original.stdout, result.exitCode, result.stdout, result.stderr)
+				}
+				if len(result.stderr) != 0 {
+					t.Fatalf("%s uncaught renderer wrote stderr: %s", label, result.stderr)
 				}
 				if strings.Contains(string(result.stderr), "Sanitizer") || strings.Contains(string(result.stderr), "runtime error:") {
 					t.Fatalf("%s sanitizer failure: %s", label, result.stderr)

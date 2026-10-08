@@ -1707,7 +1707,7 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
-	if index.Text() == "stack" && l.errorAncestry(l.checker.GetTypeAtLocation(access.Expression)) {
+	if index.Kind == ast.KindStringLiteral && index.Text() == "stack" && l.errorAncestry(l.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, l.notYet(node, "Error.stack")
 	}
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) && !(l.errorAncestry(l.checker.GetTypeAtLocation(access.Expression)) && (index.Text() == "name" || index.Text() == "message")) {

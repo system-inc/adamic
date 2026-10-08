@@ -20,7 +20,7 @@ mutants = [
      'e.hold(pending)', '// mutant: pending completion has no owner',
      'TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion[.]a$', 'leaks:'),
     ('error-message-not-retained', 'internal/native/runtime/exceptions.c',
-     'error->slots[1].reference = adamic_retain(message);', 'error->slots[1].reference = message;',
+     '\terror->slots[1].reference = adamic_retain(message);', '\terror->slots[1].reference = message;',
      'TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback[.]a$', 'AddressSanitizer: heap-use-after-free'),
 ]
 for name, relative, old, new, test, expected in mutants:

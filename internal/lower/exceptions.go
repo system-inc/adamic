@@ -22,10 +22,6 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	// Saved Error origins are delivered after general Error identity is proven.
-	if ast.IsIdentifier(thrown) && !l.caught[l.symbol(thrown)] && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error", "RangeError", "TypeError") {
-		return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
-	}
 	value, err := l.expression(thrown)
 	if err != nil {
 		return nil, err
