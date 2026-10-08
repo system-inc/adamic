@@ -147,7 +147,8 @@ def checkMain(now):
                 '"fix-forward <branch>"), so nothing lands and nothing is visibly fixing it.' % (sha[:12], where, ref or 'full-main'), [owner])
     fixStep = {'id': 'main-fix', 'globs': [row['fix']], 'owner': owner}
     summary, key, text = check(fixStep, now)
-    if summary.startswith('running') or (summary.startswith('queued') and key is None):
+    # Running, queued under a minute, or green (the landing's turn, not the gate's) is a live turn.
+    if summary.startswith(('running', 'green')) or (summary.startswith('queued') and key is None):
         return 'main red %s, fix-forward %s' % (sha[:12], summary), None, None, []
     return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key or 'idle'),
             'Main %s is red at %s and its fix-forward %s has no live turn in the gate (%s). Nothing lands until it does.'

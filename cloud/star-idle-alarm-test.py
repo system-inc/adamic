@@ -112,6 +112,12 @@ esac
         (self.root / 'running/77').write_text('cloud/land-split-fix %s S server S token log\n' % other)
         self.assertEqual(len(self.check()), 2)
         self.assertFalse((self.root / 'main-red-alarmed').exists())
+        # A green fix-forward is the landing's turn: quiet (Oct 8 20:58Z, a false page).
+        (self.root / 'running/77').unlink()
+        (self.root / 'seen').write_text('cloud/land-split-fix %s\n' % other)
+        (self.root / 'watch.log').write_text('20:57:57 done cloud/land-split-fix: green: %s fast gate in 364.2 s\n' % other)
+        self.assertEqual(len(self.check()), 2)
+        (self.root / 'running/77').write_text('cloud/land-split-fix %s S server S token log\n' % other)
         # An explained red (LIFTED, FIXED FORWARD, CLOSED) is not paged.
         (self.root / 'running/77').unlink()
         (self.root / 'main-reds.tsv').write_text('gate-logs/eeeeeeeeeeee/20261008T202422Z/full-main\tFIXED FORWARD by compiler\n')
