@@ -1,0 +1,14 @@
+const array = [1, 2, 3];
+const predicate = (value: number) => value > 1;
+const zero = 0;
+array.filter(predicate)[zero];
+array['filter'](predicate).at('0');
+(array.filter(predicate), array.filter(predicate))[0];
+(true ? array.filter(predicate) : array.filter(predicate))[0];
+array.filter(predicate) /* [ . ?. */ .at('invalid');
+array.filter(predicate).at('1junk');
+array.filter(predicate).at(' 1');
+array.filter(predicate).at('0x1p0');
+array.filter(predicate).at('1_0');
+array.filter(predicate)?.[0];
+array.filter?.(predicate)[0];

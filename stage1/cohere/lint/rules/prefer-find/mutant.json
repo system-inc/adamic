@@ -1,0 +1,5 @@
+{
+  "name": "prefer-find array verdict suppressed",
+  "from": "this.arrayish(graph, graph.root()) ? [calleeIndex] : []",
+  "to": "this.arrayish(graph, graph.root()) ? [] : []"
+}

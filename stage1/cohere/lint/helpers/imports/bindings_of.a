@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './nodes.a';
+
+export interface ImportBindings {
+    readonly default: number;
+    readonly namespace: number;
+    readonly named: readonly number[];
+}
+
+// Namespace is the NamespaceImport node itself, as Go returns, not its identifier.
+// Named entries preserve the original ImportSpecifier identities and source order.
+export function bindingsOf(nodes: readonly HelperNode[], declaration: number): ImportBindings {
+    if(declaration === -1) { return {default: -1, namespace: -1, named: []}; }
+    const node = nodes[declaration] ?? panic('missing helper AST import');
+    if(node.kind !== 'ImportDeclaration' || node.importClause === -1) {
+        return {default: -1, namespace: -1, named: []};
+    }
+    const clause = nodes[node.importClause] ?? panic('missing helper AST import clause');
+    if(clause.kind !== 'ImportClause') { return {default: -1, namespace: -1, named: []}; }
+    if(clause.namedBindings === -1) { return {default: clause.name, namespace: -1, named: []}; }
+    const binding = nodes[clause.namedBindings] ?? panic('missing helper AST named bindings');
+    if(binding.kind === 'NamespaceImport') {
+        return {default: clause.name, namespace: clause.namedBindings, named: []};
+    }
+    if(binding.kind === 'NamedImports') {
+        return {default: clause.name, namespace: -1, named: binding.elements.slice()};
+    }
+    return {default: clause.name, namespace: -1, named: []};
+}

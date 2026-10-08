@@ -175,5 +175,5 @@ func calibrateNativeCases(t *testing.T, binary string, cases []textCase, answers
 			slowest = index
 		}
 	}
-	t.Logf("ASan slowest isolated case %d %s: %.3fs over %d cases; stall %.0fs gives %.1fx headroom", slowest, cases[slowest].Name, durations[slowest].Seconds(), len(cases), jsonProgressPolicy.stall.Seconds(), jsonProgressPolicy.stall.Seconds()/durations[slowest].Seconds())
+	t.Logf("ASan slowest isolated case %d %s: %.3fs over %d cases; stall %.0fs gives %.1fx headroom", slowest, cases[slowest].Name, durations[slowest].Seconds(), len(cases), jsonGuard.Stall.Seconds(), jsonGuard.Stall.Seconds()/durations[slowest].Seconds())
 }

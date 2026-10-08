@@ -1,0 +1,15 @@
+{
+  "name": "@typescript-eslint/no-inferrable-types",
+  "kinds": [
+    "VariableDeclaration",
+    "PropertyDeclaration",
+    "Parameter"
+  ],
+  "node": true,
+  "visit": "visit",
+  "class": "Rule",
+  "factory": "create",
+  "oracle": "oracleNoInferrableTypes",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoInferrableTypes"
+}

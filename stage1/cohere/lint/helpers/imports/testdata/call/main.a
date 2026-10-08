@@ -1,0 +1,25 @@
+import { callExpressionSource } from '../../call_expression_source.a';
+import type { SourceNode } from '../../call_expression_source.a';
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../../options_json.ts';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return Number(text(index, field)); }
+function indices(index: number, field: string): number[] { return json.node(json.field(index, field)).children.map(v => Number(json.node(v).text)); }
+const nodes: SourceNode[] = [];
+for (const index of json.node(json.field(root, 'Nodes')).children) {
+    nodes.push({kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), name: number(index, 'Name'), keyword: text(index, 'Keyword'), argumentsPresent: text(index, 'ArgumentsPresent') === 'true', arguments: indices(index, 'Arguments'), propertiesPresent: text(index, 'PropertiesPresent') === 'true', properties: indices(index, 'Properties')});
+}
+// Compare decoded source as decimal UTF-16 units, retaining NUL and newlines.
+function codeUnits(text: string): string {
+    let out = '';
+    for (let i = 0; i < text.length; i++) { out += `${text.charCodeAt(i)},`; }
+    return out;
+}
+for (let id = -1; id < nodes.length; id++) {
+    const result = callExpressionSource(nodes,id);
+    console.log(`call:${result.found}:${codeUnits(result.source)}`);
+}
