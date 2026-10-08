@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface Declaration {readonly value:number;}
+interface PropertyAccessExpression {readonly value:number;readonly kind:212;}
+interface Base {readonly getExternalModuleOrNamespaceExportName:unknown;}
+interface Target {getExternalModuleOrNamespaceExportName(ns: Identifier | undefined, node: Declaration, allowComments?: boolean, allowSourceMaps?: boolean): Identifier | PropertyAccessExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.getExternalModuleOrNamespaceExportName({value:3,kind:80},{value:3},true,true);console.log("completed");}
+probe({getExternalModuleOrNamespaceExportName:(): Identifier | PropertyAccessExpression=>({value:3,kind:80})});

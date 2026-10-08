@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly increaseIndent:unknown;}
+interface Target {increaseIndent(): void;}
+function probe(value:Base):void {const writer=value as Target;writer.increaseIndent();console.log("completed");}
+probe({increaseIndent:(extra:number): void=>{}});

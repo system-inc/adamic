@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface NamespaceImport {readonly value:number;readonly kind:275;}
+interface Base {readonly createNamespaceImport:unknown;}
+interface Target {createNamespaceImport(name: Identifier): NamespaceImport;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createNamespaceImport({value:3,kind:80});console.log("completed");}
+probe({createNamespaceImport:(name: Identifier):NamespaceImport=>({value:3,kind:275})});

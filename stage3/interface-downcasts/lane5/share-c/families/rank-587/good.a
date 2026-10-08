@@ -1,0 +1,11 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeNode {readonly value:number;}
+interface ImportAttributes {readonly value:number;readonly kind:301;}
+type EntityName = Identifier | QualifiedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface QualifiedName {readonly value:number;readonly kind:167;}
+interface ImportTypeNode {readonly value:number;readonly kind:206;}
+interface Base {readonly createImportTypeNode:unknown;}
+interface Target {createImportTypeNode(argument: TypeNode, attributes?: ImportAttributes, qualifier?: EntityName, typeArguments?: readonly TypeNode[], isTypeOf?: boolean): ImportTypeNode;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createImportTypeNode({value:3},{value:3,kind:301},{value:3,kind:80},[{value:3}],true);console.log("completed");}
+probe({createImportTypeNode:(argument: TypeNode,attributes?: ImportAttributes,qualifier?: EntityName,typeArguments?: readonly TypeNode[],isTypeOf?: boolean):ImportTypeNode=>({value:3,kind:206})});

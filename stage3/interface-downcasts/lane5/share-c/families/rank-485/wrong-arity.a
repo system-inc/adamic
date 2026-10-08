@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SyntacticTypeNodeBuilderContext {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly serializeExistingTypeNode:unknown;}
+interface Target {serializeExistingTypeNode(context: SyntacticTypeNodeBuilderContext, node: TypeNode, addUndefined?: boolean): TypeNode | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.serializeExistingTypeNode({value:3},{value:3},true);console.log("completed");}
+probe({serializeExistingTypeNode:(): TypeNode | undefined=>({value:3})});

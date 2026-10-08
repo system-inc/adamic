@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface WithStatement {readonly value:number;readonly kind:255;}
+interface Expression {readonly value:number;}
+interface Statement {readonly value:number;}
+interface Base {readonly updateWithStatement:unknown;}
+interface Target {updateWithStatement(node: WithStatement, expression: Expression, statement: Statement): WithStatement;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateWithStatement({value:3,kind:255},{value:3},{value:3});console.log("completed");}
+probe({updateWithStatement:(node: WithStatement,expression: Expression,statement: Statement):WithStatement=>({value:3,kind:255})});

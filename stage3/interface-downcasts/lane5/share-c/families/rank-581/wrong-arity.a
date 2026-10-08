@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface AwaitExpression {readonly value:number;readonly kind:224;}
+interface Base {readonly createAwaitExpression:unknown;}
+interface Target {createAwaitExpression(expression: Expression): AwaitExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createAwaitExpression({value:3});console.log("completed");}
+probe({createAwaitExpression:(): AwaitExpression=>({value:3,kind:224})});

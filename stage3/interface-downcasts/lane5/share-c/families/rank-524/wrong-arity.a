@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Program {readonly value:number;}
+interface Base {readonly getProgram:unknown;}
+interface Target {getProgram(): Program;}
+function probe(value:Base):void {const builderProgram=value as Target;const result=builderProgram.getProgram();console.log("completed");}
+probe({getProgram:(extra:number): Program=>({value:3})});

@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface CancellationToken {readonly value:number;}
+interface DiagnosticWithLocation {readonly value:number;}
+interface Base {readonly getDeclarationDiagnostics:unknown;}
+interface Target {getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[];}
+function probe(value:Base):void {const state={program:value as Target};const result=state.program.getDeclarationDiagnostics({value:3,kind:308},{value:3});console.log("completed");}
+probe({getDeclarationDiagnostics:(): readonly DiagnosticWithLocation[]=>([{value:3}])});

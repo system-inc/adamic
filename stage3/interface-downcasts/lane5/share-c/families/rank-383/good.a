@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly reportLikelyUnsafeImportRequiredError:unknown;}
+interface Target {reportLikelyUnsafeImportRequiredError(specifier: string, symbolName: string | undefined): void;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker.reportLikelyUnsafeImportRequiredError("abc","abc");console.log("completed");}
+probe({reportLikelyUnsafeImportRequiredError:(specifier: string,symbolName: string | undefined):void=>{}});

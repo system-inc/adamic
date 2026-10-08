@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface NamedExports {readonly value:number;readonly kind:280;}
+interface ExportSpecifier {readonly value:number;readonly kind:282;}
+interface Base {readonly updateNamedExports:unknown;}
+interface Target {updateNamedExports(node: NamedExports, elements: readonly ExportSpecifier[]): NamedExports;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.updateNamedExports({value:3,kind:280},[{value:3,kind:282}]);console.log("completed");}
+probe({updateNamedExports:(node: NamedExports,elements: readonly ExportSpecifier[]):NamedExports=>({value:3,kind:280})});

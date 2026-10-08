@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface SpreadAssignment {readonly value:number;readonly kind:306;}
+interface Base {readonly createSpreadAssignment:unknown;}
+interface Target {createSpreadAssignment(expression: Expression): SpreadAssignment;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createSpreadAssignment({value:3});console.log("completed");}
+probe({createSpreadAssignment:(expression: Expression):SpreadAssignment=>({value:3,kind:306})});

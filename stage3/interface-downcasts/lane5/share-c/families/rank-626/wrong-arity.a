@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type FilePreprocessingDiagnostics = FilePreprocessingLibReferenceDiagnostic | FilePreprocessingFileExplainingDiagnostic | ResolutionDiagnostics;
+interface FilePreprocessingLibReferenceDiagnostic {readonly value:number;readonly kind:0;}
+interface FilePreprocessingFileExplainingDiagnostic {readonly value:number;readonly kind:1;}
+interface ResolutionDiagnostics {readonly value:number;readonly kind:2;}
+interface Base {readonly addFileProcessingDiagnostic:unknown;}
+interface Target {addFileProcessingDiagnostic(diag: FilePreprocessingDiagnostics): void;}
+function probe(value:Base):void {const programDiagnostics=value as Target;programDiagnostics.addFileProcessingDiagnostic({value:3,kind:0});console.log("completed");}
+probe({addFileProcessingDiagnostic:(): void=>{}});

@@ -1,0 +1,12 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type ForInitializer =
+    | VariableDeclarationList
+    | Expression;
+interface VariableDeclarationList {readonly value:number;readonly kind:262;}
+interface Expression {readonly value:number;}
+interface Statement {readonly value:number;}
+interface ForInStatement {readonly value:number;readonly kind:250;}
+interface Base {readonly createForInStatement:unknown;}
+interface Target {createForInStatement(initializer: ForInitializer, expression: Expression, statement: Statement): ForInStatement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createForInStatement({value:3,kind:262},{value:3},{value:3});console.log("completed");}
+probe({createForInStatement:(): ForInStatement=>({value:3,kind:250})});
