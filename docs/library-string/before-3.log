@@ -1,0 +1,177 @@
+built-ins/String 50/1223 pass=16 fail=0 refused=26 not-typescript=7 crashed=0 skipped=1
+built-ins/String 100/1223 pass=31 fail=0 refused=42 not-typescript=20 crashed=0 skipped=7
+built-ins/String 150/1223 pass=37 fail=0 refused=47 not-typescript=34 crashed=0 skipped=32
+built-ins/String 200/1223 pass=40 fail=0 refused=61 not-typescript=58 crashed=0 skipped=41
+built-ins/String 250/1223 pass=55 fail=0 refused=67 not-typescript=76 crashed=0 skipped=52
+built-ins/String 300/1223 pass=78 fail=0 refused=70 not-typescript=88 crashed=0 skipped=64
+built-ins/String 350/1223 pass=81 fail=0 refused=86 not-typescript=102 crashed=0 skipped=81
+built-ins/String 400/1223 pass=82 fail=0 refused=95 not-typescript=136 crashed=0 skipped=87
+built-ins/String 450/1223 pass=82 fail=0 refused=98 not-typescript=154 crashed=0 skipped=116
+built-ins/String 500/1223 pass=93 fail=0 refused=98 not-typescript=166 crashed=0 skipped=143
+built-ins/String 550/1223 pass=108 fail=0 refused=104 not-typescript=187 crashed=0 skipped=151
+built-ins/String 600/1223 pass=111 fail=0 refused=114 not-typescript=196 crashed=0 skipped=179
+built-ins/String 650/1223 pass=111 fail=0 refused=127 not-typescript=213 crashed=0 skipped=199
+built-ins/String 700/1223 pass=112 fail=0 refused=144 not-typescript=233 crashed=0 skipped=211
+built-ins/String 750/1223 pass=112 fail=0 refused=144 not-typescript=283 crashed=0 skipped=211
+built-ins/String 800/1223 pass=112 fail=0 refused=147 not-typescript=318 crashed=0 skipped=223
+built-ins/String 850/1223 pass=121 fail=0 refused=149 not-typescript=346 crashed=0 skipped=234
+built-ins/String 900/1223 pass=121 fail=0 refused=165 not-typescript=375 crashed=0 skipped=239
+built-ins/String 950/1223 pass=122 fail=0 refused=181 not-typescript=400 crashed=0 skipped=247
+built-ins/String 1000/1223 pass=130 fail=0 refused=191 not-typescript=420 crashed=0 skipped=259
+built-ins/String 1050/1223 pass=168 fail=0 refused=198 not-typescript=420 crashed=0 skipped=264
+built-ins/String 1100/1223 pass=210 fail=0 refused=204 not-typescript=422 crashed=0 skipped=264
+built-ins/String 1150/1223 pass=246 fail=0 refused=208 not-typescript=422 crashed=0 skipped=274
+built-ins/String 1200/1223 pass=248 fail=0 refused=216 not-typescript=424 crashed=0 skipped=312
+built-ins/String 1223/1223 pass=257 fail=0 refused=217 not-typescript=433 crashed=0 skipped=316
+test262 c8c798898646638cd0c24879f8e0374e847e7d74
+adapt on
+tsc 6.0.3 checks=434 cache-hits=1 cost=28264ms
+
+built-ins/String
+pass 257   fail 0   refused 217   not-typescript 433   crashed 0   skipped 316   total 1223
+
+directory                                       pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String                                  29       0        37              14         0        12
+built-ins/String/fromCharCode                      2       0         5               7         0         3
+built-ins/String/fromCodePoint                     2       0         1               3         0         5
+built-ins/String/prototype                         0       0         3               2         0         2
+built-ins/String/prototype/Symbol.iterator         0       0         0               0         0         6
+built-ins/String/prototype/at                      4       0         0               3         0         4
+built-ins/String/prototype/charAt                  2       0         9              15         0         4
+built-ins/String/prototype/charCodeAt              1       0         6              14         0         4
+built-ins/String/prototype/codePointAt             8       0         0               2         0         6
+built-ins/String/prototype/concat                  1       0         5              13         0         3
+built-ins/String/prototype/constructor             0       0         1               1         0         0
+built-ins/String/prototype/endsWith               15       0         0               4         0         8
+built-ins/String/prototype/includes               14       0         1               4         0         8
+built-ins/String/prototype/indexOf                 0       0        17              18         0        12
+built-ins/String/prototype/isWellFormed            3       0         0               0         0         5
+built-ins/String/prototype/lastIndexOf             1       0         5              16         0         3
+built-ins/String/prototype/localeCompare           0       0         5               5         0         3
+built-ins/String/prototype/match                   0       0         3              33         0        15
+built-ins/String/prototype/matchAll                0       0         0               1         0        24
+built-ins/String/prototype/normalize               5       0         0               3         0         6
+built-ins/String/prototype/padEnd                  3       0         0               4         0         6
+built-ins/String/prototype/padStart                3       0         0               4         0         6
+built-ins/String/prototype/repeat                  3       0         2               5         0         6
+built-ins/String/prototype/replace                13       0         7              21         0        14
+built-ins/String/prototype/replaceAll              2       0         7               6         0        30
+built-ins/String/prototype/search                  0       0        14              15         0        14
+built-ins/String/prototype/slice                   1       0        16              17         0         4
+built-ins/String/prototype/split                   0       0         4             102         0        14
+built-ins/String/prototype/startsWith              9       0         0               4         0         8
+built-ins/String/prototype/substring               0       0        14              28         0         4
+built-ins/String/prototype/toLocaleLowerCase       0       0        10              14         0         4
+built-ins/String/prototype/toLocaleUpperCase       0       0         8              14         0         4
+built-ins/String/prototype/toLowerCase             6       0         5              14         0         5
+built-ins/String/prototype/toString                0       0         2               0         0         5
+built-ins/String/prototype/toUpperCase             3       0         5              14         0         4
+built-ins/String/prototype/toWellFormed            3       0         0               0         0         5
+built-ins/String/prototype/trim                  113       0        12               2         0         2
+built-ins/String/prototype/trimEnd                 0       0         5               0         0        18
+built-ins/String/prototype/trimStart               0       0         5               0         0        18
+built-ins/String/prototype/valueOf                 0       0         2               0         0         5
+built-ins/String/raw                              11       0         1              11         0         7
+
+not-typescript reasons
+  136  TS2345
+  109  TS2339
+   55  TS2769
+   47  TS2554
+   17  TS2531
+   15  TS2704
+   14  TS7009
+    8  TS2551
+    6  TS2322
+    5  TS7015
+    4  TS2790
+    4  TS7034
+    3  TS2351
+    2  TS2349
+    2  TS7006
+  ... and 6 more
+
+refusal reasons
+  42  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+  16  not yet: a BinaryExpression with a string and a number
+  13  refuses !=
+   8  not yet: a value of type any
+   7  not yet: new an Identifier
+   6  refuses a method read as a value (toString would lose its object, and this with it)
+   6  refuses inherited library member toLocaleLowerCase read as an own field
+   6  refuses the comma operator
+   5  refuses a method read as a value (trimEnd would lose its object, and this with it)
+   5  refuses a method read as a value (trimStart would lose its object, and this with it)
+   5  refuses a method read as a value (valueOf would lose its object, and this with it)
+   5  refuses arguments
+   4  refuses a method read as a value (charAt would lose its object, and this with it)
+   4  refuses a method read as a value (charCodeAt would lose its object, and this with it)
+   4  refuses a method read as a value (concat would lose its object, and this with it)
+  ... and 36 more
+
+skip reasons
+  99  harness include propertyHelper.js
+  38  harness include isConstructor.js
+  32  feature Symbol
+  32  feature Symbol.toPrimitive
+  20  feature Symbol.replace
+  16  feature Symbol.matchAll
+  14  feature Symbol.match
+  12  eval
+   9  Symbol
+   9  feature Symbol.search
+   7  feature Symbol.split
+   3  features Symbol, Symbol.toPrimitive
+   3  noStrict (sloppy mode only; Adamic modules are always strict)
+   2  feature Symbol.iterator
+   2  feature cross-realm
+  ... and 14 more
+
+adaptations
+  1041  var-to-let
+   917  throw-error
+     1  callback-param
+
+passes (257)
+  built-ins/String/15.5.5.5.2-3-6.js
+  built-ins/String/15.5.5.5.2-3-7.js
+  built-ins/String/15.5.5.5.2-3-8.js
+  built-ins/String/15.5.5.5.2-7-2.js
+  built-ins/String/15.5.5.5.2-7-4.js
+  built-ins/String/S15.5.1.1_A1_T10.js
+  built-ins/String/S15.5.1.1_A1_T11.js
+  built-ins/String/S15.5.1.1_A1_T14.js
+  built-ins/String/S15.5.1.1_A1_T15.js
+  built-ins/String/S15.5.1.1_A1_T16.js
+  built-ins/String/S15.5.1.1_A1_T17.js
+  built-ins/String/S15.5.1.1_A1_T18.js
+  built-ins/String/S15.5.1.1_A1_T2.js
+  built-ins/String/S15.5.1.1_A1_T4.js
+  built-ins/String/S15.5.1.1_A1_T7.js
+  built-ins/String/S15.5.1.1_A2_T1.js
+  built-ins/String/S9.8.1_A1.js
+  built-ins/String/S9.8.1_A10.js
+  built-ins/String/S9.8.1_A2.js
+  built-ins/String/S9.8.1_A3.js
+  built-ins/String/S9.8.1_A4.js
+  built-ins/String/S9.8.1_A6.js
+  built-ins/String/S9.8.1_A7.js
+  built-ins/String/S9.8.1_A8.js
+  built-ins/String/S9.8.1_A9_T1.js
+  built-ins/String/S9.8.1_A9_T2.js
+  built-ins/String/S9.8_A2_T1.js
+  built-ins/String/S9.8_A3_T1.js
+  built-ins/String/S9.8_A4_T1.js
+  built-ins/String/fromCharCode/S15.5.3.2_A2.js
+  built-ins/String/fromCharCode/S15.5.3.2_A3_T1.js
+  built-ins/String/fromCodePoint/arguments-is-empty.js
+  built-ins/String/fromCodePoint/return-string-value.js
+  built-ins/String/prototype/at/returns-code-unit.js
+  built-ins/String/prototype/at/returns-item-relative-index.js
+  built-ins/String/prototype/at/returns-item.js
+  built-ins/String/prototype/at/returns-undefined-for-out-of-range-index.js
+  built-ins/String/prototype/charAt/S9.4_A2.js
+  built-ins/String/prototype/charAt/pos-rounding.js
+  built-ins/String/prototype/charCodeAt/pos-rounding.js
+  ... and 217 more
+

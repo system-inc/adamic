@@ -237,7 +237,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			callsClosures = callsClosures || strings.HasSuffix(node.Method, "Callback")
 		case ir.StringCall:
 			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
+			case node.Method == "repeat" && !node.Validated && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
 				failing = "repeat"
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"

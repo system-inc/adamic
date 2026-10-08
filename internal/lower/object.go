@@ -1356,7 +1356,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
-		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
+		return l.newStringBox(node)
 	}
 	if value, known, err := l.libraryArrayConstruct(node); known {
 		return value, err
@@ -1641,6 +1641,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 // tuple's field of that name.
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
+	if l.stringBoxType(access.Expression) {
+		return l.stringBoxIndex(node)
+	}
 	index := ast.SkipParentheses(access.ArgumentExpression)
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
 		return nil, l.prototypeRead(node, index.Text())
@@ -1764,7 +1767,10 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 			return nil, true, err
 		}
 		lowered.Spread = spread
-		return lowered, true, nil
+		return l.stringCodePointsChecked(lowered), true, nil
+	}
+	if len(node.AsCallExpression().Arguments.Nodes) > 65536 {
+		return nil, true, l.notYet(node, "String code arguments beyond the proven Node stack limit")
 	}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
@@ -1779,7 +1785,7 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 		}
 		lowered.Codes = append(lowered.Codes, value)
 	}
-	return lowered, true, nil
+	return l.stringCodePointsChecked(lowered), true, nil
 }
 
 // tupleType is the tuple type an array literal makes, from the checker or from where it's written

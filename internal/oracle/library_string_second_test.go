@@ -14,10 +14,10 @@ func init() {
 		name   string
 		lowers bool
 	}{
-		{"range_catch", true}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true},
+		{"range_catch", true}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true}, {"boxed", true}, {"regex_dispatch", true}, {"ranges", true}, {"range_refused", true},
 	} {
 		path := "internal/oracle/testdata/library_string_" + entry.name + ".a"
-		if !entry.lowers {
+		if !entry.lowers || entry.name == "range_refused" {
 			// The flow gate globs runnable top-level fixtures; refusal probes live separately.
 			path = "internal/oracle/testdata/library_string_refusals/library_string_" + entry.name + ".a"
 		}

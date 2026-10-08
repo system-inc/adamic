@@ -76,6 +76,9 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	if l.stringBoxType(node) {
+		return l.stringBoxPrimitive(node, value)
+	}
 	if l.checker.GetTypeAtLocation(node).Flags() == checker.TypeFlagsUndefined {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil
 	}
@@ -184,7 +187,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 				return nil, true, l.notYet(node, "String prototype call on a possibly undefined receiver (dynamic TypeError is not lowered)")
 			}
 			if method == "toString" || method == "valueOf" {
-				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
+				if proven.Flags()&checker.TypeFlagsStringLike == 0 && !l.stringBoxType(written[0]) {
 					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
 				}
 			}
@@ -198,9 +201,23 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 			return l.libraryStringMethod(node, value, method, written[1:])
 		}
 	}
+	if l.stringBoxType(receiver) {
+		value, err := l.expression(receiver)
+		if err != nil {
+			return nil, true, err
+		}
+		value, err = l.stringBoxPrimitive(receiver, value)
+		if err != nil {
+			return nil, true, err
+		}
+		if name == "hasOwnProperty" {
+			return l.stringBoxHasOwn(node, value, written)
+		}
+		return l.libraryStringMethod(node, value, name, written)
+	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed":
+		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed", "repeat", "match", "matchAll", "search":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -218,6 +235,9 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 }
 
 func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression, name string, written []*ast.Node, provided []ir.Expression) (ir.Expression, bool, error) {
+	if result, known, err := l.stringRegExpMethod(node, value, name, written, provided); known {
+		return result, true, err
+	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, name+" with arguments")
@@ -315,6 +335,8 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		arguments = append(arguments, lowered)
 	}
 	switch name {
+	case "repeat":
+		return l.stringRepeatChecked(value, arguments[0]), true, nil
 	case "startsWith", "endsWith":
 		return l.stringAffixMethod(value, name, arguments), true, nil
 	case "trim":
@@ -589,6 +611,12 @@ func (l *lowering) stringObjectConversion(node *ast.Node, value ir.Expression) (
 
 // .call evaluates every explicit argument before entering the intrinsic's ToPrimitive step.
 func (l *lowering) stringObjectPrototypeCall(node *ast.Node, method string, written []*ast.Node) (ir.Expression, bool, error) {
+	if !l.stringBoxType(written[0]) && (method == "matchAll" || method == "replaceAll") && len(written) > 1 && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(written[1])), "RegExp") {
+		_, flags, known := l.constantRegExp(written[1], 0)
+		if !known || !strings.Contains(flags, "g") {
+			return nil, true, l.notYet(node, "String global validation before an observable receiver conversion")
+		}
+	}
 	values := []ir.Expression{}
 	for _, argument := range written {
 		value, err := l.expression(argument)

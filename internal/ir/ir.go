@@ -333,6 +333,8 @@ type (
 	// StringFromCodes is String.fromCharCode(...Codes), or String.fromCodePoint when CodePoints is
 	// set: a string of the UTF-16 units, or of the code points, the numbers name.
 	StringFromCodes struct {
+		// Validated means lowering installed cleanup-aware RangeError guards.
+		Validated  bool
 		Codes      []Expression
 		CodePoints bool
 
@@ -477,6 +479,8 @@ type (
 	// trimStart, trimEnd, at (a string, or undefined: a null reference), replace and replaceAll
 	// with a string pattern, toUpperCase and toLowerCase, and normalize (its form filled in). Arguments are as written; lowering filled in any default.
 	StringCall struct {
+		// Validated means a repeat has cleanup-aware count and length guards.
+		Validated bool
 		Method    string
 		Value     Expression
 		Arguments []Expression

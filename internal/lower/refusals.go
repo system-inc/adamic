@@ -186,6 +186,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if err := l.stringBoxViewRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
 		// A checked cast relates only members selected by its tag, not excluded source members.
 		if !checkedCast {

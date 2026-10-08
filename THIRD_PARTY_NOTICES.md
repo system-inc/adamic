@@ -49,6 +49,8 @@ IN THE SOFTWARE.
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
   - Object sealing and extensibility (`runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - catchable String range validation (`internal/lower/library_string_ranges.go`, after
+    src/builtins/builtins-string.cc StringFromCodePoint and src/builtins/string-repeat.tq);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after

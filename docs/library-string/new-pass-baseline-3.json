@@ -1,0 +1,1237 @@
+{
+  "test262": "/workspace/test262",
+  "commit": "c8c798898646638cd0c24879f8e0374e847e7d74",
+  "adapt": true,
+  "typescript": {
+    "version": "6.0.3",
+    "checks": 0,
+    "cacheHits": 0,
+    "milliseconds": 0
+  },
+  "filters": [
+    {
+      "path": "built-ins/String/15.5.5.5.2-3-3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/15.5.5.5.2-3-4.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/15.5.5.5.2-3-5.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/15.5.5.5.2-7-1.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/15.5.5.5.2-7-3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/fromCodePoint/number-is-out-of-range.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/fromCodePoint",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: a try around String.fromCodePoint, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": []
+    },
+    {
+      "path": "built-ins/String/prototype/charAt/S15.5.4.4_A3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/charAt",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/charCodeAt/S15.5.4.5_A3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/charCodeAt",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/repeat/count-is-infinity-throws.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/repeat",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": []
+    },
+    {
+      "path": "built-ins/String/prototype/repeat/count-less-than-zero-throws.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/repeat",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": []
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T1.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T2.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T4.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T5.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T6.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T7.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T8.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/slice/S15.5.4.13_A2_T9.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T10.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T2.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T3.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T4.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T5.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T6.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T7.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T8.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/substring/S15.5.4.15_A2_T9.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 1
+        },
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/trim/15.5.4.20-1-6.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/trim",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": []
+    },
+    {
+      "path": "built-ins/String/prototype/trim/15.5.4.20-1-9.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/trim",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": [],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "built-ins/String/prototype/trim/15.5.4.20-2-35.js",
+      "pass": 0,
+      "fail": 0,
+      "notTypescript": 0,
+      "refused": 1,
+      "crashed": 0,
+      "skipped": 0,
+      "total": 1,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/trim",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 1
+        }
+      ],
+      "notTypescriptReasons": [],
+      "refusalReasons": [
+        {
+          "reason": "not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [],
+      "crashReasons": [],
+      "failReasons": []
+    }
+  ]
+}

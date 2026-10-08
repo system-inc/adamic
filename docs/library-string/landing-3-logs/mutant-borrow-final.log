@@ -1,0 +1,8 @@
+--- FAIL: TestBuiltinErrorBorrowEffects (0.00s)
+    element_borrow_test.go:118: harmless builtin error operation changes arrays: ir.BuiltinError
+    element_borrow_test.go:118: harmless builtin error operation changes arrays: ir.ErrorIs
+--- FAIL: TestThrowElementBorrowPlan (0.03s)
+    element_borrow_test.go:72: caughtInside: harmless Error creation prevented borrowing
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.043s
+FAIL

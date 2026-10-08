@@ -1,0 +1,411 @@
+built-ins/String/15.5.5.5.2-3-3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/15.5.5.5.2-3-4.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/15.5.5.5.2-3-5.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/15.5.5.5.2-7-1.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/15.5.5.5.2-7-3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/fromCodePoint/number-is-out-of-range.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/charAt/S15.5.4.4_A3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/charCodeAt/S15.5.4.5_A3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/repeat/count-is-infinity-throws.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/repeat/count-less-than-zero-throws.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T1.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T2.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T4.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T5.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T6.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T7.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T8.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/slice/S15.5.4.13_A2_T9.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T10.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T2.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T3.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T4.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T5.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T6.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T7.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T8.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/substring/S15.5.4.15_A2_T9.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/trim/15.5.4.20-1-6.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/trim/15.5.4.20-1-9.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+built-ins/String/prototype/trim/15.5.4.20-2-35.js 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+test262 c8c798898646638cd0c24879f8e0374e847e7d74
+adapt on
+tsc 6.0.3 checks=0 cache-hits=0 cost=0ms
+
+built-ins/String/15.5.5.5.2-3-3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/15.5.5.5.2-3-4.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/15.5.5.5.2-3-5.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/15.5.5.5.2-7-1.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/15.5.5.5.2-7-3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/fromCodePoint/number-is-out-of-range.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                         pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/fromCodePoint       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: a try around String.fromCodePoint, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)
+
+built-ins/String/prototype/charAt/S15.5.4.4_A3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                            pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/charAt       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/charCodeAt/S15.5.4.5_A3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                                pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/charCodeAt       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/prototype/repeat/count-is-infinity-throws.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                            pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/repeat       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)
+
+built-ins/String/prototype/repeat/count-less-than-zero-throws.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                            pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/repeat       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T1.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T2.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T4.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T5.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T6.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T7.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T8.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/slice/S15.5.4.13_A2_T9.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                           pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/slice       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T10.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T2.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T3.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T4.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T5.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T6.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T7.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T8.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/substring/S15.5.4.15_A2_T9.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                               pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/substring       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  throw-error
+  1  var-to-let
+
+built-ins/String/prototype/trim/15.5.4.20-1-6.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                          pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/trim       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+built-ins/String/prototype/trim/15.5.4.20-1-9.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                          pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/trim       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+
+adaptations
+  1  var-to-let
+
+built-ins/String/prototype/trim/15.5.4.20-2-35.js
+pass 0   fail 0   refused 1   not-typescript 0   crashed 0   skipped 0   total 1
+
+directory                          pass    fail   refused  not-typescript   crashed   skipped
+built-ins/String/prototype/trim       0       0         1               0         0         0
+
+refusal reasons
+  1  not yet: new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)
+

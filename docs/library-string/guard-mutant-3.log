@@ -1,0 +1,18 @@
+--- FAIL: TestLibraryStringRefusals (0.00s)
+    --- FAIL: TestLibraryStringRefusals/box_view (0.25s)
+        library_string_test.go:34: want refusal containing "mutable or prototype fields", got <nil>
+    --- FAIL: TestLibraryStringRefusals/box_erased (0.29s)
+        library_string_test.go:34: want refusal containing "erased, mutable or prototype", got /tmp/adamic-gate/TestLibraryStringRefusalsbox_erased2974375767/001/main.a:1:36: stage 0 can't lower a value of type unknown yet
+    --- FAIL: TestLibraryStringRefusals/nested_box_wider (0.29s)
+        library_string_test.go:34: want refusal containing "nested String box", got /tmp/adamic-gate/TestLibraryStringRefusalsnested_box_wider2626544856/001/main.a:1:69: Adamic 0.1 refuses a value of type { inner: String; } seen as { inner: {}; }, which can write {} where String is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    --- FAIL: TestLibraryStringRefusals/nested_box_erased (0.34s)
+        library_string_test.go:34: want refusal containing "nested String box", got /tmp/adamic-gate/TestLibraryStringRefusalsnested_box_erased485712415/001/main.a:1:49: stage 0 can't lower a value of type unknown yet
+    --- FAIL: TestLibraryStringRefusals/box_spread (0.18s)
+        library_string_test.go:34: want refusal containing "spreading String indexed", got <nil>
+    --- FAIL: TestLibraryStringRefusals/box_overwrite (0.18s)
+        library_string_test.go:34: want refusal containing "overwriting a String box", got /tmp/adamic-gate/TestLibraryStringRefusalsbox_overwrite2866302642/001/main.a:1:30: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => box.toString() (unbound-method)
+    --- FAIL: TestLibraryStringRefusals/primitive_box_view (0.15s)
+        library_string_test.go:34: want refusal containing "primitive or structural", got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.734s
+FAIL

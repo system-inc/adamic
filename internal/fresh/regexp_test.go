@@ -84,3 +84,44 @@ func TestFutureRegexMethodRemainsUnknown(t *testing.T) {
 	}
 	t.Fatal("a regex method without a proved effect became silently safe")
 }
+
+func TestKnownRegexCallbacksUseOrdinaryCallEffects(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{"replaceCallback", "replaceAllCallback", "symbol:replaceCallback"} {
+		program := regexTreeProgram(ir.RegExpCall{Value: ir.RegExpNew{}, Method: method, Returns: ir.String})
+		for _, write := range fresh.ProveWrites(program) {
+			if write.Kind == fresh.WriteUnknown {
+				t.Errorf("known callback %s became an unknown IR node", method)
+			}
+		}
+
+		// An opaque callback can retain an operand. That operand must lose the
+		// freshness that would otherwise permit storing it into an outside holder.
+		escaped := ir.Read{Local: 1, Of: ir.Object}
+		program = regexEscapingOperandProgram(ir.RegExpCall{Value: ir.RegExpNew{}, Arguments: []ir.Expression{escaped}, Method: method, Returns: ir.String})
+		ordinary := regexEscapingOperandProgram(ir.CallClosure{Closure: escaped, Returns: ir.String})
+		got, want := fresh.ProveWrites(program), fresh.ProveWrites(ordinary)
+		if len(got) != 1 || len(want) != 1 || got[0].Proven || want[0].Proven {
+			t.Errorf("%s lost callback operand escape effects: %+v vs %+v", method, got, want)
+		}
+
+	}
+}
+
+func regexEscapingOperandProgram(call ir.Expression) *ir.Program {
+	program := regexTreeProgram(call)
+	program.Locals = append(program.Locals, ir.Local{Type: ir.Object, Function: 0})
+	program.Locals = append(program.Locals, ir.Local{Type: ir.Object, Function: -1, Global: true})
+	program.Main = []ir.Statement{
+		ir.Declare{Local: 2, Value: ir.ObjectLiteral{}},
+		ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.Read{Local: 2, Of: ir.Object}}}},
+	}
+
+	program.Functions[0].Body = []ir.Statement{
+		ir.Declare{Local: 1, Value: ir.ObjectLiteral{}},
+		ir.Evaluate{Value: call},
+		ir.SetProperty{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "next", Value: ir.Read{Local: 1, Of: ir.Object}, Site: 1},
+		ir.Return{},
+	}
+	return program
+}

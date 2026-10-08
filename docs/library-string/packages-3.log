@@ -1,0 +1,11 @@
+ok  	github.com/system-inc/adamic/internal/load	1.428s
+--- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.14s)
+        lower_test.go:110: got <nil>, want an error ending "main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	24.675s
+ok  	github.com/system-inc/adamic/internal/native	253.903s
+ok  	github.com/system-inc/adamic/internal/flow	97.424s
+ok  	github.com/system-inc/adamic/internal/fresh	41.297s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	110.375s
+FAIL

@@ -1,0 +1,340 @@
+=== RUN   TestLibraryStringSecondMutants
+=== PAUSE TestLibraryStringSecondMutants
+=== RUN   TestLibraryStringMutants
+=== PAUSE TestLibraryStringMutants
+=== RUN   TestLibraryStringThirdMutants
+=== RUN   TestLibraryStringThirdMutants/boxLength
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/boxIndex
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/boxOwn
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/match
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/matchAll
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/replace
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/replaceAll
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/search
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/RegExpCreate
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/split
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/fromCodePoint
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+=== RUN   TestLibraryStringThirdMutants/repeat
+    library_string_third_test.go:124: caught only by stdout comparison with source on Node
+--- PASS: TestLibraryStringThirdMutants (6.37s)
+    --- PASS: TestLibraryStringThirdMutants/boxLength (0.45s)
+    --- PASS: TestLibraryStringThirdMutants/boxIndex (0.45s)
+    --- PASS: TestLibraryStringThirdMutants/boxOwn (0.40s)
+    --- PASS: TestLibraryStringThirdMutants/match (0.58s)
+    --- PASS: TestLibraryStringThirdMutants/matchAll (0.68s)
+    --- PASS: TestLibraryStringThirdMutants/replace (0.65s)
+    --- PASS: TestLibraryStringThirdMutants/replaceAll (0.67s)
+    --- PASS: TestLibraryStringThirdMutants/search (0.61s)
+    --- PASS: TestLibraryStringThirdMutants/RegExpCreate (0.61s)
+    --- PASS: TestLibraryStringThirdMutants/split (0.59s)
+    --- PASS: TestLibraryStringThirdMutants/fromCodePoint (0.31s)
+    --- PASS: TestLibraryStringThirdMutants/repeat (0.37s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestRegExpProtocolCounts
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_matchall_nonglobal.a | 2 | 1 | 4 | 2 | 2 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_replaceall_nonglobal.a | 2 | 1 | 4 | 2 | 2 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_protocol.a | 137 | 137 | 71 | 104 | 18 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_indices.a | 38 | 38 | 34 | 46 | 23 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_replacement_callback.a | 109 | 109 | 54 | 70 | 17 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_string.a | 12 | 12 | 11 | 18 | 3 | 0 |
+    regexp_protocol_counts_test.go:30: | internal/oracle/testdata/regexp_errors.a | 16 | 16 | 25 | 29 | 3 | 0 |
+--- PASS: TestRegExpProtocolCounts (0.89s)
+=== CONT  TestLibraryStringSecondMutants
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestLibraryStringMutants
+=== RUN   TestLibraryStringSecondMutants/identity
+=== RUN   TestLibraryStringMutants/conversion
+=== PAUSE TestLibraryStringSecondMutants/identity
+=== PAUSE TestLibraryStringMutants/conversion
+=== RUN   TestLibraryStringSecondMutants/primitive
+=== PAUSE TestLibraryStringSecondMutants/primitive
+=== RUN   TestLibraryStringMutants/prototype
+=== PAUSE TestLibraryStringMutants/prototype
+=== RUN   TestLibraryStringMutants/charAt
+=== PAUSE TestLibraryStringMutants/charAt
+=== RUN   TestLibraryStringSecondMutants/arrayConversion
+=== PAUSE TestLibraryStringSecondMutants/arrayConversion
+=== RUN   TestLibraryStringSecondMutants/mapConversion
+=== PAUSE TestLibraryStringSecondMutants/mapConversion
+=== RUN   TestLibraryStringSecondMutants/startsWith
+=== PAUSE TestLibraryStringSecondMutants/startsWith
+=== RUN   TestLibraryStringSecondMutants/endsWith
+=== PAUSE TestLibraryStringSecondMutants/endsWith
+=== RUN   TestLibraryStringSecondMutants/isWellFormed
+=== PAUSE TestLibraryStringSecondMutants/isWellFormed
+=== RUN   TestLibraryStringSecondMutants/toWellFormed
+=== PAUSE TestLibraryStringSecondMutants/toWellFormed
+=== RUN   TestLibraryStringSecondMutants/nullReceiver
+=== PAUSE TestLibraryStringSecondMutants/nullReceiver
+=== RUN   TestLibraryStringSecondMutants/rawLimit
+=== PAUSE TestLibraryStringSecondMutants/rawLimit
+=== CONT  TestLibraryStringSecondMutants/identity
+=== CONT  TestLibraryStringSecondMutants/isWellFormed
+=== CONT  TestLibraryStringSecondMutants/rawLimit
+=== RUN   TestLibraryStringMutants/at
+=== PAUSE TestLibraryStringMutants/at
+=== RUN   TestLibraryStringMutants/codePointAt
+=== PAUSE TestLibraryStringMutants/codePointAt
+=== RUN   TestLibraryStringMutants/substring
+=== PAUSE TestLibraryStringMutants/substring
+=== RUN   TestLibraryStringMutants/concat
+=== PAUSE TestLibraryStringMutants/concat
+=== RUN   TestLibraryStringMutants/raw
+=== PAUSE TestLibraryStringMutants/raw
+=== RUN   TestLibraryStringMutants/rawTemplate
+=== PAUSE TestLibraryStringMutants/rawTemplate
+=== RUN   TestLibraryStringMutants/fromCharCode
+=== PAUSE TestLibraryStringMutants/fromCharCode
+=== RUN   TestLibraryStringMutants/normalize
+=== PAUSE TestLibraryStringMutants/normalize
+=== RUN   TestLibraryStringMutants/replace
+=== PAUSE TestLibraryStringMutants/replace
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+=== CONT  TestLibraryStringSecondMutants/nullReceiver
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_refusals/library_string_range_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_refusals/library_string_range_refused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_typeof_conversion.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_typeof_conversion.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_primitive.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_primitive.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_affixes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_affixes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_wellformed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_wellformed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_null_receiver.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_null_receiver.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw_primitive.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw_primitive.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_boxed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_boxed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_regex_dispatch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_regex_dispatch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_ranges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_ranges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_literal_freshness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_literal_freshness.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_indices.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_indices.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== CONT  TestLibraryStringSecondMutants/toWellFormed
+=== NAME  TestLibraryStringSecondMutants/identity
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/conversion
+=== NAME  TestLibraryStringSecondMutants/nullReceiver
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/replace
+=== NAME  TestLibraryStringSecondMutants/isWellFormed
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/normalize
+=== NAME  TestLibraryStringSecondMutants/toWellFormed
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/fromCharCode
+=== NAME  TestLibraryStringSecondMutants/rawLimit
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/rawTemplate
+=== NAME  TestLibraryStringMutants/conversion
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/raw
+=== NAME  TestLibraryStringMutants/replace
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/concat
+=== NAME  TestLibraryStringMutants/normalize
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/substring
+=== NAME  TestLibraryStringMutants/fromCharCode
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/codePointAt
+=== NAME  TestLibraryStringMutants/rawTemplate
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/at
+=== NAME  TestLibraryStringMutants/raw
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/charAt
+=== NAME  TestLibraryStringMutants/concat
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringMutants/prototype
+=== NAME  TestLibraryStringMutants/codePointAt
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringSecondMutants/mapConversion
+=== NAME  TestLibraryStringMutants/at
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringSecondMutants/endsWith
+=== NAME  TestLibraryStringMutants/substring
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringSecondMutants/startsWith
+=== NAME  TestLibraryStringMutants/prototype
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+=== CONT  TestLibraryStringSecondMutants/arrayConversion
+=== NAME  TestLibraryStringMutants/charAt
+    library_string_test.go:129: caught only by stdout comparison with source on Node
+--- PASS: TestLibraryStringMutants (0.01s)
+    --- PASS: TestLibraryStringMutants/conversion (0.49s)
+    --- PASS: TestLibraryStringMutants/replace (0.50s)
+    --- PASS: TestLibraryStringMutants/normalize (0.44s)
+    --- PASS: TestLibraryStringMutants/fromCharCode (0.44s)
+    --- PASS: TestLibraryStringMutants/rawTemplate (0.58s)
+    --- PASS: TestLibraryStringMutants/raw (0.58s)
+    --- PASS: TestLibraryStringMutants/concat (0.57s)
+    --- PASS: TestLibraryStringMutants/codePointAt (0.50s)
+    --- PASS: TestLibraryStringMutants/at (0.48s)
+    --- PASS: TestLibraryStringMutants/substring (0.68s)
+    --- PASS: TestLibraryStringMutants/prototype (0.57s)
+    --- PASS: TestLibraryStringMutants/charAt (0.69s)
+=== CONT  TestLibraryStringSecondMutants/primitive
+=== NAME  TestLibraryStringSecondMutants/mapConversion
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== NAME  TestLibraryStringSecondMutants/startsWith
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== NAME  TestLibraryStringSecondMutants/endsWith
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== NAME  TestLibraryStringSecondMutants/arrayConversion
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== NAME  TestLibraryStringSecondMutants/primitive
+    library_string_second_test.go:149: caught only by stdout comparison with source on Node
+--- PASS: TestLibraryStringSecondMutants (0.01s)
+    --- PASS: TestLibraryStringSecondMutants/identity (0.40s)
+    --- PASS: TestLibraryStringSecondMutants/nullReceiver (0.41s)
+    --- PASS: TestLibraryStringSecondMutants/isWellFormed (0.57s)
+    --- PASS: TestLibraryStringSecondMutants/toWellFormed (0.55s)
+    --- PASS: TestLibraryStringSecondMutants/rawLimit (0.61s)
+    --- PASS: TestLibraryStringSecondMutants/mapConversion (0.68s)
+    --- PASS: TestLibraryStringSecondMutants/startsWith (0.60s)
+    --- PASS: TestLibraryStringSecondMutants/endsWith (0.67s)
+    --- PASS: TestLibraryStringSecondMutants/arrayConversion (0.60s)
+    --- PASS: TestLibraryStringSecondMutants/primitive (0.58s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_indices.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_literal_freshness.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_ranges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_regex_dispatch.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_boxed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw_primitive.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_null_receiver.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_wellformed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_affixes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_primitive.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_typeof_conversion.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_refusals/library_string_range_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a (0.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_indices.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_literal_freshness.a (0.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_ranges.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_boxed.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_null_receiver.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw_primitive.a (0.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_regex_dispatch.a (1.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_wellformed.a (0.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_affixes.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_refusals/library_string_range_refused.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_typeof_conversion.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_primitive.a (0.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a (0.84s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a (1.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a (0.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a (0.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a (0.63s)
+PASS
+gate cache: native hits=0 misses=178
+gate cache: node hits=0 misses=106
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.105s
