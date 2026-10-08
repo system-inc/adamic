@@ -619,6 +619,36 @@ class ScopedEnvironment(unittest.TestCase):
         self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
 
 
+class Stage3Red(unittest.TestCase):
+    def test_a_lane_red_names_the_lanes_verdict_and_last_lines(self):
+        with tempfile.TemporaryDirectory() as root:
+            tree, out = os.path.join(root, "tree"), os.path.join(root, "out")
+            os.makedirs(os.path.join(tree, "stage3/lane"))
+            os.makedirs(out)
+            open(os.path.join(tree, "stage3/lane/run.sh"), "w").close()
+            for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
+                realRun(["git", "-C", tree] + command, check=True)
+            gate = run.Gate(types.SimpleNamespace(tree=tree, out=out, tools=tree, sha="a" * 40, base="a" * 40, full=False,
+                                                  complete=False, branch="", branch_source="", session="", session_source=""))
+
+            def spawn(command, stdout, stderr=None, directory=None, environment=None):
+                lane = command[:2] == ["bash", "stage3/lane/run.sh"]
+                if lane:
+                    os.makedirs(command[2], exist_ok=True)
+                    with open(os.path.join(command[2], "verdict.txt"), "w") as handle:
+                        handle.write("FAIL stage3 landing lane: test counts: expected 1 failing, observed 4\n")
+                stdout.write("".join("noise %d\n" % i for i in range(20)) + ("failed test names: observed ['unusedTypeParameters']\n" if lane else ""))
+                return types.SimpleNamespace(wait=lambda: 1 if lane else 0)
+
+            with mock.patch.object(gate, "spawn", spawn):
+                gate.stage3()
+            detail = gate.failure["detail"]
+            self.assertIn("stage3-lane exit 1", detail)
+            self.assertIn("FAIL stage3 landing lane: test counts", detail)
+            self.assertIn("failed test names: observed ['unusedTypeParameters']", detail)
+            self.assertNotIn("noise 3", detail)
+
+
 class LongTests(unittest.TestCase):
     def test_the_ledger_holds_top_level_tests_over_the_line_longest_first(self):
         events = [

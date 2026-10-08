@@ -506,7 +506,19 @@ class Gate:
         failed = [name for name, _, _ in commands if codes.get(name) != 0]
         self.exits["stage3"] = 1 if failed else 0
         if failed:
-            self.fail("stage3", "stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed)))
+            # The red names what failed, not just an exit code (typescript, Oct 8: 'stage3-lane exit 1' said
+            # nothing): the lane's own verdict line, then each failed command's last lines.
+            detail = ["stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed))]
+            verdict = os.path.join(self.arguments.out, "stage3-lane-verdict.txt")
+            if "stage3-lane" in failed and os.path.isfile(verdict):
+                detail += [line for line in open(verdict, errors="replace").read().splitlines() if line.strip()][:2]
+            for name in failed:
+                try:
+                    lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+                except OSError:
+                    continue
+                detail += ["%s, last lines:" % name] + [line[:300] for line in lines[-6:]]
+            self.fail("stage3", "\n".join(detail))
 
     def workers(self, executors):
         """Platforms' executors for Cloudflare Workers (their inventory, Oct 7 20:59), each from the
