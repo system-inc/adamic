@@ -1,0 +1,5 @@
+{
+ "name": "prefer_stateless_function_props_disqualifies",
+ "from": "return name === 'props' || name === 'context';",
+ "to": "return name === 'context';"
+}

@@ -1,0 +1,2 @@
+createReactClass({ ...render });
+const View = createReactClass({ render: function() { return <div/>; } });

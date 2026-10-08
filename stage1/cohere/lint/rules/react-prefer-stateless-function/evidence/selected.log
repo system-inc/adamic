@@ -1,0 +1,74 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== RUN   TestPreferStatelessFunctionSelected
+=== PAUSE TestPreferStatelessFunctionSelected
+=== CONT  TestMutants
+=== CONT  TestPreferStatelessFunctionSelected
+=== CONT  TestOwnedWitnesses
+=== RUN   TestMutants/prefer_stateless_function_props_disqualifies
+=== PAUSE TestMutants/prefer_stateless_function_props_disqualifies
+=== CONT  TestMutants/prefer_stateless_function_props_disqualifies
+    lint_test.go:1000: checker compilation phases: load=267.818236ms lower=8.63288524s C=1.375432463s JavaScript=84.873808ms
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker compilation phases: load=228.448288ms lower=8.588098895s C=1.235919763s JavaScript=38.655261ms
+=== NAME  TestMutants/prefer_stateless_function_props_disqualifies
+    lint_test.go:1006: prefer_stateless_function_props_disqualifies caught on Node: case 92 line 4624: port "fixed\tclass View extends React.Component { render() { return <div>{this.props.title}</div>; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer_stateless_function_props_disqualifies1245213673/023/react-prefer-stateless-function-4.tsx:1:1"
+        Go context:
+          react/prefer-stateless-function  This class component uses nothing a class provides. It has a render method, and beyond the members React reads as configuration it has no state, no lifecycle, no refs and no other use of `this`, so the class body is ceremony around a single function of its props. Written as a function it is shorter, it cannot accidentally grow instance state, and React can treat it as a plain call. Rewrite it as a function component.
+
+        range 0 64 componentShouldBePure 			0 64
+        fixed	class View extends React.Component { render() { return null; } }\u000a
+        case 92
+        /tmp/adamic-gate/TestMutantsprefer_stateless_function_props_disqualifies1245213673/023/react-prefer-stateless-function-4.tsx:1:1
+          react/prefer-stateless-function  This class component uses nothing a class provides. It has a render method, and beyond the members React reads as configuration it has no state, no lifecycle, no refs and no other use of `this`, so the class body is ceremony around a single function of its props. Written as a function it is shorter, it cannot accidentally grow instance state, and React can treat it as a plain call. Rewrite it as a function component.
+
+        range 0 89 componentShouldBePure 			0 89
+        fixed	class View extends React.Component { render() { return <div>{this.props.title}</div>; } }\u000a
+    lint_test.go:1006: prefer_stateless_function_props_disqualifies caught on emitted JavaScript: case 92 line 4624: port "fixed\tclass View extends React.Component { render() { return <div>{this.props.title}</div>; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer_stateless_function_props_disqualifies1245213673/023/react-prefer-stateless-function-4.tsx:1:1"
+        Go context:
+          react/prefer-stateless-function  This class component uses nothing a class provides. It has a render method, and beyond the members React reads as configuration it has no state, no lifecycle, no refs and no other use of `this`, so the class body is ceremony around a single function of its props. Written as a function it is shorter, it cannot accidentally grow instance state, and React can treat it as a plain call. Rewrite it as a function component.
+
+        range 0 64 componentShouldBePure 			0 64
+        fixed	class View extends React.Component { render() { return null; } }\u000a
+        case 92
+        /tmp/adamic-gate/TestMutantsprefer_stateless_function_props_disqualifies1245213673/023/react-prefer-stateless-function-4.tsx:1:1
+          react/prefer-stateless-function  This class component uses nothing a class provides. It has a render method, and beyond the members React reads as configuration it has no state, no lifecycle, no refs and no other use of `this`, so the class body is ceremony around a single function of its props. Written as a function it is shorter, it cannot accidentally grow instance state, and React can treat it as a plain call. Rewrite it as a function component.
+
+        range 0 89 componentShouldBePure 			0 89
+        fixed	class View extends React.Component { render() { return <div>{this.props.title}</div>; } }\u000a
+--- PASS: TestMutants (2.70s)
+    --- PASS: TestMutants/prefer_stateless_function_props_disqualifies (11.86s)
+=== NAME  TestPreferStatelessFunctionSelected
+    lint_test.go:295: cohere cases: 5296 unique source/rule/options combinations
+    s13_prefer_stateless_probe_test.go:9: captured upstream cases: 91
+    s13_prefer_stateless_probe_test.go:11: checker native build: 50.981030517s
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker native build: 1m3.236506968s
+    registration_test.go:55: typed runtime time: Go program and lint=82.983213ms native program, lint and recording=94.795152ms
+    registration_test.go:55: typed runtime time: native=94.795152ms
+    registration_test.go:55: typed runtime time: Node=417.692779ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=87.028997ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 1881 bytes
+=== NAME  TestPreferStatelessFunctionSelected
+    s13_prefer_stateless_probe_test.go:11: Go, Node, emitted JavaScript, native identical: 50193 bytes
+--- PASS: TestPreferStatelessFunctionSelected (80.82s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker native build: 31.193704ms
+    registration_test.go:55: typed runtime time: Go program and lint=64.469619ms native program, lint and recording=111.005536ms
+    registration_test.go:55: typed runtime time: native=111.005536ms
+    registration_test.go:55: typed runtime time: Node=342.053252ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=89.067826ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 1996 bytes
+    registration_test.go:55: checker native build: 8.800108ms
+    registration_test.go:55: typed runtime time: Go program and lint=73.294123ms native program, lint and recording=96.019866ms
+    registration_test.go:55: typed runtime time: native=96.019866ms
+    registration_test.go:55: typed runtime time: Node=350.050122ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=103.928203ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 5272 bytes
+    registration_test.go:71: checker native build: 15.654569ms
+    registration_test.go:71: Go, Node, emitted JavaScript, native identical: 458213 bytes
+--- PASS: TestOwnedWitnesses (87.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	87.356s

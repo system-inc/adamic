@@ -1,0 +1,2 @@
+class OptionalView extends React.Component { props?: { title: string }; render() { return <div>{this.props?.title}</div>; } }
+class DefiniteView extends React.Component { props!: { title: string }; render() { return <div>{this.props.title}</div>; } }

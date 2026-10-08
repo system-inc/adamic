@@ -1,0 +1,38 @@
+=== RUN   TestCompilerAndStage1Agree
+=== PAUSE TestCompilerAndStage1Agree
+=== CONT  TestCompilerAndStage1Agree
+    lint_test.go:443: corpus-files: upstream /tmp/s13-react-prefer-stateless-function-typescript root src/compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8 count 77
+    lint_test.go:444: corpus-files: repository ../../.. root stage1 pin 6bf7bcec73a04b85900c5a69a257b3cf34b35a40 count 988
+    lint_test.go:444: compiler corpus stage1: excluded 254 tracked files under testdata/, validation/, evidence/; retained 734 sources
+    lint_test.go:452: generated input retained from old walk: /workspace/adamic/stage1/cohere/lint/.generated/registry.ts (count 1)
+    lint_test.go:458: compiler and stage1: 812 files
+    lint_test.go:461: checker compilation phases: load=411.145542ms lower=12.331570149s C=1.382298275s JavaScript=100.252561ms
+    lint_test.go:461: checker native build: 8.99730485s
+    lint_test.go:469: compiler shard 0/5: 1 files, 3151774 bytes
+    lint_test.go:469: compiler shard 0/5 only file: /tmp/s13-react-prefer-stateless-function-typescript/src/compiler/checker.ts
+    lint_test.go:469: compiler shard 1/5: 202 files, 2400950 bytes
+    lint_test.go:469: compiler shard 2/5: 202 files, 2400949 bytes
+    lint_test.go:469: compiler shard 3/5: 204 files, 2400942 bytes
+    lint_test.go:469: compiler shard 4/5: 203 files, 2400968 bytes
+    lint_test.go:490: Node shard 0/5: 22724.234643 ms
+    lint_test.go:490: Node shard 1/5: 11298.075147 ms
+    lint_test.go:490: Node shard 2/5: 13654.384496 ms
+    lint_test.go:490: Node shard 3/5: 13494.161045 ms
+    lint_test.go:490: Node shard 4/5: 12836.711058 ms
+    lint_test.go:492: Node: 5 shards in 22.940938828s
+    lint_test.go:490: emitted JavaScript shard 0/5: 38960.187981 ms
+    lint_test.go:490: emitted JavaScript shard 1/5: 31922.504357 ms
+    lint_test.go:490: emitted JavaScript shard 2/5: 23975.326376 ms
+    lint_test.go:490: emitted JavaScript shard 3/5: 28182.888274 ms
+    lint_test.go:490: emitted JavaScript shard 4/5: 18382.515961 ms
+    lint_test.go:492: emitted JavaScript: 5 shards in 39.27860482s
+    lint_test.go:490: sanitized native shard 0/5: 130858.14927 ms
+    lint_test.go:490: sanitized native shard 1/5: 88703.517 ms
+    lint_test.go:490: sanitized native shard 2/5: 76259.199479 ms
+    lint_test.go:490: sanitized native shard 3/5: 74891.374125 ms
+    lint_test.go:490: sanitized native shard 4/5: 67940.648041 ms
+    lint_test.go:492: sanitized native: 5 shards in 2m11.106527102s
+    lint_test.go:497: Go, Node, emitted JavaScript, native identical: 31428104 bytes
+--- PASS: TestCompilerAndStage1Agree (243.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	243.268s

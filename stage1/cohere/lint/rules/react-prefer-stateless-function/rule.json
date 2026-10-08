@@ -1,0 +1,13 @@
+{
+  "name": "react/prefer-stateless-function",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactPreferStatelessFunction",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestPreferStatelessFunction",
+  "finish": "finish"
+}

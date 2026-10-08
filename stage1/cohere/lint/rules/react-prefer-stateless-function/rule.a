@@ -1,0 +1,196 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { isEs5ComponentCall } from '../../helpers/react/es5_component_call.a';
+import { isIdentifierNamed } from '../../helpers/react/react_identifier_named.a';
+import { isPureComponentBase } from '../../helpers/rules-react/is_pure_component_base.a';
+import { isFunctionLike } from '../../helpers/rules-react/is_function_like.a';
+import { skipParenthesesOptional } from '../../helpers/rules-react/skip_parentheses_optional.a';
+import { messageComponentShouldBePure } from './messages.a';
+
+// The upstream rule gathers disqualifiers before judging each component.
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    unwrap(index: number): number { return skipParenthesesOptional(this.context, index); }
+    first(index: number): number { return index < 0 ? -1 : this.context.node(index).children[0] ?? -1; }
+    name(index: number): string {
+        const kind = this.context.kind(index);
+        return ['Identifier', 'PrivateIdentifier', 'StringLiteral'].includes(kind) ? this.context.node(index).text : '';
+    }
+    memberName(index: number): string {
+        // Go's SpreadAssignment has no Name even when its expression is an identifier.
+        if(this.context.kind(index) === 'SpreadAssignment') { return ''; }
+        return this.name(this.context.name(index));
+    }
+    members(index: number): number[] {
+        if(this.context.kind(index) !== 'CallExpression') { return this.context.members(index); }
+        const object = this.unwrap(this.context.arguments(index)[0] ?? -1);
+        return this.context.kind(object) === 'ObjectLiteralExpression' ? this.context.node(object).children.slice() : [];
+    }
+    pure(index: number): boolean {
+        if(!['ClassDeclaration', 'ClassExpression'].includes(this.context.kind(index))) { return false; }
+        for(const clause of this.context.children(index, 'HeritageClause')) {
+            if(this.context.node(clause).operator !== 'ExtendsKeyword') { continue; }
+            for(const type of this.context.node(clause).children) {
+                if(this.context.kind(type) === 'ExpressionWithTypeArguments' && isPureComponentBase(this.context, this.first(type))) { return true; }
+            }
+        }
+        return false;
+    }
+    redundantConstructor(index: number): boolean {
+        const body = this.context.children(index, 'Block')[0] ?? -1;
+        if(body < 0 || this.context.node(body).children.length !== 1) { return false; }
+        const statement = this.first(body);
+        if(this.context.kind(statement) !== 'ExpressionStatement') { return false; }
+        const call = this.unwrap(this.first(statement));
+        if(this.context.kind(call) !== 'CallExpression' || this.context.kind(this.first(call)) !== 'SuperKeyword') { return false; }
+        const parameters = this.context.children(index, 'Parameter');
+        for(const parameter of parameters) {
+            if(this.context.kind(this.context.name(parameter)) !== 'Identifier' || this.hasInitializer(parameter)) { return false; }
+        }
+        const args = this.context.arguments(call);
+        const arg = args[0] ?? -1;
+        if(args.length === 1 && this.context.kind(arg) === 'SpreadElement' && this.context.kind(this.first(arg)) === 'Identifier' && this.name(this.first(arg)) === 'arguments') { return true; }
+        if(parameters.length !== args.length) { return false; }
+        for(let position = 0; position < parameters.length; position++) {
+            const parameter = parameters[position] ?? -1;
+            let argument = args[position] ?? -1;
+            if(this.context.has(parameter, 'DotDotDotToken')) {
+                if(this.context.kind(argument) !== 'SpreadElement') { return false; }
+                argument = this.first(argument);
+            }
+            if(this.context.kind(argument) !== 'Identifier' || this.name(argument) !== this.name(this.context.name(parameter))) { return false; }
+        }
+        return true;
+    }
+    // Parameters and properties retain the colon and equals in their source gaps.
+    hasInitializer(index: number): boolean {
+        const children = this.context.node(index).children;
+        for(let position = 1; position < children.length; position++) {
+            const previous = children[position - 1] ?? -1;
+            const child = children[position] ?? -1;
+            if(this.context.scanAt(this.context.node(previous).end) === 'EqualsToken' && this.context.scanStart() < this.context.start(child)) { return true; }
+        }
+        return false;
+    }
+    allowed(index: number): boolean {
+        if(this.context.kind(index) === 'Constructor') { return this.redundantConstructor(index); }
+        const name = this.memberName(index);
+        if(['displayName', 'contextTypes', 'defaultProps', 'render', 'propTypes'].includes(name)) { return true; }
+        if(name !== 'props' || this.context.kind(index) !== 'PropertyDeclaration') { return false; }
+        const nameIndex = this.context.name(index);
+        const token = this.context.scanAt(this.context.node(nameIndex).end);
+        if(['QuestionToken', 'ExclamationToken'].includes(token)) {
+            return this.context.scanAt(this.context.scanEnd()) === 'ColonToken';
+        }
+        return token === 'ColonToken';
+    }
+    propsOrContext(name: string): boolean { return name === 'props' || name === 'context'; }
+    usesThis(index: number): boolean {
+        const kind = this.context.kind(index);
+        if(kind === 'PropertyAccessExpression' && this.context.kind(this.first(index)) === 'ThisKeyword') {
+            if(!this.propsOrContext(this.name(this.context.property(index)))) { return true; }
+        }
+        if(kind === 'ElementAccessExpression' && this.context.kind(this.first(index)) === 'ThisKeyword') {
+            const argument = this.unwrap(this.context.property(index));
+            const name = this.context.kind(argument) === 'StringLiteral' ? this.name(argument) : '';
+            if(!this.propsOrContext(name)) { return true; }
+        }
+        if(kind === 'VariableDeclaration') {
+            const children = this.context.node(index).children;
+            const initializer = children[children.length - 1] ?? -1;
+            const pattern = this.first(index);
+            if(this.context.kind(initializer) === 'ThisKeyword' && this.context.kind(pattern) === 'ObjectBindingPattern') {
+                for(const element of this.context.node(pattern).children) {
+                    if(this.context.kind(element) !== 'BindingElement') { continue; }
+                    // First non-rest child is either the property name or the bound name.
+                    let readable = this.first(element);
+                    if(this.context.kind(readable) === 'DotDotDotToken') { readable = this.context.node(element).children[1] ?? -1; }
+                    if(!this.propsOrContext(this.name(readable))) { return true; }
+                }
+            }
+        }
+        for(const child of this.context.node(index).children) { if(this.usesThis(child)) { return true; } }
+        return false;
+    }
+    validReturn(index: number): boolean {
+        index = this.unwrap(index);
+        const kind = this.context.kind(index);
+        if(['JsxElement', 'JsxSelfClosingElement', 'JsxFragment', 'NullKeyword', 'FalseKeyword'].includes(kind)) { return true; }
+        if(kind === 'ConditionalExpression') {
+            const children = this.context.node(index).children;
+            return this.validReturn(children[2] ?? -1) || this.validReturn(children[4] ?? -1);
+        }
+        if(kind === 'BinaryExpression') {
+            const children = this.context.node(index).children;
+            const operator = this.context.kind(children[1] ?? -1);
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) { return this.validReturn(children[0] ?? -1) || this.validReturn(children[2] ?? -1); }
+            if(operator === 'CommaToken') { return this.validReturn(children[2] ?? -1); }
+        }
+        return false;
+    }
+    invalidReturns(index: number, body: number): boolean {
+        if(index !== body && isFunctionLike(this.context, index)) { return false; }
+        if(this.context.kind(index) === 'ReturnStatement' && !this.validReturn(this.first(index))) { return true; }
+        for(const child of this.context.node(index).children) { if(this.invalidReturns(child, body)) { return true; } }
+        return false;
+    }
+    functionBody(index: number): number {
+        if(this.context.kind(index) === 'MethodDeclaration') { return this.context.children(index, 'Block')[0] ?? -1; }
+        if(this.context.kind(index) !== 'PropertyAssignment') { return -1; }
+        const children = this.context.node(index).children;
+        const initializer = this.unwrap(children[children.length - 1] ?? -1);
+        if(!['FunctionExpression', 'ArrowFunction'].includes(this.context.kind(initializer))) { return -1; }
+        const values = this.context.node(initializer).children;
+        return values[values.length - 1] ?? -1;
+    }
+    declaresChildContextTypes(index: number, componentName: string): boolean {
+        if(this.context.kind(index) === 'PropertyAccessExpression' && this.name(this.context.property(index)) === 'childContextTypes') {
+            const receiver = this.first(index);
+            if(this.context.kind(receiver) === 'Identifier' && this.name(receiver) === componentName) { return true; }
+        }
+        for(const child of this.context.node(index).children) { if(this.declaresChildContextTypes(child, componentName)) { return true; } }
+        return false;
+    }
+    reportable(index: number, root: number): boolean {
+        if(this.context.settings.read('ignorepurecomponents', 'false') === 'true' && this.pure(index)) { return false; }
+        if(this.context.has(index, 'Decorator')) { return false; }
+        // Go's call node has no Name; its callee is not the component's name.
+        const nameIndex = this.context.kind(index) === 'CallExpression' ? -1 : this.context.name(index);
+        if(this.context.kind(nameIndex) === 'Identifier' && this.declaresChildContextTypes(root, this.name(nameIndex))) { return false; }
+        const members = this.members(index);
+        if(members.length === 0) { return false; }
+        for(const member of members) { if(!this.allowed(member)) { return false; } }
+        if(this.usesThis(index)) { return false; }
+        for(const member of members) {
+            if(this.memberName(member) !== 'render') { continue; }
+            const body = this.functionBody(member);
+            if(body >= 0 && this.invalidReturns(body, body)) { return false; }
+        }
+        return true;
+    }
+    usesRef(index: number): boolean {
+        if(this.context.kind(index) === 'JsxAttribute' && this.context.kind(this.first(index)) === 'Identifier' && this.name(this.first(index)) === 'ref') { return true; }
+        for(const child of this.context.node(index).children) { if(this.usesRef(child)) { return true; } }
+        return false;
+    }
+    judge(index: number, root: number): void {
+        if(reactEs6ComponentClass(this.nodes, index, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName)) || isEs5ComponentCall(this.nodes, index, (expression: number, name: string): boolean => isIdentifierNamed(this.nodes, expression, name))) {
+            if(this.reportable(index, root)) { this.context.reportNode(index, 'react/prefer-stateless-function', 'componentShouldBePure', messageComponentShouldBePure); }
+        }
+        for(const child of this.context.node(index).children) { this.judge(child, root); }
+    }
+    visit(root: number): void {}
+    // Preserve Go's root-listener tie order with the other registered finish hooks.
+    finish(root: number): void {
+        if(this.usesRef(root)) { return; }
+        this.nodes = project(this.context.parser.nodes);
+        this.judge(root, root);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

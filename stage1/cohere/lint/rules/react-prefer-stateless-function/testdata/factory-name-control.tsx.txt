@@ -1,0 +1,3 @@
+createReactClass({ ...render });
+createReactClass.childContextTypes = {};
+const View = createReactClass({ render: function() { return <div/>; } });

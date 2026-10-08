@@ -1,0 +1,47 @@
+{
+  "upstreamCases": 91,
+  "witnesses": 7,
+  "selectedOutputBytes": 50193,
+  "allOwnedWitnessOutputBytes": 458213,
+  "inheritedCorpusOutputBytes": 31428104,
+  "fullRun": {
+    "pass": 151,
+    "fail": 1,
+    "skip": 1,
+    "failedTests": [
+      "TestCompilerAndStage1Agree"
+    ],
+    "skippedTests": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "wallSeconds": 1116.387,
+    "exitCode": 1
+  },
+  "rerun": {
+    "test": "TestCompilerAndStage1Agree",
+    "pass": true,
+    "wallSeconds": 243.268,
+    "reason": "New rule files were staged during the full run; the clean-index guard rejected them before comparison. Unstaged only the owned directory, with no source changes, then reran the rejected check."
+  },
+  "resolvedResults": {
+    "pass": 152,
+    "fail": 0,
+    "skip": 1
+  },
+  "nproc": 5,
+  "cpuQuota": "400000 100000",
+  "loadBefore": [
+    "0.60",
+    "3.27",
+    "3.92"
+  ],
+  "loadAfter": [
+    "5.83",
+    "5.93",
+    "4.92"
+  ],
+  "typescriptCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohereCommit": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "profileDirectory": "/tmp/s13-react-prefer-stateless-function-gate-profile.h5M3jx",
+  "rawFullLog": "/tmp/s13-react-prefer-stateless-function-gate.jsonl"
+}
