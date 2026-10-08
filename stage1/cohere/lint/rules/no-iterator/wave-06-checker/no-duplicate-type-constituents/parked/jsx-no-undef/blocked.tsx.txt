@@ -1,0 +1,1 @@
+declare global { var G: any; } export {}; const a = <G />; const b = <Missing />;

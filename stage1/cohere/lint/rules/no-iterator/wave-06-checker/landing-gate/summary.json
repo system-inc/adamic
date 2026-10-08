@@ -1,0 +1,64 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=60m",
+    "./stage1/cohere/lint"
+  ],
+  "branch": "codex/typeaware-wave-06-checker",
+  "head": "9b7547976bea1b00f8b04508b9102d03511f65b3",
+  "nproc": "5",
+  "cpu.max": "400000 100000",
+  "inputs": {
+    "ADAMIC_MARKDOWNWIDTH_DEPS": "/workspace/adamic-tools/markdown-width",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "GOMAXPROCS": "4",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-06-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave-06-parked-landing-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave-06-parked-landing-profiles",
+    "GOFLAGS": "-buildvcs=false"
+  },
+  "loadStart": [
+    1.8134765625,
+    3.16357421875,
+    2.46826171875
+  ],
+  "exitCode": 0,
+  "wallSeconds": 1973.831259128,
+  "counts": {
+    "pass": 113,
+    "fail": 0,
+    "skip": 1
+  },
+  "topLevel": {
+    "pass": 34,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": [],
+  "loadEnd": [
+    1.55029296875,
+    2.09814453125,
+    2.3984375
+  ],
+  "mutants": [],
+  "capturedFromEarlierAbortedCandidate": 102,
+  "ownTypedRulesRegistered": 0,
+  "upstreamUnique": 0,
+  "registeredRulesCount": 75,
+  "loadOneMinute": {
+    "minimum": 1.1904296875,
+    "median": 1.58056640625,
+    "maximum": 5.6064453125
+  },
+  "skipReasons": {
+    "TestCheckerBridgeRefusalPending": "awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+  }
+}

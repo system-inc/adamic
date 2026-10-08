@@ -1,0 +1,11 @@
+{
+  "scope": "41 completed upstream comparisons before the shared fixer/parser refusal; each has all four runtimes",
+  "cases": 41,
+  "seconds": {
+    "Go": 2.6140268890000002,
+    "native": 3.323684946,
+    "Node": 11.87128055,
+    "emitted JavaScript": 2.893515519
+  },
+  "nativeOverGo": 1.2714807793241487
+}

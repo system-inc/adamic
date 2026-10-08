@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/no-duplicate-type-constituents",
+  "typed": true,
+  "node": true,
+  "kinds": ["IntersectionType", "UnionType"],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDuplicateTypeConstituents",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoDuplicateTypeConstituents"
+}

@@ -1,0 +1,171 @@
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.a b/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.a
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.a
+@@ -0,0 +1,80 @@
++import type { RuleContext } from '../../context.ts';
++import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
++import { SuggestionEdit } from '../../suggestions.a';
++import { types } from '../../../typeaware/facts.ts';
++const ruleName = '@typescript-eslint/no-duplicate-type-constituents';
++export class Rule {
++    readonly context: RuleContext;
++    constructor(context: RuleContext) { this.context = context; }
++    inner(index: number): number {
++        while(this.context.kind(index) === 'ParenthesizedType') {
++            const next = this.context.node(index).children[0];
++            if(next === undefined) { break; }
++            index = next;
++        }
++        return index;
++    }
++    text(index: number): string { return this.context.raw(this.inner(index)); }
++    visit(node: ParseNode, index: number): void {
++        const intersection = node.kind === 'IntersectionType';
++        if(this.context.settings.read(intersection ? 'ignoreintersections' : 'ignoreunions', 'false') === 'true') { return; }
++        let parent = this.context.parent(index);
++        while(parent >= 0 && this.context.kind(parent) === 'ParenthesizedType') { parent = this.context.parent(parent); }
++        if(parent >= 0 && this.context.kind(parent) === node.kind) { return; }
++        const directParent = this.context.parent(index);
++        const optional = !intersection && directParent >= 0 && this.context.kind(directParent) === 'Parameter' && this.context.has(directParent, 'QuestionToken');
++        const seenTexts: string[] = [];
++        const seenTypes: number[] = [];
++        const seenNodes: number[] = [];
++        for(const constituent of node.children) {
++            this.check(constituent, index, node.kind, optional, seenTexts, seenTypes, seenNodes);
++        }
++    }
++    check(index: number, parent: number, kind: string, optional: boolean, seenTexts: string[], seenTypes: number[], seenNodes: number[]): void {
++        const text = this.text(index);
++        let previous = seenTexts.indexOf(text);
++        if(previous >= 0) { this.duplicate(index, parent, kind, this.text(seenNodes[previous] ?? -1)); return; }
++        const answer = this.context.checker?.ask(index, 'raw-shape');
++        if(answer === undefined || answer.value === undefined) { return; }
++        const facts = types(answer.value, 'raw-shape');
++        if(!facts.present) { return; }
++        const type = facts.root();
++        if(type.error) { return; }
++        previous = seenTypes.indexOf(type.id);
++        if(previous >= 0) { this.duplicate(index, parent, kind, this.text(seenNodes[previous] ?? -1)); return; }
++        if(optional && (type.flags & 4) !== 0) {
++            this.report(index, parent, 'unnecessary', 'Explicit undefined is unnecessary on an optional parameter.');
++        }
++        seenTexts.push(text); seenTypes.push(type.id); seenNodes.push(index);
++        const inner = this.inner(index);
++        if(this.context.kind(inner) !== kind) { return; }
++        for(const nested of this.context.node(inner).children) { this.check(nested, inner, kind, optional, seenTexts, seenTypes, seenNodes); }
++    }
++    duplicate(index: number, parent: number, kind: string, previous: string): void {
++        this.report(index, parent, 'duplicate', `${kind === 'IntersectionType' ? 'Intersection' : 'Union'} type constituent is duplicated with ${previous}.`);
++    }
++    report(index: number, parent: number, id: string, message: string): void {
++        const start = this.context.start(index);
++        const end = this.context.node(index).end;
++        const lower = this.context.start(parent);
++        const upper = this.context.node(parent).end;
++        const source = this.context.source;
++        const edits: SuggestionEdit[] = [];
++        let before = -1;
++        for(let position = start - 1; position >= lower; position--) {
++            if(source[position] === '|' || source[position] === '&') { before = position; break; }
++        }
++        if(before >= 0) {
++            edits.push(new SuggestionEdit(before, before + 1, ''));
++            edits.push(new SuggestionEdit(start, end, ''));
++        }
++        else {
++            edits.push(new SuggestionEdit(start, end, ''));
++            for(let position = end; position < upper && position < source.length; position++) {
++                if(source[position] === '|' || source[position] === '&') { edits.push(new SuggestionEdit(position, position + 1, '')); break; }
++            }
++        }
++        this.context.reportRange(this.context.start(this.inner(index)), end, ruleName, id, message, edits);
++    }
++}
++export function create(context: RuleContext): Rule { return new Rule(context); }
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/oracle.go b/stage1/cohere/lint/rules/no-duplicate-type-constituents/oracle.go
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/oracle.go
+@@ -0,0 +1,39 @@
++//go:build lintoracle
++
++package main
++
++import (
++	"encoding/json"
++	"github.com/system-inc/cohere/internal/lint/rule"
++	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
++)
++
++func oracleNoDuplicateTypeConstituents() rule.Rule { return rules.NoDuplicateTypeConstituents }
++func oracleNoDuplicateTypeConstituentsOptions(fields []string) any {
++	if len(fields) < 6 || fields[5] == "" || fields[5] == "null" {
++		return nil
++	}
++	var wire map[string]json.RawMessage
++	if err := json.Unmarshal([]byte(fields[5]), &wire); err != nil {
++		panic(err)
++	}
++	if _, present := wire["IgnoreIntersections"]; present {
++		options := rules.DefaultNoDuplicateTypeConstituentsSettings()
++		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
++			panic(err)
++		}
++		return options
++	}
++	if _, present := wire["IgnoreUnions"]; present {
++		options := rules.DefaultNoDuplicateTypeConstituentsSettings()
++		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
++			panic(err)
++		}
++		return options
++	}
++	options, err := rules.DecodeNoDuplicateTypeConstituentsOptions([]byte(fields[5]))
++	if err != nil {
++		panic(err)
++	}
++	return options
++}
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.json b/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.json
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/rule.json
+@@ -0,0 +1,12 @@
++{
++  "name": "@typescript-eslint/no-duplicate-type-constituents",
++  "typed": true,
++  "node": true,
++  "kinds": ["IntersectionType", "UnionType"],
++  "visit": "visit",
++  "factory": "create",
++  "class": "Rule",
++  "oracle": "oracleNoDuplicateTypeConstituents",
++  "upstreamPackage": "typescript",
++  "upstreamTest": "TestNoDuplicateTypeConstituents"
++}
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/mutant.json b/stage1/cohere/lint/rules/no-duplicate-type-constituents/mutant.json
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/mutant.json
+@@ -0,0 +1,5 @@
++{
++  "Name": "duplicate text verdict suppressed",
++  "From": "let previous = seenTexts.indexOf(text);",
++  "To": "let previous = -1;"
++}
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.ts.txt b/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.ts.txt
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.ts.txt
+@@ -0,0 +1,4 @@
++type A = string;
++type Duplicate = A | A;
++function optional(value?: number | undefined) {}
++type ObjectDuplicate = { a: 1 } | { a: 1 };
+diff --git a/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.options.json b/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.options.json
+new file mode 100644
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-duplicate-type-constituents/testdata/duplicate.options.json
+@@ -0,0 +1,1 @@
++{"ignoreIntersections":true,"ignoreUnions":false}

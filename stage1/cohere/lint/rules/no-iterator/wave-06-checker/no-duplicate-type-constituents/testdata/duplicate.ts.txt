@@ -1,0 +1,4 @@
+type A = string;
+type Duplicate = A | A;
+function optional(value?: number | undefined) {}
+type ObjectDuplicate = { a: 1 } | { a: 1 };

@@ -1,0 +1,1 @@
+import { Fragment as F } from "react"; const element = <F><span /></F>; function shadow(F: any) { return <F><span /></F>; }

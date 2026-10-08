@@ -1,0 +1,14 @@
+[
+  {
+    "line": 7,
+    "text": "    lint_test.go:855: duplicate text verdict suppressed caught on native: case 0 line 12: port \"fixed\\ttype A = string;\\\\u000atype Duplicate = A  ;\\\\u000afunction optional(value?: number  ) {}\\\\u000atype ObjectDuplicate = { a: 1 } | { a: 1 };\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsduplicate_text_verdict_suppressed130529128/016/no-duplicate-type-constituents-0.ts:4:35\""
+  },
+  {
+    "line": 19,
+    "text": "    lint_test.go:855: duplicate text verdict suppressed caught on Node: case 0 line 12: port \"fixed\\ttype A = string;\\\\u000atype Duplicate = A  ;\\\\u000afunction optional(value?: number  ) {}\\\\u000atype ObjectDuplicate = { a: 1 } | { a: 1 };\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsduplicate_text_verdict_suppressed130529128/016/no-duplicate-type-constituents-0.ts:4:35\""
+  },
+  {
+    "line": 31,
+    "text": "    lint_test.go:855: duplicate text verdict suppressed caught on emitted JavaScript: case 0 line 12: port \"fixed\\ttype A = string;\\\\u000atype Duplicate = A  ;\\\\u000afunction optional(value?: number  ) {}\\\\u000atype ObjectDuplicate = { a: 1 } | { a: 1 };\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsduplicate_text_verdict_suppressed130529128/016/no-duplicate-type-constituents-0.ts:4:35\""
+  }
+]

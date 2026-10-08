@@ -1,0 +1,5 @@
+{
+  "Name": "duplicate text verdict suppressed",
+  "From": "let previous = seenTexts.indexOf(text);",
+  "To": "let previous = -1;"
+}

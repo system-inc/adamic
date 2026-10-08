@@ -1,0 +1,183 @@
+[
+  {
+    "rule": "adamic/nominal-class",
+    "status": "blocked",
+    "call": "flow.WalkerFor(ctx)",
+    "location": "cohere/internal/lint/rules/adamic/nominal_class.go:68",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/nominal-class/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "walker := flow.WalkerFor(ctx)"
+  },
+  {
+    "rule": "no-useless-return",
+    "status": "blocked",
+    "call": "control_flow_graph.Build",
+    "location": "cohere/internal/lint/rules/core/no_useless_return.go:125",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-useless-return/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "graph := control_flow_graph.Build(root, control_flow_graph.Hooks[noUselessReturnEvent]{"
+  },
+  {
+    "rule": "nexus/correctness-require-child-process-error-listener",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(bound)",
+    "location": "cohere/internal/lint/rules/nexus/correctness_require_child_process_error_listener.go:135",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/correctness-require-child-process-error-listener/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(bound)"
+  },
+  {
+    "rule": "nexus/correctness-require-response-status-check",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(name)",
+    "location": "cohere/internal/lint/rules/nexus/correctness_require_response_status_check.go:278",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/correctness-require-response-status-check/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "return correctnessRequireResponseStatusCheckIsGlobalFetch(ctx.TypeChecker.GetSymbolAtLocation(name))"
+  },
+  {
+    "rule": "nexus/performance-no-independent-await-in-loop",
+    "status": "blocked",
+    "call": "checker.SkipAlias(symbol, analysis.ctx.TypeChecker)",
+    "location": "cohere/internal/lint/rules/nexus/performance_no_independent_await_in_loop.go:479",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/performance-no-independent-await-in-loop/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol = checker.SkipAlias(symbol, analysis.ctx.TypeChecker)"
+  },
+  {
+    "rule": "no-new-func",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/core/no_new_native_nonconstructor.go:103",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-new-func/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "no-new-native-nonconstructor",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/core/no_new_native_nonconstructor.go:103",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-new-native-nonconstructor/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "no-new-wrappers",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/core/no_new_native_nonconstructor.go:103",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-new-wrappers/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "no-throw-literal",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/core/no_undef_init.go:163",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-throw-literal/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "no-useless-backreference",
+    "status": "blocked",
+    "call": "reference.NewTracker(ctx.SourceFile, ctx.TypeChecker, nil)",
+    "location": "cohere/internal/lint/rules/core/no_useless_backreference.go:100",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-useless-backreference/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "tracker := reference.NewTracker(ctx.SourceFile, ctx.TypeChecker, nil)"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(name)",
+    "location": "cohere/internal/lint/rules/core/prefer_arrow_callback.go:331",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/prefer-arrow-callback/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "declared := ctx.TypeChecker.GetSymbolAtLocation(name)"
+  },
+  {
+    "rule": "react-hooks/set-state-in-effect",
+    "status": "blocked",
+    "call": "high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)",
+    "location": "cohere/internal/lint/rules/react/set_state_in_effect.go:267",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/set-state-in-effect/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "lowered := high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)"
+  },
+  {
+    "rule": "react-hooks/set-state-in-render",
+    "status": "blocked",
+    "call": "high_level_intermediate_representation.ForFunction(ctx, functionNode)",
+    "location": "cohere/internal/lint/rules/react/set_state_in_render.go:183",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/set-state-in-render/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "lowered := high_level_intermediate_representation.ForFunction(ctx, functionNode)"
+  },
+  {
+    "rule": "react-hooks/static-components",
+    "status": "blocked",
+    "call": "high_level_intermediate_representation.ForFunction(ctx, functionNode)",
+    "location": "cohere/internal/lint/rules/react/static_components.go:120",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/static-components/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "lowered := high_level_intermediate_representation.ForFunction(ctx, functionNode)"
+  },
+  {
+    "rule": "react/jsx-fragments",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/react/jsx_fragments.go:290",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/jsx-fragments/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "react/jsx-no-undef",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(reference)",
+    "location": "cohere/internal/lint/rules/react/jsx_no_undef.go:101",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/jsx-no-undef/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "if symbol := ctx.TypeChecker.GetSymbolAtLocation(reference); symbol != nil {"
+  },
+  {
+    "rule": "react/no-adjacent-inline-elements",
+    "status": "blocked",
+    "call": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "location": "cohere/internal/lint/rules/react/checked_requires_onchange_or_readonly.go:352",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/parked/no-adjacent-inline-elements/BLOCKED.md",
+    "upstreamMatched": 0,
+    "mutant": "not attempted: prerequisite missing",
+    "sourceLine": "symbol := ctx.TypeChecker.GetSymbolAtLocation(identifier)"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "status": "blocked",
+    "call": "Linter.fixed reparses generated intermediate",
+    "location": "stage1/cohere/lint/lint.ts:198",
+    "note": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/BLOCKED.md",
+    "upstreamCaptured": 102,
+    "upstreamMatched": 41,
+    "witnessesMatched": 1,
+    "mutant": "stage1/cohere/lint/rules/no-iterator/wave-06-checker/no-duplicate-type-constituents/proof/partial-mutant.log"
+  }
+]

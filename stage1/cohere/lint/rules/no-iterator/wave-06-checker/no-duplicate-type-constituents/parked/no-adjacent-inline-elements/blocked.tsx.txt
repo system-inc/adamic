@@ -1,0 +1,1 @@
+import { createElement } from "react"; createElement("div", undefined, [createElement("a"), createElement("span")]);

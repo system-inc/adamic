@@ -1,0 +1,30 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=60m",
+    "./stage1/cohere/lint"
+  ],
+  "branch": "codex/typeaware-wave-06",
+  "head": "fc50ea0fcc06777b062c77c92ae45e02909896d4",
+  "nproc": "5",
+  "cpu.max": "400000 100000",
+  "inputs": {
+    "ADAMIC_MARKDOWNWIDTH_DEPS": "/workspace/adamic-tools/markdown-width",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "GOMAXPROCS": "4",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-06-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave-06-merged-complete-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave-06-merged-complete-profiles",
+    "GOFLAGS": "-buildvcs=false"
+  },
+  "loadStart": [
+    1.47998046875,
+    1.7763671875,
+    1.77685546875
+  ]
+}

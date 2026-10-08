@@ -1,0 +1,1 @@
+async function f(items: string[]) { for (const item of items) { await fetch(item); } }

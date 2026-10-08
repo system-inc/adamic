@@ -1,0 +1,55 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=60m",
+    "./stage1/cohere/lint"
+  ],
+  "branch": "codex/typeaware-wave-06-checker",
+  "head": "9b7547976bea1b00f8b04508b9102d03511f65b3",
+  "nproc": "5",
+  "cpu.max": "400000 100000",
+  "inputs": {
+    "ADAMIC_MARKDOWNWIDTH_DEPS": "/workspace/adamic-tools/markdown-width",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "GOMAXPROCS": "4",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-06-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave-06-checker-final-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave-06-checker-final-profiles",
+    "GOFLAGS": "-buildvcs=false"
+  },
+  "loadStart": [
+    1.06884765625,
+    1.80126953125,
+    1.74267578125
+  ],
+  "exitCode": 1,
+  "wallSeconds": 338.05746486,
+  "counts": {
+    "pass": 14,
+    "skip": 1,
+    "fail": 1
+  },
+  "topLevel": {
+    "pass": 14,
+    "skip": 1,
+    "fail": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": [
+    "TestRulesAgree"
+  ],
+  "loadEnd": [
+    1.33154296875,
+    1.76416015625,
+    1.7724609375
+  ],
+  "upstreamUnique": 102,
+  "mutants": []
+}

@@ -1,0 +1,13 @@
+{
+  "file": "cohere/internal/lint/rules/typescript/no_duplicate_type_constituents_test.go",
+  "sha256": "227c4f065ea51b2f8d600c465eddc38a8e37931790bb9005d6a1508e694f7157",
+  "prefix": "TestNoDuplicateTypeConstituents",
+  "testNames": [
+    "TestNoDuplicateTypeConstituentsStaysSilentOnUpstreamPassCases",
+    "TestNoDuplicateTypeConstituentsFiresOnUpstreamFailCases",
+    "TestNoDuplicateTypeConstituentsStaysSilentOnTypeScriptShapes",
+    "TestNoDuplicateTypeConstituentsFiresOnTypeScriptShapes",
+    "TestNoDuplicateTypeConstituentsFallsBackToTheDefaultOnNilOptions",
+    "TestNoDuplicateTypeConstituentsNeedsTheTypedHarness"
+  ]
+}

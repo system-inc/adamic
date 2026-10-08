@@ -1,0 +1,1 @@
+new Symbol("x"); function shadow(Symbol: any) { new Symbol("x"); }

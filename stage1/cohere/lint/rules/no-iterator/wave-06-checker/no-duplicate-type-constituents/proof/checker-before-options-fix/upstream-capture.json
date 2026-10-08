@@ -1,0 +1,3227 @@
+[
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A;\ntype A = string;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A;\ntype A = string;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 14,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A & A;\ntype A = { a: 1 };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 14,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A;\ntype A = string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A & A;\ntype A = { a: 1 };\n",
+    "options": {
+      "IgnoreIntersections": true,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = import('x').A | import('x').A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = readonly string[] | readonly string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 47,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with readonly string[].",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = readonly string[] | readonly string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 47,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with readonly string[].",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = readonly string[]  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A[] | A[];\ntype A = string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A[].",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = keyof A | keyof A;\ntype A = {a:1};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 20,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with keyof A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = keyof A | keyof A;\ntype A = {a:1};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 20,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with keyof A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = keyof A  ;\ntype A = {a:1};\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A[] | A[];\ntype A = string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A[].",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = A[]  ;\ntype A = string;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare function f(a?: A | undefined): void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare function f(a?: A | undefined): void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "declare function f(a?: A  ): void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "let x: string | string = 'a';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "let x: string | string = 'a';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "let x: string   = 'a';\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface I { a: string | string; }\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface I { a: string | string; }\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "interface I { a: string  ; }\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type G<T> = T | T;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with T.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type G<T> = T | T;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with T.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type G<T> = T  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A extends B ? C : D | D;\ntype A=1;type B=1;type C=1;type D=1;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 32,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with D.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A extends B ? C : D | D;\ntype A=1;type B=1;type C=1;type D=1;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 32,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with D.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = A extends B ? C : D  ;\ntype A=1;type B=1;type C=1;type D=1;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string | string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 19,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string | string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 19,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = string    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = `a${string}` | `a${string}`;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with `a${string}`.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = `a${string}` | `a${string}`;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with `a${string}`.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = `a${string}`  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (() => void) | (() => void);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with () => void.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (() => void) | (() => void);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with () => void.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = (() => void)  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "function f(a?: string | undefined, b?: number) {}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "function f(a?: string | undefined, b?: number) {}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "function f(a?: string  , b?: number) {}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { readonly a: 1 } | { readonly a: 1 };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 47,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { readonly a: 1 }.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "class K { m(a?: string | undefined): void {} }\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 1 | 2;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { readonly a: 1 } | { readonly a: 1 };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 47,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { readonly a: 1 }.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = { readonly a: 1 }  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "class K { m(a?: string | undefined): void {} }\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "class K { m(a?: string  ): void {} }\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "(a: string | undefined) => {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A & A;\n",
+    "options": {
+      "IgnoreIntersections": true,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = Class<string> | Class<string>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = Record<string, A | B>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = readonly string[] | string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = (A | B) | (A & B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype T = (A | B) | (C | D);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B | C;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | /* comment */ B;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = 'A' | 'B';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\nconst a: A | B = 'A';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (arg: string | number) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => null | undefined;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => string | void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (() => string) | (() => void);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = [1, 2, 3] | [1, 2, 4];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = [1, 2, 3] | [1, 2, 3, 4];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[][] | string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[] | number[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = Class<string> | Class<number>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = Set<string> | Set<number>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 'A' | string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string | number };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string } | { b: string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = any | unknown;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = null | undefined;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string; b: number } | { b: number; a: string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 1 | '1';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 1 | 1;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 14,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with 1.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 1 | 1;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 14,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with 1.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = 1  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "abstract class cc {\n  abstract f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 36,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "abstract class cc {\n  abstract f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 36,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "abstract class cc {\n  abstract f(a?: string  ): void;\n}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: (undefined | number) | string) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = true & boolean;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: (undefined | number) | string) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type fn = (a?: (  number) | string) => void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: string | (undefined | number)) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: string | (undefined | number)) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type fn = (a?: string | (  number)) => void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: string | undefined) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = (a?: string | undefined) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type fn = (a?: string  ) => void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface ee {\n  new (a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 21,
+        "endLine": 2,
+        "endColumn": 30,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface ee {\n  new (a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 21,
+        "endLine": 2,
+        "endColumn": 30,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "interface ee {\n  new (a?: string  ): void;\n}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface ee {\n  f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 18,
+        "endLine": 2,
+        "endColumn": 27,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface ee {\n  f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 18,
+        "endLine": 2,
+        "endColumn": 27,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "interface ee {\n  f(a?: string  ): void;\n}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare class bb {\n  f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 18,
+        "endLine": 2,
+        "endColumn": 27,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare class bb {\n  f(a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 18,
+        "endLine": 2,
+        "endColumn": 27,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "declare class bb {\n  f(a?: string  ): void;\n}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare function f(a?: string | undefined): void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "declare function f(a?: string | undefined): void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "declare function f(a?: string  ): void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "function f(a?: string | undefined) {}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "function f(a?: string | undefined) {}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "function f(a?: string  ) {}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "f = function (a?: string | undefined) {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "f = function (a?: string | undefined) {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 28,
+        "endLine": 1,
+        "endColumn": 37,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "f = function (a?: string  ) {};\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = new (a?: string | undefined) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 29,
+        "endLine": 1,
+        "endColumn": 38,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type fn = new (a?: string | undefined) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 29,
+        "endLine": 1,
+        "endColumn": 38,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type fn = new (a?: string  ) => void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface F {\n  (a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 2,
+        "endColumn": 26,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "interface F {\n  (a?: string | undefined): void;\n}\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 2,
+        "endColumn": 26,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "interface F {\n  (a?: string  ): void;\n}\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = undefined;\n(arg?: T | string) => {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 8,
+        "endLine": 2,
+        "endColumn": 9,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = undefined;\n(arg?: T | string) => {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 8,
+        "endLine": 2,
+        "endColumn": 9,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = undefined;\n(arg?:   string) => {};\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "(a?: string | undefined) => {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 15,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A | string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "(a?: string | undefined) => {};\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 15,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "unnecessary",
+        "message": "Explicit undefined is unnecessary on an optional parameter.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "(a?: string  ) => {};\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = A | A | string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = A | A | string  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = Record<string, A | A>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 29,
+        "endLine": 2,
+        "endColumn": 30,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = Record<string, A | A>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 29,
+        "endLine": 2,
+        "endColumn": 30,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype T = Record<string, A  >;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = number & string & (number & string);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 29,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with number.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 38,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number & string) & number & string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with number.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 39,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number & string) & number & string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with number.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 39,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = (number & string)    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number | (string | null)) | (string | (null | number));\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 40,
+        "endLine": 1,
+        "endColumn": 65,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with number | (string | null).",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number | (string | null)) | (string | (null | number));\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 40,
+        "endLine": 1,
+        "endColumn": 65,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with number | (string | null).",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = (number | (string | null))  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number | string) | number | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with number.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 39,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = (number | string) | number | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 30,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with number.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 39,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = (number | string)    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = (A | B) | A | B | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 20,
+        "endLine": 3,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 24,
+        "endLine": 3,
+        "endColumn": 25,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with B.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 29,
+        "endLine": 3,
+        "endColumn": 35,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = (A | B) | A | B | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 3,
+        "column": 20,
+        "endLine": 3,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 24,
+        "endLine": 3,
+        "endColumn": 25,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with B.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 29,
+        "endLine": 3,
+        "endColumn": 35,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype C = (A | B)      ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype F = (A | B) | (A | B) | ((C | D) & (A | B)) | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 21,
+        "endLine": 5,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      },
+      {
+        "line": 5,
+        "column": 53,
+        "endLine": 5,
+        "endColumn": 59,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype F = (A | B) | (A | B) | ((C | D) & (A | B)) | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 5,
+        "column": 21,
+        "endLine": 5,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      },
+      {
+        "line": 5,
+        "column": 53,
+        "endLine": 5,
+        "endColumn": 59,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype F = (A | B)   | ((C | D) & (A | B))  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | (A | A);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 15,
+        "endLine": 2,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | (A | A);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 15,
+        "endLine": 2,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype T = A  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = (A | B) | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 21,
+        "endLine": 3,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = (A | B) | (A | B);\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 3,
+        "column": 21,
+        "endLine": 3,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A | B.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype T = (A | B)  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 22,
+        "endLine": 3,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 22,
+        "endLine": 3,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype T = A | B    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A | B;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 22,
+        "endLine": 3,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with B.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A | B;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      },
+      {
+        "line": 3,
+        "column": 22,
+        "endLine": 3,
+        "endColumn": 23,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with B.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype T = A | B    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype T = A | B | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 3,
+        "column": 18,
+        "endLine": 3,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype T = A | B  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A1 = 'A';\ntype A2 = 'A';\ntype A3 = 'A';\ntype T = A1 | A2 | A3;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 15,
+        "endLine": 4,
+        "endColumn": 17,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A1.",
+        "fix": true
+      },
+      {
+        "line": 4,
+        "column": 20,
+        "endLine": 4,
+        "endColumn": 22,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A1.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A1 = 'A';\ntype A2 = 'A';\ntype A3 = 'A';\ntype T = A1 | A2 | A3;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 4,
+        "column": 15,
+        "endLine": 4,
+        "endColumn": 17,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A1.",
+        "fix": true
+      },
+      {
+        "line": 4,
+        "column": 20,
+        "endLine": 4,
+        "endColumn": 22,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A1.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A1 = 'A';\ntype A2 = 'A';\ntype A3 = 'A';\ntype T = A1    ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B | A | C;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 18,
+        "endLine": 4,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B | A | C;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 4,
+        "column": 18,
+        "endLine": 4,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B   | C;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\nconst a: A | A = 'A';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 14,
+        "endLine": 2,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\nconst a: A | A = 'A';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 14,
+        "endLine": 2,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\nconst a: A   = 'A';\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 14,
+        "endLine": 2,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 14,
+        "endLine": 2,
+        "endColumn": 15,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype T = A  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 'A' | 'A';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with 'A'.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = 'A' | 'A';\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with 'A'.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = 'A'  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | /* comment */ A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 28,
+        "endLine": 2,
+        "endColumn": 29,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type A = 'A';\ntype T = A | /* comment */ A;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 28,
+        "endLine": 2,
+        "endColumn": 29,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with A.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type A = 'A';\ntype T = A  /* comment */ ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (arg: string | string) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = (arg: string | string) => void;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = (arg: string  ) => void;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => null | null;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with null.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => null | null;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with null.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = () => null  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = () => string | string;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 25,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = () => string  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = [1, 2, 3] | [1, 2, 3];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 22,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with [1, 2, 3].",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = [1, 2, 3] | [1, 2, 3];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 22,
+        "endLine": 1,
+        "endColumn": 31,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with [1, 2, 3].",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = [1, 2, 3]  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[][] | string[][];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string[][].",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[][] | string[][];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string[][].",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = string[][]  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[] | string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 21,
+        "endLine": 1,
+        "endColumn": 29,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string[].",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = string[] | string[];\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 21,
+        "endLine": 1,
+        "endColumn": 29,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string[].",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = string[]  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type IsArray<T> = T extends any[] ? true : false;\ntype ActuallyDuplicated = IsArray<number> | IsArray<string>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 45,
+        "endLine": 2,
+        "endColumn": 60,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with IsArray<number>.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = Set<string> | Set<string>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 24,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with Set<string>.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type IsArray<T> = T extends any[] ? true : false;\ntype ActuallyDuplicated = IsArray<number> | IsArray<string>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 45,
+        "endLine": 2,
+        "endColumn": 60,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with IsArray<number>.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type IsArray<T> = T extends any[] ? true : false;\ntype ActuallyDuplicated = IsArray<number>  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = Set<string> | Set<string>;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 24,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with Set<string>.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = Set<string>  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string } | { a: string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { a: string }.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string } | { a: string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { a: string }.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = { a: string }  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = any | any;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with any.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = any | any;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 16,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with any.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = any  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = null | null;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with null.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = null | null;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with null.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = null  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string | string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 24,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string | string };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 24,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with string.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = { a: string   };\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string; b: number } | { a: string; b: number };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 37,
+        "endLine": 1,
+        "endColumn": 61,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { a: string; b: number }.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = { a: string; b: number } | { a: string; b: number };\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 37,
+        "endLine": 1,
+        "endColumn": 61,
+        "messageId": "duplicate",
+        "message": "Union type constituent is duplicated with { a: string; b: number }.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = { a: string; b: number }  ;\n"
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = true & true;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with true.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-type-constituents",
+    "file": "/repository/source/Types.ts",
+    "source": "type T = true & true;\n",
+    "options": {
+      "IgnoreIntersections": false,
+      "IgnoreUnions": false
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "duplicate",
+        "message": "Intersection type constituent is duplicated with true.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "type T = true  ;\n"
+  }
+]
