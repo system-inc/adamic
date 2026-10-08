@@ -1603,3 +1603,14 @@ rank 36) are already in our 42/181 inventory; they are not added or certified
 again. Owned resume/dictionary-member-handoff.json records this split and counts.
 Full dynamic lookup validation awaits lane 6's hooks in views-integration,
 currently ba59427c locally; no dictionary branch was merged.
+
+### Lane 4 original branded-read certification on the new branch
+
+Lane 4 resumes from integration 4e67894a on codex/views-mixed-unions-2.
+Its original/prepare.cjs verifies pinned upstream and the shared complete
+declaration output, plus the original thirty-pair / 543-read candidate inventory.
+checked_views_brands_original_test.go imports those complete declarations,
+requires every original receiver field in the view contract, compares Node with
+release native, sanitized native and JavaScript, and runs a member-check bypass
+for each certified pair. Unread unsupported fields remain lazy obligations.
+This checkpoint adds no shared compiler hook and no separate flow analysis.
