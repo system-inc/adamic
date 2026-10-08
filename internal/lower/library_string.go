@@ -146,6 +146,9 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 }
 
 func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.regexStringPrototypeCall(node); handled {
+		return value, true, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	written := node.AsCallExpression().Arguments.Nodes
 	if l.isLibraryGlobal(callee, "String") {
