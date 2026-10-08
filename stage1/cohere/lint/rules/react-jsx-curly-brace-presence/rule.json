@@ -1,0 +1,17 @@
+{
+  "name": "react/jsx-curly-brace-presence",
+  "kinds": [
+    "JsxExpression",
+    "JsxText",
+    "StringLiteral",
+    "JsxSelfClosingElement",
+    "JsxElement"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxCurlyBracePresence",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxCurlyBracePresence"
+}
