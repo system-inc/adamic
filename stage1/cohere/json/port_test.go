@@ -210,15 +210,24 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 
+const testPortMatchesGoCohereShards = 2072
+
 // TestPortMatchesGoCohere checks every side, sanitizer and leak detector on every
 // shard. ADAMIC_TEST_SHARD=i/n (zero-based i) selects shard ordinals modulo n;
-// unset runs all shards. Validate the complete union before selecting any work.
+// unset runs all shards. Gate selectors use direct shard-0000 through shard-2071.
+// Units 0..517 compare all sides; 518..2071 hold three benchmark rounds per range.
+// ADAMIC_JSON_BENCH=1 enables those benchmark comparisons. Validate the complete union before selecting any work.
 // Build subtests prepare shared inputs once; shard clocks start after preparation.
 // Measure isolated units with -parallel=1; normal runs schedule shards in parallel.
 func TestPortMatchesGoCohere(t *testing.T) {
 	t.Parallel()
+	parentStart := time.Now()
 	cases := sampledCorpusCases(t, 32)
 	shards := jsonPortShards(cases)
+	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
+	if got := enumeratedUnits; got != testPortMatchesGoCohereShards {
+		t.Fatalf("enumerated %d shards, declared %d; corpus sampling is incompatible with the gate census", got, testPortMatchesGoCohereShards)
+	}
 	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
@@ -247,139 +256,166 @@ func TestPortMatchesGoCohere(t *testing.T) {
 	sanitizedDir := jsonBuildUnit(t, "build-sanitized", jsonNativePortInputs(c, true, clangTools), buildJSONSanitizedPort(c))
 	entry, script := filepath.Join(loweredDir, "main.ts"), filepath.Join(loweredDir, "program.mjs")
 	release, sanitized, oracle := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port"), filepath.Join(oracleDir, "go-cohere")
+	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+		if err := os.MkdirAll(artifacts, 0755); err != nil {
+			t.Fatal(err)
+		}
+		for name, product := range map[string]string{"release-port": release, "sanitized-port": sanitized, "go-cohere": oracle} {
+			data, err := os.ReadFile(product)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(artifacts, name), data, 0755); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
 	setupTime := time.Since(setup)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	references := make([]string, len(shards))
-	agreementRan := false
-	t.Run("agreement", func(t *testing.T) {
-		agreementRan = true
-		for ordinal, shard := range shards {
-			if ordinal%count != index {
-				continue
-			}
-			t.Run(fmt.Sprintf("shard-%04d", ordinal), func(t *testing.T) {
-				t.Parallel()
-				start := time.Now()
-				items := cases[shard.start:shard.end]
-				input, _ := protocol(items, make([]answer, len(items)))
-				path := filepath.Join(t.TempDir(), "cases.txt")
-				if err := os.WriteFile(path, []byte(input), 0644); err != nil {
-					t.Fatal(err)
-				}
-				sides := []struct {
-					name, binary           string
-					arguments, environment []string
-				}{
-					{"Go", oracle, []string{"--cases", path}, nil},
-					{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", path}, nil},
-					{"release", release, []string{"--cases", path}, nil},
-					{"ASan/UBSan", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}},
-					{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", runner, script, "--cases", path}, nil},
-				}
-				if runtime.GOOS == "linux" {
-					sides = append(sides, struct {
-						name, binary           string
-						arguments, environment []string
-					}{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
-				}
-				results := make([]chunkResult, len(sides))
-				// The sanitizer processes retain substantially more memory than the
-				// other sides. Run them together after the first wave has exited,
-				// so an isolated four-CPU unit does not compete with Node/Go heaps.
-				for _, wave := range [][]int{{0, 1, 2, 4}, {3, 5}} {
-					var workers sync.WaitGroup
-					for _, side := range wave {
-						if side >= len(sides) {
-							continue
-						}
-						workers.Add(1)
-						go func(side int) {
-							defer workers.Done()
-							s := sides[side]
-							results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
-						}(side)
-					}
-					workers.Wait()
-				}
-				reference := results[0]
-				if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
-					t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
-				}
-				expected := string(reference.result.stdout)
-				references[ordinal] = expected
-				if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
-					t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
-				}
-				for side := 1; side < len(sides); side++ {
-					if results[side].err != nil {
-						t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
-					}
-					compare(t, t.Name()+" "+sides[side].name, results[side].result, expected, items)
-					if side >= 3 {
-						compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
-					}
-				}
-				if runtime.GOOS != "linux" {
-					report := execute(t, nil, "leaks", "--atExit", "--", release, "--cases", path)
-					if report.exitCode != 0 {
-						t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
-					}
-				}
-				if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
-					// Calibration uses the same per-case Go answers as mandatory comparisons.
-					answers, err := jsonPortAnswers(expected, len(items))
-					if err != nil {
-						t.Fatal(err)
-					}
-					calibrateNativeCases(t, sanitized, items, answers)
-				}
-				if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
-					directory := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", ordinal))
-					if err := os.MkdirAll(directory, 0755); err != nil {
-						t.Fatal(err)
-					}
-					writeJSON(t, filepath.Join(directory, "cases.json"), items)
-					for side, s := range sides {
-						name := strings.NewReplacer("/", "-", " ", "-").Replace(s.name)
-						if err := os.WriteFile(filepath.Join(directory, name+".txt"), results[side].result.stdout, 0644); err != nil {
-							t.Fatal(err)
-						}
-					}
-				}
-				t.Logf("%d cases; execution %.3fs; shared setup waited %.3fs; execution plus locally measured builds %.3fs", len(items), time.Since(start).Seconds(), setupTime.Seconds(), (time.Since(start) + setupTime).Seconds())
-			})
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
 		}
-	})
-	allReferences := agreementRan
-	for _, reference := range references {
-		allReferences = allReferences && reference != ""
-	}
-	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && count == 1 && allReferences {
-		joined := strings.Join(references, "")
-		answers, err := jsonPortAnswers(joined, len(cases))
-		if err != nil {
-			t.Fatal(err)
-		}
-		input, _ := protocol(cases, answers)
-		writeJSON(t, filepath.Join(artifacts, "cases.json"), cases)
-		writeJSON(t, filepath.Join(artifacts, "go.json"), answers)
-		for name, value := range map[string]string{"cases.txt": input, "node.txt": joined} {
-			if err := os.WriteFile(filepath.Join(artifacts, name), []byte(value), 0644); err != nil {
+		t.Run(fmt.Sprintf("shard-%04d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			start := time.Now()
+			items := cases[shard.start:shard.end]
+			input, _ := protocol(items, make([]answer, len(items)))
+			path := filepath.Join(t.TempDir(), "cases.txt")
+			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 				t.Fatal(err)
 			}
-		}
-	}
-
-	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
-		for ordinal, shard := range shards {
-			if ordinal%count != index {
-				continue
+			sides := []struct {
+				name, binary           string
+				arguments, environment []string
+			}{
+				{"Go", oracle, []string{"--cases", path}, nil},
+				{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", path}, nil},
+				{"release", release, []string{"--cases", path}, nil},
+				{"ASan/UBSan", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}},
+				{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", runner, script, "--cases", path}, nil},
 			}
+			if runtime.GOOS == "linux" {
+				sides = append(sides, struct {
+					name, binary           string
+					arguments, environment []string
+				}{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
+			}
+			results := make([]chunkResult, len(sides))
+			timings := make([]time.Duration, len(sides))
+			// The sanitizer processes retain substantially more memory than the
+			// other sides. Run them together after the first wave has exited,
+			// so an isolated four-CPU unit does not compete with Node/Go heaps.
+			for _, wave := range [][]int{{0, 1, 2, 4}, {3, 5}} {
+				var workers sync.WaitGroup
+				for _, side := range wave {
+					if side >= len(sides) {
+						continue
+					}
+					workers.Add(1)
+					go func(side int) {
+						defer workers.Done()
+						s := sides[side]
+						began := time.Now()
+						results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
+						timings[side] = time.Since(began)
+					}(side)
+				}
+				workers.Wait()
+			}
+			for side, timing := range timings {
+				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+			}
+			reference := results[0]
+			if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
+				t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
+			}
+			expected := string(reference.result.stdout)
+			references[ordinal] = expected
+			if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
+				t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
+			}
+			for side := 1; side < len(sides); side++ {
+				if results[side].err != nil {
+					t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
+				}
+				compare(t, t.Name()+" "+sides[side].name, results[side].result, expected, items)
+				if side >= 3 {
+					compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
+				}
+			}
+			if runtime.GOOS != "linux" {
+				report := execute(t, nil, "leaks", "--atExit", "--", release, "--cases", path)
+				if report.exitCode != 0 {
+					t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
+				}
+			}
+			if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+				// Calibration uses the same per-case Go answers as mandatory comparisons.
+				answers, err := jsonPortAnswers(expected, len(items))
+				if err != nil {
+					t.Fatal(err)
+				}
+				calibrateNativeCases(t, sanitized, items, answers)
+			}
+			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+				directory := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", ordinal))
+				if err := os.MkdirAll(directory, 0755); err != nil {
+					t.Fatal(err)
+				}
+				writeJSON(t, filepath.Join(directory, "cases.json"), items)
+				for side, s := range sides {
+					name := strings.NewReplacer("/", "-", " ", "-").Replace(s.name)
+					if err := os.WriteFile(filepath.Join(directory, name+".txt"), results[side].result.stdout, 0644); err != nil {
+						t.Fatal(err)
+					}
+				}
+			}
+			t.Logf("case range [%d:%d]; %d cases; execution %.3fs; shared setup waited %.3fs; execution plus locally measured builds %.3fs", shard.start, shard.end, len(items), time.Since(start).Seconds(), setupTime.Seconds(), (time.Since(start) + setupTime).Seconds())
+		})
+	}
+	var setupBeforeShards time.Duration
+	t.Cleanup(func() {
+		cleanupStart := time.Now()
+		defer func() {
+			t.Logf("setup outside shards: %.3fs (including local builds)", (setupBeforeShards + time.Since(cleanupStart)).Seconds())
+		}()
+		allReferences := true
+		for _, reference := range references {
+			allReferences = allReferences && reference != ""
+		}
+		if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && count == 1 && allReferences {
+			joined := strings.Join(references, "")
+			answers, err := jsonPortAnswers(joined, len(cases))
+			if err != nil {
+				t.Fatal(err)
+			}
+			input, _ := protocol(cases, answers)
+			writeJSON(t, filepath.Join(artifacts, "cases.json"), cases)
+			writeJSON(t, filepath.Join(artifacts, "go.json"), answers)
+			for name, value := range map[string]string{"cases.txt": input, "node.txt": joined} {
+				if err := os.WriteFile(filepath.Join(artifacts, name), []byte(value), 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+		}
+
+	})
+	{
+		for ordinal, shard := range shards {
 			for round := 0; round < 3; round++ {
-				t.Run(fmt.Sprintf("benchmark-%04d-round-%d", ordinal, round), func(t *testing.T) {
+				unit := len(shards) + ordinal*3 + round
+				if unit%count != index {
+					continue
+				}
+				t.Run(fmt.Sprintf("shard-%04d", unit), func(t *testing.T) {
+					if os.Getenv("ADAMIC_JSON_BENCH") != "1" {
+						t.Skip("ADAMIC_JSON_BENCH=1 enables benchmark comparisons")
+					}
 					t.Parallel()
 					items := cases[shard.start:shard.end]
 					input, _ := protocol(items, make([]answer, len(items)))
@@ -387,7 +423,7 @@ func TestPortMatchesGoCohere(t *testing.T) {
 					if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 						t.Fatal(err)
 					}
-					expected := references[ordinal]
+					expected := ""      // A gate unit runs independently of the agreement shard.
 					if expected == "" { // -run may select a benchmark without its agreement sibling.
 						reference := execute(t, nil, oracle, "--cases", path)
 						if reference.exitCode != 0 || len(reference.stderr) != 0 {
@@ -409,12 +445,13 @@ func TestPortMatchesGoCohere(t *testing.T) {
 						began := time.Now()
 						result := execute(t, nil, side.binary, side.args...)
 						compare(t, t.Name()+" "+side.name, result, expected, items)
-						t.Logf("round %d %s %d cases %.3fs", round, side.name, len(items), time.Since(began).Seconds())
+						t.Logf("case range [%d:%d]; round %d %s %d cases %.3fs", shard.start, shard.end, round, side.name, len(items), time.Since(began).Seconds())
 					}
 				})
 			}
 		}
 	}
+	setupBeforeShards = time.Since(parentStart)
 }
 
 func TestThreePortMutantsAreCaught(t *testing.T) {
