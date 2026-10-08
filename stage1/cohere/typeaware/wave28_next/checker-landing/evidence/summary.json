@@ -1,0 +1,133 @@
+{
+  "normal_case_passes": {
+    "base/correctness-require-verify-optional-parity": 22,
+    "block-scoped-var": 109,
+    "getter-return": 106,
+    "nexus/correctness-no-uncleared-race-timeout": 21,
+    "no-throw-literal": 47,
+    "no-useless-backreference": 406,
+    "prefer-arrow-callback": 81,
+    "react/jsx-fragments": 46,
+    "react/jsx-no-undef": 45
+  },
+  "normal_mode_refusals": {
+    "no-throw-literal": 1,
+    "no-useless-backreference": 2,
+    "prefer-arrow-callback": 2
+  },
+  "recovered_case_passes": {
+    "no-throw-literal": 1,
+    "no-useless-backreference": 2
+  },
+  "unique_cases_compared": 886,
+  "caught_rule_mutants": [
+    "TestMutants/Only_root_nullability_accepted",
+    "TestMutants/Unicode_component_mistaken_for_intrinsic",
+    "TestMutants/Arrow_insertion_gains_a_trailing_space",
+    "TestMutants/Capturing_group_duplicated",
+    "TestMutants/Conditional_error_possibility_changed_from_or_to_and",
+    "TestMutants/Timeout_assignment_recognition_reversed",
+    "TestMutants/Either_if_branch_credited_as_exit",
+    "TestMutants/All_var_uses_treated_as_in_scope",
+    "TestMutants/React_fragment_receiver_renamed"
+  ],
+  "owned_witnesses_passed": true,
+  "capture_count_mutant_caught": true,
+  "bridge_passed": true,
+  "case_runtime_medians_seconds": {
+    "base/correctness-require-verify-optional-parity": {
+      "Go": 0.20648268599999997,
+      "native": 0.294690884
+    },
+    "block-scoped-var": {
+      "Go": 0.453993408,
+      "native": 0.567869883
+    },
+    "getter-return": {
+      "Go": 0.28889264849999996,
+      "native": 0.397638715
+    },
+    "nexus/correctness-no-uncleared-race-timeout": {
+      "Go": 0.19936945700000003,
+      "native": 0.341211503
+    },
+    "no-throw-literal": {
+      "Go": 0.201137755,
+      "native": 0.281733245
+    },
+    "no-useless-backreference": {
+      "Go": 0.256546818,
+      "native": 0.3689153855
+    },
+    "prefer-arrow-callback": {
+      "Go": 0.21012521,
+      "native": 0.362589473
+    },
+    "react/jsx-fragments": {
+      "Go": 0.199111576,
+      "native": 0.2966858055
+    },
+    "react/jsx-no-undef": {
+      "Go": 0.203597724,
+      "native": 0.311146869
+    }
+  },
+  "performance_scope": "Per-case whole Go program+lint versus ASan/UBSan native program+lint+recording; concurrent compilation, not an isolated throughput benchmark.",
+  "full_package": {
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=90m",
+      "./stage1/cohere/lint"
+    ],
+    "cwd": "/tmp/wave28-checker-landing",
+    "start_utc": "2026-10-08T10:28:58Z",
+    "load_before": [
+      1.955078125,
+      2.376953125,
+      3.111328125
+    ],
+    "nproc": 5,
+    "inputs": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-28-corpus",
+      "ADAMIC_LINT_BENCH": "1",
+      "ADAMIC_LINT_PROFILE_DIR": "/tmp/wave28-checker-profile",
+      "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/wave28-checker-profile"
+    },
+    "top_level_counts": {
+      "pass": 16,
+      "skip": 1,
+      "fail": 4
+    },
+    "failed": [
+      "TestJsxLintReleaseAndThroughput",
+      "TestJsxLintTrees",
+      "TestRulesAgree",
+      "TestCompilerAndStage1Agree"
+    ],
+    "skipped": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "mutants": [
+      "TestMutants/comma_chain_reports_inner",
+      "TestMutants/debugger_fix_suppressed",
+      "TestMutants/interface_accepts_type_suffix",
+      "TestMutants/JSDoc_replacement_text_corrupted",
+      "TestMutants/shouting_fourth_token_omitted",
+      "TestMutants/no-useless-catch_finally_repair_range_reversed",
+      "TestMutants/and-left-undefined-ignored",
+      "TestMutants/concat_substituted_template_ignored"
+    ],
+    "stopped_utc": "2026-10-08T11:27:00Z",
+    "load_after": [
+      6.85205078125,
+      7.08837890625,
+      4.91259765625
+    ],
+    "complete": false,
+    "reason": "Already-red full run stopped to honor gate-capacity limit; independent owned case checks and serial owned mutants continue. No failure was removed.",
+    "wall_seconds": 3482.7180485725403
+  }
+}
