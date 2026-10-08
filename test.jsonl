@@ -46559,3 +46559,10 @@
 {"Time":"2026-10-08T01:14:39.509344161Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Elapsed":23.37}
 {"Time":"2026-10-08T01:14:39.509353495Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl"}
 {"Time":"2026-10-08T01:14:39.509355849Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"=== RUN   TestLossyInputControl\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:15:02.737457682Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"    utf8_test.go:78: Node: line 17: Go \"0 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"0 .value string \\\\ufffd\"\n"}
+{"Time":"2026-10-08T01:15:02.737511283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"    utf8_test.go:78: native: line 17: Go \"0 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"0 .value string \\\\ufffd\"\n"}
+{"Time":"2026-10-08T01:15:02.740719859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"--- PASS: TestLossyInputControl (23.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:15:02.740770655Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Elapsed":23.23}
+{"Time":"2026-10-08T01:15:02.740782924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:15:02.743768573Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1218.190s\n"}
+{"Time":"2026-10-08T01:15:02.743830636Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1218.191}
