@@ -1,0 +1,10 @@
+import type { OptionsBase } from 'original-tsc-commandLineParser';
+interface Base { readonly kind:'options'; }
+interface Carrier extends Base { readonly child:OptionsBase; }
+const raw={kind:'options' as const,child:{item:{name:[42]}}};
+const base:Base=raw;
+const carrier=base as Carrier;
+const selected=carrier.child['item'];
+const dictionary=selected as {readonly [key:string]:string[]|undefined};
+const values=dictionary['name'];
+console.log(values===undefined ? 'missing' : values[0] ?? 'missing');

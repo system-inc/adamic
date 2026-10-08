@@ -1,6 +1,6 @@
-import type { CompilerOptions } from 'original-tsc-types';
+import type { OptionsBase } from 'original-tsc-commandLineParser';
 interface Base { readonly kind:'options'; }
-interface Carrier extends Base { readonly child:CompilerOptions; }
+interface Carrier extends Base { readonly child:OptionsBase; }
 const raw={kind:'options' as const,child:{item:['array']}};
 const base:Base=raw;
 const carrier=base as Carrier;
