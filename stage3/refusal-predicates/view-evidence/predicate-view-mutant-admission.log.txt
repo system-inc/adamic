@@ -1,0 +1,63 @@
+=== RUN   TestPredicateStructuralViews
+=== RUN   TestPredicateStructuralViews/invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:60: release must stop at label after kind: exit=-1 stdout="" stderr=""
+    predicate_views_test.go:60: javascript must stop at label after kind: exit=0 stdout="1\n42\n" stderr=""
+    predicate_views_test.go:60: sanitized must stop at label after kind: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==45111==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x555b782a4583 bp 0x000000000001 sp 0x7ffe63661a90 T0)\n==45111==The signal is caused by a READ memory access.\n==45111==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x555b782a4583 in adamic_retain /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28\n    #1 0x555b7828ae2a in main /tmp/adamic-gate/adamic-build-1959589086/main.c:140:40\n    #2 0x7fa018003ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fa018003d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x555b781a4510 in _start (/tmp/adamic-gate/TestPredicateStructuralViewsinvalid2036668745/003/program+0x65510)\n\n==45111==Register values:\nrax = 0x4045000000000008  rbx = 0x00007c10173e0020  rcx = 0x0808a00000000001  rdx = 0x00000f8202e7c004  \nrdi = 0x4045000000000000  rsi = 0x00007c10173e0050  rbp = 0x0000000000000001  rsp = 0x00007ffe63661a90  \n r8 = 0x00000f7402c00020   r9 = 0x00007fffffffff01  r10 = 0x0000000000001f01  r11 = 0x00000aabef199be8  \nr12 = 0x0000555b78d22020  r13 = 0x00000aab6f1a4404  r14 = 0x00007be0173e0010  r15 = 0x00007c10173e0020  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28 in adamic_retain\n==45111==ABORTING\n"
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:64: no counts at the end of stderr (exit -1): ""
+=== RUN   TestPredicateStructuralViews/direct_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:60: sanitized must stop at label after kind: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==45141==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55c60ee13a6e bp 0x7ffd4af7b410 sp 0x7ffd4af7b3a0 T0)\n==45141==The signal is caused by a READ memory access.\n==45141==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55c60ee13a6e in adamic_write_line /home/agent/.cache/adamic/runtime/.build-1456696027/adamic.c:250:29\n    #1 0x55c60ee12d4f in adamic_function_3_describe /tmp/adamic-gate/adamic-build-1528246454/main.c:76:4\n    #2 0x55c60ee12d4f in main /tmp/adamic-gate/adamic-build-1528246454/main.c:107:2\n    #3 0x7f2dc2540ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f2dc2540d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55c60ed2c510 in _start (/tmp/adamic-gate/TestPredicateStructuralViewsdirect_invalid3114836363/003/program+0x65510)\n\n==45141==Register values:\nrax = 0x0808a00000000003  rbx = 0x00007ffd4af7b3a0  rcx = 0xf3f3f3f3f3f3f3f3  rdx = 0xf8f8f8f8f8f8f8f8  \nrdi = 0x4045000000000018  rsi = 0x0000000000000000  rbp = 0x00007ffd4af7b410  rsp = 0x00007ffd4af7b3a0  \n r8 = 0x0000000000000000   r9 = 0x00007fffffffff01  r10 = 0x0000000000000f01  r11 = 0x0000000000000000  \nr12 = 0x4045000000000000  r13 = 0x00007b2dc0300100  r14 = 0x00000f65b8060020  r15 = 0x0000000000000001  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1456696027/adamic.c:250:29 in adamic_write_line\n==45141==ABORTING\n"
+    predicate_views_test.go:60: release must stop at label after kind: exit=-1 stdout="" stderr=""
+    predicate_views_test.go:60: javascript must stop at label after kind: exit=0 stdout="1\n42\n" stderr=""
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:64: no counts at the end of stderr (exit -1): ""
+=== RUN   TestPredicateStructuralViews/statement_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:60: javascript must stop at label after kind: exit=0 stdout="1\n42\n" stderr=""
+    predicate_views_test.go:60: sanitized must stop at label after kind: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==45171==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55cb12f97583 bp 0x000000000001 sp 0x7fff6bd60270 T0)\n==45171==The signal is caused by a READ memory access.\n==45171==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55cb12f97583 in adamic_retain /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28\n    #1 0x55cb12f7de2a in main /tmp/adamic-gate/adamic-build-675450284/main.c:140:40\n    #2 0x7f01c48ffca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f01c48ffd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55cb12e97510 in _start (/tmp/adamic-gate/TestPredicateStructuralViewsstatement_invalid2031467519/003/program+0x65510)\n\n==45171==Register values:\nrax = 0x4045000000000008  rbx = 0x00007b71c39e0020  rcx = 0x0808a00000000001  rdx = 0x00000f6e3873c004  \nrdi = 0x4045000000000000  rsi = 0x00007b71c39e0050  rbp = 0x0000000000000001  rsp = 0x00007fff6bd60270  \n r8 = 0x00000f60384c0020   r9 = 0x00007fffffffff01  r10 = 0x0000000000001f01  r11 = 0x00000ab9e27381e8  \nr12 = 0x000055cb13a15020  r13 = 0x00000ab962742a04  r14 = 0x00007b41c39e0010  r15 = 0x00007b71c39e0020  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28 in adamic_retain\n==45171==ABORTING\n"
+    predicate_views_test.go:60: release must stop at label after kind: exit=-1 stdout="" stderr=""
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:64: no counts at the end of stderr (exit -1): ""
+=== RUN   TestPredicateStructuralViews/intersection_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:60: javascript must stop at label after kind: exit=0 stdout="1\n42\n" stderr=""
+    predicate_views_test.go:60: sanitized must stop at label after kind: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==45201==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56231ca24a6e bp 0x7ffd54ac2e90 sp 0x7ffd54ac2e20 T0)\n==45201==The signal is caused by a READ memory access.\n==45201==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x56231ca24a6e in adamic_write_line /home/agent/.cache/adamic/runtime/.build-1456696027/adamic.c:250:29\n    #1 0x56231ca23d4f in adamic_function_3_describe /tmp/adamic-gate/adamic-build-2152904629/main.c:76:4\n    #2 0x56231ca23d4f in main /tmp/adamic-gate/adamic-build-2152904629/main.c:107:2\n    #3 0x7f7c14f4eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f7c14f4ed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x56231c93d510 in _start (/tmp/adamic-gate/TestPredicateStructuralViewsintersection_invalid3548241806/003/program+0x65510)\n\n==45201==Register values:\nrax = 0x0808a00000000003  rbx = 0x00007ffd54ac2e20  rcx = 0xf3f3f3f3f3f3f3f3  rdx = 0xf8f8f8f8f8f8f8f8  \nrdi = 0x4045000000000018  rsi = 0x0000000000000000  rbp = 0x00007ffd54ac2e90  rsp = 0x00007ffd54ac2e20  \n r8 = 0x0000000000000000   r9 = 0x00007fffffffff01  r10 = 0x0000000000000f01  r11 = 0x0000000000000000  \nr12 = 0x4045000000000000  r13 = 0x00007b7c12f00100  r14 = 0x00000f6f825e0020  r15 = 0x0000000000000001  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1456696027/adamic.c:250:29 in adamic_write_line\n==45201==ABORTING\n"
+    predicate_views_test.go:60: release must stop at label after kind: exit=-1 stdout="" stderr=""
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:64: no counts at the end of stderr (exit -1): ""
+=== RUN   TestPredicateStructuralViews/union_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:60: release must stop at label after kind: exit=-1 stdout="" stderr=""
+    predicate_views_test.go:60: javascript must stop at label after kind: exit=0 stdout="1\n42\n" stderr=""
+    predicate_views_test.go:60: sanitized must stop at label after kind: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==45231==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55e4b76e7583 bp 0x000000000001 sp 0x7ffc819f1d10 T0)\n==45231==The signal is caused by a READ memory access.\n==45231==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55e4b76e7583 in adamic_retain /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28\n    #1 0x55e4b76cde2a in main /tmp/adamic-gate/adamic-build-656115040/main.c:140:40\n    #2 0x7f9182350ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f9182350d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55e4b75e7510 in _start (/tmp/adamic-gate/TestPredicateStructuralViewsunion_invalid3712187185/003/program+0x65510)\n\n==45231==Register values:\nrax = 0x4045000000000008  rbx = 0x00007c01813e0020  rcx = 0x0808a00000000001  rdx = 0x00000f803027c004  \nrdi = 0x4045000000000000  rsi = 0x00007c01813e0050  rbp = 0x0000000000000001  rsp = 0x00007ffc819f1d10  \n r8 = 0x00000f7230000020   r9 = 0x00007fffffffff01  r10 = 0x0000000000001f01  r11 = 0x00000abd170221e8  \nr12 = 0x000055e4b8165020  r13 = 0x00000abc9702ca04  r14 = 0x00007bd1813e0010  r15 = 0x00007c01813e0020  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:242:28 in adamic_retain\n==45231==ABORTING\n"
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:64: no counts at the end of stderr (exit -1): ""
+--- FAIL: TestPredicateStructuralViews (3.73s)
+    --- FAIL: TestPredicateStructuralViews/invalid (0.93s)
+    --- FAIL: TestPredicateStructuralViews/direct_invalid (0.67s)
+    --- FAIL: TestPredicateStructuralViews/statement_invalid (0.68s)
+    --- FAIL: TestPredicateStructuralViews/intersection_invalid (0.71s)
+    --- FAIL: TestPredicateStructuralViews/union_invalid (0.73s)
+FAIL
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.737s
+FAIL

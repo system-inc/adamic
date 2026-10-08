@@ -1,0 +1,12 @@
+Exact raw CSV tuples match: 122 of 122
+checker.ts 938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb MATCH
+factory/nodeFactory.ts 6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3 MATCH
+emitter.ts 59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19 MATCH
+transformers/es2015.ts 81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4 MATCH
+program.ts 7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284 MATCH
+binder.ts 8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39 MATCH
+transformers/classFields.ts b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c MATCH
+scanner.ts 2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750 MATCH
+21/23 a type predicate whose return is not proven (return expression is not a trusted check on node)
+80/80 an unproven predicate argument for parameter test (argument "isExpression")
+19/19 an unproven predicate argument for parameter test (argument "isStatement")

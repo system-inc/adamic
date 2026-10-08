@@ -1,0 +1,6 @@
+go run ./cmd/adamic c internal/oracle/testdata/predicate_callback_contract.a
+Emitted C; no named stop. Bytes=5586 sha256=4aad076457750aa2735053ab62c0f8414da7ab86574ccc3ff09c8e0bb60dc564
+go run ./cmd/adamic c internal/oracle/testdata/predicate_helper_return.a
+Emitted C; no named stop. Bytes=5305 sha256=98fabeac2d980c3eed0324f13ffbdc3cf8698191854809f8abe77e9e2d2b2264
+go run ./cmd/adamic c /tmp/predicate-view-replay.ts (copy of view_valid.a)
+Emitted C; no named stop. Bytes=8324 sha256=e02d08e0fd035ce1ceaa9359170407603eabd9df455308416d919b99c55d04a7

@@ -1,0 +1,118 @@
+=== RUN   TestPredicateCheckedNarrowing
+=== RUN   TestPredicateCheckedNarrowing/true
+    predicate_contracts_test.go:47: gate cache node miss
+    predicate_contracts_test.go:51: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    oracle_test.go:639: gate cache native miss
+=== RUN   TestPredicateCheckedNarrowing/false
+    predicate_contracts_test.go:47: gate cache node miss
+    predicate_contracts_test.go:51: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    oracle_test.go:639: gate cache native miss
+=== RUN   TestPredicateCheckedNarrowing/callback
+    predicate_contracts_test.go:47: gate cache node miss
+    predicate_contracts_test.go:51: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    oracle_test.go:639: gate cache native miss
+--- PASS: TestPredicateCheckedNarrowing (1.75s)
+    --- PASS: TestPredicateCheckedNarrowing/true (0.71s)
+    --- PASS: TestPredicateCheckedNarrowing/false (0.51s)
+    --- PASS: TestPredicateCheckedNarrowing/callback (0.52s)
+=== RUN   TestPredicateOpenContractsStayRefused
+=== RUN   TestPredicateOpenContractsStayRefused/open_payload
+=== RUN   TestPredicateOpenContractsStayRefused/extra_refinement
+=== RUN   TestPredicateOpenContractsStayRefused/bodyless
+--- PASS: TestPredicateOpenContractsStayRefused (0.11s)
+    --- PASS: TestPredicateOpenContractsStayRefused/open_payload (0.03s)
+    --- PASS: TestPredicateOpenContractsStayRefused/extra_refinement (0.03s)
+    --- PASS: TestPredicateOpenContractsStayRefused/bodyless (0.04s)
+=== RUN   TestPredicateStructuralViews
+=== RUN   TestPredicateStructuralViews/valid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/direct_valid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_direct_valid.a (.ts mode) | 3 | 3 | 5 | 7 | 3 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/direct_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_direct_invalid.a (.ts mode) | 1 | 0 | 2 | 2 | 1 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/statement_valid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_statement_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/statement_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_statement_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/intersection_valid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_intersection_valid.a (.ts mode) | 3 | 3 | 5 | 7 | 3 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/intersection_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_intersection_invalid.a (.ts mode) | 1 | 0 | 2 | 2 | 1 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/union_valid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_union_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+=== RUN   TestPredicateStructuralViews/union_invalid
+    predicate_views_test.go:48: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    predicate_views_test.go:53: gate cache node miss
+    oracle_test.go:639: gate cache native miss
+    predicate_views_test.go:64: gate cache native miss
+    predicate_views_test.go:66: | internal/oracle/testdata/predicate_hatches/view_union_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |
+--- PASS: TestPredicateStructuralViews (7.32s)
+    --- PASS: TestPredicateStructuralViews/valid (0.79s)
+    --- PASS: TestPredicateStructuralViews/invalid (0.68s)
+    --- PASS: TestPredicateStructuralViews/direct_valid (0.75s)
+    --- PASS: TestPredicateStructuralViews/direct_invalid (0.78s)
+    --- PASS: TestPredicateStructuralViews/statement_valid (0.69s)
+    --- PASS: TestPredicateStructuralViews/statement_invalid (0.69s)
+    --- PASS: TestPredicateStructuralViews/intersection_valid (0.78s)
+    --- PASS: TestPredicateStructuralViews/intersection_invalid (0.65s)
+    --- PASS: TestPredicateStructuralViews/union_valid (0.79s)
+    --- PASS: TestPredicateStructuralViews/union_invalid (0.72s)
+=== RUN   TestPredicateWritableViewStaysRefused
+    predicate_views_test.go:84: gate cache node miss
+--- PASS: TestPredicateWritableViewStaysRefused (0.20s)
+PASS
+gate cache: native hits=0 misses=36
+gate cache: node hits=0 misses=27
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.398s

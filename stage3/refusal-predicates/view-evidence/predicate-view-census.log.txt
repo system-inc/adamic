@@ -1,0 +1,9 @@
+=== RUN   TestPredicateViewCensus
+    predicates_views_census_test.go:105: remaining transformers/es2015.ts:1349:9: structural source=true target=true assignable=true writable restriction=true
+    predicates_views_census_test.go:107: readonly field=emitNode source=EmitNode & { autoGenerate: AutoGenerateInfo; } target=EmitNode | undefined
+    predicates_views_census_test.go:105: remaining transformers/es2015.ts:1354:9: structural source=true target=true assignable=true writable restriction=true
+    predicates_views_census_test.go:107: readonly field=emitNode source=EmitNode & { autoGenerate: AutoGenerateInfo; } target=EmitNode | undefined
+    predicates_views_census_test.go:133: matched=122 admitted=120; refusal roots only, no production compilation claimed
+--- PASS: TestPredicateViewCensus (17.41s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	17.448s
