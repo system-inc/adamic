@@ -1,8 +1,8 @@
-Built an isolated 18-row manifest and runtime harness; fourteen rows proven and two hole rows refused.
-Commits: checkpoints 5716a4ce and ed1d9041; this third group continues codex/stricter-indexed-c.
-Commands and outputs: groups passed in 13.214s, 7.637s and 7.847s; filtered oracle passed in 3.388s; vet passed.
-Mutants: D157-D166 and D178-D181 erase-panic mutants caught in release and sanitized builds, 28 runs.
-Not covered yet: D182/D183 remain pending; D155/D156 hole construction refuses.
+Built witnesses for all 18 selected ledger rows: 16 proven in both backends and native modes, two hole refusals recorded.
+Commits: implementation 5716a4ce; group checkpoints ed1d9041 and beef3a58; final report is this branch-head commit.
+Commands and outputs: full witness package passed in 30.020s, uncached filtered oracle in 3.388s, vet exit 0; setup 598.141s, nproc 5.
+Mutants: all 16 independent erase-check mutants built and were caught in release and sanitized modes, 32 runs; outcomes listed below.
+Not covered: D155/D156 holes refuse; full AST payloads and whole-program native build are unproven; zero rows remain unassessed.
 
 ## Scope and provenance
 
@@ -68,7 +68,7 @@ cannot count as a caught mutant.
 | D165 | object array, statementOffset | proven |
 | D166 | constructor.body.statements array, statementOffset | proven |
 | D178 | node.declarations array, literal 0 | proven |
-| D179, D182, D183 | object array outerParameters, i | D179 proven; D182/D183 pending |
+| D179, D182, D183 | object array outerParameters, i | proven |
 | D180, D181 | node.parameters object array, i | proven |
 
 ## Commands
@@ -107,7 +107,7 @@ hole-construction lowering, seven remaining (D166 and D178-D183). Group 2
 passed all five rows, present and absent, in both backends and release/sanitized
 native. Log: /tmp/stricter-indexed-c-group2.log.
 
-All ten group-2 erase-check runs built and exited 0 with empty stderr.
+All ten group-2 erase-check runs built and exited 0 with the following stdout.
 D161 and D165 printed undefined; D162 printed present; D163 printed 0;
 D164 printed 1. Every result lost the required named exit-70 stop, caught
 by the exact output/exit assertion. Numeric missing results becoming zero
@@ -121,8 +121,7 @@ ADAMIC_WITNESS_CLI=/tmp/stricter-indexed-c-adamic go test ./stage3/stricter-inde
 
 D166 and D178-D181 passed present and absent witnesses, exact named stderr,
 IR location and CLI explain counts, backend Node and both native modes.
-All ten erase-check mutant builds succeeded, then exited 0 with empty stderr
-and undefined on stdout. The exact named exit-70 assertion caught every one.
+All ten erase-check mutant builds succeeded, then exited 0 with undefined on stdout. The exact named exit-70 assertion caught every one.
 Log: /tmp/stricter-indexed-c-group3.log.
 
 ```sh
@@ -134,3 +133,72 @@ go vet ./stage3/stricter-indexed-c > /tmp/stricter-indexed-c-vet.log 2>&1
 The filtered oracle passed all four existing fixtures in 3.388s with zero
 cache hits (native misses=10, Node misses=8). Vet exited 0 without diagnostics.
 The full repository gate was not run under the worker-gate exception.
+
+## Final result
+
+All 18 rows are assessed. Proven: D157-D166 and D178-D183 (16).
+Blocked: D155/D156, both arrays with holes created by new Array, refused
+at main.ts:1:35 with `stage 0 can't lower new an Identifier yet`.
+Remaining: zero. The blocked rows have Node observations and pinned refusals,
+not runtime checks or successful native builds. Representation support remains
+with the stricter-checks worker as instructed. No record, typed-array, string
+or Map receiver occurs among this slice's traced reads.
+
+The complete package was run without ADAMIC_WITNESS_CLI, exercising its
+automatic build of the current CLI. It passed in 30.020s. Its 34 source-Node
+observations cover both variants of each supported witness plus two hole
+probes. The supported witnesses pass 32 backend-Node runs, 64 native runs
+(release and ASan/UBSan), exact named absent stderr/exit assertions, actual IR
+source locations and 32 CLI explain assertions. Each supported variant lists
+its source read as checked indexed-presence, counts one, and reports trusted: 0.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage3/stricter-indexed-c -count=1 -timeout 10m -v > /tmp/stricter-indexed-c-final.log 2>&1
+# ok github.com/system-inc/adamic/stage3/stricter-indexed-c 30.020s
+```
+
+Every mutant below erases only the single indexed panic from emitted C.
+Both release and sanitized builds succeeded for each. All 32 executions
+exited 0, so the exact assertion requiring the named stderr and exit 70
+caught them. Neither a build failure nor a sanitizer report is counted as
+a mutant kill here. These are 16 independent per-row mutants, including
+duplicate originating-read shapes; the receiver kind is array throughout.
+
+| Mutant | Release exit / stdout | Sanitized exit / stdout | Catcher |
+|---|---|---|---|
+| erase-D157-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D158-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D159-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D160-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D161-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D162-presence | 0 / `present\n` | 0 / `present\n` | pinned named stderr and exit-70 assertion |
+| erase-D163-presence | 0 / `0\n` | 0 / `0\n` | pinned named stderr and exit-70 assertion |
+| erase-D164-presence | 0 / `1\n` | 0 / `1\n` | pinned named stderr and exit-70 assertion |
+| erase-D165-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D166-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D178-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D179-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D180-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D181-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D182-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+| erase-D183-presence | 0 / `undefined\n` | 0 / `undefined\n` | pinned named stderr and exit-70 assertion |
+
+All outcomes appear in /tmp/stricter-indexed-c-final.log. Group logs preserve
+the earlier checkpoint runs. The source-only preliminary log is
+/tmp/stricter-indexed-c-source-node.log; final source observations come from
+the complete harness, including the corrected D162 origin trace.
+
+Only this unit's manifest, Go harness and report changed. Compiler implementation,
+protected files and cohere remain unchanged. Pushed checkpoints went only to
+codex/stricter-indexed-c; no pull request was opened. No merge into main or an
+area branch was performed. The requested baseline was retained.
+
+Scope limit: some ledger diagnostics share a read through a local. The 16
+proven rows represent 11 distinct originating receiver/index expressions,
+not 16 distinct checks emitted into the whole adapted compiler. Object AST
+payloads are minimized, stack element arrays use a number payload, and explicit
+required-type sinks keep the minimal witnesses rejected by stricter indexed
+checking even where Node observation would otherwise narrow away the error.
+The whole-program compiler date and native emission of all original AST types
+are not established by this witness unit. The full repository gate was not run.
