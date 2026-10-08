@@ -1,0 +1,33 @@
+interface Box { readonly number: number; }
+let calls = 0;
+function make(): Box {
+    calls += 1;
+    return { number: calls * 7 };
+}
+function present(value: Box): number {
+    return value?.number;
+}
+function absent(value: Box | undefined): number | undefined {
+    return value?.number;
+}
+console.log(`${present(make())}/${present(make())}/${calls}`);
+console.log(`${absent(undefined) ?? -1}/${absent({ number: 0 }) ?? -1}`);
+type Kind = 1 | 2;
+interface Node { readonly kind: Kind; }
+function kind(node: Node): string {
+    switch (node?.kind) {
+        case 1: return 'one';
+        case 2: return 'two';
+    }
+}
+console.log(kind({ kind: 1 }));
+console.log(kind({ kind: 2 }));
+function narrowed(value: Box | undefined): number | undefined {
+    const clear = (): void => { value = undefined; };
+    if (value !== undefined) {
+        clear();
+        return value?.number;
+    }
+    return undefined;
+}
+console.log(`${narrowed({ number: 9 }) ?? -1}`);
