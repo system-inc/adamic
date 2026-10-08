@@ -1,0 +1,5 @@
+{
+  "name": "empty function suggestion range widened",
+  "from": "new SuggestionEdit(start + 1, end - 1,",
+  "to": "new SuggestionEdit(start, end - 1,"
+}

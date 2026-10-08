@@ -1,0 +1,166 @@
+import { panic, utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { noEdits } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { propertyName, Static } from '../../helpers/property_name.a';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import { CoreArena, CoreNode } from '../../helpers/core/nodes.a';
+import { consistentReturnIsGenerator } from '../../helpers/core/consistent_return_is_generator.a';
+import { unexpected, suggestComment } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly names: HelperNode[] = [];
+    arena: CoreArena | undefined = undefined;
+    comments: readonly Comment[] = [];
+    readonly allow: readonly string[];
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.allow = context.settings.list('allow', []);
+    }
+    prepare(root: number): void {
+        const nodes: CoreNode[] = [];
+        for(let index = 0; index < this.context.parser.nodes.length; index++) {
+            const parsed = this.context.node(index);
+            this.names.push({ kind: parsed.kind, text: parsed.text, expression: parsed.children[0] ?? -1, name: -1 });
+            const node = new CoreNode();
+            node.kind = parsed.kind;
+            node.generator = this.context.has(index, 'AsteriskToken');
+            nodes.push(node);
+        }
+        this.arena = new CoreArena(this.context.source, nodes);
+        this.comments = forFile(this.context.parser, root, undefined);
+    }
+    generator(index: number): boolean {
+        return consistentReturnIsGenerator(this.arena ?? panic('missing function arena'), index);
+    }
+    kind(index: number): string {
+        switch(this.context.kind(index)) {
+            case 'ArrowFunction':
+                return 'arrowFunctions';
+            case 'GetAccessor':
+                return 'getters';
+            case 'SetAccessor':
+                return 'setters';
+            case 'Constructor':
+                return 'constructors';
+            default:
+                break;
+        }
+        const kind = this.context.kind(index) === 'MethodDeclaration' ? 'Methods' : 'Functions';
+        if(this.generator(index)) {
+            return `generator${kind}`;
+        }
+        if(this.context.has(index, 'AsyncKeyword')) {
+            return `async${kind}`;
+        }
+        return kind === 'Methods' ? 'methods' : 'functions';
+    }
+    allowed(index: number): boolean {
+        const kind = this.kind(index);
+        if(this.allow.includes(kind)) {
+            return true;
+        }
+        if(kind === 'constructors') {
+            if(this.context.has(index, 'PrivateKeyword') && this.allow.includes('privateConstructors')) {
+                return true;
+            }
+            if(this.context.has(index, 'ProtectedKeyword') && this.allow.includes('protectedConstructors')) {
+                return true;
+            }
+            for(const parameter of this.context.children(index, 'Parameter')) {
+                // Only modifiers before the parameter name count, not its keyword type.
+                for(const child of this.context.node(parameter).children) {
+                    if(this.context.kind(child) === 'Decorator') {
+                        continue;
+                    }
+                    if(!this.context.kind(child).endsWith('Keyword')) {
+                        break;
+                    }
+                    return true;
+                }
+            }
+        }
+        if(['getters', 'setters', 'methods', 'generatorMethods', 'asyncMethods'].includes(kind)) {
+            if(this.context.has(index, 'Decorator') && this.allow.includes('decoratedFunctions')) {
+                return true;
+            }
+            if(this.context.has(index, 'OverrideKeyword') && this.allow.includes('overrideMethods')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    joinName(kind: string, key: number): string {
+        const result = propertyName(this.names, key, Static);
+        return !result.named || result.name === '' ? kind : `${kind} '${result.name}'`;
+    }
+    nameWithKind(index: number): string {
+        let prefix = this.context.has(index, 'StaticKeyword') ? 'static ' : '';
+        if(this.generator(index)) {
+            prefix += 'generator ';
+        }
+        else if(this.context.has(index, 'AsyncKeyword')) {
+            prefix += 'async ';
+        }
+        switch(this.context.kind(index)) {
+            case 'ArrowFunction':
+                return `${prefix}arrow function`;
+            case 'Constructor':
+                return `${prefix}constructor`;
+            case 'GetAccessor':
+                return this.joinName(`${prefix}getter`, this.context.name(index));
+            case 'SetAccessor':
+                return this.joinName(`${prefix}setter`, this.context.name(index));
+            case 'MethodDeclaration':
+                return this.joinName(`${prefix}method`, this.context.name(index));
+            default:
+                break;
+        }
+        const name = this.context.name(index);
+        if(name >= 0) {
+            return this.joinName(`${prefix}function`, name);
+        }
+        const parent = this.context.parent(index);
+        if(this.context.kind(parent) === 'PropertyAssignment') {
+            return this.joinName(`${prefix}method`, this.context.name(parent));
+        }
+        return `${prefix}function`;
+    }
+    visit(index: number): void {
+        const body = this.context.children(index, 'Block')[0] ?? -1;
+        if(body < 0 || this.context.node(body).children.length !== 0) {
+            return;
+        }
+        const start = this.context.start(body);
+        const end = this.context.node(body).end;
+        const first = utf8Length(this.context.source.slice(0, start));
+        const last = utf8Length(this.context.source.slice(0, end));
+        for(const comment of this.comments) {
+            if(comment.start >= first && comment.end <= last) {
+                return;
+            }
+        }
+        if(this.allowed(index)) {
+            return;
+        }
+        this.context.reportRange(
+            start,
+            end,
+            'no-empty-function',
+            'unexpected',
+            unexpected(this.nameWithKind(index)),
+            noEdits,
+            [
+                new Suggestion('suggestComment', suggestComment, [
+                    new SuggestionEdit(start + 1, end - 1, ' /* empty */ '),
+                ]),
+            ],
+        );
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

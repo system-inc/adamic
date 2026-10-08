@@ -1,0 +1,77 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestNoEmptyFunctionSelected(t *testing.T) {
+	t.Parallel()
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []string
+	for _, row := range upstream(t) {
+		if strings.Split(row, "\t")[1] == "no-empty-function" {
+			rows = append(rows, row)
+		}
+	}
+	t.Logf("no-empty-function upstream cases: %d", len(rows))
+	if len(rows) < 2313 {
+		t.Fatalf("incomplete upstream corpus: %d", len(rows))
+	}
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name == "no-empty-function" {
+			rows = append(rows, ownedWitnessRows(t, directory, descriptor)...)
+			break
+		}
+	}
+	seen := map[string]bool{}
+	for _, row := range generated(t) {
+		source := strings.SplitN(row, "\t", 2)[0]
+		if !seen[source] {
+			rows = append(rows, source+"\tno-empty-function")
+			seen[source] = true
+		}
+	}
+	oracle := goOracle(t)
+	compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, recoveryRows(t, oracle, rows)))
+	var change struct{ Name, From, To string }
+	data, err := os.ReadFile("rules/no-empty-function/mutant.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &change); err != nil {
+		t.Fatal(err)
+	}
+	changed := mutant(t, change.From, change.To, "rules/no-empty-function/rule.a")
+	witnesses := ownedWitnesses(t, directory, "no-empty-function")
+	var mutantRows []string
+	for _, source := range witnesses {
+		mutantRows = append(mutantRows, source+"\tno-empty-function")
+	}
+	path := manifest(t, recoveryRows(t, oracle, mutantRows))
+	want := execute(t, "", oracle, "--manifest", path).output
+	baseline := compare(t, oracle, buildPort(t, directory, true), directory, path)
+	if !bytes.Equal(baseline, want) {
+		t.Fatal("mutant baseline differs")
+	}
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, changed, path, false)},
+		{"emitted JavaScript", emittedNode(t, changed, path, false)},
+		{"sanitized native", execute(t, "", buildMutantPort(t, changed), "--manifest", path)},
+	} {
+		if bytes.Equal(side.run.output, want) {
+			t.Fatalf("mutant survived on %s", side.name)
+		}
+		t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+	}
+}

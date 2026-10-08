@@ -1,0 +1,6 @@
+/* outside */ function empty() {} // outside
+function deliberate() { /* empty */ }
+function line() {
+ // empty
+}
+class Example { constructor(private value: number) {} empty() {} }

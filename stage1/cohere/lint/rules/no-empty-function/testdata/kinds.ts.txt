@@ -1,0 +1,5 @@
+function named() {}
+const anonymous = function() {};
+const arrow = async () => {};
+const object = { plain: function*() {}, *method() {}, get value() {}, set value(input) {} };
+class Example { constructor() {} static async work() {} }

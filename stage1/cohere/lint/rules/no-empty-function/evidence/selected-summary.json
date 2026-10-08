@@ -1,0 +1,27 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/tmp/s13-no-empty-function-overlay.json",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-timeout=30m",
+    "-run",
+    "^TestNoEmptyFunctionSelected$",
+    "-v"
+  ],
+  "nproc": 5,
+  "load_before": "1.27 2.25 2.96 7/171 87611",
+  "inputs": {
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/adamic-gate/s13-no-empty-function-profile-recovered.dhy9bosh",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/adamic-gate/s13-no-empty-function-profile-recovered.dhy9bosh",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/s13-typescript",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_TEST_WASI": "1"
+  },
+  "exit": 0,
+  "wall_seconds": 515.5096700760005,
+  "load_after": "3.42 3.34 3.28 2/192 154714"
+}

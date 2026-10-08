@@ -1,0 +1,4 @@
+export function unexpected(name: string): string {
+    return `Unexpected empty ${name}.`;
+}
+export const suggestComment = 'Add a comment inside the empty body, saying the emptiness is deliberate.';

@@ -1,0 +1,19 @@
+{
+  "name": "no-empty-function",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor",
+    "Constructor"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoEmptyFunction",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEmptyFunction"
+}

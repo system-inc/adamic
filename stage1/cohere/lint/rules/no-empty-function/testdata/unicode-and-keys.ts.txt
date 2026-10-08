@@ -1,0 +1,3 @@
+/* 😀 */ const object = { ['a\u0062']() {}, [unknown]() {}, 0x10() {}, 'quoted'() {} };
+async function* sequence() {}
+const arrow = (value: number) => value;
