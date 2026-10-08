@@ -24,8 +24,9 @@ typedef bool (*adamic_view_untagged_probe)(void *context, const adamic_view_unio
 // so dispatch can preserve it on aliases and every subsequent transitive read.
 size_t adamic_view_untagged_union_select(const adamic_view_union_value *value, const adamic_view_untagged_member *members, size_t count, adamic_view_untagged_probe probe, adamic_view_union_match match, void *context, const char *expression, const char *declared);
 
-/* Plain-object adapters reuse the shared initialization and representation
- * bytes. Class/static/accessor storage is not certified by this adapter. */
+/* Own-data adapters reuse the shared initialization and representation
+ * bytes, including initialized class instance fields. Static and accessor
+ * storage is not certified by this adapter. */
 typedef struct adamic_view_untagged_field {
     const char *name;
     size_t contract;

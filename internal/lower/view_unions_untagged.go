@@ -97,7 +97,7 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 				continue
 			}
 			child := l.result.ViewContracts[field.Contract-1]
-			tagged = tagged || child.Kind == ir.ViewScalar && len(child.Allowed) != 0
+			tagged = tagged || child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.String || child.Of == ir.Boolean))
 		}
 		if tagged {
 			return true

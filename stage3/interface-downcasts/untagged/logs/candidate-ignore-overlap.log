@@ -1,0 +1,6 @@
+=== RUN   TestViewUnionDiscriminantOverlaps
+    view_unions_untagged_test.go:14: overlapping tags selected a member
+--- FAIL: TestViewUnionDiscriminantOverlaps (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.008s
+FAIL

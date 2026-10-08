@@ -268,3 +268,98 @@ func dropUntaggedNestedSourceReads(program *ir.Program) {
 		mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 	}
 }
+
+func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
+	for _, flow := range []string{"helper", "generic", "callback", "stored"} {
+		for _, variant := range []string{"good", "wrong"} {
+			t.Run(flow+"/"+variant, func(t *testing.T) {
+				program, path := interfaceFixture(t, "untagged/fixtures/flow-"+flow+"-"+variant)
+				want := run{stdout: []byte("true\n")}
+				if difference := disagreement(want, onNode(t, path)); difference != "" {
+					t.Fatal("Node: " + difference)
+				}
+				if variant == "wrong" {
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n")}
+				}
+				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+					if difference := disagreement(want, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				}
+			})
+		}
+	}
+}
+
+func TestCheckedViewUntaggedCandidatePairs(t *testing.T) {
+	var pairs []struct {
+		Rank        int
+		SourceAlias string `json:"source_alias"`
+		Variants    []string
+	}
+	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/candidate-fixtures.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(data, &pairs); err != nil {
+		t.Fatal(err)
+	}
+	pinData, err := os.ReadFile("../../stage3/interface-downcasts/untagged/candidate-refusals.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pins := map[string]string{}
+	if err = json.Unmarshal(pinData, &pins); err != nil {
+		t.Fatal(err)
+	}
+	for _, pair := range pairs {
+		for _, variant := range pair.Variants {
+			t.Run(strconv.Itoa(pair.Rank)+"/"+variant, func(t *testing.T) {
+				name := "untagged/candidates/pair-" + strconv.Itoa(pair.Rank) + "-" + variant
+				program, path := interfaceFixture(t, name)
+				node := onNode(t, path)
+				t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+				// untagged candidate mutation anchor
+				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+					if variant == "good" || variant == "absent" {
+						if difference := disagreement(node, got); difference != "" {
+							t.Errorf("%s: %s", backend, difference)
+						}
+					} else {
+						expected, ok := pins[strconv.Itoa(pair.Rank)+"/"+variant]
+						if !ok {
+							t.Fatal("missing candidate refusal pin")
+						}
+						if difference := disagreement(run{exitCode: 70, stderr: []byte(expected)}, got); difference != "" {
+							t.Errorf("%s: %s; got %#v", backend, difference, got)
+						}
+					}
+				}
+			})
+		}
+	}
+}
+
+func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
+	for _, variant := range []string{"good", "wrong", "getter"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "untagged/fixtures/class-data-"+variant)
+			node := onNode(t, path)
+			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+				t.Fatal(difference)
+			}
+			want := node
+			if variant != "good" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+			}
+			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s: %s", backend, difference)
+				}
+			}
+		})
+	}
+}

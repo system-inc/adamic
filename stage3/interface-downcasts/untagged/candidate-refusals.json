@@ -1,0 +1,10 @@
+{
+  "8/wrong": "adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n",
+  "8/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n",
+  "11/wrong": "adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n",
+  "11/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n",
+  "13/wrong": "adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n",
+  "13/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n",
+  "19/wrong": "adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n",
+  "19/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+}

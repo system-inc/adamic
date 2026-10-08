@@ -11,6 +11,10 @@ import (
 // This named adapter is a shared-dispatch handoff. It uses already evaluated
 // objects and shared slot metadata; field reads retain their original guards.
 func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
+	if property.ViewType == "" && property.ViewContract > 0 {
+		property.ViewType = e.program.ViewContracts[property.ViewContract-1].Name
+	}
+
 	name := e.temporary()
 	var declarations strings.Builder
 	declarations.WriteString("#include \"view_unions_untagged.h\"\n")
@@ -54,7 +58,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 			fmt.Fprintf(&declarations, "static const size_t %s[] = {%s};\n", members, strings.Join(values, ","))
 		}
 		kind := contract.Kind
-		if contract.Unsupported != "" && contract.Unsupported != "untagged object union" {
+		if contract.Nominal != "" || contract.Unsupported != "" && contract.Unsupported != "untagged object union" {
 			kind = ir.ViewUnknown
 		}
 		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members)))
@@ -66,17 +70,5 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 
 // Preserve the existing shared-discriminant dispatch.
 func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
-	if len(contract.Members) == 0 {
-		return false
-	}
-	for _, field := range contract.Fields {
-		if field.Optional || field.Contract <= 0 || int(field.Contract) > len(contracts) {
-			continue
-		}
-		child := contracts[field.Contract-1]
-		if child.Kind == ir.ViewScalar && len(child.Allowed) != 0 {
-			return false
-		}
-	}
-	return true
+	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
 }

@@ -1,3 +1,78 @@
+Built: classified candidate unions; added overlapping/open-kind dispatch, own class-data probes, and top-four candidate selector fixtures.
+Commits: production hooks 1baa2640; prior handoff 55b3fdef/2bb00f0f; this candidate group follows in Git history.
+Commands: stock classification has 0 diagnostics; final lane IR/lower/backend/oracle checks pass, oracle 25.111s; getter/data control 0.783s.
+Mutants: skip selection native/JS, accept wrong scalar kind native/JS, accept wrong literal native/JS, drop nested guards, ignore overlap; all eight caught and restored.
+Uncovered: 57 candidate selector pairs/268 candidate reads remain; full unchanged compiler interfaces, non-kind member adapters, nominal targets, getters/static selection and exact allocation reachability are not certified.
+
+Whole-family planning target remains October 12, 2026, 23:00 UTC. Candidate
+progress is explicitly selector-projection coverage, not a claim of full compiler
+interface conformance. User authorization removed the shared-hook waiting block.
+
+The pinned stock checker at TypeScript 6.0.3/050880ce has zero diagnostics after
+locked dependency installation and generated diagnostic declarations. No production
+checker diagnostics were bypassed. classify-candidates.cjs refers to a detached
+cohere/TypeScript worktree; no code was lifted from cohere. Its input is lazy's
+228-pair/2,468-read candidate inventory. Actual shared disjoint literal fields split
+it into 156 shared-discriminant pairs/2,019 reads, 61 untagged candidates/434 reads,
+and 11 other consumer contracts/15 reads. The 61 retain array/callable overlaps.
+A shared enum field with overlapping values is not a discriminant. Open whole
+numeric enums preserve number semantics rather than requiring listed enum values.
+
+First ranked group:
+- FunctionLikeDeclaration.body: rank 8, 50 candidate reads.
+- ForStatement.initializer: rank 11, 43 candidate reads.
+- ModuleDeclaration.body: rank 13, 38 candidate reads.
+- ForOfStatement.initializer: rank 19, 35 candidate reads.
+
+Each has a separate source fixture set with valid member samples, named wrong-kind
+exit 70, a nested wrong label, and permitted absence where declared. Source definitions
+are independently written selector projections from measured kind metadata, with
+unread unsupported fields retained. They do not copy original interfaces and do not
+certify every unread compiler field. Four candidate selector pairs/166 candidate
+reads are covered; 57/268 remain unvalidated. The full compiler-pair completion count
+is still zero. Both scopes are recorded in lazy-candidate-progress.json.
+
+ViewUnionHasDiscriminant is a new lane-owned IR query. The existing named lower
+hook and both backend hooks use it; the shared change is listed in the plan. An own
+required scalar kind is checked, including unrestricted numeric enum kind contracts.
+Other unread payload fields are deferred. Pure probing now covers initialized own
+data on class instances through shared metadata. It does not invoke getters or
+resolve inherited static storage. Nominal target contracts remain unsupported by this
+matcher, consistently in both backends. The returned id does not become a payload
+certificate; subsequent reads keep shared guards. Helper, generic, callback and
+stored-field source controls pass with exact holder.value wrong-shape messages.
+
+candidate-refusals.json pins actual native/JS messages. A malformed nested label
+fails at value0.payload.label, expected string, found boolean. Invalid kinds fail at
+the actual body/initializer read, naming its source alias and found object. Node
+controls observe ordinary true values; invalid checked reads intentionally refuse.
+class-data-getter.a refuses without printing its getter marker, proving no getter
+was invoked by membership probing. Valid class data and wrong class kinds are pinned.
+
+Eight candidate mutations are separate and restored. Skipped selectors, wrong type
+acceptance and wrong literal acceptance continue with exit 0; exact refusal pins catch
+them. Dropping actual lowered payload/label guards makes native exit by signal and
+JavaScript continue with true; both fail the exit-70 pin. Removing disjointness is
+caught by TestViewUnionDiscriminantOverlaps. Logs are checked in. No full repository
+gate was run; the scoped existing view/lazy checks passed (IR 0.015s, lower 1.371s,
+native 4.733s, JavaScript 1.083s). Setup remains 214.165s, nproc 5.
+
+Reproduction:
+
+```
+source /workspace/adamic-tools/env.sh
+NODE_PATH=/tmp/untagged-stock-api/node_modules node stage3/interface-downcasts/untagged/classify-candidates.cjs /tmp/untagged-typescript stage3/interface-downcasts/untagged/lazy-candidate-progress.json /tmp/untagged-classified-candidates.json > /tmp/untagged-classification.log 2>&1
+python3 stage3/interface-downcasts/untagged/generate-candidate-fixtures.py /tmp/untagged-classified-candidates.json 8 11 13 19
+python3 stage3/interface-downcasts/untagged/run-candidate-mutants.py > /tmp/untagged-candidate-mutants.log 2>&1
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestViewUnionDiscriminant|TestUntaggedView|TestCheckedViewUntagged(Selection|SourceDispatch|SourceFlows|CandidatePairs|OwnClassData)' -count=1 -v > /tmp/untagged-group1-shipping.log 2>&1
+```
+
+Next: continue most-read remaining own-kind candidates, then field-only/recursive
+and array/callable overlaps. Full member adapter coverage is not replaced by these
+projection receipts. No individual lane branch was merged.
+
+Earlier checkpoint, historical:
+
 Built: installed three minimal named production hooks; all 12 representative source cases pass without overlays.
 Commits: component/source handoff 55b3fdef, evidence 2bb00f0f, integration base ba59427c; production hook commit follows in Git history.
 Commands: production oracle 5.751s; scoped lower/JS/native 1.247s/0.975s/4.064s; setup 214.165s, nproc 5.

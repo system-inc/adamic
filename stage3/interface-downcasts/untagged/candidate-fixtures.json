@@ -1,0 +1,65 @@
+[
+  {
+    "rank": 8,
+    "type_id": 9226,
+    "receiver": "FunctionLikeDeclaration",
+    "field": "body",
+    "declared_type": "ConciseBody | undefined",
+    "source_alias": "ConciseBody",
+    "candidate_reads": 50,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces"
+  },
+  {
+    "rank": 11,
+    "type_id": 7309,
+    "receiver": "ForStatement",
+    "field": "initializer",
+    "declared_type": "ForInitializer | undefined",
+    "source_alias": "ForInitializer",
+    "candidate_reads": 43,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces"
+  },
+  {
+    "rank": 13,
+    "type_id": 7666,
+    "receiver": "ModuleDeclaration",
+    "field": "body",
+    "declared_type": "ModuleBody | undefined",
+    "source_alias": "ModuleBody",
+    "candidate_reads": 38,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces"
+  },
+  {
+    "rank": 19,
+    "type_id": 7311,
+    "receiver": "ForOfStatement",
+    "field": "initializer",
+    "declared_type": "ForInitializer",
+    "source_alias": "ForInitializer",
+    "candidate_reads": 35,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces"
+  }
+]

@@ -1055,3 +1055,22 @@ block is removed. Revised whole-family target: October 12, 2026, 23:00 UTC.
 Continue against the supplied candidate inventory, explicitly labeled candidate
 pairs and reads; checker-clean allocation reachability is a later audit. Common
 finite-tag unions remain with shared dispatch, never charged as untagged completions.
+
+Untagged discriminant refinement: new lane-owned internal/ir/view_unions_untagged.go
+exports ViewUnionHasDiscriminant. Shared lower/view_contracts.go and the two named
+backend hooks use it to require disjoint member literal sets; overlapping enum values
+must use member selection. This is a minimal shared IR query, not a new representation.
+The classifier uses the pinned stock checker through a cohere/TypeScript worktree,
+with generated diagnostics and locked dependencies. Zero stock diagnostics; 61
+candidate pairs/434 reads have no shared disjoint field, including adapter overlaps.
+An own required scalar kind checks that kind contract, including open numeric enums,
+without reading other enum-valued payload fields. It certifies no unread payload.
+
+Own-data class support uses the same optional-field lookup and initialization/type
+bytes for non-static class instances. JavaScript uses own data descriptors. No getter
+or inherited static lookup runs during selection. Dedicated class-produced positive
+and wrong-kind fixtures match Node/control expectations in both backends. Candidate
+ranks 8, 11, 13 and 19 have selector-projection fixtures with exact wrong/nested pins
+and eight semantic mutants; they represent 4 candidate pairs/166 candidate reads.
+Remaining unvalidated selector obligations: 57 candidate pairs/268 candidate reads.
+This does not certify every field of the unchanged compiler interfaces.

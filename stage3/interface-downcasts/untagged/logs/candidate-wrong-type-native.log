@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/wrong
+    checked_views_untagged_unions_test.go:322: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:325: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:336: native: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_untagged_unions_test.go:325: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+--- FAIL: TestCheckedViewUntaggedCandidatePairs (14.53s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/8/wrong (14.53s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.542s
+FAIL

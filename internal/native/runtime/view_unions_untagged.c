@@ -1,4 +1,5 @@
 #include "view_unions_untagged.h"
+#include <string.h>
 
 static bool tag_matches(const adamic_view_union_value *slot, const adamic_view_union_member *allowed) {
     if (!allowed->literal || slot->kind != allowed->kind) { return false; }
@@ -40,7 +41,7 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
     (void)context;
     if (value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
     const adamic_object *object = value->payload.reference;
-    if (object->class != NULL) { return false; }
+    if (object->class != NULL && object->class->is_static) { return false; }
     adamic_slot_cache cache = {0};
     adamic_value *slot = adamic_object_optional_field(object, field, &cache);
     if (slot == NULL || !adamic_object_initialized(object)[cache.index]) { return false; }
@@ -84,7 +85,17 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
     if (contract->kind == 7) { return value->kind == adamic_view_union_undefined; }
     if (contract->kind != 2 || value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
     const adamic_object *object = value->payload.reference;
-    if (object->class != NULL) { return false; }
+    if (object->class != NULL && object->class->is_static) { return false; }
+    /* An open kind contract remains a checked selector, not a payload
+     * certificate. Numeric enums intentionally admit unnamed numbers. */
+    for (size_t i = 0; i < contract->field_count; i++) {
+        const adamic_view_untagged_field *field = &contract->fields[i];
+        if (field->optional || strcmp(field->name, "kind") != 0 || field->contract == 0 || field->contract > count) { continue; }
+        const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
+        if (child->kind != 1 || (child->of != 1 && child->of != 2 && child->of != 3)) { continue; }
+        adamic_view_union_value slot;
+        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && adamic_view_untagged_plain_matches(contracts, count, field->contract, &slot);
+    }
     /* A member's own finite tags select it without inspecting unread payloads.
      * Subsequent reads still use the existing per-field checks. */
     bool tagged = false;
