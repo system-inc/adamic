@@ -1,8 +1,10 @@
-Built shared dense-array destructuring guards and runtime proofs for D071-D073; 26 of 27 rows now proven.
-Commits: prior witness commits plus the follow-up destructuring commit on codex/stricter-indexed-a.
-Commands: D071-D073 witness gate passed in 65.236s; whole lowering-package gate is running.
-Mutants: each selected binding panic erased alone; D071/D072 hit the next binding guard, D073 printed undefined; exact named stderr caught all three.
-Not covered yet: D037 attribution follow-up is in progress; D069 initially absent own-field storage requires the records representation.
+Built shared array-binding guards for D071-D073 and preserved D037 overload attribution; all 27 minimal read shapes have runtime proof.
+Commits: af274a79 for destructuring; the following overload commit is pushed only to codex/stricter-indexed-a.
+Commands: destructuring gate 65.236s, third-binding probe 8.809s, D037 attribution/runtime gate 14.785s, lower package 36.790s, filtered oracle 1.537s: PASS.
+Mutants: three ledger binding guards, a supplemental third binding and D037 argument guard erased individually; exact named-site observations caught all five.
+Not covered: D069 initially absent optional own-field context, blocked on fixed-shape field addition owned by codex/stricter-records; full compiler/full gate/WASI/holes remain outside this proof.
+
+Initial witness-only report, retained as historical evidence
 
 Group 1 proves D054, D056, D057, D067 and D068. Each source Node run has exit 0,
 empty stderr, and stdout `7` when present or `undefined` when absent. Release
@@ -210,3 +212,35 @@ The recorded expanded filter also included a slash-containing supplemental name;
 it did not select that probe, which is run separately. Logs/destructuring.txt
 retains the complete three-row evidence. Earlier report sections describe the
 initial witness-only state; this follow-up supersedes their destructuring refusals.
+
+Follow-up: D037
+
+The original helper referenced through cohere/TypeScript/tsc/testdata/fixtures/
+compiler/utilities.ts:980-984 has separate present and optional overloads. No
+source was copied from cohere. The prior minimal probe replaced that relationship
+with a single optional-return declaration, losing option attribution before
+Adamic could audit it. Restoring the independently written overload shape exposes
+a second boundary: declareModule attempted to lower the bodyless overloads as
+executable functions. It now registers only their implementation, after checking
+that overload parameters and result have the same storage representation.
+Generic or different-storage overloads still refuse; ambient functions without
+an implementation retain their refusal.
+
+The checker keeps overload selection and its downstream indexed-option diagnostic.
+The audit test proves the receiving assignment is accepted under the project's
+options and rejected specifically by noUncheckedIndexedAccess. Removing the
+overloads restores an ordinary optional-return error, which the loader still
+refuses. A different-storage overload test also requires refusal. No general
+optional-return error is relabeled as an indexed read.
+
+D037 guards declarations[0] at line 10, column 34 through the same direct-read
+helper. Node prints 7 or undefined. Release native, sanitized native and backend
+JavaScript agree when present and pin the named indexed stop when absent. Explain
+lists precisely one check. Its single-panic-erasure mutant builds sanitized,
+finishes with exit 0 and prints undefined, failing the exact named-stop assertion.
+Logs/optional-return.txt records the 14.785s passing gate. The supplemental third
+binding similarly passes in 8.809s: its mutant prints undefined with exit 0.
+
+The whole lowering package passed in 36.790s. The four existing indexed/narrowing
+oracle fixtures passed in 1.537s, with the normal oracle cache, not an uncached
+integration gate. Complete witness-package verification is still running.

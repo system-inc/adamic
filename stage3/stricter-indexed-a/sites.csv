@@ -1,5 +1,5 @@
 id,ledger_file,ledger_line,ledger_column,ledger_expression,receiver,witness,indexed_read,read_line,read_column,disposition,reason
-D037,src/compiler/checker.ts,12034,30,file.endFlowNode,object array input followed by optional function return,D037.json,declarations[0],6,34,blocked,Type 'SourceFile | undefined' is not assignable to type 'SourceFile'
+D037,src/compiler/checker.ts,12034,30,file.endFlowNode,"object array, constant zero, overload-selected optional return",D037.json,declarations[0],10,34,proven overloaded-return attribution,
 D054,src/compiler/checker.ts,17946,29,elementTypes[unionIndex],"readonly object array, variable index",D054.json,elementTypes[unionIndex],5,21,proven minimal read shape,
 D056,src/compiler/checker.ts,19044,25,types[unionIndex],"readonly object array, variable index",D056.json,types[unionIndex],5,21,proven minimal read shape,
 D057,src/compiler/checker.ts,20595,32,targets[i],"readonly callable array, loop index",D057.json,targets[i],6,27,proven minimal read shape,
