@@ -1,0 +1,15 @@
+{
+  "compiler_checkout": "719bb8d9e6bebed2a92543bd86c49243b20cef37",
+  "compiler_merge": "acdf5c109a3f13bb58ff89905bf6f968926f35e6",
+  "area_parent": "3b25512566206bc603b93264e8d072c55e075d64",
+  "enum_parent": "41231d514cf0090d1a7ec103326858b7eb34b6e3",
+  "meter_fix": "49bdfe0e",
+  "compiler_mode": "single",
+  "compiler_sources_unchanged_after_merge": true,
+  "tracked_worktree_clean": true,
+  "vcs_modified_reason": "untracked meter run directories",
+  "node": "24.19.0",
+  "node_types": "25.3.3",
+  "nproc": 5,
+  "setup_workaround": "reuse successful enum scratch setup after fix-checkout setup exited at go list without stderr; npm ci --prefix stage3/api supplies compiler-required locked Node declarations"
+}

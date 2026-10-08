@@ -1,0 +1,5 @@
+panic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+goroutine 1 [running]:
+main.main()
+	/workspace/stage3-meter-enum-views/stage3/census/latent/tool/main.go:40 +0x53e
