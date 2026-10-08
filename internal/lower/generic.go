@@ -18,9 +18,9 @@ const maximumGenericDepth = 32
 // each type parameter is what this call made it.
 //
 // The checker resolves the call's signature with its type arguments substituted, but doesn't export
-// the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
-// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
+// the mapping itself, so inferred arguments are first read back from the declared and resolved
+// parameter and result types. The resolved mapper bridge supplies binders hidden inside conditional
+// or indexed types and defaults. Anything still unknown remains unmapped and says not yet.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)
@@ -47,6 +47,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		}
 	}
 	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	l.signatureTypeArguments(resolved, declaration, concreteTypes)
 
 	// An explicit type argument can make tsc view a mutable argument through a wider type without
 	// giving the argument that contextual type. Judge the instantiated parameter directly: the
