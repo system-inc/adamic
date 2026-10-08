@@ -21,11 +21,29 @@ if (mode === '--oracle-runtime') {
 			if (url === runtimeUrl) {
 				// Keep the oracle's functions; replace only its process-wide panic policy.
 				const source = readFileSync(fileURLToPath(url), 'utf8');
-				const begin = source.indexOf('class AdamicPanic');
-				const end = source.indexOf('// readTextFile', begin);
-				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
-				const policy = `export class AdamicPanic extends Error {}\nconst panicked = false;\nexport function panic(message) { throw new AdamicPanic(message); }\n`;
-				return { format: 'module', source: source.slice(0, begin) + policy + source.slice(end), shortCircuit: true };
+				const definition = 'export function panic(';
+				const begin = source.indexOf(definition);
+				if (begin < 0 || source.indexOf(definition, begin + definition.length) >= 0) {
+					throw new Error(`oracle panic policy: expected exactly one "${definition}" definition`);
+				}
+				let end = source.indexOf('{', begin + definition.length);
+				let depth = 0;
+				for (; end >= 0 && end < source.length; end++) {
+					const character = source[end];
+					if (character === '"' || character === "'" || character === '`') {
+						// Quoted text, including the oracle's message template, is not a body delimiter.
+						for (end++; end < source.length; end++) {
+							if (source[end] === '\\') end++;
+							else if (source[end] === character) break;
+						}
+					} else if (character === '{') depth++;
+					else if (character === '}' && --depth === 0) break;
+				}
+				if (end < 0 || end >= source.length || depth !== 0) {
+					throw new Error(`oracle panic policy: unbalanced body braces for "${definition}"`);
+				}
+				const policy = `export class AdamicPanic extends Error {}\nexport function panic(message) { throw new AdamicPanic(message); }`;
+				return { format: 'module', source: source.slice(0, begin) + policy + source.slice(end + 1), shortCircuit: true };
 			}
 			if (url.endsWith('.a') || url.endsWith('.ts')) {
 				let source = readFileSync(fileURLToPath(url), 'utf8');
