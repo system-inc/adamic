@@ -1,0 +1,107 @@
+{
+  "census": [
+    {
+      "latent_mode": "full"
+    },
+    {
+      "file": "/fixture/fixture.a",
+      "units": [],
+      "findings": [
+        {
+          "kind": "NotYet",
+          "reason": "outer reason",
+          "text": "/fixture/fixture.a:2:1: stage 0 cannot lower outer reason",
+          "where": "/fixture/fixture.a:2:1"
+        },
+        {
+          "kind": "Boundary",
+          "reason": "failed statement",
+          "text": "/fixture/fixture.a:2:1: stage 0 cannot lower outer reason",
+          "where": "/fixture/fixture.a:2:1",
+          "unit": "/fixture/fixture.a:1:1",
+          "start": 10,
+          "end": 60
+        },
+        {
+          "kind": "NotYet",
+          "reason": "inner reason",
+          "text": "/fixture/fixture.a:3:1: stage 0 cannot lower inner reason",
+          "where": "/fixture/fixture.a:3:1"
+        },
+        {
+          "kind": "Boundary",
+          "reason": "failed statement",
+          "text": "/fixture/fixture.a:3:1: stage 0 cannot lower inner reason",
+          "where": "/fixture/fixture.a:3:1",
+          "unit": "/fixture/fixture.a:1:1",
+          "start": 20,
+          "end": 30
+        },
+        {
+          "kind": "NotYet",
+          "reason": "outer reason",
+          "text": "/fixture/fixture.a:2:1: stage 0 cannot lower outer reason",
+          "where": "/fixture/fixture.a:2:1"
+        },
+        {
+          "kind": "Boundary",
+          "reason": "failed statement",
+          "text": "/fixture/fixture.a:2:1: stage 0 cannot lower outer reason",
+          "where": "/fixture/fixture.a:2:1",
+          "unit": "/fixture/fixture.a:1:1",
+          "start": 10,
+          "end": 60
+        },
+        {
+          "kind": "NotYet",
+          "reason": "inner reason",
+          "text": "/fixture/fixture.a:8:1: stage 0 cannot lower inner reason",
+          "where": "/fixture/fixture.a:8:1"
+        },
+        {
+          "kind": "Boundary",
+          "reason": "failed statement",
+          "text": "/fixture/fixture.a:8:1: stage 0 cannot lower inner reason",
+          "where": "/fixture/fixture.a:8:1",
+          "unit": "/fixture/fixture.a:1:1",
+          "start": 70,
+          "end": 90
+        }
+      ]
+    }
+  ],
+  "stock": {
+    "fixture.a": {
+      "bytes": 100
+    }
+  },
+  "files": {
+    "fixture.a": {
+      "hidden_ranges": [
+        [
+          10,
+          40
+        ],
+        [
+          50,
+          60
+        ],
+        [
+          70,
+          90
+        ]
+      ],
+      "hidden_bytes": 60
+    }
+  },
+  "expected": {
+    "outer reason": 40,
+    "inner reason": 20
+  },
+  "independently_examined": [
+    [
+      40,
+      50
+    ]
+  ]
+}
