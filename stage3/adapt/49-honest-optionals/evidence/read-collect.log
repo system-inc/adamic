@@ -1,0 +1,19 @@
+{
+  "projects": 301,
+  "byte_identical_project_outputs": 301,
+  "moved_unwrap_sites": 116,
+  "reached_sites": 38,
+  "unvisited_sites": 78,
+  "checked_reads": 910898035,
+  "nullish_reads": 0,
+  "driver": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/49-read-probe/checked.cjs"
+    ],
+    "cases": 301,
+    "passed": 301,
+    "failed": [],
+    "seconds": 199.525
+  }
+}

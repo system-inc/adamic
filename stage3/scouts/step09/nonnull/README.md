@@ -1,6 +1,6 @@
 This scout inventories postfix non-null assertions in stock TypeScript 6.0.3 and
-observes their operands while stock tsc runs on Node. It changes no adaptation or
-production compiler source. The source pin is
+observes their operands while stock tsc runs on Node. The original measurement changed no adaptation or
+production compiler source; the ruled follow-up adds adaptation 49 as described below. The source pin is
 050880ce59e30b356b686bd3144efe24f875ebc8, tag v6.0.3. The topic starts from
 origin/main 45487a809f89885a3fc651cd590e7dabf31362dc.
 
@@ -43,8 +43,9 @@ The stock control and final instrumented CLI each match all 301 existing goldens
 Of 1,119 distinct check candidates, 322 execute and 797 remain unvisited. Seventy-two
 sites see undefined, totaling 61,952,884 evaluations; none sees null. All 301
 processes first observe undefined at scanner.ts:4097:24, the unconditional
-Script_Extensions table initializer. Under the ruled check, each process would
-stop at that initializer before processing its project. The observer deliberately
+Script_Extensions table initializer. Under the initial ruling, each process would
+stop at that initializer before processing its project. The later placeholder ruling
+below removes that consequence for literal initializers. The observer deliberately
 continues, exposing later reset and optional-field cases too.
 
 runtime-summary.json records the final 301-project experiment. NULLISH.tsv lists
@@ -163,3 +164,57 @@ records that interruption and the resumed 16-project receipt rather than inventi
 a continuous-run elapsed time. probe-contract.cjs independently requires exactly
 one undefined observation of the unconditional Script_Extensions initializer in
 each process; an actual probe-log omission mutant exercises that check.
+
+
+Ruled follow-up: placeholders and real type lies
+
+The October 8, 12:35 ruling makes literal `undefined!` and `null!` placeholder
+initializers, including resets. Other assertions remain checked unwraps. The 72
+observed sites split into 50 literal placeholders, seven nullish property/call
+results, and 15 other nonliteral nullish operands. All 22 nonliteral operands
+received `undefined`, never `null`; they are the ruling's category (3) type lies.
+[SPLIT.tsv](SPLIT.tsv) lists all 72 stock locations and input sets. split.cjs uses
+the stock compiler API and the previously measured span IDs, not source regexes.
+split.json records the expression and its owning slot; placeholder-slots.json
+resolves all 50 slots and their lexical binding references.
+
+The slot experiment matches stdout, stderr and exits for all 301 projects. It
+records 61,883,896 placeholder executions and 4,888,904 first reads after those
+executions. Of 50 slots, 25 have a write before every observed first read, 19 have
+at least one first read before a write, and six have no observed first read.
+There are 344,015 reads before writes. None of the tracked arrays took an opaque
+native-array operation in this run. These observations include presence tests and
+reads returning undefined; they do not mean each such read is itself an asserted
+unwrap or an error under the placeholder ruling.
+
+[SLOTS.tsv](SLOTS.tsv) gives the answer for each file:line, including unread epoch
+counts and every input observing a read before a write. slot-observations.json
+also gives first-read locations and whether their values were nullish;
+slot-projects.jsonl retains per-input slot counts. Unread epochs are coverage
+limits, including under the 25 positive rows. The six entirely unread slots are
+not proved safe. This is evidence on the 301 projects, not on every possible tsc
+input.
+
+slots-transform.cjs uses stock compiler API transforms. Lexical tokens distinguish
+closures and per-call variable storage; WeakMaps identify aliased object slots.
+A reset rearms the first-read observation. Writes stay in place and no metadata
+is attached to compiler objects. Optional chains and destructuring are lowered by
+stock tsc to ES5 before field-access instrumentation. The final build uses external
+`tslib` helpers to avoid capture by tsc's imported `Symbol` type. The initial local
+helper version passed 296 projects and failed five for that harness defect; those
+observations were discarded. The corrected complete rerun passed 301/301 in
+403.574 seconds. Reflective descriptor reads, spread, Object.assign, JSON and
+inherited property reads are observed; unreviewed opaque native-array operations
+are reported as unknown rather than safe.
+
+slots-tests.cjs checks 18 helper observations and kills four mutants: omitted
+first-read observation, omitted write observation, inverted write status, and a
+getter writing the slot before the observer latches the read status. Every mutant
+is caught by the first-read observation assertions.
+
+The requested adaptation and the TypeScript bug log are in
+[49-honest-optionals](../../../adapt/49-honest-optionals/README.md). Eleven of the
+22 lies admit byte-preserving private type repairs. Eleven are blocked by the
+simultaneous public API and JavaScript byte requirements; each is listed with its
+own input and reason. The classifier does not quietly move those sites into the
+placeholder category.
