@@ -1,0 +1,8 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function enterDisconnected(b: Builder, blk: BlockIndex | undefined): void {
+    b.block(blk).hasIncoming = (b.block(blk).hasIncoming || b.block(b.cur).Reachable);
+    b.enter(blk);
+}

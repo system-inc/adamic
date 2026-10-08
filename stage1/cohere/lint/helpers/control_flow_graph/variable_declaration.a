@@ -1,0 +1,27 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function variableDeclaration(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    let decl = node;
+    if ((decl === undefined)) {
+        return;
+    }
+    b.expr(b.ast.maybe(needNode(decl).Type));
+    let name = b.ast.maybe(needNode(decl).Name);
+    if (((name !== undefined) && (((needNode(name).Kind === 'ObjectBindingPattern') || (needNode(name).Kind === 'ArrayBindingPattern'))))) {
+        b.expr(b.ast.maybe(needNode(decl).Initializer));
+        b.patternBind(name);
+        return;
+    }
+    if ((b.ast.maybe(needNode(decl).Initializer) === undefined)) {
+        b.patternReads(name);
+        return;
+    }
+    b.patternReads(name);
+    b.expr(b.ast.maybe(needNode(decl).Initializer));
+    b.patternWrites(name);
+}

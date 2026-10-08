@@ -1,0 +1,27 @@
+import { panic } from 'adamic';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import type { CfgBlock } from '../../../arena/arena_index.a';
+export type Block = CfgBlock;
+export class BlockArena {
+    private alive = true;
+    private blocks: Block[] = [];
+    get length(): number { if(!this.alive) panic('freed CFG arena'); return this.blocks.length; }
+    allocate(): BlockIndex {
+        if(!this.alive) panic('freed CFG arena');
+        return BlockIndex.push(this.blocks);
+    }
+    indexAtSlot(slot: number): BlockIndex {
+        if(!this.alive) panic('freed CFG arena');
+        if(slot < 0 || slot >= this.blocks.length || slot !== Math.floor(slot)) panic('CFG block index out of range');
+        return (this.blocks[slot] ?? panic('missing CFG block index')).index;
+    }
+    read(index: BlockIndex | undefined): Block {
+        if(!this.alive) panic('freed CFG arena');
+        if(index === undefined) panic('absent CFG block index');
+        const slot = index.slot;
+        if(slot < 0 || slot >= this.blocks.length || slot !== Math.floor(slot)) panic('CFG block index out of range');
+        BlockIndex.read(this.blocks, index);
+        return this.blocks[slot] ?? panic('missing CFG block');
+    }
+    dispose(): void { this.blocks = []; this.alive = false; }
+}

@@ -1,0 +1,85 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { throwTarget } from './throw_target.a';
+export function tryStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    let hasCatch = (b.ast.maybe(needNode(stmt).CatchClause) !== undefined);
+    let hasFinally = (b.ast.maybe(needNode(stmt).FinallyBlock) !== undefined);
+    let frame: TryFrame = {catchEntry: undefined, finallyEntry: undefined, thrownForked: false, thrownAny: false, implicit: [], returnedAny: false, position: 'try', hasFinally: hasFinally};
+    if (hasCatch) {
+        frame.catchEntry = b.newBlock();
+    }
+    if (hasFinally) {
+        frame.finallyEntry = b.newBlock();
+    }
+    b.tryStack = append(b.tryStack, frame);
+    b.statement(b.ast.maybe(needNode(stmt).TryBlock));
+    let normalEnds: (BlockIndex | undefined)[] = [];
+    if (hasCatch) {
+        b.link(b.cur, frame.catchEntry);
+        normalEnds = append(normalEnds, b.cur);
+        frame.position = 'catch';
+        frame.thrownForked = false;
+        b.enter(frame.catchEntry);
+        let catchClause = b.ast.maybe(needNode(stmt).CatchClause);
+        if ((b.ast.maybe(needNode(catchClause).VariableDeclaration) !== undefined)) {
+            b.patternBind(b.ast.maybe(needNode(b.ast.maybe(needNode(catchClause).VariableDeclaration)).Name));
+        }
+        b.statement(b.ast.maybe(needNode(catchClause).Block));
+    }
+    normalEnds = append(normalEnds, b.cur);
+    b.tryStack = b.tryStack.slice(0, ((b.tryStack).length - 1));
+    let after = b.newBlock();
+    if (!hasFinally) {
+        for (const end of normalEnds) {
+            b.link(end, after);
+        }
+        b.enter(after);
+        return;
+    }
+    let snapshot = b.snapshotForks();
+    let normalEntry = b.newBlock();
+    for (const end of normalEnds) {
+        b.link(end, normalEntry);
+    }
+    for (const source of frame.implicit) {
+        b.link(source, normalEntry);
+    }
+    b.enter(normalEntry);
+    b.statement(b.ast.maybe(needNode(stmt).FinallyBlock));
+    b.link(b.cur, after);
+    if (b.block(frame.finallyEntry).hasIncoming) {
+        b.restoreForks(snapshot);
+        b.enter(frame.finallyEntry);
+        b.statement(b.ast.maybe(needNode(stmt).FinallyBlock));
+        if (b.block(b.cur).Reachable) {
+            if (frame.returnedAny) {
+                {
+                    let i = b.returnFrame();
+                    if ((i >= 0)) {
+                        let outer = at(b.tryStack, i);
+                        outer.returnedAny = true;
+                        b.link(b.cur, outer.finallyEntry);
+                    } else {
+                        b.markFinal(b.cur);
+                    }
+                }
+            }
+            if (frame.thrownAny) {
+                {
+                    let i = b.throwFrame();
+                    if ((i >= 0)) {
+                        let outer = at(b.tryStack, i);
+                        outer.thrownAny = true;
+                        b.link(b.cur, throwTarget(outer));
+                    } else {
+                        b.markThrown(b.cur);
+                    }
+                }
+            }
+        }
+    }
+    b.enter(after);
+}
