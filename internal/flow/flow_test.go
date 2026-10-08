@@ -50,7 +50,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -288,4 +288,13 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.
+func refusedConstructorFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+		return true
+	}
+	return false
 }
