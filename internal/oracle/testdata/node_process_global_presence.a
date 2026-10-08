@@ -1,0 +1,5 @@
+import { EOL } from "node:os";
+console.log(`${!!process.nextTick}`);
+if (!!process.nextTick) { console.log("global" + EOL); }
+console.log(`${!!process.cwd}`);
+console.log(`${!!process.memoryUsage}`);

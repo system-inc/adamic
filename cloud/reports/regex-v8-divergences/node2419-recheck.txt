@@ -1,0 +1,30 @@
+=== RUN   TestV8RefusalCost
+    v8_cost_test.go:101: execution corpus: 127369 rows, 2791 pattern/flags; refused 0 rows in 0 patterns and 0 attributed files; 0 agree with Node, 0 disagree
+    v8_cost_test.go:102: parser corpus: 5746 rows, 0 refused pattern/flags in 0 test262 files
+--- PASS: TestV8RefusalCost (0.83s)
+=== RUN   TestV8Node2419Recheck
+    v8_recheck_test.go:58: [\q{a}]/iv input="A" spec=[[0 1]] Node24.19=[] refusal=true
+    v8_recheck_test.go:58: [\q{Ss|x}]/iv input="X" spec=[[0 1]] Node24.19=[] refusal=true
+    v8_recheck_test.go:58: (?i:a)[b]/v input="aB" spec=[] Node24.19=[[0 2]] refusal=true
+    v8_recheck_test.go:58: (?-i:a)[b]/iv input="aB" spec=[[0 2]] Node24.19=[] refusal=true
+    v8_recheck_test.go:58: (?i:a)\w/u input="aK" spec=[] Node24.19=[[0 2]] refusal=true
+    v8_recheck_test.go:58: (?i:a)[\w]/u input="aK" spec=[] Node24.19=[[0 2]] refusal=true
+    v8_recheck_test.go:58: (?-i:^)\W/iu input="K" spec=[] Node24.19=[[0 1]] refusal=true
+    v8_recheck_test.go:58: (?i:x|[^a-z])/ input="B" spec=[] Node24.19=[[0 1]] refusal=true
+    v8_recheck_test.go:58: (?i:a)|\P{Ll}/v input="Σ" spec=[[0 1]] Node24.19=[] refusal=true
+    v8_recheck_test.go:58: [\q{ab|a|}]/iv input="A" spec=[[0 1]] Node24.19=[[0 0]] refusal=true
+    v8_recheck_test.go:58: \B/u input="a🌍b" spec=[] Node24.19=[[2 2]] refusal=false
+    v8_recheck_test.go:58: \B/u input="1🌍aac" spec=[[4 4]] Node24.19=[[2 2]] refusal=false
+    v8_recheck_test.go:58: (?!\W)/u input="🌍" spec=[[2 2]] Node24.19=[[1 1]] refusal=false
+--- PASS: TestV8Node2419Recheck (0.12s)
+=== RUN   TestV8VisibleShapesNode
+    v8_test.go:80: visible shapes: 4650 cases; 3660 accepted with zero disagreements; 66 refused patterns, 830 refused cases agreeing with Node and 160 differing
+--- PASS: TestV8VisibleShapesNode (1.15s)
+=== RUN   TestV8EmptyClassStringReplacement
+    v8_test.go:118: optimized control and conforming direct exec: 🌍🌍
+        ["a"]
+        v24.19.0 13.6.233.17-node.51
+    v8_test.go:128: slow-path reproduction: timed out after 2s (process killed)
+--- PASS: TestV8EmptyClassStringReplacement (2.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/regexp	4.240s

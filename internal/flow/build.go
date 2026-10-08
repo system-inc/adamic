@@ -446,7 +446,17 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+				throws = true
+			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.ProcessCall{}):
+				// Invalid exit codes and host failures throw before a valid exit
+				// can terminate the process; retain their catch/finally edges.
+				operation := value.Interface().(ir.ProcessCall).Operation
+				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+			case reflect.TypeOf(ir.NodeHostCall{}):
+				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

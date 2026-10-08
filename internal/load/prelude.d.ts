@@ -6,6 +6,16 @@ interface Console {
 }
 declare var console: Console;
 
+// The supported process surface. Environment and stream observations are read-only.
+// Nonterminal streams have no isTTY value, as on Node.
+declare const process: {
+	exitCode: number | undefined;
+	readonly exit: (code?: number) => never;
+	readonly stdout: { readonly isTTY: true | undefined };
+	readonly stderr: { readonly isTTY: true | undefined };
+	readonly env: { readonly [name: string]: string | undefined };
+};
+
 declare module 'adamic' {
 	// External checker library. Native build requires --tsgo <archive>; JavaScript is refused.
 	// Paths and positions follow bridge/tsgo/tsgo.h. Release each handle exactly once.
@@ -25,6 +35,7 @@ declare module 'adamic' {
 	export function writeTextFile(path: string, text: string): { readonly kind: 'Ok' } | { readonly kind: 'Error'; readonly message: string };
 	// The file system a walk needs: a directory's names in Node's order, and what a path names.
 	export function readDirectory(path: string): { readonly kind: 'Ok'; readonly names: readonly string[] } | { readonly kind: 'Error'; readonly message: string };
+	export function realPath(path: string): { readonly kind: 'Ok'; readonly path: string } | { readonly kind: 'Error'; readonly message: string };
 	export function fileStatus(path: string): { readonly kind: 'Ok'; readonly type: 'file' | 'directory' | 'other'; readonly size: number; readonly symbolicLink: boolean } | { readonly kind: 'Error'; readonly message: string };
 
 	// A string's UTF-8, read in place: how many bytes it is, and the byte at an index, 0 to 255. A lone

@@ -1,0 +1,451 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_live.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_live.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_set_live.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_set_live.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+    oracle_test.go:481: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a
+    oracle_test.go:593: not yet: /workspace/adamic/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a
+    oracle_test.go:599: gate cache node hit
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_set_live.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_set_live.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_live.a
+    oracle_test.go:599: gate cache node hit
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_live.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a
+    oracle_test.go:599: gate cache node hit
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a
+    oracle_test.go:481: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:488: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a
+    oracle_test.go:495: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:604: the release build: exit codes differ
+        sanitized: exit -1, stdout "", stderr ""
+        release:   exit 0, stdout "100000\n", stderr ""
+    oracle_test.go:620: exit codes differ
+        node:   exit 0, stdout "100000\n", stderr ""
+        native: exit -1, stdout "", stderr ""
+    oracle_test.go:495: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:495: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a (78.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a (78.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a (79.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a (79.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a (85.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a (7.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a (8.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a (11.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a (10.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a (11.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a (18.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a (13.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a (6.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a (7.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a (5.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a (16.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a (7.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_input_cache.a (7.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a (9.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_string_duplicates.a (7.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a (7.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a (8.96s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a (7.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a (7.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_order.a (6.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_set_live.a (6.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a (10.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_live.a (6.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a (6.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_small_numbers.a (5.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a (4.72s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_matchall.a (72.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_exec.a (101.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quadratic_test.a (117.38s)
+FAIL
+gate cache: native hits=33 misses=68
+gate cache: node hits=3 misses=65
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	223.700s
+FAIL

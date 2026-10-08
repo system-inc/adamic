@@ -151,6 +151,22 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
+	if usesNodeModules(program) {
+		index, err := nodeTypesIndex(workingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		roots = append(roots, tspath.RootedFilePathFromAbsolute(index))
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		config = config.WithFileNames(roots)
+		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
+	}
+
 	loaded := &Program{compiler: program, fs: fs}
 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
 		return nil, &CheckError{Diagnostics: diagnostics}

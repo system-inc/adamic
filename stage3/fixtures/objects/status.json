@@ -344,8 +344,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/26_diagnostic_in.a:8:107: stage 0 can't lower a parameter that isn't a plain name yet"
     }
   },
   {
