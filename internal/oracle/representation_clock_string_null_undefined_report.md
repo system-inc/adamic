@@ -85,3 +85,15 @@ not canceled as a census echo.
 
 Assumption: admission is limited to the complete three-state string union and string-literal
 variants, rather than extending other nullable representations or importing the parent worker's changes.
+
+## Fast-gate correction
+
+The uncached gate exposed an invalid leak assertion in the intentional stale-narrowing panic
+tests. `natively` correctly returns exit 70; `leakSanitizer` requires exit 0 and consequently
+reported that expected panic as a failure. The cached native path skips leak checks for nonzero
+exits, masking the mistake in the initial verification.
+
+Remove the leak assertion only from the panic cases. They still run sanitized native code and
+require the expected panic and agreement with JavaScript for both absent states in local and
+field storage. Normal fixture, storage, and collapse-null mutant runs retain their leak checks.
+No compiler, runtime, fixture registration, or counts changes are needed.

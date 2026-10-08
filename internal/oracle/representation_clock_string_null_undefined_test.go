@@ -107,7 +107,7 @@ func TestRepresentationClockStringNullUndefinedNarrowing(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				got, sanitized := natively(t, program)
+				got, _ := natively(t, program)
 				js := onJavaScriptBackend(t, program)
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "union member where the checker narrowed it away") {
 					t.Fatalf("stale narrowing escaped: %+v", got)
@@ -115,9 +115,8 @@ func TestRepresentationClockStringNullUndefinedNarrowing(t *testing.T) {
 				if diff := disagreement(js, got); diff != "" {
 					t.Fatal(diff)
 				}
-				if report := leaks(t, program, sanitized); report != "" {
-					t.Fatal(report)
-				}
+				// Panic intentionally exits 70 holding its references. The oracle's leak
+				// checker applies only to programs that finish with exit 0.
 			})
 		}
 	}
