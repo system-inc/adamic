@@ -102,8 +102,10 @@ set -e
 
 local=$(mktemp -d)
 scp -q -r "${box}:${out}" "${local}/fast"
-# Logs only: anything over 5 MB (a binary that strayed into the out directory) is never published.
-find "${local}/fast" -type f -size +5M -print -exec mv {} "${local}" \;
+# A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
+# that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
+find "${local}/fast" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
+find "${local}/fast" -type f -size +5M -exec mv {} "${local}" \; -print >&2
 logBranch=gate-logs/${sha:0:12}/${stamp}/fast
 index=$(mktemp -u)
 gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)

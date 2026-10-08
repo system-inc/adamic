@@ -25,8 +25,10 @@ publish() {
   local copy index gitDirectory tree commit branch=gate-logs/${sha:0:12}/${stamp}/full-main
   copy=$(mktemp -d)
   scp -q -r "${box}:${out}" "${copy}/full-main"
-  # Logs only: anything over 5 MB is never published.
-  find "${copy}/full-main" -type f -size +5M -print -exec mv {} "${copy}" \;
+  # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
+  # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
+  find "${copy}/full-main" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
+  find "${copy}/full-main" -type f -size +5M -exec mv {} "${copy}" \; -print >&2
   index=$(mktemp -u)
   gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)
   tree=$(cd "${copy}/full-main" && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" --work-tree=. add -A -f . && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" write-tree)
