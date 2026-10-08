@@ -1,0 +1,6 @@
+type Path = string & { readonly pathBrand: unknown };
+interface FileInfo { readonly version: string }
+function examine([path, info]: [Path, FileInfo] | undefined): void {
+    console.log(String(path) + info.version);
+}
+examine(["p" as Path, { version: "1" }]);

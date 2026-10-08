@@ -1,0 +1,4 @@
+function show(file: { readonly path: string } | undefined): void {
+    console.log(file.path);
+}
+show({ path: "ok" });

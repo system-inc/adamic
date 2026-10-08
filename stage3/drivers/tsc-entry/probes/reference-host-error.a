@@ -1,0 +1,3 @@
+const error: Error = new Error("probe");
+Error.captureStackTrace(error);
+console.log(typeof error.stack === "string");

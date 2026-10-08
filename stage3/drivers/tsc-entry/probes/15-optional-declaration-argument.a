@@ -1,0 +1,5 @@
+interface Node { readonly kind: number }
+interface Declaration extends Node { readonly name: string }
+function accept(node: Node): void { console.log("ok"); }
+const declarations: readonly Declaration[] = [];
+accept(declarations[0]);

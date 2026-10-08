@@ -1,0 +1,5 @@
+interface EmitSignature { readonly hash: string }
+interface ReusableBuilderProgramState { readonly outSignature?: EmitSignature }
+const outSignature: EmitSignature | undefined = undefined;
+const state: ReusableBuilderProgramState = { outSignature };
+console.log("ok");
