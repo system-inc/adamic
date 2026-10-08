@@ -34,6 +34,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return l.setIndex(target, binary.Right)
 	}
+	if target.Kind == ast.KindObjectLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.objectDestructuringAssignment(target, binary.Right)
+	}
 	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.destructuringAssignment(target, binary.Right)
 	}

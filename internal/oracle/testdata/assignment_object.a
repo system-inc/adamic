@@ -1,0 +1,15 @@
+let calls = 0;
+function source(): { first: string; second: number; third: string[] } {
+ calls += 1;
+ return {first: ['new', 'text'].join('/'), second: 7, third: ['held']};
+}
+let first = ['old'].join('');
+let second = 2;
+let third = ['before'];
+({first, second, third} = source());
+console.log(`${first}:${second}:${third.join('/')}:${calls}`);
+({first: first, second: second} = {first: ['renamed'].join(''), second: 9});
+console.log(`${first}:${second}`);
+let duplicate = 0;
+({second: duplicate, second: duplicate} = {second: 11});
+console.log(`${duplicate}`);

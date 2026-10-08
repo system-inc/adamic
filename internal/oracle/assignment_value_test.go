@@ -2,6 +2,7 @@ package oracle
 
 func init() {
 	for _, name := range []string{
+		"assignment_object.a",
 		"assignment_value_undefined.a",
 		"assignment_value_accessor.a",
 		"assignment_value_weak.a",

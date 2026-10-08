@@ -1,0 +1,292 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/semver.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "kind": "KindClassDeclaration",
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "Version",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:255:37",
+      "reason": "a value of type T | null | undefined",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:255:37: stage 0 can't lower a value of type T | null | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:59:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:255:37: stage 0 can't lower a value of type T | null | undefined yet",
+      "start": 2549,
+      "end": 2643
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:60:14",
+      "reason": "assigning to an ObjectLiteralExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:60:14: stage 0 can't lower assigning to an ObjectLiteralExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:60:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:60:14: stage 0 can't lower assigning to an ObjectLiteralExpression yet",
+      "start": 2643,
+      "end": 2711
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:63:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 2722,
+      "end": 2786
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:64:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 2786,
+      "end": 2848
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:65:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 2848,
+      "end": 2910
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1750:25",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1750:25: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:67:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1750:25: stage 0 can't lower a value of type unknown yet",
+      "start": 2910,
+      "end": 3029
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:68:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1750:25: stage 0 can't lower a value of type unknown yet",
+      "start": 3029,
+      "end": 3121
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:70:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 3121,
+      "end": 3237
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:71:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 3237,
+      "end": 3336
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:76:27",
+      "reason": "reading prereleaseArray",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:76:27: stage 0 can't lower reading prereleaseArray yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:76:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:76:27: stage 0 can't lower reading prereleaseArray yet",
+      "start": 3425,
+      "end": 3469
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:77:22",
+      "reason": "reading buildArray",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:77:22: stage 0 can't lower reading buildArray yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:77:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:77:22: stage 0 can't lower reading buildArray yet",
+      "start": 3469,
+      "end": 3503
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:273:33",
+      "reason": "a value of type never",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:118:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet",
+      "start": 5328,
+      "end": 5378
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:124:13",
+      "reason": "a destructured name that isn't plain",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:124:13: stage 0 can't lower a destructured name that isn't plain yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:123:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:124:13: stage 0 can't lower a destructured name that isn't plain yet",
+      "start": 5557,
+      "end": 5770
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:130:28",
+      "reason": "reading major",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:130:28: stage 0 can't lower reading major yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:130:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:130:28: stage 0 can't lower reading major yet",
+      "start": 5770,
+      "end": 5839
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:622:31",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:622:31: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:622:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:622:31: stage 0 can't lower a NonNullExpression yet",
+      "start": 20976,
+      "end": 21074
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:47:41",
+      "reason": "a constructor object escaping before static fields are initialized",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:47:41: Adamic 0.1 refuses a constructor object escaping before static fields are initialized; publish the class value after the last static field initializer"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:46:1",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/semver.ts:47:41: Adamic 0.1 refuses a constructor object escaping before static fields are initialized; publish the class value after the last static field initializer",
+      "start": 1819,
+      "end": 6123
+    }
+  ]
+}

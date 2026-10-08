@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,os,concurrent.futures
+p=Path('internal/lower/assignment_object.go');original=p.read_text()
+for name,before,after in [('double-source','body := []ir.Statement{ir.Declare{Local: held, Value: value}}','body := []ir.Statement{ir.Evaluate{Value: value}, ir.Declare{Local: held, Value: value}}'),('skip-store','body = append(body, ir.Assign{Local: local, Value: read, Checked: l.checked(local)})','body = append(body, ir.Evaluate{Value: read})')]:
+ try:
+  assert original.count(before)==1;p.write_text(original.replace(before,after))
+  with open('/tmp/object-mutant-'+name+'.log','w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestNativeAgreesWithNode/internal/oracle/testdata/assignment_object','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  log=Path('/tmp/object-mutant-'+name+'.log').read_text();assert r.returncode and 'stdout differs' in log and '[build failed]' not in log,(name,log)
+  print(name,'caught by Node stdout',flush=True)
+ finally:p.write_text(original)
+def replay(where):
+ name='object-'+('builder' if 'builder' in where else 'semver')
+ with open('/tmp/root-after-'+name+'.json','w') as f,open('/tmp/root-after-'+name+'.log','w') as e:
+  r=subprocess.run(['go','run','./stage3/census/latent/replay','-project','/tmp/notyet-binary-adapted/src/tsc/tsc.ts','-where','/tmp/notyet-binary-adapted/src/compiler/'+where,'-kind','NotYet','-reason','assigning to an ObjectLiteralExpression'],stdout=f,stderr=e)
+ print(name,'replay exit',r.returncode,flush=True)
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(replay,['builder.ts:1765:22','semver.ts:60:14']))
