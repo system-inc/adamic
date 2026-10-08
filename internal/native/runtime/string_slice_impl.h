@@ -35,7 +35,9 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	size_t middle = stop > offset ? stop - offset : 0;
 	if (!low && !ends_low) {
 		adamic_string *slice = adamic_string_share(string, offset, middle);
-		slice->units = last - first + 1;
+		// A whole span retains its source; its shared metadata is already published.
+		// Only a freshly allocated view may receive a plain units write.
+		if (slice != string) { slice->units = last - first + 1; }
 		return slice;
 	}
 	builder build = {NULL, 0, 0};
