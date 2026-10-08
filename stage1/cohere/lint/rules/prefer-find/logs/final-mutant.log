@@ -1,0 +1,30 @@
+=== RUN   TestMutants/prefer-find_array_verdict_suppressed
+=== PAUSE TestMutants/prefer-find_array_verdict_suppressed
+=== CONT  TestMutants/prefer-find_array_verdict_suppressed
+    lint_test.go:832: checker compilation phases: load=224.781592ms lower=4.419314837s C=613.832112ms JavaScript=36.983493ms
+    lint_test.go:832: checker native mutant build: 4.489650903s
+    lint_test.go:855: prefer-find array verdict suppressed caught on native: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:5:1
+    lint_test.go:855: prefer-find array verdict suppressed caught on Node: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:5:1
+    lint_test.go:855: prefer-find array verdict suppressed caught on emitted JavaScript: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed1069999006/016/prefer-find-0.ts:5:1
+--- PASS: TestMutants/prefer-find_array_verdict_suppressed (10.58s)
