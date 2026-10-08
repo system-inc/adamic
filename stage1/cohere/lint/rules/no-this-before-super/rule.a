@@ -1,0 +1,116 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { CoreArena } from '../../helpers/core/nodes.a';
+import { isSeparateEvaluationContext } from '../../helpers/core/is_separate_evaluation_context.a';
+import { bodyDefinitelyExits } from '../../helpers/core/body_definitely_exits.a';
+import { project } from './projection.a';
+import { message } from './messages.a';
+class SuperScanner {
+    readonly context: RuleContext; readonly arena: CoreArena; superCalled: boolean;
+    constructor(context: RuleContext, arena: CoreArena, called: boolean) { this.context = context; this.arena = arena; this.superCalled = called; }
+    branch(): SuperScanner { return new SuperScanner(this.context, this.arena, this.superCalled); }
+    scan(index: number): boolean {
+        if(index < 0 || isSeparateEvaluationContext(this.arena, index)) { return false; }
+        const node = this.context.node(index); const children = node.children;
+        switch(node.kind) {
+            case 'CallExpression':
+                if(this.context.kind(children[0] ?? -1) === 'SuperKeyword') {
+                    for(const argument of children.slice(children.length - node.list)) { if(this.scan(argument)) { return true; } }
+                    this.superCalled = true; return false;
+                }
+                break;
+            case 'ThisKeyword': case 'SuperKeyword': return !this.superCalled;
+            case 'ConditionalExpression': {
+                if(this.scan(children[0] ?? -1)) { return true; }
+                const entry = this.superCalled; const whenTrue = this.branch(); const whenFalse = this.branch();
+                if(whenTrue.scan(children[2] ?? -1) || whenFalse.scan(children[4] ?? -1)) { return true; }
+                this.superCalled = entry; return false;
+            }
+            case 'BinaryExpression': {
+                const operator = this.context.kind(children[1] ?? -1);
+                if(operator === 'AmpersandAmpersandToken' || operator === 'BarBarToken' || operator === 'QuestionQuestionToken' || operator === 'AmpersandAmpersandEqualsToken' || operator === 'BarBarEqualsToken' || operator === 'QuestionQuestionEqualsToken') {
+                    if(this.scan(children[0] ?? -1)) { return true; }
+                    const right = this.branch(); return right.scan(children[2] ?? -1);
+                }
+                break;
+            }
+            case 'IfStatement': {
+                if(this.scan(children[0] ?? -1)) { return true; }
+                const thenScanner = this.branch(); const elseScanner = this.branch();
+                if(thenScanner.scan(children[1] ?? -1) || elseScanner.scan(children[2] ?? -1)) { return true; }
+                this.superCalled = thenScanner.superCalled && elseScanner.superCalled; return false;
+            }
+            case 'Block':
+                for(const statement of children) {
+                    if(this.scan(statement)) { return true; }
+                    if(bodyDefinitelyExits(this.arena, statement)) { return false; }
+                }
+                return false;
+            case 'TryStatement': {
+                const tryScanner = this.branch(); if(tryScanner.scan(children[0] ?? -1)) { return true; }
+                let hasCatch = false;
+                for(const child of children.slice(1)) {
+                    if(this.context.kind(child) === 'CatchClause') { hasCatch = true; }
+                    const scanner = this.branch(); if(scanner.scan(child)) { return true; }
+                }
+                this.superCalled = tryScanner.superCalled && !hasCatch; return false;
+            }
+            case 'WhileStatement': case 'ForStatement': case 'ForInStatement': case 'ForOfStatement': {
+                for(const part of children.slice(0, children.length - 1)) { if(this.scan(part)) { return true; } }
+                const bodyScanner = this.branch(); return bodyScanner.scan(children[children.length - 1] ?? -1);
+            }
+            case 'DoStatement': return this.scan(children[0] ?? -1) || this.scan(children[1] ?? -1);
+            case 'LabeledStatement': return this.scan(children[children.length - 1] ?? -1);
+            case 'SwitchStatement': return this.scanSwitch(index);
+        }
+        for(const child of children) { if(this.scan(child)) { return true; } }
+        return false;
+    }
+    scanSwitch(index: number): boolean {
+        const node = this.context.node(index); if(this.scan(node.children[0] ?? -1)) { return true; }
+        const entry = this.superCalled; const clauses = this.arena.node(index).clauses;
+        let hasDefault = false; let everyExitCalled = true; let clauseState = true;
+        for(let i = 0; i < clauses.length; i++) {
+            const clause = clauses[i] ?? -1; const details = this.context.node(clause);
+            if(details.kind === 'DefaultClause') { hasDefault = true; }
+            const clauseScanner = new SuperScanner(this.context, this.arena, clauseState && entry);
+            if(details.kind === 'CaseClause' && this.scan(details.children[0] ?? -1)) { return true; }
+            let exits = false;
+            for(const inner of this.arena.node(clause).statements) {
+                if(clauseScanner.scan(inner)) { return true; }
+                if(this.context.kind(inner) === 'BreakStatement' || bodyDefinitelyExits(this.arena, inner)) { exits = true; break; }
+            }
+            if(exits) { everyExitCalled = everyExitCalled && clauseScanner.superCalled; clauseState = true; continue; }
+            clauseState = clauseScanner.superCalled;
+            if(i === clauses.length - 1) { everyExitCalled = everyExitCalled && clauseScanner.superCalled; }
+        }
+        this.superCalled = hasDefault && everyExitCalled; return false;
+    }
+}
+export class Rule {
+    readonly context: RuleContext; arena: CoreArena | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.arena = project(this.context); }
+    visit(node: ParseNode, index: number): void {
+        const parent = this.context.parent(index); const kind = this.context.kind(parent);
+        if(kind !== 'ClassDeclaration' && kind !== 'ClassExpression') { return; }
+        let extending = false;
+        for(const child of this.context.node(parent).children) {
+            const heritage = this.context.node(child);
+            if(heritage.kind !== 'HeritageClause' || heritage.operator !== 'ExtendsKeyword') { continue; }
+            const element = heritage.children[0] ?? -1;
+            if(element >= 0 && this.context.kind(this.context.node(element).children[0] ?? -1) !== 'NullKeyword') { extending = true; }
+        }
+        if(!extending) { return; }
+        let body = -1; for(const child of node.children) { if(this.context.kind(child) === 'Block') { body = child; } }
+        if(body < 0) { return; }
+        const scanner = new SuperScanner(this.context, this.arena ?? panic('missing core projection'), false);
+        let violated = false;
+        for(const child of node.children) { if(this.context.kind(child) === 'Parameter' && scanner.scan(child)) { violated = true; break; } }
+        if(!violated) { violated = scanner.scan(body); }
+        if(!violated) { return; }
+        this.context.report(index, 'no-this-before-super', 'thisBeforeSuper', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

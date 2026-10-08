@@ -1,0 +1,1 @@
+export const message = "This derived constructor reads `this` or `super` on a path that has not called `super()` yet, which throws a ReferenceError because the `this` binding does not exist until `super()` returns.";
