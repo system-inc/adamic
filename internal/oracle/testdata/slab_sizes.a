@@ -1,0 +1,1697 @@
+// Size classes (runtime/heap.c). Strings of every length from 1 to 300 bytes, and objects whose
+// own blocks are every size an object can be from an empty one (40 bytes) up through 300. Some of
+// each size stay live, some are dropped, then more of that same size are made, so a class's free
+// list is taken from while other slots of it are still live. A string's block is the 64-byte header
+// plus its length, so length 192 is the 256-byte class and length 193 comes from malloc. Empty
+// slices are 64-byte strings. Boxed numbers, arrays, maps, closures and weak handles are the other
+// heap kinds, kept and dropped the same way.
+import type { Weak } from 'adamic';
+
+interface Packed {
+	readonly label: string;
+	readonly weight: number;
+}
+
+interface Box {
+	readonly label: string;
+}
+
+interface Holder {
+	readonly box: Box;
+	readonly handle: Weak<Box>;
+}
+
+function letter(mark: number): string {
+	const alphabet = "abcdefghijklmnopqrstuvwxyz";
+	return alphabet[mark % 26] ?? "a";
+}
+
+function makeText(length: number, mark: number): string {
+	return letter(mark).repeat(length);
+}
+
+let stringSum = 0;
+let objectSum = 0;
+const edges: string[] = [];
+for (let length = 1; length <= 300; length++) {
+	let texts: string[] = [];
+	let objects: Packed[] = [];
+	for (let index = 0; index < 8; index++) {
+		texts.push(makeText(length, index));
+		objects.push({ label: makeText(length, index + 8), weight: length * 8 + index });
+	}
+	let heldText: string[] = [];
+	let heldObject: Packed[] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const text = texts[index];
+		const object = objects[index];
+		if (text !== undefined && object !== undefined) {
+			heldText.push(text);
+			heldObject.push(object);
+		}
+	}
+	texts = [];
+	objects = [];
+	for (let index = 0; index < 4; index++) {
+		const made = makeText(length, index + 16);
+		const object: Packed = { label: makeText(length, index + 20), weight: length };
+		stringSum = (stringSum + made.length + made.charCodeAt(0) + made.charCodeAt(length - 1)) % 1000003;
+		objectSum = (objectSum + object.label.length + object.label.charCodeAt(length - 1) + object.weight) % 1000003;
+		if (index % 2 === 0) {
+			heldText.push(made);
+			heldObject.push(object);
+		}
+	}
+	for (const text of heldText) {
+		stringSum = (stringSum + text.length + text.charCodeAt(0) + text.charCodeAt(length - 1)) % 1000003;
+	}
+	for (const object of heldObject) {
+		objectSum = (objectSum + object.label.length + object.weight + object.label.charCodeAt(0)) % 1000003;
+	}
+	if (length === 1 || length === 16 || length === 17 || length === 176 || length === 177 || length === 192 || length === 193 || length === 256 || length === 300) {
+		const sample = heldText[0];
+		const packed = heldObject[0];
+		if (sample !== undefined && packed !== undefined) {
+			edges.push(`${length}:${sample.length}:${sample.charCodeAt(length - 1)}:${packed.label.length}:${packed.weight}`);
+		}
+	}
+}
+
+function churnBlanks(): number {
+	let batch: string[] = [];
+	for (let index = 0; index < 8; index++) {
+		batch.push("abc".slice(1, 1));
+	}
+	let held: string[] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 4; index++) {
+		const made = "xyz".slice(2, 2);
+		if (index % 2 === 0) {
+			held.push(made);
+		}
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += 1 + item.length;
+	}
+	return sum;
+}
+
+function churnBoxes(): number {
+	let keptA: number | string = 0.5;
+	let keptB: number | string = 1.5;
+	let slot: number | string = 2.5;
+	for (let index = 0; index < 12; index++) {
+		slot = index + 3.5;
+	}
+	for (let index = 0; index < 6; index++) {
+		slot = index + 40.5;
+	}
+	let sum = 0;
+	if (typeof keptA === "number") {
+		sum += keptA;
+	}
+	if (typeof keptB === "number") {
+		sum += keptB;
+	}
+	if (typeof slot === "number") {
+		sum += slot;
+	}
+	return sum;
+}
+
+function churnArrays(): number {
+	let batch: number[][] = [];
+	for (let index = 0; index < 8; index++) {
+		batch.push([index, index + 1, index + 2]);
+	}
+	let held: number[][] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 4; index++) {
+		held.push([index + 10, index + 11]);
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.length + (item[0] ?? 0);
+	}
+	return sum;
+}
+
+function churnMaps(): number {
+	let batch: Map<string, number>[] = [];
+	for (let index = 0; index < 8; index++) {
+		const map = new Map<string, number>();
+		map.set(`k${index}`, index);
+		batch.push(map);
+	}
+	let held: Map<string, number>[] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 4; index++) {
+		const map = new Map<string, number>();
+		map.set(`n${index}`, index + 10);
+		held.push(map);
+	}
+	let sum = 0;
+	for (const map of held) {
+		let found = map.get("k1") ?? map.get("k3") ?? map.get("k5") ?? map.get("k7") ?? map.get("n0") ?? map.get("n1") ?? map.get("n2") ?? map.get("n3") ?? 0;
+		for (const [, value] of map) {
+			found += value;
+		}
+		sum += map.size + found;
+	}
+	return sum;
+}
+
+function churnClosures(): number {
+	let plain: (() => number)[] = [];
+	let closed: (() => number)[] = [];
+	for (let index = 0; index < 8; index++) {
+		plain.push(() => 7);
+		const captured = index;
+		closed.push(() => captured);
+	}
+	let heldPlain: (() => number)[] = [];
+	let heldClosed: (() => number)[] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const left = plain[index];
+		const right = closed[index];
+		if (left !== undefined && right !== undefined) {
+			heldPlain.push(left);
+			heldClosed.push(right);
+		}
+	}
+	plain = [];
+	closed = [];
+	for (let index = 0; index < 4; index++) {
+		heldPlain.push(() => index);
+		const captured = index + 30;
+		heldClosed.push(() => captured);
+	}
+	let sum = 0;
+	for (const made of heldPlain) {
+		sum += made();
+	}
+	for (const made of heldClosed) {
+		sum += made();
+	}
+	return sum;
+}
+
+function churnWeaks(): number {
+	let batch: Holder[] = [];
+	for (let index = 0; index < 8; index++) {
+		const box: Box = { label: `w${index}` };
+		batch.push({ box, handle: box });
+	}
+	let held: Holder[] = [];
+	for (let index = 1; index < 8; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 4; index++) {
+		const box: Box = { label: `n${index}` };
+		held.push({ box, handle: box });
+	}
+	let sum = 0;
+	for (const item of held) {
+		const weakLabel = item.handle?.label;
+		sum += item.box.label.length + (weakLabel === undefined ? 0 : weakLabel.length);
+	}
+	return sum;
+}
+
+interface Shape0 {}
+function churnShape0(seed: number): number {
+	let batch: Shape0[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({});
+	}
+	let held: Shape0[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({});
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += 0;
+	}
+	return sum;
+}
+
+interface Shape1 {
+	readonly f0: number;
+}
+function churnShape1(seed: number): number {
+	let batch: Shape1[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0 });
+	}
+	let held: Shape1[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0;
+	}
+	return sum;
+}
+
+interface Shape2 {
+	readonly f0: number;
+	readonly f1: number;
+}
+function churnShape2(seed: number): number {
+	let batch: Shape2[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1 });
+	}
+	let held: Shape2[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f1;
+	}
+	return sum;
+}
+
+interface Shape3 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+}
+function churnShape3(seed: number): number {
+	let batch: Shape3[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2 });
+	}
+	let held: Shape3[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f2;
+	}
+	return sum;
+}
+
+interface Shape4 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+}
+function churnShape4(seed: number): number {
+	let batch: Shape4[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3 });
+	}
+	let held: Shape4[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f3;
+	}
+	return sum;
+}
+
+interface Shape5 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+}
+function churnShape5(seed: number): number {
+	let batch: Shape5[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4 });
+	}
+	let held: Shape5[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f4;
+	}
+	return sum;
+}
+
+interface Shape6 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+}
+function churnShape6(seed: number): number {
+	let batch: Shape6[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5 });
+	}
+	let held: Shape6[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f5;
+	}
+	return sum;
+}
+
+interface Shape7 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+}
+function churnShape7(seed: number): number {
+	let batch: Shape7[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6 });
+	}
+	let held: Shape7[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f6;
+	}
+	return sum;
+}
+
+interface Shape8 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+}
+function churnShape8(seed: number): number {
+	let batch: Shape8[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7 });
+	}
+	let held: Shape8[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f7;
+	}
+	return sum;
+}
+
+interface Shape9 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+}
+function churnShape9(seed: number): number {
+	let batch: Shape9[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8 });
+	}
+	let held: Shape9[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f8;
+	}
+	return sum;
+}
+
+interface Shape10 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+}
+function churnShape10(seed: number): number {
+	let batch: Shape10[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9 });
+	}
+	let held: Shape10[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f9;
+	}
+	return sum;
+}
+
+interface Shape11 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+}
+function churnShape11(seed: number): number {
+	let batch: Shape11[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10 });
+	}
+	let held: Shape11[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f10;
+	}
+	return sum;
+}
+
+interface Shape12 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+}
+function churnShape12(seed: number): number {
+	let batch: Shape12[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11 });
+	}
+	let held: Shape12[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f11;
+	}
+	return sum;
+}
+
+interface Shape13 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+}
+function churnShape13(seed: number): number {
+	let batch: Shape13[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12 });
+	}
+	let held: Shape13[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f12;
+	}
+	return sum;
+}
+
+interface Shape14 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+}
+function churnShape14(seed: number): number {
+	let batch: Shape14[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13 });
+	}
+	let held: Shape14[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f13;
+	}
+	return sum;
+}
+
+interface Shape15 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+}
+function churnShape15(seed: number): number {
+	let batch: Shape15[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14 });
+	}
+	let held: Shape15[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f14;
+	}
+	return sum;
+}
+
+interface Shape16 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+}
+function churnShape16(seed: number): number {
+	let batch: Shape16[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15 });
+	}
+	let held: Shape16[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f15;
+	}
+	return sum;
+}
+
+interface Shape17 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+}
+function churnShape17(seed: number): number {
+	let batch: Shape17[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16 });
+	}
+	let held: Shape17[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f16;
+	}
+	return sum;
+}
+
+interface Shape18 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+}
+function churnShape18(seed: number): number {
+	let batch: Shape18[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17 });
+	}
+	let held: Shape18[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f17;
+	}
+	return sum;
+}
+
+interface Shape19 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+}
+function churnShape19(seed: number): number {
+	let batch: Shape19[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18 });
+	}
+	let held: Shape19[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f18;
+	}
+	return sum;
+}
+
+interface Shape20 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+}
+function churnShape20(seed: number): number {
+	let batch: Shape20[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19 });
+	}
+	let held: Shape20[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f19;
+	}
+	return sum;
+}
+
+interface Shape21 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+}
+function churnShape21(seed: number): number {
+	let batch: Shape21[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20 });
+	}
+	let held: Shape21[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f20;
+	}
+	return sum;
+}
+
+interface Shape22 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+}
+function churnShape22(seed: number): number {
+	let batch: Shape22[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21 });
+	}
+	let held: Shape22[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f21;
+	}
+	return sum;
+}
+
+interface Shape23 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+}
+function churnShape23(seed: number): number {
+	let batch: Shape23[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22 });
+	}
+	let held: Shape23[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f22;
+	}
+	return sum;
+}
+
+interface Shape24 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+}
+function churnShape24(seed: number): number {
+	let batch: Shape24[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23 });
+	}
+	let held: Shape24[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f23;
+	}
+	return sum;
+}
+
+interface Shape25 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+}
+function churnShape25(seed: number): number {
+	let batch: Shape25[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24 });
+	}
+	let held: Shape25[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f24;
+	}
+	return sum;
+}
+
+interface Shape26 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+}
+function churnShape26(seed: number): number {
+	let batch: Shape26[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25 });
+	}
+	let held: Shape26[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f25;
+	}
+	return sum;
+}
+
+interface Shape27 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+}
+function churnShape27(seed: number): number {
+	let batch: Shape27[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26 });
+	}
+	let held: Shape27[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f26;
+	}
+	return sum;
+}
+
+interface Shape28 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+}
+function churnShape28(seed: number): number {
+	let batch: Shape28[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27 });
+	}
+	let held: Shape28[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f27;
+	}
+	return sum;
+}
+
+interface Shape29 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+	readonly f28: number;
+}
+function churnShape29(seed: number): number {
+	let batch: Shape29[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27, f28: seed + index + 28 });
+	}
+	let held: Shape29[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27, f28: seed + 100 + index + 28 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f28;
+	}
+	return sum;
+}
+
+interface Shape30 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+	readonly f28: number;
+	readonly f29: number;
+}
+function churnShape30(seed: number): number {
+	let batch: Shape30[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27, f28: seed + index + 28, f29: seed + index + 29 });
+	}
+	let held: Shape30[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27, f28: seed + 100 + index + 28, f29: seed + 100 + index + 29 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f29;
+	}
+	return sum;
+}
+
+interface Shape31 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+	readonly f28: number;
+	readonly f29: number;
+	readonly f30: number;
+}
+function churnShape31(seed: number): number {
+	let batch: Shape31[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27, f28: seed + index + 28, f29: seed + index + 29, f30: seed + index + 30 });
+	}
+	let held: Shape31[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27, f28: seed + 100 + index + 28, f29: seed + 100 + index + 29, f30: seed + 100 + index + 30 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f30;
+	}
+	return sum;
+}
+
+interface Shape32 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+	readonly f28: number;
+	readonly f29: number;
+	readonly f30: number;
+	readonly f31: number;
+}
+function churnShape32(seed: number): number {
+	let batch: Shape32[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27, f28: seed + index + 28, f29: seed + index + 29, f30: seed + index + 30, f31: seed + index + 31 });
+	}
+	let held: Shape32[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27, f28: seed + 100 + index + 28, f29: seed + 100 + index + 29, f30: seed + 100 + index + 30, f31: seed + 100 + index + 31 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f31;
+	}
+	return sum;
+}
+
+interface Shape33 {
+	readonly f0: number;
+	readonly f1: number;
+	readonly f2: number;
+	readonly f3: number;
+	readonly f4: number;
+	readonly f5: number;
+	readonly f6: number;
+	readonly f7: number;
+	readonly f8: number;
+	readonly f9: number;
+	readonly f10: number;
+	readonly f11: number;
+	readonly f12: number;
+	readonly f13: number;
+	readonly f14: number;
+	readonly f15: number;
+	readonly f16: number;
+	readonly f17: number;
+	readonly f18: number;
+	readonly f19: number;
+	readonly f20: number;
+	readonly f21: number;
+	readonly f22: number;
+	readonly f23: number;
+	readonly f24: number;
+	readonly f25: number;
+	readonly f26: number;
+	readonly f27: number;
+	readonly f28: number;
+	readonly f29: number;
+	readonly f30: number;
+	readonly f31: number;
+	readonly f32: number;
+}
+function churnShape33(seed: number): number {
+	let batch: Shape33[] = [];
+	for (let index = 0; index < 6; index++) {
+		batch.push({ f0: seed + index + 0, f1: seed + index + 1, f2: seed + index + 2, f3: seed + index + 3, f4: seed + index + 4, f5: seed + index + 5, f6: seed + index + 6, f7: seed + index + 7, f8: seed + index + 8, f9: seed + index + 9, f10: seed + index + 10, f11: seed + index + 11, f12: seed + index + 12, f13: seed + index + 13, f14: seed + index + 14, f15: seed + index + 15, f16: seed + index + 16, f17: seed + index + 17, f18: seed + index + 18, f19: seed + index + 19, f20: seed + index + 20, f21: seed + index + 21, f22: seed + index + 22, f23: seed + index + 23, f24: seed + index + 24, f25: seed + index + 25, f26: seed + index + 26, f27: seed + index + 27, f28: seed + index + 28, f29: seed + index + 29, f30: seed + index + 30, f31: seed + index + 31, f32: seed + index + 32 });
+	}
+	let held: Shape33[] = [];
+	for (let index = 1; index < 6; index += 2) {
+		const item = batch[index];
+		if (item !== undefined) {
+			held.push(item);
+		}
+	}
+	batch = [];
+	for (let index = 0; index < 3; index++) {
+		held.push({ f0: seed + 100 + index + 0, f1: seed + 100 + index + 1, f2: seed + 100 + index + 2, f3: seed + 100 + index + 3, f4: seed + 100 + index + 4, f5: seed + 100 + index + 5, f6: seed + 100 + index + 6, f7: seed + 100 + index + 7, f8: seed + 100 + index + 8, f9: seed + 100 + index + 9, f10: seed + 100 + index + 10, f11: seed + 100 + index + 11, f12: seed + 100 + index + 12, f13: seed + 100 + index + 13, f14: seed + 100 + index + 14, f15: seed + 100 + index + 15, f16: seed + 100 + index + 16, f17: seed + 100 + index + 17, f18: seed + 100 + index + 18, f19: seed + 100 + index + 19, f20: seed + 100 + index + 20, f21: seed + 100 + index + 21, f22: seed + 100 + index + 22, f23: seed + 100 + index + 23, f24: seed + 100 + index + 24, f25: seed + 100 + index + 25, f26: seed + 100 + index + 26, f27: seed + 100 + index + 27, f28: seed + 100 + index + 28, f29: seed + 100 + index + 29, f30: seed + 100 + index + 30, f31: seed + 100 + index + 31, f32: seed + 100 + index + 32 });
+	}
+	let sum = 0;
+	for (const item of held) {
+		sum += item.f0 + item.f32;
+	}
+	return sum;
+}
+
+const blanks = churnBlanks();
+const boxes = churnBoxes();
+const arrays = churnArrays();
+const maps = churnMaps();
+const closures = churnClosures();
+const weaks = churnWeaks();
+let shapes = 0;
+	shapes += churnShape0(0);
+	shapes += churnShape1(1);
+	shapes += churnShape2(2);
+	shapes += churnShape3(3);
+	shapes += churnShape4(4);
+	shapes += churnShape5(5);
+	shapes += churnShape6(6);
+	shapes += churnShape7(7);
+	shapes += churnShape8(8);
+	shapes += churnShape9(9);
+	shapes += churnShape10(10);
+	shapes += churnShape11(11);
+	shapes += churnShape12(12);
+	shapes += churnShape13(13);
+	shapes += churnShape14(14);
+	shapes += churnShape15(15);
+	shapes += churnShape16(16);
+	shapes += churnShape17(17);
+	shapes += churnShape18(18);
+	shapes += churnShape19(19);
+	shapes += churnShape20(20);
+	shapes += churnShape21(21);
+	shapes += churnShape22(22);
+	shapes += churnShape23(23);
+	shapes += churnShape24(24);
+	shapes += churnShape25(25);
+	shapes += churnShape26(26);
+	shapes += churnShape27(27);
+	shapes += churnShape28(28);
+	shapes += churnShape29(29);
+	shapes += churnShape30(30);
+	shapes += churnShape31(31);
+	shapes += churnShape32(32);
+	shapes += churnShape33(33);
+console.log(`strings ${stringSum} objects ${objectSum}`);
+console.log(`edges ${edges.join(" ")}`);
+console.log(`blanks ${blanks} boxes ${boxes} arrays ${arrays} maps ${maps} closures ${closures} weaks ${weaks} shapes ${shapes}`);

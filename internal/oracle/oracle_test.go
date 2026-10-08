@@ -566,6 +566,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// A move handed to a call whose later argument throws (reuse.go, handOver).
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// Fresh values handed to a call whose later argument throws.
+	{"internal/oracle/testdata/reuse_handover_fresh.a", true, false},
+	// Reuse across every string and object slab size.
+	{"internal/oracle/testdata/slab_sizes.a", true, false},
 	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
 	{"internal/oracle/testdata/aside_throw.a", true, false},
 	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
