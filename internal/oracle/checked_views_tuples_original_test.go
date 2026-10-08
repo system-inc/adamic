@@ -160,6 +160,92 @@ func tupleOriginalMutant(t *testing.T, program *ir.Program, kind string) {
 	}
 }
 
+func TestCheckedViewTupleOriginalTrackedSymbols(t *testing.T) {
+	root, manifest := tupleOriginalInputs(t)
+	for _, test := range []struct{ name, node, diagnostic string }{
+		{"tracked-good", "1\n4\n", ""},
+		{"tracked-undefined", "", ""},
+		{"tracked-evaluation-good", "receiver\ncallback\n1\n4\n", ""},
+		{"tracked-evaluation-undefined", "receiver\n", ""},
+		{"tracked-meaning-wrong", "1\nfalse\n", "field read failed: item[2] is not a SymbolFlags; expected SymbolFlags, found boolean"},
+		{"tracked-symbol-wrong", "false\n4\n", "field read failed: item[0].flags is not a SymbolFlags; expected SymbolFlags, found boolean"},
+		{"tracked-length-wrong", "1\n4\n", "field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found array"},
+		{"tracked-record-wrong", "1\n4\n", "field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found object"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			path, program := tupleOriginalProgram(t, root, test.name)
+			complete := false
+			for _, contract := range program.ViewContracts {
+				if contract.Name != "Symbol" {
+					continue
+				}
+				var fields []string
+				for _, field := range contract.Fields {
+					fields = append(fields, field.Name)
+				}
+				slices.Sort(fields)
+				complete = complete || slices.Equal(fields, manifest.Fields["Symbol"])
+			}
+			if !complete {
+				t.Fatal("original Symbol declaration was reduced")
+			}
+			if difference := disagreement(run{stdout: []byte(test.node)}, onNode(t, path)); difference != "" {
+				t.Fatal("Node: " + difference)
+			}
+			if os.Getenv("ADAMIC_TUPLE_TRACKED_MUTANT") == "meaning" {
+				if changeTupleOriginalRead(program, func(p ir.Property) bool { return p.Name == "2" }, func(p ir.Property) ir.Property { p.View = ""; return p }) == 0 {
+					t.Fatal("mutant changed no tuple position check")
+				}
+			}
+			if os.Getenv("ADAMIC_TUPLE_TRACKED_MUTANT") == "guard" {
+				changed := 0
+				for i, statement := range program.Main {
+					branch, ok := statement.(ir.If)
+					if !ok || len(branch.Then) != 1 {
+						continue
+					}
+					evaluate, ok := branch.Then[0].(ir.Evaluate)
+					if !ok {
+						continue
+					}
+					if _, ok := evaluate.Value.(ir.ArrayVisit); !ok {
+						continue
+					}
+					branch.Condition = ir.BooleanConstant{Value: true}
+					program.Main[i] = branch
+					changed++
+				}
+				if changed != 1 {
+					t.Fatalf("guard mutant changed %d checks", changed)
+				}
+			}
+			want := run{stdout: []byte(test.node)}
+			if test.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
+			}
+			if test.name == "tracked-meaning-wrong" {
+				want.stdout = []byte("1\n")
+			}
+			js := onJavaScriptBackend(t, program)
+			if difference := disagreement(want, js); difference != "" {
+				t.Fatalf("JavaScript: %s; stdout %q stderr %q exit %d", difference, js.stdout, js.stderr, js.exitCode)
+			}
+			actual, binary := nativelyUncached(t, program)
+			if difference := disagreement(want, actual); difference != "" {
+				t.Fatalf("sanitized: %s; stdout %q stderr %q", difference, actual.stdout, actual.stderr)
+			}
+			if difference := disagreement(want, releasedUncached(t, program)); difference != "" {
+				t.Fatalf("release: %s", difference)
+			}
+			if want.exitCode == 0 {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+		})
+	}
+}
+
 // The existing union mutant walker covers function bodies. Include module reads
 // without changing function identities or the compiled program's final graph.
 func changeTupleOriginalRead(program *ir.Program, matches func(ir.Property) bool, edit func(ir.Property) ir.Property) int {

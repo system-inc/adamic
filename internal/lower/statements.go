@@ -131,6 +131,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindCallExpression:
+		if statements, handled, err := l.tupleOptionalForEach(expression); handled {
+			return statements, err
+		}
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
 		}

@@ -1634,3 +1634,25 @@ hands off two executable Map gap forms (optional and rest tuples); those fixture
 forms are not counted as production pairs or reads. Exact reachability remains
 unmeasured. Original numeric brands retain their current refusal unless their
 real contracts can be certified without rewriting tsc's declarations.
+
+Tuple lane, TrackedSymbol consumer checkpoint (October 8):
+`tupleOptionalForEach` in lower/view_tuples_optional_call.go is called by
+expressionStatement in shared lower/statements.go. It handles only a discarded
+receiver?.forEach(callback) on an array of required-position tuples, without a
+nullable receiver or an optional call on the method itself. It saves the receiver
+once and places the existing ArrayVisit inside its undefined guard; callback
+construction stays in the present branch. The existing tupleViewSlot and lazy
+array element extraction remain the only contract path. Other optional calls
+retain their existing refusal.
+
+The eight tracked-*.a witnesses import the unchanged original TrackedSymbol;
+the oracle checks the complete original Symbol field set. The added counts hook
+is tupleOriginalCounts in checked_views_tuples_counts_test.go, called from
+interfaceCastCounts. With prepared upstream declarations it binds and measures
+all tuple sources, including the previous outSignature witnesses. Without those
+opt-in inputs it preserves their recorded rows; this does not claim revalidation
+of original declarations. TestCheckedViewTupleOriginalCounts can update/check
+only these rows when the repository-wide counts refresh is blocked by unrelated
+fixtures. The required TestCountsAreRecorded command was also run and failed;
+three lowering failures reproduce with the starting production source. No full
+gate or successful complete counts refresh is claimed.
