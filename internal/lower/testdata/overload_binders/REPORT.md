@@ -1,6 +1,6 @@
-Verified compiler sha: eb0427470cdc428b5de18bce73b49eeca6f5887f; 14 reproduced binder stops cleared, 11 executable per-kind reductions, 3 contract rulings, 2 echoes cancelled.
-Commits: e662629c replay merge; 42207bc7 census witnesses; 593c3dbc union/optional inference; d448df93 callbacks; 69fb5eba maps/state; 1df0334a refusal probes; eb042747 current-main merge.
-Commands/outputs: focused lower tests PASS (0.392s), uncached oracle PASS (2.596s), counts refresh PASS (28.656s); all 16 final replays no longer find the specified stop.
+Verified compiler sha: 85b0bf14b4dc6d2be7b8bc92fc9ae604552f0f96; 14 reproduced binder stops cleared, 11 executable per-kind reductions, 3 contract rulings, 2 echoes cancelled.
+Commits: e662629c replay merge; 42207bc7 census witnesses; 593c3dbc union/optional inference; d448df93 callbacks; 69fb5eba maps/state; 1df0334a refusal probes; eb042747 current-main merge; 85b0bf14 checked non-null merge (c41c0e06).
+Commands/outputs: merged lower tests PASS (1.031s), uncached oracle PASS (4.328s), CLI PASS (2.186s), flow PASS (17.938s), counts refresh PASS (23.910s); all 16 replays retain the same findings.
 Mutants: all 10 caught, including all 11 executable per-kind fixtures for the old count guard and all 3 Node-held refusal probes for contract bypasses; individual failures in mutants.log.
 Not covered: full compiler helpers or downstream stops; no IR/backend/runtime C changes; no territory skips remain; refused probes cannot reach backend sanitizers or counts.
 
@@ -14,13 +14,13 @@ Per kind (requested order; every row represents one listed root site)
 
 “Lowered” means the additional-binder proof is implemented and the reduced fixture passes source Node, JavaScript backend Node, native release, ASan/UBSan and LeakSanitizer. It does not mean the complete compiler helper reaches native code. Every reproduced original stop is gone. Final replay intentionally exits 1 when the requested exact signature is absent; its JSON names the next stop.
 
-| Sha | Kind | Root sites covered | Status | Fixture suffix (`internal/oracle/testdata/overload_*.a`) | Final source stop |
+| Sha | Kind | Root sites covered | Status | Fixture (positive suffix `overload_*.a`; refusal path under `internal/oracle/testdata/`) | Final source stop |
 |---|---|---:|---|---|---|
 | 593c3dbc | arrayToMap | 1 | lowered binder; next stop remains | array_to_map | Refused: overload 2 of arrayToMap result Map<K, V2> cannot be served by implementation result Map<K, V1 \| V2> |
 | 593c3dbc | arrayToMultiMap | 1 | lowered binder; next stop remains | array_to_multimap | Refused: overload 2 of arrayToMultiMap result MultiMap<K, U> cannot be served by implementation result MultiMap<K, U \| V> |
 | 593c3dbc | arrayToNumericMap | 1 | lowered binder; next stop remains | array_to_numeric_map | Refused: overload 2 of arrayToNumericMap result U[] cannot be served by implementation result (T \| U)[] |
-| 1df0334a | createBinaryExpressionTrampoline | 1 | refused for a ruling | trampoline_contract | Refused: overload 1 of createBinaryExpressionTrampoline result (node: BinaryExpression) => TResult cannot be served by implementation result (node: BinaryExpression, outerState: TOuterState) => TResult |
-| 1df0334a | createToken | 1 | refused for a ruling | token_contract | Refused: overload 1 of createToken result SuperExpression cannot be served by implementation result Mutable<Token<TKind>> |
+| 1df0334a | createBinaryExpressionTrampoline | 1 | refused for a ruling | overload_contracts/trampoline.a | Refused: overload 1 of createBinaryExpressionTrampoline result (node: BinaryExpression) => TResult cannot be served by implementation result (node: BinaryExpression, outerState: TOuterState) => TResult |
+| 1df0334a | createToken | 1 | refused for a ruling | overload_contracts/token.a | Refused: overload 1 of createToken result SuperExpression cannot be served by implementation result Mutable<Token<TKind>> |
 | d448df93 | forEachAncestorDirectory | 1 | lowered binder; next stop remains | ancestor_directory | NotYet: a function returning T \| undefined |
 | d448df93 | forEachLeadingCommentRange | 1 | lowered binder; next stop remains | leading_comment_range | NotYet: a function returning U \| undefined |
 | d448df93 | forEachTrailingCommentRange | 1 | lowered binder; next stop remains | trailing_comment_range | NotYet: a function returning U \| undefined |
@@ -28,7 +28,7 @@ Per kind (requested order; every row represents one listed root site)
 | 69fb5eba | mutateMap | 1 | lowered binder; next stop remains | mutate_map | Refused: a method in object destructuring; panic: statement panic: runtime error: invalid memory address or nil pointer dereference; error: statement panic: runtime error: invalid memory address or nil pointer dereference; Refused: a cast the runtime can't check; NotYet: a call through ?. (an optional call) |
 | 69fb5eba | mutateMapSkippingNewValues | 1 | lowered binder; next stop remains | mutate_map_skipping_new | Refused: a method in object destructuring; NotYet: a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions |
 | 69fb5eba | resolveTypeReferenceDirectiveNamesReusingOldState | 1 | lowered binder; next stop remains | resolve_type_names | NotYet: a value of type unknown; NotYet: a destructured name held otherwise than its field |
-| 1df0334a | setSerializerContextAnd | 1 | refused for a ruling | serializer_contract | Refused: overload 2 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb |
+| 1df0334a | setSerializerContextAnd | 1 | refused for a ruling | overload_contracts/serializer.a | Refused: overload 2 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb |
 | 69fb5eba | sortAndDeduplicate | 1 | lowered binder; next stop remains | sort_deduplicate | Refused: a cast the runtime can't check; panic: statement panic: runtime error: invalid memory address or nil pointer dereference; error: statement panic: runtime error: invalid memory address or nil pointer dereference |
 | baseline | arrayFrom | 0 (1 listed, never reproduced) | skipped: cancelled echo (earlier refusal already blocked before change) | none | Refused: overload 1 of arrayFrom result U[] cannot be served by implementation result (T \| U)[] |
 | baseline | group | 0 (1 listed, never reproduced) | skipped: cancelled echo (earlier refusal already blocked before change) | none | Refused: overload 2 of group parameter resultSelector cannot be served by implementation parameter resultSelector |
@@ -69,3 +69,9 @@ Every mutant run exited 1 with an intended test failure, not a build failure. Co
 Reproduction
 
 Source /workspace/adamic-tools/env.sh before commands. validation.log records exact focused commands and outputs, setup timing, and the final per-kind replay summary. replays.json records exact site and reason arguments. run-mutants.py is the repeatable mutation runner; mutants.log includes each failing test. All test output was redirected to log files, never piped. Each positive fixture is registered from an overload-specific _test.go file. counts.md was refreshed after each positive group and after the main merge; refusal-only probes have no counted native build.
+
+Checked non-null follow-up
+
+Merged codex/non-null-checked-area c41c0e062e99da37820f822968d4df1b48cdaee7 cleanly as 85b0bf14. Replayed every one of the 16 original examples with the exact same source snapshot and arguments. All post-merge findings are identical to the previous replays, and none contains a NonNullExpression stop. The 14 original additional-binder stops remain cleared; the three contract rulings, two earlier-refusal echoes, and named next stops in the table remain unchanged. This unit therefore has no newly exposed stop from the non-null merge to lower.
+
+Uncached merged non-null/overload oracle tests, lower proof/non-null tests, and CLI explanation tests pass. On inspection, my three refusal-only probes were incorrectly at the root of the oracle testdata directory, which the flow test treats as runnable. TestEveryFunctionIsInSingleAssignment reproduced the failure on the serializer probe (12.066s). Moved the three probes to internal/oracle/testdata/overload_contracts/{token,trampoline,serializer}.a and updated only their own custom oracle test paths. The identical flow test then passed (17.938s); source Node/strict refusal probes and all 11 executable fixtures passed again (2.576s). No existing flow test or another worker's lowering function was changed. All ten mutants were rerun after the merge and relocation and were caught; counts were refreshed. non-null-followup.log records every exact command, output, and replay comparison; mutants.log contains the new failing mutant outputs. The original validation.log remains the previous landing evidence.

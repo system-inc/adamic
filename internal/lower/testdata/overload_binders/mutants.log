@@ -15,33 +15,33 @@ optional-rigid-binder: caught by TestOverloadInferenceWitnesses/optional_rigid_b
 optional-rigid-binder: also caught by 1 oracle fixtures
 
 additional-binder-refusal.log
---- FAIL: TestNativeAgreesWithNode (0.02s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a (0.09s)
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a (0.09s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_mutate_map.a:1:1: stage 0 can't lower overload 1 of mutateMap with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a (0.09s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_trailing_comment_range.a:1:1: stage 0 can't lower overload 1 of forEachTrailingCommentRange with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a (0.10s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_mutate_map_skipping_new.a:1:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a (0.10s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_binders.a:2:1: stage 0 can't lower overload 1 of token with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a (0.10s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_resolve_type_names.a:2:1: stage 0 can't lower overload 1 of resolveTypeReferenceDirectiveNamesReusingOldState with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a (0.10s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_trailing_comment_range.a:1:1: stage 0 can't lower overload 1 of forEachTrailingCommentRange with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a (0.14s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a (0.11s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_sort_deduplicate.a:1:1: stage 0 can't lower overload 1 of sortAndDeduplicate with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a (0.06s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_leading_comment_range.a:1:1: stage 0 can't lower overload 1 of forEachLeadingCommentRange with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a (0.07s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: stage 0 can't lower overload 1 of getOriginalNode with additional implementation type parameters yet
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a (0.07s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_numeric_map.a:1:1: stage 0 can't lower overload 1 of arrayToNumericMap with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a (0.09s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_mutate_map.a:1:1: stage 0 can't lower overload 1 of mutateMap with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a (0.07s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: stage 0 can't lower overload 1 of getOriginalNode with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.05s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_ancestor_directory.a:2:1: stage 0 can't lower overload 1 of forEachAncestorDirectory with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a (0.06s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_multimap.a:1:1: stage 0 can't lower overload 1 of arrayToMultiMap with additional implementation type parameters yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a (0.07s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_leading_comment_range.a:1:1: stage 0 can't lower overload 1 of forEachLeadingCommentRange with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a (0.09s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_resolve_type_names.a:2:1: stage 0 can't lower overload 1 of resolveTypeReferenceDirectiveNamesReusingOldState with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a (0.03s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_map.a:1:1: stage 0 can't lower overload 1 of arrayToMap with additional implementation type parameters yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a (0.03s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_multimap.a:1:1: stage 0 can't lower overload 1 of arrayToMultiMap with additional implementation type parameters yet
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.265s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.242s
 FAIL
 
 bottom-witness.log
@@ -49,7 +49,7 @@ bottom-witness.log
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a (0.03s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_binders.a:23:17: Adamic 0.1 refuses overload 1 of erased parameter callback cannot be served by implementation parameter callback; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.054s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.050s
 FAIL
 
 constraint.log
@@ -65,15 +65,15 @@ known-union-member.log
     --- FAIL: TestOverloadInferenceWitnesses/incompatible_known_member (0.00s)
         overload_inference_test.go:42: inferred a union witness despite incompatible known number
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.037s
+FAIL	github.com/system-inc/adamic/internal/lower	0.042s
 FAIL
 
 multiple-union-binders.log
---- FAIL: TestOverloadInferenceWitnesses (0.04s)
+--- FAIL: TestOverloadInferenceWitnesses (0.03s)
     --- FAIL: TestOverloadInferenceWitnesses/multiple_unknown_binders (0.00s)
         overload_inference_test.go:49: invented witnesses for multiple unknown binders
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
 FAIL
 
 optional-rigid-binder-oracle.log
@@ -81,7 +81,7 @@ optional-rigid-binder-oracle.log
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.03s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_ancestor_directory.a:2:55: Adamic 0.1 refuses overload 1 of forEachAncestorDirectory parameter callback cannot be served by implementation parameter callback; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.048s
 FAIL
 
 optional-rigid-binder.log
@@ -89,67 +89,67 @@ optional-rigid-binder.log
     --- FAIL: TestOverloadInferenceWitnesses/optional_rigid_binder (0.00s)
         overload_inference_test.go:58: lost the rigid binder behind undefined
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL	github.com/system-inc/adamic/internal/lower	0.035s
 FAIL
 
 parameter-contracts.log
---- FAIL: TestOverloadContractRulings (0.19s)
-    --- FAIL: TestOverloadContractRulings/serializer (0.19s)
+--- FAIL: TestOverloadContractRulings (0.21s)
+    --- FAIL: TestOverloadContractRulings/serializer (0.21s)
         overload_contract_test.go:32: want refusal "overload 2 of setSerializerContextAnd parameter cb", got <nil>
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=1
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.201s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.222s
 FAIL
 
 parameter-inference.log
---- FAIL: TestNativeAgreesWithNode (0.02s)
+--- FAIL: TestNativeAgreesWithNode (0.01s)
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a (0.03s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_binders.a:6:22: Adamic 0.1 refuses overload 1 of ancestor parameter directory cannot be served by implementation parameter directory; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.045s
 FAIL
 
 parameter.log
---- FAIL: TestCensusOverloadBinderGuards (0.04s)
-    --- FAIL: TestCensusOverloadBinderGuards/parameter (0.04s)
+--- FAIL: TestCensusOverloadBinderGuards (0.03s)
+    --- FAIL: TestCensusOverloadBinderGuards/parameter (0.03s)
         census_overload_binders_test.go:23: want "cannot be served by implementation parameter", got <nil>
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.048s
+FAIL	github.com/system-inc/adamic/internal/lower	0.041s
 FAIL
 
 result-contracts.log
---- FAIL: TestOverloadContractRulings (0.27s)
-    --- FAIL: TestOverloadContractRulings/token (0.15s)
+--- FAIL: TestOverloadContractRulings (0.31s)
+    --- FAIL: TestOverloadContractRulings/token (0.18s)
         overload_contract_test.go:32: want refusal "overload 1 of createToken result", got <nil>
-    --- FAIL: TestOverloadContractRulings/trampoline (0.12s)
-        overload_contract_test.go:32: want refusal "overload 1 of createBinaryExpressionTrampoline result", got /workspace/adamic/internal/oracle/testdata/overload_trampoline_contract.a:3:19: stage 0 can't lower a value of type Outer yet
+    --- FAIL: TestOverloadContractRulings/trampoline (0.13s)
+        overload_contract_test.go:32: want refusal "overload 1 of createBinaryExpressionTrampoline result", got /workspace/adamic/internal/oracle/testdata/overload_contracts/trampoline.a:3:19: stage 0 can't lower a value of type Outer yet
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.283s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.315s
 FAIL
 
 result.log
---- FAIL: TestCensusOverloadBinderGuards (0.05s)
-    --- FAIL: TestCensusOverloadBinderGuards/result (0.05s)
-        census_overload_binders_test.go:23: want "cannot be served by implementation result", got /tmp/adamic-gate/TestCensusOverloadBinderGuardsresult1410793217/001/main.a:3:16: stage 0 can't lower an overload result requiring another representation yet
+--- FAIL: TestCensusOverloadBinderGuards (0.04s)
+    --- FAIL: TestCensusOverloadBinderGuards/result (0.04s)
+        census_overload_binders_test.go:23: want "cannot be served by implementation result", got /tmp/adamic-gate/TestCensusOverloadBinderGuardsresult3214506511/001/main.a:3:16: stage 0 can't lower an overload result requiring another representation yet
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.062s
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
 FAIL
 
 union-inference-oracle.log
---- FAIL: TestNativeAgreesWithNode (0.02s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a (0.06s)
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a (0.05s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_numeric_map.a:5:32: stage 0 can't lower an array of T | U yet
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a (0.05s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_map.a:3:20: stage 0 can't lower a Map of V1 | V2 yet
     --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a (0.06s)
         oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_multimap.a:8:38: stage 0 can't lower an array of U | V yet
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a (0.06s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_array_to_map.a:3:20: stage 0 can't lower a Map of V1 | V2 yet
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.097s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.078s
 FAIL
 
 union-inference.log
@@ -157,5 +157,5 @@ union-inference.log
     --- FAIL: TestOverloadInferenceWitnesses/one_compatible_binder (0.00s)
         overload_inference_test.go:35: missing compatible union witness
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.036s
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
 FAIL
