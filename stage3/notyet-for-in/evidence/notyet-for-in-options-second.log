@@ -1,0 +1,3 @@
+replay load/register/lower: 2.187839506s
+reproduced NotYet: for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) at /tmp/notyet-for-in-census-input/src/compiler/commandLineParser.ts:2975:24
+replay total (including overlay and Go build): 2.505965021s

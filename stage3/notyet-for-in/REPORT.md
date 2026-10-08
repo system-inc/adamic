@@ -1,8 +1,8 @@
-Preserved the plain-object origin guard and added a Node-held property-presence witness.
-Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf420ec262c1e4acac730d0c4853ee43e49.
-Both options examples replay; focused oracle and recorded-count refresh pass.
-Bypassing the origin guard fails TestForInOptionsRuling: expected exact NotYet, got nil.
-No root site is newly lowered; the 10 origin sites are retained for a ruling. Array kind follows separately.
+Preserved both for-in guards and added Node-held property-presence and array-hole witnesses.
+Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; first kind bb393fb8.
+All three examples replay; final focused oracle passes in 0.697s and counts refresh in 22.431s.
+Both guard mutants fail exact-stop assertions: origin bypass accepts; array bypass reaches the origin stop.
+No root site is newly lowered: 10 origin sites and 1 array site retained for a ruling; refused witnesses cannot run through backends.
 
 ## Origin kind: refused for a ruling, 10 root sites
 
@@ -82,3 +82,43 @@ submodules 16.447s, Go build 221.748s, tests deferred 221.858s, cache warm
 Go 1.27.1, clang 20.1.8, Node 24.19.0.
 
 No whole package test or full gate was run. Evidence logs are in evidence/.
+
+## Array kind: refused for a ruling, 1 root site
+
+factory/nodeFactory.ts:7538:23 in mergeTokenSourceMapRanges copies present
+properties from sourceRanges to destRanges. Replacing it with an element loop
+would copy a hole as undefined and may change the destination's existing entry.
+The fixture distinguishes present undefined from a hole: Node prints `0|1|2`
+then `0|2`. TestForInArrayRuling pins that output and the exact array diagnostic.
+This is a sparse-property representation question, not a choice of loop syntax.
+No expansion of the language's fixed-shape contract is made in this unit.
+The stop remains NotYet while the ruling is pending; arrays with a proven dense
+origin could be future proof work, but the census site's parameter is not proved dense.
+
+Before and after replay commands use the same project as above, with `-where
+/tmp/notyet-for-in-census-input/src/compiler/factory/nodeFactory.ts:7538:23
+-kind NotYet -reason 'for...in over an array (holes and own enumerable properties
+are not represented; use for...of for elements)'`. Both exit 0 and reproduce the
+exact array stop. Total times: 2.274s before, 3.043s after.
+
+Array mutant uses a scratch Go overlay replacing only forIn's array test with
+`if false && (l.checker.IsArrayType(proven) || checker.IsTupleType(proven))`.
+Command: `ADAMIC_GATE_UNCACHED=1 go test
+-overlay=/tmp/notyet-for-in-array-mutant/overlay.json ./internal/oracle
+-run '^TestForInArrayRuling$' -count=1 -v`. Exit 1, 0.305s; the test expected
+the array stop and got the origin stop. This proves diagnostic classification,
+not an unsound acceptance: the second guard still protects the program.
+The unmutated array witness passed in 0.178s.
+
+Final commands before landing:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestForIn(Options|Array)Ruling|TestNativeAgreesWithNode/internal/oracle/testdata/(library_for_in|for_in_.*_refused)' -count=1 -v
+go vet ./internal/oracle
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+git diff --check
+```
+
+All exit 0. Oracle 0.697s, counts 22.431s, vet and diff check no output.
+counts.md is unchanged. The first-kind push succeeded. Current main advanced
+from d65e2d5e to ef3141e9 during work; landing validation follows its merge.

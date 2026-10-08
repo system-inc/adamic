@@ -1,0 +1,10 @@
+function rangeKeys(sourceRanges: readonly (number | undefined)[]): void {
+	const keys: string[] = [];
+	for (const key in sourceRanges) {
+		keys.push(key);
+	}
+	console.log(keys.join('|'));
+}
+
+rangeKeys([10, undefined, 30]);
+rangeKeys([10, , 30]);

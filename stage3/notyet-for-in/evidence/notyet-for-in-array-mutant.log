@@ -1,0 +1,11 @@
+=== RUN   TestForInArrayRuling
+=== PAUSE TestForInArrayRuling
+=== CONT  TestForInArrayRuling
+    for_in_ruling_test.go:60: want exact array stop "for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)", got /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:3:20: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet
+--- FAIL: TestForInArrayRuling (0.29s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.305s
+FAIL

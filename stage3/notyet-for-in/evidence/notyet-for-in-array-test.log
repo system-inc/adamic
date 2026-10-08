@@ -1,0 +1,10 @@
+=== RUN   TestForInArrayRuling
+=== PAUSE TestForInArrayRuling
+=== CONT  TestForInArrayRuling
+    for_in_ruling_test.go:62: Node "0|1|2\n0|2\n"; retained /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:3:20: stage 0 can't lower for...in over an array (holes and own enumerable properties are not represented; use for...of for elements) yet
+--- PASS: TestForInArrayRuling (0.17s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.178s
