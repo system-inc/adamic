@@ -1,6 +1,6 @@
-# Cycles: brief for the step 06 ruling
+# Cycles: step 06 ruling and Program-region prototype
 
-Draft for #7g4qv2b, measured 2026-10-08. Recommend a **mix**: a Program-lifetime region for the independently owned compiler graph, checked weak references only for backlinks with a keeper contract, ordinary counted ownership for acyclic caches and escaping owners, and graph regions for dynamic cyclic graphs whose lifetime is not one Program. Statement arenas remain useful for proven temporary trees. This is a proposed ruling, not an implementation of Program regions or inferred Weak.
+Evidence for #7g4qv2b, measured 2026-10-08. Recommend a **mix**: a Program-lifetime region for the independently owned compiler graph, checked weak references only for backlinks with a keeper contract, ordinary counted ownership for acyclic caches and escaping owners, and graph regions for dynamic cyclic graphs whose lifetime is not one Program. Statement arenas remain useful for proven temporary trees. The system_adamic ruling of October 8, 10:10 adopts the Program-region design. The opt-in first cut below implements it for a one-shot native CLI; compiler review of the provisional membership pass, IR flag and emitter is required before merging. The specification is in [memory.md](memory.md#program-region-ruling-step-06-october-8). Explicit Weak values are not rewritten.
 
 Base: `area/runtime` at `cdfa22555589194e6f3133d986dd110061aafaa9`. Named-fetch evidence: [cycle census, fcb7451a](https://github.com/system-inc/adamic/blob/fcb7451a8239723fd903ae5998f54d2a86715e1f/docs/stage3-tsc-cycles.md), [slice report, 4ddb9eb3](https://github.com/system-inc/adamic/blob/4ddb9eb362d5a7f79140fbe5fdaeaa6241d171fa/docs/regions-tsc-slice.md), and [allocation report, e4113bfd](https://github.com/system-inc/adamic/blob/e4113bfdb734c894c50a6743bd8bc8998d589875/stage3/performance/allocation/evidence/REPORT.md). All refer to stock TypeScript 6.0.3, source `050880ce59e30b356b686bd3144efe24f875ebc8`. The built graph-region contract is in [memory.md](memory.md#regions-for-cyclic-graphs).
 
@@ -29,9 +29,9 @@ Relation memo tables themselves deserve a correction to the question's premise: 
 
 **Checked weak references.** Each read checks the target's liveness; a handle has allocation/ownership costs as well as the read check. An optional/probing read yields absent after the target dies. A read whose target was proven present panics rather than reading freed storage. Weak does not own its target. Ordinary AST roots strongly own children, so a parent can be weak while that root lives. A detached child, synthesized parent or retained node from an old Program needs an explicit parent keeper if subsequent parent reads must succeed. Weakening both declaration/symbol directions, table values or the sole owning type cache loses that keeper. Type/checker debugging backlinks fit the same rule. Names alone do not prove ownership.
 
-**Graph regions, built today.** A graph store merges holder and target regions before publishing the pointer. Union by member count and path compression find the current root; intrusive lists concatenate on merge. Stores inside a region omit per-edge retain/release. Locals, returned values, globals and other owners outside it contribute outside counts. The last outside release frees every member, invalidates weak targets and releases owned non-graph contents. A merge never splits: overwriting or deleting an edge can leave unreachable members allocated until the region ends. Metadata persists for losing union-find records as well. This handles symbol/declaration inverses, flow loops, emit annotation cycles and caches that really own newly created objects without guessing a weak direction. A Program is currently only an outside owner, not a special allocator or a registry of every allocation.
+**Graph regions, built today.** A graph store merges holder and target regions before publishing the pointer. Union by member count and path compression find the current root; intrusive lists concatenate on merge. Stores inside a region omit per-edge retain/release. Locals, returned values, globals and other owners outside it contribute outside counts. The last outside release frees every member, invalidates weak targets and releases owned non-graph contents. A merge never splits: overwriting or deleting an edge can leave unreachable members allocated until the region ends. Metadata persists for losing union-find records as well. This handles symbol/declaration inverses, flow loops, emit annotation cycles and caches that really own newly created objects without guessing a weak direction. With the prototype off, a Program has no special allocation registry. With it on, selected allocations belong to the explicit Program registry; remaining graph allocations keep this contract.
 
-**A Program-lifetime region.** Allocate the selected Node/Symbol/Type/Signature graph and its connecting storage into one explicit Program owner. Nothing in that region is freed before its owner ends. Interior pointers then require neither weak liveness checks nor dynamic union-find merges; the implementation must establish membership, handle non-region owned contents and give each escape an owner of the region. Merely reference-counting an escaped interior object while freeing its region would be a use-after-free. An escape must retain the region or be copied/promoted with its reachable graph. Keeping the entire region for one escape has a retention cost.
+**A Program-lifetime region.** Allocate the selected Node/Symbol/Type/Signature graph and its connecting storage into one explicit Program owner. Nothing in that region is freed before its owner ends. Interior pointers then require neither weak liveness checks nor dynamic union-find merges; the prototype infers membership at allocation sites, marks member headers and releases owned counted contents at teardown. The first cut supports the one-shot native CLI boundary only. Future host escapes must acquire an owner of the region. Merely reference-counting an escaped interior object while freeing its region would be a use-after-free. An escape must retain the region or be copied/promoted with its reachable graph. Keeping the entire region for one escape has a retention cost.
 
 The fetched allocation report strongly favors this lifetime for the **core graph**:
 
@@ -50,7 +50,7 @@ For the compiler, **exact constructor calls** are parse Nodes 1,084,449; bind Sy
 
 Thus the measured answer to “how big is that for a tsc run?” is: the stock compiler workload has a 422.20 MiB post-GC rooted heap and 547.66 MiB observed peak, versus a 4.78 MiB released heap. These are useful observed scale and lifetime evidence, **not a prediction of native Program-region bytes**. Native layout, exact cumulative core-graph bytes and escaped-region retention have not been measured.
 
-**File/check arenas.** An arena is safe when its allocations cannot escape its ending scope, including through a closure, table, returned node or another file's symbol. AST trees often start file-local, but global symbol merging, imports, declarations, checker caches and synthesized nodes cross files. A per-file arena cannot be freed independently while those edges remain. A per-check arena fits relation scratch/temporary traversal storage only if no result, flow node, diagnostic or persistent type links back into it. Promoting/copying an escape needs a concrete graph policy. Today's compiler has statement arenas for proven nonescaping allocations; it does not have general cyclic file/check arenas or a Program allocator. Graph allocations are excluded from statement arenas. There are consequently **no measured alternative-allocator costs** for those unbuilt mechanisms, and no arena/Program mirror is presented as though it implemented them.
+**File/check arenas.** An arena is safe when its allocations cannot escape its ending scope, including through a closure, table, returned node or another file's symbol. AST trees often start file-local, but global symbol merging, imports, declarations, checker caches and synthesized nodes cross files. A per-file arena cannot be freed independently while those edges remain. A per-check arena fits relation scratch/temporary traversal storage only if no result, flow node, diagnostic or persistent type links back into it. Promoting/copying an escape needs a concrete graph policy. Today's compiler has statement arenas for proven nonescaping allocations and the opt-in Program prototype. Graph and Program allocations are excluded from statement arenas. General cyclic file/check arenas remain unbuilt, so their costs are not measured; section 3 compares actual Program allocations against the default graph/weak implementations.
 
 | Group | Weak fit | Graph-region fit | Program-region fit | File/check arena boundary |
 |---|---|---|---|---|
@@ -91,7 +91,35 @@ Each new mirror is registered in the normal oracle, held to source Node and emit
 
 For an additional fresh stock-tsc observation, the saved [API profiler](cycles-decision/tsc-profile.cjs) checks the existing tiny hello and whole parser roots with repository options, prelude and standard libraries, TypeScript 6.0.3 and Node 24.19.0. Both checks report zero diagnostics. Tiny (71 files) sampled 71,861,280 allocated bytes, with 43,183,984 post-GC rooted heap bytes, 30,058,776 after dropping Program and 135,336 KiB peak RSS. Parser (80 files) sampled 138,753,080 allocated bytes, with 59,910,440 rooted heap bytes, 37,209,768 after dropping Program and 248,748 KiB RSS. Sampling includes collected objects at 32 KiB interval; these are estimates, and startup/profiler/service caches remain in the released heap. Those API runs are not the stock-CLI constructor/survival experiment in e4113bfd and are not a native region benchmark. Their raw JSON is saved with the evidence. To repeat the API probes, set `TYPESCRIPT_PACKAGE` to the unpacked npm TypeScript 6.0.3 package directory and run `node --expose-gc docs/cycles-decision/tsc-profile.cjs INPUT` from the repository root; INPUT is either `internal/load/testdata/0.1/compile/01_hello.ts` or `stage1/typescript/parser/main.ts`.
 
-**Measurement boundary:** there is no implemented Program-region allocator, general file arena or check arena in this base to benchmark against these six mirrors. The brief reports the measured built alternatives and names that gap instead of substituting predicted numbers or labeling a graph-region anchor as a Program allocator. The slice report also establishes no closed natively executable tsc hot loop: emit lifecycle helpers allocate cycle-capable types but alone contain no allocation loop. No native tsc size or throughput claim is made here. An allocator-level comparison and mirrors for those unbuilt alternatives remain outstanding.
+**Measurement boundary:** the opt-in Program allocator is now measured on these seven workloads. General cyclic file/check arenas remain unbuilt. The slice report establishes no closed natively executable tsc hot loop, so neither these mirrors nor the declaration audit claim a native tsc size or throughput measurement.
+
+### Program-region prototype: flag off versus flag on
+
+The same release/count harness was rerun today for the six mirrors and million-node graph. The Program-region column uses actual allocation-site flags and marked headers, not a graph-region anchor. Load before: `2.98 1.78 0.92 2/193 32749`; after: `2.90 1.78 0.92 2/197 33162`. All three wall/RSS samples and build flags are in [program-measure.log.gz](cycles-decision/program-measure.log.gz); allocations, ordinary frees and graph counts are also in [program-measurements.csv](cycles-decision/program-measurements.csv).
+
+Each tuple below is **retains / releases / peak values / in-regions**, followed by **best seconds / that run's RSS KiB**. In-regions counts members freed at teardown; it is distinct from the number of union-find regions in the earlier table.
+
+| Workload | Flag off: graph/weak | Program-region column: flag on |
+|---|---|---|
+| cycles_weak_parent.a | 3004 / 3006 / 3004 / 0; 0.001199046 / 896 | 3004 / 7007 / 3004 / 2002; 0.001385833 / 1024 |
+| cycles_graph_parent.a | 1003 / 4005 / 3003 / 0; 0.001302779 / 1024 | 4004 / 7006 / 3003 / 2002; 0.001329981 / 1024 |
+| cycles_graph_relations.a | 3003 / 7007 / 4004 / 0; 0.001421337 / 1024 | 8003 / 10006 / 4004 / 2000; 0.001335579 / 1024 |
+| cycles_graph_symbols.a | 2006 / 4009 / 2004 / 0; 0.001231544 / 896 | 4008 / 6010 / 2004 / 1002; 0.001370221 / 896 |
+| cycles_weak_relations.a | 4004 / 6007 / 6004 / 0; 0.001672831 / 1152 | 4004 / 6007 / 6004 / 0; 0.001765730 / 1152 |
+| cycles_weak_symbols.a | 3008 / 3010 / 2005 / 0; 0.001338985 / 896 | 3008 / 3010 / 2005 / 0; 0.001375939 / 896 |
+| million.a | 950001 / 1950004 / 1000003 / 0; 0.065397590 / 78976 | 2949999 / 2050002 / 1000003 / 1000000; 0.053168672 / 78976 |
+
+Flag off preserves all existing counts. Flag on eliminates union-find merges on these selected member graphs; counted/graph singleton containers remain when their type is outside the SCC. The weak-symbol and weak-relation mirrors select no members: explicit Weak cuts their recursive field graphs, so their counts stay identical. The parent tree still has a recursive owning child graph and enters the Program region even with explicit weak parents.
+
+Retain/release instrumentation counts calls **before** the header fast path. Member calls do not mutate a reference count. Graph stores previously omitted calls after merging, whereas Program stores and teardown enumerate plain member edges; the larger call totals are not additional member reference-count updates. Peak values stay unchanged in these workloads. The million fixture accounts for all 1,000,000 members in-regions plus three ordinary frees, with zero merges. Its deliberately disconnected 49,999 nodes still remain until teardown, as in the graph baseline; their 3,199,936 payload bytes are the existing graph reachability witness, not a new Program tracing measurement. Program membership adds a two-word storage prefix per member, without union-find records. Millisecond mirrors remain dominated by startup noise; these measurements do not establish a general throughput result.
+
+`TestProgramRegionFixtures` holds all seven workloads, an owned-counted-payload fixture, and eight additional closure/capture/class/flow/throw/mixed-ownership fixtures to Node with ASan/UBSan and the leak check. Every counted run satisfies allocations = ordinary frees + in-regions. `TestProgramRegionInferenceMutants` holds the same unchanged Node oracle for both inference errors: marking an acyclic leaf adds exactly one teardown-accounted member; omitting one cyclic member leaves graph fallback and removes exactly one Program member. Both remain sanitizer-clean and leak-clean. The runtime harness separately checks union dispatch, counted payload ownership, weak invalidation, idempotent teardown and task publication refusal.
+
+### Reproducible membership audit for compiler review
+
+[TestProgramRegionCensusMembership](../internal/lower/program_region_census_test.go) runs the **same** provisional `programRegionSelection` and SCC selector as lowering against the original pinned TypeScript declaration graph. It verifies source `050880ce` and inventory `fcb7451a`, resolves exact census property sites and available concrete container identities, and generates [membership.csv](cycles-decision/membership.csv). All **1,685** unique record IDs are present: **1,594 in region, 91 counted**. Of the counted records, **14 container identities are unresolved** and carry that reason explicitly; they need compiler review against lowered generic/container identities. Scalar storage, unresolved templates and nonrecursive types remain counted.
+
+`declared_type` is the allocation-holder type for declaration records and the container type for container records. `slot_type` preserves the field's type separately: membership belongs to the holder allocation, not necessarily the referenced value. The declaration audit has no lowered capture cells and cannot certify original tsc lowering. Actual executable fixtures exercise allocation flags, structural views and counted scalar storage; this inventory exposes the provisional result for review rather than asserting a native whole-tsc run.
 
 ## 4. What stays refused
 
@@ -109,32 +137,30 @@ Cross-task graph publication remains refused. Today's actual compile-time messag
 Adamic 0.1 refuses parallelMap items are not shareable: Ring.next is a mutable field; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
 ```
 
-This test passed and pins the field and remedy. Graph sharing/concurrent merges, watch mode and language-service version lifetime are outside the built graph contract. A proposed Program region does not override those refusals or make a mutable cyclic graph shareable.
+This test passed and pins the field and remedy. Graph sharing/concurrent merges, watch mode and language-service version lifetime are outside the built graph contract. The Program prototype does not override those refusals. Its additional compile-time refusal is:
+
+```text
+Adamic 0.1 refuses parallelMap in a program with Program-region members; keep Program members in the one-shot CLI thread; the provisional region does not allocate or publish members across tasks
+```
+
+The runtime backstop panics `a Program region member cannot cross into parallel work`. Non-CLI targets/request exports are refused with `native: Program regions require a one-shot native CLI`.
 
 The fetched slice's recorded source blockers remain evidence boundaries, not fresh claims of a complete compiler refusal census: `a void call used as a value`, `a value of type unknown`, and `a cast the runtime can't check` for `{ annotatedNodes: [node] } as EmitNode` and `{} as EmitNode`. Their exact sites are in the pinned slice report. No unsupported original-tsc lowering is certified by these hand-written mirrors.
 
 ## 5. Recommendations and questions for the ruling
 
-| Group | Proposed choice |
+| Group | Choice under the ruling |
 |---|---|
 | AST parents | Program-region interior pointers for a fully registered ordinary AST graph; otherwise checked weak parents with an independently retained tree owner. Detached/synthetic/escaped nodes retain an owner or use graph regions. Keep child edges owning. |
 | Symbol declarations/valueDeclaration | Program-region strong interior edges for ordinary binder/checker symbols and declarations. Use graph regions for independently escaping or merged graphs until Program membership is established. Do not weaken declaration lists or valueDeclaration as a schema-wide policy. |
 | Symbol tables/SymbolLinks | Keep tables as owners. Put Program-owned symbols and connecting links/storage in the Program region; keep scalar/non-graph contents counted. Prove or register synthetic targets. Graph regions cover mixed/dynamic ownership; weaken only selected proven backlinks such as symbol parent. |
 | Type/signature caches and relations | The constructor and snapshot evidence directly supports Program lifetime for core types/signatures. Preserve cache ownership, including fresh/regular reciprocal types. Keep scalar relation memo maps counted or in a proven check-local arena. Checker backlinks can be checked weak outside a common region. |
-| Flow nodes | Use built graph regions now. A Program region is a plausible simpler owner once flow allocation membership and post-bind reads are explicit; constructor counts for Types do not prove FlowNode lifetime. Never weaken all antecedents. |
-| Emit nodes | Use graph regions for dynamic annotation/source cycles now. Consider an emit-epoch region only after disposal and transformed-node escape contracts are defined and an actual emitting workload is measured. The stock noEmit profile cannot decide this lifetime. |
+| Flow nodes | Select Program membership from the recursive field graph for one-shot CLI flows; preserve graph-region fallback for omitted members. Constructor counts for Types do not prove FlowNode lifetime. Never weaken all antecedents. |
+| Emit nodes | Put emit metadata in the Program region under the ruling. An independently ended emit epoch or exported transformed node needs a later escape contract. The stock noEmit profile supplies no emit survival evidence. |
 
 The e4113bfd evidence changes the default for the **CLI core graph** toward one Program owner: the observed graph largely survives the whole check and dies together at release. Dynamic union-find machinery is useful for unknown/dynamic topology, but within a single established Program lifetime it can pay merge and metadata costs without enabling earlier freeing. A blanket all-allocation Program arena is not recommended: the 3,690.78 MiB sampled cumulative allocation includes large transient populations, whereas the observed rooted heap is 422.20 MiB. Neither number predicts native bytes. Reference counts at **region escape boundaries** preserve owner lifetime; they cannot independently reclaim an interior object from an arena.
 
-Only the ruling can settle these policy choices:
-
-1. Is the supported contract a one-shot CLI Program, or must the first implementation also support independently retired Programs, watch/service versions and escaped API values?
-2. Is Program membership explicit in allocation/IR, or inferred? Which NodeLinks/SymbolLinks, synthetic declarations/types, flows, callbacks and backing stores must be registered? Does an escaping member retain the whole region, or require copying/promotion?
-3. May two Programs share graph members? If yes, does that merge lifetimes, prohibit independent teardown, or require isolation/copying? What retained-byte limit justifies the selected escape policy?
-4. Should ordinary parent/checker backlinks inside a proven common region remain plain, with checked Weak reserved for different lifetimes, or should all backlinks pay a uniform read check? What is the contract for a detached child's parent?
-5. Are relation scratch and emit metadata separate epochs, and which lifetime boundary ends each one? Does the first ruling authorize new allocator mechanisms and their mirror measurements, or select built graph regions pending that evidence?
-
-These are ownership and product-boundary decisions, not claims the profiling tools can infer. The brief supplies measured built costs and the strongest available Program-lifetime evidence, while leaving unbuilt allocator costs explicitly open.
+The ruling settles inferred membership, plain interior backlinks, counted relation scratch, Program-owned emit metadata, task isolation and the one-shot CLI boundary. Remaining policy questions require a further ruling: the owner/promotion contract for API escapes and independently retired watch/service Programs; whether different Programs may ever share members; and boundaries for any independently ended file/check/emit arena. Measurement cannot choose those ownership contracts. Compiler review must resolve the provisional pass's structural views, capture environments and unresolved generic/container identities before merging.
 
 ## Reproduction and validation
 
@@ -150,3 +176,17 @@ go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-
 ```
 
 All listed oracle runs passed; counts regeneration adds the six mirror rows. Compressed logs preserve those outcomes and the sampled stock API measurements. The complete repository gate was not run. Earlier measurement attempts with an unavailable time utility and inherited parent RSS were superseded by the saved small-launcher run; neither supplies published performance numbers.
+
+Prototype reproduction (the census audit requires a pristine checkout of TypeScript at the pinned source commit with `src/compiler/diagnosticInformationMap.generated.ts` generated by its diagnostic-message script):
+
+```sh
+ADAMIC_PROGRAM_CENSUS_ROOT=/path/to/pinned/typescript go test ./internal/lower -run '^TestProgramRegionCensusMembership$' -count=1 -args -update-program-membership
+ADAMIC_PROGRAM_CENSUS_ROOT=/path/to/pinned/typescript go test ./internal/lower -run '^TestProgramRegionCensusMembership$' -count=1
+go test ./internal/native -run '^TestProgramRegion' -count=1
+go test ./internal/oracle -run '^(TestProgramRegionFixtures|TestProgramRegionInferenceMutants)$' -v -count=1
+ADAMIC_CYCLES_MEASURE=1 ADAMIC_CYCLES_PROGRAM_COMPARE=1 go test ./internal/oracle -run '^TestCyclesDecisionMeasurements$' -v -count=1
+```
+
+The prototype fixture, both inference mutants, census reproducibility and count regeneration passed. Saved prototype logs preserve the results. The default count ledger changes only by the new ownership fixture.
+
+The full lower package passed. The full native package's only failure was the missing mutable-storage audit entry for the new registry; [the suite log](cycles-decision/program-unit-suite.log.gz) records that failure. After documenting its CLI/thread/lifetime contract, the storage scanner/audit and Program runtime tests [passed on rerun](cycles-decision/program-audit.log.gz). [Expanded oracle evidence](cycles-decision/program-expanded.log.gz) includes the additional capture/class/flow/throw fixtures and both inference mutants; [count regeneration](cycles-decision/program-counts.log.gz) passed. The complete repository gate was not run.

@@ -10,6 +10,10 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// ProgramRegion opts into the one-shot CLI prototype; ProgramTypes are provisional checker identities.
+	ProgramRegion bool
+	ProgramTypes  map[int]bool
+
 	Generated  []*GeneratedType
 	AsyncEntry int // one-based ordinary function for module suspension, zero when synchronous
 
@@ -49,7 +53,8 @@ type Program struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
-	Graph bool
+	ProgramRegion bool
+	Graph         bool
 
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
@@ -74,6 +79,7 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	ProgramRegion bool
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
 
@@ -189,6 +195,7 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
+	ProgramRegion bool
 	// GraphCell selects graph ownership for its capture cell or shared environment.
 	GraphCell bool
 
@@ -310,7 +317,9 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		GraphTypes []int
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -354,10 +363,12 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		GraphTypes []int
-		Element    Type
-		Elements   []Expression
-		Spread     []bool
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Element       Type
+		Elements      []Expression
+		Spread        []bool
 	}
 
 	// Length is array.length.
@@ -556,6 +567,8 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion       bool
 		GraphTypes          []int
 		Array, Start, Count Expression
 		Items               []Expression
@@ -568,6 +581,8 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion                    bool
 		GraphTypes                       []int
 		Array, Length, Value, Start, End Expression
 		Element                          Type
@@ -581,6 +596,8 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion    bool
 		GraphTypes       []int
 		Length, Callback Expression
 		Element, First   Type
@@ -592,9 +609,11 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		GraphTypes []int
-		Array      Expression
-		Others     []Expression
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Array         Expression
+		Others        []Expression
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
@@ -631,11 +650,13 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		GraphTypes []int
-		Array      Expression
-		Callback   Expression
-		Element    Type
-		Result     Type
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Array         Expression
+		Callback      Expression
+		Element       Type
+		Result        Type
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
@@ -644,17 +665,21 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		GraphTypes []int
-		Method     string
-		Array      Expression
-		Callback   Expression
-		Element    Type
-		Returns    Type
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Method        string
+		Array         Expression
+		Callback      Expression
+		Element       Type
+		Returns       Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion      bool
 		GraphTypes         []int
 		Map                Expression
 		KeyType, ValueType Type
@@ -662,9 +687,11 @@ type (
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		GraphTypes []int
-		Array      Expression
-		Arguments  []Expression
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Array         Expression
+		Arguments     []Expression
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
@@ -678,9 +705,11 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
-		GraphTypes []int
-		Key, Value Type
-		Entries    [][2]Expression
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Key, Value    Type
+		Entries       [][2]Expression
 
 		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
 		// set in order: new Map(pairs), or new Map(otherMap) through its entries.
@@ -689,14 +718,18 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		GraphTypes []int
-		Map        Expression
-		Key        Type
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Map           Expression
+		Key           Type
 	}
 	MapValues struct {
-		GraphTypes []int
-		Map        Expression
-		Value      Type
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Map           Expression
+		Value         Type
 	}
 
 	// MapClear is map.clear() and set.clear(), which is void.
@@ -741,9 +774,11 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		GraphTypes []int
-		Element    Type
-		Values     Expression
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Element       Type
+		Values        Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
@@ -758,9 +793,11 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		GraphTypes []int
-		Set        Expression
-		Element    Type
+		// ProgramRegion is inferred at this allocation site by the provisional membership pass.
+		ProgramRegion bool
+		GraphTypes    []int
+		Set           Expression
+		Element       Type
 	}
 
 	// MapSize is map.size.

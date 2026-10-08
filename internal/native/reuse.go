@@ -513,7 +513,7 @@ type taking struct {
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
-	if e.graphTypes(literal.GraphTypes) {
+	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) {
 		return "", false
 	}
 	read, ok := variableRead(literal.Spread)
@@ -685,7 +685,7 @@ func sameSlots(left, right ir.Type) bool {
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
 func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
-	if e.graphTypes(expression.GraphTypes) {
+	if expression.ProgramRegion || e.graphTypes(expression.GraphTypes) {
 		return "", false
 	}
 	read, ok := variableRead(expression.Array)
@@ -722,7 +722,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 // when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
 // new array, as any literal.
 func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
-	if e.graphTypes(literal.GraphTypes) {
+	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) {
 		return "", false
 	}
 	if len(literal.Spread) == 0 || !literal.Spread[0] {

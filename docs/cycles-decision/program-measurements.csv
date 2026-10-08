@@ -1,0 +1,15 @@
+fixture,mode,best_seconds,best_run_rss_kib,allocations,ordinary_frees,retains,releases,peak_values,in_regions,graph_regions,graph_merges
+internal/oracle/testdata/cycles_weak_parent.a,graph,0.001199046,896,4004,4004,3004,3006,3004,0,0,0
+internal/oracle/testdata/cycles_weak_parent.a,program,0.001385833,1024,4004,2002,3004,7007,3004,2002,0,0
+internal/oracle/testdata/cycles_graph_parent.a,graph,0.001302779,1024,4003,4003,1003,4005,3003,0,1001,2001
+internal/oracle/testdata/cycles_graph_parent.a,program,0.001329981,1024,4003,2001,4004,7006,3003,2002,0,0
+internal/oracle/testdata/cycles_graph_relations.a,graph,0.001421337,1024,6005,6005,3003,7007,4004,0,1,2001
+internal/oracle/testdata/cycles_graph_relations.a,program,0.001335579,1024,6005,4005,8003,10006,4004,2000,0,0
+internal/oracle/testdata/cycles_graph_symbols.a,graph,0.001231544,896,3005,3005,2006,4009,2004,0,1,1002
+internal/oracle/testdata/cycles_graph_symbols.a,program,0.001370221,896,3005,2003,4008,6010,2004,1002,0,0
+internal/oracle/testdata/cycles_weak_relations.a,graph,0.001672831,1152,8005,8005,4004,6007,6004,0,0,0
+internal/oracle/testdata/cycles_weak_relations.a,program,0.001765730,1152,8005,8005,4004,6007,6004,0,0,0
+internal/oracle/testdata/cycles_weak_symbols.a,graph,0.001338985,896,3006,3006,3008,3010,2005,0,0,0
+internal/oracle/testdata/cycles_weak_symbols.a,program,0.001375939,896,3006,3006,3008,3010,2005,0,0,0
+internal/oracle/testdata/graph_regions/million.a,graph,0.065397590,78976,1000003,1000003,950001,1950004,1000003,0,1,999999
+internal/oracle/testdata/graph_regions/million.a,program,0.053168672,78976,1000003,3,2949999,2050002,1000003,1000000,0,0

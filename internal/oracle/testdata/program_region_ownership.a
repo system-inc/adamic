@@ -1,0 +1,18 @@
+interface RegionNode { id: string; next: RegionNode | undefined; payload: string; }
+interface CountedLeaf { text: string; }
+function run(): void {
+ const root: RegionNode = { id: `root${1}`, next: undefined, payload: '' };
+ const child: RegionNode = { id: `child${2}`, next: undefined, payload: '' };
+ root.next = child; child.next = root;
+ root.payload = `outside${3}`;
+ console.log(`${root.payload}`);
+ root.payload = `replacement${6}`;
+ console.log(root.next.id);
+ const leaf: CountedLeaf = { text: `leaf${4}` };
+ console.log(leaf.text);
+ const scratch = new Map<string, string>(); scratch.set('result', `scratch${5}`);
+ console.log(`${scratch.get('result')}`);
+ const temporary: number[] = [1, 2, 3];
+ console.log(`${temporary.length}`);
+}
+run();

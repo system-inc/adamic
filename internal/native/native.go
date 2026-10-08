@@ -66,6 +66,9 @@ func cLiteral(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// ProgramRegion enables the one-shot CLI region prototype. Lowering must use the matching option.
+	ProgramRegion bool
+
 	// Release selects the native build people ship. Tests leave it false.
 	// Sanitized, counted and WASI builds retain their existing compilation policy.
 	Release bool
@@ -116,6 +119,9 @@ func Flags(options Options) []string {
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	if options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
+	}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.

@@ -58,6 +58,17 @@ _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require
 #define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
 #define ADAMIC_GRAPH_FLAG UINT32_C(0x20000000)
+#define ADAMIC_PROGRAM_FLAG UINT32_C(0x10000000)
+_Static_assert((ADAMIC_PROGRAM_FLAG & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG)) == 0, "program mark overlaps other header flags");
+static inline bool adamic_program_is(const void *value) {
+#ifdef ADAMIC_PROGRAM_REGION
+ return value != NULL && (((const adamic_heap *)value)->slab & ADAMIC_PROGRAM_FLAG) != 0;
+#else
+ (void)value; return false;
+#endif
+}
+void *adamic_program_adopt_owned(void *value, size_t size);
+void adamic_program_region_end(void);
 _Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
 	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
 // Values whose counts the inline paths below must not touch: shared ones count atomically, and a
@@ -84,6 +95,9 @@ void adamic_release_slow(void *value);
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
+#ifdef ADAMIC_PROGRAM_REGION
+ if (adamic_program_is(heap)) { return value; }
+#endif
 	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
@@ -94,6 +108,9 @@ static inline void *adamic_retain(void *value) {
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
+#ifdef ADAMIC_PROGRAM_REGION
+ if (adamic_program_is(heap)) { return; }
+#endif
 	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }

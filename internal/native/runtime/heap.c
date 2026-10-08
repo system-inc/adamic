@@ -297,6 +297,14 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	return heap;
 }
 
+// Program members use the same two-word storage prefix, but no union-find record.
+void *adamic_heap_program_storage(void *value, size_t size) {
+ adamic_heap *heap = adamic_heap_graph_storage(value, size);
+	heap->slab = (heap->slab & ~ADAMIC_GRAPH_FLAG) | ADAMIC_PROGRAM_FLAG;
+	heap->references = 0;
+	return heap;
+}
+
 // An environment's interior cell has no count of its own; its environment holds it. Such a cell's
 // count is zero and a graph object's header has ADAMIC_GRAPH_FLAG, so adamic_retain and
 // adamic_release (adamic.h) bring both here and never count them inline.
@@ -310,6 +318,7 @@ static adamic_heap *counted_heap(void *value) {
 
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = counted_heap(value);
+	if (adamic_program_is(heap)) { return value; }
 	if (adamic_graph_is(heap)) {
 		// Graph regions are never shared yet (share.c refuses them), so their counts stay plain.
 		adamic_graph_retain(heap);
@@ -349,7 +358,7 @@ static void list(void *value) {
 // an interior cell its environment. It never touches the freeing queue itself.
 static adamic_heap *drop_reference(void *value) {
 	adamic_heap *heap = counted_heap(value);
-	if (heap == NULL) { return NULL; }
+	if (heap == NULL || adamic_program_is(heap)) { return NULL; }
 	if (adamic_graph_is(heap)) {
 		// A member reaching zero does not mean its region is unowned: only the region's last
 		// outside release frees it.
@@ -457,12 +466,16 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 
 void adamic_heap_free_storage(void *value, uint32_t slab) {
 	adamic_heap *heap = value;
-	if (adamic_graph_is(heap)) {
+	bool program_member = adamic_program_is(heap);
+	if (adamic_graph_is(heap) || program_member) {
 		heap = (adamic_heap *)adamic_graph_header_of(heap);
 	}
 	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
+#ifdef ADAMIC_PROGRAM_REGION
+	heap->slab &= ~ADAMIC_PROGRAM_FLAG;
+#endif
 	deallocate(heap);
-	ADAMIC_COUNT_FREE();
+	if (program_member) { ADAMIC_COUNT_REGION(1); } else { ADAMIC_COUNT_FREE(); }
 }
 
 static void free_one(void *value) {
@@ -506,6 +519,7 @@ void adamic_heap_thread_end(void) {
 
 // Called only after all workers join. No owner can allocate or publish remote frees now.
 void adamic_heap_end(void) {
+ adamic_program_region_end();
 	adamic_heap_thread_end();
 	size_t count = atomic_load_explicit(&chunk_count, memory_order_relaxed);
 	for (size_t index = 0; index < count; index++) {

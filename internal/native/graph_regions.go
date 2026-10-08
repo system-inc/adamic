@@ -7,8 +7,10 @@ import (
 
 func (e *emitter) graphTypes(types []int) bool { return e.program.IsGraph(types) }
 
-func (e *emitter) adoptGraph(value, bytes string, graph bool) {
-	if graph {
+func (e *emitter) adoptGraph(value, bytes string, graph bool, member ...bool) {
+	if len(member) != 0 && member[0] {
+		e.line("%s = adamic_program_adopt_owned(%s, %s);", value, value, bytes)
+	} else if graph {
 		e.line("%s = adamic_graph_adopt_owned(%s, %s);", value, value, bytes)
 	}
 }
@@ -18,7 +20,11 @@ func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
 	}
-	e.adoptGraph(value, fmt.Sprintf("sizeof *%s + %s->shape->count * sizeof(adamic_value)", value, value), graph)
+	member := literal.ProgramRegion
+	if literal.Class != 0 {
+		member = member || e.program.Classes[literal.Class-1].ProgramRegion
+	}
+	e.adoptGraph(value, fmt.Sprintf("sizeof *%s + %s->shape->count * sizeof(adamic_value)", value, value), graph, member)
 }
 
 // The runtime decides boundary ownership from both actual allocations. This
@@ -56,8 +62,8 @@ func (e *emitter) graphUnique(value string) string {
 	return result
 }
 
-func (e *emitter) graphArray(code string, types []int) string {
+func (e *emitter) graphArray(code string, types []int, member ...bool) string {
 	value := e.own(ir.Array, code)
-	e.adoptGraph(value, "sizeof *"+value, e.graphTypes(types))
+	e.adoptGraph(value, "sizeof *"+value, e.graphTypes(types), member...)
 	return value
 }

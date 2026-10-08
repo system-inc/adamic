@@ -107,7 +107,13 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
-	return finder.graphTypes(modules)
+	if err := finder.graphTypes(modules); err != nil {
+		return err
+	}
+	if l.result.ProgramRegion {
+		return finder.programRegionTypes(modules)
+	}
+	return nil
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is

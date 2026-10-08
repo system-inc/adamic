@@ -3234,6 +3234,22 @@ Batch8 removes 15,334,163 pairs on the 77-file compiler corpus, while its best
 release time moves only 2.4 percent. Full evidence, commands and remaining
 accessor/iterator work are in [the borrow-chains report](../internal/native/performance/borrow-chains/REPORT.md).
 
+## Program region (ruling, step 06, October 8)
+
+The system_adamic ruling of October 8, 10:10, for roadmap step 06 (#7g4qv2b) adopts a Program region. The following nine points are the ownership contract; the opt-in first cut and its evidence are in [cycles-decision.md](cycles-decision.md).
+
+1. Membership is inferred in lowering from the static type at each allocation site: types in the strongly connected part of the existing field-type graph are members. Non-graph strings, scalar maps and transient arrays remain counted. The provisional compiler pass, allocation flags in IR and emitter require compiler review before merging.
+2. Each member carries a header mark. Retain and release test that mark with one branch and return for a member, including when a union also contains counted values. Stores need no emitter proof of the runtime alternative. A member owns counted contents; replacing a slot releases its previous counted owner and teardown releases remaining owners.
+3. Inference errors must never read freed memory. Over-inclusion costs retention until teardown. Under-inclusion uses ordinary counted ownership and the existing graph-region machinery, or is refused. Both errors are held to Node, ASan and leak accounting.
+4. Backlinks within one Program region are plain pointers. Checked weak references are needed only across lifetimes, with an independently owned target and an explicit expiry contract. The first cut does not silently rewrite explicit Weak values.
+5. The first supported boundary is a one-shot native CLI Program. Its region ends after main and global owners are released. Watch mode, host API escapes, independently retired Programs and request lifetimes need further contracts; a counted interior pointer alone cannot keep a freed region alive.
+6. Relation scratch stays counted. Emit metadata belongs to the Program region. Scalar relation memo tables do not become graph members merely because they are used by a checker.
+7. Program members are never shareable across tasks. The provisional pass conservatively refuses parallelMap in any program selecting members, including member allocation inside task functions; the runtime also rejects publishing a marked member.
+8. This is not a collector: no tracing, collection pauses or reachability discovery. The region ends at a known lifetime boundary. Unreachable members remain allocated until that point.
+9. Teardown accounts for every member. It invalidates weak targets, releases owned counted contents while all members remain alive, then frees every registered member. Counted builds include these values in the in-regions column, and allocations equal ordinary frees plus values freed in regions.
+
+`ADAMIC_PROGRAM_REGION=1` enables both lowering and native runtime support; the corresponding lower/native Options fields support tests and explicit callers. It is off by default, preserving today's graph-region selection and runtime. Membership lives separately in `internal/lower/program_region_provisional.go`; runtime lifetime operations live in `internal/native/runtime/program_region.c`. The reproducible [membership report](cycles-decision/membership.csv) exposes every census record for compiler review.
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.

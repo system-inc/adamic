@@ -221,6 +221,7 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:from_codes.c`
 - `runtime-file:graph_regions.c`
 - `runtime-file:graph_regions.h`
+- `runtime-file:program_region.c`
 - `runtime-file:heap.c`
 - `runtime-file:heap_parallel.h`
 - `runtime-file:hypot.c`
@@ -442,3 +443,9 @@ introduced. This entry records this extension, not an inventory of earlier units
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## Program-region prototype registry (step 06)
+
+| Audit key | Holds | Writers and lifetime | Classification |
+|---|---|---|---|
+| `program_region.c:members:1` | Intrusive head of every Program-member allocation | adamic_program_adopt_owned prepends fresh members; adamic_program_region_end invalidates targets, releases counted children and drains the list after main/global cleanup; heap_end supplies an idempotent fallback | Single one-shot native CLI thread, enabled only with ADAMIC_PROGRAM_REGION. The provisional compiler refuses every parallelMap in a program selecting members, including task-local allocations; share.c also refuses publishing a marked member. Not safe for concurrent Programs or request/service lifetimes, which remain unsupported. Off builds have no registry. |

@@ -62,6 +62,9 @@ void adamic_share(void *value) {
 		adamic_heap *heap = pending.values[--pending.count];
 		// A graph region's counts are plain and single-threaded (graph_regions.c); the compiler
 		// refuses a graph value reaching a task, and this is the backstop.
+		if (adamic_program_is(heap)) {
+ adamic_panic("a Program region member cannot cross into parallel work", sizeof "a Program region member cannot cross into parallel work" - 1);
+ }
 		if ((heap->slab & ADAMIC_GRAPH_FLAG) != 0) {
 			adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);
 		}

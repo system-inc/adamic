@@ -1,0 +1,313 @@
+package lower
+
+// PROVISIONAL compiler-owned first cut for step 06. Compiler must review/replace
+// this pass, the allocation flags in IR, and the emitter before merging.
+// Runtime neither discovers membership nor reasons about field types.
+
+import (
+	"reflect"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// ProgramRegionSCC selects the strongly connected part containing an owning
+// field/container/capture edge. Structural view edges connect possible identities,
+// but a cycle of views alone is not a cycle of owned fields. The census adapter
+// calls this same selection algorithm; it is not a second membership heuristic.
+func ProgramRegionSCC[T comparable](edges, owning map[T][]T) map[T]bool {
+	index, low := map[T]int{}, map[T]int{}
+	active := map[T]bool{}
+	stack := []T{}
+	next := 0
+	result := map[T]bool{}
+	var visit func(T)
+	visit = func(node T) {
+		next++
+		index[node] = next
+		low[node] = next
+		stack = append(stack, node)
+		active[node] = true
+		for _, link := range edges[node] {
+			if index[link] == 0 {
+				visit(link)
+				if low[link] < low[node] {
+					low[node] = low[link]
+				}
+			} else if active[link] && index[link] < low[node] {
+				low[node] = index[link]
+			}
+		}
+		if low[node] != index[node] {
+			return
+		}
+		component := map[T]bool{}
+		for {
+			last := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			active[last] = false
+			component[last] = true
+			if last == node {
+				break
+			}
+		}
+		selected := false
+		for each := range component {
+			for _, target := range owning[each] {
+				if component[target] {
+					selected = true
+				}
+			}
+		}
+		if selected {
+			for each := range component {
+				result[each] = true
+			}
+		}
+	}
+	for node := range edges {
+		if index[node] == 0 {
+			visit(node)
+		}
+	}
+	return result
+}
+
+func (f *cycleFinder) programRegionTypes(modules []*ast.SourceFile) error {
+	// Observe allocation and contextual identities even where all writes passed the
+	// fresh proof and the ordinary graph-region pass had no seeds (e.g. Weak trees).
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			if ast.IsExpressionNode(node) {
+				f.use(f.l.checker.GetTypeAtLocation(node), node)
+				if contextual := f.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+					f.use(contextual, node)
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, closure := range f.l.closureRecords {
+		f.use(closure.proven, closure.node)
+	}
+	selected := f.programRegionSelection()
+	program := f.l.result
+	program.ProgramTypes = map[int]bool{}
+	for node := range selected {
+		if node.proven != nil && !f.weak(node.proven) && !f.l.isLibraryType(node.proven, "Promise") {
+			program.ProgramTypes[int(node.proven.Id())] = true
+		}
+		if node.cell != 0 {
+			program.Locals[node.cell-1].ProgramRegion = true
+		}
+	}
+	for _, closure := range f.l.closureRecords {
+		program.Functions[closure.function].ProgramRegion = program.ProgramTypes[int(closure.proven.Id())]
+	}
+	// Capture environments are indivisible allocations; retaining an extra sibling
+	// costs retention, while treating an interior cell as independently freeable is unsafe.
+	for changed := true; changed; {
+		changed = false
+		for i := range program.Functions {
+			function := &program.Functions[i]
+			for _, local := range function.Environment {
+				if program.Locals[local].ProgramRegion && !function.ProgramRegion {
+					function.ProgramRegion = true
+					changed = true
+				}
+			}
+			if function.ProgramRegion {
+				for _, local := range function.Environment {
+					if !program.Locals[local].ProgramRegion {
+						program.Locals[local].ProgramRegion = true
+						changed = true
+					}
+				}
+			}
+			frame := false
+			for _, local := range function.FrameEnvironment {
+				frame = frame || program.Locals[local].ProgramRegion
+			}
+			if frame {
+				for _, local := range function.FrameEnvironment {
+					if !program.Locals[local].ProgramRegion {
+						program.Locals[local].ProgramRegion = true
+						changed = true
+					}
+				}
+			}
+		}
+	}
+	for _, instance := range f.l.instances {
+		for _, local := range instance.thisLocals {
+			for _, proven := range append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...) {
+				if proven != nil && program.ProgramTypes[int(proven.Id())] {
+					program.Classes[instance.class-1].ProgramRegion = true
+				}
+			}
+		}
+	}
+	for symbol, instance := range f.l.statics {
+		if program.ProgramTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
+			program.Classes[instance.class-1].ProgramRegion = true
+		}
+	}
+	program.Main = programRegionAllocations(reflect.ValueOf(program.Main), program.ProgramTypes).Interface().([]ir.Statement)
+	for i := range program.Functions {
+		program.Functions[i].Body = programRegionAllocations(reflect.ValueOf(program.Functions[i].Body), program.ProgramTypes).Interface().([]ir.Statement)
+	}
+
+	if len(program.ProgramTypes) != 0 {
+		parallel := false
+		check := func(node any) bool {
+			if _, ok := node.(ir.ParallelMap); ok {
+				parallel = true
+			}
+			return true
+		}
+		walk(program.Main, check)
+		for _, function := range program.Functions {
+			walk(function.Body, check)
+		}
+		if parallel {
+			return &Refused{Where: f.l.program.Where(modules[0].AsNode()), What: "parallelMap in a program with Program-region members", Fix: "keep Program members in the one-shot CLI thread; the provisional region does not allocate or publish members across tasks"}
+		}
+	}
+	return nil
+}
+
+// Copy IR trees before annotating allocation flags. Negative graph-flow IDs are
+// intentionally ignored: Program membership is based on the allocation-site type.
+func programRegionAllocations(value reflect.Value, types map[int]bool) reflect.Value {
+	switch value.Kind() {
+	case reflect.Interface, reflect.Ptr:
+		if value.IsNil() {
+			return value
+		}
+		mapped := programRegionAllocations(value.Elem(), types)
+		result := reflect.New(value.Type()).Elem()
+		if value.Kind() == reflect.Ptr {
+			result.Set(reflect.New(value.Type().Elem()))
+			result.Elem().Set(mapped)
+		} else {
+			result.Set(mapped)
+		}
+		return result
+	case reflect.Struct:
+		result := reflect.New(value.Type()).Elem()
+		for i := 0; i < value.NumField(); i++ {
+			result.Field(i).Set(programRegionAllocations(value.Field(i), types))
+		}
+		field := result.FieldByName("GraphTypes")
+		mark := result.FieldByName("ProgramRegion")
+		if field.IsValid() && field.Type() == reflect.TypeOf([]int{}) && mark.IsValid() {
+			for _, id := range field.Interface().([]int) {
+				if id > 0 && types[id] {
+					mark.SetBool(true)
+				}
+			}
+		}
+		return result
+	case reflect.Slice:
+		if value.IsNil() {
+			return value
+		}
+		result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+		for i := 0; i < value.Len(); i++ {
+			result.Index(i).Set(programRegionAllocations(value.Index(i), types))
+		}
+		return result
+	case reflect.Map:
+		if value.IsNil() {
+			return value
+		}
+		result := reflect.MakeMapWithSize(value.Type(), value.Len())
+		entries := value.MapRange()
+		for entries.Next() {
+			result.SetMapIndex(entries.Key(), programRegionAllocations(entries.Value(), types))
+		}
+		return result
+	default:
+		return value
+	}
+}
+
+// programRegionSelection is shared by executable lowering and the pinned census audit.
+func (f *cycleFinder) programRegionSelection() map[cycleNode]bool {
+	candidates := []cycleNode{}
+	for proven := range f.where {
+		candidates = append(candidates, cycleNode{proven: proven})
+	}
+	for _, shape := range f.shapes {
+		candidates = append(candidates, cycleNode{proven: shape})
+	}
+	for local, declared := range f.l.result.Locals {
+		if declared.Captured && !declared.Global {
+			candidates = append(candidates, cycleNode{cell: local + 1})
+		}
+	}
+	edges, owning := map[cycleNode][]cycleNode{}, map[cycleNode][]cycleNode{}
+	queue := append([]cycleNode{}, candidates...)
+	for len(queue) != 0 {
+		node := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if _, seen := edges[node]; seen {
+			continue
+		}
+		if node.proven != nil && f.programScalarStorage(node.proven) {
+			edges[node] = nil
+			owning[node] = nil
+			continue
+		}
+		// graphLinks includes shape/view edges. Record actual owned slots separately.
+		shapes := f.shapes
+		f.shapes = nil
+		owned := f.graphLinks(node)
+		f.shapes = shapes
+		links := append([]cycleNode{}, owned...)
+		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
+			for _, view := range candidates {
+				if view != node && view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && !f.isFunction(view.proven) && !f.programScalarStorage(view.proven) && f.related(node.proven, view.proven) {
+					links = append(links, view)
+				}
+			}
+		}
+		owning[node] = owned
+		edges[node] = links
+		queue = append(queue, links...)
+	}
+	return ProgramRegionSCC(edges, owning)
+
+}
+
+// Empty-literal never[] views must not connect scalar scratch arrays/maps to a
+// recursive object component merely because they are assignable to both.
+func (f *cycleFinder) programScalarStorage(proven *checker.Type) bool {
+	if !(f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		return false
+	}
+	var scalar func(*checker.Type) bool
+	scalar = func(value *checker.Type) bool {
+		if value.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, member := range value.Types() {
+				if !scalar(member) {
+					return false
+				}
+			}
+			return true
+		}
+		return value.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
+	}
+	for _, argument := range f.l.checker.GetTypeArguments(proven) {
+		if !scalar(argument) {
+			return false
+		}
+	}
+	return true
+}

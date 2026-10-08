@@ -232,7 +232,7 @@ void *adamic_graph_take(void *holder, void *value) {
 }
 
 bool adamic_graph_counted(const void *value) {
-	return !adamic_graph_is(value);
+	return !adamic_graph_is(value) && !adamic_program_is(value);
 }
 
 #ifdef ADAMIC_COUNT

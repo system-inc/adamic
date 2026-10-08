@@ -298,7 +298,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
-		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell, e.program.Locals[local].ProgramRegion)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}

@@ -9,16 +9,29 @@ package lower
 import (
 	"context"
 	"fmt"
+	"os"
+	"path/filepath"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
-	"path/filepath"
 )
+
+// Options selects opt-in lowering mechanisms.
+type Options struct {
+	// ProgramRegion enables the provisional allocation-site membership pass.
+	ProgramRegion bool
+}
 
 // Lower lowers a checked program from one entry, in ESM evaluation order.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1"})
+}
+
+// LowerWithOptions lowers one checked program with explicit mechanism choices.
+func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
@@ -28,7 +41,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{ProgramRegion: options.ProgramRegion}, this: -1, functionIndex: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)

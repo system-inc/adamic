@@ -100,6 +100,9 @@ func cProgram(program *ir.Program, handler int) string {
 		emitter.releaseGlobals()
 	}
 	bodies.WriteString(emitter.out.String())
+	if program.ProgramRegion {
+		bodies.WriteString("\tadamic_program_region_end();\n")
+	}
 	bodies.WriteString("\treturn 0;\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))

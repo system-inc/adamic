@@ -4,8 +4,8 @@
 
 #include "adamic.h"
 
-// Only graph allocations carry this two-word prefix. Ordinary layouts are unchanged.
-// ADAMIC_GRAPH_FLAG (adamic.h) marks the prefix; the low slab bits retain allocator identity.
+// Graph and opt-in Program allocations carry this two-word prefix. Ordinary layouts are unchanged.
+// ADAMIC_GRAPH_FLAG or ADAMIC_PROGRAM_FLAG marks the prefix; low slab bits retain allocator identity.
 typedef struct adamic_graph_header {
 	struct graph_region *region;
 	adamic_heap *next;
