@@ -15,6 +15,7 @@ import (
 	"regexp"
 	"runtime"
 	"sort"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -294,24 +295,65 @@ func generated(t *testing.T) []string {
 func upstream(t *testing.T) []string {
 	return upstreamFrom(t, ".")
 }
+
+// sharedUpstream is the run's one capture of this package's upstream cases.
+func sharedUpstream() *sharedValue {
+	return shared("upstream", func(value *sharedValue) {
+		directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
+		if err != nil {
+			value.err = err
+			return
+		}
+		value.rows, value.configs, value.err = captureUpstream(".", directory)
+	})
+}
+
+// strictAloneTypedCases are the typed upstream cases replayed under strict alone, by rule and source, because
+// upstream ran them without a program. A typed case lands here only when the capture carried no program for
+// it, so a capture that stopped carrying options would move every typed case here, which is #0jkpds7's bug;
+// TestRulesAgree fails on any case here that isn't listed, and on a listed one that's gone.
+var strictAloneTypedCases = map[string]bool{
+	"@typescript-eslint/no-unnecessary-boolean-literal-compare\tdeclare const b: boolean;\nconst z = b === true;": true,
+	"@typescript-eslint/prefer-find\tdeclare const arr: string[];\narr.filter(item => item === 'a')[0];":          true,
+}
+
+// capturedTypedCases is how many typed upstream cases replay under their captured programs. A new typed rule
+// changes it on purpose; a drop means the capture lost programs.
+const capturedTypedCases = 261
+
+// typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
+// when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
+// TestTypedReplayKeepsUpstreamCompilerOptions holds it to the options.
+func typedReplayConfig(program typedProgram, found bool, file string) string {
+	options := `{"strict":true}`
+	if found {
+		options = program.CompilerOptions
+	}
+	return fmt.Sprintf(`{"compilerOptions":%s,"files":[%q]}`, options, file)
+}
+
+// upstreamPrograms is each typed upstream case's program as upstream's test built it, its compiler options
+// and the findings it reported, by the case file's path (#0jkpds7).
+func upstreamPrograms(t *testing.T) map[string]typedProgram {
+	t.Helper()
+	value := sharedUpstream()
+	if value.err != nil {
+		t.Fatal(value.err)
+	}
+	return value.configs
+}
+
 func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	t.Helper()
 	if isPackage(sourceRoot) {
-		value := shared("upstream", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
-			if err != nil {
-				value.err = err
-				return
-			}
-			value.rows, value.err = captureUpstream(sourceRoot, directory)
-		})
+		value := sharedUpstream()
 		if value.err != nil {
 			t.Fatal(value.err)
 		}
 		t.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
 		return append([]string(nil), value.rows...)
 	}
-	rows, err := captureUpstream(sourceRoot, t.TempDir())
+	rows, _, err := captureUpstream(sourceRoot, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -370,26 +412,98 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := generated(t)
 	module := emittedJavaScript(t, directory)
 	typed := map[string]bool{}
+	scoped := map[string]bool{}
 	for _, descriptor := range prepareRegistry(t, directory) {
 		typed[descriptor.Name] = descriptor.Typed
+		scoped[descriptor.Name] = inRuleScope(descriptor)
 	}
+	// Scoped, the generated rows that run every rule together stay, since they're how a new rule disturbing
+	// the shared walk shows; a generated row naming one rule outside the scope goes.
+	var rows []string
+	for _, row := range generated(t) {
+		if fields := strings.Split(row, "\t"); len(fields) < 2 || fields[1] == "all" || scoped[fields[1]] {
+			rows = append(rows, row)
+		}
+	}
+	// A typed case is replayed under the compiler options upstream's test built its program with, and Go must
+	// report there the count upstream's own run reported. Both engines read one tsconfig, so their agreement
+	// can't see an option the replay dropped; that count can. A typed rule's case that upstream ran without a
+	// program keeps strict alone, and the counts are logged so a capture that stopped carrying options shows.
+	programs := upstreamPrograms(t)
+	captured, assumed, uncounted := 0, 0, 0
+	strictAlone := map[string]bool{}
+	compared := map[string]int{}
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && !scoped[fields[1]] {
+			continue
+		}
+		if len(fields) > 1 {
+			compared[fields[1]]++
+		}
 		if len(fields) > 1 && typed[fields[1]] {
 			config := filepath.Join(t.TempDir(), "tsconfig.json")
-			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+			program, found := programs[fields[0]]
+			if found {
+				captured++
+			} else {
+				assumed++
+				source, err := os.ReadFile(fields[0])
+				if err != nil {
+					t.Fatal(err)
+				}
+				key := fields[1] + "\t" + string(source)
+				strictAlone[key] = true
+				if !strictAloneTypedCases[key] {
+					t.Errorf("%s %q: a typed case replays under strict alone, so the capture carried no program for it. If upstream really runs it without one, add it to strictAloneTypedCases on purpose", fields[1], source)
+				}
+			}
+			options := typedReplayConfig(program, found, fields[0])
 			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
 				t.Fatal(err)
 			}
-			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+			caseManifest := manifest(t, []string{"program " + config, row})
+			compareWithJavaScript(t, oracle, binary, directory, caseManifest, module)
+			if found && program.Findings < 0 {
+				uncounted++
+			}
+			if found && program.Findings >= 0 {
+				count := strings.TrimSpace(string(execute(t, "", oracle, "--manifest", caseManifest, "--count").output))
+				if count != strconv.Itoa(program.Findings) {
+					t.Errorf("%s %s: Go reports %s findings under the replayed tsconfig %s, and upstream's run reported %d", fields[1], fields[0], count, options, program.Findings)
+				}
+			}
 		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
 		} else {
 			rows = append(rows, row)
+		}
+	}
+	t.Logf("typed upstream cases: %d under their captured compiler options, %d under strict alone; %d held to upstream's count, %d not, their programs holding other fixture files", captured, assumed, captured-uncounted, uncounted)
+	// A scoped run compares each named rule's upstream cases, and a new rule's capture is where that can come up
+	// empty, so a named rule with none fails by name rather than passing on the generated rows alone.
+	if ruleScope != nil {
+		for name, inScope := range scoped {
+			if inScope && compared[name] == 0 {
+				t.Errorf("%s is in ADAMIC_LINT_RULES and its upstream capture holds no case, so this scoped run compared none of its own", name)
+			}
+		}
+	}
+	// The exact counts are the whole corpus's, so a scoped run, which replays some rules, doesn't hold them.
+	if ruleScope == nil {
+		for key := range strictAloneTypedCases {
+			if !strictAlone[key] {
+				t.Errorf("%q is listed in strictAloneTypedCases and no longer replays under strict alone; remove it", key)
+			}
+		}
+		if captured != capturedTypedCases {
+			t.Errorf("%d typed cases replay under their captured programs, want %d. A new typed rule's cases change this on purpose; fewer means the capture lost programs", captured, capturedTypedCases)
+		}
+		if uncounted != 0 {
+			t.Errorf("%d typed cases come from programs with other fixture files, so they aren't held to upstream's count; the replay lints one file, so decide each one before accepting it", uncounted)
 		}
 	}
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
@@ -435,6 +549,7 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 
 func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -843,6 +958,7 @@ func TestThroughput(t *testing.T) {
 // harness pass that walks the table by row reports on the copies and fails here.
 func TestNodeTableIsLinkOnly(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -869,6 +985,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // case, so the whole output is compared, and the count mode too.
 func TestShardsAgree(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -934,6 +1051,10 @@ func TestMutants(t *testing.T) {
 		t.Fatalf("native canary rule %s is missing", nativeCanaryRule)
 	}
 	for _, descriptor := range descriptors {
+		// Scoped, a rule outside the scope keeps its mutant out, and the native canary always runs.
+		if !inRuleScope(descriptor) && descriptor.Name != nativeCanaryRule {
+			continue
+		}
 		var change struct{ Name, File, From, To string }
 		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
 		if err != nil {

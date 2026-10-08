@@ -16,7 +16,12 @@ import (
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
 func TestMain(m *testing.M) {
-	if _, err := registry.Generate("."); err != nil {
+	descriptors, err := registry.Generate(".")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := validateRuleScope(descriptors); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
