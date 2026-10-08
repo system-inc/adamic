@@ -444,40 +444,22 @@ func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.E
 	return b.finish("namespace_read", b.read(b.parameters[len(checks)]))
 }
 
-// Put readiness operands before the original arguments. This keeps the callee
-// read before argument side effects, even for void and generic direct calls.
+// Run readiness before evaluating the call. Keep the call itself intact so its
+// counted dispatch, spread layout and argument fitting remain at the existing boundary.
 func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Expression {
 	checks := l.namespaceReadyReads(node, false)
 	if len(checks) == 0 {
 		return value
 	}
-	if call, closure := value.(ir.CallClosure); closure {
-		operands := append(checks, call.Closure)
-		b := l.libraryArrayBuilder(append(operands, call.Arguments...))
-		call.Closure = b.read(b.parameters[len(checks)])
-		call.Arguments = nil
-		for _, parameter := range b.parameters[len(checks)+1:] {
-			call.Arguments = append(call.Arguments, b.read(parameter))
-		}
-		if call.Returns != 0 {
-			return b.finish("namespace_call", call)
-		}
-		b.body = append(b.body, ir.Evaluate{Value: call}, ir.Return{})
-		l.result.Functions = append(l.result.Functions, ir.Function{Name: "namespace_call", Parameters: b.parameters, Body: b.body})
-		return ir.Call{Function: b.function, Arguments: b.arguments}
+	body := make([]ir.Statement, 0, len(checks)+1)
+	for _, check := range checks {
+		body = append(body, ir.Evaluate{Value: check})
 	}
-	call := value.(ir.Call)
-	b := l.libraryArrayBuilder(append(checks, call.Arguments...))
-	call.Arguments = nil
-	for _, parameter := range b.parameters[len(checks):] {
-		call.Arguments = append(call.Arguments, b.read(parameter))
+	if value.Type() == 0 {
+		body = append(body, ir.Evaluate{Value: value})
+		value = ir.Undefined{}
 	}
-	if call.Returns != ir.Type(0) {
-		return b.finish("namespace_call", call)
-	}
-	b.body = append(b.body, ir.Evaluate{Value: call}, ir.Return{})
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "namespace_call", Parameters: b.parameters, Returns: ir.Type(0), Body: b.body})
-	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: ir.Type(0)}
+	return ir.Effects{Body: body, Result: value}
 }
 
 // namespaceVariable identifies direct singleton storage, excluding function-local var.

@@ -13,7 +13,7 @@ func TestCallableNamespaceLimitsStayLoud(t *testing.T) {
 		{"replacement", "function f(){} namespace f {export function g(){}} f.g=()=>{};", "replacing a namespace export"},
 		{"intrinsic", "function f(){} namespace f {export const name='shadow';}", "function intrinsic"},
 		{"intrinsic method", "function f(){} namespace f {export function call(){}}", "function intrinsic"},
-		{"early", "function f(){} namespace f {export const x=1;} function h(){return f.x;} const value=h(); namespace Later {export const y=2;}", "call before all runtime namespaces"},
+		{"early", "function f(){} function h(){return f.x;} const value=h(); namespace f {export const x=1;}", "namespace read before runtime initialization"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
