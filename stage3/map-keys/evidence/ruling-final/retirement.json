@@ -1,0 +1,553 @@
+{
+  "compiler_after": "ca3d58d5626862ad1e650ea3dfd910b4226b053c",
+  "compiler_before": "04b105cf293ebb191f8731ac212147fc266e305b",
+  "probes": 159,
+  "before_reproduced": 137,
+  "after_reproduced": 34,
+  "retired_diagnostic_signatures": {
+    "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions": 83,
+    "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)": 14,
+    "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)": 6
+  },
+  "distinct_selected_units_with_no_lowering_blockers": [
+    "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:2400:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:13721:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:13729:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:16068:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:16679:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:24283:9",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:25907:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:25989:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:2829:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:37984:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:44611:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:49573:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5108:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:51221:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5128:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5203:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/program.ts:2680:5",
+    "/tmp/scout-map-keys-adapted/src/compiler/utilities.ts:644:1"
+  ],
+  "whole_tsc_entry_roots_compiling": 0,
+  "hidden_byte_recovery_measured": false,
+  "scope": "same frozen original adapted sources; new stage 3 composition adaptation is verified separately",
+  "retired_probes": [
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/sys.ts:638:32",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/sys.ts:689:17",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/sys.ts:778:27",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/sys.ts:816:32",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/utilities.ts:645:20",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:576:29",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:2413:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:3615:17",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:3631:30",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/binder.ts:3638:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:2830:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:2918:30",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5009:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5109:16",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5130:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5205:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5232:34",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5259:29",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5262:33",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5479:51",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5484:23",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5586:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:5611:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:11659:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:13724:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:13734:29",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:13926:27",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:14752:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:16070:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:16680:16",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:20203:39",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:20216:17",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:20219:17",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:24219:40",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:24226:17",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:24287:22",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:25912:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:25990:24",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:25996:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:26003:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:26007:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:37990:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:41403:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:41408:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:44425:48",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:44616:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:46866:28",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:47699:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:47707:34",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:47727:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:47736:34",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:49574:16",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:49778:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:51222:16",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:52598:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/checker.ts:52715:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/ts.ts:1993:14",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/es2017.ts:575:13",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/es2017.ts:637:20",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/es2017.ts:654:35",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/es2017.ts:1064:5",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/transformers/es2018.ts:1170:35",
+      "Kind": "NotYet",
+      "Reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:530:27",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:531:29",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:532:34",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:537:23",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:2557:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:2563:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:2681:16",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:3570:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:3652:17",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:3831:9",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:4007:27",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:4042:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/program.ts:4064:17",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builderState.ts:168:23",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builderState.ts:309:27",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builderState.ts:478:25",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builderState.ts:607:34",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builderState.ts:610:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1060:31",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1068:5",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1429:9",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1474:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1847:13",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/builder.ts:1862:13",
+      "Kind": "NotYet",
+      "Reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:683:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:684:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:685:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:688:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:689:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:690:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:704:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:768:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:805:13",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:813:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:815:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:821:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/resolutionCache.ts:1081:35",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/watchPublic.ts:1039:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/tsbuildPublic.ts:692:9",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/tsbuildPublic.ts:1084:32",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    },
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/tsbuildPublic.ts:1377:22",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    }
+  ],
+  "complete_findings": "after.jsonl.gz"
+}

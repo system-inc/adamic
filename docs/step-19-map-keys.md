@@ -397,3 +397,48 @@ All pass. Counts are refreshed; the refused custom collection has no native coun
 ### Remaining step 19 work
 
 The string brand representation, concrete presence proof, checked required reads, lexical array range proof and composed add/remove helpers are implemented. The stage 3 MultiMap factory adaptation is written, guarded and verified against Node, with unchanged extracted declarations; its complete native class still stops at the computed string-tag accessor. Program-region collection allocation remains a step 06 implementation dependency. Original createSet needs its own union bucket representation, suspended iterators and region-safe ownership; it stays refused and is never lowered as built-in Set. Mixed/nullish union keys and MapLike remain the separately recorded representation/index-signature work. No complete tsc entry root or hidden-byte recovery is claimed.
+
+### Final delivery verification
+
+Merged area-next dcdbb909 in 04b105cf. Ruled implementation and evidence commits: 4274af93 (string brands), 9ed45ccb (presence), 79090307 (range), dcfead5e (MultiMap adaptation), 11ae89f4 (strong-edge fixture), ca3d58d5 (original custom Set boundary). Each finished piece was pushed to codex/scout-map-keys. No PR or merge to an owned main/area branch was made.
+
+The final compiler replay on the unchanged frozen corpus confirms 159 probes, 137 originally reproduced signatures, 34 still reproduced and 103 retired diagnostic signatures: 83 general Map-key sites, 14 __String Set sites and six Path Set sites. Eighteen distinct selected units have no remaining lowering blockers. The entry-root program remains checker-rejected; complete tsc entry roots compiling is zero, and no hidden-byte recovery is measured. The new composition adaptation is verified separately, not mixed into this frozen-source comparison. Complete final findings and the exact probe list are in ruling-final.
+
+Final scoped commands, with environment sourced and output redirected:
+
+```sh
+python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/scout19-rules-final.jsonl > /tmp/scout19-rules-final-replay.log 2>&1
+go test ./internal/oracle -run '^TestScout' -count=1 -timeout 30m -v > /tmp/scout19-final-mutants.log 2>&1
+go test ./internal/lower -run '^TestScout' -count=1 -v > /tmp/scout19-final-lower.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m > /tmp/scout19-final-counts.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/oracle > /tmp/scout19-final-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_(map|array|multimap)_.*[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-final-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^stage3$/^map-keys$/^iterator_pairs[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-final-pairs.log 2>&1
+```
+
+All pass. The last uncached native fixtures record 30 native misses and 22 Node misses; the pair fixture records three native misses and two Node misses; both have zero hits. Recorded counts match without an update. Vet has no findings. No whole package test or full gate was run.
+
+Every executed mutant and its catcher:
+
+| Mutant | What caught it |
+|---|---|
+| Inventory count changed | Exact inventory consistency assertion |
+| Lost lookup in object-key fixture | Source Node stdout, clean native sanitizer/leaks |
+| Lost lookup in numeric-key fixture | Source Node stdout, clean native sanitizer/leaks |
+| Lost lookup in reference-key fixture | Source Node stdout, clean native sanitizer/leaks |
+| Union key admission enabled | Mixed-key outcome became accepted and failed the gap test |
+| Pair representation guard weakened | Widened pair program became accepted and failed the gap test |
+| Second pair insertion omitted | Source Node stdout, clean native sanitizer/leaks |
+| Brand boundary check omitted | Required panic contract; both mutant backends exit 0 |
+| Presence effect guard bypassed | Alias/call/key-update flow controls and invalidated-read panic contract |
+| Array range effect guard bypassed | Alias-pop flow control and invalidated-read panic contract |
+| Concrete generic undefined allowance omitted | Node agrees on stored undefined; both mutant backends panic instead |
+| Empty MultiMap bucket retained in source | Upstream Node size comparison |
+| Empty MultiMap bucket retained in generated native code | Source Node size comparison, clean native sanitizer/leaks |
+| Applied adapter source changed | Exact replacement drift guard exits 1 |
+| Computed accessor prepass guard omitted | Native factory gap test fails with the old compiler panic |
+| Strong key edge dropped | ASAN heap-use-after-free after producer return |
+| Strong value edge dropped | ASAN heap-use-after-free after producer return |
+| Custom Set replaced with built-in Set | Original Node equality, membership, size, representative and string-tag observations |
+
+No backend compile-warning kill is counted. Compiler panic, source-drift and refusal tests are distinct from successful-runtime semantic mutants. Remaining native implementation dependencies are listed above; the branch advances step 19 but does not complete it.
