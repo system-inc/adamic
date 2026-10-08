@@ -1,0 +1,7 @@
+class Named {readonly count:number=7;}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly values:readonly (Named|null|undefined)[]}
+const fake={count:7};const item:(Named|null|undefined)[]=[new Named(),null,undefined];const raw={kind:'box',values:item};const base:Base=raw;
+function show<T extends Named|null|undefined>(value:T):string{return value===null||value===undefined?'missing':String(value.count);}
+function read(node:Target):void{const values=node.values;console.log(values.map(value=>show(value)).join(','));console.log(String(values.includes(null)));console.log(values.map(value=>(value===null||value===undefined)?'missing':String(value.count)).join(','));for(const value of values){console.log((value===null||value===undefined)?'missing':String(value.count));}console.log(values.slice(1).map(value=>(value===null||value===undefined)?'missing':String(value.count)).join(','));}
+read(base as Target);item.push(null);item[0]=new Named();read(base as Target);console.log(String(fake.count));

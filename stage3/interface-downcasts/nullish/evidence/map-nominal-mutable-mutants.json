@@ -1,0 +1,30 @@
+[
+  {
+    "name": "mutable-nominal-native-write",
+    "test": "^TestCheckedViewMutableNominalWriteMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-mutable-nominal-native-write.log.gz"
+  },
+  {
+    "name": "mutable-nominal-javascript-write",
+    "test": "^TestCheckedViewMutableNominalWriteMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-mutable-nominal-javascript-write.log.gz"
+  },
+  {
+    "name": "mutable-nominal-native-read",
+    "test": "^TestCheckedViewMutableNominalFieldMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-mutable-nominal-native-read.log.gz"
+  },
+  {
+    "name": "mutable-nominal-javascript-read",
+    "test": "^TestCheckedViewMutableNominalFieldMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-mutable-nominal-javascript-read.log.gz"
+  }
+]

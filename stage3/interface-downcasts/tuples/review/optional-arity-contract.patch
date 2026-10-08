@@ -1,0 +1,112 @@
+--- a/internal/ir/views.go
++++ b/internal/ir/views.go
+@@ -47,6 +47,8 @@
+ 	ArrayReadonly bool
+ 	Element       ViewContractID
+ 	FixedTuple    bool
++	TupleVariable bool
++	TupleMinimum  int
+ 	Tuple         []ViewContractID
+ 	Functions     []int
+ 	Parameters    []ViewContractID
+--- a/internal/lower/view_maps_tuples.go
++++ b/internal/lower/view_maps_tuples.go
+@@ -31,8 +31,16 @@
+ 		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+ 	}
+ 	tuple := target.TargetTupleType()
++	minimum, variable := 0, false
+ 	for _, flag := range tuple.ElementFlags() {
+-		if flag != checker.ElementFlagsRequired {
++		if flag == checker.ElementFlagsRequired {
++			if variable {
++				return 0
++			}
++			minimum++
++		} else if flag == checker.ElementFlagsOptional {
++			variable = true
++		} else {
+ 			return 0
+ 		}
+ 	}
+@@ -47,7 +55,7 @@
+ 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+ 	l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUnknown, Unsupported: "tuple building"})
+ 	l.result.ViewContractTypes[int(target.Id())] = id
+-	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly(), FixedTuple: true}
++	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly(), FixedTuple: true, TupleVariable: variable, TupleMinimum: minimum}
+ 	for position, element := range l.checker.GetTypeArguments(target) {
+ 		child := build(element)
+ 		if child == 0 {
+@@ -55,7 +63,7 @@
+ 		}
+ 		name := strconv.Itoa(position)
+ 		contract.Tuple = append(contract.Tuple, child)
+-		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Readonly: tuple.IsReadonly()})
++		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Optional: tuple.ElementFlags()[position] == checker.ElementFlagsOptional, Readonly: tuple.IsReadonly()})
+ 		l.result.CheckedFields[name] = true
+ 	}
+ 	l.result.ViewContracts[id-1] = contract
+--- a/internal/native/view_tuples.go
++++ b/internal/native/view_tuples.go
+@@ -11,6 +11,10 @@
+ 		return false
+ 	}
+ 	e.declarations = append(e.declarations, "#include \"view_tuples.h\"")
+-	e.line("adamic_view_tuple((const adamic_object *)%s, %d, %s, %s);", value, len(contract.Tuple), cString(contract.Name), cString(property.View))
++	if contract.TupleVariable {
++		e.line("adamic_view_tuple_range((const adamic_object *)%s, %d, %d, %s, %s);", value, contract.TupleMinimum, len(contract.Tuple), cString(contract.Name), cString(property.View))
++	} else {
++		e.line("adamic_view_tuple((const adamic_object *)%s, %d, %s, %s);", value, len(contract.Tuple), cString(contract.Name), cString(property.View))
++	}
+ 	return true
+ }
+--- a/internal/javascript/view_tuples.go
++++ b/internal/javascript/view_tuples.go
+@@ -13,6 +13,9 @@
+ 	if !contract.FixedTuple {
+ 		return value, false
+ 	}
++	if contract.TupleVariable {
++		return fmt.Sprintf("((v) => {if (!(Array.isArray(v) && v.length >= %d && v.length <= %d)) panic('field read failed: '+%s+' is not a '+%s+'; expected '+%s+', found '+(v === undefined ? 'undefined' : Array.isArray(v) ? 'array' : typeof v)); return v;})(%s)", contract.TupleMinimum, len(contract.Tuple), quote(property.View), quote(contract.Name), quote(contract.Name), value), true
++	}
+ 	return fmt.Sprintf("((v) => { if (!(Array.isArray(v) && v.length === %d)) panic('field read failed: ' + %s + ' is not a ' + %s + '; expected ' + %s + ', found ' + (v === undefined ? 'undefined' : Array.isArray(v) ? 'array' : typeof v)); return v; })(%s)", len(contract.Tuple), quote(property.View), quote(contract.Name), quote(contract.Name), value), true
+ }
+ 
+--- a/internal/native/runtime/view_tuples.h
++++ b/internal/native/runtime/view_tuples.h
+@@ -1,6 +1,7 @@
+ #ifndef ADAMIC_VIEW_TUPLES_H
+ #define ADAMIC_VIEW_TUPLES_H
+ #include "adamic.h"
++void adamic_view_tuple_range(const adamic_object *, size_t, size_t, const char *, const char *);
+ void adamic_view_tuple(const adamic_object *, size_t, const char *, const char *);
+ bool adamic_tuple_matches(const adamic_object *, size_t);
+ // Probe-only until the tuple union read adapter is certified. Owns a present
+--- a/internal/native/runtime/view_tuples.c
++++ b/internal/native/runtime/view_tuples.c
+@@ -19,6 +19,13 @@
+  adamic_panic(message, (size_t)written);
+ }
+ 
++// Variable tuples keep actual arity in the existing immutable shape.
++void adamic_view_tuple_range(const adamic_object *value, size_t minimum, size_t maximum, const char *expected, const char *expression) {
++ if (value != NULL && value->tuple && value->shape->count >= minimum && value->shape->count <= maximum) return;
++ // Reuse the existing named refusal. A nonmatching range cannot equal SIZE_MAX.
++ adamic_view_tuple(value, SIZE_MAX, expected, expression);
++}
++
+ // Normalize only the selected source-certified slot, retaining or boxing it.
+ // The existing reader owns bounds, holes, storage and undefined checks.
+ bool adamic_tuple_array_union_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, const char *expected, const char *expression, adamic_value *result) {
+--- a/internal/ir/view_maps.go
++++ b/internal/ir/view_maps.go
+@@ -129,7 +129,7 @@
+ 			if source.FixedTuple != target.FixedTuple {
+ 				return false
+ 			}
+-			if len(source.Tuple) != len(target.Tuple) || source.ArrayReadonly && !target.ArrayReadonly {
++			if source.TupleVariable != target.TupleVariable || source.TupleVariable && source.TupleMinimum != target.TupleMinimum || len(source.Tuple) != len(target.Tuple) || source.ArrayReadonly && !target.ArrayReadonly {
+ 				return false
+ 			}
+ 			for index, element := range source.Tuple {

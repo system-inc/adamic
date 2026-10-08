@@ -42,7 +42,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	if declarations == "" {
 		t.Skip("set ADAMIC_INTERSECTION_ORIGINAL_DECLS to pinned declaration output")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "intersection-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "intersection-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 		}
 	}
 	for name, digest := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, name))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, name)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -73,7 +73,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 
 func intersectionOriginalProgram(t *testing.T, declarations, name, source string) (*ir.Program, string) {
 	t.Helper()
-	input, err := os.ReadFile("../../stage3/interface-downcasts/lane7/original/" + name + ".a")
+	input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane7/original/" + name + ".a"))
 	if err != nil {
 		t.Fatal(err)
 	}

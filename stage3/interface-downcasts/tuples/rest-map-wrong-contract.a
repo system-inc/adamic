@@ -1,0 +1,4 @@
+interface Base {readonly kind:string;}
+interface Target extends Base {readonly values:ReadonlyMap<number,readonly [number,...number[]]>;}
+const pair:readonly [number,...string[]]=[7,'a']; const values=new Map<number,readonly [number,...string[]]>(); values.set(1,pair); const raw={kind:'probe',values}; const base:Base=raw; const target=base as Target;
+const selected=target.values; console.log('read');

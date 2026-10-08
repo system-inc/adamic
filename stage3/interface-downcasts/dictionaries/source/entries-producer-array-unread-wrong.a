@@ -1,0 +1,8 @@
+interface MapLike<T>{[key:string]:T;}
+interface Entry{readonly name:string;}
+interface Base{readonly kind:'Enum';}
+interface Holder extends Base{readonly table:MapLike<string[]>;}
+const table:Record<string,number[]>={item:[42]};
+const payload={kind:'Enum' as const,table};
+const base:Base=payload;const view=base as Holder;
+const result=Object.entries(view.table);console.log(`${result.length}`);

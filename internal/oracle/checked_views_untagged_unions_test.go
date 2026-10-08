@@ -34,7 +34,7 @@ func TestCheckedViewUntaggedSelection(t *testing.T) {
 		{"structural", "2:name\n", "99:true\n"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + sample.name + "-good.a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/fixtures/" + sample.name + "-good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -58,7 +58,7 @@ func TestCheckedViewUntaggedSelection(t *testing.T) {
 				if variant == "no-adapter" {
 					source = "2:name\n"
 				}
-				path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + sample.name + "-" + variant + ".a")
+				path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/fixtures/" + sample.name + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -170,7 +170,7 @@ int main(int argc,char **argv){
 func TestCheckedViewUntaggedSourceFrontier(t *testing.T) {
 	for _, family := range []string{"binding-name", "option-element", "structural"} {
 		t.Run(family, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + family + "-view-read.a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/fixtures/" + family + "-view-read.a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -191,7 +191,7 @@ func TestCheckedViewUntaggedSourceFrontier(t *testing.T) {
 			t.Logf("shared frontend refusal (both backends): %v", err)
 			program, absentPath := interfaceFixture(t, "untagged/fixtures/"+family+"-absent")
 			want := run{stdout: []byte("true\n")}
-			t.Log(counted(t, "stage3/interface-downcasts/untagged/fixtures/"+family+"-absent.a", false, nil, false, false))
+			t.Log(counted(t, checkedViewFixturePath("stage3/interface-downcasts/untagged/fixtures/"+family+"-absent.a"), false, nil, false, false))
 			for _, got := range []run{onNode(t, absentPath), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
 					t.Fatalf("ordinary absent control: %s", difference)
@@ -204,7 +204,7 @@ func TestCheckedViewUntaggedSourceFrontier(t *testing.T) {
 // Run with source-overlay.py's three owner hooks until the integrator applies
 // them. These tests compile the actual .a program, rather than adapter snapshots.
 func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
-	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a")
+	path, _ := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a"))
 	loaded, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
@@ -216,7 +216,7 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 		}
 		t.Skip("three owner hooks pending; use source-overlay.py for source validation")
 	}
-	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/source-refusals.json")
+	data, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/source-refusals.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -299,14 +299,14 @@ func TestCheckedViewUntaggedCandidatePairs(t *testing.T) {
 		GoodStdout  string `json:"good_stdout"`
 		Variants    []string
 	}
-	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/candidate-fixtures.json")
+	data, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/candidate-fixtures.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	if err = json.Unmarshal(data, &pairs); err != nil {
 		t.Fatal(err)
 	}
-	pinData, err := os.ReadFile("../../stage3/interface-downcasts/untagged/candidate-refusals.json")
+	pinData, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/untagged/candidate-refusals.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -492,7 +492,7 @@ func TestCheckedViewUntaggedCompletedBoundaries(t *testing.T) {
 
 func TestCheckedViewUntaggedCompletedBoundaryMutants(t *testing.T) {
 	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary"} {
-		source, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures", fixture+".a"))
+		source, err := os.ReadFile(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures", fixture+".a")))
 		if err != nil {
 			t.Fatal(err)
 		}

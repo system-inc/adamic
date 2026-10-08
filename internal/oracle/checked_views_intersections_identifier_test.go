@@ -24,7 +24,7 @@ func TestCheckedViewIntersectionOriginalIdentifier(t *testing.T) {
 			if variant == "direct" || variant == "alias-write" || variant == "helper-only" {
 				fixture = "wrong"
 			}
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-" + fixture + ".a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-" + fixture + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -122,7 +122,7 @@ func TestCheckedViewIntersectionOriginalIdentifier(t *testing.T) {
 // Not parallel: update only this unit's original-declaration count rows.
 func recordIntersectionOriginalCounts(t *testing.T, fixture, label string) {
 	t.Helper()
-	root, err := filepath.Abs(repository)
+	root, err := filepath.Abs(checkedViewFixturePath(repository))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -130,9 +130,9 @@ func recordIntersectionOriginalCounts(t *testing.T, fixture, label string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	row := strings.Replace(counted(t, relative, false, nil, false, false), relative, "original/"+label+".a", 1)
+	row := strings.Replace(counted(t, checkedViewFixturePath(relative), false, nil, false, false), relative, "original/"+label+".a", 1)
 	path := filepath.Join(repository, "stage3/interface-downcasts/lane7/counts.md")
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(checkedViewFixturePath(path))
 	if err != nil && !os.IsNotExist(err) {
 		t.Fatal(err)
 	}

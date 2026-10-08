@@ -15,15 +15,20 @@ func viewCallableCounts(t *testing.T) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
+		typeScriptPaths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5", directory, "*.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		paths = append(paths, typeScriptPaths...)
 		for _, path := range paths {
-			if name := filepath.Base(path); name == "write-back.a" || name == "observed.a" {
+			if name := strings.TrimSuffix(filepath.Base(path), filepath.Ext(path)); name == "write-back" || name == "observed" {
 				continue
 			}
 			relative, err := filepath.Rel(repository, path)
 			if err != nil {
 				t.Fatal(err)
 			}
-			rows = append(rows, counted(t, relative, false, nil, false, false))
+			rows = append(rows, counted(t, checkedViewFixturePath(relative), false, nil, false, false))
 		}
 	}
 	for _, path := range []string{
@@ -32,7 +37,7 @@ func viewCallableCounts(t *testing.T) []string {
 		"internal/lower/testdata/predicates/mixed_union_callback.a",
 		"internal/lower/testdata/predicates/mixed_union_callback_variance.a",
 	} {
-		rows = append(rows, counted(t, path, false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath(path), false, nil, false, false))
 	}
 	return rows
 }
@@ -41,7 +46,7 @@ func viewCallableCounts(t *testing.T) []string {
 func TestCheckedViewCallableCounts(t *testing.T) {
 	rows := viewCallableCounts(t)
 	path := filepath.Join(repository, "internal/oracle/counts.md")
-	contents, err := os.ReadFile(path)
+	contents, err := os.ReadFile(checkedViewFixturePath(path))
 	if err != nil {
 		t.Fatal(err)
 	}

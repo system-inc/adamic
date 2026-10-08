@@ -20,7 +20,7 @@ func TestCheckedViewIntersectionConjunction(t *testing.T) {
 	}
 	for _, variant := range []string{"good", "wrong", "nested", "absent"} {
 		t.Run(variant, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/lane7/" + variant + ".a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane7/" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -239,7 +239,7 @@ func TestCheckedViewIntersectionCompoundDemand(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
-	readPath, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-untagged-read.a"))
+	readPath, pathErr := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-untagged-read.a")))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}

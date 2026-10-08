@@ -1,0 +1,30 @@
+[
+  {
+    "name": "nominal-field-readonly-alias-write",
+    "test": "^TestCheckedViewMapCertificates$/entry-nominal-slot-widen-undefined-to-both(-nested)?$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nominal-slot-widen-nominal-field-readonly-alias-write.log.gz"
+  },
+  {
+    "name": "nominal-field-widen-native-read",
+    "test": "^TestCheckedViewNominalFieldWidenReadMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nominal-slot-widen-nominal-field-widen-native-read.log.gz"
+  },
+  {
+    "name": "nominal-field-widen-js-read",
+    "test": "^TestCheckedViewNominalFieldWidenReadMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nominal-slot-widen-nominal-field-widen-js-read.log.gz"
+  },
+  {
+    "name": "nominal-field-union-storage",
+    "test": "^TestCheckedViewMapCertificates$/entry-nominal-slot-widen-(null|both)(-nested)?$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nominal-slot-widen-nominal-field-union-storage.log.gz"
+  }
+]

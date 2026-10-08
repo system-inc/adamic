@@ -46,7 +46,7 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 		{"incremental-union-each-frontier", "string\ndone\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + probe.name + ".a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + probe.name + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

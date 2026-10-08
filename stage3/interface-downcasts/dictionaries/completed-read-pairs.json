@@ -419,5 +419,39 @@
       "source/optional-paths-wrong.a"
     ],
     "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 14,
+    "field": "<dynamic-key>",
+    "type": "string",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryStringIndexing"
+    ],
+    "fixtures": [
+      "source/string-index-good.a",
+      "source/string-index-missing.a",
+      "source/string-index-negative.a",
+      "source/string-index-surrogate.a",
+      "source/string-index-wrong.a"
+    ],
+    "scope": "Numeric UTF-16 string indexing after checked field extraction through a shared helper: valid BMP/surrogate indices, negative/out-of-range absence, wrong number field. Path uses a void phantom brand and preserves its named diagnostic. Census dictionary-read classification is retained; no record representation is involved."
+  },
+  {
+    "type_id": 8572,
+    "field": "<dynamic-key>",
+    "type": "Path",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryStringIndexing"
+    ],
+    "fixtures": [
+      "source/path-index-good.a",
+      "source/path-index-missing.a",
+      "source/path-index-negative.a",
+      "source/path-index-surrogate.a",
+      "source/path-index-wrong.a"
+    ],
+    "scope": "Numeric UTF-16 string indexing after checked field extraction through a shared helper: valid BMP/surrogate indices, negative/out-of-range absence, wrong number field. Path uses a void phantom brand and preserves its named diagnostic. Census dictionary-read classification is retained; no record representation is involved."
   }
 ]

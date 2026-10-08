@@ -25,7 +25,7 @@ func TestCheckedViewIntersectionOriginalIsolatedMembers(t *testing.T) {
 				if variant == "wrong" {
 					fixture = sample.bad
 				}
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane7/original/" + fixture + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane7/original/" + fixture + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}

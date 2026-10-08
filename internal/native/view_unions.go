@@ -10,10 +10,20 @@ import (
 // Test union membership at the returned object, then leave member payload reads
 // checked. The caller has already evaluated the receiver exactly once.
 func (e *emitter) viewObjectUnion(property ir.Property, object string) {
+	if e.viewTuple(property, object) {
+		return
+	}
 	if property.ViewContract == 0 {
 		return
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
+	if contract.TupleUnion {
+		if !e.viewTupleHeapUnion(property.ViewContract, object, property.View) {
+			panic("compiler bug: missing tuple alternatives plan")
+		}
+		return
+	}
+
 	if contract.Intersection {
 		e.viewObjectIntersection(property, object)
 		return

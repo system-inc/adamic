@@ -1,0 +1,10 @@
+import type { IncrementalBuildInfoRoot } from 'original-tsc-builder';
+interface Base { readonly kind: string; }
+interface Target extends Base { readonly roots: readonly IncrementalBuildInfoRoot[]; }
+const roots: number[] = [];
+const raw = {kind:'probe', roots};
+const base: Base = raw;
+const viewed = base as Target;
+const values = viewed.roots;
+const item = values[0];
+console.log(typeof item);

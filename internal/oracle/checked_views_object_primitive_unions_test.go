@@ -39,7 +39,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 		{"node-indicator-wrong", "42\n", "", "field read failed: member.kind is not a string; expected string, found number"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -242,7 +242,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS to prepare.cjs output")
 	}
-	manifestBytes, err := os.ReadFile(filepath.Join(declarations, "original-manifest.json"))
+	manifestBytes, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "original-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -263,7 +263,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 		t.Fatal("original declaration provenance changed")
 	}
 	for file, expected := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, file))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, file)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -308,17 +308,17 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 		{"diagnostic-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "Diagnostic", "member.code"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			file, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/original/" + sample.name + ".a")
+			file, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + sample.name + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			input, err := os.ReadFile(file)
+			input, err := os.ReadFile(checkedViewFixturePath(file))
 			if err != nil {
 				t.Fatal(err)
 			}
 			originalTypes := filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))
 			bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", originalTypes), 1)
-			file = filepath.Join(t.TempDir(), sample.name+".a")
+			file = checkedViewFixtureCopyPath(filepath.Join(t.TempDir(), sample.name+".a"), file)
 			if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 				t.Fatal(err)
 			}
@@ -479,7 +479,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	} {
 		name := frontier.name
 		t.Run(name, func(t *testing.T) {
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + name + ".a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + name + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

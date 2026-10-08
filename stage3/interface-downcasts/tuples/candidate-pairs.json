@@ -1,0 +1,168 @@
+{
+  "integration_sha": "4e67894aae94cba46212458d604e1b886edf56b5",
+  "classification": "candidate counts, not exact reachability",
+  "pairs": [
+    {
+      "type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "<element>",
+      "declared_type": "[] | EmitSignature | IncrementalBuildInfoFileId",
+      "families": [
+        "array element or consumer reads",
+        "intersection field contract",
+        "object plus primitive union",
+        "scalar contracts",
+        "tuple contracts"
+      ],
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2299,
+          "column": 40,
+          "start": 108305,
+          "end": 108313,
+          "text": "value[0]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2302,
+          "column": 31,
+          "start": 108411,
+          "end": 108419,
+          "text": "value[1]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2302,
+          "column": 45,
+          "start": 108425,
+          "end": 108433,
+          "text": "value[1]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2305,
+          "column": 25,
+          "start": 108613,
+          "end": 108621,
+          "text": "value[1]"
+        }
+      ]
+    },
+    {
+      "type_id": 70161,
+      "type": "TrackedSymbol[]",
+      "field": "forEach",
+      "declared_type": "(callbackfn: (value: TrackedSymbol, index: number, array: TrackedSymbol[]) => void, thisArg?: any) => void",
+      "families": [
+        "array element or consumer reads",
+        "array intrinsic contracts",
+        "tuple contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8146,
+          "column": 17,
+          "start": 448606,
+          "end": 448629,
+          "text": "trackedSymbols?.forEach"
+        }
+      ]
+    },
+    {
+      "type_id": 97913,
+      "type": "readonly IncrementalBuildInfoRoot[]",
+      "field": "<element>",
+      "declared_type": "IncrementalBuildInfoRoot",
+      "families": [
+        "array element or consumer reads",
+        "intersection field contract",
+        "object plus primitive union",
+        "tuple contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2412,
+          "column": 29,
+          "start": 113655,
+          "end": 113678,
+          "text": "program.root[rootIndex]"
+        }
+      ]
+    },
+    {
+      "type_id": 97926,
+      "type": "IncrementalBuildInfoReferencedMap",
+      "field": "forEach",
+      "declared_type": "(callbackfn: (value: [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], index: number, array: [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId][]) => void, thisArg?: any) => void",
+      "families": [
+        "array element or consumer reads",
+        "array intrinsic contracts",
+        "tuple contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2369,
+          "column": 9,
+          "start": 111561,
+          "end": 111581,
+          "text": "referenceMap.forEach"
+        }
+      ]
+    },
+    {
+      "type_id": 97931,
+      "type": "readonly IncrementalBuildInfoEmitSignature[] | undefined",
+      "field": "forEach",
+      "declared_type": "(callbackfn: (value: IncrementalBuildInfoEmitSignature, index: number, array: readonly IncrementalBuildInfoEmitSignature[]) => void, thisArg?: any) => void",
+      "families": [
+        "array element or consumer reads",
+        "array intrinsic contracts",
+        "intersection field contract",
+        "object plus primitive union",
+        "tuple contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2296,
+          "column": 9,
+          "start": 108123,
+          "end": 108156,
+          "text": "buildInfo.emitSignatures?.forEach"
+        }
+      ]
+    },
+    {
+      "type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "outSignature",
+      "declared_type": "EmitSignature | undefined",
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "scalar contracts",
+        "tuple contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2281,
+          "column": 27,
+          "start": 107188,
+          "end": 107210,
+          "text": "buildInfo.outSignature"
+        }
+      ]
+    }
+  ]
+}
