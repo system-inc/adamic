@@ -1,0 +1,12 @@
+namespace Debug {
+ export function assertEachNode(value:number):number;
+ export function assertEachNode(value:number):number;
+ export function assertEachNode(value:number):number{return value+1;}
+}
+console.log(`${Debug.assertEachNode(2)}:${Debug.assertEachNode(7)}`);
+function moduleRead(value:string):string;
+function moduleRead(value:string):string{return 'module:'+value;}
+console.log(moduleRead('okay'));
+function unusedType<T>(value:number):number;
+function unusedType(value:number):number{return value*2;}
+console.log(`${unusedType<string>(3)}`);

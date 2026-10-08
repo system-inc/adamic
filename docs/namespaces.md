@@ -405,3 +405,20 @@ and rejects each absence independently; dropping the null branch changes
 Node's result. Narrow sound acceptance needs those tags and a concrete T
 representation, preserving runtime narrowing and ownership. Evidence:
 `debug-groups/nullable_generic.*`; neither absence is silently erased.
+
+## Identical overload contracts
+
+Bodyless signatures are now skipped only when every overload's runtime
+parameter and result types are identical to a nongeneric implementation's
+contract. Parameters must be required plain names with no default, rest or
+this parameter; predicates retain their proof requirement. Unused signature
+type parameters are harmless only when those types still exactly match.
+Differing contracts and generic implementations retain NotYet. A Node cut
+shows why dropping arbitrary signatures is unsound: an overload promises a
+number while its checker-accepted implementation returns a string.
+
+The identical concrete subset advances the normalized Parser, IncrementalParser
+and Debug declaration shapes, for nine of ten isolated shapes lowering. This
+normalization does not prove real Debug.assertEachNode's predicates or all
+parser bodies. `debug-groups/OVERLOADS.md` records source, exact limits, Node
+output and two executed compiler/IR mutants.

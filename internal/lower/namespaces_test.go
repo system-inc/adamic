@@ -260,3 +260,19 @@ func TestDebugNullableGenericBoundary(t *testing.T) {
 		t.Fatalf("nullable generic boundary lost: %v", err)
 	}
 }
+
+func TestDebugOverloadContracts(t *testing.T) {
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/overload_contract.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var ny *NotYet
+	if !errors.As(err, &ny) || !strings.Contains(err.Error(), "function without a body") {
+		t.Fatalf("overload contract boundary lost: %v", err)
+	}
+	_, err = lowerSource(t, "namespace N {export function read(value:number):number;export function read(value:number):number;export function read(value:number):number{return value+1;}} console.log(`${N.read(2)}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+}

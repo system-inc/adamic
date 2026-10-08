@@ -1,0 +1,42 @@
+{
+  "group": "overload_contract",
+  "sites": [
+    "debug.ts:281:5"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/overload_contract.a"
+    ],
+    "stdout": "wrong:string\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/overload_contract/mutant.a"
+    ],
+    "stdout": "1:number\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "build": {
+    "command": [
+      "/tmp/debug-groups-adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/overload_contract.a",
+      "-o",
+      "/tmp/debug-groups/overload_contract/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/overload_contract.a:2:2: stage 0 can't lower a function without a body yet\n",
+    "exit": 1
+  },
+  "judgment": "The checker permits an implementation returning a string for the number overload. Skipping signatures without proving their selected contracts would violate the types. Narrow sound acceptance: identical concrete parameter and result contracts, or separately proved/checking each selected overload including its predicates."
+}

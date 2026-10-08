@@ -1,0 +1,8 @@
+namespace Debug {
+ export function assertEachNode(value:number):number;
+ export function assertEachNode(value:string):string;
+ export function assertEachNode(value:number|string):number|string {
+  return typeof value==='number'?'wrong':value;
+ }
+}
+console.log(`${Debug.assertEachNode(1)}:${typeof Debug.assertEachNode(1)}`);
