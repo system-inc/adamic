@@ -71,6 +71,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
+		// export default function () {} and export default class {} have no name to declare a global
+		// under, and everything below that looks a declaration up by its name.
+		if (node.Kind == ast.KindFunctionDeclaration || node.Kind == ast.KindClassDeclaration) && node.Name() == nil {
+			found = l.notYet(node, "an anonymous default export (name the function or class)")
+			return true
+		}
 		if found != nil {
 			return true
 		}
