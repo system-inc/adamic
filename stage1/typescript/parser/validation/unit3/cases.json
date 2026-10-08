@@ -906,5 +906,63 @@
       "token": 241,
       "fix": "The name after a dot uses diagnostic 1003; only a missing initial type name uses 1110."
     }
-  ]
+  ],
+  "final_results": {
+    "parser_package": {
+      "result": "PASS",
+      "seconds": 3396.417,
+      "log": "parser-final.log",
+      "source_commit": "a2a244fdfc7f90231b6a0ca878377078266de429",
+      "skipped": 0
+    },
+    "TestIncompleteCompilerAgrees": {
+      "result": "PASS",
+      "seconds": 2734.29,
+      "inputs": 22497,
+      "failures": 0,
+      "log": "incomplete-final.log",
+      "invocation": "Included in parser_package; log extracted from the same invocation."
+    },
+    "TestRulesAgree": {
+      "result": "PASS",
+      "seconds": 140.597,
+      "upstream_cases": 3777,
+      "identical_bytes": 13763944,
+      "log": "lint-final.log",
+      "skipped": 0
+    },
+    "vet": {
+      "result": "PASS",
+      "log": "vet-final.log"
+    },
+    "unfixed_incomplete_cases": []
+  },
+  "names_preflight": {
+    "result": "PASS",
+    "seconds": 40.856,
+    "log": "names-preflight.log"
+  },
+  "merges": {
+    "lint_case_collection": "e2956f8821bde1483772b3065eb09c0b38f04930",
+    "lint_area": "bfa0bfec9ab6f49c81e22984d3fca4ee21a472e8",
+    "latest_merge": "7bec0b85934511ca95048b525fe367926ddc43bb",
+    "method": "merge; no rebase",
+    "conflict_resolution": "Keep the new shared capture helper and move the four repaired interface cases from unsupported-recovery to recovery in shared_test.go."
+  },
+  "last_merge_validation": {
+    "parser_scanner_lint_sources_and_tests": "Unchanged since a2a244fd.",
+    "generated_c": "Both ports emit byte-identical C before and after the final merge. The compiler changes add rejection checks; validated machine-code inputs remain identical.",
+    "parser_c_sha256": "5912c53d8cf20706a07ece2defb9a2e08417af038208c4cb2dfd43c0fbdd6fa6",
+    "lint_c_sha256": "b3f056e7cc33eb91832a5b6cdd25a187aec239164897ed7fe9b527bff466fe29",
+    "comparison_log": "last-merge-code.log",
+    "vet": "PASS after final merge"
+  },
+  "environment_interruption": {
+    "log": "parser-environment-interruption.log",
+    "completed_inputs": 22400,
+    "failures_reported": 0,
+    "final_result": null,
+    "action": "Discarded partial result and restarted the full package from the beginning."
+  },
+  "typescript_checkout_clean_including_ignored": true
 }
