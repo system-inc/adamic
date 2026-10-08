@@ -1,0 +1,15 @@
+internal/leakcheck/leakcheck.go
+internal/oracle/enums_test.go
+internal/oracle/input_test.go
+internal/oracle/library_array_mutant_test.go
+internal/oracle/oct6_mutant_test.go
+internal/oracle/oracle_test.go
+internal/oracle/typeof_dispatch_test.go
+internal/oracle/typeof_null_test.go
+internal/skipcensus/census.go
+internal/skipcensus/census_test.go
+internal/skipcensus/cmd/main.go
+internal/skipcensus/log.go
+internal/skipcensus/optin.go
+internal/skipcensus/testdata/plain-skips.jsonl
+internal/skipcensus/testdata/skips.json
