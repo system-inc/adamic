@@ -572,6 +572,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "parenthesizer-token-true",
+      "pairs": 3,
+      "candidateReads": 68,
+      "members": [
+        {
+          "receiver_type_id": 11725,
+          "type": "ParenthesizerRules",
+          "field": "parenthesizeExpressionForDisallowedComma",
+          "declared_types": [
+            "(expression: Expression) => Expression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 23,
+          "witness": {
+            "file": "src/compiler/factory/nodeFactory.ts",
+            "line": 3615,
+            "column": 41
+          },
+          "rank": 68,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "getTokenStart",
+          "declared_types": [
+            "() => number"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 23,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2514,
+            "column": 19
+          },
+          "rank": 69,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createTrue",
+          "declared_types": [
+            "() => TrueLiteral"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 22,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 150,
+            "column": 62
+          },
+          "rank": 70,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
