@@ -219,7 +219,7 @@ func (l *lowering) libraryLocal(function int, name string, of ir.Type) ir.Read {
 // A stored iterator is consumed by calls to next, rather than by snapshotting its collection.
 func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
 	proven := l.checker.GetTypeAtLocation(node)
-	if !l.isLibraryType(proven, "MapIterator", "SetIterator") {
+	if !l.isLibraryType(proven, "MapIterator", "SetIterator", "ArrayIterator", "StringIterator") {
 		return 0, false
 	}
 	arguments := l.typeArguments(proven)
@@ -359,7 +359,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	if l.checker.IsArrayType(proven) {
 		sourceType = l.checker.GetElementTypeOfArrayType(proven)
 	}
-	if l.isSet(sourceNode) || l.isLibraryType(proven, "MapIterator", "SetIterator") {
+	if l.isSet(sourceNode) || l.isLibraryType(proven, "MapIterator", "SetIterator", "ArrayIterator", "StringIterator") {
 		sourceType = l.typeArguments(proven)[0]
 	}
 	grouped := l.typeArguments(l.checker.GetTypeAtLocation(node))
@@ -467,14 +467,18 @@ func (f *cycleFinder) libraryIteratorMade(node *ast.Node) {
 		return
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression {
+	var receiver *ast.Node
+	if callee.Kind == ast.KindPropertyAccessExpression {
+		receiver = callee.AsPropertyAccessExpression().Expression
+	} else if callee.Kind == ast.KindElementAccessExpression && f.l.symbolIterator(callee.AsElementAccessExpression().ArgumentExpression) {
+		receiver = callee.AsElementAccessExpression().Expression
+	} else {
 		return
 	}
-	access := callee.AsPropertyAccessExpression()
 	iterator := f.l.checker.GetTypeAtLocation(node)
-	collection := f.l.checker.GetTypeAtLocation(access.Expression)
-	if f.l.isLibraryType(iterator, "MapIterator", "SetIterator") &&
-		f.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	collection := f.l.checker.GetTypeAtLocation(receiver)
+	if f.l.isLibraryType(iterator, "MapIterator", "SetIterator", "ArrayIterator", "StringIterator") &&
+		(f.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") || f.l.checker.IsArrayType(collection)) {
 		f.libraryIterators = append(f.libraryIterators, libraryIteratorCapture{iterator, collection})
 	}
 }
@@ -498,25 +502,37 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) {
-				return l.notYet(property, "spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array")
+				return l.notYet(property, "spreading a built-in iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array")
 			}
 		}
 	}
 	if node.Kind == ast.KindCallExpression {
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression {
+			receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+			if l.isLibraryGlobal(receiver, "Object") && len(call.Arguments.Nodes) > 0 && isIterator(call.Arguments.Nodes[0]) {
+				switch name {
+				case "keys", "values", "entries", "getOwnPropertyNames", "getOwnPropertySymbols", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors", "hasOwn":
+					return l.notYet(node, "own-property reflection on a built-in iterator: next is inherited, and its native closure slot is private")
+				}
+			}
+			if isIterator(receiver) && (name == "hasOwnProperty" || name == "propertyIsEnumerable") {
+				return l.notYet(node, "own-property reflection on a built-in iterator: next is inherited, and its native closure slot is private")
+			}
+		}
 		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "assign" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 			for index, source := range call.Arguments.Nodes {
 				if index == 0 {
 					continue
 				}
 				if isIterator(source) {
-					return l.notYet(source, "Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator")
+					return l.notYet(source, "Object.assign copying a built-in iterator: next is inherited, not an own enumerable field; use the original iterator")
 				}
 			}
 		}
 	}
-	return nil
+	return l.libraryIteratorOrigin(node)
 }
 
 func (l *lowering) libraryIteratorType(proven *checker.Type) bool {
@@ -527,5 +543,5 @@ func (l *lowering) libraryIteratorType(proven *checker.Type) bool {
 			}
 		}
 	}
-	return l.isLibraryType(proven, "MapIterator", "SetIterator")
+	return l.isLibraryType(proven, "MapIterator", "SetIterator", "ArrayIterator", "StringIterator")
 }

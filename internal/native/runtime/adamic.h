@@ -370,7 +370,7 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 // Ends an active iteration once and returns a small map to inline storage when safe.
 void adamic_map_iterator_close(adamic_map_iterator *iterator);
-adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+adamic_object *adamic_collection_iterator(void *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
