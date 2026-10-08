@@ -1,0 +1,9 @@
+import type { FunctionLikeDeclaration, ClassDeclaration, ClassExpression } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as FunctionLikeDeclaration;
+ const items = viewed.parameters;
+ console.log(`${items.length}:${items[0]!.pos}`);
+}
+const raw = { kind: 179, parameters: [{kind: 170, pos: 7}, {kind: 170, pos: undefined}] };
+read(raw);

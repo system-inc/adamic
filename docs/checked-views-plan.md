@@ -2452,3 +2452,16 @@ ASSIGNED-REPORT.md and assigned-lane4b-certificates.json. Remaining lane 7
 array blockers are pinned through actual string and original FileInfo objects;
 they need boxed union array storage and member adapters in the array consumers.
 Private 68704 remains excluded as instructed.
+
+## Lane 2 group nineteen: original union array reads
+
+FunctionLikeDeclaration.parameters and ClassDeclaration | ClassExpression.members
+are held against complete original declarations by 81 probes covering all nine
+receiver arms, selected elements, readiness, laziness and map descendants.
+The two pairs account for 43 static candidate reads. Both backends, release and
+sanitized native, 36 finishing leak checks and four executed numeric-field mutants
+pass. Eighty-one measured count rows are recorded; the global refresh still fails
+in existing fixtures. Cumulative obligations are 171 pairs / 2840 reads; remainder
+163 / 349. Production execution is unmeasured. IncrementalBuildInfo.fileNames is
+pinned at an original untagged-union admission refusal, with no credit. Tuples stay
+with their worker. See stage3/interface-downcasts/lane2/RANKED19-ARRAYS-REPORT.md.

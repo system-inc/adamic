@@ -48,7 +48,7 @@ func originalArrayFile(t *testing.T, declarations, directory, name string) strin
 }
 
 // Original declarations include every unread member. Candidate spans do not measure runtime reachability.
-func originalRankedArrayOracle(t *testing.T, group string, pairCount, reads int) {
+func originalRankedArrayOracle(t *testing.T, group string, pairCount int, reads ...int) {
 	t.Helper()
 	declarations, directory, probes := originalArrayInputs(t, group)
 	if declarations == "" {
@@ -65,8 +65,15 @@ func originalRankedArrayOracle(t *testing.T, group string, pairCount, reads int)
 	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Pairs) != pairCount {
 		t.Fatal("original provenance changed")
 	}
-	for _, pair := range manifest.Pairs {
-		if pair.Reads != reads || len(pair.Sites) != reads {
+	if len(reads) != 1 && len(reads) != pairCount {
+		t.Fatal("expected one read count or one count per pair")
+	}
+	for index, pair := range manifest.Pairs {
+		expected := reads[0]
+		if len(reads) > 1 {
+			expected = reads[index]
+		}
+		if pair.Reads != expected || len(pair.Sites) != expected {
 			t.Fatal("candidate witnesses changed")
 		}
 	}

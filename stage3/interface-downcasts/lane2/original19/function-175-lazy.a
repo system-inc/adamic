@@ -1,0 +1,8 @@
+import type { FunctionLikeDeclaration, ClassDeclaration, ClassExpression } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as FunctionLikeDeclaration;
+ console.log(`${viewed.kind}`);
+}
+const raw = { kind: 175, parameters: 7 };
+read(raw);

@@ -1,0 +1,713 @@
+[
+  {
+    "name": "function-263-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-lazy",
+    "source": "263\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-263-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-lazy",
+    "source": "175\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-175-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-lazy",
+    "source": "178\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-178-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-lazy",
+    "source": "179\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-179-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-lazy",
+    "source": "177\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-177-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-lazy",
+    "source": "219\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "function-219-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "function-219-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-219-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-lazy",
+    "source": "220\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "function-220-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "function-220-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-220-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "class-264-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-lazy",
+    "source": "264\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "class-264-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.members is not a NodeArray<ClassElement>; expected NodeArray<ClassElement>, found number",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "class-264-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ClassElement, found number",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-264-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-lazy",
+    "source": "232\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "class-232-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.members is not a NodeArray<ClassElement>; expected NodeArray<ClassElement>, found number",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "class-232-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ClassElement, found number",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  },
+  {
+    "name": "class-232-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassExpression",
+      "ClassElement"
+    ]
+  }
+]
