@@ -11,7 +11,7 @@ const scout22OwnSignature = `const hasOwnProperty: (this: object, key: string) =
 func TestBorrowedObjectOwnProperty(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const own = Object.prototype.hasOwnProperty; console.log(String(own.call({n:1},'n')));`,
+		`const own = Object.prototype.hasOwnProperty; console.log(own.call({n:1},'n'));`,
 		scout22OwnSignature + `const value = { n: 1 }; console.log(String(hasOwnProperty.call(value, 'n')));`,
 		scout22OwnSignature + `const value = { hasOwnProperty: (key: string): boolean => false }; hasOwnProperty.call(value, 'hasOwnProperty');`,
 		`const value = { n: 1 }; console.log(String(Object.prototype.hasOwnProperty.call(value, 'absent')));`,

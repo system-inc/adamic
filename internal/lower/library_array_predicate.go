@@ -131,6 +131,26 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	argument := node.AsCallExpression().Arguments.Nodes[0]
+	proven := l.checker.GetTypeAtLocation(argument)
+	of, represented := l.representation(proven)
+	// Keep the library's effect-preserving static facts, including empty literals
+	// and intrinsic identities. Mixed slots use the compiler's runtime brand test.
+	static := represented && of != ir.Union && proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0 && !isClassInstance(proven)
+	plain := ast.SkipParentheses(argument)
+	if plain.Kind == ast.KindArrayLiteralExpression && len(plain.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+		static = true
+	}
+	for _, global := range []string{"Object", "Array", "String", "Number", "JSON", "Math", "Map", "Set"} {
+		if l.isLibraryGlobal(plain, global) {
+			static = true
+		}
+	}
+	if plain.Kind == ast.KindPropertyAccessExpression && plain.Name().Text() == "prototype" && l.isLibraryGlobal(plain.AsPropertyAccessExpression().Expression, "Array") {
+		static = true
+	}
+	if static {
+		return l.libraryArrayIsArray(node)
+	}
 	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
 	}

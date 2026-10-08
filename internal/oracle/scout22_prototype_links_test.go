@@ -15,6 +15,7 @@ func init() {
 		lowers, checked bool
 	}{
 		{"internal/oracle/testdata/scout22_prototype_create.a", true, false},
+		{"internal/oracle/testdata/scout22_cached_intrinsic.a", true, false},
 		{"internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a", false, false},
 		{"internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a", false, false},
 	} {
