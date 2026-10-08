@@ -15,6 +15,7 @@ import (
 	"regexp"
 	"runtime"
 	"sort"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -294,24 +295,52 @@ func generated(t *testing.T) []string {
 func upstream(t *testing.T) []string {
 	return upstreamFrom(t, ".")
 }
+
+// sharedUpstream is the run's one capture of this package's upstream cases.
+func sharedUpstream() *sharedValue {
+	return shared("upstream", func(value *sharedValue) {
+		directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
+		if err != nil {
+			value.err = err
+			return
+		}
+		value.rows, value.configs, value.err = captureUpstream(".", directory)
+	})
+}
+
+// typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
+// when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
+// TestTypedReplayKeepsUpstreamCompilerOptions holds it to the options.
+func typedReplayConfig(program typedProgram, found bool, file string) string {
+	options := `{"strict":true}`
+	if found {
+		options = program.CompilerOptions
+	}
+	return fmt.Sprintf(`{"compilerOptions":%s,"files":[%q]}`, options, file)
+}
+
+// upstreamPrograms is each typed upstream case's program as upstream's test built it, its compiler options
+// and the findings it reported, by the case file's path (#0jkpds7).
+func upstreamPrograms(t *testing.T) map[string]typedProgram {
+	t.Helper()
+	value := sharedUpstream()
+	if value.err != nil {
+		t.Fatal(value.err)
+	}
+	return value.configs
+}
+
 func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	t.Helper()
 	if isPackage(sourceRoot) {
-		value := shared("upstream", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
-			if err != nil {
-				value.err = err
-				return
-			}
-			value.rows, value.err = captureUpstream(sourceRoot, directory)
-		})
+		value := sharedUpstream()
 		if value.err != nil {
 			t.Fatal(value.err)
 		}
 		t.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
 		return append([]string(nil), value.rows...)
 	}
-	rows, err := captureUpstream(sourceRoot, t.TempDir())
+	rows, _, err := captureUpstream(sourceRoot, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -376,15 +405,37 @@ func TestRulesAgree(t *testing.T) {
 	for _, descriptor := range prepareRegistry(t, directory) {
 		typed[descriptor.Name] = descriptor.Typed
 	}
+	// A typed case is replayed under the compiler options upstream's test built its program with, and Go must
+	// report there the count upstream's own run reported. Both engines read one tsconfig, so their agreement
+	// can't see an option the replay dropped; that count can. A typed rule's case that upstream ran without a
+	// program keeps strict alone, and the counts are logged so a capture that stopped carrying options shows.
+	programs := upstreamPrograms(t)
+	captured, assumed, uncounted := 0, 0, 0
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
 		if len(fields) > 1 && typed[fields[1]] {
 			config := filepath.Join(t.TempDir(), "tsconfig.json")
-			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+			program, found := programs[fields[0]]
+			if found {
+				captured++
+			} else {
+				assumed++
+			}
+			options := typedReplayConfig(program, found, fields[0])
 			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
 				t.Fatal(err)
 			}
-			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+			caseManifest := manifest(t, []string{"program " + config, row})
+			compareWithJavaScript(t, oracle, binary, directory, caseManifest, module)
+			if found && program.Findings < 0 {
+				uncounted++
+			}
+			if found && program.Findings >= 0 {
+				count := strings.TrimSpace(string(execute(t, "", oracle, "--manifest", caseManifest, "--count").output))
+				if count != strconv.Itoa(program.Findings) {
+					t.Errorf("%s %s: Go reports %s findings under the replayed tsconfig %s, and upstream's run reported %d", fields[1], fields[0], count, options, program.Findings)
+				}
+			}
 		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
@@ -392,6 +443,7 @@ func TestRulesAgree(t *testing.T) {
 			rows = append(rows, row)
 		}
 	}
+	t.Logf("typed upstream cases: %d under their captured compiler options, %d under strict alone; %d held to upstream's count, %d not, their programs holding other fixture files", captured, assumed, captured-uncounted, uncounted)
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
 }
 
