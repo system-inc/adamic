@@ -1,0 +1,46 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/module-equality
+=== PAUSE TestMutants/module-equality
+=== CONT  TestMutants/module-equality
+    lint_test.go:818: checker compilation phases: load=265.386978ms lower=5.24027634s C=1.341690018s JavaScript=30.309655ms
+    lint_test.go:818: checker native mutant build: 6.454372858s
+    lint_test.go:841: module-equality caught on Node: case 85 line 4367: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+    lint_test.go:841: module-equality caught on emitted JavaScript: case 85 line 4367: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+    lint_test.go:841: module-equality caught on native: case 85 line 4367: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsmodule-equality3519367747/016/next-no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+--- PASS: TestMutants (5.18s)
+    --- PASS: TestMutants/module-equality (22.50s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	27.741s

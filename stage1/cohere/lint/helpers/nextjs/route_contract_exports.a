@@ -1,0 +1,16 @@
+import { buildRouteFileContracts } from './build_route_file_contracts.a';
+import { splitSegments } from './split_segments.a';
+const contracts=buildRouteFileContracts();
+export function routeContractExports(path: string): readonly string[] | undefined {
+ const segments=splitSegments(path); if(segments.length<2) { return undefined; }
+ let under=false; for(let i=0;i<segments.length-1;i++) { if(segments[i]==='app') { under=true; break; } }
+ if(!under) { return undefined; }
+ const base=segments[segments.length-1] ?? ''; let stem='';
+ for(const extension of ['.tsx','.ts','.jsx','.js']) { if(base.endsWith(extension)) { stem=base.slice(0,base.length-extension.length); break; } }
+ if(stem==='') { return undefined; }
+ const found=contracts.get(stem); if(found!==undefined) { return found; }
+ let end=stem.length; while(end>0 && stem.charCodeAt(end-1)>=48 && stem.charCodeAt(end-1)<=57) { end--; }
+ const numberless=stem.slice(0,end);
+ if(numberless==='icon' || numberless==='apple-icon' || numberless==='opengraph-image' || numberless==='twitter-image') { return contracts.get(numberless); }
+ return undefined;
+}

@@ -1,0 +1,6 @@
+import { utf8At, utf8Length } from 'adamic';
+export function lastSeparator(path: string): number {
+ let posix = -1; let windows = -1;
+ for(let i=0; i<utf8Length(path); i++) { const byte=utf8At(path,i); if(byte===47) { posix=i; } if(byte===92) { windows=i; } }
+ return windows > posix ? windows : posix;
+}
