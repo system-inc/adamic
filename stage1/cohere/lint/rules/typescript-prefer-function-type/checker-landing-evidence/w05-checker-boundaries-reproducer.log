@@ -1,0 +1,28 @@
+=== RUN   TestDependenciesProjectModuleBoundary
+=== PAUSE TestDependenciesProjectModuleBoundary
+=== CONT  TestDependenciesProjectModuleBoundary
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_type
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_index
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker_dynamically
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_nested_workers_folder
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_common_source
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_another_module
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_package_laid_out_like_a_worker
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_Base
+=== RUN   TestDependenciesProjectModuleBoundary/a_worker_imports_another_worker
+=== RUN   TestDependenciesProjectModuleBoundary/common_source_imports_a_worker
+--- PASS: TestDependenciesProjectModuleBoundary (0.03s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker (0.02s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_type (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_index (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker_dynamically (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_nested_workers_folder (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_common_source (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_another_module (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_package_laid_out_like_a_worker (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_Base (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_worker_imports_another_worker (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/common_source_imports_a_worker (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/boundaries	0.034s
