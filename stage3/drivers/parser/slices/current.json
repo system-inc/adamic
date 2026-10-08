@@ -1,5 +1,5 @@
 {
-  "source_area": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "source_area": "ffe6efc1bd30de2539c1e1416230ca650105a0c7",
   "source_pin": {
     "repository": "https://github.com/microsoft/TypeScript.git",
     "tag": "v6.0.3",
@@ -7,7 +7,7 @@
   },
   "summary": {
     "typescript": "6.0.3",
-    "tree": "/workspace/scratch/parser-front31-lane-fixed/adapted-tree",
+    "tree": "/workspace/scratch/parser-front32-lane-76/adapted-tree",
     "entries": [
       "src/compiler/parser.ts:createSourceFile",
       "src/compiler/parser.ts:forEachChild",
@@ -17,22 +17,22 @@
       "src/compiler/types.ts:ScriptTarget",
       "src/compiler/types.ts:SyntaxKind"
     ],
-    "declarations": 2071,
-    "copied_spans": 2083,
+    "declarations": 2070,
+    "copied_spans": 2082,
     "namespace_wrapper_spans": 12,
     "value_declarations": 1406,
-    "type_declarations": 665,
+    "type_declarations": 664,
     "files": 79,
     "declaration_files": 27,
-    "code_declarations": 1994,
+    "code_declarations": 1993,
     "export_facade_records": 77,
     "evaluation_only_files": 52,
     "preserves_evaluation": true,
-    "declaration_lines": 41861,
-    "declaration_bytes": 2358868,
+    "declaration_lines": 41857,
+    "declaration_bytes": 2358778,
     "rewritten_import_lines": 236
   },
-  "archive_sha256": "3d9f2e7f09d6c52bc690f03797b4614b034a281bba10d6dd9a96b9da77a4a7ae",
+  "archive_sha256": "1a415c8628b32e21e2af8ae40b9148434aeac5f5e1f9dc0b1befee2fe5822f8f",
   "temporary_adaptations_retained": [
     60,
     61,
@@ -45,6 +45,7 @@
   "retired_scanner_temporary_80": "absent from current area and not reapplied",
   "dump_reference": "../reference.json",
   "case_reference": "../cases-reference.json",
-  "warning": "Current main plus temporary 65, gathered verbatim relative to the adapted source. No discovery stubs. The 81-file Node dump was revalidated; the existing case manifest was not rerun in this unit.",
-  "source_base": "origin/main"
+  "warning": "Current main plus temporary 65 and permanent 76; byte-audited, no discovery stubs. 81-file extended Node dump revalidated. Existing 10,406-case manifest not rerun in this unit.",
+  "source_base": "origin/main",
+  "permanent_adaptation_76": "six assertion-cache keys only; sameMap proposal not applied"
 }

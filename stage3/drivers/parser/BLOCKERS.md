@@ -1,3 +1,69 @@
+# Current unit: library merge and permanent finite-key contract
+
+Native red on scratch 2d7c31ac (main ffe6efc1 + area/library b05a9306).
+ErrorConstructor's two checker diagnostics vanish. Both final slice build modes
+stop at core.ts:11:52 before enum initialization; no C or native acceptance run.
+Unsplit attempt 0.5679s, split 0.5193s (pre-clang wall, not clang time).
+The isolated Error probe now refuses ambient host method presence at 4:9.
+
+Namespace-read e1ebac45 conflicted in 16 files, including lower and native. It
+was aborted, not manually resolved, as requested. The isolated namespace `this`,
+class and merged-function probes all still refuse on the retained scratch.
+
+Permanent 76 narrows AssertionKeys to the six actual private cache keys. An
+ownership audit rejects new writes, keys, escapes and altered enumeration. Both
+full landing lanes PASS: 106366 passing, one identical sanctioned API failure,
+zero pending. The API diff and ten emitted JavaScript artifacts match main by
+byte. The key-array cast's finite narrowing is justified; native array-view
+support remains a compiler gap. The existing cast is retained, with a truthful
+six-key target, and no new narrowing assertion is introduced.
+
+sameMap is a tsc source-contract hole: its callback can mutate the original
+input, leaving T in the returned array despite a U-only overload. Its truthful
+readonly (T|U)[] proposal erases identically and has a contract mutant, but full
+stock checking reveals builder.ts:564 TS2322. Widening the private builder helper
+reveals next-field assignment failures at 545, 551 and 555. The proposal is NOT
+in apply; no cast hides the mismatch. This part is incomplete pending a truthful
+builder/diagnostic contract or approved runtime repair. Exact proposal patches
+and compiler diagnostics are in [evidence/front32](evidence/front32/README.md).
+
+The final slice has 27 declaration files, 1993 code declarations, 41857 copied
+lines, 2082 audited spans and 79 ordered modules. Full/slice Node identity remains
+36,429,231 bytes, SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Node-end, dropped JSDoc tags and JSDoc diagnostic mutants are caught on both.
+32 local lane tests pass. The existing recovery manifest is not rerun this unit.
+
+The ordered walk below uses the prior validated slice, before 76's finite-key
+alias. The final 76 slice was separately audited and rebuilt in both modes and
+has the same first stop. Rows 2–15 are found behind uncommitted throwing discovery
+placeholders. Exact edits (including overload predicate widening to boolean),
+messages, stdout and stderr are retained; these are not source adaptations.
+
+| Order | Slice file:line:column | Exact diagnostic | Minimal program | Known feature branch (not admitted by this scratch) |
+|---|---|---|---|---|
+| 1 | src/compiler/core.ts:11:52 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 2 | src/compiler/debug.ts:333:29 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 3 | src/compiler/performanceCore.ts:37:37 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 4 | src/compiler/performance.ts:15:18 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 5 | src/compiler/performance.ts:16:15 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 6 | src/compiler/performance.ts:17:16 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 7 | src/compiler/performance.ts:18:19 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b (historical covering probe; not merged here) |
+| 8 | src/compiler/corePublic.ts:9:5 | Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added | [native-maplike-index.a](native-maplike-index.a) | codex/records-lowering (historical branch coverage; not merged here) |
+| 9 | src/compiler/core.ts:28:37 | Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case | [native-nonnull.a](native-nonnull.a) | codex/non-null-check (historical branch coverage; not merged here) |
+| 10 | src/compiler/core.ts:42:30 | Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case | [native-nonnull.a](native-nonnull.a) | codex/non-null-check (historical branch coverage; not merged here) |
+| 11 | src/compiler/core.ts:54:101 | Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate) | [native-predicate-overload.a](native-predicate-overload.a) | codex/proven-predicates (historical branch coverage; not merged here) |
+| 12 | src/compiler/core.ts:76:113 | Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate) | [native-predicate-overload.a](native-predicate-overload.a) | codex/proven-predicates (historical branch coverage; not merged here) |
+| 13 | src/compiler/core.ts:99:23 | Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case | [native-nonnull.a](native-nonnull.a) | codex/non-null-check (historical branch coverage; not merged here) |
+| 14 | src/compiler/core.ts:110:34 | Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case | [native-nonnull.a](native-nonnull.a) | codex/non-null-check (historical branch coverage; not merged here) |
+| 15 | src/compiler/core.ts:124:65 | Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate) | [native-predicate-overload.a](native-predicate-overload.a) | codex/proven-predicates (historical branch coverage; not merged here) |
+
+The twelve focused probes all execute on Node and all refuse natively on this
+scratch (0/12). No byte-output native mutant can run for these refused builds.
+Main remains untouched, scratch compiler merges are never pushed. Earlier
+measurements below are historical, not this unit's pass claims.
+
+---
+
 # Current main and temporary Node builtins: adaptation green, native red
 
 Driver inputs use readTextFile and programArguments from adamic. The erased
