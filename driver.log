@@ -4,3 +4,4 @@ github.com/system-inc/adamic/internal/fuzz TestExecuteCPULimit/infinite
     run_test.go:44: infinite CPU loop was not timed out: {Stdout:[] Stderr:[] ExitCode:-1 TimedOut:false}
 --- FAIL: TestExecuteCPULimit/infinite (3.19s)
 
+red: 6f16a1693ff41bc102c4d9bfac83b6330277c479 full gate, first failure at tests after 175.0 s (coverage=0.0s build=91.0s vet=46.9s wasi=274.8s catalog=648.0s stage3=893.4s tests=2114.6s census=0.6s), 2 fail, 6402 pass

@@ -1,0 +1,46 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change', 'conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"']",
+    "number of reported failure titles: expected 1, observed 2"
+  ],
+  "counts": {
+    "passing": 106360,
+    "failing": 2,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+    "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\""
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "6f16a1693ff41bc102c4d9bfac83b6330277c479",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 892.291
+  },
+  "results": "/home/ahra/full-gate/tree-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}"
+}
