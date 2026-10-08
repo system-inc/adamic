@@ -1,0 +1,1454 @@
+[
+  {
+    "name": "super_parentheses",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_parentheses.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_parentheses.a:2:101: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = (super.describe()); count: number = 5; score(): number { return this.count + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_optional",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_optional.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_optional.a:2:101: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe?.(); count: number = 5; score(): number { return this.count + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_arrow_call",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_arrow_call.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_arrow_call.a:2:109: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = (() => super.describe())(); count: number = 5; score(): number { return this.count + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_getter_override",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_getter_override.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_getter_override.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.number -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count: number = 5; get number(): number { return this.count + 1; } score(): number { return this.number; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_nested",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_nested.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_nested.a:2:183: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.middle -> Derived.last -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count: number = 5; score(): number { return this.middle(); } middle(): number { return this.last; } get last(): number { return this.count + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_generic",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_generic.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_generic.a:3:108: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "function identity<T>(value: T): T { return value; }\nclass Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count: number = 5; score(): number { return identity(this.count) + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_interface",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_interface.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score NaN\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_interface.a:3:121: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "interface Count { readonly count: number; }\nclass Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count: number = 5; score(): number { const view: Count = { count: this.count }; return view.count + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_union",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/super_union.a",
+    "rule": "uninitialized field",
+    "node": {
+      "exit": 0,
+      "stdout": "score 10\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_union.a:2:126: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count: number = 5; score(): number { const value: number | undefined = this.count; return (value ?? 9) + 1; } }\nconsole.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_no_override",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_super_no_override.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "score 0\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "score 0\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "score 0\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "score 0\n",
+      "stderr": ""
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = super.describe(); count = 5; } console.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_ordered",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_super_ordered.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { count = 5; snap = super.describe(); score(): number { return this.count + 1; } } console.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_ordered_getter",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_super_ordered_getter.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "source": "class Base { get summary(): string { return `score ${this.score()}`; } score(): number { return 0; } } class Derived extends Base { count = 5; snap = super.summary; score(): number { return this.count + 1; } } console.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_deferred",
+    "kind": "suspect",
+    "path": "review/class-refusals/super_deferred.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "score 6\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_deferred.a:2:97: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }\nclass Derived extends Base { snap = () => super.describe(); count = 5; score(): number { return this.count + 1; } } console.log(new Derived().snap());\n"
+  },
+  {
+    "name": "super_ignored_argument",
+    "kind": "suspect",
+    "path": "review/class-refusals/super_ignored_argument.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "value undefined\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/tmp/class-refusals/probes/super_ignored_argument.a:1:133: error TS2729: Property 'count' is used before its initialization.\n"
+    },
+    "source": "class Base { describe(value: number): string { return `value ${value}`; } } class Derived extends Base { snap = super.describe(this.count); count = 5; } console.log(new Derived().snap);\n"
+  },
+  {
+    "name": "super_inherited_reset",
+    "kind": "suspect",
+    "path": "internal/oracle/testdata/class_refusals_safe_super_inherited_reset.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "score 5\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "score 5\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "score 5\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "score 5\n",
+      "stderr": ""
+    },
+    "source": "class Base { count = 4; describe(): string { return `score ${this.score()}`; } score(): number { return this.count; } } class Derived extends Base { snap = super.describe(); count = 5; score(): number { return this.count + 1; } } console.log(new Derived().snap);\n"
+  },
+  {
+    "name": "iterator_for_of",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_for_of.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0\nscaled:return\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_for_of.a:4:17: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nfor (const v of new ScaledIterator()) { console.log(`${v}`); break; }\n"
+  },
+  {
+    "name": "iterator_spread",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_spread.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_spread.a:4:17: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new ScaledIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_from",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_from.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_from.a:4:24: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log(Array.from(new ScaledIterator()).join(\",\"));\n"
+  },
+  {
+    "name": "iterator_destructure",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_destructure.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "scaled:return\n0\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_destructure.a:4:18: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconst [v = -1] = new ScaledIterator(); console.log(`${v}`);\n"
+  },
+  {
+    "name": "iterator_alias",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_alias.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_alias.a:4:62: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconst a = new ScaledIterator(); const b = a; console.log([...b].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_arrow",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_arrow.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_arrow.a:4:58: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconst make = () => new ScaledIterator(); console.log([...make()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_getter",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_getter.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_getter.a:4:93: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nclass Holder { get value(): BaseIterator { return new ScaledIterator(); } } console.log([...new Holder().value].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_generic",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_generic.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_generic.a:4:90: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nfunction erase<T extends BaseIterator>(v: T): BaseIterator { return v; } console.log([...erase(new ScaledIterator())].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_interface",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_interface.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_interface.a:4:101: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\ninterface View { [Symbol.iterator](): BaseIterator; } function use(v: View): void { console.log([...v].join(\",\")); } use(new ScaledIterator());\n"
+  },
+  {
+    "name": "iterator_union",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_union.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_union.a:4:140: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nfunction choose(flag: boolean): BaseIterator | ScaledIterator { return flag ? new ScaledIterator() : new BaseIterator(); } console.log([...choose(true)].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_optional",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_optional.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_optional.a:4:97: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nclass Holder { value: BaseIterator | undefined = new ScaledIterator(); } console.log(Array.from(new Holder().value ?? new BaseIterator()).join(\",\"));\n"
+  },
+  {
+    "name": "iterator_return_alias",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_return_alias.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_return_alias.a:4:17: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { const receiver = this; return (receiver); } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new ScaledIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_return_arrow",
+    "kind": "suspect",
+    "path": "review/class-refusals/iterator_return_arrow.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_return_arrow.a:2:86: stage 0 can't lower a function returning this yet\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { const receiver = () => this; return receiver(); } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new ScaledIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_return_conditional",
+    "kind": "suspect",
+    "path": "review/class-refusals/iterator_return_conditional.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this.index >= 0 ? this : this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new ScaledIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_base",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_iterator_base.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new BaseIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_unchanged",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_iterator_unchanged.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nclass Unchanged extends BaseIterator {} console.log([...new Unchanged()].join(\",\"));\n"
+  },
+  {
+    "name": "iterator_closed_parameter",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_iterator_closed_parameter.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nfunction use(v: BaseIterator): void { console.log([...v].join(\",\")); } use(new BaseIterator());\n"
+  },
+  {
+    "name": "iterator_base_parameter",
+    "kind": "suspect",
+    "path": "review/class-refusals/iterator_base_parameter.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_base_parameter.a:4:55: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nfunction use(v: BaseIterator): void { console.log([...v].join(\",\")); } use(new BaseIterator());\n",
+    "main_release_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/iterator_base_parameter.a:4:55: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\nexit status 1\n"
+    },
+    "main_sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/iterator_base_parameter.a:4:55: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\nexit status 1\n"
+    }
+  },
+  {
+    "name": "iterator_factory",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_iterator_factory.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0,1,2\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return new BaseIterator(); } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nconsole.log([...new ScaledIterator()].join(\",\"));\n"
+  },
+  {
+    "name": "keys_interface",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_interface.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_interface.a:2:84: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\ninterface View { readonly value: number; } function keys(v: View): string { return Object.keys(v).join(\",\"); } console.log(keys(source));\n"
+  },
+  {
+    "name": "keys_arrow",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_arrow.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_arrow.a:2:49: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nconst keys = (v: { readonly value: number }) => Object.keys(v).join(\",\"); console.log(keys(source));\n"
+  },
+  {
+    "name": "keys_generic",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_generic.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_generic.a:2:76: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nfunction keys<T extends { readonly value: number }>(v: T): string { return Object.keys(v).join(\",\"); } const view: { readonly value: number } = source; console.log(keys(view));\n"
+  },
+  {
+    "name": "keys_getter",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_getter.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_getter.a:2:88: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nclass Holder { get view(): { readonly value: number } { return source; } } console.log(Object.keys(new Holder().view).join(\",\"));\n"
+  },
+  {
+    "name": "keys_union",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_union.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_union.a:2:92: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nfunction keys(v: { readonly value: number } | { readonly other: number }): string { return Object.keys(v).join(\",\"); } console.log(keys(source));\n"
+  },
+  {
+    "name": "keys_optional",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_optional.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_optional.a:2:141: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nclass Holder { view: { readonly value: number } | undefined = source; } const view = new Holder().view; if (view !== undefined) console.log(Object.keys(view).join(\",\"));\n"
+  },
+  {
+    "name": "keys_nested",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_nested.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_nested.a:2:57: stage 0 can't lower a function inside a function (a closure) yet\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nfunction outer(v: { readonly value: number }): string { function inner(w: { readonly value: number }): string { return Object.keys(w).join(\",\"); } return inner(v); } console.log(outer(source));\n"
+  },
+  {
+    "name": "keys_plain",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_keys_plain.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "source": "const plain = { value: 1 }; console.log(Object.keys(plain).join(\",\"));\n"
+  },
+  {
+    "name": "keys_copy",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_keys_copy.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nconsole.log(Object.keys({ value: source.value }).join(\",\"));\n"
+  },
+  {
+    "name": "keys_unrelated",
+    "kind": "suspect",
+    "path": "review/class-refusals/keys_unrelated.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n1,2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_unrelated.a:2:41: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nconst plain = { value: 7 }; console.log(Object.keys(plain).join(\",\")); console.log([...source].join(\",\"));\n",
+    "main_release_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/keys_unrelated.a:2:41: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\nexit status 1\n"
+    },
+    "main_sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/keys_unrelated.a:2:41: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\nexit status 1\n"
+    }
+  },
+  {
+    "name": "keys_class",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_keys_class.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "source": "class Ranged { readonly value = 3; [Symbol.iterator](): Ranged { return this; } next(): { readonly value: number; readonly done: boolean } { return { value: 0, done: true }; } } console.log(Object.keys(new Ranged()).join(\",\"));\n"
+  },
+  {
+    "name": "private_arrow",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_arrow.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_arrow.a:1:136: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box): string { const read = () => box.#secret; return read(); } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_getter",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_getter.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_getter.a:1:121: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static get value(): string { return new Box(`s${1}`).#secret; } } console.log(Box.value);\n"
+  },
+  {
+    "name": "private_optional",
+    "kind": "refuse",
+    "path": "review/class-refusals/private_optional_checker_rejected.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/tmp/class-refusals/probes/private_optional.a:1:141: error TS18030: An optional chain cannot contain private identifiers.\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box | undefined): string { return box?.#secret ?? \"none\"; } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_generic",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_generic.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_generic.a:1:137: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek<T extends Box>(box: T): string { return box.#secret; } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_union",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_union.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_union.a:1:174: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box | undefined): string { if (box === undefined) return \"none\"; return box.#secret; } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_nested",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_nested.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_nested.a:1:160: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box): string { function read(value: Box): string { return value.#secret; } return read(box); } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_write",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_write.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "t2\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_write.a:1:117: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box): string { box.#secret = `t${2}`; return box.reveal(); } reveal(): string { return this.#secret; } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_instance",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_private_instance.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } reveal(): string { return this.#secret; } static peek(box: Box): string { return box.reveal(); } } console.log(Box.peek(new Box(`s${1}`)));\n"
+  },
+  {
+    "name": "private_static",
+    "kind": "safe",
+    "path": "internal/oracle/testdata/class_refusals_safe_private_static.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "source": "class Box { static #secret = `s${1}`; static peek(): string { return Box.#secret; } } console.log(Box.peek());\n"
+  },
+  {
+    "name": "super_unused_arrow",
+    "kind": "suspect",
+    "path": "review/class-refusals/super_unused_arrow.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "safe\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_unused_arrow.a:1:208: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { const later = () => this.score(); return \"safe\"; } score(): number { return 0; } } class Derived extends Base { snap = super.describe(); count = 5; score(): number { return this.count + 1; } } console.log(new Derived().snap);\n",
+    "main_release_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/super_unused_arrow.a:1:208: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\nexit status 1\n"
+    },
+    "main_sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/super_unused_arrow.a:1:208: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\nexit status 1\n"
+    }
+  },
+  {
+    "name": "super_dead_branch",
+    "kind": "suspect",
+    "path": "review/class-refusals/super_dead_branch.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "safe\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/super_dead_branch.a:1:217: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\n"
+    },
+    "source": "class Base { describe(): string { if (false) return `score ${this.score()}`; return \"safe\"; } score(): number { return 0; } } class Derived extends Base { snap = super.describe(); count = 5; score(): number { return this.count + 1; } } console.log(new Derived().snap);\n",
+    "main_release_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/super_dead_branch.a:1:217: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\nexit status 1\n"
+    },
+    "main_sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/review/class-refusals/super_dead_branch.a:1:217: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\nexit status 1\n"
+    }
+  },
+  {
+    "name": "keys_optional_call",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_optional_call.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_optional_call.a:2:62: stage 0 can't lower a call through ?. (an optional call) yet\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nconst view: { readonly value: number } = source; console.log(Object.keys?.(view).join(\",\"));\n"
+  },
+  {
+    "name": "keys_nested_arrow",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/keys_nested_arrow.a",
+    "rule": "symbol-key-view",
+    "node": {
+      "exit": 0,
+      "stdout": "value\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/keys_nested_arrow.a:2:106: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys\n"
+    },
+    "source": "const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };\nfunction outer(v: { readonly value: number }): string { const inner = (w: { readonly value: number }) => Object.keys(w).join(\",\"); return inner(v); } console.log(outer(source));\n"
+  },
+  {
+    "name": "private_optional_holder",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_optional_holder.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_optional_holder.a:1:224: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(holder: { readonly value: Box } | undefined): string { const box = holder?.value; if (box === undefined) return \"none\"; return box.#secret; } } console.log(Box.peek({ value: new Box(`s${1}`) }));\n"
+  },
+  {
+    "name": "private_interface",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/private_interface.a",
+    "rule": "private-instance-from-static",
+    "node": {
+      "exit": 0,
+      "stdout": "s1\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/private_interface.a:1:172: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member\n"
+    },
+    "source": "interface Holder { readonly value: Box; } class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(holder: Holder): string { return holder.value.#secret; } } console.log(Box.peek({ value: new Box(`s${1}`) }));\n"
+  },
+  {
+    "name": "iterator_optional_chain",
+    "kind": "refuse",
+    "path": "internal/oracle/testdata/class_refusals_refused/iterator_optional_chain.a",
+    "rule": "iterator-receiver-origin",
+    "node": {
+      "exit": 0,
+      "stdout": "0,100,200\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /tmp/class-refusals/probes/iterator_optional_chain.a:4:128: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type\n"
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }\nclass ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }\nclass Holder { value: BaseIterator = new ScaledIterator(); } function use(holder: Holder | undefined): void { console.log([...(holder?.value ?? new BaseIterator())].join(\",\")); } use(new Holder());\n"
+  },
+  {
+    "name": "iterator_conditional_close",
+    "kind": "suspect",
+    "path": "review/class-refusals/iterator_conditional_close.a",
+    "rule": "",
+    "node": {
+      "exit": 0,
+      "stdout": "0\nclosing:return\nclosing:return\n0\n",
+      "stderr": ""
+    },
+    "compile": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "0\n0\n",
+      "stderr": ""
+    },
+    "release_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "exit": 0,
+      "stdout": "0\n0\n",
+      "stderr": ""
+    },
+    "sanitized_build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "exit": 0,
+      "stdout": "0\n0\n",
+      "stderr": ""
+    },
+    "source": "interface Step { readonly value: number; readonly done: boolean; }\nclass Lines { index = 0; [Symbol.iterator](): Lines { return this.index >= 0 ? this : this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } }\nclass ClosingLines extends Lines { return(): Step { console.log('closing:return'); return { value: 0, done: true }; } }\nfor(const value of new ClosingLines()) { console.log(`${value}`); break; } const [first = -1] = new ClosingLines(); console.log(`${first}`);\n\n"
+  }
+]

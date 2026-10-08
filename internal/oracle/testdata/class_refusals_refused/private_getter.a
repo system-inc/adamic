@@ -1,0 +1,1 @@
+class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static get value(): string { return new Box(`s${1}`).#secret; } } console.log(Box.value);

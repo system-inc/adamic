@@ -1,0 +1,2 @@
+const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };
+class Holder { view: { readonly value: number } | undefined = source; } const view = new Holder().view; if (view !== undefined) console.log(Object.keys(view).join(","));

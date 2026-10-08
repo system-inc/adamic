@@ -1,0 +1,1 @@
+class Box { static #secret = `s${1}`; static peek(): string { return Box.#secret; } } console.log(Box.peek());

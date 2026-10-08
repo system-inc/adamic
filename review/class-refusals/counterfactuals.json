@@ -1,0 +1,539 @@
+[
+  {
+    "guard": "super",
+    "test": "TestClassWrongOutput103",
+    "test_result": {
+      "exit": 1,
+      "stdout": "--- FAIL: TestClassWrongOutput103 (0.42s)\n    --- FAIL: TestClassWrongOutput103/init_super_number (0.16s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\n    --- FAIL: TestClassWrongOutput103/init_super_getter (0.12s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\n    --- FAIL: TestClassWrongOutput103/init_super (0.13s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\nFAIL\ngate cache: native hits=0 misses=0\ngate cache: node hits=0 misses=3\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.425s\nFAIL\n",
+      "stderr": ""
+    },
+    "observations": [
+      {
+        "name": "classfeat_init_super_number",
+        "path": "internal/oracle/testdata/classfeat_init_super_number.a",
+        "node": {
+          "exit": 0,
+          "stdout": "score NaN\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "classfeat_init_super_getter",
+        "path": "internal/oracle/testdata/classfeat_init_super_getter.a",
+        "node": {
+          "exit": 0,
+          "stdout": "score NaN\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "score 1\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "classfeat_init_super",
+        "path": "internal/oracle/testdata/classfeat_init_super.a",
+        "node": {
+          "exit": 0,
+          "stdout": "caught TypeError\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "caught TypeError\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": -11,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "/home/agent/.cache/adamic/runtime/.build-1890023752/case.c:189:35: runtime error: member access within null pointer of type 'const adamic_string' (aka 'const struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1890023752/case.c:189:35 \n"
+        }
+      },
+      {
+        "name": "super_deferred",
+        "path": "review/class-refusals/super_deferred.a",
+        "node": {
+          "exit": 0,
+          "stdout": "score 6\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 70,
+          "stdout": "",
+          "stderr": "adamic: panic: ReferenceError: local_5_this is not defined\n"
+        },
+        "release_build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-2577583671/main.c:167:72: error: use of undeclared identifier 'adamic_local_5_this'\n  167 |         adamic_string * adamic_temporary_24 = adamic_function_1_Base_describe(adamic_local_5_this);\n      |                                                                               ^\n1 error generated.\n\nexit status 1\n"
+        },
+        "sanitized_build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-705183418/main.c:167:72: error: use of undeclared identifier 'adamic_local_5_this'\n  167 |         adamic_string * adamic_temporary_24 = adamic_function_1_Base_describe(adamic_local_5_this);\n      |                                                                               ^\n1 error generated.\n\nexit status 1\n"
+        }
+      }
+    ]
+  },
+  {
+    "guard": "iterator",
+    "test": "TestClassWrongOutput107",
+    "test_result": {
+      "exit": 1,
+      "stdout": "--- FAIL: TestClassWrongOutput107 (0.32s)\n    --- FAIL: TestClassWrongOutput107/iterators_override_this (0.17s)\n        class_wrong_output_test.go:52: want pinned receiver-origin refusal, got <nil>\n    --- FAIL: TestClassWrongOutput107/iterators_hidden_return (0.15s)\n        class_wrong_output_test.go:52: want pinned receiver-origin refusal, got <nil>\nFAIL\ngate cache: native hits=0 misses=0\ngate cache: node hits=0 misses=2\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.328s\nFAIL\n",
+      "stderr": ""
+    },
+    "observations": [
+      {
+        "name": "iterators_override_this",
+        "path": "internal/oracle/testdata/iterators_override_this.a",
+        "node": {
+          "exit": 0,
+          "stdout": "0\n100\nscaled:return\n0,100,200\n0,100,200\nscaled:return\n0\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "0\n1\n2\n0,1,2\n0,1,2\nbase:return\n0\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "0\n1\n2\n0,1,2\n0,1,2\nbase:return\n0\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "0\n1\n2\n0,1,2\n0,1,2\nbase:return\n0\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "iterators_hidden_return",
+        "path": "internal/oracle/testdata/iterators_hidden_return.a",
+        "node": {
+          "exit": 0,
+          "stdout": "0\nclosing:return\nclosing:return\n0\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "0\n0\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "0\n0\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "0\n0\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "iterator_base_parameter",
+        "path": "review/class-refusals/iterator_base_parameter.a",
+        "node": {
+          "exit": 0,
+          "stdout": "0,1,2\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "0,1,2\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "0,1,2\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "0,1,2\n",
+          "stderr": ""
+        }
+      }
+    ]
+  },
+  {
+    "guard": "keys",
+    "test": "TestClassWrongOutput108",
+    "test_result": {
+      "exit": 1,
+      "stdout": "--- FAIL: TestClassWrongOutput108 (0.16s)\n    class_wrong_output_test.go:70: want pinned symbol-key-view refusal, got <nil>\nFAIL\ngate cache: native hits=0 misses=0\ngate cache: node hits=0 misses=1\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.172s\nFAIL\n",
+      "stderr": ""
+    },
+    "observations": [
+      {
+        "name": "iterators_sym_keys_view",
+        "path": "internal/oracle/testdata/iterators_sym_keys_view.a",
+        "node": {
+          "exit": 0,
+          "stdout": "value\n1,2\nvalue\nvalue\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "value,__adamic_symbol_iterator\n1,2\nvalue\nvalue\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "value,__adamic_symbol_iterator\n1,2\nvalue\nvalue\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "value,__adamic_symbol_iterator\n1,2\nvalue\nvalue\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "keys_unrelated",
+        "path": "review/class-refusals/keys_unrelated.a",
+        "node": {
+          "exit": 0,
+          "stdout": "value\n1,2\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "value\n1,2\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "value\n1,2\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "value\n1,2\n",
+          "stderr": ""
+        }
+      }
+    ]
+  },
+  {
+    "guard": "private",
+    "test": "TestClassWrongOutput106",
+    "test_result": {
+      "exit": 1,
+      "stdout": "--- FAIL: TestClassWrongOutput106 (0.29s)\n    --- FAIL: TestClassWrongOutput106/classfeat_static_private_instance (0.17s)\n        class_wrong_output_test.go:91: want pinned private-instance-from-static refusal, got <nil>\n    --- FAIL: TestClassWrongOutput106/classfeat_static_private_method (0.12s)\npanic: ir: virtual call has no target set [recovered, repanicked]\n\ngoroutine 50 [running]:\ntesting.tRunner.func1.2({0x1b7ba80, 0x1236e00})\n\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\ntesting.tRunner.func1()\n\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\npanic({0x1b7ba80?, 0x1236e00?})\n\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)\n\t/workspace/adamic/internal/ir/call_targets.go:13\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)\n\t/workspace/adamic/internal/ir/call_targets.go:21\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1c06590?, 0x234dbcf20a50?})\n\t/workspace/adamic/internal/lower/exceptions.go:163 +0x365\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1c06590?, 0x234dbcf20a50?, 0x234dbc1a4590?}, 0x234dbd149a28)\n\t/workspace/adamic/internal/lower/exceptions.go:310 +0x13f\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1b977c8?, 0x234dbc1a4590?, 0x1b97830?}, 0x234dbd149a28)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1bc3cc0?, 0x234dbc1a4590?, 0x8080808080808080?}, 0x234dbd149a28)\n\t/workspace/adamic/internal/lower/exceptions.go:315 +0x172\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1b97830?, 0x234dbc1a45b0?, 0x7fe1bcc35d28?}, 0x234dbd149a28)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aff6e8?, 0x234dbbe7dc98?, 0x489845?}, 0x234dbd149a28)\n\t/workspace/adamic/internal/lower/exceptions.go:302 +0x1b6\ngithub.com/system-inc/adamic/internal/lower.walk({0x1aff6e8?, 0x234dbbe7dc98?}, 0x1?)\n\t/workspace/adamic/internal/lower/exceptions.go:286 +0x67\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x234dbc4d7800, {0x234dbc1a45b0?, 0x3?, 0x234dbbda7d40?})\n\t/workspace/adamic/internal/lower/exceptions.go:152 +0x5f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x234dbc4d7800)\n\t/workspace/adamic/internal/lower/exceptions.go:133 +0x251\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1c31610?, 0x1d1df00?}, 0x234dbc102660)\n\t/workspace/adamic/internal/lower/lower.go:70 +0x7fd\ngithub.com/system-inc/adamic/internal/oracle.lowered(0x234dbbfda6c8, {0x234dbbd74d70, 0x4c})\n\t/workspace/adamic/internal/oracle/oracle_test.go:554 +0x18b\ngithub.com/system-inc/adamic/internal/oracle.TestClassWrongOutput106.func1(0x234dbbfda6c8)\n\t/workspace/adamic/internal/oracle/class_wrong_output_test.go:88 +0x255\ntesting.tRunner(0x234dbbfda6c8, 0x234dbc47fb80)\n\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\ncreated by testing.(*T).Run in goroutine 8\n\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.301s\nFAIL\n",
+      "stderr": ""
+    },
+    "observations": [
+      {
+        "name": "classfeat_static_private_instance",
+        "path": "internal/oracle/testdata/classfeat_static_private_instance.a",
+        "node": {
+          "exit": 0,
+          "stdout": "s1\nt2\nhidden t2\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "undefined\ns1\nhidden s1\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 70,
+          "stdout": "",
+          "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 70,
+          "stdout": "",
+          "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+        }
+      },
+      {
+        "name": "classfeat_static_private_method",
+        "path": "internal/oracle/testdata/classfeat_static_private_method.a",
+        "node": {
+          "exit": 0,
+          "stdout": "first function\nhidden s1\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "panic: ir: virtual call has no target set\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)\n\t/workspace/adamic/internal/ir/call_targets.go:13\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)\n\t/workspace/adamic/internal/ir/call_targets.go:21\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1b0b178?, 0xc8581090eb0?})\n\t/workspace/adamic/internal/lower/exceptions.go:163 +0x365\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1b0b178?, 0xc8581090eb0?, 0xc8580b54ca0?}, 0xc8580dd9928)\n\t/workspace/adamic/internal/lower/exceptions.go:310 +0x13f\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa24a8?, 0xc8580b54ca0?, 0x1aa2510?}, 0xc8580dd9928)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1acc698?, 0xc8580b54ca0?, 0x8080808080808080?}, 0xc8580dd9928)\n\t/workspace/adamic/internal/lower/exceptions.go:315 +0x172\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa2510?, 0xc8580b54cc0?, 0x7f8058a3e4c0?}, 0xc8580dd9928)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1a10c88?, 0xc8580892870?, 0x484465?}, 0xc8580dd9928)\n\t/workspace/adamic/internal/lower/exceptions.go:302 +0x1b6\ngithub.com/system-inc/adamic/internal/lower.walk({0x1a10c88?, 0xc8580892870?}, 0x1?)\n\t/workspace/adamic/internal/lower/exceptions.go:286 +0x67\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0xc858150fc00, {0xc8580b54cc0?, 0x3?, 0xc8580980540?})\n\t/workspace/adamic/internal/lower/exceptions.go:152 +0x5f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0xc858150fc00)\n\t/workspace/adamic/internal/lower/exceptions.go:133 +0x251\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1b345b0?, 0x1c1c040?}, 0xc8580a84ff0)\n\t/workspace/adamic/internal/lower/lower.go:70 +0x7fd\nmain.compileLibrary({0x7fff2c2d7285?, 0x9?}, 0x0)\n\t/workspace/adamic/cmd/adamic/main.go:110 +0x65\nmain.compile(...)\n\t/workspace/adamic/cmd/adamic/main.go:99\nmain.run({0xc858099e220?, 0x1b42608?, 0xc85808841e0?})\n\t/workspace/adamic/cmd/adamic/main.go:61 +0x1d8\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\nexit status 2\n"
+        },
+        "release_build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "panic: ir: virtual call has no target set\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)\n\t/workspace/adamic/internal/ir/call_targets.go:13\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)\n\t/workspace/adamic/internal/ir/call_targets.go:21\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1b0b178?, 0x193b225795e0?})\n\t/workspace/adamic/internal/lower/exceptions.go:163 +0x365\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1b0b178?, 0x193b225795e0?, 0x193b225b88d0?}, 0x193b21f31838)\n\t/workspace/adamic/internal/lower/exceptions.go:310 +0x13f\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa24a8?, 0x193b225b88d0?, 0x1aa2510?}, 0x193b21f31838)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1acc698?, 0x193b225b88d0?, 0x8080808080808080?}, 0x193b21f31838)\n\t/workspace/adamic/internal/lower/exceptions.go:315 +0x172\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa2510?, 0x193b225b88f0?, 0x7f8dd09da4c0?}, 0x193b21f31838)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1a10c88?, 0x193b21967bc0?, 0x484465?}, 0x193b21f31838)\n\t/workspace/adamic/internal/lower/exceptions.go:302 +0x1b6\ngithub.com/system-inc/adamic/internal/lower.walk({0x1a10c88?, 0x193b21967bc0?}, 0x1?)\n\t/workspace/adamic/internal/lower/exceptions.go:286 +0x67\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x193b225ba800, {0x193b225b88f0?, 0x3?, 0x1bfaf98?})\n\t/workspace/adamic/internal/lower/exceptions.go:152 +0x5f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x193b225ba800)\n\t/workspace/adamic/internal/lower/exceptions.go:133 +0x251\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1b345b0?, 0x1c1c040?}, 0x193b21b51530)\n\t/workspace/adamic/internal/lower/lower.go:70 +0x7fd\nmain.compileLibrary({0x7ffdb984523f?, 0x0?}, 0x0)\n\t/workspace/adamic/cmd/adamic/main.go:110 +0x65\nmain.build({0x7ffdb984523f, 0x3a}, {0x7ffdb984527d, 0x42}, {0x193b21ac4010?, 0x2f00300031001d?, 0x4000000000000000?})\n\t/workspace/adamic/cmd/adamic/tsgo.go:54 +0x4a9\nmain.run({0x193b21ac4010?, 0x1b42608?, 0x193b219581e0?})\n\t/workspace/adamic/cmd/adamic/main.go:74 +0x4ae\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\nexit status 2\n"
+        },
+        "sanitized_build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "panic: ir: virtual call has no target set\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)\n\t/workspace/adamic/internal/ir/call_targets.go:13\ngithub.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)\n\t/workspace/adamic/internal/ir/call_targets.go:21\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1b0b178?, 0x18a5a6dba780?})\n\t/workspace/adamic/internal/lower/exceptions.go:163 +0x365\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1b0b178?, 0x18a5a6dba780?, 0x18a5a7183c50?}, 0x18a5a6e1f838)\n\t/workspace/adamic/internal/lower/exceptions.go:310 +0x13f\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa24a8?, 0x18a5a7183c50?, 0x1aa2510?}, 0x18a5a6e1f838)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1acc698?, 0x18a5a7183c50?, 0x8080808080808080?}, 0x18a5a6e1f838)\n\t/workspace/adamic/internal/lower/exceptions.go:315 +0x172\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1aa2510?, 0x18a5a7183c70?, 0x7f7ab081ea08?}, 0x18a5a6e1f838)\n\t/workspace/adamic/internal/lower/exceptions.go:298 +0x75\ngithub.com/system-inc/adamic/internal/lower.walkValue({0x1a10c88?, 0x18a5a65d2b88?, 0x484465?}, 0x18a5a6e1f838)\n\t/workspace/adamic/internal/lower/exceptions.go:302 +0x1b6\ngithub.com/system-inc/adamic/internal/lower.walk({0x1a10c88?, 0x18a5a65d2b88?}, 0x1?)\n\t/workspace/adamic/internal/lower/exceptions.go:286 +0x67\ngithub.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x18a5a7141000, {0x18a5a7183c70?, 0x3?, 0x18a5a6547d40?})\n\t/workspace/adamic/internal/lower/exceptions.go:152 +0x5f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x18a5a7141000)\n\t/workspace/adamic/internal/lower/exceptions.go:133 +0x251\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1b345b0?, 0x1c1c040?}, 0x18a5a66d0a50)\n\t/workspace/adamic/internal/lower/lower.go:70 +0x7fd\nmain.compileLibrary({0x7fff4a303232?, 0x0?}, 0x0)\n\t/workspace/adamic/cmd/adamic/main.go:110 +0x65\nmain.build({0x7fff4a303232, 0x3a}, {0x7fff4a303270, 0x44}, {0x18a5a66001d0?, 0x2f00300031001d?, 0x4000000000000000?})\n\t/workspace/adamic/cmd/adamic/tsgo.go:54 +0x4a9\nmain.run({0x18a5a6600190?, 0x1b42608?, 0x18a5a64ec1e0?})\n\t/workspace/adamic/cmd/adamic/main.go:74 +0x4ae\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\nexit status 2\n"
+        }
+      }
+    ]
+  },
+  {
+    "guard": "super",
+    "test": "TestClassWrongOutput103",
+    "test_result": {
+      "exit": 1,
+      "stdout": "--- FAIL: TestClassWrongOutput103 (0.37s)\n    --- FAIL: TestClassWrongOutput103/init_super_number (0.15s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\n    --- FAIL: TestClassWrongOutput103/init_super_getter (0.12s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\n    --- FAIL: TestClassWrongOutput103/init_super (0.11s)\n        class_wrong_output_test.go:29: want path and repair, got <nil>\nFAIL\ngate cache: native hits=0 misses=0\ngate cache: node hits=0 misses=3\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.382s\nFAIL\n",
+      "stderr": ""
+    },
+    "observations": [
+      {
+        "name": "super_unused_arrow",
+        "path": "review/class-refusals/super_unused_arrow.a",
+        "node": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        }
+      },
+      {
+        "name": "super_dead_branch",
+        "path": "review/class-refusals/super_dead_branch.a",
+        "node": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "js_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "backend": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "release_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "release": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        },
+        "sanitized_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sanitized": {
+          "exit": 0,
+          "stdout": "safe\n",
+          "stderr": ""
+        }
+      }
+    ]
+  }
+]

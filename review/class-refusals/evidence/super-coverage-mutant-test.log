@@ -1,0 +1,20 @@
+--- FAIL: TestClassRefusalsSyntaxCoverage (0.00s)
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_parentheses (0.07s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_interface (0.07s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_nested (0.07s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_arrow_call (0.08s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_union (0.09s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_optional (0.06s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoveragesuper_optional3830578117/001/main.a:2:37: stage 0 can't lower a call through ?. (an optional call) yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_getter_override (0.06s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/super_generic (0.06s)
+        class_refusals_coverage_test.go:70: want "uninitialized field" (NotYet=false), got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.141s
+FAIL

@@ -1,0 +1,1 @@
+class Base { count = 4; describe(): string { return `score ${this.score()}`; } score(): number { return this.count; } } class Derived extends Base { snap = super.describe(); count = 5; score(): number { return this.count + 1; } } console.log(new Derived().snap);

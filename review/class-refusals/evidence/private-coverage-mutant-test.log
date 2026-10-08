@@ -1,0 +1,20 @@
+--- FAIL: TestClassRefusalsSyntaxCoverage (0.00s)
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_generic (0.08s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageprivate_generic3202839553/001/main.a:1:112: stage 0 can't lower a value of type T yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_union (0.08s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_arrow (0.08s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_getter (0.08s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_nested (0.10s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageprivate_nested430791197/001/main.a:1:117: stage 0 can't lower a function inside a function (a closure) yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_optional_holder (0.04s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_write (0.04s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/private_interface (0.05s)
+        class_refusals_coverage_test.go:70: want "private-instance-from-static" (NotYet=false), got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.137s
+FAIL

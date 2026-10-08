@@ -1,0 +1,1 @@
+class Ranged { readonly value = 3; [Symbol.iterator](): Ranged { return this; } next(): { readonly value: number; readonly done: boolean } { return { value: 0, done: true }; } } console.log(Object.keys(new Ranged()).join(","));

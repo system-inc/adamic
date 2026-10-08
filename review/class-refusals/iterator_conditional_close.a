@@ -1,0 +1,4 @@
+interface Step { readonly value: number; readonly done: boolean; }
+class Lines { index = 0; [Symbol.iterator](): Lines { return this.index >= 0 ? this : this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } }
+class ClosingLines extends Lines { return(): Step { console.log('closing:return'); return { value: 0, done: true }; } }
+for(const value of new ClosingLines()) { console.log(`${value}`); break; } const [first = -1] = new ClosingLines(); console.log(`${first}`);

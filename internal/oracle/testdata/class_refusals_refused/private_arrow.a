@@ -1,0 +1,1 @@
+class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box): string { const read = () => box.#secret; return read(); } } console.log(Box.peek(new Box(`s${1}`)));

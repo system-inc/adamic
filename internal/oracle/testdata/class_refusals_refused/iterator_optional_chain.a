@@ -1,0 +1,4 @@
+interface Step { readonly value: number; readonly done: boolean; }
+class BaseIterator { index = 0; [Symbol.iterator](): BaseIterator { return this; } next(): Step { const value = this.index; this.index++; return { value, done: value >= 3 }; } return(): Step { console.log('base:return'); return { value: 0, done: true }; } }
+class ScaledIterator extends BaseIterator { override next(): Step { const value = this.index; this.index++; return { value: value * 100, done: value >= 3 }; } override return(): Step { console.log('scaled:return'); return { value: 0, done: true }; } }
+class Holder { value: BaseIterator = new ScaledIterator(); } function use(holder: Holder | undefined): void { console.log([...(holder?.value ?? new BaseIterator())].join(",")); } use(new Holder());

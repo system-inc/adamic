@@ -1,0 +1,2 @@
+const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };
+const plain = { value: 7 }; console.log(Object.keys(plain).join(",")); console.log([...source].join(","));

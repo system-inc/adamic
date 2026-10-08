@@ -1,0 +1,4 @@
+function identity<T>(value: T): T { return value; }
+class Base { describe(): string { return `score ${this.score()}`; } score(): number { return 0; } }
+class Derived extends Base { snap = super.describe(); count: number = 5; score(): number { return identity(this.count) + 1; } }
+console.log(new Derived().snap);

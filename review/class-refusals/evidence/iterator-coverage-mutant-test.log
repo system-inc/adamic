@@ -1,0 +1,28 @@
+--- FAIL: TestClassRefusalsSyntaxCoverage (0.00s)
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_for_of (0.07s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_return_alias (0.07s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_return_alias3782564964/001/main.a:2:75: stage 0 can't lower a value of type this yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_generic (0.07s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_generic650806446/001/main.a:4:90: stage 0 can't lower an iterator view that erases its method receiver convention yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_getter (0.07s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_getter1468671967/001/main.a:4:93: stage 0 can't lower an iterator view that erases its method receiver convention yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_optional_chain (0.08s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_optional_chain3693237888/001/main.a:4:128: stage 0 can't lower an iterator view that erases its method receiver convention yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_arrow (0.05s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_destructure (0.06s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_alias (0.06s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_from (0.06s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_union (0.06s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_union212693477/001/main.a:4:140: stage 0 can't lower a class iterator method through a structural object view yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_optional (0.03s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got /tmp/adamic-gate/TestClassRefusalsSyntaxCoverageiterator_optional1795582280/001/main.a:4:97: stage 0 can't lower an iterator view that erases its method receiver convention yet
+    --- FAIL: TestClassRefusalsSyntaxCoverage/iterator_spread (0.03s)
+        class_refusals_coverage_test.go:70: want "iterator-receiver-origin" (NotYet=false), got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.176s
+FAIL

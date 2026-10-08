@@ -1,0 +1,18 @@
+--- FAIL: TestClassRefusalsSyntaxCoverage (0.00s)
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_getter (0.07s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_optional (0.08s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_interface (0.09s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_generic (0.08s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_union (0.07s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_arrow (0.08s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+    --- FAIL: TestClassRefusalsSyntaxCoverage/keys_nested_arrow (0.07s)
+        class_refusals_coverage_test.go:70: want "symbol-key-view" (NotYet=false), got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.177s
+FAIL

@@ -1,0 +1,2 @@
+const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; } }; } };
+function outer(v: { readonly value: number }): string { const inner = (w: { readonly value: number }) => Object.keys(w).join(","); return inner(v); } console.log(outer(source));

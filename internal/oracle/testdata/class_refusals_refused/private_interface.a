@@ -1,0 +1,1 @@
+interface Holder { readonly value: Box; } class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(holder: Holder): string { return holder.value.#secret; } } console.log(Box.peek({ value: new Box(`s${1}`) }));

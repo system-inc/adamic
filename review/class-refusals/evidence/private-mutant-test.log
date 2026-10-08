@@ -1,0 +1,47 @@
+--- FAIL: TestClassWrongOutput106 (0.29s)
+    --- FAIL: TestClassWrongOutput106/classfeat_static_private_instance (0.17s)
+        class_wrong_output_test.go:91: want pinned private-instance-from-static refusal, got <nil>
+    --- FAIL: TestClassWrongOutput106/classfeat_static_private_method (0.12s)
+panic: ir: virtual call has no target set [recovered, repanicked]
+
+goroutine 50 [running]:
+testing.tRunner.func1.2({0x1b7ba80, 0x1236e00})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1b7ba80?, 0x1236e00?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)
+	/workspace/adamic/internal/ir/call_targets.go:13
+github.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)
+	/workspace/adamic/internal/ir/call_targets.go:21
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1c06590?, 0x234dbcf20a50?})
+	/workspace/adamic/internal/lower/exceptions.go:163 +0x365
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c06590?, 0x234dbcf20a50?, 0x234dbc1a4590?}, 0x234dbd149a28)
+	/workspace/adamic/internal/lower/exceptions.go:310 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1b977c8?, 0x234dbc1a4590?, 0x1b97830?}, 0x234dbd149a28)
+	/workspace/adamic/internal/lower/exceptions.go:298 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1bc3cc0?, 0x234dbc1a4590?, 0x8080808080808080?}, 0x234dbd149a28)
+	/workspace/adamic/internal/lower/exceptions.go:315 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1b97830?, 0x234dbc1a45b0?, 0x7fe1bcc35d28?}, 0x234dbd149a28)
+	/workspace/adamic/internal/lower/exceptions.go:298 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1aff6e8?, 0x234dbbe7dc98?, 0x489845?}, 0x234dbd149a28)
+	/workspace/adamic/internal/lower/exceptions.go:302 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1aff6e8?, 0x234dbbe7dc98?}, 0x1?)
+	/workspace/adamic/internal/lower/exceptions.go:286 +0x67
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x234dbc4d7800, {0x234dbc1a45b0?, 0x3?, 0x234dbbda7d40?})
+	/workspace/adamic/internal/lower/exceptions.go:152 +0x5f
+github.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x234dbc4d7800)
+	/workspace/adamic/internal/lower/exceptions.go:133 +0x251
+github.com/system-inc/adamic/internal/lower.Lower({0x1c31610?, 0x1d1df00?}, 0x234dbc102660)
+	/workspace/adamic/internal/lower/lower.go:70 +0x7fd
+github.com/system-inc/adamic/internal/oracle.lowered(0x234dbbfda6c8, {0x234dbbd74d70, 0x4c})
+	/workspace/adamic/internal/oracle/oracle_test.go:554 +0x18b
+github.com/system-inc/adamic/internal/oracle.TestClassWrongOutput106.func1(0x234dbbfda6c8)
+	/workspace/adamic/internal/oracle/class_wrong_output_test.go:88 +0x255
+testing.tRunner(0x234dbbfda6c8, 0x234dbc47fb80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 8
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.301s
+FAIL
