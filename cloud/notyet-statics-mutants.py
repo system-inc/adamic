@@ -22,7 +22,7 @@ old_guard = '''\tif len(l.staticGlobals) > 0 && method != nil && len(method.Decl
         return nil, l.notYet(node, "a method call through a structural signature in a program with statics; use typeof the declaring class")
     }
 '''
-call = '\treturn ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil'
+call = '\treturn ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil'
 guess = '''    if property, ok := closure.(ir.Property); ok && property.Method {
         for _, side := range l.statics {
             if function, exists := side.methods[property.Name]; exists {
