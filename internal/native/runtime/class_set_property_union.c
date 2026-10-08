@@ -27,8 +27,17 @@ adamic_heap *adamic_union_runtime_field(const adamic_object *owner, const adamic
     if (owner->shape->kinds != NULL) {
         switch (owner->shape->kinds[index]) {
         case adamic_field_reference: return adamic_retain(slot->reference);
-        case adamic_field_number: return adamic_box_number(slot->number);
-        case adamic_field_boolean: return slot->boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+        case adamic_field_number: {
+            adamic_maybe_number value = adamic_maybe_number_unpack(slot->number);
+            return value.present ? adamic_box_number(value.number) : NULL;
+        }
+        case adamic_field_boolean: {
+            // Exhausted collection iterators use the reserved undefined word for
+            // either scalar kind. Ordinary booleans and packed pairs use 0/1/2.
+            if (!adamic_maybe_number_unpack(slot->number).present) return NULL;
+            adamic_maybe_boolean value = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+            return !value.present ? NULL : value.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+        }
         }
     }
     static const char message[] = "union field has an invalid storage kind";

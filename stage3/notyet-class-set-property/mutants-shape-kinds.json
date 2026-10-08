@@ -8,5 +8,15 @@
     "mutant": "shape-scalar-boxing",
     "exit": 1,
     "log": "/tmp/adamic-class-set-property-mutant-shape-scalar-boxing.log"
+  },
+  {
+    "mutant": "shape-number-undefined",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-shape-number-undefined.log"
+  },
+  {
+    "mutant": "shape-boolean-undefined",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-shape-boolean-undefined.log"
   }
 ]
