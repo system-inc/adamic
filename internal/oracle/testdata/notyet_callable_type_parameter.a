@@ -1,0 +1,7 @@
+function create<T>(watchDirectory: (directory: string, flags: number) => T): T {
+    return watchDirectory('directory', 3);
+}
+const text = create((directory: string, flags: number): string => `${directory}${flags}`);
+const position = create((directory: string, flags: number): number => directory.length + flags);
+console.log(text);
+console.log(`${position}`);
