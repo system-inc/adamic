@@ -331,12 +331,13 @@ func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
 	directory := t.TempDir()
 	options := native.Options{Sanitize: true}
-	library, err := native.RuntimeLibrary("", options)
+	code := native.C(program)
+	library, err := native.RuntimeLibraryForSource("", code, options)
 	if err != nil {
 		t.Fatal(err)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
-	write(t, source, []byte(native.C(program)))
+	write(t, source, []byte(code))
 	flags := native.Flags(options)
 	for index, flag := range flags {
 		if flag == "-O1" {
@@ -453,4 +454,15 @@ func (task *fixtureTask[T]) await(t *testing.T) T {
 		t.Fatal(err)
 	}
 	return value
+}
+
+// The mutant helper must use the same runtime layouts as the emitted program.
+func TestNativeMutantUsesProgramsFeatures(t *testing.T) {
+	parallelMarkdown(t)
+	const path = "../../../internal/oracle/testdata/arguments_length_extended.a"
+	want := onNode(t, path)
+	clean(t, "Node", want)
+	got := nativeMutant(t, lowered(t, path))
+	clean(t, "native mutant helper", got)
+	equal(t, "native mutant helper", got.stdout, want.stdout)
 }
