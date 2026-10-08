@@ -4,7 +4,7 @@ import "github.com/microsoft/TypeScript/tsc/shim/ast"
 
 // Each function body is inspected once. Tarjan's active stack identifies cycles;
 // only a complete component receives a cached transitive reach set. Sets contain
-// all namespace declarations, independent of the current module evaluation point.
+// all namespace and regular enum declarations, independent of the current module evaluation point.
 type namespaceCallGraph struct {
 	lowering  *lowering
 	functions map[*ast.Node]*namespaceCallNode
@@ -34,12 +34,53 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 	g.next++
 	g.functions[function] = entry
 	g.stack = append(g.stack, entry)
+	connect := func(target *ast.Node) {
+		previous := g.functions[target]
+		edge := g.discover(target)
+		entry.edges = append(entry.edges, edge)
+		if edge.active {
+			if previous == nil {
+				entry.low = min(entry.low, edge.low)
+			} else {
+				entry.low = min(entry.low, edge.index)
+			}
+		}
+	}
 	var walk func(*ast.Node)
 	walk = func(node *ast.Node) {
 		if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) {
 			return
 		}
+		if branch := g.lowering.literalCallableBranch(node); branch != nil {
+			walk(branch)
+			return
+		}
 		if ast.IsClassLike(node) {
+			if node == function {
+				for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+					if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
+						for _, element := range clause.AsHeritageClause().Types.Nodes {
+							if base := g.lowering.namespaceCallable(element.AsExpressionWithTypeArguments().Expression); base != nil {
+								connect(base)
+							}
+						}
+					}
+				}
+				// Construction executes instance initializers, parameter defaults and
+				// the constructor body. Static members ran at the class declaration.
+				for _, member := range node.AsClassDeclaration().Members.Nodes {
+					if member.Kind == ast.KindPropertyDeclaration && !ast.HasStaticModifier(member) {
+						walk(member.Initializer())
+					}
+					if member.Kind == ast.KindConstructor {
+						for _, parameter := range member.Parameters() {
+							walk(parameter.Initializer())
+						}
+						walk(member.Body())
+					}
+				}
+				return
+			}
 			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 					for _, element := range clause.AsHeritageClause().Types.Nodes {
@@ -66,16 +107,7 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 			callees := append([]*ast.Node{node.Expression()}, node.Arguments()...)
 			for _, callee := range callees {
 				if target := g.lowering.namespaceCallable(callee); target != nil {
-					previous := g.functions[target]
-					edge := g.discover(target)
-					entry.edges = append(entry.edges, edge)
-					if edge.active {
-						if previous == nil {
-							entry.low = min(entry.low, edge.low)
-						} else {
-							entry.low = min(entry.low, edge.index)
-						}
-					}
+					connect(target)
 				}
 			}
 		}
@@ -111,11 +143,10 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 	return entry
 }
 
-// Namespace-scoped regular enums retain their own initialization boundary even
-// when integration replaces the module-level enum analysis with ready checks.
+// Both module and namespace enums participate in the same initialization graph.
 func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
 	declaration := l.enumObject(node)
-	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) || declaration.Parent == nil || declaration.Parent.Kind != ast.KindModuleBlock {
+	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
 		return nil
 	}
 	return declaration

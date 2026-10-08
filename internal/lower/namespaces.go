@@ -232,6 +232,9 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 		if node == nil || ast.IsTypeNode(node) || ast.IsFunctionLike(node) {
 			return nil
 		}
+		if branch := l.literalCallableBranch(node); branch != nil {
+			return visit(branch)
+		}
 		if ast.IsClassLike(node) {
 			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
@@ -261,6 +264,10 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			}
 			initialized[node] = true
 			return nil
+		}
+		// The enum object exists while its own member assignments execute.
+		if node.Kind == ast.KindEnumDeclaration {
+			initialized[node] = true
 		}
 		if l.namespaceValueNode(node) {
 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
@@ -309,6 +316,10 @@ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
 	seen := map[*ast.Symbol]bool{}
 	for callee != nil {
 		callee = ast.SkipParentheses(callee)
+		if branch := l.literalCallableBranch(callee); branch != nil {
+			callee = branch
+			continue
+		}
 		if callee.Kind == ast.KindArrowFunction || callee.Kind == ast.KindFunctionExpression {
 			return callee
 		}
@@ -319,6 +330,8 @@ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
 		seen[symbol] = true
 		declaration := symbol.ValueDeclaration
 		switch declaration.Kind {
+		case ast.KindClassDeclaration:
+			return declaration
 		case ast.KindFunctionDeclaration:
 			if declaration.Body() != nil {
 				return declaration
