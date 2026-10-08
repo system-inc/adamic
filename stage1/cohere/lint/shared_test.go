@@ -64,9 +64,12 @@ func inRuleScope(descriptor registry.Descriptor) bool {
 	return ruleScope == nil || ruleScope[descriptor.Slug]
 }
 
-// validateRuleScope refuses a scope naming a rule directory the registry doesn't hold, so a typo can't scope
-// a run down to nothing.
+// validateRuleScope refuses a scope naming a rule directory the registry doesn't hold, and one set but naming
+// none, such as "," or " ", so neither a typo nor a blank can scope a run down to nothing.
 func validateRuleScope(descriptors []registry.Descriptor) error {
+	if ruleScope != nil && len(ruleScope) == 0 {
+		return fmt.Errorf("ADAMIC_LINT_RULES is set and names no rule directory, so it would scope the run to no rules")
+	}
 	known := map[string]bool{}
 	for _, descriptor := range descriptors {
 		known[descriptor.Slug] = true

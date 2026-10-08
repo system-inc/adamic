@@ -434,10 +434,14 @@ func TestRulesAgree(t *testing.T) {
 	programs := upstreamPrograms(t)
 	captured, assumed, uncounted := 0, 0, 0
 	strictAlone := map[string]bool{}
+	compared := map[string]int{}
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
 		if len(fields) > 1 && !scoped[fields[1]] {
 			continue
+		}
+		if len(fields) > 1 {
+			compared[fields[1]]++
 		}
 		if len(fields) > 1 && typed[fields[1]] {
 			config := filepath.Join(t.TempDir(), "tsconfig.json")
@@ -479,6 +483,15 @@ func TestRulesAgree(t *testing.T) {
 		}
 	}
 	t.Logf("typed upstream cases: %d under their captured compiler options, %d under strict alone; %d held to upstream's count, %d not, their programs holding other fixture files", captured, assumed, captured-uncounted, uncounted)
+	// A scoped run compares each named rule's upstream cases, and a new rule's capture is where that can come up
+	// empty, so a named rule with none fails by name rather than passing on the generated rows alone.
+	if ruleScope != nil {
+		for name, inScope := range scoped {
+			if inScope && compared[name] == 0 {
+				t.Errorf("%s is in ADAMIC_LINT_RULES and its upstream capture holds no case, so this scoped run compared none of its own", name)
+			}
+		}
+	}
 	// The exact counts are the whole corpus's, so a scoped run, which replays some rules, doesn't hold them.
 	if ruleScope == nil {
 		for key := range strictAloneTypedCases {
