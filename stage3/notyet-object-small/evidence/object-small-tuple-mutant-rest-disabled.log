@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_tuple.a (0.03s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/object_small_tuple.a:2:49: stage 0 can't lower a tuple literal leaving out an element of type Ending yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.049s
+FAIL

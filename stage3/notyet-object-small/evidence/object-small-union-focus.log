@@ -1,0 +1,32 @@
+=== RUN   TestObjectSmallUnionFieldCheck
+=== PAUSE TestObjectSmallUnionFieldCheck
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestObjectSmallUnionFieldCheck
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestObjectSmallUnionFieldCheck/object_small_union_stale.a
+=== PAUSE TestObjectSmallUnionFieldCheck/object_small_union_stale.a
+=== CONT  TestObjectSmallUnionFieldCheck/object_small_union_stale.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union_stale.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union_stale.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union_stale.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union_stale.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a (0.64s)
+=== NAME  TestObjectSmallUnionFieldCheck/object_small_union_stale.a
+    object_small_union_test.go:67: native unchecked field member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+    object_small_union_test.go:67: JavaScript unchecked field member mutant caught: exit 0, stdout "after toText: wordswordswords1\n", stderr ""
+--- PASS: TestObjectSmallUnionFieldCheck (0.00s)
+    --- PASS: TestObjectSmallUnionFieldCheck/object_small_union_stale.a (0.76s)
+PASS
+gate cache: native hits=0 misses=11
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.773s

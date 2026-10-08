@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_spread.a (0.03s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/object_small_spread.a:6:26: stage 0 can't lower spreading an array of other elements yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.052s
+FAIL

@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_slice.a (0.42s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "none 10,20,30,40\nstart 20,30,40\nend 10,20\nnegative 30\nnan \nliteral 10,20,30,40\ngrown 20,30,40,50: 1\nold 10,20,30,40,50: 2\nnew 99\n", stderr ""
+            native: exit 0, stdout "none \nstart \nend 10,20\nnegative 30\nnan \nliteral 10,20,30,40\ngrown : 1\nold : 2\nnew 99\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "none 10,20,30,40\nstart 20,30,40\nend 10,20\nnegative 30\nnan \nliteral 10,20,30,40\ngrown 20,30,40,50: 1\nold 10,20,30,40,50: 2\nnew 99\n", stderr ""
+            backend: exit 0, stdout "none \nstart \nend 10,20\nnegative 30\nnan \nliteral 10,20,30,40\ngrown : 1\nold : 2\nnew 99\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.442s
+FAIL

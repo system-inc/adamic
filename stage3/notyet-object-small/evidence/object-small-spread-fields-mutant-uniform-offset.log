@@ -1,0 +1,35 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_spread_fields.a (0.62s)
+        oracle_test.go:745: the release build: exit codes differ
+            sanitized: exit 1, stdout "", stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==48066==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x5592b07e4dc1 bp 0x7fff6a807201 sp 0x7fff6a807140 T0)\n==48066==The signal is caused by a READ memory access.\n==48066==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x5592b07e4dc1 in adamic_string_concat /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21\n    #1 0x5592b079f350 in main /tmp/adamic-gate/adamic-build-1825346942/main.c:695:41\n    #2 0x7f4afc505ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f4afc505d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5592b06b7430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdataobject_small_s2045944763/002/program+0x53430)\n\n==48066==Register values:\nrax = 0x0806e00000000002  rbx = 0x000000000000000e  rcx = 0x00000ab25610e500  rdx = 0x0000000000000005  \nrdi = 0x4037000000000010  rsi = 0x4037000000000000  rbp = 0x00007fff6a807201  rsp = 0x00007fff6a807140  \n r8 = 0x00000f775f6bc0d0   r9 = 0x0000000000000000  r10 = 0x00000f775f6bc0d0  r11 = 0x0000000000000002  \nr12 = 0x00007b4afa400140  r13 = 0x00007b4afa400120  r14 = 0x000000000000000e  r15 = 0x0000000000000004  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21 in adamic_string_concat\n==48066==ABORTING\n"
+            release:   exit -1, stdout "", stderr ""
+        oracle_test.go:761: exit codes differ
+            node:   exit 0, stdout "oldoldold,11,addedadded\ntrue\nnewnewnew,7\noldoldold,replacedreplaced,true\ntrue\nonly\nfalse\nfalse\nnumber\n15\nnumber\n23\n23,classclass,plain\nstring\nboxedboxed\nnumber\n14\n14\ngv:7,0\n", stderr ""
+            native: exit 1, stdout "", stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==48066==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x5592b07e4dc1 bp 0x7fff6a807201 sp 0x7fff6a807140 T0)\n==48066==The signal is caused by a READ memory access.\n==48066==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x5592b07e4dc1 in adamic_string_concat /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21\n    #1 0x5592b079f350 in main /tmp/adamic-gate/adamic-build-1825346942/main.c:695:41\n    #2 0x7f4afc505ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f4afc505d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5592b06b7430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdataobject_small_s2045944763/002/program+0x53430)\n\n==48066==Register values:\nrax = 0x0806e00000000002  rbx = 0x000000000000000e  rcx = 0x00000ab25610e500  rdx = 0x0000000000000005  \nrdi = 0x4037000000000010  rsi = 0x4037000000000000  rbp = 0x00007fff6a807201  rsp = 0x00007fff6a807140  \n r8 = 0x00000f775f6bc0d0   r9 = 0x0000000000000000  r10 = 0x00000f775f6bc0d0  r11 = 0x0000000000000002  \nr12 = 0x00007b4afa400140  r13 = 0x00007b4afa400120  r14 = 0x000000000000000e  r15 = 0x0000000000000004  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21 in adamic_string_concat\n==48066==ABORTING\n"
+        oracle_test.go:774: leaks:
+            exit 1
+            AddressSanitizer:DEADLYSIGNAL
+            =================================================================
+            ==48073==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x558fbe89ddc1 bp 0x7fff18cb7f01 sp 0x7fff18cb7ee0 T0)
+            ==48073==The signal is caused by a READ memory access.
+            ==48073==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+                #0 0x558fbe89ddc1 in adamic_string_concat /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21
+                #1 0x558fbe858350 in main /tmp/adamic-gate/adamic-build-1825346942/main.c:695:41
+                #2 0x7f9a2f576ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+                #3 0x7f9a2f576d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+                #4 0x558fbe770430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdataobject_small_s2045944763/002/program+0x53430)
+            
+            ==48073==Register values:
+            rax = 0x0806e00000000002  rbx = 0x000000000000000e  rcx = 0x00000ab1f7d25700  rdx = 0x0000000000000005  
+            rdi = 0x4037000000000010  rsi = 0x4037000000000000  rbp = 0x00007fff18cb7f01  rsp = 0x00007fff18cb7ee0  
+             r8 = 0x00000f8145cbc0d0   r9 = 0x0000000000000000  r10 = 0x00000f8145cbc0d0  r11 = 0x0000000000000002  
+            r12 = 0x00007b9a2d400140  r13 = 0x00007b9a2d400120  r14 = 0x000000000000000e  r15 = 0x0000000000000004  
+            AddressSanitizer can not provide additional info.
+            SUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-2463135572/string_build_impl.h:40:21 in adamic_string_concat
+            ==48073==ABORTING
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.642s
+FAIL

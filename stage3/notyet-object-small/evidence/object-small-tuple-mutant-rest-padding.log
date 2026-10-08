@@ -1,0 +1,20 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_tuple.a (0.23s)
+        oracle_test.go:740: gate cache node miss
+        oracle_test.go:740: gate cache node miss
+        oracle_test.go:587: gate cache native miss
+        cache_test.go:340: native: clang failed: exit status 1
+            /tmp/adamic-gate/adamic-build-3424806232/main.c:236:83: error: passing 'double' to parameter of incompatible type 'void *'
+              236 |         adamic_array_push(adamic_temporary_95, (adamic_value){.reference = adamic_retain((0x0p+00))});
+                  |                                                                                          ^~~~~~~~~
+            /home/agent/.cache/adamic/runtime/42e8a4824f7733722f3f1fec6ddb045ef5598b8c8d634eb193e49c62cce558aa/adamic.h:44:27: note: passing argument to parameter 'value' here
+               44 | void *adamic_retain(void *value);
+                  |                           ^
+            1 error generated.
+            
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.245s
+FAIL

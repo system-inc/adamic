@@ -1,0 +1,19 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_index.a (0.52s)
+        oracle_test.go:740: gate cache node miss
+        oracle_test.go:740: gate cache node miss
+        oracle_test.go:587: gate cache native miss
+        oracle_test.go:580: gate cache native miss
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "rkv\n1,7,10,20\n11,13\nchangedchanged,changedchanged\n", stderr ""
+            native: exit 0, stdout "rkv\n7,2,10,20\n13,2\nchangedchanged,RRR\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "rkv\n1,7,10,20\n11,13\nchangedchanged,changedchanged\n", stderr ""
+            backend: exit 0, stdout "rkv\n7,2,10,20\n13,2\nchangedchanged,RRR\n", stderr ""
+        oracle_test.go:594: gate cache native hit
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.536s
+FAIL

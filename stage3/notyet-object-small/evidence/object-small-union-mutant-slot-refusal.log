@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_union.a (0.03s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/object_small_union.a:2:77: stage 0 can't lower a field from a union of differently held members variable yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.045s
+FAIL

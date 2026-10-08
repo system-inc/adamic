@@ -1,0 +1,9 @@
+--- FAIL: TestObjectSmallSpreadNULRefusal (0.18s)
+    object_small_args_refused_test.go:53: gate cache node miss
+    object_small_args_refused_test.go:60: want the explicit name-storage stop, got <nil>
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.192s
+FAIL

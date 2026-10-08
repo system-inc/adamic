@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_tuple.a (0.03s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/object_small_tuple.a:4:29: stage 0 can't lower mutant: tuple indexOf disabled yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.055s
+FAIL

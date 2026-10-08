@@ -1,0 +1,8 @@
+--- FAIL: TestObjectSmallOptionalWriteRefusal (0.16s)
+    object_small_args_refused_test.go:44: want the fixed-shape design refusal, got <nil>
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.167s
+FAIL

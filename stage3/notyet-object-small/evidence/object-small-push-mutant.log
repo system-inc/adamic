@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_small_push.a (0.41s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "empty 1\nargument 20: 1\nargument 30: 1\nargument 40: 1\nmany 4\n2: 10,20,30,40\nargument 60: 1\nreplace 6\nold 10,20,30,40,50,60, new 99\nword 1: 1\nword 2: 1\nwords 3: old,built-1,built-2\n", stderr ""
+            native: exit 0, stdout "empty 1\nargument 20: 1\nargument 30: 1\nargument 40: 1\nmany 4\n2: 10,40,30,20\nargument 60: 1\nreplace 6\nold 10,40,30,20,60,50, new 99\nword 1: 1\nword 2: 1\nwords 3: old,built-2,built-1\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "empty 1\nargument 20: 1\nargument 30: 1\nargument 40: 1\nmany 4\n2: 10,20,30,40\nargument 60: 1\nreplace 6\nold 10,20,30,40,50,60, new 99\nword 1: 1\nword 2: 1\nwords 3: old,built-1,built-2\n", stderr ""
+            backend: exit 0, stdout "empty 1\nargument 20: 1\nargument 30: 1\nargument 40: 1\nmany 4\n2: 10,40,30,20\nargument 60: 1\nreplace 6\nold 10,40,30,20,60,50, new 99\nword 1: 1\nword 2: 1\nwords 3: old,built-2,built-1\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.433s
+FAIL
