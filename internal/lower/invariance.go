@@ -574,6 +574,25 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		}
 		return nil
 	}
+	if returns := l.freshMapReturns(node); returns != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+		element := l.checker.GetElementTypeOfArrayType(l.withoutUndefined(contextual))
+		for _, returned := range returns {
+			own := l.concrete(l.checker.GetTypeAtLocation(returned))
+			var found *widening
+			if returned.Kind == ast.KindArrayLiteralExpression && len(returned.AsArrayLiteralExpression().Elements.Nodes) != 0 && l.checker.IsArrayType(l.concrete(element)) {
+				// These literal elements retain their checker context, which
+				// need not be this destination. Shared values inside them
+				// still need the ordinary invariant comparison.
+				found = l.widenedArguments(own, element, false, map[[2]*checker.Type]bool{})
+			} else {
+				found = l.freshOrWidened(returned, own, element)
+			}
+			if found != nil {
+				return found
+			}
+		}
+		return nil
+	}
 	visited := map[[2]*checker.Type]bool{}
 	if !l.freshValue(node) {
 		return l.widened(own, contextual, visited)

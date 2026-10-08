@@ -2,12 +2,14 @@ package lower
 
 import (
 	"context"
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/load"
+	"errors"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestContextualEmptyMap(t *testing.T) {
@@ -24,6 +26,7 @@ func TestContextualEmptyMap(t *testing.T) {
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
+	seenEmpty := false
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
 		if n.Kind == ast.KindArrayLiteralExpression || n.Kind == ast.KindArrowFunction || n.Kind == ast.KindCallExpression {
@@ -32,13 +35,32 @@ func TestContextualEmptyMap(t *testing.T) {
 			if ctx != nil {
 				text = c.TypeToString(ctx)
 			}
+			if n.Kind == ast.KindArrayLiteralExpression && len(n.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+				seenEmpty = true
+				if text != "never[]" {
+					t.Fatalf("checker literal context changed: %s", text)
+				}
+			}
 			t.Logf("%s own=%s context=%s", program.Where(n), c.TypeToString(c.GetTypeAtLocation(n)), text)
 		}
 		return n.ForEachChild(visit)
 	}
 	program.Files()[0].Node.ForEachChild(visit)
+	if !seenEmpty {
+		t.Fatal("missing empty literal")
+	}
 	_, err = Lower(context.Background(), program)
-	if err == nil {
-		t.Fatal("expected existing map-result invariance refusal")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestFreshCallbackKeepsSharedNestedViews(t *testing.T) {
+	_, err := lowerSource(t, `const shared: never[] = [];
+ function rows<T>(values: T[]): T[][][] { return values.map(() => [shared]); }
+ const result = rows([1]);`)
+	var refused *Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("want shared nested array refused, got %v", err)
 	}
 }
