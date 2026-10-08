@@ -18,6 +18,7 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 		}
 		e.line("if (%s != NULL && %s != &adamic_null && !(%s)) adamic_nullish_failure(%s, %s, %s);", value, value, strings.Join(tests, " || "), cString(property.View), cString(property.ViewType), value)
 	}
+	e.nullishMemberSelection(property, value)
 	if property.Of == ir.Union {
 		return value
 	}
@@ -35,4 +36,61 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 		return e.own(property.Of, fmt.Sprintf("adamic_retain(%s)", narrowed))
 	}
 	return narrowed
+}
+
+func (e *emitter) nullishMemberSelection(property ir.Property, value string) {
+	if property.ViewContract == 0 {
+		return
+	}
+	contract := e.program.ViewContracts[property.ViewContract-1]
+	if contract.Kind == ir.ViewNullable {
+		if contract.Element == 0 {
+			return
+		}
+		property.ViewContract = contract.Element
+		contract = e.program.ViewContracts[contract.Element-1]
+	}
+	if contract.Kind != ir.ViewUnion {
+		return
+	}
+	e.line("if (%s != NULL && %s != &adamic_null) {", value, value)
+	if contract.Of == ir.Object {
+		e.viewObjectUnion(property, "(adamic_object *)"+value)
+	} else {
+		tests := []string{}
+		for _, id := range contract.Members {
+			member := e.program.ViewContracts[id-1]
+			if member.Kind == ir.ViewUndefined || member.Kind == ir.ViewNull {
+				continue
+			}
+			kind := map[ir.Type]string{ir.Number: "adamic_kind_number", ir.Boolean: "adamic_kind_boolean", ir.String: "adamic_kind_string", ir.Object: "adamic_kind_object", ir.Array: "adamic_kind_array"}[member.Of]
+			if kind == "" {
+				panic("compiler bug: unavailable nullable union member")
+			}
+			allowed := []string{}
+			for _, literal := range member.Allowed {
+				var constant ir.Expression
+				switch literal.Of {
+				case ir.Number:
+					constant = ir.NumberConstant{Value: literal.Number}
+				case ir.Boolean:
+					constant = ir.BooleanConstant{Value: literal.Boolean}
+				case ir.String:
+					name := e.temporary()
+					e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", name, cString(literal.String)))
+					allowed = append(allowed, fmt.Sprintf("adamic_string_equal((const adamic_string *)%s, &%s)", value, name))
+					continue
+				}
+				actual, _ := converted(ir.Union, member.Of, value)
+				allowed = append(allowed, e.binary(ir.Equal, member.Of, actual, e.value(constant)))
+			}
+			test := value + "->kind == " + kind
+			if len(allowed) != 0 {
+				test += " && (" + strings.Join(allowed, " || ") + ")"
+			}
+			tests = append(tests, "("+test+")")
+		}
+		e.line("if (!(%s)) adamic_nullish_failure(%s, %s, %s);", strings.Join(tests, " || "), cString(property.View), cString(property.ViewType), value)
+	}
+	e.line("}")
 }

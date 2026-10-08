@@ -849,6 +849,59 @@ remaining member adapters and original-pair witnesses; exact reachability will
 still require the checker-clean program. Only integration is merged, and the
 lead forwards this lane's tip to the integrator for hunk reconciliation.
 
+### Lane 4b scalar and array union checkpoint, October 8
+
+The next direct shape is string|number|PseudoBigInt (rank 4, 10 candidate reads).
+Rank 3 is an object union with an intersection and remains uncovered. Array
+alternatives now dispatch through the existing shared lazy element contract;
+source controls model string|NodeArray<JSDocComment>|undefined using a readonly
+array alias. Full NodeArray inherited metadata is not certified by this alias.
+These two added shapes bring reduced controls to 22 candidate pairs / 103 reads;
+20 candidate pairs / 78 reads have no reduced shape control. Original-pair
+witnesses remain pending for all 42 pairs / 181 reads, and exact production
+reachability remains unmeasured.
+
+Minimal added shared hook: lower/object.go calls objectPrimitiveBoxedField for
+ir.Union property initializers. The helper admits physical boxed storage only
+for scalar unions or the supported single object/array alternative, preserving
+runtime tags and source slots. It does not widen writes or prove payload types.
+Both positive source controls exercise boxed union field producers and both
+backends check the member at the read. Native sanitized/leak-checked runs pass.
+Independent outer removal, wrong-member acceptance, wrong nested-shape acceptance
+and dropped nested checks all fail pinned refusals in executable release code.
+
+Revised working whole-family date: October 13, 2026, 23:00 UTC, brought forward
+from October 16 after this production checkpoint. Remaining risks include true
+NodeArray representation/metadata, object intersections and unions, dynamic
+keys, tuple/element reads, callable alternatives and original-pair context
+witnesses. This is a delivery estimate, not completed production reachability.
+
+### Lane 4b original-pair witness checkpoint, October 8
+
+Original declarations are generated outside the repository from TypeScript pin
+050880ce59e30b356b686bd3144efe24f875ebc8 using original/prepare.cjs. No cohere
+code is copied. The generator rejects tracked source drift, audits every UTF-16
+read-site slice for the two leading pairs, emits declarations, and records their
+hashes and complete SourceFile/Node/Diagnostic/DiagnosticMessageChain field sets.
+The oracle binds type-only imports to those declarations, runs normal strict
+load diagnostics, and checks every root/member field name against the manifest.
+
+Certified standalone original field-contract pairs: SourceFile.externalModuleIndicator
+(20 candidate reads) and Diagnostic.messageText (15 candidate reads). These are
+complete original declarations, with valid/wrong/absent controls as applicable,
+both-backend refusal pins and independent semantic mutants. SourceFile also has
+generic, callback and stored-alias controls. Its optional missing field returns
+undefined; an uninitialized present slot still refuses. These are pair-contract
+witnesses and site provenance audits, not execution of the 35 whole-tsc contexts
+or exact production allocation reachability. Remaining: 40 candidate pairs /
+146 candidate reads. Whole-family working date remains October 13, 23:00 UTC.
+
+Only lane-owned emitter/runtime files changed for original optional admission:
+pass receiver optionality and field absence separately; allow a missing optional
+slot while retaining the shared readiness guard. Existing shared hook hunks remain
+those already listed. Original schemas retain all unread unsupported descendants
+as lazy obligations. No blanket shape certificate is claimed.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
@@ -1092,3 +1145,40 @@ wiring restrictions for those named hooks. The integration worker reconciles
 each overlapping hunk individually, preserving all refusals and Node agreements.
 Lanes still consume other lanes through codex/views-integration; a hook or
 component alone is not evidence of complete source admission.
+
+## Lane 2 native array hooks, October 8
+
+Under the lead's October 8 rule, lane 2 adds minimal shared hooks directly;
+`codex/views-integration` reconciles overlapping hunks. Callables belong to lane
+5 and are unchanged. The native array family estimate is October 10, 12:00 MDT.
+Use the frozen candidate inventory until checker-clean exact reachability exists.
+
+- `viewOptionalArrayContract` in `view_array_adapter.go`, dispatched from
+  `strictViewContract`, preserves the array/element descriptor through undefined
+  alternatives. Published in 5ca21a57.
+- `viewArrayBase`, `viewArrayOwnProperties`, and `viewArrayElementType` in
+  `view_array_types.go` recognize instantiated array ancestry and array/record
+  intersections. Representation, `elementType`, collection iteration,
+  `viewDataType`, `unsupportedViewFamily`, `strictViewContract`, and existing
+  array read metadata call these hooks. Tuple/class ancestry and overridden
+  intrinsics are excluded.
+- `internArrayViewContract` adds own-field child descriptors without scanning
+  elements. Unsupported children remain lazy read obligations.
+- `viewArrayRecordProduction` is called from `objectCall`: Object.assign of a
+  fresh array literal and one exact scalar record produces a fixed own-field
+  shape. Other array assignments refuse explicitly.
+- `viewArrayOwnReceiver` is called from `property`; `viewArrayOwnWriteReceiver`
+  from `setProperty` and `updateProperty`. Own writes register the shared original
+  slot certificate, including finite literal constraints.
+- New IR `ArrayRecord` and `ArrayProperties` carry production and selected own
+  storage through the existing walkers. Native `emitViewArrayRecord` and
+  `emitViewArrayProperties`, and JavaScript counterparts, are dispatched from
+  native `evaluate` and JavaScript `value`. Native reuses the existing owned
+  `adamic_array.properties`; no header layout or destructor change is needed.
+- `checkLazyViewReads` dispatches `ArraySearch` through its existing named
+  `arrayRead` hook, as it already does for map/join/other selected consumers.
+
+Fixtures live under stage3/interface-downcasts/lane2/node-array-*.a; their oracle
+is TestCheckedViewNodeArrayRecords. This checkpoint covers scalar own-field
+reads/writes and lazy object element reads. It does not certify reference element
+writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
