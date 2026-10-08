@@ -1088,3 +1088,27 @@ Fixtures are `lane2/reference-array-*.a`, held by
 `TestCheckedViewArrayReferenceWrites`. This is a flat-record write foundation,
 not certification of complete tsc Type/Symbol/Diagnostic shapes, class elements,
 optional/nested record writes, array/map/function elements or every mutator.
+
+### Lane 2 readonly array unions
+
+- `viewReadonlyArrayUnionBase` in `internal/lower/view_array_unions.go` is called
+  from `viewArrayBaseSeen`. Every alternative must have valid, non-overridden
+  ReadonlyArray ancestry. The common base identifies array storage and intrinsic
+  names; it does not select an element alternative or inspect array contents.
+- `viewArrayUnionElementType` joins every alternative's declared element type
+  with the checker and is called from `viewArrayElementType`. Shared `elementType`
+  uses this named hook instead of replacing the type by the first array base.
+  `internArrayViewContract` and existing read/consumer metadata therefore retain
+  the union element descriptor, including its existing tagged object checks.
+- `viewMutableArrayUnion` is called from `unsupportedViewFamily`. Mutable array
+  unions remain a named lazy field-read refusal; an unread member does not block
+  cast admission. This checkpoint does not erase their distinct write contracts.
+- `adamic_object_view`'s existing diagnostic allocation accounts for both copies
+  of the expected type in its format string. BindingPattern's long array-union
+  name exposed the former out-of-bounds panic text read under ASan. Diagnostics
+  are unchanged; restoring the old sizing is an executed mutant witness.
+
+No new IR node, array header metadata, callable hook or element scan is added.
+The new oracle is TestCheckedViewRankedArrayUnionContracts, with Node controls,
+both backends and exact kind/tag failure pins. The separate
+TestCheckedViewMutableArrayUnionRefusal pins the unsupported read diagnostic.

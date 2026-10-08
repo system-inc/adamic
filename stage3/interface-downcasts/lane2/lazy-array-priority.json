@@ -121,6 +121,46 @@
       "read_count": 42,
       "test": "TestCheckedViewRankedParserArrayContracts",
       "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 7317,
+      "type": "BindingPattern",
+      "field": "elements",
+      "read_count": 35,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 8655,
+      "type": "UnionOrIntersectionType",
+      "field": "types",
+      "read_count": 35,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7331,
+      "type": "SignatureDeclaration",
+      "field": "parameters",
+      "read_count": 31,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7287,
+      "type": "ClassLikeDeclaration",
+      "field": "members",
+      "read_count": 29,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7721,
+      "type": "TypeReferenceNode",
+      "field": "typeArguments",
+      "read_count": 27,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
     }
   ],
   "candidate_queue": [

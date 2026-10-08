@@ -40,6 +40,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
 	}
+	if l.viewMutableArrayUnion(target) {
+		return "mutable array union"
+	}
 	if l.viewArrayBase(target) != nil {
 		return ""
 	}
