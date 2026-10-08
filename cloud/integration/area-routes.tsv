@@ -38,7 +38,6 @@ codex/concurrency	runtime
 codex/typed-array	runtime
 codex/async-	runtime	native async and host promises
 codex/string-views	runtime	native string views
-codex/require-	hold	@system_adamic_typescript or @system_adamic_platforms: require builtins are stage 3 host-process work
 codex/host-	platforms
 codex/host-promises	runtime	census-owners.tsv
 # Library
@@ -47,6 +46,7 @@ codex/regex-	library
 codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
 # Stage 3
 codex/stage3-	stage3
+codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
 codex/views-	hold	@system_adamic_compiler or @system_adamic_typescript: the views touch lowering and stage 3's downcasts
 codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
 # Platforms
