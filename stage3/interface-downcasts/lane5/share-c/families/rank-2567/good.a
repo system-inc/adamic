@@ -1,0 +1,7 @@
+// Original Array.push receiver, declaration, read and enum values.
+const enum TypeSystemPropertyName {Type=0,ResolvedBaseConstructorType=1,DeclaredType=2,ResolvedReturnType=3,ImmediateBaseConstraint=4,ResolvedTypeArguments=5,ResolvedBaseTypes=6,WriteType=7,ParameterInitializerContainsUndefined=8}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:TypeSystemPropertyName[];}
+function probe(value:Base):void {const resolutionPropertyNames=(value as Target).items;const witnessResult=resolutionPropertyNames.push(TypeSystemPropertyName.Type);console.log(String(witnessResult));}
+probe({items:[TypeSystemPropertyName.Type]});

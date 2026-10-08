@@ -29,7 +29,7 @@
     "type": "NodeFactory",
     "field": "createNodeArray",
     "read": "factory.createNodeArray",
-    "status": "generic or rest signature"
+    "status": "needs code; see continuation-code-blocked.json"
   },
   {
     "rank": 17,
@@ -85,7 +85,7 @@
     "type": "Math",
     "field": "min",
     "read": "Math.min",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see continuation-code-blocked.json"
   },
   {
     "rank": 56,
@@ -159,7 +159,7 @@
     "type": "Map<string, number>",
     "field": "get",
     "read": "counts.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 125,
@@ -272,7 +272,7 @@
     "type": "Map<string, FileWatcherOfAffectingLocation>",
     "field": "get",
     "read": "fileWatchesOfAffectingLocations.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 233,
@@ -1886,7 +1886,7 @@
     "type": "Map<string, FileWatcherOfAffectingLocation>",
     "field": "delete",
     "read": "fileWatchesOfAffectingLocations.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 869,
@@ -1902,7 +1902,7 @@
     "type": "Map<string, Symbol>",
     "field": "get",
     "read": "patternAmbientModuleAugmentations.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 875,
@@ -1910,7 +1910,7 @@
     "type": "Map<string, Type | undefined>",
     "field": "has",
     "read": "reverseHomomorphicMappedCache.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 878,
@@ -1918,7 +1918,7 @@
     "type": "Map<string, false | MutableFileSystemEntries>",
     "field": "has",
     "read": "cachedReadDirectoryResult.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 881,
@@ -4148,7 +4148,7 @@
     "type": "Map<string, BigIntLiteralType>",
     "field": "get",
     "read": "bigIntLiteralTypes.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1715,
@@ -4156,7 +4156,7 @@
     "type": "Map<string, CachedResolvedModuleWithFailedLookupLocations>",
     "field": "delete",
     "read": "resolvedLibraries.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1718,
@@ -4196,7 +4196,7 @@
     "type": "Map<string, DirectoryWatcher>",
     "field": "get",
     "read": "dirWatchers.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1733,
@@ -4212,7 +4212,7 @@
     "type": "Map<string, ExtendedConfigCacheEntry>",
     "field": "delete",
     "read": "extendedConfigCache.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1739,
@@ -6267,7 +6267,7 @@
     "type": "T[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2504,
@@ -6275,7 +6275,7 @@
     "type": "T[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2507,
@@ -6283,7 +6283,7 @@
     "type": "T[]",
     "field": "push",
     "read": "to.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2510,
@@ -6291,7 +6291,7 @@
     "type": "T[]",
     "field": "push",
     "read": "array.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2513,
@@ -6299,7 +6299,7 @@
     "type": "T[]",
     "field": "push",
     "read": "to.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2516,
@@ -6443,7 +6443,7 @@
     "type": "TypeSystemPropertyName[]",
     "field": "push",
     "read": "resolutionPropertyNames.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2570,
@@ -6451,7 +6451,7 @@
     "type": "U[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2573,
@@ -6459,7 +6459,7 @@
     "type": "U[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2576,
@@ -6467,7 +6467,7 @@
     "type": "V[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2579,
@@ -6475,7 +6475,7 @@
     "type": "V[]",
     "field": "push",
     "read": "values.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver (explicit specialization where generic)"
   },
   {
     "rank": 2582,

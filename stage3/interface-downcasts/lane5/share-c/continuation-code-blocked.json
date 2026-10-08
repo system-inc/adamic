@@ -1,0 +1,108 @@
+[
+  {
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createNodeArray",
+    "declared_types": [
+      "<T extends Node>(elements?: readonly T[] | undefined, hasTrailingComma?: boolean | undefined) => NodeArray<T>"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 92,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 12376,
+      "column": 24
+    },
+    "rank": 11,
+    "certified": false,
+    "read": "factory.createNodeArray",
+    "start": 510460,
+    "end": 510483,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;",
+        "file": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-11/good.a:6:64: Adamic 0.1 refuses checked view read of field createNodeArray with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-11/good.a:6:64: Adamic 0.1 refuses checked view read of field createNodeArray with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      }
+    ],
+    "change_needed": "Implement complete original callable or receiver contract; retain refusal until source metadata and checked invocation are available."
+  },
+  {
+    "receiver_type_id": 2376,
+    "type": "Math",
+    "field": "min",
+    "declared_types": [
+      "(...values: number[]) => number"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 36,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 2225,
+      "column": 19
+    },
+    "rank": 47,
+    "certified": false,
+    "read": "Math.min",
+    "start": 79729,
+    "end": 79737,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "min(...values: number[]): number;",
+        "file": "lib/lib.es5.d.ts",
+        "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-47/good.a:5:69: Adamic 0.1 refuses inherited library member min read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-47/good.a:5:69: Adamic 0.1 refuses inherited library member min read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      }
+    ],
+    "change_needed": "Implement complete original callable or receiver contract; retain refusal until source metadata and checked invocation are available."
+  }
+]

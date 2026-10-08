@@ -1,0 +1,7 @@
+// Original Map receiver, member declaration and read; adjacent payload interfaces reduced.
+interface Type {readonly value:number;}
+interface OriginalMember<K,V> {has(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, Type | undefined>;}
+function probe(value:Base):void {const reverseHomomorphicMappedCache=(value as Target).items;reverseHomomorphicMappedCache.has("missing");console.log("completed");}
+const sourceMap:Map<string,Type | undefined>=new Map<string,Type | undefined>();probe({items:sourceMap});

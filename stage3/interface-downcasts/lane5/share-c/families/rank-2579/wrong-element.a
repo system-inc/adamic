@@ -1,0 +1,6 @@
+// Original generic Array.push receiver and read; explicit number specialization.
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target<V> {readonly items:V[];}
+function probe<V>(value:Base,incoming:V):void {const values=(value as Target<V>).items;const witnessResult=values.push(incoming);console.log(String(witnessResult));}
+probe<number>({items:[false]},2);

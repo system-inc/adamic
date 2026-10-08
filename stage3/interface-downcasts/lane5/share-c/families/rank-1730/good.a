@@ -1,0 +1,7 @@
+// Original Map receiver, member declaration and read; adjacent payload interfaces reduced.
+interface DirectoryWatcher {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, DirectoryWatcher>;}
+function probe(value:Base):void {const dirWatchers=(value as Target).items;dirWatchers.get("missing");console.log("completed");}
+const sourceMap:Map<string,DirectoryWatcher>=new Map<string,DirectoryWatcher>();probe({items:sourceMap});

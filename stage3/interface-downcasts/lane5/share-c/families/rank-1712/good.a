@@ -1,0 +1,7 @@
+// Original Map receiver, member declaration and read; adjacent payload interfaces reduced.
+interface BigIntLiteralType {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, BigIntLiteralType>;}
+function probe(value:Base):void {const bigIntLiteralTypes=(value as Target).items;bigIntLiteralTypes.get("missing");console.log("completed");}
+const sourceMap:Map<string,BigIntLiteralType>=new Map<string,BigIntLiteralType>();probe({items:sourceMap});

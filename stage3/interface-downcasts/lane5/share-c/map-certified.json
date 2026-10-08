@@ -1,0 +1,82 @@
+[
+  {
+    "rank": 119,
+    "reads": 14,
+    "type": "Map<string, number>",
+    "read": "counts.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, number>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 230,
+    "reads": 7,
+    "type": "Map<string, FileWatcherOfAffectingLocation>",
+    "read": "fileWatchesOfAffectingLocations.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, FileWatcherOfAffectingLocation>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 866,
+    "reads": 2,
+    "type": "Map<string, FileWatcherOfAffectingLocation>",
+    "read": "fileWatchesOfAffectingLocations.delete",
+    "declaration": "delete(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, FileWatcherOfAffectingLocation>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 872,
+    "reads": 2,
+    "type": "Map<string, Symbol>",
+    "read": "patternAmbientModuleAugmentations.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, Symbol>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 875,
+    "reads": 2,
+    "type": "Map<string, Type | undefined>",
+    "read": "reverseHomomorphicMappedCache.has",
+    "declaration": "has(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, Type | undefined>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 878,
+    "reads": 2,
+    "type": "Map<string, false | MutableFileSystemEntries>",
+    "read": "cachedReadDirectoryResult.has",
+    "declaration": "has(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, false | MutableFileSystemEntries>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1712,
+    "reads": 1,
+    "type": "Map<string, BigIntLiteralType>",
+    "read": "bigIntLiteralTypes.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, BigIntLiteralType>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1715,
+    "reads": 1,
+    "type": "Map<string, CachedResolvedModuleWithFailedLookupLocations>",
+    "read": "resolvedLibraries.delete",
+    "declaration": "delete(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, CachedResolvedModuleWithFailedLookupLocations>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1730,
+    "reads": 1,
+    "type": "Map<string, DirectoryWatcher>",
+    "read": "dirWatchers.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, DirectoryWatcher>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1736,
+    "reads": 1,
+    "type": "Map<string, ExtendedConfigCacheEntry>",
+    "read": "extendedConfigCache.delete",
+    "declaration": "delete(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, ExtendedConfigCacheEntry>, found Map<string, boolean>\n"
+  }
+]

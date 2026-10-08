@@ -1,0 +1,10 @@
+// Original declaration and read; adjacent carriers and bodies reduced.
+const enum InternalSymbolName {Call="__call",Constructor="__constructor",New="__new",Index="__index",ExportStar="__export",Global="__global",Missing="__missing",Type="__type",Object="__object",JSXAttributes="__jsxAttributes",Class="__class",Function="__function",Computed="__computed",Resolving="__resolving__",ExportEquals="export=",Default="default",This="this",InstantiationExpression="__instantiationExpression",ImportAttributes="__importAttributes"}
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+type SymbolTable = Map<__String, Symbol>;
+interface Symbol {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:SymbolTable;}
+function probe(value:Base):void {const moduleExports=(value as Target).items;moduleExports.get(InternalSymbolName.Call);console.log("completed");}
+probe({items:new Map<__String,Symbol>()});

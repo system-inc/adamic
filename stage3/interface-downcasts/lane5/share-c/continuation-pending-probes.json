@@ -1,0 +1,108 @@
+[
+  {
+    "receiver_type_id": 8811,
+    "type": "SymbolTable",
+    "field": "get",
+    "declared_types": [
+      "(key: __String) => Symbol | undefined"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 61,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 11607,
+      "column": 38
+    },
+    "rank": 20,
+    "certified": false,
+    "read": "moduleExports.get",
+    "start": 471763,
+    "end": 471780,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "get(key: K): V | undefined;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 0,
+        "stdout": "<emitted>",
+        "stderr": ""
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "stdout": "<emitted>",
+        "stderr": ""
+      }
+    ],
+    "change_needed": "Implement complete original callable or receiver contract; retain refusal until source metadata and checked invocation are available."
+  },
+  {
+    "receiver_type_id": 8811,
+    "type": "SymbolTable",
+    "field": "set",
+    "declared_types": [
+      "(key: __String, value: Symbol) => SymbolTable"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 53,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 1565,
+      "column": 5
+    },
+    "rank": 29,
+    "certified": false,
+    "read": "globals.set",
+    "start": 48859,
+    "end": 48870,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "set(key: K, value: V): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 0,
+        "stdout": "<emitted>",
+        "stderr": ""
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "stdout": "<emitted>",
+        "stderr": ""
+      }
+    ],
+    "change_needed": "Implement complete original callable or receiver contract; retain refusal until source metadata and checked invocation are available."
+  }
+]

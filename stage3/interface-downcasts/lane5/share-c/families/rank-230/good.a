@@ -1,0 +1,7 @@
+// Original Map receiver, member declaration and read; adjacent payload interfaces reduced.
+interface FileWatcherOfAffectingLocation {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, FileWatcherOfAffectingLocation>;}
+function probe(value:Base):void {const fileWatchesOfAffectingLocations=(value as Target).items;fileWatchesOfAffectingLocations.get("missing");console.log("completed");}
+const sourceMap:Map<string,FileWatcherOfAffectingLocation>=new Map<string,FileWatcherOfAffectingLocation>();probe({items:sourceMap});

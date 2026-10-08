@@ -1,0 +1,7 @@
+// Original Map receiver, member declaration and read; adjacent payload interfaces reduced.
+interface CachedResolvedModuleWithFailedLookupLocations {readonly value:number;}
+interface OriginalMember<K,V> {delete(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, CachedResolvedModuleWithFailedLookupLocations>;}
+function probe(value:Base):void {const resolvedLibraries=(value as Target).items;resolvedLibraries.delete("missing");console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

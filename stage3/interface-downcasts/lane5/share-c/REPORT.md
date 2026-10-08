@@ -1,3 +1,11 @@
+Built: 20 further pairs / 43 ranked candidate reads; cumulative share c 287 pairs / 773 reads. Fixtures, tests, own counts and evidence only.
+Commits: continues edee6e6cd on codex/views-callables-c; delivery SHA is reported after push.
+Commands and outputs: array oracle PASS 19.729s; Map oracle PASS 9.317s; original verifier PASS 287 pairs / 574 fixtures; scoped counts update PASS 4.104s and verification PASS 4.321s.
+Mutants: ten Array.push write-certificate omissions and ten Map receiver-certificate omissions caught in native and JavaScript, forty executed mutant comparisons.
+Uncovered: no complete original tsc execution or arbitrary generic-instantiation claim; Set, optional-host and bind/condition families remain delegated or excluded; no compiler/runtime changes.
+
+Current continuation: see continuation/REPORT.md. The following retains prior delivery evidence.
+
 Built: 11 further pairs / 30 ranked reads certified; cumulative share c 267 pairs / 730 reads. Fixtures, tests, own counts and evidence only.
 Commits: follows bd953abe, pushed only to codex/views-callables-c; delivery SHA is in the final response.
 Commands and outputs: scoped oracle PASS 11.873s; independent source verifier PASS 267 pairs / 534 fixtures; own counts update PASS 2.499s and verification PASS 2.656s.

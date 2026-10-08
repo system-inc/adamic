@@ -1,0 +1,159 @@
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2501
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2501/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2501/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2504
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2504/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2504/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2507
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2507/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2507/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2510
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2510/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2510/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2513
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2513/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2513/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2570
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2570/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2570/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2573
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2573/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2573/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node hit
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2576
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2576/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2576/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2579
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2579/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2579/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2567
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2567/good
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCArrayIntrinsics/rank-2567/wrong-element
+    checked_views_callable_share_c_intrinsics_test.go:31: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:40: gate cache node miss
+--- PASS: TestCheckedViewCallableShareCArrayIntrinsics (18.48s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2501 (12.37s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2501/good (12.00s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2501/wrong-element (0.37s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2504 (0.52s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2504/good (0.26s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2504/wrong-element (0.26s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2507 (0.70s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2507/good (0.35s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2507/wrong-element (0.35s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2510 (0.74s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2510/good (0.38s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2510/wrong-element (0.36s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2513 (0.51s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2513/good (0.26s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2513/wrong-element (0.25s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2570 (0.75s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2570/good (0.37s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2570/wrong-element (0.38s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2573 (0.55s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2573/good (0.28s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2573/wrong-element (0.27s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2576 (0.75s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2576/good (0.38s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2576/wrong-element (0.38s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2579 (0.81s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2579/good (0.39s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2579/wrong-element (0.42s)
+    --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2567 (0.77s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2567/good (0.39s)
+        --- PASS: TestCheckedViewCallableShareCArrayIntrinsics/rank-2567/wrong-element (0.38s)
+=== RUN   TestCheckedViewCallableShareCArrayMutants
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2501
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2504
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2507
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2510
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2513
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2570
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2573
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node hit
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2576
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2579
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCArrayMutants/rank-2567
+    checked_views_callable_share_c_intrinsics_test.go:75: gate cache node miss
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+    checked_views_callable_share_c_intrinsics_test.go:79: caught omitted Array.push write certificate: exit codes differ; exit 0 stdout "2\n" stderr ""
+--- PASS: TestCheckedViewCallableShareCArrayMutants (1.24s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2501 (0.13s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2504 (0.11s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2507 (0.12s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2510 (0.13s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2513 (0.09s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2570 (0.13s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2573 (0.10s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2576 (0.15s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2579 (0.14s)
+    --- PASS: TestCheckedViewCallableShareCArrayMutants/rank-2567 (0.13s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=15 misses=35
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.729s

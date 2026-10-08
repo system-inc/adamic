@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent carriers and bodies reduced.
+interface Node {readonly value:number;}
+interface NodeArray<T extends Node> extends ReadonlyArray<T> {}
+interface Base {readonly createNodeArray:unknown;}
+interface Target {createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;}
+function probe(value:Base):void {const factory=value as Target;factory.createNodeArray();console.log("completed");}
+probe({createNodeArray:<T extends Node>(elements?:readonly T[],hasTrailingComma?:boolean):NodeArray<T>=>elements ?? []});

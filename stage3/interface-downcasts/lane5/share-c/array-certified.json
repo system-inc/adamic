@@ -233,5 +233,85 @@
     "declaration": "push(...items: T[]): number;",
     "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: SyntaxKind.AbstractKeyword; }\n",
     "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 2501,
+    "reads": 1,
+    "type": "T[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2504,
+    "reads": 1,
+    "type": "T[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2507,
+    "reads": 1,
+    "type": "T[]",
+    "read": "to.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2510,
+    "reads": 1,
+    "type": "T[]",
+    "read": "array.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2513,
+    "reads": 1,
+    "type": "T[]",
+    "read": "to.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2570,
+    "reads": 1,
+    "type": "U[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2573,
+    "reads": 1,
+    "type": "U[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2576,
+    "reads": 1,
+    "type": "V[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2579,
+    "reads": 1,
+    "type": "V[]",
+    "read": "values.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
+  },
+  {
+    "rank": 2567,
+    "reads": 1,
+    "type": "TypeSystemPropertyName[]",
+    "read": "resolutionPropertyNames.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element read failed: <array write> expected number, found boolean\n"
   }
 ]
