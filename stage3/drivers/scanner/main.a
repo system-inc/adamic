@@ -7,14 +7,55 @@ import { ScriptTarget, SyntaxKind } from './adapted/src/compiler/types.ts';
 import { tokenNames } from './token-names.a';
 import { panic, programArguments, readTextFile } from 'adamic';
 
+// Match JSON's string quoting, including well-formed escaping of lone surrogates.
+function escapeJsonString(text: string): string {
+    let result = '"';
+    for (let index = 0; index < text.length; index++) {
+        const code = text.charCodeAt(index);
+        if (code === 34) result += '\\"';
+        else if (code === 92) result += '\\\\';
+        else if (code === 8) result += '\\b';
+        else if (code === 9) result += '\\t';
+        else if (code === 10) result += '\\n';
+        else if (code === 12) result += '\\f';
+        else if (code === 13) result += '\\r';
+        else if (code >= 0xd800 && code <= 0xdbff) {
+            if (index + 1 < text.length) {
+                const next = text.charCodeAt(index + 1);
+                if (next >= 0xdc00 && next <= 0xdfff) {
+                    result += text.substring(index, index + 2);
+                    index++;
+                    continue;
+                }
+            }
+            result += '\\u' + code.toString(16).padStart(4, '0');
+        }
+        else if (code < 32 || (code >= 0xdc00 && code <= 0xdfff)) {
+            result += '\\u' + code.toString(16).padStart(4, '0');
+        }
+        else result += text.charAt(index);
+    }
+    return result + '"';
+}
+
+function escapeOptionalString(value: string | undefined): string {
+    return value === undefined ? 'null' : escapeJsonString(value);
+}
+
+function formatDiagnosticArgument(value: string | number | undefined): string {
+    if (typeof value === 'string') return escapeJsonString(value);
+    if (typeof value === 'number') return Number.isFinite(value) ? String(value) : 'null';
+    return 'null';
+}
+
 // Both passes use the same input corpus and a fresh scanner per pass.
 for (const skipTrivia of [true, false]) {
     const scanner = createScanner(ScriptTarget.Latest, skipTrivia);
-    scanner.setOnError((message, length, arg0) => {
-        console.log(`error\t${message.code}\t${message.category}\t${scanner.getTextPos()}\t${length}\t${JSON.stringify(message.message)}\t${JSON.stringify(arg0 ?? null)}`);
+    scanner.setOnError((message, length, arg0: string | number | undefined) => {
+        console.log(`error\t${message.code}\t${message.category}\t${scanner.getTextPos()}\t${length}\t${escapeJsonString(message.message)}\t${formatDiagnosticArgument(arg0)}`);
     });
     for (const path of programArguments()) {
-        console.log(`pass\t${skipTrivia}\t${JSON.stringify(path)}`);
+        console.log(`pass\t${skipTrivia}\t${escapeJsonString(path)}`);
         const input = readTextFile(path);
         if (input.kind === 'Error') {
             panic(input.message);
@@ -22,7 +63,7 @@ for (const skipTrivia of [true, false]) {
         scanner.setText(input.text);
         while (true) {
             const kind = scanner.scan();
-            console.log(`${tokenNames[kind] ?? panic('missing SyntaxKind name')}\t${scanner.getTokenFullStart()}\t${scanner.getTokenStart()}\t${scanner.getTokenEnd()}\t${scanner.getTokenFlags()}\t${JSON.stringify(scanner.getTokenText())}\t${JSON.stringify(scanner.getTokenValue() ?? null)}`);
+            console.log(`${tokenNames[kind] ?? panic('missing SyntaxKind name')}\t${scanner.getTokenFullStart()}\t${scanner.getTokenStart()}\t${scanner.getTokenEnd()}\t${scanner.getTokenFlags()}\t${escapeJsonString(scanner.getTokenText())}\t${escapeOptionalString(scanner.getTokenValue())}`);
             if (kind === SyntaxKind.EndOfFileToken) {
                 break;
             }

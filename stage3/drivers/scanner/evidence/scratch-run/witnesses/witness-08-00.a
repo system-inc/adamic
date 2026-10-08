@@ -1,0 +1,4 @@
+interface Message { flag?: boolean; }
+function diag(flag?: boolean) { return { flag }; }
+const value = diag() as Message;
+console.log("ok");
