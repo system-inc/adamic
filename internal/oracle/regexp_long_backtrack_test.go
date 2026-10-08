@@ -1,14 +1,8 @@
 package oracle
 
 import (
-	"bytes"
-	"context"
-	"errors"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
-	"syscall"
 	"testing"
 	"time"
 
@@ -16,14 +10,14 @@ import (
 )
 
 // The same fixture registry shape, counted by the ordinary counts gate, but run
-// below with a longer deadline. Ordinary fixtures retain their one-minute bound.
+// below with a three-minute CPU budget and a separate generous hang cap.
 var slowRegExpFixtures = []struct {
 	path            string
 	lowers, checked bool
 }{{"internal/oracle/testdata/regexp_native_long_backtrack.a", true, false}}
 
 // Not parallel: the long failing search deliberately exercises backtracking;
-// sanitizer contention must not turn its leak check into a timeout.
+// avoid multiplying the expensive backtracking and sanitizer work.
 func TestRegExpLongBacktrackNode(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, slowRegExpFixtures[0].path))
 	if err != nil {
@@ -71,26 +65,16 @@ func TestRegExpLongBacktrackNode(t *testing.T) {
 
 func longRegExpRun(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.Env = append(os.Environ(), environment...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	start := time.Now()
-	err := command.Run()
-	if ctx.Err() != nil {
-		t.Fatalf("long regex exceeded 3m: %v", ctx.Err())
+	budget := 3 * time.Minute
+	// leaks is an external tool; the release child was CPU-checked above.
+	if name == "leaks" {
+		budget = 0
 	}
-	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
+	result, cpu, err := regExpCPUCommand(environment, name, arguments, 5*time.Minute, budget)
+	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("%s %v: %s, exit %d", filepath.Base(name), environment, time.Since(start), command.ProcessState.ExitCode())
-	result := run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}
+	t.Logf("%s %v: CPU %s, exit %d", filepath.Base(name), environment, cpu, result.exitCode)
 	rememberRun(t, result)
 	return result
 }

@@ -23,12 +23,13 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 		t.Fatalf("TypeScript pin: %q %v", data, err)
 	}
 	files := []string{}
+	upstream := excludedUpstreamInputs(t, root)
 	for _, base := range []string{root, source + "/src/compiler"} {
 		err := filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if entry.IsDir() && (entry.Name() == ".git" || path == filepath.Join(root, "cohere")) {
+			if entry.IsDir() && (entry.Name() == ".git" || path == filepath.Join(root, "cohere") || path == upstream) {
 				return filepath.SkipDir
 			}
 			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {

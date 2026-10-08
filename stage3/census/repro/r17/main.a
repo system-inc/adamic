@@ -1,1 +1,2 @@
+// a-check: type error TS2375
 interface Slot { value?: number; } const slot: Slot = {value: undefined}; console.log(String(slot.value));

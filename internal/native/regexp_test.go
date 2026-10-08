@@ -159,17 +159,13 @@ int main(int argc,char **argv) {
 	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
 	for _, arguments := range [][]string{nil, {"unlimited"}} {
-		command := exec.CommandContext(ctx, binary, arguments...)
-		command.Env = os.Environ()
-		// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it, so the leak half
-		// of this check runs on Linux, the gate of record.
+		environment := ""
+		// LeakSanitizer is Linux's; macOS AddressSanitizer rejects this option.
 		if goruntime.GOOS == "linux" {
-			command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=1")
+			environment = "ASAN_OPTIONS=detect_leaks=1"
 		}
-		output, err := command.CombinedOutput()
+		output, err := runRegExpChild(t, binary, arguments, environment, 5*time.Minute, 2*time.Minute)
 		if err != nil {
 			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
 		}
@@ -220,7 +216,7 @@ func TestRegExpBytecodeRandomNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, "node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
@@ -263,11 +259,7 @@ int main(int argc,char **argv) {
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, binary)
-	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-	output, err := command.CombinedOutput()
+	output, err := runRegExpChild(t, binary, nil, "ASAN_OPTIONS=detect_leaks=0", 5*time.Minute, 10*time.Second)
 	var exit *exec.ExitError
 	if !errors.As(err, &exit) || exit.ExitCode() != 70 || !bytes.Contains(output, []byte("regexp: instruction step limit exceeded")) {
 		t.Fatalf("native catastrophic backtracking: exit=%v output=%s", err, output)

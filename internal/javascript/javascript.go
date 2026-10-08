@@ -745,6 +745,12 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "errorCaptureStack" {
+			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
+		}
+		if expression.Method == "errorReadStack" {
+			return "(" + e.value(expression.Arguments[0]) + ")['stack']"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {

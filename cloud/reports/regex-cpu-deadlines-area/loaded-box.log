@@ -1,0 +1,5 @@
+=== RUN   TestRegExpNativeStepLimit
+    regexp_test.go:262: regexp child CPU=3.817ms budget=10s wall-cap=5m0s
+--- PASS: TestRegExpNativeStepLimit (0.41s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.441s
