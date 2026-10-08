@@ -1,0 +1,6 @@
+// Ledger D218: isolated receiver/index shape, no manual presence guard.
+type Item = { kind: number };
+const values: Item[] = ABSENT ? [] : [{ kind: 7 }];
+const i = 0;
+const value: Item = values[i];
+console.log(typeof value === "undefined" ? "undefined" : "present");

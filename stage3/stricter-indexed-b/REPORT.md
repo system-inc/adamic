@@ -1,0 +1,162 @@
+Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 27 sites proven.
+Base 390af985; latest preceding commit e852f795a63d1be6c3d73547f8880d77bf6e2e1f; branch codex/stricter-indexed-b only.
+Complete witness gate and filtered oracle: 27 proven, 0 blocked, 0 remaining; outputs below.
+Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
+Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
+
+## Scope and assumptions
+
+The exact 27 rows D195 through D221 are retained in sites.json from a1a16427
+stage3/ledger/checker-259/rows.csv. All receivers are arrays. Read shapes were
+traced through the referenced cohere/TypeScript submodule source at
+tsc/testdata/fixtures/compiler/transformers/generators.ts; no implementation
+was copied from cohere. The fixtures are independently written minimal shapes.
+Statement and declaration arrays use small object elements; clause and CodeBlock
+arrays preserve discriminated object unions. readonly array receivers are preserved.
+Label is number; labelNumbers is number[][]; blockOffsets is number[].
+
+D212 and D220 originally retained the stock receiver non-null assertion !.
+The first runs observed its exact pre-emission refusal: Adamic 0.1 refuses
+the non-null assertion !; write ?? panic('why it can't be missing'), or narrow
+and handle the missing case. This is syntax, not an unsupported array
+representation. Final minimal witnesses use guaranteed-present array receivers
+and omit the redundant assertion while retaining [j] and [blockIndex]. Node
+erases !, so this reduction preserves the indexed read runtime shape. It does
+not prove the complete original source, nor implement non-null assertions.
+
+D196/D197 share variables[i]. D200 uses one caseBlock.clauses[i] read;
+D201-D205 and D207/D208 share another such read. D213/D214 share blockStack[i].
+These are 27 ledger diagnostic rows corresponding to 19 unique upstream reads.
+Each row has an isolated witness so a prior trap cannot hide its observation.
+Minimal witnesses stop at the read, before downstream property uses, allowing
+source Node to observe undefined rather than throw on a later dereference.
+
+The specific .ts witness requirement supersedes the general new-.a convention.
+Following the base worker, tracked .ts.txt templates materialize as main.ts in
+a temporary project with its own tsconfig. noUncheckedIndexedAccess is omitted
+(project default false); strictNullChecks and strictFunctionTypes stay enabled.
+Each source is run directly through Node 24 type stripping, outside Adamic.
+
+Present input prints present; an empty receiver with the same numeric index prints
+undefined on source Node. Both have empty stderr and exit 0. Native release and
+ASan/UBSan and the JavaScript backend must match present input. For absent input
+all backends must produce empty stdout, exit 70, and exactly
+`adamic: panic: indexed read is absent: <main.ts>:<read line>:<read column>\n`.
+The expected location is calculated independently from source text, and the
+same location must appear in the inserted guard. The actual --explain-checks CLI
+must list exactly one checked indexed-presence site, count one, and trust zero.
+
+## Site results
+
+| Row | Upstream line | Source expression | Receiver | Result |
+|---|---:|---|---|---|
+| D195 | 1283 | `statements[i]` | object array | proven, erase-panic caught |
+| D196 | 1370 | `variable.initializer` | object array | proven, erase-panic caught |
+| D197 | 1374 | `transformInitializedVariable(variable)` | object array | proven, erase-panic caught |
+| D198 | 1684 | `initializer.declarations` | object array | proven, erase-panic caught |
+| D199 | 1729 | `initializer.declarations` | object array | proven, erase-panic caught |
+| D200 | 1866 | `clause.kind` | object union array | proven, erase-panic caught |
+| D201 | 1880 | `clause.kind` | object union array | proven, erase-panic caught |
+| D202 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
+| D203 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
+| D204 | 1887 | `clause.expression` | object union array | proven, erase-panic caught |
+| D205 | 1887 | `clause.expression` | object union array | proven, erase-panic caught |
+| D206 | 1889 | `clauseLabels[i]` | number[] | proven, erase-panic caught |
+| D207 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
+| D208 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
+| D209 | 1911 | `clauseLabels[defaultClauseIndex]` | number[] | proven, erase-panic caught |
+| D210 | 1918 | `clauseLabels[i]` | number[] | proven, erase-panic caught |
+| D211 | 1919 | `caseBlock.clauses` | object union array | proven, erase-panic caught |
+| D212 | 2446 | `supportsLabeledBreakOrContinue(containingBlock)` | object union array | proven, erase-panic caught |
+| D213 | 2469 | `supportsLabeledBreakOrContinue(block)` | object union array | proven, erase-panic caught |
+| D214 | 2472 | `supportsUnlabeledBreak(block)` | object union array | proven, erase-panic caught |
+| D215 | 2480 | `supportsUnlabeledBreak(block)` | object union array | proven, erase-panic caught |
+| D216 | 2499 | `supportsUnlabeledContinue(block)` | object union array | proven, erase-panic caught |
+| D217 | 2507 | `supportsUnlabeledContinue(block)` | object union array | proven, erase-panic caught |
+| D218 | 2880 | `withBlock.expression` | object array | proven, erase-panic caught |
+| D219 | 2951 | `labelNumbers[labelNumber]` | number[][] | proven, erase-panic caught |
+| D220 | 2983 | `blockOffsets![blockIndex]` | number[] | proven, erase-panic caught |
+| D221 | 2984 | `block` | object union array | proven, erase-panic caught |
+
+## Commands, setup and limits
+
+All test output is written to log files, never piped. Current proof logs:
+
+- `/tmp/stricter-indexed-b-group1-final.log`
+- `/tmp/stricter-indexed-b-group2-final.log`
+- `/tmp/stricter-indexed-b-group3-final.log`
+- `/tmp/stricter-indexed-b-group4-final.log`
+- `/tmp/stricter-indexed-b-group5-final.log`
+- `/tmp/stricter-indexed-b-group6-final.log`
+- `/tmp/stricter-indexed-b-group7-final.log`
+
+Setup: `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`
+with `/workspace/adamic-tools/env.sh` sourced for builds and tests. nproc=5.
+
+```text
+setup: go ready (0.086s)
+setup: node ready (0.090s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.465s)
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.691s
+setup: markdown dependencies ready (0.895s)
+setup: submodules ready (158.967s)
+setup: go build ready (412.702s)
+setup: test binaries deferred (use --warm-tests) (412.817s)
+setup: build cache warm (412.818s)
+setup: build-flags commit=390af985caf2a81edb239cdf5e3238add50a7fcd nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.08 0.02 0.01 1/137 712 load-after=14.24 8.47 3.55 3/195 3896
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (412.842s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.G56QUY
+```
+
+The first test attempt preceded submodule checkout and failed with missing
+cohere/TypeScript/tsc/go.mod. It was rerun after checkout completed.
+No compiler implementation files are edited. Unsupported receivers are
+reported with the observed refusal; this unit does not extend them.
+The full repository gate is not claimed. The final focused gate and vet
+results are appended after the last group.
+
+## Final verification
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage3/stricter-indexed-b -count=1 -timeout 10m -v > /tmp/stricter-indexed-b-final-witnesses.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage3/stricter-indexed-b ./internal/oracle -run 'TestGeneratorWitnesses|TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/stricter-indexed-b-final-gate.log 2>&1
+go vet ./stage3/stricter-indexed-b > /tmp/stricter-indexed-b-vet.log 2>&1
+gofmt -l stage3/stricter-indexed-b/witness_test.go
+git diff --check
+```
+
+The complete witness package proves all 27 with no skips. Each present
+and absent case runs source Node, backend Node, native release and native
+ASan/UBSan. All 27 independently built erase-panic mutants exit 0:
+the exact stderr/exit-70 contract catches every one. Each witness also
+checks the actual CLI location listing, count one and trusted zero.
+
+The combined slash-filtered command runs the four existing oracle fixtures;
+its slash filter does not run the generator subtests. The separate complete
+witness-package command above is the final 27-site gate. Oracle cache
+counters report native hits=0/misses=10 and node hits=0/misses=8.
+
+```text
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-b	42.915s
+ok  	github.com/system-inc/adamic/internal/oracle	3.417s
+vet exit=0, no diagnostics
+gofmt: no output
+git diff --check: no output
+```
+
+Completion covers the requested minimal indexed-read shapes. No native
+whole-program completion date is established: original receiver ! syntax
+still refuses, and full adapted-TypeScript compilation was not attempted.
+
+## Pushed checkpoints
+
+```text
+4ea89530 Add generator indexed witnesses with isolated project ts fixtures
+e3b48cfe Record runtime proof for five clause array rows
+bff31ede Record clause and numeric label indexed proofs through D209
+0f3ebb3a Record block array proofs and the D212 non-null refusal
+a3d71f97 Prove remaining block and nested array reads through D219
+e852f795 Complete all generator indexed read shape witnesses
+```
