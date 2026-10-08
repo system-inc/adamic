@@ -1,0 +1,64 @@
+[
+  {
+    "group": "hir",
+    "path": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/always_invalidating_test.go",
+    "line": 39,
+    "source": "function declaredValue() { return 1; }"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.handle-unexpected-exception-pipeline.ts",
+    "line": 3,
+    "source": "function Component() {}"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.hook-property-load-local-hook.js",
+    "line": 1,
+    "source": "function useFoo() {}"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hoist-function-decls.js",
+    "line": 3,
+    "source": "function get2() {     return 2;   }"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hoisted-function-in-unreachable-code.js",
+    "line": 6,
+    "source": "function Foo() {}"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-kitchensink.js",
+    "line": 65,
+    "source": "function t() {}"
+  },
+  {
+    "group": "upstream",
+    "path": "cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-valid-functiondecl-hoisting.tsx",
+    "line": 15,
+    "source": "function bar() {     return 42;   }"
+  },
+  {
+    "group": "probe",
+    "source": "function Empty() {}"
+  },
+  {
+    "group": "probe",
+    "source": "function NumberValue() { 1; 2; return 3; }"
+  },
+  {
+    "group": "probe",
+    "source": "function useBoolean() { false; return true; }"
+  },
+  {
+    "group": "probe",
+    "source": "function Nil() { return null; }"
+  },
+  {
+    "group": "probe",
+    "source": "function Bare() { return; }"
+  }
+]
