@@ -5,4 +5,5 @@ Licensed under the Apache License, Version 2.0.
 Upstream: https://github.com/microsoft/TypeScript
 Commit: 050880ce59e30b356b686bd3144efe24f875ebc8
 The complete license is reproduced in LICENSE-TypeScript.txt.
-Original test bytes are retained in corpus/*/input.a and reference.errors.txt.
+Original test bytes are retained under their upstream filenames in corpus/*/
+and in reference.errors.txt.

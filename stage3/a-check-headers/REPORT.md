@@ -1,95 +1,123 @@
-Retained 51 first-line expectations: 13 refusals and 38 type errors; removed exactly 218 corpus headers.
-Base 855d114e; original commits 6d75652e and c59f9ab5; correction is a new commit on codex/stage3-a-check-headers.
-Whole stage3: 675 files, 214 accepted, 243 findings and 218 awaiting a corpus exemption; audit.py passes.
-Historical 539 header mutants caught; a fresh corpus-header mutant is caught by the provenance audit.
-No developer-tools exemption implemented or full repository gate run; the remaining 51 headers are unchanged.
+Renamed 300 corpus inputs with git mv to exact upstream .ts names; bytes and hash pins unchanged.
+Retained the other 51 headers; added 17 host TS2591 headers: 68 total, 13 refusal and 55 type-error.
+Node tsc goldens pass 301/301; corpus audit passes; a-check scans 375 inputs, accepts 201 and lists 174 findings.
+Driver output/provenance mutants, 34 host-header mutants and the host source-span mutant are caught.
+Host check.py fails on recorded diagnostic provenance; source-audit.cjs passes. No full repository/native tsc gate.
 
 # Stage 3 a-check headers
 
-## Method and observations
+## Current ruling and changes
 
-Fetched current main and created the requested branch. Read CLAUDE.md and its prerequisite documents, then the fast-gate implementation at fbac28c6 before the scan. Setup used `export GOPROXY='https://proxy.golang.org|direct'`, `bash cloud/setup.sh > /tmp/stage3-a-setup.log 2>&1`, and `source /workspace/adamic-tools/env.sh`. Setup succeeded without a workaround. `nproc=5`, CPU quota four, Go 1.27.1, Node 24.19.0, clang 20.1.8. Complete timing lines are in [logs/setup.log](logs/setup.log): Node 0.021s; Go 0.032s; clang 0.228s; markdown install step 1.660s, ready 1.732s; submodules 317.574s; Go build 479.572s; tests deferred 479.676s; cache warm 479.678s; done 479.714s.
+The 21:50 @system_adamic ruling supersedes the proposed corpus exemption. Upstream compiler tests are TypeScript data, not authored Adamic programs. All **300** corpus inputs were renamed with `git mv` from input.a to the exact basename in selection.json's upstream `source`. This selection contains 300 `.ts` files and no `.tsx` or `.d.ts` files. Every renamed source is byte-identical both to its existing SHA-256 pin and to the source in the pinned upstream checkout, commit 050880ce59e30b356b686bd3144efe24f875ebc8. BOMs, CRLFs and upstream comments are intact. [corpus-renames.json](corpus-renames.json) lists every old/new path.
 
-The unchanged `Gate.aCheck` method was imported from `git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py`, with a harness implementing only its process/build/log interfaces. It builds `./cmd/adamic`, then calls `adamic c PATH` for every `.a` under stage3. Each process completed; full stderr and return codes for every baseline and final outcome are retained in [outcomes.json](outcomes.json).
+selection.json retains its upstream source paths and unchanged byte pins, and now records each local source as `path`. The importer, audit, driver and provenance mutants use those names. The audit also validates that every local path has the exact upstream filename. The shell wrapper needs no change because it delegates to the updated driver. Goldens, expected outputs, baseline files and baseline hashes are unchanged. The two authored tiny negative programs retain their a-check headers; the driver omits those first-line gate comments only when materializing the tiny project, preserving the existing diagnostic line positions. Corpus source bytes are not altered or stripped of gate metadata.
 
-Main contains 675 files, rather than the historical 401. Baseline: **95 clean, 68 not-yet, 162 refused, 350 type errors**. The gate labels both clean and not-yet as `checked`. Current diagnostic categories are identical. There are **13 refusal headers, 38 type-error headers, 243 findings, 218 files awaiting a corpus exemption, and zero unclassified files**. The 243 findings comprise 149 refusals and 94 type errors. After restoring the corpus, the raw whole-tree gate exits 1 and says `a-check failed for 461 files`: exactly the 243 findings plus the 218 restored corpus inputs. The same gate over the other 214 files exits 0. No exemption was implemented in developer tools by this unit.
+All **51** existing header files are byte-identical to the previous branch head e1fe34ce. Exactly **17** host fixtures whose measured first a-check diagnostic is TS2591 gained `// a-check: type error TS2591` above their existing comments. The other eight host fixtures start with TS2345 or TS2503 and remain findings. No text below the inserted host header changed. No developer-tools exemption or compiler change was made.
 
-The user corrected the initial classification: the corpus files are verbatim upstream TypeScript test data, pinned by selection.json and exact diagnostic positions, not authored Adamic programs. Exactly the 218 corpus headers added in 6d75652e were removed. Every restored file matches its original SHA-256; the other 51 header files are byte-identical to c59f9ab5. All 300 corpus inputs now pass the existing provenance/expectation audit.
+## Counts and a-check
 
-## Classification decisions
+The exact pinned Gate.aCheck method at fbac28c62493f27a788edc02a18bc8edb68de5da was rerun after all header mutants were restored. It scans **375** `.a` files under stage3; **zero** corpus inputs are selected. Results: **81 clean, 52 not-yet, 135 refused, 107 type errors**. Clean and not-yet both count as checked. There are **13 refusal headers, 55 type-error headers, 174 findings and zero unclassified files**. The raw scan exits 1 and lists exactly those 174 findings (122 refusals, 52 type errors). The identical gate over the other **201** files exits 0. No failures are suppressed in the gate.
 
-Each failing file's purpose, source documents and diagnostic are recorded separately in outcomes.json. A header is inserted only where the current refusal/code reproduces the documented negative case. Census reproducers get their documented TS code or the observed refusal phrase. The 218 previously marked negative tsc corpus inputs are now restored verbatim and listed as awaiting a corpus exemption. Two authored tiny negative checker controls retain their headers. Four record CLI inputs deliberately expect unresolved paths TS2307/exit 2. Seven ledger files are explicit checker-error/diagnostic-isolation controls.
+The compact table groups cases/probes under their owning directory. [directories.md](directories.md) gives every exact parent directory. The 300 renamed inputs are counted separately from a-check inputs.
 
-Executable fixtures and their supporting modules retain their source unchanged, including future runtime panic cases. Parser/scanner driver probes and memoize candidates are runnable controls. The optional-widening stock-checker/analyzer witnesses remain findings. Six historical iterator/Set ledger witnesses remain findings because the dated library-fix rerun says their declaration errors should be removed. Their current standalone errors must stay visible. The repeated-destructuring source explicitly isolates a checker diagnostic, so its documented TS2488 gets a header; that does not claim the historical compiler-tree discrepancy remains.
-
-The 60 clean tsc corpus controls have 28 passes and 32 findings. Of 240 negative cases, 218 reproduce a baseline code, 20 fail differently and remain findings, and two pass the stage-0 front end under its own options. The latter two do not get a failure header; stage 0 does not run every embedded upstream option. Full recorded diagnostics can contain additional errors: the exact gate requires the named code/rule as a substring in the correct outcome category, rather than equality of the entire diagnostic list. No inference of native readiness follows from a not-yet pass.
-
-## Counts by directory
-
-This compact table groups census reproducer subdirectories, corpus cases, fixture cases and driver probes by their owning directory. [directories.md](directories.md) supplies counts for **every exact parent directory**, without aggregation.
-
-| Directory | Refused headers | Type-error headers | Findings | Awaiting a corpus exemption | Unclassified | Pass without header |
+| Directory | Refusal headers | Type-error headers | Findings | Pass without header | Renamed corpus | Unclassified |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | stage3/adapt/48-memoize | 0 | 0 | 4 | 0 | 0 | 0 |
 | stage3/adapt/75-optional-widening | 0 | 0 | 2 | 0 | 0 | 0 |
-| stage3/census/repro | 13 | 25 | 0 | 0 | 0 | 16 |
-| stage3/drivers/parser | 0 | 0 | 5 | 0 | 0 | 4 |
-| stage3/drivers/scanner | 0 | 0 | 16 | 0 | 0 | 14 |
-| stage3/drivers/tsc | 0 | 2 | 52 | 218 | 0 | 31 |
-| stage3/fixtures/assertions | 0 | 0 | 18 | 0 | 0 | 2 |
-| stage3/fixtures/cycles | 0 | 0 | 25 | 0 | 0 | 18 |
-| stage3/fixtures/enums | 0 | 0 | 3 | 0 | 0 | 11 |
-| stage3/fixtures/host | 0 | 0 | 25 | 0 | 0 | 0 |
+| stage3/census/repro | 13 | 25 | 0 | 16 | 0 | 0 |
+| stage3/drivers/parser | 0 | 0 | 5 | 4 | 0 | 0 |
+| stage3/drivers/scanner | 0 | 0 | 16 | 14 | 0 | 0 |
+| stage3/drivers/tsc | 0 | 2 | 0 | 1 | 300 | 0 |
+| stage3/fixtures/assertions | 0 | 0 | 18 | 2 | 0 | 0 |
+| stage3/fixtures/cycles | 0 | 0 | 25 | 18 | 0 | 0 |
+| stage3/fixtures/enums | 0 | 0 | 3 | 11 | 0 | 0 |
+| stage3/fixtures/host | 0 | 17 | 8 | 0 | 0 | 0 |
 | stage3/fixtures/namespaces | 0 | 0 | 12 | 0 | 0 | 0 |
-| stage3/fixtures/nested-functions | 0 | 0 | 2 | 0 | 0 | 9 |
-| stage3/fixtures/objects | 0 | 0 | 16 | 0 | 0 | 9 |
-| stage3/fixtures/predicates | 0 | 0 | 10 | 0 | 0 | 1 |
-| stage3/fixtures/records | 0 | 4 | 35 | 0 | 0 | 30 |
-| stage3/fixtures/runner | 0 | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/taste | 0 | 0 | 12 | 0 | 0 | 14 |
-| stage3/ledger/checker-259 | 0 | 7 | 6 | 0 | 0 | 1 |
-| **Total** | 13 | 38 | 243 | 218 | 0 | 163 |
+| stage3/fixtures/nested-functions | 0 | 0 | 2 | 9 | 0 | 0 |
+| stage3/fixtures/objects | 0 | 0 | 16 | 9 | 0 | 0 |
+| stage3/fixtures/predicates | 0 | 0 | 10 | 1 | 0 | 0 |
+| stage3/fixtures/records | 0 | 4 | 35 | 30 | 0 | 0 |
+| stage3/fixtures/runner | 0 | 0 | 0 | 3 | 0 | 0 |
+| stage3/fixtures/taste | 0 | 0 | 12 | 14 | 0 | 0 |
+| stage3/ledger/checker-259 | 0 | 7 | 6 | 1 | 0 | 0 |
+| **Total** | 13 | 55 | 174 | 133 | 300 | 0 |
 
-## Verification and mutants
+## Node driver and provenance verification
 
-The 51 remaining edited sources equal `header + LF + original bytes from origin/main`; all other 624 `.a` files are byte-identical to origin/main. This correction changes exactly 218 `.a` files, each by deleting only the first header line; all 51 retained header files are byte-identical to the previous branch head c59f9ab5. Existing comments, BOMs and CRLF source bodies are preserved below the inserted line. `git diff --check` passes. No compiler or runtime source changed.
-
-The original pass ran actual temporary first-line mutants, restored in finally blocks. The following results are historical; corpus headers tested then have now been removed. [mutants.json](mutants.json) lists every mutant and the exact gate failure that caught it:
-
-* 269 wrong-code/rule headers: TS999999 or MUTANT_NONEXISTENT_RULE; each singleton gate exits 1.
-* 269 deleted headers: each intentional failure becomes an unexpected failure; each gate exits 1.
-* One expected-error header on green-control.a: the actual checked outcome is rejected; gate exits 1.
-
-All **539/539** were caught in the original pass. This includes 103 checks for the retained 51 headers and green control. The correction reran the whole-tree and 214-file checks after restoring corpus bytes. A fresh temporary header on 061_constEnumErrors/input.a makes audit.py exit 1 on the source hash; restoring the bytes makes the audit exit 0 again. [logs/mutants.log](logs/mutants.log) records elapsed time.
-
-The original pass ran `go test ./internal/oracle -count=1 -v -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^functions[.]a$' -timeout 10m > /tmp/stage3-a-check/oracle-functions.log 2>&1` passes the actual functions fixture, comparing Node, JavaScript backend, native release and sanitized native output (11.677s). An initial shorter subtest filter matched no tests; its log is retained and is not counted as coverage. No full repository gate, entire Node fixture suite, or compiler semantic mutant run is claimed.
-
-## Corpus provenance restored; exemption pending
-
-`python3 stage3/drivers/tsc/audit.py` now exits **0** and prints `PASS provenance, 300 cases, 60 clean, baseline summaries, headers, golden bytes and exits`. The initial failure after corpus header insertion is retained as historical evidence in logs/provenance-after.log. All 218 affected inputs are restored byte-for-byte, including original BOMs, comments and CRLFs, so their source hashes and materialized source positions are restored. selection.json, materialization code, baselines and goldens were not changed.
-
-A fresh first-line comment mutant in 061_constEnumErrors/input.a is caught solely by the audit's source-hash assertion; its log is retained in logs/corpus-provenance-mutant.log. The mutant is restored before the final passing audit. The new byte-verification log proves exactly 218 first-line removals and all other 51 header files unchanged. No corpus exemption was implemented here: these 218 inputs await the developer-tools change, and the unmodified a-check still rejects them. The four negative record CLI inputs retain their original branch headers; their complete CLI golden suite was not rerun.
-
-## Reproduce the exact local check
-
-Run from the repository root after sourcing setup's env.sh. Save this harness to `/tmp/stage3-a-check/run.py`, then run the commands below. The harness exits with the actual a-check exit code. The pinned gate source is available by fetching devtools/fast-gate if necessary.
+The upstream checkout was verified at the pinned commit. A fresh scratch tree was built with the current registered stage3 adaptations using `STAGE3_CACHE=/tmp/stage3-ruling/cache bash stage3/apply.sh /tmp/stage3-ruling/adapted`, then `npm ci --prefix /tmp/stage3-ruling/adapted --ignore-scripts --no-audit --no-fund` and `npx hereby tsc --no-typecheck` inside that tree. This targeted Node bundle is a runtime oracle; it does not claim the full adapted compiler's typechecking or native compilation succeeds. Build/apply logs are retained.
 
 ```sh
-mkdir -p /tmp/stage3-a-check
+source /workspace/adamic-tools/env.sh
+python3 stage3/drivers/tsc/audit.py > /tmp/stage3-ruling/corpus-audit.log 2>&1
+TSC_RESULTS=/tmp/stage3-ruling/node-goldens stage3/drivers/tsc/run.sh node /tmp/stage3-ruling/adapted/built/local/tsc.js > /tmp/stage3-ruling/node-goldens.log 2>&1
+python3 stage3/drivers/tsc/mutants.py node /tmp/stage3-ruling/adapted/built/local/tsc.js > /tmp/stage3-ruling/driver-mutants.log 2>&1
+```
+
+The provenance audit exits **0**: `PASS provenance, 300 cases, 60 clean, baseline summaries, headers, golden bytes and exits`. The ordinary Node driver exits **0**, with **301/301** projects passing in **53.234s**, comparing every stdout byte, stderr byte and exit code against the unchanged goldens. The tiny project passes too, proving its preserved headers do not move materialized diagnostic positions. [logs/node-goldens-report.json](logs/node-goldens-report.json) records the command and count.
+
+The driver mutant suite exits 0 and catches three independent golden mutants (diagnostic column, stderr, exit) and nine provenance mutants (source hash, baseline hash, baseline summary, expected stderr, expected exit, case population, header options, new source-path guard, baseline codes). Its Node-forwarder smoke proves native-slot plumbing only. No actual native tsc run is claimed.
+
+All 17 new host headers were separately mutated to TS999999 and removed, for **34/34** catches by the unchanged gate. Each was restored in a finally block. [host-header-mutants.json](host-header-mutants.json) records every exact catcher. Earlier header-mutant logs remain historical evidence; no corpus header remains in the current tree.
+
+## Host source audits and provenance failures
+
+Both audit programs and status.json were left unchanged. The actual source-span audit was run before and after the headers:
+
+```sh
+NODE_PATH=/workspace/adamic/stage3/api/node_modules node stage3/fixtures/host/source-audit.cjs /tmp/stage3-ruling/upstream > /tmp/stage3-ruling/host-source-audit-after.log 2>&1
+python3 stage3/fixtures/host/check.py --mutants --logs /tmp/stage3-ruling/host-check-after > /tmp/stage3-ruling/host-check-after.log 2>&1
+```
+
+source-audit.cjs exits **0** both times: `pass: 124 upstream function and method spans retain their tokens`; its SHA256-to-SHA1 mutant is caught. It compares parsed syntax without comments, so the new first line does not break its spans. Original upstream `From ...` provenance comments are unchanged below each header.
+
+check.py exits **1** before and after this change at `AssertionError: 01_readFile_utf8.a stage0: exact observation differs`. That fixture has no new header. The recorded diagnostic lacks the final newline and `exit status 1` emitted by the current `go run` invocation; the before-header diff proves this existing failure. The stop prevents check.py from reaching later fixtures and its --mutants phase, so that phase is not claimed to have passed.
+
+The 17 new headers additionally move source diagnostic lines by one, which breaks check.py's exact recorded stage0 provenance if it reaches those fixtures. For example, 06_fileExists.a's first TS2591 moves from **10:24 to 11:24**; its node:fs import moves from **8:22 to 9:22**. The affected files are listed below. A supplemental run applied the same exact recorded comparisons to all 25 files without modifying the audit: all **25 Node goldens match**, but all 25 current stage0 records differ, including the existing go-run trailer mismatch and the added host line shifts. [host-audit-details.json](host-audit-details.json) retains each complete diagnostic diff. These are reported failures, not refreshed expectations or weakened checks.
+
+| New host header | First diagnostic line before | After |
+| --- | --- | --- |
+| stage3/fixtures/host/06_fileExists.a | 10:24 | 10:24 |
+| stage3/fixtures/host/07_directoryExists.a | 10:24 | 10:24 |
+| stage3/fixtures/host/08_getDirectories.a | 18:22 | 19:22 |
+| stage3/fixtures/host/09_realpath.a | 6:22 | 10:21 |
+| stage3/fixtures/host/10_getModifiedTime.a | 12:41 | 10:21 |
+| stage3/fixtures/host/11_setModifiedTime.a | 4:22 | 5:22 |
+| stage3/fixtures/host/12_deleteFile.a | 4:22 | 5:22 |
+| stage3/fixtures/host/13_createDirectory.a | 10:24 | 10:22 |
+| stage3/fixtures/host/14_getCurrentDirectory.a | 5:22 | 6:22 |
+| stage3/fixtures/host/15_getExecutingFilePath.a | 5:22 | 6:22 |
+| stage3/fixtures/host/17_write.a | 4:22 | 5:22 |
+| stage3/fixtures/host/18_exit_0.a | 5:22 | 6:22 |
+| stage3/fixtures/host/19_exit_1.a | 5:22 | 6:22 |
+| stage3/fixtures/host/20_exit_2.a | 5:22 | 6:22 |
+| stage3/fixtures/host/21_createHash.a | 11:26 | 10:21 |
+| stage3/fixtures/host/22_createHash_fallback.a | 5:22 | 6:22 |
+| stage3/fixtures/host/24_useCaseSensitiveFileNames.a | 11:22 | 12:22 |
+
+## Scope, setup and history
+
+Fetched current main and created the requested branch. Read CLAUDE.md and its prerequisite documents, then the fast-gate implementation at fbac28c6 before the scan. Setup used `export GOPROXY='https://proxy.golang.org|direct'`, `bash cloud/setup.sh > /tmp/stage3-a-setup.log 2>&1`, and `source /workspace/adamic-tools/env.sh`. Setup succeeded without a workaround. `nproc=5`, CPU quota four, Go 1.27.1, Node 24.19.0, clang 20.1.8. Complete timing lines are in [logs/setup.log](logs/setup.log): Node 0.021s; Go 0.032s; clang 0.228s; markdown install step 1.660s, ready 1.732s; submodules 317.574s; Go build 479.572s; tests deferred 479.676s; cache warm 479.678s; done 479.714s.
+
+This ruling is delivered as a new descendant commit after e1fe34ce, without rebasing or rewriting history. Changes are restricted to the tsc driver, host first lines, and this report/evidence. The corpus golden streams and host audits are unchanged. Earlier scans and the initial corpus-header mistake are retained in Git history and old logs; they are not the current findings or an exemption request. No full repository gate, full upstream compiler suite, native tsc implementation run, or full host check.py mutant pass is claimed. `git diff --check` passes.
+
+## Reproduce a-check
+
+Save the harness below to /tmp/stage3-a-check/run.py. Fetch devtools/fast-gate if the pinned object is unavailable. Run from the repository root after sourcing setup's env.sh:
+
+```sh
+mkdir -p /tmp/stage3-a-check /tmp/stage3-ruling
 git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py > /tmp/stage3-a-check/gate.py
-python3 /tmp/stage3-a-check/run.py final > /tmp/stage3-a-check/final.log 2>&1
-# Expected whole-tree exit: 1, 243 findings plus 218 awaiting a corpus exemption.
+python3 /tmp/stage3-a-check/run.py ruling-final > /tmp/stage3-ruling/acheck-final.log 2>&1
+# Whole stage3: exit 1, exactly the 174 listed findings; no corpus inputs.
 python3 - <<'PYCODE'
 import json
 from pathlib import Path
 rows = json.loads(Path('stage3/a-check-headers/outcomes.json').read_text())
-Path('/tmp/stage3-a-check/accepted-paths.json').write_text(json.dumps(
-    [p for p, r in rows.items() if r['classification'] not in ('finding', 'unclassified', 'awaiting a corpus exemption')]))
+Path('/tmp/stage3-ruling/accepted-paths.json').write_text(json.dumps(
+    [p for p, r in rows.items() if r['classification'] in ('header', 'checked')]))
 PYCODE
-python3 /tmp/stage3-a-check/run.py accepted /tmp/stage3-a-check/accepted-paths.json > /tmp/stage3-a-check/accepted.log 2>&1
-# Expected exit: 0, 214 files.
-python3 stage3/drivers/tsc/audit.py > /tmp/stage3-a-check/provenance-restored.log 2>&1
-# Expected exit: 0, all 300 corpus hashes and baseline/golden consistency.
+python3 /tmp/stage3-a-check/run.py ruling-accepted /tmp/stage3-ruling/accepted-paths.json > /tmp/stage3-ruling/acheck-accepted.log 2>&1
+# Exit 0, 201 files.
 ```
 
 ```python
@@ -120,236 +148,11 @@ print(h.failure or 'PASS')
 sys.exit(h.exits["a-check"])
 ```
 
-## Awaiting a corpus exemption
+## Every remaining finding
 
-These **218** files are upstream test data restored to their pinned original bytes. Their observed stage-0 type errors remain in outcomes.json; each awaits a developer-tools corpus exemption.
+These 174 `.a` files have no expected-error header. Full current/baseline diagnostics, classification reasons and evidence paths are in [outcomes.json](outcomes.json). Renamed upstream TypeScript inputs are recorded as data and are no longer findings in a-check.
 
-| File | Disposition |
-| --- | --- |
-| stage3/drivers/tsc/corpus/061_constEnumErrors/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/062_interfaceDeclaration1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/063_didYouMeanSuggestionErrors/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/064_recursiveFunctionTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/065_callOverloads2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/066_decoratorUsedBeforeDeclaration/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/067_undefinedTypeAssignment4/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/068_emitCapturingThisInTupleDestructuring1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/069_computedPropertiesInDestructuring1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/070_assignmentToReferenceTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/071_overloadModifiersMustAgree/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/072_noImplicitAnyForIn/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/073_superNewCall1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/075_recursiveConditionalCrash4/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/076_interfacedeclWithIndexerErrors/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/077_objectLitIndexerContextualType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/078_weakType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/079_nullableFunctionError/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/081_errorForUsingPropertyOfTypeAsType03/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/083_indirectSelfReferenceGeneric/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/084_thisInModule/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/086_noImplicitSymbolToString/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/087_strictModeInConstructor/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/088_baseConstraintOfDecorator/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/089_moduleVisibilityTest3/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/090_constraintWithIndexedAccess/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/091_excessivelyLargeTupleSpread/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/092_omittedExpressionForOfLoop/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/093_typeOfEnumAndVarRedeclarations/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/095_interfaceExtendsClassWithPrivate1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/096_importDeclRefereingExternalModuleWithNoResolve/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/097_mappedTypeGenericWithKnownKeys/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/098_moduleAugmentationGlobal7_1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/100_scopeCheckExtendedClassInsidePublicMethod2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/101_noUncheckedIndexedAccessCompoundAssignments/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/102_implicitAnyDeclareTypePropertyWithoutType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/104_mixedStaticAndInstanceClassMembers/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/105_exportDefaultTypeClassAndValue/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/106_interfaceMergeWithNonGenericTypeArguments/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/107_objectFreeze/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/108_redeclareParameterInCatchBlock/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/109_classExtendsNull2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/110_importDeclWithExportModifierAndExportAssignment/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/111_circularlyReferentialInterfaceAccessNoCrash/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/112_noImplicitAnyParametersInInterface/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/113_duplicateSymbolsExportMatching/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/116_recursivelyExpandingUnionNoStackoverflow/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/117_typeUsedAsTypeLiteralIndex/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/118_anyMappedTypesError/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/119_yieldExpressionInFlowLoop/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/120_excessPropertyCheckWithSpread/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/121_switchCasesExpressionTypeMismatch/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/122_literalsInComputedProperties1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/123_narrowByEquality/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/124_this_inside-enum-should-not-be-allowed/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/125_noMappedGetSet/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/126_restInvalidArgumentType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/127_forInStatement4/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/129_enumWithPrimitiveName/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/130_inheritedStringIndexersFromDifferentBaseTypes2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/131_errorsForCallAndAssignmentAreSimilar/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/132_missingCommaInTemplateStringsArray/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/133_forInStatement2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/134_augmentedTypesEnum/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/135_narrowingTruthyObject/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/136_nestedFreshLiteral/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/137_duplicateErrorNameNotFound/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/138_voidAsOperator/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/139_typeParametersInStaticAccessors/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/140_arrayAssignmentTest5/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/141_forInStrictNullChecksNoError/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/142_spreadUnionPropOverride/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/143_enumPropertyAccessBeforeInitalisation/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/144_inheritedStringIndexersFromDifferentBaseTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/145_ClassDeclaration10/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/146_noImplicitAnyIndexing/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/147_genericMappedTypeAsClause/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/148_nonArrayRestArgs/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/149_undefinedTypeAssignment1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/150_useUnknownInCatchVariables01/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/151_normalizedIntersectionTooComplex/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/152_errorOnEnumReferenceInCondition/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/153_returnTypeTypeArguments/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/154_emitThisInSuperMethodCall/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/155_varianceReferences/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/156_misspelledNewMetaProperty/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/157_varNameConflictsWithImportInDifferentPartOfModule/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/158_incorrectRecursiveMappedTypeConstraint/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/159_objectBindingPattern_restElementWithPropertyName/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/162_instanceofWithPrimitiveUnion/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/163_ArrowFunctionExpression1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/164_staticOffOfInstance1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/165_defaultValueInConstructorOverload1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/166_inheritanceMemberFuncOverridingProperty/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/167_compareTypeParameterConstrainedByLiteralToLiteral/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/168_importedModuleAddToGlobal/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/169_spreadInvalidArgumentType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/171_extendPrivateConstructorClass/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/172_constDeclarationShadowedByVarDeclaration/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/173_selfReferencesInFunctionParameters/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/174_baseExpressionTypeParameters/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/175_propertyOrdering/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/177_readonlyTupleAndArrayElaboration/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/178_bitwiseCompoundAssignmentOperators/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/179_callOnClass/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/180_keywordExpressionInternalComments/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/181_noImplicitAnyDestructuringParameterDeclaration/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/182_propertyAccessibility1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/183_internalImportInstantiatedModuleNotReferencingInstance/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/184_bindingPatternCannotBeOnlyInferenceSource/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/185_restParamsWithNonRestParams/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/186_superInConstructorParam1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/187_deleteReadonlyInStrictNullChecks/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/188_uncalledFunctionChecksInConditional/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/189_circularModuleImports/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/190_interfaceMayNotBeExtendedWitACall/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/191_extendedInterfacesWithDuplicateTypeParameters/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/192_constructorOverloads1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/195_inheritanceMemberAccessorOverridingProperty/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/197_classExtendsInterfaceInModule/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/198_shadowPrivateMembers/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/199_getterMissingReturnError/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/200_instantiationExpressionErrorNoCrash/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/201_thisPredicateInObjectLiteral/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/202_reservedNameOnInterfaceImport/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/203_incrementOnTypeParameter/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/204_classExpressionExtendingAbstractClass/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/208_importAliasInModuleAugmentation/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/209_genericSpecializations2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/210_illegalSuperCallsInConstructor/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/211_functionParameterArityMismatch/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/212_duplicateIdentifierDifferentModifiers/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/213_inheritanceMemberPropertyOverridingAccessor/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/215_classImplementsPrimitive/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/216_functionTypeArgumentArityErrors/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/218_shorthandPropertyUndefined/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/219_classImplementsClass4/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/222_staticPrototypeProperty/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/223_instanceofOnInstantiationExpression/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/224_newFunctionImplicitAny/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/225_returnInConstructor1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/226_assigningFromObjectToAnythingElse/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/227_classFieldSuperNotAccessible/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/228_inKeywordAndUnknown/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/230_parameterPropertyInConstructor3/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/231_circularReferenceInReturnType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/232_neverNullishThroughParentheses/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/233_noImplicitAnyNamelessParameter/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/234_superCallFromClassThatHasNoBaseType1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/236_returnValueInSetter/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/237_gettersAndSettersAccessibility/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/238_typeParameterAsBaseClass/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/240_indexedAccessPrivateMemberOfGenericConstraint/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/242_constDeclarations-access2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/243_classExtendsNull3/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/245_inheritanceMemberFuncOverridingAccessor/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/246_noCrashOnMixin/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/247_missingDomElements/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/248_relationComplexityError/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/249_mergedClassNamespaceRecordCast/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/250_parseInvalidNonNullableTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/253_correctOrderOfPromiseMethod/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/254_parseTypes/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/255_keyRemappingKeyofResult/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/256_namespaceDisambiguationInUnion/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/257_generatorES6_5/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/258_decoratorMetadataGenericTypeVariableInScope/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/259_conditionalAnyCheckTypePicksBothBranches/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/261_promiseIdentity2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/262_decoratorMetadataConditionalType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/263_keyofIsLiteralContexualType/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/265_promiseIdentity/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/266_decoratorMetadataGenericTypeVariableDefault/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/267_reverseMappedTypeContextualTypeNotCircular/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/270_promiseChaining1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/271_enumUsedBeforeDeclaration/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/272_conditionalExpressionNewLine3/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/273_stringMappingAssignability/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/274_ipromise3/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/276_intersectionsAndOptionalProperties/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/277_useBeforeDeclaration_destructuring/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/278_typeOfOperator1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/279_enumAssignmentCompat/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/281_doubleUnderStringLiteralAssignability/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/282_ipromise4/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/283_errorsWithInvokablesInUnions01/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/284_exhaustiveSwitchCheckCircularity/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/285_numberAssignableToEnumInsideUnion/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/286_conditionalExpressionNewLine9/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/288_numberOnLeftSideOfInExpression/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/289_awaitedTypeStrictNull/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/290_contextuallyTypingOrOperator/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/291_nonexistentPropertyOnUnion/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/292_scopingInCatchBlocks/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/293_augmentedTypesEnum2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/294_mappedTypeWithCombinedTypeMappers/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/296_numberToString/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/297_promiseIdentityWithAny/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/298_destructuringAssignmentWithDefault2/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/299_contextualTypingOfArrayLiterals1/input.a | awaiting a corpus exemption |
-| stage3/drivers/tsc/corpus/300_errorMessageOnIntersectionsWithDiscriminants01/input.a | awaiting a corpus exemption |
-
-## Every finding
-
-Diagnostics below are the first baseline diagnostic, before header changes in imported negative dependencies. Full baseline/final stderr, classification reasons and evidence paths are in outcomes.json. None of these files was edited.
-
-| File | Outcome | Baseline diagnostic |
+| File | Outcome | Current first diagnostic |
 | --- | --- | --- |
 | stage3/adapt/48-memoize/a-explicit.a | refused | adamic: /workspace/adamic/stage3/adapt/48-memoize/a-explicit.a:1:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the fun |
 | stage3/adapt/48-memoize/a.a | refused | adamic: /workspace/adamic/stage3/adapt/48-memoize/a.a:4:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0 |
@@ -378,58 +181,6 @@ Diagnostics below are the first baseline diagnostic, before header changes in im
 | stage3/drivers/scanner/probes/scanner-lazy-text.a | refused | adamic: /workspace/adamic/stage3/drivers/scanner/probes/scanner-lazy-text.a:3:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
 | stage3/drivers/scanner/probes/scanner-state.a | type error | stage3/drivers/scanner/probes/scanner-state.a:12:28: error TS2554: Expected 1 arguments, but got 2. |
 | stage3/drivers/scanner/probes/uninitialized-non-null.a | refused | adamic: /workspace/adamic/stage3/drivers/scanner/probes/uninitialized-non-null.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
-| stage3/drivers/tsc/corpus/001_varianceCantBeStrictWhileStructureIsnt/input.a | type error | stage3/drivers/tsc/corpus/001_varianceCantBeStrictWhileStructureIsnt/input.a:19:1: error TS2322: Type 'Foo<"">' is not assignable to type 'Foo<string>'. |
-| stage3/drivers/tsc/corpus/004_metadataOfUnion/input.a | type error | stage3/drivers/tsc/corpus/004_metadataOfUnion/input.a:11:6: error TS1240: Unable to resolve signature of property decorator when called as an expression. |
-| stage3/drivers/tsc/corpus/006_arrayDestructuringInSwitch1/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/006_arrayDestructuringInSwitch1/input.a:6:7: Adamic 0.1 refuses inherited library member isArray read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-me |
-| stage3/drivers/tsc/corpus/008_library_StringSlice/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/008_library_StringSlice/input.a:3:1: Adamic 0.1 refuses inherited library member slice read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method) |
-| stage3/drivers/tsc/corpus/011_namespaces2/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/011_namespaces2/input.a:2:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/015_decoratorReferences/input.a | type error | stage3/drivers/tsc/corpus/015_decoratorReferences/input.a:10:12: error TS1206: Decorators are not valid here. |
-| stage3/drivers/tsc/corpus/016_yieldStarContextualType/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/016_yieldStarContextualType/input.a:6:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) |
-| stage3/drivers/tsc/corpus/017_binopAssignmentShouldHaveType/input.a | type error | stage3/drivers/tsc/corpus/017_binopAssignmentShouldHaveType/input.a:12:8: error TS2322: Type 'null' is not assignable to type 'string'. |
-| stage3/drivers/tsc/corpus/022_nestedBlockScopedBindings4/input.a | type error | stage3/drivers/tsc/corpus/022_nestedBlockScopedBindings4/input.a:14:13: error TS18048: 'x' is possibly 'undefined'. |
-| stage3/drivers/tsc/corpus/024_genericTypeParameterEquivalence2/input.a | type error | stage3/drivers/tsc/corpus/024_genericTypeParameterEquivalence2/input.a:13:11: error TS2345: Argument of type 'A &#124; undefined' is not assignable to parameter of type 'A'. |
-| stage3/drivers/tsc/corpus/026_functionAssignmentError/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/026_functionAssignmentError/input.a:3:1: Adamic 0.1 refuses var; use const or let |
-| stage3/drivers/tsc/corpus/027_multiExtendsSplitInterfaces1/input.a | type error | stage3/drivers/tsc/corpus/027_multiExtendsSplitInterfaces1/input.a:2:1: error TS2304: Cannot find name 'self'. |
-| stage3/drivers/tsc/corpus/028_stringMatchAll/input.a | type error | stage3/drivers/tsc/corpus/028_stringMatchAll/input.a:5:16: error TS2339: Property 'input' does not exist on type 'RegExpExecArray &#124; undefined'. |
-| stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/input.a:17:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterato |
-| stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/input.a:2:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/input.a:6:3: Adamic 0.1 refuses a decorator; write the behavior where it applies; 0.1 doesn't rewrite classes at runtime |
-| stage3/drivers/tsc/corpus/033_assignmentCompatability6/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/033_assignmentCompatability6/input.a:2:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/035_classOrder1/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/035_classOrder1/input.a:8:1: Adamic 0.1 refuses var; use const or let |
-| stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule/input.a | type error | stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule/input.a:8:16: error TS1284: An 'export default' must reference a value when 'verbatimModuleSyntax' is enabled, but 'm' only refers to a type. |
-| stage3/drivers/tsc/corpus/043_collisionThisExpressionAndLocalVarInProperty/input.a | type error | stage3/drivers/tsc/corpus/043_collisionThisExpressionAndLocalVarInProperty/input.a:17:19: error TS7006: Parameter 'callback' implicitly has an 'any' type. |
-| stage3/drivers/tsc/corpus/046_assignmentCompatForEnums/input.a | type error | stage3/drivers/tsc/corpus/046_assignmentCompatForEnums/input.a:13:24: error TS7053: Element implicitly has an 'any' type because expression of type '"one"' can't be used to index type '{}'. |
-| stage3/drivers/tsc/corpus/047_promiseWithResolvers/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/047_promiseWithResolvers/input.a:4:38: Adamic 0.1 refuses inherited library member withResolvers read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-me |
-| stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/049_decoratorMetadataNoStrictNull/input.a | type error | stage3/drivers/tsc/corpus/049_decoratorMetadataNoStrictNull/input.a:8:15: error TS2564: Property 'foo' has no initializer and is not definitely assigned in the constructor. |
-| stage3/drivers/tsc/corpus/050_unusedInterfaceinNamespace4/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/050_unusedInterfaceinNamespace4/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/051_extendedUnicodeEscapeSequenceIdentifiers/input.a | type error | stage3/drivers/tsc/corpus/051_extendedUnicodeEscapeSequenceIdentifiers/input.a:5:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'. |
-| stage3/drivers/tsc/corpus/054_contextualTyping19/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/054_contextualTyping19/input.a:2:1: Adamic 0.1 refuses var; use const or let |
-| stage3/drivers/tsc/corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib/input.a | type error | stage3/drivers/tsc/corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib/input.a:11:3: error TS7015: Element implicitly has an 'any' type because index expression is not of type 'number'. |
-| stage3/drivers/tsc/corpus/056_genericCallInferenceInConditionalTypes1/input.a | type error | stage3/drivers/tsc/corpus/056_genericCallInferenceInConditionalTypes1/input.a:32:14: error TS2304: Cannot find name 'HTMLElement'. |
-| stage3/drivers/tsc/corpus/057_localImportNameVsGlobalName/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/057_localImportNameVsGlobalName/input.a:2:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/058_contextualTypingOfConditionalExpression/input.a | type error | stage3/drivers/tsc/corpus/058_contextualTypingOfConditionalExpression/input.a:12:5: error TS2564: Property 'baz' has no initializer and is not definitely assigned in the constructor. |
-| stage3/drivers/tsc/corpus/060_numberAsInLHS/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/060_numberAsInLHS/input.a:2:3: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map |
-| stage3/drivers/tsc/corpus/080_builtinIterator/input.a | type error | stage3/drivers/tsc/corpus/080_builtinIterator/input.a:15:26: error TS2693: 'Iterator' only refers to a type, but is being used as a value here. |
-| stage3/drivers/tsc/corpus/082_unusedDestructuring/input.a | type error | stage3/drivers/tsc/corpus/082_unusedDestructuring/input.a:15:14: error TS7031: Binding element 'a' implicitly has an 'any' type. |
-| stage3/drivers/tsc/corpus/115_unusedClassesinNamespace4/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/115_unusedClassesinNamespace4/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/176_exportSpecifierReferencingOuterDeclaration1/input.a | type error | stage3/drivers/tsc/corpus/176_exportSpecifierReferencingOuterDeclaration1/input.a:3:16: error TS2664: Invalid module name in augmentation, module 'm' cannot be found. |
-| stage3/drivers/tsc/corpus/194_reachabilityChecks1/input.a | type error | stage3/drivers/tsc/corpus/194_reachabilityChecks1/input.a:40:13: error TS7006: Parameter 'x' implicitly has an 'any' type. |
-| stage3/drivers/tsc/corpus/205_noImplicitReturnsInAsync2/input.a | type error | stage3/drivers/tsc/corpus/205_noImplicitReturnsInAsync2/input.a:28:48: error TS2366: Function lacks ending return statement and return type does not include 'undefined'. |
-| stage3/drivers/tsc/corpus/214_ambientExternalModuleWithRelativeModuleName/input.a | type error | stage3/drivers/tsc/corpus/214_ambientExternalModuleWithRelativeModuleName/input.a:2:16: error TS2664: Invalid module name in augmentation, module './relativeModule' cannot be found. |
-| stage3/drivers/tsc/corpus/217_fallFromLastCase2/input.a | type error | stage3/drivers/tsc/corpus/217_fallFromLastCase2/input.a:5:18: error TS7010: 'use', which lacks return-type annotation, implicitly has an 'any' return type. |
-| stage3/drivers/tsc/corpus/221_unusedParameterProperty2/input.a | type error | stage3/drivers/tsc/corpus/221_unusedParameterProperty2/input.a:7:17: error TS7006: Parameter 'used' implicitly has an 'any' type. |
-| stage3/drivers/tsc/corpus/235_reachabilityChecks3/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/235_reachabilityChecks3/input.a:6:11: Adamic 0.1 refuses ==; use ===, which doesn't coerce |
-| stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments/input.a | type error | stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments/input.a:12:22: error TS1110: Type expected. |
-| stage3/drivers/tsc/corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib/input.a:7:23: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter |
-| stage3/drivers/tsc/corpus/252_unusedFunctionsinNamespaces3/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/252_unusedFunctionsinNamespaces3/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/260_unusedFunctionsinNamespaces6/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/260_unusedFunctionsinNamespaces6/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/264_unusedVariablesinNamespaces3/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/264_unusedVariablesinNamespaces3/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/269_unusedFunctionsinNamespaces5/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/269_unusedFunctionsinNamespaces5/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/275_unusedInterfaceinNamespace1/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/275_unusedInterfaceinNamespace1/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/280_unusedClassesinNamespace2/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/280_unusedClassesinNamespace2/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/287_unusedFunctionsinNamespaces2/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/287_unusedFunctionsinNamespaces2/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
-| stage3/drivers/tsc/corpus/295_unusedFunctionsinNamespaces4/input.a | refused | adamic: /workspace/adamic/stage3/drivers/tsc/corpus/295_unusedFunctionsinNamespaces4/input.a:5:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
 | stage3/fixtures/assertions/01_map_call.a | refused | adamic: /workspace/adamic/stage3/fixtures/assertions/01_map_call.a:7:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
 | stage3/fixtures/assertions/02_code_point_call.a | refused | adamic: /workspace/adamic/stage3/fixtures/assertions/02_code_point_call.a:7:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
 | stage3/fixtures/assertions/03_exports_field.a | refused | adamic: /workspace/adamic/stage3/fixtures/assertions/03_exports_field.a:9:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
@@ -481,25 +232,8 @@ Diagnostics below are the first baseline diagnostic, before header changes in im
 | stage3/fixtures/host/03_readFile_utf16be.a | type error | stage3/fixtures/host/03_readFile_utf16be.a:47:21: error TS2345: Argument of type 'string &#124; undefined' is not assignable to parameter of type 'string'. |
 | stage3/fixtures/host/04_readFile_missing.a | type error | stage3/fixtures/host/04_readFile_missing.a:46:17: error TS2345: Argument of type 'string &#124; undefined' is not assignable to parameter of type 'string'. |
 | stage3/fixtures/host/05_writeFile.a | type error | stage3/fixtures/host/05_writeFile.a:37:35: error TS2503: Cannot find namespace 'NodeJS'. |
-| stage3/fixtures/host/06_fileExists.a | type error | stage3/fixtures/host/06_fileExists.a:10:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/07_directoryExists.a | type error | stage3/fixtures/host/07_directoryExists.a:10:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/08_getDirectories.a | type error | stage3/fixtures/host/08_getDirectories.a:18:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/09_realpath.a | type error | stage3/fixtures/host/09_realpath.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/10_getModifiedTime.a | type error | stage3/fixtures/host/10_getModifiedTime.a:12:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/11_setModifiedTime.a | type error | stage3/fixtures/host/11_setModifiedTime.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/12_deleteFile.a | type error | stage3/fixtures/host/12_deleteFile.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/13_createDirectory.a | type error | stage3/fixtures/host/13_createDirectory.a:10:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/14_getCurrentDirectory.a | type error | stage3/fixtures/host/14_getCurrentDirectory.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/15_getExecutingFilePath.a | type error | stage3/fixtures/host/15_getExecutingFilePath.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
 | stage3/fixtures/host/16_getEnvironmentVariable.a | type error | stage3/fixtures/host/16_getEnvironmentVariable.a:18:17: error TS2345: Argument of type 'string &#124; undefined' is not assignable to parameter of type 'string'. |
-| stage3/fixtures/host/17_write.a | type error | stage3/fixtures/host/17_write.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/18_exit_0.a | type error | stage3/fixtures/host/18_exit_0.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/19_exit_1.a | type error | stage3/fixtures/host/19_exit_1.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/20_exit_2.a | type error | stage3/fixtures/host/20_exit_2.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/21_createHash.a | type error | stage3/fixtures/host/21_createHash.a:11:26: error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
-| stage3/fixtures/host/22_createHash_fallback.a | type error | stage3/fixtures/host/22_createHash_fallback.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
 | stage3/fixtures/host/23_newLine.a | type error | stage3/fixtures/host/23_newLine.a:13:17: error TS2345: Argument of type 'string &#124; undefined' is not assignable to parameter of type 'string'. |
-| stage3/fixtures/host/24_useCaseSensitiveFileNames.a | type error | stage3/fixtures/host/24_useCaseSensitiveFileNames.a:11:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try &#96;npm i --save-dev @types/node&#96; and then add 'node' to the types field in your tsconfig. |
 | stage3/fixtures/host/25_readDirectory.a | type error | stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 | stage3/fixtures/namespaces/01_builder_state.a | refused | adamic: /workspace/adamic/stage3/fixtures/namespaces/01_builder_state.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
 | stage3/fixtures/namespaces/02_jsx_names.a | refused | adamic: /workspace/adamic/stage3/fixtures/namespaces/02_jsx_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports |
@@ -595,4 +329,4 @@ Diagnostics below are the first baseline diagnostic, before header changes in im
 | stage3/ledger/checker-259/witnesses/set-copy.a | type error | stage3/ledger/checker-259/witnesses/set-copy.a:2:7: error TS2322: Type 'Set<string &#124; undefined>' is not assignable to type 'Set<string>'. |
 | stage3/ledger/checker-259/witnesses/set-shape.a | type error | stage3/ledger/checker-259/witnesses/set-shape.a:2:7: error TS2740: Type 'Omit<Set<string>, "difference" &#124; "intersection" &#124; "isDisjointFrom" &#124; "isSubsetOf" &#124; "isSupersetOf" &#124; "symmetricDifference" &#124; "union">' is missing the following properties from type 'Set<string>': union, intersection, difference |
 
-Unclassified: **0**. No file was given an expectation merely because it failed.
+Unclassified: **0**. No corpus exemption is pending.
