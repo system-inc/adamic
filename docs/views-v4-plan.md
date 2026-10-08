@@ -2,6 +2,34 @@
 
 Roadmap step 11, task #1p9ste9, under #a03mesg. This is preparation, not a landed slice.
 
+## Current integration method
+
+The compiler's net-change ruling supersedes the historical cherry-pick method
+below. For each lane, compare its pinned final tree with its actual fork point,
+apply that single diff to the slice, and resolve each conflicted file once.
+Produce one commit per lane, listing its original own commit SHAs and subjects.
+Apply the final ruled merge judgments once per touched file. Use that lane's
+tests and fixtures to verify the resolution, followed by the unchanged slice
+comparison, counts, stage3, gap, a-check and mutation sweeps.
+
+The pinned endpoints and net changed paths are in
+views-v4-evidence/net-lanes.json. The lane5 fork is 2de6d1ba; shares a, b and c
+fork at 926a1d39, share d at 18d1c9da, factory at a62778110, and code, Set receiver
+and optional host at 926a1d39. Shared ancestors are not applied a second time.
+The Set receiver lane contributes the dependency once; the code net diff retains
+f339ca8d and 2efc8949 without overwriting that reconciled receiver work.
+
+A raw final-tree diff can include other slices introduced by lane5's historical
+merges. Review shared files by V4 function/hook, not merely by pathname, and retain
+the V3 version for excluded admissions. Netting history does not waive the cyclic
+ownership, fresh_refused, graph_regions or other-slice exclusions. The net manifest
+records candidates, not an authorization to apply every listed path.
+
+Push a partial compiler/views-v4 as soon as the real V3-based compiler builds,
+even with red tests. Report exactly which lanes and resolutions it contains,
+the failed comparisons and remaining work. This supersedes the older green-only,
+single-final-push text below. A successful build is not a completed slice.
+
 ## Base and observed state
 
 The required origin/compiler/views-v3 branch is absent. Every origin check in this
@@ -148,8 +176,9 @@ never run a production comparison concurrently with a mutating runner.
    its catching fixture on V4. Historical lane logs are prerequisites, not new
    validation. Reject build failures and -Werror as mutation evidence.
 8. Confirm no cyclic-ownership admissions, other-slice changes, local platform
-   guard changes or cohere copies enter the diff. Push compiler/views-v4 exactly
-   once only after the real slice and its comparisons are green.
+   guard changes or cohere copies enter the diff. Push the partial V3-based slice
+   when it builds, reporting reds; continue the full comparison and mutation sweep
+   before calling V4 complete.
 
 New checks require their existing lane mutation runners plus independent ruled
 packing, marker, plain-Error, producer identity, overload-set membership, nested
