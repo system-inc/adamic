@@ -1,0 +1,38 @@
+{
+  "counts": {
+    "pass": 1291,
+    "fail": 0,
+    "skip": 0
+  },
+  "shards": 1287,
+  "longest": [
+    "TestMarkdownInline/shard-0000",
+    "pass",
+    11.82,
+    11.861535
+  ],
+  "over30": [],
+  "over20": [],
+  "parent": [
+    [
+      "TestMarkdownInline",
+      "pass",
+      6.42,
+      161.46745
+    ]
+  ],
+  "logs": [
+    "shards_test.go:337: counted union: 115045 cases, each id exactly once; 1287 shards",
+    "shards_test.go:460: planted mutant caught exactly once: TestMarkdownInline/shard-1247 disagreement: case 114627 mode w byte 25368 lengths 27898/27894"
+  ],
+  "box": {
+    "start": "2026-10-08 23:51:59.559605+00:00",
+    "nproc": 5,
+    "cpu_max": "400000 100000",
+    "load": [
+      2.4765625,
+      3.67138671875,
+      2.01220703125
+    ]
+  }
+}
