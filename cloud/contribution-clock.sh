@@ -7,7 +7,10 @@
 #   cloud/contribution-clock.sh            # loop: one dispatch an hour
 #   cloud/contribution-clock.sh --once     # one dispatch, then exit
 #
-# Briefs are files in cloud/contribution-clock/, used in name order, each once; the watcher
+# Briefs are files in cloud/contribution-clock/, used in name order, each once. Two optional header lines
+# at a brief's top, stripped from the prompt: "Clock-base: <ref>" (where the worker starts, default
+# origin/main; compiler's stage 3 lessons start from origin/area/compiler) and "Clock-owner: <username>"
+# (who gets each attempt's verdict and sha, as the row is written). The watcher
 # (cloud/fast-gate-watch.sh) gates the pushed branch like any worker's, and its log gives t2.
 set -uo pipefail
 
@@ -67,7 +70,7 @@ packagesOf() {
 # a restart (launchd, a reboot, an edit to this file) resumes the wait instead of losing the attempt's row.
 save() {
   local file=${state}/inflight/${target//\//_}
-  { for key in name target t0 session t1 sha first rounds answered verdict t2; do
+  { for key in name target t0 session t1 sha first rounds answered verdict t2 owner; do
       printf '%s=%q\n' "${key}" "${!key}"
     done; } > "${file}.new" && mv "${file}.new" "${file}"
 }
@@ -79,7 +82,7 @@ save() {
 #   verdict no verdict in 90 minutes pushed, and the gate never answered (a voided gate shows up here)
 #   verdict no push in 90 minutes    the worker never pushed
 follow() {
-  local file=$1 name="" target="" t0="" session="" t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" tip line excerpt packages=""
+  local file=$1 name="" target="" t0="" session="" t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" owner="" tip line excerpt packages=""
   . "${file}"
   # t1: the branch first appears on origin. Give the worker up to 90 minutes.
   while [ -z "${t1}" ] && [ $(( $(date -u +%s) - t0 )) -lt 5400 ]; do
@@ -90,6 +93,7 @@ follow() {
   if [ -z "${t1}" ]; then
     record "$(iso "${t0}"),,,${name},${target},,${session},no push in 90 minutes,,,,,0,${t0Source}"
     echo "$(date -u +%H:%M:%S) ${target}: no push in 90 minutes"
+    tell "${owner}" "Clock brief ${name}: no push in 90 minutes (branch ${target}, session ${session})."
     rm -f "${file}"
     return 0
   fi
@@ -126,22 +130,31 @@ follow() {
   [ -n "${t2}" ] && packages=$(packagesOf "${sha}")
   record "$(iso "${t0}"),$(iso "${t1}"),${t2:+$(iso "${t2}")},${name},${target},${sha},${session},${verdict},$(( t1 - t0 )),${t2:+$(( t2 - t1 ))},${t2:+$(( t2 - t0 ))},${first},${rounds},${t0Source},${packages}"
   echo "$(date -u +%H:%M:%S) ${target}: ${verdict}, $(( ${t2:-$t1} - t0 )) s from dispatch"
+  tell "${owner}" "Clock brief ${name}: ${verdict} at ${sha} (branch ${target}, ${rounds} round(s), $(( ${t2:-$t1} - t0 )) s from dispatch)."
   rm -f "${file}"
+}
+
+# A brief's owner hears each attempt's outcome, when the brief names one.
+tell() {
+  [ -n "$1" ] || return 0
+  (cd "${ahraDirectory}" && ahra os send "$1" "$2" > /dev/null 2>&1) || echo "$(date -u +%H:%M:%S) could not tell $1: $2"
 }
 
 # Starts one attempt and returns at once; its follow runs beside the next hour's dispatch, so one slow
 # attempt never swallows the hours after it. A dispatch that starts no session gets its row
 # (verdict dispatch failed) and hands its brief back for the next hour.
 dispatch() {
-  local brief name number target t0 t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" session prompt output
+  local brief name number target t0 t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" session prompt output base owner
   brief=$(ls "${here}"/cloud/contribution-clock/*.md 2>/dev/null | grep -vxF -f "${state}/used" | head -1)
   [ -n "${brief}" ] || { echo "$(date -u +%H:%M:%S) no unused brief left in cloud/contribution-clock/"; return 1; }
   echo "${brief}" >> "${state}/used"
   name=$(basename "${brief}" .md)
   number=$(( $(wc -l < "${state}/used") ))
   target=codex/clock-${number}-${name}
+  base=$(sed -n 's/^Clock-base: *//p' "${brief}" | head -1)
+  owner=$(sed -n 's/^Clock-owner: *//p' "${brief}" | head -1)
   prompt=$(mktemp)
-  { cat "${brief}"; printf '\n\nHow to deliver: start from current origin/main. When the change is done and its own checks pass, push it to the branch %s (a new branch; never main, never force) and say the full sha. Keep going on ambiguity: pick the reading most consistent with this brief, write the assumption in the commit, and ask only if the answer would change what you build. Commits: author kirkouimet <kirk@kirkouimet.com>, trailer Co-Authored-By: Ahra <ahra@ahra.ai>.\n' "${target}"; } > "${prompt}"
+  { grep -v '^Clock-\(base\|owner\): ' "${brief}"; printf '\n\nHow to deliver: start from current %s and carry only your own commits on it. When the change is done and its own checks pass (its fixture, mutant and counts, where the brief has them), push once to the branch %s (a new branch; never main, never force) and say the full sha. Keep going on ambiguity: pick the reading most consistent with this brief, write the assumption in the commit, and ask only if the answer would change what you build. Commits: author kirkouimet <kirk@kirkouimet.com>, trailer Co-Authored-By: Ahra <ahra@ahra.ai>.\n' "${base:-origin/main}" "${target}"; } > "${prompt}"
   t0=$(date -u +%s)
   echo "${t0}" > "${state}/last-dispatch"
   output=$(cd "${ahraDirectory}" && ahra ai start codex --directory "${here}" --label "clock-${number}" --fleet devtools-clock --prompt-file "${prompt}" 2>&1)
