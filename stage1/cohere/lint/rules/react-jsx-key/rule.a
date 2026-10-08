@@ -1,0 +1,159 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/jsx/ast.a';
+import { JsxArena } from '../../helpers/jsx/ast.a';
+import { elementParts } from '../../helpers/jsx/element_parts.a';
+import { attributeName } from '../../helpers/jsx/attribute_name.a';
+import { matchExactly } from '../../helpers/jsx/match_exactly.a';
+import { matchIgnoringCase } from '../../helpers/jsx/match_ignoring_case.a';
+import { attributesOf } from '../../helpers/rules-react/attributes_of.a';
+import { reactPragmaFor } from '../../helpers/rules-react/react_pragma_for.a';
+import { skipParenthesesOptional } from '../../helpers/rules-react/skip_parentheses_optional.a';
+import { sourceSliceOf } from '../../helpers/rules-react/source_slice_of.a';
+import { missingIterKey, missingIterKeyUsePrag, missingArrayKey, missingArrayKeyUsePrag, keyBeforeSpread, nonUniqueKeys } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly arena: JsxArena;
+    readonly pragma: string;
+    readonly fragments: boolean;
+    readonly beforeSpread: boolean;
+    readonly duplicates: boolean;
+    constructor(context: RuleContext, arena: JsxArena, pragma: string) {
+        this.context = context; this.arena = arena; this.pragma = pragma;
+        this.fragments = context.settings.read('checkfragmentshorthand', 'false') === 'true';
+        this.beforeSpread = context.settings.read('checkkeymustbeforespread', 'false') === 'true';
+        this.duplicates = context.settings.read('warnonduplicates', 'false') === 'true';
+    }
+    unwrap(index: number): number { return skipParenthesesOptional(this.context, index); }
+    element(index: number): boolean {
+        return ['JsxElement', 'JsxSelfClosingElement'].includes(this.context.kind(this.unwrap(index)));
+    }
+    jsx(index: number): boolean { return this.element(index) || this.context.kind(this.unwrap(index)) === 'JsxFragment'; }
+    attributes(index: number): number[] {
+        const opening = this.context.kind(index) === 'JsxElement' ? this.context.node(index).children[0] ?? -1 : index;
+        if(opening < 0) { return []; }
+        return attributesOf(this.context, elementParts(this.arena, opening).attributes);
+    }
+    named(index: number, ignoreCase: boolean): boolean {
+        const name = attributeName(this.arena.nodes, index);
+        return name.named && (ignoreCase ? matchIgnoringCase(name.name, 'key') : matchExactly(name.name, 'key'));
+    }
+    afterSpread(attributes: number[]): boolean {
+        let spread = false;
+        for(const attribute of attributes) {
+            if(this.context.kind(attribute) === 'JsxSpreadAttribute') { spread = true; }
+            else if(spread && this.named(attribute, false)) { return true; }
+        }
+        return false;
+    }
+    report(index: number, id: string, message: string): void { this.context.reportNode(index, 'react/jsx-key', id, message); }
+    suppressed(index: number): boolean {
+        const context = this.context;
+        for(let current = index; current >= 0; current = context.parent(current)) {
+            if(context.kind(current) !== 'CallExpression') { continue; }
+            const callee = context.node(current).children[0] ?? -1;
+            if(context.kind(callee) !== 'PropertyAccessExpression' || context.node(context.property(callee)).text !== 'toArray') { continue; }
+            const object = context.node(callee).children[0] ?? -1;
+            if(context.kind(object) === 'Identifier' && context.node(object).text === 'Children') { return true; }
+            if(context.kind(object) !== 'PropertyAccessExpression' || context.node(context.property(object)).text !== 'Children') { continue; }
+            const base = context.node(object).children[0] ?? -1;
+            if(context.kind(base) === 'Identifier' && context.node(base).text === this.pragma) { return true; }
+        }
+        return false;
+    }
+    collection(index: number, elements: number[], array: boolean): void {
+        const groups = new Map<string, number[]>();
+        for(const element of elements) {
+            if(!this.element(element)) { continue; }
+            const attributes = this.attributes(element);
+            const keys = attributes.filter(attribute => this.named(attribute, false));
+            if(keys.length === 0) {
+                if(array) { this.report(element, 'missingArrayKey', missingArrayKey); }
+                continue;
+            }
+            for(const key of keys) {
+                const value = this.context.node(key).children[1] ?? -1;
+                const text = value < 0 ? '' : sourceSliceOf(this.context, value);
+                let group = groups.get(text);
+                if(group === undefined) { const fresh: number[] = []; group = fresh; groups.set(text, group); }
+                group.push(key);
+                if(this.beforeSpread && this.afterSpread(attributes)) { this.report(index, 'keyBeforeSpread', keyBeforeSpread); }
+            }
+        }
+        if(this.duplicates) {
+            for(const group of groups.values()) {
+                if(group.length < 2) { continue; }
+                for(const key of group) { this.report(key, 'nonUniqueKeys', nonUniqueKeys); }
+            }
+        }
+    }
+    iteratorElement(index: number): void {
+        index = this.unwrap(index);
+        if(this.element(index)) {
+            const attributes = this.attributes(index);
+            if(!attributes.some(attribute => this.named(attribute, true))) { this.report(index, 'missingIterKey', missingIterKey); }
+            else if(this.beforeSpread && this.afterSpread(attributes)) { this.report(index, 'keyBeforeSpread', keyBeforeSpread); }
+        }
+        else if(this.fragments && this.context.kind(index) === 'JsxFragment') { this.report(index, 'missingIterKeyUsePrag', missingIterKeyUsePrag); }
+    }
+    expression(index: number, unwrap: boolean): void {
+        if(unwrap) { index = this.unwrap(index); }
+        const context = this.context;
+        if(context.kind(index) === 'ConditionalExpression') {
+            const yes = context.node(index).children[2] ?? -1;
+            const no = context.node(index).children[4] ?? -1;
+            if(this.jsx(yes)) { this.iteratorElement(yes); }
+            if(this.jsx(no)) { this.iteratorElement(no); }
+        }
+        else if(context.kind(index) === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(context.kind(context.node(index).children[1] ?? -1))) {
+            const right = context.node(index).children[2] ?? -1;
+            if(this.jsx(right)) { this.iteratorElement(right); }
+        }
+        else { this.iteratorElement(index); }
+    }
+    returns(index: number): void {
+        const context = this.context;
+        if(context.kind(index) === 'ReturnStatement') { this.expression(context.node(index).children[0] ?? -1, true); }
+        else if(context.kind(index) === 'IfStatement') {
+            this.returns(context.node(index).children[1] ?? -1);
+            this.returns(context.node(index).children[2] ?? -1);
+        }
+        else if(context.kind(index) === 'Block') {
+            for(const statement of context.node(index).children) {
+                if(['ReturnStatement', 'IfStatement'].includes(context.kind(statement))) { this.returns(statement); }
+            }
+        }
+    }
+    visit(index: number, parent: number): void {
+        const context = this.context;
+        if(this.suppressed(index)) { return; }
+        const kind = context.kind(index);
+        if(kind === 'ArrayLiteralExpression') { this.collection(index, context.node(index).children, true); }
+        if(kind === 'JsxElement') { this.collection(index, context.node(index).children.slice(1, -1), false); }
+        if(kind === 'JsxFragment' && this.fragments && context.kind(parent) === 'ArrayLiteralExpression') { this.report(index, 'missingArrayKeyUsePrag', missingArrayKeyUsePrag); }
+        if(kind !== 'CallExpression') { return; }
+        const callee = this.unwrap(context.node(index).children[0] ?? -1);
+        if(context.kind(callee) !== 'PropertyAccessExpression') { return; }
+        const name = context.node(context.property(callee));
+        if(name.kind !== 'Identifier' || !['map', 'from'].includes(name.text)) { return; }
+        const argumentsList = context.arguments(index);
+        const callback = this.unwrap(argumentsList[name.text === 'map' ? 0 : 1] ?? -1);
+        if(!['ArrowFunction', 'FunctionExpression'].includes(context.kind(callback))) { return; }
+        const children = context.node(callback).children;
+        const body = children[children.length - 1] ?? -1;
+        if(context.kind(body) === 'Block') { this.returns(body); }
+        else { this.expression(body, false); }
+    }
+}
+export function create(context: RuleContext): Rule {
+    const nodes: HelperNode[] = [];
+    if(!context.enabled('react/jsx-key')) { return new Rule(context, new JsxArena(nodes), 'React'); }
+    for(const node of context.parser.nodes) {
+        const opening = ['JsxOpeningElement', 'JsxSelfClosingElement'].includes(node.kind);
+        nodes.push({ kind: node.kind, text: node.text, name: node.children[0] ?? -1,
+            tagName: opening ? node.children[0] ?? -1 : -1,
+            attributes: opening ? node.children[node.children.length - 1] ?? -1 : -1,
+            properties: node.children, propertiesPresent: node.kind === 'JsxAttributes' });
+    }
+    return new Rule(context, new JsxArena(nodes), reactPragmaFor(context));
+}

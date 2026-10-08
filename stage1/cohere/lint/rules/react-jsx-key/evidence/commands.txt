@@ -1,0 +1,22 @@
+Base: origin/area/stage1-lint, 9156bf5c579a44d687c9955d13e44f9ad8bbb6f8.
+Cohere pin: 7945d102a6c18dd36adf9114a758ce646e8b2359.
+Duplicate checks: all 2034 fetched origin refs, exact required JSON name check and whitespace-independent check; no matching descriptor.
+export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh
+bash cloud/setup.sh --wasi-sdk
+source /workspace/adamic-tools/env.sh
+go run ./cmd/lint-registry
+go run ./cmd/adamic types stage1/cohere/lint/main.ts
+go test -overlay /tmp/jsx-key-unit-overlay.json ./stage1/cohere/lint -run '^TestJsxKeyUnit$' -count=1 -v -timeout=30m
+The overlay adds testdata/validation.go.txt as stage1/cohere/lint/jsx_key_unit_test.go without editing shared files.
+go test ./stage1/cohere/lint -run '^TestMutants$/jsx-key-collection-case-fold$' -count=1 -v -timeout=30m
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/jsx-key-typescript ADAMIC_LINT_PROFILE_DIR=/tmp/jsx-key-profile-restart ADAMIC_LINT_PROFILE_SNAPSHOTS=/tmp/jsx-key-profile-restart ADAMIC_LINT_BENCH=1 go test ./stage1/cohere/lint -count=1 -json -timeout=60m
+TypeScript checkout: clean detached worktree at 050880ce59e30b356b686bd3144efe24f875ebc8.
+WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot, inherited from setup env.sh.
+Both profile variables point at the same fresh scratch directory.
+The whole-package command uses Bash SECONDS for wall time: /usr/bin/time is absent, and the initial wrapper exited 127 before executing Go tests.
+An initial selected run refused an inferred never[]; using an explicitly typed number[] empty array is ordinary supported Adamic. The final selected run and mutant pass.
+A standalone manual driver build without the checker archive refused the unlinked typescript-go call. The lint harness builds and links its checker archive and passed the sanitized native comparison.
+Observed upstream asymmetry preserved: collection KEY reports missingArrayKey; iterator KEY is accepted. Key-before-spread collection findings underline the container. Duplicate findings underline each key attribute. Block conditional and logical returns follow Go cohere's clone behavior, including upstream invalid-0 through invalid-3 and invalid-28 through invalid-29.
+No shared helper or language blocker encountered. No shared files or upstream rule bodies changed.
+
+The first full attempt was interrupted by an environment restart. The identical full command was rerun in a separate process session, with a newly created profile directory, and completed with exit 0. See whole-summary.txt and whole.jsonl.gz. The incomplete attempt is whole-interrupted.jsonl.gz.

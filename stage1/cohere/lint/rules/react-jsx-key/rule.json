@@ -1,0 +1,16 @@
+{
+  "name": "react/jsx-key",
+  "kinds": [
+    "ArrayLiteralExpression",
+    "JsxElement",
+    "JsxFragment",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxKey",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxKey"
+}

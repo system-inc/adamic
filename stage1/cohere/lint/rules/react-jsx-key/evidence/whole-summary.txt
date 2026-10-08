@@ -1,0 +1,12 @@
+Whole lint package completed with exit 0.
+Test and subtest events: {'pass': 152, 'skip': 1}
+Top-level test events: {'pass': 46, 'skip': 1}
+Skipped: TestCheckerBridgeRefusalPending
+Failed: none
+wall=917 exit=0
+nproc, then load before and after (1/5/15 minute):
+5
+0.78 3.78 4.25 1/154 140124
+4.68 5.20 4.76 1/160 275177
+The sole skip is not missing input: checker_pending_test.go:51 awaits TSGoError support from codex/tsgo-errors-as-values. This syntax-only rule requires no checker bridge changes.
+One earlier whole-package attempt was externally interrupted by an environment restart before completion. Its partial JSON log is preserved separately and is not counted as a completed gate. The completed run uses fresh /tmp/jsx-key-profile-restart for both profile variables.

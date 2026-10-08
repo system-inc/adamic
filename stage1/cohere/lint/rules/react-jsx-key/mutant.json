@@ -1,0 +1,5 @@
+{
+  "name": "jsx-key-collection-case-fold",
+  "from": "this.named(attribute, false));",
+  "to": "this.named(attribute, true));"
+}
