@@ -128,11 +128,7 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && l.unlowerable == nil {
-			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
-			// it's done, since the capture is found here, where nothing can return an error.
-			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
-		}
+
 	}
 	return local, isLocal
 }

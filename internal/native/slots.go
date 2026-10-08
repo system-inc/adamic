@@ -13,6 +13,9 @@ func slotted(valueType ir.Type, value string) string {
 	if valueType == ir.MaybeNumber {
 		return fmt.Sprintf("adamic_maybe_number_pack(%s)", value)
 	}
+	if valueType == ir.MaybeBoolean {
+		return fmt.Sprintf("((%s).present ? ((%s).boolean ? 1.0 : 0.0) : -1.0)", value, value)
+	}
 	return value
 }
 
@@ -20,6 +23,9 @@ func slotted(valueType ir.Type, value string) string {
 func unslotted(valueType ir.Type, member string) string {
 	if valueType == ir.MaybeNumber {
 		return fmt.Sprintf("adamic_maybe_number_unpack(%s)", member)
+	}
+	if valueType == ir.MaybeBoolean {
+		return fmt.Sprintf("(adamic_maybe_boolean){(%s) != -1.0, (%s) == 1.0}", member, member)
 	}
 	return member
 }

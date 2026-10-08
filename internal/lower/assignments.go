@@ -11,6 +11,10 @@ import (
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	binary := node.AsBinaryExpression()
+	if logicalAssignment(binary.OperatorToken.Kind) {
+		value, err := l.logicalAssignment(node)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
 		return nil, l.notYet(node, describe(node)+" as a statement")
