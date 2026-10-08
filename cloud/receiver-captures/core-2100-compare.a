@@ -1,0 +1,8 @@
+// Reduction of c6ea4131 src/compiler/core.ts:2100:26, detached compare.
+class Comparer {
+	bias = 4;
+	compare(left: number, right: number): number { return left - right + this.bias; }
+}
+const comparer = new Comparer();
+const compare = comparer.compare;
+console.log(`${compare(3, 1)}`);

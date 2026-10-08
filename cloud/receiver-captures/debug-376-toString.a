@@ -1,0 +1,8 @@
+// Reduction of c6ea4131 src/compiler/debug.ts:376:26, detached toString.
+class Description {
+	text = 'description';
+	toString(): string { return this.text; }
+}
+const description = new Description();
+const show = description.toString;
+console.log(show());
