@@ -60,9 +60,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Array, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
-		// Inside a generic class, a type parameter is what this instantiation made it.
-		substituted, isKnown := l.substitution[proven]
-		return substituted, isKnown
+		// Instantiations and class substitutions precede constraint-backed storage.
+		if substituted, known := l.substitution[proven]; known {
+			return substituted, true
+		}
+		return l.constraintStorage(proven)
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.

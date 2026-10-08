@@ -315,6 +315,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
+	if err := l.overloadResultField(node); err != nil {
+		return nil, err
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
