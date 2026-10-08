@@ -1,7 +1,0 @@
-=== RUN   TestSyntaxKindRepresentationTags
-=== PAUSE TestSyntaxKindRepresentationTags
-=== CONT  TestSyntaxKindRepresentationTags
-    syntax_kind_tags_test.go:42: collision mutant caught: record and Uint8Array share representation tag 14
---- PASS: TestSyntaxKindRepresentationTags (0.00s)
-PASS
-ok  	github.com/system-inc/adamic/internal/ir	0.007s
