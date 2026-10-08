@@ -1,0 +1,21 @@
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/library_date_string.a
+    wasi_test.go:40: gate cache node miss
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a
+    wasi_test.go:40: gate cache node miss
+--- PASS: TestWASIAgreesWithNode (10.35s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/library_date_string.a (9.97s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a (0.30s)
+=== RUN   TestWASIRunnerCatchesMutants
+--- PASS: TestWASIRunnerCatchesMutants (0.40s)
+=== RUN   TestWASIEmission
+=== RUN   TestWASIEmission/internal/oracle/testdata/library_date_string.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/library_date_string_utc.a
+--- PASS: TestWASIEmission (0.33s)
+    --- PASS: TestWASIEmission/internal/oracle/testdata/library_date_string.a (0.18s)
+    --- PASS: TestWASIEmission/internal/oracle/testdata/library_date_string_utc.a (0.12s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.101s
