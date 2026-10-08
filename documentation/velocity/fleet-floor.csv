@@ -157,3 +157,10 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-08T18:25:52.080257Z,runtime,5,8,0,,,queue_empty
 2026-10-08T18:25:54.100311Z,library,9,8,0,,,floor_met
 2026-10-08T18:26:02.054055Z,developer_tools,0,4,0,,,queue_empty
+2026-10-08T18:29:17.593741Z,compiler,23,30,3,10-presence-on-views.md,01a113e7-bfed-7238-9abe-b2c07dfe7008,dispatch_uncertain
+2026-10-08T18:29:25.916315Z,compiler,24,30,2,,,"gate_backpressure: 134 queued, 13 slots"
+2026-10-08T18:29:27.884008Z,cohere_adamic,,30,30,,,fleet_unavailable: fleet live status unavailable
+2026-10-08T18:29:31.529480Z,typescript,10,10,7,,,"gate_backpressure: 134 queued, 13 slots"
+2026-10-08T18:29:35.975549Z,runtime,3,8,0,,,"gate_backpressure: 134 queued, 13 slots"
+2026-10-08T18:29:37.943632Z,library,11,8,0,,,"gate_backpressure: 134 queued, 13 slots"
+2026-10-08T18:29:46.855832Z,developer_tools,0,4,0,,,"gate_backpressure: 134 queued, 13 slots"
