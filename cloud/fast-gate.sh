@@ -58,13 +58,16 @@ sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSourc
 mkdir -p ~/fast-gate
 # Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
 # stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
+# With both busy it takes whichever frees first, never waiting on one while the other is idle.
 slot=""
-for candidate in 1 2; do
-  exec 9> ~/fast-gate/lock$([ "${candidate}" = 1 ] && echo "" || echo "-${candidate}")
-  if flock -n 9; then slot=${candidate}; break; fi
-  exec 9>&-
+while [ -z "${slot}" ]; do
+  for candidate in 1 2; do
+    exec 9> ~/fast-gate/lock$([ "${candidate}" = 1 ] && echo "" || echo "-${candidate}")
+    if flock -n 9; then slot=${candidate}; break; fi
+    exec 9>&-
+  done
+  [ -n "${slot}" ] || sleep 1
 done
-if [ -z "${slot}" ]; then exec 9> ~/fast-gate/lock; flock 9; slot=1; fi
 suffix=$([ "${slot}" = 1 ] && echo "" || echo "-${slot}")
 source ~/adamic-tools/env.sh
 for directory in tools tree; do
