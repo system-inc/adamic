@@ -385,7 +385,10 @@ func (m *latentShapeMeter) body(root *ast.Node) {
 				return false
 			}
 		case ast.KindReturnStatement:
-			m.append(ir.Return{Value: m.expression(node.AsReturnStatement().Expression)})
+            returned := node.AsReturnStatement().Expression
+            if returned == nil {
+                m.append(ir.Return{Value:latentShapeUnknown{Category:"flow the graph can't see", Reason:"explicit return without a result at "+m.Loaded.Where(node)}})
+            } else { m.append(ir.Return{Value:m.expression(returned)}) }
 			return false
 		}
 		if ast.IsExpressionNode(node) {
@@ -585,7 +588,12 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 						m.append(ir.Assign{Local: m.IR.Functions[function.Index].Parameters[i], Value: latentShapeUnknown{Category: "host metadata", Reason: "host parameter requires boundary metadata at " + program.Where(parameter), Value: m.text(parameter.Name()) + ": " + m.Checker.TypeToString(m.Checker.GetTypeAtLocation(parameter.Name()))}})
 					}
 				}
-				if node.Body().Kind == ast.KindBlock { m.body(node.Body()) } else { m.append(ir.Return{Value:m.expression(node.Body())}) }
+				if node.Body().Kind == ast.KindBlock {
+                    m.body(node.Body())
+                    if !allocationBodyCannotFallThrough(node.Body()) {
+                        m.append(ir.Return{Value:latentShapeUnknown{Category:"flow the graph can't see", Reason:"function may complete without a result at "+program.Where(node)}})
+                    }
+                } else { m.append(ir.Return{Value:m.expression(node.Body())}) }
 				m.Current = -1
 			}
 			node.ForEachChild(visit)
@@ -1062,4 +1070,23 @@ func allocationCallableProtocol(node *ast.Node) string {
         return "generator function result requires an iterator allocation"
     }
     return ""
+}
+
+// Only explicit terminating syntax proves that every normal completion returns.
+// Loops, labels, switches and exception regions are not terminal proofs here.
+// Their returns are collected, but a missing normal result remains possible.
+func allocationBodyCannotFallThrough(node *ast.Node) bool {
+    if node == nil { return false }
+    switch node.Kind {
+    case ast.KindReturnStatement, ast.KindThrowStatement:
+        return true
+    case ast.KindIfStatement:
+        branch := node.AsIfStatement()
+        return allocationBodyCannotFallThrough(branch.ThenStatement) && allocationBodyCannotFallThrough(branch.ElseStatement)
+    case ast.KindBlock:
+        for _, statement := range node.AsBlock().Statements.Nodes {
+            if allocationBodyCannotFallThrough(statement) { return true }
+        }
+    }
+    return false
 }

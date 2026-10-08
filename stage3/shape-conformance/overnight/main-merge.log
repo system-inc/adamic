@@ -1,0 +1,220 @@
+Auto-merging stage1/cohere/cssnumbers/port_test.go
+Auto-merging stage1/cohere/cssstrings/port_test.go
+Auto-merging stage1/cohere/json/port_test.go
+Auto-merging stage1/cohere/markdowninline/port_test.go
+Auto-merging stage1/cohere/selector/selector_test.go
+Merge made by the 'ort' strategy.
+ cloud/setup.sh                                     |    3 +
+ cloud/submodule-cache.sh                           |   86 +
+ cmd/adamic-test262/run.go                          |   23 +-
+ cmd/adamic-test262/run_test.go                     |   76 +
+ documentation/velocity/landings.csv                |   12 +
+ internal/childguard/childguard.go                  |  173 +
+ internal/childguard/childguard_test.go             |  120 +
+ internal/corpusfiles/REPORT.txt                    |  174 +
+ internal/corpusfiles/files.go                      |  176 +
+ internal/corpusfiles/files_test.go                 |  172 +
+ .../validation/baseline-audit_test.go.log          |  342 ++
+ internal/corpusfiles/validation/baseline-path.log  |   21 +
+ .../validation/baseline-path_test.go.log           |   96 +
+ .../corpusfiles/validation/baseline-results.log    |    5 +
+ internal/corpusfiles/validation/counts.log         |   89 +
+ .../validation/css-counts-provenance.log           |    5 +
+ internal/corpusfiles/validation/final-results.log  |   41 +
+ internal/corpusfiles/validation/gofmt.log          |    0
+ internal/corpusfiles/validation/helper-mutants.log |   27 +
+ internal/corpusfiles/validation/helper.log         |  156 +
+ .../validation/initial-markdowninline.log          |   23 +
+ internal/corpusfiles/validation/initial-yaml.log   |  211 +
+ internal/corpusfiles/validation/machine-final.log  |   10 +
+ internal/corpusfiles/validation/machine.log        |   10 +
+ .../mutant-accept-wrong-upstream-pin.log           |  126 +
+ .../validation/mutant-omit-index-check.log         |  104 +
+ .../mutant-omit-sparse-presence-check.log          |    6 +
+ .../validation/mutant-omit-upstream-status.log     |   71 +
+ .../validation/mutant-omit-worktree-check.log      |   82 +
+ .../validation/prettier-sparse-clean.log           |    8 +
+ .../validation/prettier-sparse-missing.log         |    6 +
+ .../validation/prettier-sparse-proof.log           |    1 +
+ .../validation/prettier-sparse-status.log          |    0
+ internal/corpusfiles/validation/results.log        |  119 +
+ .../validation/scanner-final-results.log           |   15 +
+ .../validation/scanner-runtime-counts.log          |   75 +
+ .../validation/selector-manifest-controls.log      |    6 +
+ internal/corpusfiles/validation/setup.log          |   16 +
+ .../validation/stage1-cohere-cssnumbers.log        |   37 +
+ .../validation/stage1-cohere-cssstrings.log        |   45 +
+ .../validation/stage1-cohere-graphql-printer.log   |  203 +
+ .../stage1-cohere-markdownblocks-final.log         |  987 +++++
+ .../validation/stage1-cohere-markdownblocks.log    |  798 ++++
+ .../stage1-cohere-markdowninline-final.log         |   62 +
+ .../validation/stage1-cohere-selector.log          |  243 ++
+ .../validation/stage1-cohere-typeaware-final.log   |  119 +
+ .../validation/stage1-cohere-typeaware.log         |  222 +
+ .../validation/stage1-typescript-scanner-final.log |   84 +
+ .../validation/stage1-typescript-scanner.log       |   83 +
+ internal/corpusfiles/validation/vet.log            |    0
+ internal/corpusfiles/validation/yaml-rerun.log     |  356 ++
+ internal/corpusfiles/validation/yaml-results.log   |   14 +
+ internal/fuzz/run.go                               |   34 +-
+ internal/fuzz/run_test.go                          |   81 +
+ internal/gatesample/README.md                      |   88 +
+ internal/gatesample/sample.go                      |  156 +
+ internal/gatesample/sample_test.go                 |  197 +
+ internal/lower/class_wrong_output_test.go          |    4 +-
+ internal/oracle/class_wrong_output_test.go         |    8 +-
+ .../classfeat_init_super.a                         |    0
+ .../classfeat_init_super_getter.a                  |    0
+ .../classfeat_init_super_number.a                  |    0
+ .../classfeat_static_private_instance.a            |    0
+ .../classfeat_static_private_method.a              |    0
+ .../iterators_hidden_return.a                      |    0
+ .../iterators_override_this.a                      |    0
+ .../iterators_sym_keys_view.a                      |    0
+ stage1/cohere/cssnumbers/port_test.go              |   28 +-
+ stage1/cohere/cssstrings/port_test.go              |   28 +-
+ stage1/cohere/estree/corpus_test.go                |   12 +-
+ stage1/cohere/estree/deadlines_test.go             |  107 +
+ stage1/cohere/estree/stalls_test.go                |   13 +-
+ stage1/cohere/graphql/printer/printer_test.go      |   29 +-
+ stage1/cohere/json/DEADLINES.md                    |   68 +
+ stage1/cohere/json/audit_test.go                   |   56 +-
+ stage1/cohere/json/chunks_test.go                  |  179 +
+ stage1/cohere/json/pin_test.go                     |  228 +
+ stage1/cohere/json/port_test.go                    |   68 +-
+ stage1/cohere/json/progress_test.go                |   68 +
+ stage1/cohere/json/repository_test.go              |  288 ++
+ stage1/cohere/json/sample_test.go                  |   48 +
+ stage1/cohere/json/testdata/corpus.pin             | 4400 ++++++++++++++++++++
+ stage1/cohere/markdownblocks/ast_test.go           |    6 +
+ stage1/cohere/markdownblocks/audit_test.go         |   55 +-
+ stage1/cohere/markdownblocks/chunks_test.go        |   39 +-
+ stage1/cohere/markdownblocks/events_test.go        |   39 +-
+ stage1/cohere/markdownblocks/frontmatter_test.go   |    6 +
+ stage1/cohere/markdownblocks/lists_test.go         |  133 +-
+ stage1/cohere/markdownblocks/mdast_test.go         |    6 +
+ stage1/cohere/markdownblocks/path_test.go          |    6 +
+ stage1/cohere/markdownblocks/prefix_test.go        |    6 +
+ stage1/cohere/markdownblocks/sample_test.go        |  167 +
+ stage1/cohere/markdowninline/port_test.go          |   33 +-
+ stage1/cohere/selector/selector_test.go            |   49 +-
+ stage1/cohere/selector/testdata/library.mjs        |   37 +-
+ stage1/cohere/tsprinter/GAPS.md                    |   36 +-
+ stage1/cohere/tsprinter/README.md                  |   36 +-
+ stage1/cohere/tsprinter/TSC_CORPUS.md              |  188 +
+ stage1/cohere/tsprinter/corpus_test.go             |   98 +
+ stage1/cohere/tsprinter/expressions.ts             |   23 +-
+ stage1/cohere/tsprinter/expressions_test.go        |   33 +-
+ stage1/cohere/tsprinter/files.ts                   |   12 +-
+ .../tsprinter/results/tsc-corpus-before.json       |   58 +
+ .../results/tsc-expressions-coverage.json          |   63 +
+ .../results/tsc-main-merge-validation.json         |   45 +
+ .../tsprinter/results/tsc-smallest-upstream.json   |   20 +
+ .../tsprinter/results/tsc-statements-coverage.json |   43 +
+ .../cohere/tsprinter/results/tsc-validation.json   |   34 +
+ stage1/cohere/tsprinter/statements_test.go         |   30 +-
+ stage1/cohere/tsprinter/syntax.ts                  |    6 +-
+ stage1/cohere/tsprinter/testdata/embedded.mjs      |   13 +-
+ stage1/cohere/tsprinter/testdata/expressions.mjs   |   19 +-
+ .../tsprinter/testdata/expressions_side_test.go    |    3 +
+ .../cohere/tsprinter/testdata/run_tsc_mutants.py   |  120 +
+ .../tsprinter/testdata/statements_side_test.go     |    3 +
+ .../testdata/tsc-upstream-differences.json         |  237 ++
+ stage1/cohere/tsprinter/tsc_corpus_test.go         |  134 +
+ stage1/cohere/tsprinter/upstream_protocol_test.go  |  120 +
+ stage1/cohere/typeaware/suite_test.go              |   26 +-
+ stage1/cohere/typeaware/typeaware_test.go          |   26 +-
+ stage1/cohere/typeaware/volume_test.go             |   38 +-
+ stage1/cohere/yaml/lexer_test.go                   |   30 +-
+ stage1/typescript/parser/parser.ts                 |   15 +-
+ stage1/typescript/parser/yield_test.go             |   48 +
+ stage1/typescript/scanner/profile_test.go          |   19 +-
+ stage1/typescript/scanner/scanner_test.go          |   23 +-
+ stage3/lane/README.md                              |    3 +-
+ stage3/lane/check.py                               |    3 +-
+ stage3/lane/test_check.py                          |    6 +-
+ stage3/oracle/run.py                               |    5 +-
+ 130 files changed, 13794 insertions(+), 531 deletions(-)
+ create mode 100755 cloud/submodule-cache.sh
+ create mode 100644 cmd/adamic-test262/run_test.go
+ create mode 100644 internal/childguard/childguard.go
+ create mode 100644 internal/childguard/childguard_test.go
+ create mode 100644 internal/corpusfiles/REPORT.txt
+ create mode 100644 internal/corpusfiles/files.go
+ create mode 100644 internal/corpusfiles/files_test.go
+ create mode 100644 internal/corpusfiles/validation/baseline-audit_test.go.log
+ create mode 100644 internal/corpusfiles/validation/baseline-path.log
+ create mode 100644 internal/corpusfiles/validation/baseline-path_test.go.log
+ create mode 100644 internal/corpusfiles/validation/baseline-results.log
+ create mode 100644 internal/corpusfiles/validation/counts.log
+ create mode 100644 internal/corpusfiles/validation/css-counts-provenance.log
+ create mode 100644 internal/corpusfiles/validation/final-results.log
+ create mode 100644 internal/corpusfiles/validation/gofmt.log
+ create mode 100644 internal/corpusfiles/validation/helper-mutants.log
+ create mode 100644 internal/corpusfiles/validation/helper.log
+ create mode 100644 internal/corpusfiles/validation/initial-markdowninline.log
+ create mode 100644 internal/corpusfiles/validation/initial-yaml.log
+ create mode 100644 internal/corpusfiles/validation/machine-final.log
+ create mode 100644 internal/corpusfiles/validation/machine.log
+ create mode 100644 internal/corpusfiles/validation/mutant-accept-wrong-upstream-pin.log
+ create mode 100644 internal/corpusfiles/validation/mutant-omit-index-check.log
+ create mode 100644 internal/corpusfiles/validation/mutant-omit-sparse-presence-check.log
+ create mode 100644 internal/corpusfiles/validation/mutant-omit-upstream-status.log
+ create mode 100644 internal/corpusfiles/validation/mutant-omit-worktree-check.log
+ create mode 100644 internal/corpusfiles/validation/prettier-sparse-clean.log
+ create mode 100644 internal/corpusfiles/validation/prettier-sparse-missing.log
+ create mode 100644 internal/corpusfiles/validation/prettier-sparse-proof.log
+ create mode 100644 internal/corpusfiles/validation/prettier-sparse-status.log
+ create mode 100644 internal/corpusfiles/validation/results.log
+ create mode 100644 internal/corpusfiles/validation/scanner-final-results.log
+ create mode 100644 internal/corpusfiles/validation/scanner-runtime-counts.log
+ create mode 100644 internal/corpusfiles/validation/selector-manifest-controls.log
+ create mode 100644 internal/corpusfiles/validation/setup.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-cssnumbers.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-cssstrings.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-graphql-printer.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-markdownblocks-final.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-markdownblocks.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-markdowninline-final.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-selector.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-typeaware-final.log
+ create mode 100644 internal/corpusfiles/validation/stage1-cohere-typeaware.log
+ create mode 100644 internal/corpusfiles/validation/stage1-typescript-scanner-final.log
+ create mode 100644 internal/corpusfiles/validation/stage1-typescript-scanner.log
+ create mode 100644 internal/corpusfiles/validation/vet.log
+ create mode 100644 internal/corpusfiles/validation/yaml-rerun.log
+ create mode 100644 internal/corpusfiles/validation/yaml-results.log
+ create mode 100644 internal/fuzz/run_test.go
+ create mode 100644 internal/gatesample/README.md
+ create mode 100644 internal/gatesample/sample.go
+ create mode 100644 internal/gatesample/sample_test.go
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/classfeat_init_super.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/classfeat_init_super_getter.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/classfeat_init_super_number.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/classfeat_static_private_instance.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/classfeat_static_private_method.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/iterators_hidden_return.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/iterators_override_this.a (100%)
+ rename internal/oracle/testdata/{ => class_wrong_output_refused}/iterators_sym_keys_view.a (100%)
+ create mode 100644 stage1/cohere/estree/deadlines_test.go
+ create mode 100644 stage1/cohere/json/DEADLINES.md
+ create mode 100644 stage1/cohere/json/chunks_test.go
+ create mode 100644 stage1/cohere/json/pin_test.go
+ create mode 100644 stage1/cohere/json/progress_test.go
+ create mode 100644 stage1/cohere/json/repository_test.go
+ create mode 100644 stage1/cohere/json/sample_test.go
+ create mode 100644 stage1/cohere/json/testdata/corpus.pin
+ create mode 100644 stage1/cohere/markdownblocks/sample_test.go
+ create mode 100644 stage1/cohere/tsprinter/TSC_CORPUS.md
+ create mode 100644 stage1/cohere/tsprinter/corpus_test.go
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-corpus-before.json
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-expressions-coverage.json
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-main-merge-validation.json
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-smallest-upstream.json
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-statements-coverage.json
+ create mode 100644 stage1/cohere/tsprinter/results/tsc-validation.json
+ create mode 100644 stage1/cohere/tsprinter/testdata/run_tsc_mutants.py
+ create mode 100644 stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json
+ create mode 100644 stage1/cohere/tsprinter/tsc_corpus_test.go
+ create mode 100644 stage1/cohere/tsprinter/upstream_protocol_test.go
+ create mode 100644 stage1/typescript/parser/yield_test.go

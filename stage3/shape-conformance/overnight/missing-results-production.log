@@ -1,0 +1,14 @@
+[
+  {
+    "file": "alias.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "adamic: /tmp/shape-missing-results-production/alias.a:5:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  {
+    "file": "direct.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "adamic: /tmp/shape-missing-results-production/direct.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  }
+]

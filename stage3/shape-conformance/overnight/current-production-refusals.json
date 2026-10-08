@@ -1,0 +1,49 @@
+{
+  "compiler_sha256": "ad29081119723166807acfa14b3a5be1494f674ad73492f0a08ba33a677e8da7",
+  "production_snapshot": "5310ddd984c5cbd95f69d42de87cdf0751187036",
+  "status": "PASS",
+  "rows": [
+    {
+      "fixture": "/tmp/shape-missing-results-production/alias.a",
+      "source": "interface Base {readonly kind:'ok'|'other';}\ninterface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}\nfunction partial(flag:boolean) {if(flag) return {kind:'ok' as const,ready:true};}\nconst alias=partial;\nconst node=alias(false) as Base;\nconsole.log((node as Ready).ready?'true':'false');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-missing-results-production/alias.a:5:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    {
+      "fixture": "/tmp/shape-missing-results-production/direct.a",
+      "source": "interface Base {readonly kind:'ok'|'other';}\ninterface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}\nfunction partial(flag:boolean) {if(flag) return {kind:'ok' as const,ready:true};}\nconst node=partial(false) as Base;\nconsole.log((node as Ready).ready?'true':'false');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-missing-results-production/direct.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    {
+      "fixture": "/tmp/shape-suspended-production/async-arrow.a",
+      "source": "const value=async<T>(arg:T):Promise<T>=>arg;\nconsole.log('checked');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-suspended-production/async-arrow.a:1:13: Adamic 0.1 refuses an async function; 0.1 has no async; it arrives with the concurrency model\n"
+    },
+    {
+      "fixture": "/tmp/shape-suspended-production/async-declaration.a",
+      "source": "async function value<T>(arg:T):Promise<T>{return arg;}\nconsole.log('checked');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-suspended-production/async-declaration.a:1:1: Adamic 0.1 refuses an async function; 0.1 has no async; it arrives with the concurrency model\n"
+    },
+    {
+      "fixture": "/tmp/shape-suspended-production/generator-declaration.a",
+      "source": "function* value<T>(arg:T):Generator<never,T,unknown>{return arg;}\nconsole.log('checked');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-suspended-production/generator-declaration.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+    },
+    {
+      "fixture": "/tmp/shape-suspended-production/generator-expression.a",
+      "source": "const value=function*<T>(arg:T):Generator<never,T,unknown>{return arg;};\nconsole.log('checked');\n",
+      "exit": 1,
+      "stdout_bytes": 0,
+      "diagnostic": "adamic: /tmp/shape-suspended-production/generator-expression.a:1:13: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+    }
+  ]
+}

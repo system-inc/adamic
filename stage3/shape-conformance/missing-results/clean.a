@@ -1,0 +1,28 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function partial(flag:boolean) {if(flag) return {kind:'ok' as const,ready:true};}
+function partialDirectRead():Ready {const node=partial(false) as Base;return node as Ready;}
+const partialAlias=partial;
+function partialAliasRead():Ready {const node=partialAlias(false) as Base;return node as Ready;}
+const partialArrow=<T>(flag:boolean,value:T)=>{if(flag)return value;};
+function partialArrowRead():Ready {const raw={kind:'ok' as const,ready:true};const node=partialArrow(false,raw) as Base;return node as Ready;}
+function labeled(flag:boolean) {escape:{if(!flag)break escape;return {kind:'ok' as const,ready:true};}}
+function labeledRead():Ready {const node=labeled(false) as Base;return node as Ready;}
+function loop() {for(let index=0;index<0;index++){return {kind:'ok' as const,ready:true};}}
+function loopRead():Ready {const node=loop() as Base;return node as Ready;}
+function explicitVoid(flag:boolean) {if(flag)return {kind:'ok' as const,ready:true};return;}
+function explicitVoidRead():Ready {const node=explicitVoid(false) as Base;return node as Ready;}
+function completeIf(flag:boolean) {if(flag)return {kind:'ok' as const,ready:true};else return {kind:'ok' as const,ready:false};}
+function completeIfRead():Ready {const node:Base=completeIf(false);return node as Ready;}
+function completeFinal(flag:boolean) {if(flag)return {kind:'ok' as const,ready:true};return {kind:'ok' as const,ready:false};}
+function completeFinalRead():Ready {const node:Base=completeFinal(false);return node as Ready;}
+function nestedReturn() {function unused(flag:boolean){if(flag)return {kind:'ok' as const,ready:false};}return {kind:'ok' as const,ready:true};}
+function nestedReturnRead():Ready {const node:Base=nestedReturn();return node as Ready;}
+function completeThrow(flag:boolean) {if(flag)return {kind:'ok' as const,ready:true};else throw new Error('stop');}
+function completeThrowRead():Ready {const node:Base=completeThrow(true);return node as Ready;}
+function empty() {}
+function emptyRead():Ready {const node=empty() as unknown as Base;return node as Ready;}
+const observations={partialDirectRead:partialDirectRead(),partialAliasRead:partialAliasRead(),partialArrowRead:partialArrowRead(),labeledRead:labeledRead(),loopRead:loopRead(),explicitVoidRead:explicitVoidRead(),completeIfRead:completeIfRead(),completeFinalRead:completeFinalRead(),nestedReturnRead:nestedReturnRead(),completeThrowRead:completeThrowRead(),emptyRead:emptyRead()};
+console.log(JSON.stringify(Object.fromEntries(Object.entries(observations).map(([name,value])=>[name,{missing:value===undefined,ready:value===undefined?'absent':typeof value.ready}])))!);

@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-missing-results-mutants-rxzsg6ty/ignore-return-sequence/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/missing-results/controls.py", line 18, in <module>
+    assert row['outcome']=='conforms and ready (free)',(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('completeIfRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 1450, 'end': 1463, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 1450, 'end': 1463, 'owner': 'completeIfRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:17:1'], 'allocation_sites': [-8, -7], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

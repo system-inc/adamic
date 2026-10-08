@@ -1,8 +1,14 @@
 """Count distinct cast sites for overlapping flow patterns and exact transitions."""
-import collections,gc,gzip,json,pathlib,sys
+import collections,gc,gzip,importlib.util,json,pathlib,sys
 
 def read(path):
- with gzip.open(path,'rt') if str(path).endswith('.gz') else open(path) as stream:return json.load(stream)
+ with gzip.open(path,'rt') if str(path).endswith('.gz') else open(path) as stream:value=json.load(stream)
+ if value.get('format')=='interned-census-json-v1':
+  source=pathlib.Path(__file__).resolve().parents[1]/'dynamic-keys/artifacts.py'
+  spec=importlib.util.spec_from_file_location('census_artifacts',source);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  decoded=module.decode(value);assert module.json_hash(decoded)==value['json_sha256'],'artifact changed an observation'
+  return decoded
+ return value
 
 def patterns(sites):
  counts=collections.defaultdict(collections.Counter)
@@ -18,6 +24,9 @@ def patterns(sites):
    'dynamic keys':['dynamic element key','dynamic or relative element key'],
    'constructors':['constructor allocation and initialization body not modeled'],
    'whole-array contracts':['array intrinsic and augmented-field certificates unavailable'],
+   'Promise/iterator result protocols':['async function result requires a Promise allocation','generator function result requires an iterator allocation'],
+   'missing result completion':['function may complete without a result'],
+   'missing local/result producers':['producer without a value','returns without a value','missing expression','no tracked producer'],
   }.items():
    if any(needle in detail for needle in needles):counts[label][row['kind']]+=1
  return {label:dict(counts[label]) for label in counts}

@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-missing-results-mutants-rxzsg6ty/throw-is-fallthrough/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/missing-results/controls.py", line 18, in <module>
+    assert row['outcome']=='conforms and ready (free)',(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('completeThrowRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 2118, 'end': 2131, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 2118, 'end': 2131, 'owner': 'completeThrowRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:23:1'], 'allocation_sites': [-13], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

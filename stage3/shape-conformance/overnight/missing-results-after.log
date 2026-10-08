@@ -1,0 +1,131 @@
+{
+  "status": "PASS",
+  "node": {
+    "partialDirectRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "partialAliasRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "partialArrowRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "labeledRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "loopRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "explicitVoidRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "completeIfRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "completeFinalRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "nestedReturnRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "completeThrowRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "emptyRead": {
+      "missing": true,
+      "ready": "absent"
+    }
+  },
+  "controls": [
+    {
+      "owner": "partialDirectRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "partialAliasRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "partialArrowRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:9:20"
+      ]
+    },
+    {
+      "owner": "labeledRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:11:1"
+      ]
+    },
+    {
+      "owner": "loopRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:13:1"
+      ]
+    },
+    {
+      "owner": "explicitVoidRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "explicit return without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:15:85"
+      ]
+    },
+    {
+      "owner": "completeIfRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "completeFinalRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "nestedReturnRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "completeThrowRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "emptyRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:25:1"
+      ]
+    }
+  ]
+}
