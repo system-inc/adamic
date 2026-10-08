@@ -48,6 +48,43 @@ func constructionExpression(n *ast.Node) bool {
 		return false
 	}
 	switch n.Kind {
+	case ast.KindArrayLiteralExpression:
+		for _, element := range n.AsArrayLiteralExpression().Elements.Nodes {
+			if element.Kind == ast.KindOmittedExpression {
+				continue
+			}
+			if element.Kind == ast.KindSpreadElement {
+				element = element.AsSpreadElement().Expression
+			}
+			if !constructionExpression(element) {
+				return false
+			}
+		}
+		return true
+	case ast.KindObjectLiteralExpression:
+		for _, member := range n.AsObjectLiteralExpression().Properties.Nodes {
+			switch member.Kind {
+			case ast.KindSpreadAssignment:
+				if !constructionExpression(member.AsSpreadAssignment().Expression) {
+					return false
+				}
+			case ast.KindShorthandPropertyAssignment:
+				if member.Name().Kind != ast.KindIdentifier {
+					return false
+				}
+			case ast.KindPropertyAssignment:
+				x := member.AsPropertyAssignment()
+				if !constructionExpression(x.Initializer) {
+					return false
+				}
+				if x.Name().Kind == ast.KindComputedPropertyName && !constructionExpression(x.Name().AsComputedPropertyName().Expression) {
+					return false
+				}
+			default:
+				return false
+			}
+		}
+		return true
 	case ast.KindJsxExpression:
 		x := n.AsJsxExpression()
 		return x.Expression == nil || constructionExpression(x.Expression)
@@ -460,6 +497,12 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Arrays(value, values) { return [value, , ...values, [value],]; }",
+		"function Objects(value, key, props) { return {value, literal: value, 'quoted': value, 3: value, [key()]: value(), ...props}; }",
+		"function ComputedOrder(flag, value, key) { return {[flag ? key() : 1]: flag ? value() : 2}; }",
+		"function AggregateClosures(value) { const read = () => [value, {value}]; return {read, items: [read]}; }",
+		"function EmptyAggregates() { return [{}, [], {x = 1}]; }",
+
 		"function Host(value, props) { return <div bare title='hello' count={value} {...props}>text {value}<span />{ /* empty */ }</div>; }",
 		"function Component(Foo, Namespace, value) { return <><Foo value={value} /><Namespace.Inner /> <div>🙂 &amp;\n  </div></>; }",
 		"function LocalComponent(value) { const Child = () => <span>{value}</span>; return <Child />; }",

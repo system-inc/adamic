@@ -23,6 +23,8 @@ export interface IdentifierInterface {
 // The slice admits only these variants; unsupported syntax is declined before lowering.
 export interface FunctionReferenceInterface { readonly index: FunctionIndex; readonly ordinal: number; }
 export interface ArgumentInterface { place: PlaceInterface; readonly spread: boolean; }
+export interface ArrayElementInterface { place: PlaceInterface; readonly spread: boolean; readonly hole: boolean; }
+export interface ObjectPropertyInterface { readonly key: string; computedKey: PlaceInterface | undefined; value: PlaceInterface; readonly spread: boolean; }
 export interface JsxTagInterface { readonly name: string; place: PlaceInterface | undefined; }
 export interface JsxAttributeInterface { readonly name: string; value: PlaceInterface; readonly spread: boolean; }
 export interface ModuleExportOriginInterface { readonly module: string; readonly exported: string; }
@@ -43,6 +45,8 @@ export type ValueType = { readonly kind: 'Primitive'; readonly literal: string }
     | { readonly kind: 'NewExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[] }
     | { readonly kind: 'GetIterator' | 'NextPropertyOf'; value: PlaceInterface }
     | { readonly kind: 'IteratorNext'; iterator: PlaceInterface; collection: PlaceInterface }
+    | { readonly kind: 'ArrayExpression'; readonly elements: ArrayElementInterface[] }
+    | { readonly kind: 'ObjectExpression'; readonly properties: ObjectPropertyInterface[] }
     | { readonly kind: 'JsxExpression'; readonly tag: JsxTagInterface; readonly props: JsxAttributeInterface[]; readonly children: PlaceInterface[] }
     | { readonly kind: 'JsxFragment'; readonly children: PlaceInterface[] }
     | { readonly kind: 'JsxText'; readonly text: string }

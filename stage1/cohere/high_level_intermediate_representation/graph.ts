@@ -55,6 +55,8 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
         if(value.kind === 'CallExpression' || value.kind === 'NewExpression' || value.kind === 'MethodCall') { for(const argument of value.args) { argument.place = visit(argument.place, 'Use'); } }
         if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'IteratorNext') { value.iterator = visit(value.iterator, 'Use'); value.collection = visit(value.collection, 'Use'); }
+        if(value.kind === 'ObjectExpression') { for(const property of value.properties) { if(property.computedKey !== undefined) { property.computedKey = visit(property.computedKey, 'Use'); } property.value = visit(property.value, 'Use'); } }
+        if(value.kind === 'ArrayExpression') { for(const element of value.elements) { if(!element.hole) { element.place = visit(element.place, 'Use'); } } }
         if(value.kind === 'JsxExpression') { if(value.tag.place !== undefined) { value.tag.place = visit(value.tag.place, 'Use'); } for(const prop of value.props) { prop.value = visit(prop.value, 'Use'); } }
         if(value.kind === 'JsxExpression' || value.kind === 'JsxFragment') { for(let index = 0; index < value.children.length; index++) { value.children[index] = visit(value.children[index] ?? panic('missing jsx child'), 'Use'); } }
         if(value.kind === 'FunctionExpression') { for(let index = 0; index < value.captures.length; index++) { value.captures[index] = visit(value.captures[index] ?? panic('missing capture'), 'Use'); } }

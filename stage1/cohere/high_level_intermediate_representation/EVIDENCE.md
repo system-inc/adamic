@@ -352,3 +352,16 @@ is rejected. Direct/cached full-census comparison, three live native cache probe
 12 small-oracle functions and 22 symbol selectors with their identity-collapse
 mutant all pass. The current certificate is 380/1,465 original corpus functions
 and 50/50 construction probes. No unit-2 completion or green rule is claimed.
+
+## Aggregate construction WIP backup (Oct 8 13:19 UTC)
+
+Array/object lowering (Go lower_expression.go:560–651) compiles natively and the
+whole census now admits 804/1,521 rows, including 56 probes. This is NOT certified
+coverage. The first full Node comparison fails on effects_react_state_test.go:55:
+`import * as Hooks from './star'; function Component() { return Hooks.useState({value: 0}); }`.
+The MethodCall payload has an empty CalleeOrigin where Go reports react/useState.
+This exposes the previously catalogued module-export graph seam, not a language
+refusal. Named/star/namespace re-exports must be resolved from generic resident
+compiler facts; no HIR-derived callee answer will be supplied as oracle input.
+The last certified count remains 380/1,465 on both backends with 49 lowering
+mutants. No watched plan-branch push or unit-completion claim is made.

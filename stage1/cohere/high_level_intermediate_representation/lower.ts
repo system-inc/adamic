@@ -3,7 +3,7 @@ import { panic, utf8Length } from 'adamic';
 import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR, blockIndex } from './core.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
-import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, FunctionIndex, BlockIndex } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, ArrayElementInterface, ObjectPropertyInterface, FunctionIndex, BlockIndex } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
@@ -33,6 +33,17 @@ function supportedTarget(parser: Parser, id: number): boolean {
 }
 function supportedExpression(parser: Parser, id: number): boolean {
     const node = parser.node(id);
+    if(node.kind === 'ArrayLiteralExpression') { return node.children.every((child) => { const element = parser.node(child); return element.kind === 'OmittedExpression' || supportedExpression(parser, element.kind === 'SpreadElement' ? element.children[0] ?? -1 : child); }); }
+    if(node.kind === 'ObjectLiteralExpression') {
+        return node.children.every((child) => {
+            const member = parser.node(child);
+            if(member.kind === 'SpreadAssignment') { return supportedExpression(parser, member.children[0] ?? -1); }
+            if(member.kind === 'ShorthandPropertyAssignment') { return parser.node(member.children[0] ?? -1).kind === 'Identifier'; }
+            if(member.kind !== 'PropertyAssignment') { return false; }
+            const name = parser.node(member.children[0] ?? -1);
+            return (name.kind !== 'ComputedPropertyName' || supportedExpression(parser, name.children[0] ?? -1)) && supportedExpression(parser, member.children[1] ?? -1);
+        });
+    }
     if(node.kind === 'JsxExpression') { return node.children.every((child) => parser.node(child).kind === 'DotDotDotToken' || supportedExpression(parser, child)); }
     if(node.kind === 'JsxElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxFragment') {
         if(node.kind !== 'JsxFragment') {
@@ -511,6 +522,29 @@ class StraightLineBuilder {
         const place = this.expression(calleeId);
         return this.emit({ kind: 'CallExpression', callee: place, args: this.arguments(id), optional, origin }, id, undefined);
     }
+    aggregate(id: number): PlaceInterface {
+        const node = this.parser.node(id);
+        if(node.kind === 'ArrayLiteralExpression') {
+            const elements: ArrayElementInterface[] = [];
+            for(const child of node.children) {
+                const element = this.parser.node(child);
+                if(element.kind === 'OmittedExpression') { elements.push({ place: { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 }, spread: false, hole: true }); }
+                else { elements.push({ place: this.expression(element.kind === 'SpreadElement' ? element.children[0] ?? -1 : child), spread: element.kind === 'SpreadElement', hole: false }); }
+            }
+            return this.emit({ kind: 'ArrayExpression', elements }, id, undefined);
+        }
+        const properties: ObjectPropertyInterface[] = [];
+        for(const child of node.children) {
+            const member = this.parser.node(child);
+            if(member.kind === 'SpreadAssignment') { properties.push({ key: '', computedKey: undefined, value: this.expression(member.children[0] ?? -1), spread: true }); continue; }
+            const nameId = member.children[0] ?? -1; const name = this.parser.node(nameId);
+            // Go lowers the initializer before a computed key, including effects and block splits.
+            const value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1);
+            const computedKey = name.kind === 'ComputedPropertyName' ? this.expression(name.children[0] ?? -1) : undefined;
+            properties.push({ key: computedKey === undefined ? name.text : '', computedKey, value, spread: false });
+        }
+        return this.emit({ kind: 'ObjectExpression', properties }, id, undefined);
+    }
     jsxChildren(children: readonly number[]): PlaceInterface[] {
         const places: PlaceInterface[] = [];
         for(const id of children) {
@@ -543,6 +577,7 @@ class StraightLineBuilder {
     }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
+        if(node.kind === 'ArrayLiteralExpression' || node.kind === 'ObjectLiteralExpression') { return this.aggregate(id); }
         if(node.kind === 'JsxElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxFragment') { return this.jsx(id); }
         if(node.kind === 'JsxExpression') { const inner = node.children.find((child) => this.parser.node(child).kind !== 'DotDotDotToken'); return inner === undefined ? this.emit({ kind: 'Primitive', literal: 'nil' }, id, undefined) : this.expression(inner); }
         if(node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') { return this.nested(id); }

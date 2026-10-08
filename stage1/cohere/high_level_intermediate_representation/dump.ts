@@ -64,6 +64,8 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
     else if(value.kind === 'LoadContext') { payload = `{"Place":${quote(placeText(value.place))}}`; }
     else if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { payload = `{"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'IteratorNext') { payload = `{"Collection":${quote(placeText(value.collection))},"Iterator":${quote(placeText(value.iterator))}}`; }
+    else if(value.kind === 'ArrayExpression') { payload = `{"Elements":[${value.elements.map((element) => `{"Hole":${element.hole ? 'true' : 'false'},"Place":${quote(placeText(element.place))},"Spread":${element.spread ? 'true' : 'false'}}`).join(',')}]}`; }
+    else if(value.kind === 'ObjectExpression') { payload = `{"Properties":[${value.properties.map((property) => `{"ComputedKey":${property.computedKey === undefined ? 'null' : quote(placeText(property.computedKey))},"Key":${quote(property.key)},"Spread":${property.spread ? 'true' : 'false'},"Value":${quote(placeText(property.value))}}`).join(',')}]}`; }
     else if(value.kind === 'JsxText') { payload = `{"Value":${quote(value.text)}}`; }
     else if(value.kind === 'JsxExpression' || value.kind === 'JsxFragment') {
         const children = '[' + value.children.map((place) => quote(placeText(place))).join(',') + ']';
