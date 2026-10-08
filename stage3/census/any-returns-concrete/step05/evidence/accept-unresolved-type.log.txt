@@ -1,0 +1,6 @@
+=== RUN   TestNodeNamespaceUnresolvedTypesStayRejected
+    node_namespace_test.go:87: unresolved type must retain its named checker refusal: <nil>
+--- FAIL: TestNodeNamespaceUnresolvedTypesStayRejected (0.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.305s
+FAIL

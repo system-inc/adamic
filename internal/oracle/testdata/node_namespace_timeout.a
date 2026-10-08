@@ -1,0 +1,3 @@
+// One qualified annotation, with no node: import to request ambient declarations.
+type TimerHandle = NodeJS.Timeout | undefined;
+console.log('timer type resolved');

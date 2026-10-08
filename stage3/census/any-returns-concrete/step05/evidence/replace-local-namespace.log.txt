@@ -1,0 +1,6 @@
+=== RUN   TestNodeNamespaceLocalDeclarationIsNotReplaced
+    node_namespace_test.go:99: a resolved local namespace must not request ambient Node declarations
+--- FAIL: TestNodeNamespaceLocalDeclarationIsNotReplaced (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.293s
+FAIL

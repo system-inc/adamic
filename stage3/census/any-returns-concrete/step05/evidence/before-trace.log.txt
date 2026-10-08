@@ -1,0 +1,5 @@
+checker diagnostics: [/tmp/timeout-reduction.a:1:20: error TS2503: Cannot find namespace 'NodeJS'.]
+pinned Node declaration files: 0
+/tmp/timeout-reduction.a:1:20 kind=KindUnionType checker=any any=true (before lowering or mapper substitution)
+namespace symbol before lowering: &{34078720 8388608 NodeJS [] <nil> map[] map[] {{} {} 0} <nil> <nil>}
+/tmp/timeout-reduction.a:1:20 kind=KindTypeReference checker=NodeJS.Timeout any=true (before lowering or mapper substitution)

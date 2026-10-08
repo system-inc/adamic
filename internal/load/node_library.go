@@ -1,6 +1,7 @@
 package load
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -50,10 +51,13 @@ func nodeTypesIndex(directory string) (string, error) {
 		}
 		directory = parent
 	}
-	return "", fmt.Errorf("load: node:* imports require @types/node %s installed in %s", NodeTypesVersion, nodeTypesRelative)
+	return "", fmt.Errorf("load: Node imports and NodeJS types require @types/node %s installed in %s", NodeTypesVersion, nodeTypesRelative)
 }
 
-func usesNodeModules(program *compiler.Program) bool {
+// NodeJS is an ambient namespace, so a qualified annotation can request the
+// package without importing a runtime module. A locally resolved namespace keeps
+// its own meaning; only a missing namespace requests the pinned declarations.
+func usesNodeTypes(program *compiler.Program) bool {
 	for _, file := range program.GetSourceFiles() {
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
@@ -63,6 +67,38 @@ func usesNodeModules(program *compiler.Program) bool {
 			if specifier != nil && strings.HasPrefix(specifier.Text(), "node:") {
 				return true
 			}
+		}
+		var names []*ast.Node
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindTypeReference {
+				name := node.AsTypeReferenceNode().TypeName
+				if name.Kind == ast.KindQualifiedName {
+					first := ast.GetFirstIdentifier(name)
+					if first.Text() == "NodeJS" {
+						names = append(names, first)
+					}
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		file.AsNode().ForEachChild(visit)
+		if len(names) == 0 {
+			continue
+		}
+		checker, release := program.GetTypeCheckerForFile(context.Background(), file)
+		needed := false
+		for _, name := range names {
+			symbol := checker.GetSymbolAtLocation(name)
+			// The checker can return a synthetic unresolved alias, not just nil.
+			if symbol == nil || symbol.CheckFlags&ast.CheckFlagsUnresolved != 0 {
+				needed = true
+				break
+			}
+		}
+		release()
+		if needed {
+			return true
 		}
 	}
 	return false

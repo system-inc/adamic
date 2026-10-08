@@ -1,0 +1,30 @@
+package main
+import (
+ "context"
+ "fmt"
+ "os"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/load"
+)
+func main() {
+ p, err := load.LatentLoad([]string{os.Args[1]}); if err != nil {panic(err)}
+ fmt.Printf("checker diagnostics: %v\n",p.LatentDiagnostics())
+ count:=0; for _,file:=range p.CompilerProgram().GetSourceFiles(){if load.IsNodeLibrary(file){count++}}
+ fmt.Printf("pinned Node declaration files: %d\n",count)
+ c, release:=p.Checker(context.Background(),p.Files()[0]);defer release()
+ var visit ast.Visitor
+ visit=func(node *ast.Node) bool {
+  if node.Kind==ast.KindTypeReference || node.Kind==ast.KindUnionType {
+   if node.Kind==ast.KindTypeReference {
+    name:=ast.GetFirstIdentifier(node.AsTypeReferenceNode().TypeName)
+    symbol:=c.GetSymbolAtLocation(name); fmt.Printf("namespace unresolved before lowering: %t\n",symbol==nil || symbol.CheckFlags&ast.CheckFlagsUnresolved!=0)
+   }
+   typ:=c.GetTypeAtLocation(node)
+   fmt.Printf("%s kind=%s checker=%s any=%t (before lowering or mapper substitution)\n",p.Where(node),node.Kind,c.TypeToString(typ),typ.Flags()&checker.TypeFlagsAny!=0)
+   if symbol:=typ.Symbol();symbol!=nil {for _,decl:=range symbol.Declarations{fmt.Printf("type symbol=%s declaration=%s\n",symbol.Name,ast.GetSourceFileOfNode(decl).FileName())}}
+  }
+  return node.ForEachChild(visit)
+ }
+ p.Files()[0].AsNode().ForEachChild(visit)
+}

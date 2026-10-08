@@ -127,7 +127,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
-	if usesNodeModules(program) {
+	if usesNodeTypes(program) {
 		index, err := nodeTypesIndex(workingDirectory)
 		if err != nil {
 			return nil, err

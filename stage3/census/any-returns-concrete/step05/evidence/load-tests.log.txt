@@ -1,0 +1,18 @@
+=== RUN   TestNodeLibraryUsesPinnedDeclarations
+--- PASS: TestNodeLibraryUsesPinnedDeclarations (0.53s)
+=== RUN   TestNodeLibraryRejectsDifferentVersion
+--- PASS: TestNodeLibraryRejectsDifferentVersion (0.00s)
+=== RUN   TestNodeLibraryKeepsOfficialConsoleSignatures
+--- PASS: TestNodeLibraryKeepsOfficialConsoleSignatures (0.25s)
+=== RUN   TestNodeNamespaceAnnotationUsesPinnedTimeout
+--- PASS: TestNodeNamespaceAnnotationUsesPinnedTimeout (0.26s)
+=== RUN   TestNodeNamespaceAliasesKeepTimeout
+--- PASS: TestNodeNamespaceAliasesKeepTimeout (0.25s)
+=== RUN   TestNodeNamespaceUnresolvedTypesStayRejected
+--- PASS: TestNodeNamespaceUnresolvedTypesStayRejected (0.33s)
+=== RUN   TestNodeNamespaceLocalDeclarationIsNotReplaced
+--- PASS: TestNodeNamespaceLocalDeclarationIsNotReplaced (0.03s)
+=== RUN   TestNodeNamespaceLocalMissingMemberIsNotReplaced
+--- PASS: TestNodeNamespaceLocalMissingMemberIsNotReplaced (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	1.692s

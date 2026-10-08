@@ -1,0 +1,6 @@
+checker diagnostics: []
+pinned Node declaration files: 80
+/tmp/timeout-reduction.a:1:20 kind=KindUnionType checker=TimerHandle any=false (before lowering or mapper substitution)
+namespace unresolved before lowering: false
+/tmp/timeout-reduction.a:1:20 kind=KindTypeReference checker=Timeout any=false (before lowering or mapper substitution)
+type symbol=Timeout declaration=/workspace/adamic/stage3/api/node_modules/@types/node/timers.d.ts

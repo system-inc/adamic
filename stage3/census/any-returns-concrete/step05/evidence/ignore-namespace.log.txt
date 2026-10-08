@@ -1,0 +1,6 @@
+=== RUN   TestNodeNamespaceAnnotationUsesPinnedTimeout
+    node_namespace_test.go:20: qualified Timeout annotation must load pinned Node declarations: /workspace/adamic/internal/oracle/testdata/node_namespace_timeout.a:2:20: error TS2503: Cannot find namespace 'NodeJS'.
+--- FAIL: TestNodeNamespaceAnnotationUsesPinnedTimeout (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.043s
+FAIL
