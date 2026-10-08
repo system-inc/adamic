@@ -1,5 +1,9 @@
 # Native tsc entry measurement
 
+The project-reference build witness and scratch source-root experiment are in
+[PROJECT-REFERENCES.md](PROJECT-REFERENCES.md). All compiler changes for that
+experiment remain outside this publication checkout.
+
 The project-options composition and remaining-site adaptation audit are in
 [MODE-AND-ADAPTATIONS.md](MODE-AND-ADAPTATIONS.md). Its scratch compiler has
 explicit uncommitted reconciliation choices; admission is separate from emission.
