@@ -1731,7 +1731,7 @@ SUMMARY: AddressSanitizer: 256 byte(s) leaked in 4 allocation(s).
 ```
 
 
-Failure categories for the new-probe mutants: negative wrap produces different output in release and a runtime abort under UBSan; excess owner retain is memory not freed, while all four comparison modes still agree. These are deliberate mutants, not defects observed on main.
+Failure categories for the new-probe mutants: negative wrap causes a runtime abort under UBSan in the new Uint8 probe, while its release and JavaScript outputs still match source Node. The existing package runtime test separately catches different release output on Int32; excess owner retain is memory not freed, while all four comparison modes still agree. These are deliberate mutants, not defects observed on main.
 
 Inferences and limits
 
