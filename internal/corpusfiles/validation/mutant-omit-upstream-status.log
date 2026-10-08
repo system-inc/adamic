@@ -1,0 +1,71 @@
+=== RUN   TestConvertedPackageContracts
+=== RUN   TestConvertedPackageContracts/scanner
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscanner848027978/001 root stage1 pin daef6e5c1c0f14a522cf94467d683825e8caceca count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsscanner848027978/001 root stage1 pin daef6e5c1c0f14a522cf94467d683825e8caceca count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscanner848027978/001 root stage1 pin daef6e5c1c0f14a522cf94467d683825e8caceca count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/scanner/profile-runtime
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime3901493919/001 root internal/native/runtime pin 0a69c5ccc3f8d85661597db48888a9e74b509f5d count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime3901493919/001 root internal/native/runtime pin 0a69c5ccc3f8d85661597db48888a9e74b509f5d count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime3901493919/001 root internal/native/runtime pin 0a69c5ccc3f8d85661597db48888a9e74b509f5d count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/typeaware
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractstypeaware424985140/001 root src/compiler pin 3a2780514603f6f0f9a42db044767a608177bb77 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractstypeaware424985140/001 root src/compiler pin 3a2780514603f6f0f9a42db044767a608177bb77 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractstypeaware424985140/001 root src/compiler pin 3a2780514603f6f0f9a42db044767a608177bb77 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdowninline
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3614888454/001 root . pin 2123f6a17329972cff2511dc3dcfc1f28ed4b9e3 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3614888454/001 root . pin 2123f6a17329972cff2511dc3dcfc1f28ed4b9e3 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3614888454/001 root . pin 2123f6a17329972cff2511dc3dcfc1f28ed4b9e3 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/yaml
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsyaml2862556633/001 root .github/workflows pin 2f833c524fb9f9a2f7beddc004608fc057f65d00 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsyaml2862556633/001 root .github/workflows pin 2f833c524fb9f9a2f7beddc004608fc057f65d00 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsyaml2862556633/001 root .github/workflows pin 2f833c524fb9f9a2f7beddc004608fc057f65d00 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/cssstrings
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssstrings4105386151/001 root internal/format/css/testdata/prettier pin 3cd9fec1c4e00d26ace3f0112f8ba0f3765e7db8 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractscssstrings4105386151/001 root internal/format/css/testdata/prettier pin 3cd9fec1c4e00d26ace3f0112f8ba0f3765e7db8 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssstrings4105386151/001 root internal/format/css/testdata/prettier pin 3cd9fec1c4e00d26ace3f0112f8ba0f3765e7db8 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/cssnumbers
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssnumbers2613875789/001 root internal/format/css/testdata/prettier pin 12fdf40b86627342ace7802c9712a2537dae2eaf count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractscssnumbers2613875789/001 root internal/format/css/testdata/prettier pin 12fdf40b86627342ace7802c9712a2537dae2eaf count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssnumbers2613875789/001 root internal/format/css/testdata/prettier pin 12fdf40b86627342ace7802c9712a2537dae2eaf count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/graphql/printer
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter2613633833/001 root internal/format/graphql pin fd2e0aaa6f1d346e5410afe5af3917f7b83a2758 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter2613633833/001 root internal/format/graphql pin fd2e0aaa6f1d346e5410afe5af3917f7b83a2758 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter2613633833/001 root internal/format/graphql pin fd2e0aaa6f1d346e5410afe5af3917f7b83a2758 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdownblocks/default
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault3162200444/001 root stage1/cohere/markdownblocks pin 874c0717b206bee4a9fa9b32f1b2262f8f2a28a8 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault3162200444/001 root stage1/cohere/markdownblocks pin 874c0717b206bee4a9fa9b32f1b2262f8f2a28a8 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault3162200444/001 root stage1/cohere/markdownblocks pin 874c0717b206bee4a9fa9b32f1b2262f8f2a28a8 count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdownblocks/census
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus1090199102/001 root . pin 5f6f476aa7002d8f395c1f4d0cc214da1992863f count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus1090199102/001 root . pin 5f6f476aa7002d8f395c1f4d0cc214da1992863f count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus1090199102/001 root . pin 5f6f476aa7002d8f395c1f4d0cc214da1992863f count 1
+    files_test.go:88: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/selector
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsselector889349823/001 root internal/format/css pin 05fb50407e6e6bfa0415e2125af1b9d18662dc46 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsselector889349823/001 root internal/format/css pin 05fb50407e6e6bfa0415e2125af1b9d18662dc46 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsselector889349823/001 root internal/format/css pin 05fb50407e6e6bfa0415e2125af1b9d18662dc46 count 1
+    files_test.go:88: planted corpus fault survived
+--- FAIL: TestConvertedPackageContracts (0.48s)
+    --- FAIL: TestConvertedPackageContracts/scanner (0.05s)
+    --- FAIL: TestConvertedPackageContracts/scanner/profile-runtime (0.05s)
+    --- FAIL: TestConvertedPackageContracts/typeaware (0.04s)
+    --- FAIL: TestConvertedPackageContracts/markdowninline (0.04s)
+    --- FAIL: TestConvertedPackageContracts/yaml (0.04s)
+    --- FAIL: TestConvertedPackageContracts/cssstrings (0.04s)
+    --- FAIL: TestConvertedPackageContracts/cssnumbers (0.04s)
+    --- FAIL: TestConvertedPackageContracts/graphql/printer (0.04s)
+    --- FAIL: TestConvertedPackageContracts/markdownblocks/default (0.04s)
+    --- FAIL: TestConvertedPackageContracts/markdownblocks/census (0.04s)
+    --- FAIL: TestConvertedPackageContracts/selector (0.04s)
+FAIL
+FAIL	corpusmutant	0.486s
+FAIL
