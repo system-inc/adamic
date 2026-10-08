@@ -62,6 +62,10 @@ export class CommentAnchors {
         const node = this.context.node(index);
         this.anchors[node.pos] = true;
         this.anchors[node.end] = true;
+        // Go probes inside the opening brace only when the JSX expression is empty.
+        if(node.kind === 'JsxExpression' && node.children.length === 0) {
+            this.anchors[node.pos + 1] = true;
+        }
         const parameterList = isParameterListKind(node.kind);
         const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
         const bracedList = isBracedListKind(node.kind);
