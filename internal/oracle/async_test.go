@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"strings"
 	"testing"
@@ -615,4 +616,40 @@ func TestAsyncForOfWrongIterationMutant(t *testing.T) {
 		t.Fatalf("only Node stdout must catch wrong iteration: %+v", result)
 	}
 	t.Logf("caught: Node %q; wrong iteration %q", oracle.stdout, result.stdout)
+}
+
+func TestAsyncFinallyPendingValueMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_finally_completion.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	mutateFallthroughStatements(reflect.ValueOf(&program.Functions).Elem(), func(statement ir.Statement) ir.Statement {
+		assignment, ok := statement.(ir.Assign)
+		if ok && program.Locals[assignment.Local].Name == "pending return" && assignment.Value.Type() == ir.String {
+			assignment.Value = ir.StringConstant{Index: len(program.Strings)}
+			program.Strings = append(program.Strings, "dropped")
+			changed++
+			return assignment
+		}
+		return statement
+	})
+	if changed == 0 {
+		t.Fatal("no pending payload mutated")
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("pending-value mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("dropped pending return payload caught by Node stdout; sanitizer and leak checks clean")
 }

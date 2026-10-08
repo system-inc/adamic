@@ -32,7 +32,9 @@ func NormalizeAsync(program *ir.Program) error {
 			continue
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
-		body, err := normalizer.statements(function.Body)
+		completion := asyncCompletion{n: &normalizer, loops: map[int]bool{}}
+		completed := completion.statements(function.Body)
+		body, err := normalizer.statements(append(completion.locals, completed...))
 		if err != nil {
 			return err
 		}
@@ -300,12 +302,6 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			value.Body, err = n.statements(value.Body)
 			statement = value
 		case ir.Try:
-			if containsAwait(reflect.ValueOf(value.Catch)) || containsAwait(reflect.ValueOf(value.Finally)) {
-				return nil, fmt.Errorf("await in catch or finally is not yet proven")
-			}
-			if value.HasFinally {
-				return nil, fmt.Errorf("async finally completion routing is not yet proven")
-			}
 			value.Body, err = n.statements(value.Body)
 			if err == nil {
 				value.Catch, err = n.statements(value.Catch)
