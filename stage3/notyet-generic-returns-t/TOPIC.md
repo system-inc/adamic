@@ -61,3 +61,15 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-coun
 No full package suite or full gate ran.
 
 Setup: export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh. Total 46.328s; Node ready .036s, Go .040s, markdown ready .128s, submodules .133s, clang .303s, build ready 46.138s, tests deferred 46.291s, cache warm 46.293s. nproc=5 (cgroup quota=4). Setup passed without a workaround.
+
+Scanner follow-up: utilities.ts:13:17, returning U | undefined.
+Exact standalone witness from codex/stage3-scanner-native-3 a3a8c599, stage3/drivers/scanner/evidence/land-area-next/witnesses/09-generic-return.a, is now registered unchanged as internal/oracle/testdata/notyet_scanner_generic_return.a, from its own notyet_scanner_generic_return_test.go.
+On topic commit 10250fde the witness already builds; Node and release native print x. No production lowering edit or checked view is needed. This observation applies to the concrete standalone call, not an uninstantiated generic declaration in a census replay.
+Commands (source /workspace/adamic-tools/env.sh):
+node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/notyet-scanner-generic-return.a > /tmp/notyet-scanner-node.log 2>&1
+go run ./cmd/adamic build /tmp/notyet-scanner-generic-return.a -o /tmp/notyet-scanner-generic-return > /tmp/notyet-scanner-build.log 2>&1
+/tmp/notyet-scanner-generic-return > /tmp/notyet-scanner-native.log 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/notyet_scanner_generic_return.a|TestScannerGenericReturnMutant' -count=1 -v > /tmp/notyet-scanner-oracles.log 2>&1
+PASS, 0.743s: release native, sanitized native, JavaScript and leak checks match Node. TestScannerGenericReturnMutant replaces only the specialized each function's string result with wrong; native and JavaScript cleanly exit but stdout disagrees with Node, catching the mutant.
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/notyet-scanner-counts.log 2>&1
+Counts refreshed before the single follow-up push.
