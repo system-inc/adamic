@@ -136,6 +136,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_frame_capture_safe.a", true, false},
 	{"internal/oracle/testdata/async_for_of_body.a", true, false},
 	{"internal/oracle/testdata/async_for_of_capture.a", true, false},
+	{"internal/oracle/testdata/async_iterables_cells_labels.a", true, false},
+	// Historical refusal fixtures are positive witnesses now that their gaps are closed.
+	{"internal/oracle/testdata/async_refused/async_refuse_for_of_string.a", true, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a", true, false},
 	{"internal/oracle/testdata/async_for_of_cells.a", true, false},
 	{"internal/oracle/testdata/async_for_of_body_cells.a", true, false},
 	{"internal/oracle/testdata/async_for_of_break_cells.a", true, false},

@@ -866,7 +866,7 @@ func TestLabelBlockUnlabeledBreakMutant(t *testing.T) {
 
 // Reusing the numeric binding is memory safe; Node must catch the lost identity.
 func TestAsyncForOfCellsCatchSharedCell(t *testing.T) {
-	for _, fixture := range []string{"async_for_of_cells", "async_for_of_body_cells", "async_for_of_break_cells"} {
+	for _, fixture := range []string{"async_for_of_cells", "async_for_of_body_cells", "async_for_of_break_cells", "async_iterables_cells_labels"} {
 		t.Run(fixture, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture+".a"))
 			if err != nil {

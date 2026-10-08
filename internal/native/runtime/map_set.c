@@ -135,14 +135,15 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 
 static const char *const string_state_names[] = {"string", "offset"};
 static const bool string_state_references[] = {true, false};
-static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL};
+static const adamic_field_kind string_state_kinds[] = {adamic_field_reference, adamic_field_number};
+static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL, string_state_kinds};
 
 static adamic_value string_next(adamic_closure *self, adamic_value *arguments) {
 	(void)arguments;
 	adamic_object *state = self->cells[0]->value.reference;
 	adamic_string *string = state->slots[0].reference;
 	size_t offset = (size_t)state->slots[1].number;
-	adamic_object *result = adamic_object_new(&result_shapes[1]);
+	adamic_object *result = adamic_object_new(&result_shapes[adamic_field_reference]);
 	result->slots[0].boolean = offset >= string->length;
 	if (offset < string->length) {
 		size_t size = adamic_string_next(string, offset);

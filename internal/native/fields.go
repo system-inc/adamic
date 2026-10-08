@@ -40,7 +40,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
+		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"}, {"string", "offset"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},

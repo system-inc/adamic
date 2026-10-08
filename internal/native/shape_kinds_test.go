@@ -98,3 +98,74 @@ int main(int argc, char **argv) {
 		})
 	}
 }
+
+// Mutate the merged string iterator state while preserving its ownership bitmap.
+// The counted allocator must reject the inconsistent shape before any slots are used.
+func TestCountedStringIteratorShapeKindsCatchMutant(t *testing.T) {
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, mutant := range []bool{false, true} {
+		t.Run(map[bool]string{false: "valid", true: "mutant"}[mutant], func(t *testing.T) {
+			directory := t.TempDir()
+			for _, file := range files {
+				contents := string(file.contents)
+				if mutant && file.name == "map_set.c" {
+					before := "string_state_kinds[] = {adamic_field_reference, adamic_field_number}"
+					after := "string_state_kinds[] = {adamic_field_number, adamic_field_number}"
+					if strings.Count(contents, before) != 1 {
+						t.Fatal("string iterator mutant target missing")
+					}
+					contents = strings.Replace(contents, before, after, 1)
+				}
+				if err := os.WriteFile(filepath.Join(directory, file.name), []byte(contents), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			options := Options{Count: true}
+			library, err := RuntimeLibrary(directory, options)
+			if err != nil {
+				t.Fatal(err)
+			}
+			source := filepath.Join(directory, "main.c")
+			code := `#include "adamic.h"
+_Static_assert(sizeof(adamic_field_kind) == 1, "field kinds must occupy one byte");
+int main(int argc, char **argv) {
+ adamic_start(argc, argv);
+ static adamic_string text = ADAMIC_STRING("x");
+ adamic_object *iterator = adamic_string_iterator(&text);
+ adamic_closure *next = iterator->slots[0].reference;
+ adamic_object *result = next->code(next, NULL).reference;
+ if (result->shape->kinds[1] != adamic_field_reference || !result->shape->references[1]) return 1;
+ adamic_release(result);
+ adamic_release(iterator);
+ return 0;
+}
+`
+			if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			binary := filepath.Join(directory, "probe")
+			arguments := append(LinkFlags(options), "-I", filepath.Dir(library), "-o", binary, source)
+			arguments = append(arguments, RuntimeLinkFlags(library)...)
+			arguments = append(arguments, "-lm")
+			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
+				t.Fatalf("compile: %v\n%s", err, output)
+			}
+			output, err := exec.Command(binary).CombinedOutput()
+			if mutant {
+				var exit *exec.ExitError
+				if !errors.As(err, &exit) {
+					t.Fatalf("mutant did not terminate: %v\n%s", err, output)
+				}
+				status, ok := exit.Sys().(syscall.WaitStatus)
+				if !ok || !status.Signaled() || status.Signal() != syscall.SIGABRT || !strings.Contains(string(output), "inconsistent shape kind for field string") {
+					t.Fatalf("mutant escaped shape check: %v\n%s", err, output)
+				}
+			} else if err != nil {
+				t.Fatalf("valid shape: %v\n%s", err, output)
+			}
+		})
+	}
+}
