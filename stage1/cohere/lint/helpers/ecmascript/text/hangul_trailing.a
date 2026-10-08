@@ -1,0 +1,1 @@
+export function hangulTrailing(c: number): boolean { return c >= 4520 && c <= 4607; }
