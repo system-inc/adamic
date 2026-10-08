@@ -129,32 +129,19 @@ adamic_array *adamic_checked_entries(const adamic_object *object, int element, s
  return result;
 }
 
-static const adamic_reflection_field *field(size_t count, const adamic_reflection_field *fields, const char *name, size_t length) {
- for (size_t index=0;index<count;index++) if (!fields[index].index && fields[index].length==length && memcmp(fields[index].name,name,length)==0) return &fields[index];
- for (size_t index=0;index<count;index++) if (fields[index].index) return &fields[index];
- return NULL;
-}
-
-void adamic_checked_assign(adamic_object *target, const adamic_object *source, size_t source_count, const adamic_reflection_field *source_fields, size_t target_count, const adamic_reflection_field *target_fields, adamic_reflection_types types, bool own_order, const char *message) {
+// Lowering proves all actual source keys already have target storage of the same
+// scalar representation. Do not impose structural-view member checks at a write.
+void adamic_reflection_assign(adamic_object *target, const adamic_object *source, adamic_reflection_types types, bool own_order) {
  size_t *order=indices(source,types,own_order);
+ const adamic_reflection_layout *source_layout=layout_of(source->shape,types), *target_layout=layout_of(target->shape,types);
  for (size_t at=0;at<source->shape->count;at++) {
   size_t index=order[at];const char *name=source->shape->names[index];
-  if (source->class!=NULL && name[0]=='#') continue;
-  const adamic_reflection_layout *source_layout=layout_of(source->shape,types);
-  if (source_layout==NULL) adamic_panic(message,strlen(message));
   size_t length=source_layout->lengths[index];
-  reflected_value value=classify(source,index,types);
-  const adamic_reflection_field *from=field(source_count,source_fields,name,length), *into=field(target_count,target_fields,name,length);
-  if (from==NULL || into==NULL || !matches(value,from->count,from->members) || !matches(value,into->count,into->members)) adamic_panic(message,strlen(message));
-  const adamic_reflection_layout *target_layout=layout_of(target->shape,types);
-  if (target_layout==NULL) adamic_panic(message,strlen(message));
   size_t position=target->shape->count;
   for (size_t next=0;next<target->shape->count;next++) if (target_layout->lengths[next]==length && memcmp(target->shape->names[next],name,length)==0) {position=next;break;}
-  if (position==target->shape->count) adamic_panic(message,strlen(message));
-  const int *kinds=target_layout->kinds;
-  if (kinds==NULL) adamic_panic(message,strlen(message));
-  if (kinds[position]!=value.kind && kinds[position]!=10 && !(kinds[position]==7 && value.kind==1)) adamic_panic(message,strlen(message));
-  adamic_value next=converted(value,kinds[position]);
+  if (position==target->shape->count) adamic_panic("compiler bug: unproven Object.assign storage",sizeof "compiler bug: unproven Object.assign storage"-1);
+  adamic_value next=source->slots[index];
+  if (source->shape->references[index]) adamic_retain(next.reference);
   adamic_object_check_write(target,name);
   if (target->shape->references[position]) adamic_release(target->slots[position].reference);
   target->slots[position]=next;

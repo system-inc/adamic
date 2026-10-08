@@ -51,25 +51,6 @@ func (l *lowering) reflectionMembers(node *ast.Node, t *checker.Type) ([]ir.Refl
 	return []ir.ReflectionMember{member}, nil
 }
 
-func (l *lowering) reflectionFields(node *ast.Node) ([]ir.ReflectionField, error) {
-	fields := []ir.ReflectionField{}
-	for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
-		members, err := l.reflectionMembers(node, l.checker.GetTypeOfSymbol(field))
-		if err != nil {
-			return nil, err
-		}
-		fields = append(fields, ir.ReflectionField{Name: field.Name, Members: members})
-	}
-	if indexed := l.checker.GetIndexTypeOfType(l.checker.GetTypeAtLocation(node), l.checker.GetStringType()); indexed != nil {
-		members, err := l.reflectionMembers(node, indexed)
-		if err != nil {
-			return nil, err
-		}
-		fields = append(fields, ir.ReflectionField{Index: true, Members: members})
-	}
-	return fields, nil
-}
-
 func (l *lowering) ruledObjectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
 	if name != "entries" && name != "assign" {
 		return nil, false, nil
@@ -129,31 +110,13 @@ func (l *lowering) ruledObjectCall(node *ast.Node, name string) (ir.Expression, 
 			return nil, true, l.notYet(node, "Object.entries value representation")
 		}
 		call.Element = element
+		l.result.ReflectionChecks++
 	} else {
 		call.Returns = ir.Object
-		if l.checker.GetIndexTypeOfType(l.checker.GetTypeAtLocation(args[0]), l.checker.GetStringType()) != nil {
-			return nil, true, l.notYet(args[0], "Object.assign to an open index-signature target needs growable own-property storage")
-		}
-		for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(args[0])) {
-			of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-			if field.Flags&ast.SymbolFlagsOptional != 0 || !known || (of != ir.Number && of != ir.Boolean && of != ir.String) {
-				return nil, true, l.notYet(args[0], "Object.assign target requires present scalar slots with stable representations")
-			}
-		}
-		targets, err := l.reflectionFields(args[0])
-		if err != nil {
+		if err := l.reflectionAssignStorage(node, args); err != nil {
 			return nil, true, err
 		}
-		call.Reflection.Targets = targets
-		for _, arg := range args[1:] {
-			fields, err := l.reflectionFields(arg)
-			if err != nil {
-				return nil, true, err
-			}
-			call.Reflection.Sources = append(call.Reflection.Sources, fields)
-		}
 	}
-	l.result.ReflectionChecks++
 	return call, true, nil
 }
 
@@ -335,4 +298,76 @@ func (l *lowering) reflectionIndexAccess(node *ast.Node) error {
 		return nil
 	}
 	return l.notYet(node, "an index-signature slot without a known own literal producer (growable own-property storage is not represented)")
+}
+
+// Fixed native slots cannot grow or change their representation through assign. Prove
+// storage from actual literal producers, independently of the apparent structural view.
+func (l *lowering) reflectionLiteralProducer(node *ast.Node, depth int) *ast.Node {
+	if depth > 32 {
+		return nil
+	}
+	node = ast.SkipParentheses(node)
+	if l.reflectionLiteralShapeKnown(node) {
+		return node
+	}
+	if node.Kind == ast.KindAsExpression {
+		assertion := node.AsAsExpression()
+		if assertion.Type.Kind == ast.KindTypeReference && assertion.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			return l.reflectionLiteralProducer(assertion.Expression, depth+1)
+		}
+		return nil
+	}
+	if node.Kind != ast.KindIdentifier {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return nil
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return nil
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	if initializer == nil {
+		return nil
+	}
+	return l.reflectionLiteralProducer(initializer, depth+1)
+}
+
+func (l *lowering) reflectionAssignStorage(node *ast.Node, args []*ast.Node) error {
+	target := l.reflectionLiteralProducer(args[0], 0)
+	if target == nil {
+		return l.notYet(node, "Object.assign needs growable own-property storage unless its target and sources have known literal producers")
+	}
+	physical := l.checker.GetTypeAtLocation(target)
+	apparent := l.checker.GetTypeAtLocation(args[0])
+	for _, arg := range args[1:] {
+		source := l.reflectionLiteralProducer(arg, 0)
+		if source == nil {
+			return l.notYet(node, "Object.assign needs growable own-property storage for a source with unknown actual own keys")
+		}
+		for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(source)) {
+			into := l.checker.GetPropertyOfType(physical, field.Name)
+			if into == nil {
+				return l.notYet(node, "Object.assign adding an own key needs growable own-property storage (native objects have fixed slots)")
+			}
+			fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
+			from, fromKnown := l.representation(fromType)
+			to, toKnown := l.representation(toType)
+			if !fromKnown || !toKnown || from != to || (from != ir.Number && from != ir.Boolean && from != ir.String) {
+				return l.notYet(node, "Object.assign changing a native slot representation needs dynamic own-property storage")
+			}
+			if !l.enumAssignable(fromType, toType) || !l.checker.IsTypeAssignableTo(fromType, toType) || toType.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBooleanLiteral) != 0 {
+				return l.notYet(node, "Object.assign changing a producer member domain needs checks on later typed reads")
+			}
+			if declared := l.checker.GetPropertyOfType(apparent, field.Name); declared != nil {
+				declaredType := l.checker.GetTypeOfSymbol(declared)
+				if !l.enumAssignable(fromType, declaredType) || !l.checker.IsTypeAssignableTo(fromType, declaredType) || declaredType.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBooleanLiteral) != 0 {
+					return l.notYet(node, "Object.assign changing a declared member domain needs checks on later typed reads")
+				}
+			}
+		}
+	}
+	return nil
 }

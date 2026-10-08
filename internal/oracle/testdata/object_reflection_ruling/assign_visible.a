@@ -1,0 +1,8 @@
+const actualTarget = {first: 1, '10': 0, '2': 0, extra: 0};
+const target: {first: number} = actualTarget;
+const actualSource = {'10': 10, '2': 2, extra: 3};
+const source: {'2': number} = actualSource;
+Object.assign(target, source);
+console.log(Object.keys(target).join(','));
+for (const pair of Object.entries(target)) { console.log(`${pair[0]}:${pair[1]}`); }
+console.log(String(target.first));

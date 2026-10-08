@@ -9,18 +9,11 @@ type ReflectionMember struct {
 	Boolean bool
 }
 
-type ReflectionField struct {
-	Name    string
-	Index   bool
-	Members []ReflectionMember
-}
-
-// ObjectReflection is a visible, unconditional check over actual enumerable slots.
+// ObjectReflection preserves actual own-key order. Entries carries a visible value check;
+// storage-proven assign does not read values as members of the apparent type.
 // OwnPropertyOrder is required by OrdinaryOwnPropertyKeys, independently of layout.
 type ObjectReflection struct {
 	Members          []ReflectionMember
-	Sources          [][]ReflectionField
-	Targets          []ReflectionField
 	Message          string
 	OwnPropertyOrder bool
 }

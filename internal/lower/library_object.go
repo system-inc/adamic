@@ -138,7 +138,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 				for _, field := range l.checker.GetPropertiesOfType(source) {
 					into := l.checker.GetPropertyOfType(target, field.Name)
 					if into == nil {
-						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
+						return nil, true, l.notYet(argument, "Object.assign adding an own key needs growable own-property storage (native objects have fixed slots)")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
 					of, known := l.representation(fromType)

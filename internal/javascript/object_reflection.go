@@ -22,20 +22,7 @@ const adamicCheckedEntries = (object, members, message) => {
  }
  return result;
 };
-const adamicCheckedAssign = (objects, sources, targets, message) => {
- const target = objects[0];
- for (let index = 1; index < objects.length; index++) {
-  const source = objects[index];
-  for (const key of Object.keys(source)) {
-   const value = source[key];
-   const from = (sources[index - 1] ?? []).find(field => !field.Index && field.Name === key) ?? (sources[index - 1] ?? []).find(field => field.Index);
-   const into = (targets ?? []).find(field => !field.Index && field.Name === key) ?? (targets ?? []).find(field => field.Index);
-   if (from === undefined || into === undefined || !adamicReflectionMatches(value, from.Members) || !adamicReflectionMatches(value, into.Members) || typeof target[key] !== typeof value) panic(message);
-   target[key] = value;
-  }
- }
- return target;
-};
+
 `
 
 func (e *emitter) checkedObjectCall(call ir.ObjectCall) string {
@@ -50,5 +37,5 @@ func (e *emitter) checkedObjectCall(call ir.ObjectCall) string {
 	if call.Method == "entries" {
 		return fmt.Sprintf("adamicCheckedEntries(%s, %s, %s)", e.values(call.Arguments), encode(proof.Members), quote(proof.Message))
 	}
-	return fmt.Sprintf("adamicCheckedAssign([%s], %s, %s, %s)", e.values(call.Arguments), encode(proof.Sources), encode(proof.Targets), quote(proof.Message))
+	return fmt.Sprintf("Object.assign(%s)", e.values(call.Arguments))
 }

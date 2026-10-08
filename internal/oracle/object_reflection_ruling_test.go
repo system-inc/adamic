@@ -29,7 +29,9 @@ var objectReflectionFixtures = []struct {
 }{
 	{"scanner", false, "1\n"}, {"hidden", true, "before\n2\n"}, {"hidden_control", false, "before\n1\n"},
 	{"integers", false, "0:0\n2:2\n10:10\n4294967294:4\nfirst:1\n01:3\n4294967295:5\n-0:6\n"},
-	{"assign_extra", true, "before\n2\n"}, {"assign_hidden", true, "before\n2\n"}, {"assign_control", false, "before\n2\n"},
+	{"assign_hidden", false, "before\n2\n"},
+	{"assign_visible", false, "2,10,first,extra\n2:2\n10:10\nfirst:1\nextra:3\n1\n"},
+	{"assign_read_check", true, "before\nafter\n2\n"},
 	{"proven_record", false, "2:2\n10:10\nfirst:1\n"},
 	{"proven_index", false, "2:2\n10:10\nfirst:1\n"},
 	{"mixed", false, "text\nnumber\nboolean\n3\n"},
@@ -60,9 +62,6 @@ func reflectionFixture(t *testing.T, name string) (string, *ir.Program) {
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if program.ReflectionChecks < 1 {
-		t.Fatal("missing visible reflection check count")
 	}
 	return path, program
 }
@@ -127,11 +126,11 @@ func mutateReflection(value reflect.Value, mutate func(ir.ObjectCall) ir.ObjectC
 }
 
 func TestObjectReflectionRulingMutants(t *testing.T) {
-	for _, rule := range []string{"fold check", "fold assign check", "layout order", "literal member"} {
+	for _, rule := range []string{"fold check", "fold post-assign read check", "layout order", "literal member"} {
 		t.Run(rule, func(t *testing.T) {
 			name := "hidden"
-			if rule == "fold assign check" {
-				name = "assign_hidden"
+			if rule == "fold post-assign read check" {
+				name = "assign_read_check"
 			}
 			if rule == "layout order" {
 				name = "integers"
@@ -142,9 +141,9 @@ func TestObjectReflectionRulingMutants(t *testing.T) {
 			path, program := reflectionFixture(t, name)
 			changed := 0
 			mutate := func(call ir.ObjectCall) ir.ObjectCall {
-				if call.Reflection != nil && ((rule == "fold assign check" && call.Method == "assign") || (rule != "fold assign check" && call.Method == "entries")) {
+				if call.Reflection != nil && call.Method == "entries" {
 					changed++
-					if rule == "fold check" || rule == "fold assign check" {
+					if rule == "fold check" || rule == "fold post-assign read check" {
 						call.Reflection = nil
 					} else if rule == "literal member" {
 						for i := range call.Reflection.Members {
@@ -208,5 +207,85 @@ func TestObjectReflectionSplitBackend(t *testing.T) {
 	result := execute(t, binary)
 	if difference := disagreement(onNode(t, path), result); difference != "" {
 		t.Fatalf("split backend: %s %#v", difference, result)
+	}
+}
+
+func TestObjectAssignStoragePolicy(t *testing.T) {
+	for _, fixture := range []struct{ name, output string }{
+		{"assign_growth", "2,10,first,extra\n2:2\n10:10\nfirst:1\nextra:3\n1\n"},
+		{"assign_extra", "before\n2\n"},
+		{"assign_control", "before\n2\n"},
+	} {
+		t.Run(fixture.name, func(t *testing.T) {
+			text, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/object_reflection_ruling", fixture.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(t.TempDir(), fixture.name+".ts")
+			if err = os.WriteFile(path, text, 0644); err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(run{stdout: []byte(fixture.output)}, onNode(t, path)); difference != "" {
+				t.Fatal(difference)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			if err == nil || !strings.Contains(err.Error(), "growable own-property storage") {
+				t.Fatalf("want named native-storage stop, got %v", err)
+			}
+		})
+	}
+}
+
+func TestObjectAssignExtrasRemainOutsideTypedView(t *testing.T) {
+	for _, name := range []string{"assign_growth", "assign_visible"} {
+		text, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/object_reflection_ruling", name+".a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(t.TempDir(), name+".ts")
+		if err = os.WriteFile(path, append(text, []byte("\nconsole.log(target.extra);\n")...), 0644); err != nil {
+			t.Fatal(err)
+		}
+		_, err = load.Load([]string{path})
+		if err == nil || !strings.Contains(err.Error(), "extra") || !strings.Contains(err.Error(), "does not exist") {
+			t.Fatalf("extra key became a typed member: %v", err)
+		}
+	}
+}
+
+func TestObjectAssignStorageDomainStops(t *testing.T) {
+	for _, fixture := range []struct{ source, reason string }{
+		{"const target={x:1}; Object.assign(target,{x:'other'});", "changing a native slot representation"},
+		{"const actual={x:'control' as const}; const target:{}=actual; Object.assign(target,{x:'other'});", "checks on later typed reads"},
+		{"const target={x:1}; function copy(source:{x:number}):void {Object.assign(target,source);} copy({x:2});", "unknown actual own keys"},
+	} {
+		t.Run(fixture.reason, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "storage.ts")
+			if err := os.WriteFile(path, []byte(fixture.source), 0644); err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(run{}, onNode(t, path)); difference != "" {
+				t.Fatal(difference)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			if err == nil || !strings.Contains(err.Error(), fixture.reason) {
+				t.Fatalf("want storage stop %q, got %v", fixture.reason, err)
+			}
+		})
+	}
+}
+
+func TestObjectAssignWritesDoNotCountAsReads(t *testing.T) {
+	_, program := reflectionFixture(t, "assign_record")
+	if program.ReflectionChecks != 0 {
+		t.Fatalf("assign write incorrectly counted as a structural read check: %d", program.ReflectionChecks)
 	}
 }

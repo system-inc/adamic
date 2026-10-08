@@ -1,6 +1,6 @@
-function copy(target: {x: number, extra: string}, source: {x: number}): void { Object.assign(target, source); }
 const target = {x: 1, extra: 'control'};
 console.log('before');
-const source = {x: 2, extra: 'hidden'};
-copy(target, source);
+const actual = {x: 2, extra: 'hidden'};
+const source: {x: number} = actual;
+Object.assign(target, source);
 console.log(String(Object.entries(target).length));

@@ -1,0 +1,8 @@
+const actualTarget = {x: 1, extra: 'control'};
+const target: {x: number} = actualTarget;
+const actualSource = {x: 2, extra: 'hidden'};
+const source: {x: number} = actualSource;
+console.log('before');
+Object.assign(target, source);
+console.log('after');
+console.log(String(Object.entries(target).length));
