@@ -74,11 +74,11 @@ func cacheKey(parts ...string) string {
 }
 
 func nativeResultKey(code, runtimeKey, nodeVersion, context string) string {
-	return cacheKey("adamic-native-result-v1", code, runtimeKey, nodeVersion, context)
+	return cacheKey("adamic-native-result-v1", ir.TypeTagFingerprint(), code, runtimeKey, nodeVersion, context)
 }
 
 func nodeResultKey(source, javascript, nodeVersion, context string) string {
-	return cacheKey("adamic-node-result-v1", source, javascript, nodeVersion, context)
+	return cacheKey("adamic-node-result-v1", ir.TypeTagFingerprint(), source, javascript, nodeVersion, context)
 }
 
 func (cache *resultCache) read(key string, value any) bool {
