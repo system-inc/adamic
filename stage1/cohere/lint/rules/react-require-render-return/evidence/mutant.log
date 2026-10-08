@@ -1,0 +1,35 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestMutants
+=== RUN   TestMutants/render-return-scope-threshold
+=== PAUSE TestMutants/render-return-scope-threshold
+=== CONT  TestMutants/render-return-scope-threshold
+    lint_test.go:1000: checker compilation phases: load=249.567987ms lower=6.615000135s C=781.952968ms JavaScript=49.015326ms
+    lint_test.go:1006: render-return-scope-threshold caught on Node: case 91 line 4618: port "fixed\tclass Hello extends React.Component { render() { const f = () => { return <div/>; }; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsrender-return-scope-threshold2022895869/022/react-require-render-return-3.tsx:1:39"
+        Go context:
+          react/require-render-return  A class component's `render` returns nothing, so React receives `undefined` where it expected an element. React treats that as an error rather than as an empty component, and the whole subtree fails to mount with a message naming the class rather than the missing return. The usual cause is a body that builds the element and forgets to hand it back, or an arrow whose braces turned an implicit return into a statement. Return the element, or return `null` to render nothing on purpose.
+        
+        range 31 52 noRenderReturn 			31 52
+        fixed	var Hello = createReactClass({ render: function() {} });\u000a
+        case 91
+        /tmp/adamic-gate/TestMutantsrender-return-scope-threshold2022895869/022/react-require-render-return-3.tsx:1:39
+          react/require-render-return  A class component's `render` returns nothing, so React receives `undefined` where it expected an element. React treats that as an error rather than as an empty component, and the whole subtree fails to mount with a message naming the class rather than the missing return. The usual cause is a body that builds the element and forgets to hand it back, or an arrow whose braces turned an implicit return into a statement. Return the element, or return `null` to render nothing on purpose.
+        
+        range 38 86 noRenderReturn 			38 86
+        fixed	class Hello extends React.Component { render() { const f = () => { return <div/>; }; } }\u000a
+    lint_test.go:1006: render-return-scope-threshold caught on emitted JavaScript: case 91 line 4618: port "fixed\tclass Hello extends React.Component { render() { const f = () => { return <div/>; }; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsrender-return-scope-threshold2022895869/022/react-require-render-return-3.tsx:1:39"
+        Go context:
+          react/require-render-return  A class component's `render` returns nothing, so React receives `undefined` where it expected an element. React treats that as an error rather than as an empty component, and the whole subtree fails to mount with a message naming the class rather than the missing return. The usual cause is a body that builds the element and forgets to hand it back, or an arrow whose braces turned an implicit return into a statement. Return the element, or return `null` to render nothing on purpose.
+        
+        range 31 52 noRenderReturn 			31 52
+        fixed	var Hello = createReactClass({ render: function() {} });\u000a
+        case 91
+        /tmp/adamic-gate/TestMutantsrender-return-scope-threshold2022895869/022/react-require-render-return-3.tsx:1:39
+          react/require-render-return  A class component's `render` returns nothing, so React receives `undefined` where it expected an element. React treats that as an error rather than as an empty component, and the whole subtree fails to mount with a message naming the class rather than the missing return. The usual cause is a body that builds the element and forgets to hand it back, or an arrow whose braces turned an implicit return into a statement. Return the element, or return `null` to render nothing on purpose.
+        
+        range 38 86 noRenderReturn 			38 86
+        fixed	class Hello extends React.Component { render() { const f = () => { return <div/>; }; } }\u000a
+--- PASS: TestMutants (4.20s)
+    --- PASS: TestMutants/render-return-scope-threshold (9.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	13.304s
