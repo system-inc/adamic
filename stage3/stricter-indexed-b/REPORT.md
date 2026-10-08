@@ -1,6 +1,6 @@
-Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 5 sites proven.
-Base 390af985; latest preceding commit 390af985caf2a81edb239cdf5e3238add50a7fcd; branch codex/stricter-indexed-b only.
-Logged filtered go tests: 5 proven, 0 blocked, 22 remaining; final gate recorded below.
+Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 10 sites proven.
+Base 390af985; latest preceding commit 4ea89530ea5d0ebed8d5a1da0d7f16ae8b9f0b15; branch codex/stricter-indexed-b only.
+Logged filtered go tests: 10 proven, 0 blocked, 17 remaining; final gate recorded below.
 Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
 Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
 
@@ -46,11 +46,11 @@ must list exactly one checked indexed-presence site, count one, and trust zero.
 | D197 | 1374 | `transformInitializedVariable(variable)` | object array | proven, erase-panic caught |
 | D198 | 1684 | `initializer.declarations` | object array | proven, erase-panic caught |
 | D199 | 1729 | `initializer.declarations` | object array | proven, erase-panic caught |
-| D200 | 1866 | `clause.kind` | object union array | remaining |
-| D201 | 1880 | `clause.kind` | object union array | remaining |
-| D202 | 1881 | `clause.expression` | object union array | remaining |
-| D203 | 1881 | `clause.expression` | object union array | remaining |
-| D204 | 1887 | `clause.expression` | object union array | remaining |
+| D200 | 1866 | `clause.kind` | object union array | proven, erase-panic caught |
+| D201 | 1880 | `clause.kind` | object union array | proven, erase-panic caught |
+| D202 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
+| D203 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
+| D204 | 1887 | `clause.expression` | object union array | proven, erase-panic caught |
 | D205 | 1887 | `clause.expression` | object union array | remaining |
 | D206 | 1889 | `clauseLabels[i]` | number[] | remaining |
 | D207 | 1889 | `clause.expression` | object union array | remaining |
@@ -74,6 +74,7 @@ must list exactly one checked indexed-presence site, count one, and trust zero.
 All test output is written to log files, never piped. Current proof logs:
 
 - `/tmp/stricter-indexed-b-group1-final.log`
+- `/tmp/stricter-indexed-b-group2-final.log`
 
 Setup: `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`
 with `/workspace/adamic-tools/env.sh` sourced for builds and tests. nproc=5.
