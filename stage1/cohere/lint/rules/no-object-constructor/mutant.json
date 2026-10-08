@@ -1,0 +1,5 @@
+{
+  "name": "object constructor forgets literal parentheses",
+  "from": "replacement = '({})';",
+  "to": "replacement = '{}';"
+}

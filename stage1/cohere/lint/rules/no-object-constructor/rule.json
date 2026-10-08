@@ -1,0 +1,16 @@
+{
+  "name": "no-object-constructor",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "NewExpression",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave21ObjectConstructor",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoObjectConstructor"
+}
