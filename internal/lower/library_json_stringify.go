@@ -178,6 +178,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
 	}
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return &ir.JSONSchema{Kind: "null"}, nil
+	}
 	if t.Flags()&checker.TypeFlagsUndefined != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}

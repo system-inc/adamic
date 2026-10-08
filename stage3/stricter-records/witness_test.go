@@ -27,7 +27,8 @@ type site struct {
 	Read    string `json:"read"`
 	Want    string `json:"want"`
 	Blocked string `json:"blocked"`
-	Lookups int    `json:"lookups"`
+	Checks  int    `json:"checks"`
+	Arrays  int    `json:"arrays"`
 }
 
 type observation struct {
@@ -69,8 +70,8 @@ func TestLedgerWitnesses(t *testing.T) {
 	if err := json.Unmarshal(data, &sites); err != nil {
 		t.Fatal(err)
 	}
-	if len(sites) != 7 {
-		t.Fatalf("want 7 record shapes, got %d", len(sites))
+	if len(sites) != 10 {
+		t.Fatalf("want 10 record shapes, got %d", len(sites))
 	}
 	cli := os.Getenv("ADAMIC_WITNESS_CLI")
 	if cli == "" {
@@ -127,7 +128,10 @@ func TestLedgerWitnesses(t *testing.T) {
 					column := len(before) - strings.LastIndex(before, "\n")
 					where := fmt.Sprintf("%s:%d:%d", path, line, column)
 					checks := ir.InsertedChecks(program)
-					count := 1
+					count := s.Checks
+					if count == 0 {
+						count = 1
+					}
 					if s.ID == "D129-D131" {
 						count = 2
 					}
@@ -153,16 +157,12 @@ func TestLedgerWitnesses(t *testing.T) {
 						want = observation{"", "adamic: panic: indexed read is absent: " + where + "\n", 70}
 					}
 					c := native.C(program)
-					lookups := s.Lookups
-					if lookups == 0 {
-						lookups = 1
-					}
-					lookups = 0
+					arrays := s.Arrays
 					if s.ID == "D129-D131" {
-						lookups = 1
+						arrays = 1
 					}
-					if strings.Count(c, "adamic_record_get(") != 1 || strings.Count(c, "adamic_array_at(") != lookups {
-						t.Fatal("guard must retain exactly one indexed lookup")
+					if strings.Count(c, "adamic_record_get(") != count-arrays || strings.Count(c, "adamic_array_at(") != arrays {
+						t.Fatal("each guard must retain exactly one indexed lookup")
 					}
 					js := javascript.JavaScript(program)
 					runtime, err := filepath.Abs("../../oracle/adamic.mjs")
@@ -200,7 +200,7 @@ func TestLedgerWitnesses(t *testing.T) {
 							// Erase only the single emitted presence panic, retaining its lookup.
 							panicCall := regexp.MustCompile(`adamic_panic\([^;\n]*->bytes[^;\n]*\);`)
 							if len(panicCall.FindAllString(c, -1)) != count {
-								t.Fatal("mutant requires exactly one guard")
+								t.Fatal("mutant requires one guard per indexed read")
 							}
 							mutant := binary + "-mutant"
 							if err := native.Build(eraseLastGuard(c, panicCall), mutant, native.Options{Sanitize: sanitized}); err != nil {
@@ -220,8 +220,8 @@ func TestLedgerWitnesses(t *testing.T) {
 	}
 }
 
-// The outer record and inner array guards are distinct. Erase the guard at the
-// read under test (the outer array guard emits after the record's lookup).
+// Each chained read has its own guard. The final prefix guard emits last;
+// erasing it retains all earlier record guards and every indexed lookup.
 func eraseLastGuard(c string, re *regexp.Regexp) string {
 	matches := re.FindAllStringIndex(c, -1)
 	last := matches[len(matches)-1]

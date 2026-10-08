@@ -328,8 +328,7 @@
     "source": "const typesVersions: { readonly [key: string]: { readonly [path: string]: string[] } } = @VALUES@; const key = \"version\";\nconst value: { readonly [path: string]: string[] } = typesVersions[key];\nconsole.log(value === undefined ? \"undefined\" : \"7\");\n",
     "present": "{ version: { entry: [\"7\"] } }",
     "absent": "{}",
-    "blocked": true,
-    "refusal": "stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet"
+    "blocked": false
   },
   {
     "id": "D151",

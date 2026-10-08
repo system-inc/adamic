@@ -1,8 +1,8 @@
-Built witnesses for all 27 assigned rows: 26 proven, including all 26 supported hole variants; D119 nested records blocked.
-Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 1fb6e6a4; cast integration correction and regression evidence in this commit.
-Commands: complete witness suite, compiler packages, both dependency suites, 30 uncached Node oracle fixtures, vet and census pass.
-Mutants: every supported absent and hole guard erased independently and caught; record outer guard and null-sentinel-to-NULL mutants caught.
-Not covered: D119 needs nested record payload support; full repository gate and whole TypeScript build not run.
+Built all 27 assigned row witnesses plus inline sentinel predicates, address-safe Map/Set keys, null-byte backstop and Node-held null conversions.
+Commits: inline/migration backstop 3a69e75c, runtime identity/conversions 75031fa7, nested-record merge a160f053, D119 witness 2b38e4ae; final validation evidence in this commit.
+Commands: full unit and both dependency suites, lower/IR/native packages, 68 uncached Node oracle fixtures, vet and exact 27-row census pass.
+Mutants: 57 site guard erasures caught in the final unit, including D119 release and sanitized; Map address, JSON sentinel and both existing sentinel-to-NULL mutants caught.
+Not covered: full repository gate, whole TypeScript build and WebAssembly timing; mutable/cyclic records and additional nullable reference kinds remain outside this work.
 
 ## Scope and assumptions
 
@@ -521,7 +521,7 @@ use new Array<T>(1), with the same receiver and index form as the dense source.
 | D229 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 | D230 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 | D231 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
-| D119 | Blocked | Nested record payload unsupported; waits on records implementation expansion; refusal pinned at D119.ts:1:24 |
+| D119 | Proven | One checked record read; nested receiver and string-variable key; release and sanitized erased-guard mutants caught |
 | D151 | Proven | One presence check; string/null/absent/hole; equality, typeof, String and console; both guard and sentinel-conflation mutants |
 | D170 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 
@@ -578,3 +578,171 @@ repository gate and whole TypeScript native build remain unrun.
 Final complete witness rerun after the cast correction passes in 80.072s,
 with all 27 row assessments and both nullable runtime mutants rerun; raw output
 is merged-final-witnesses.log. No supported row or hole variant remains.
+
+## Runtime review: inline predicates and migration backstop
+
+The sentinel now has one external declaration in adamic.h and one definition
+in nullable.c. adamic_reference_is_null and adamic_reference_is_sentinel are
+static inline in adamic.h and compare the string sentinel directly by address.
+They do not call adamic_reference_null. Unmigrated kinds retain their previous
+NULL behavior. TestNullReferenceUsesOnlyMigratedKinds asserts that native
+nullReference emits a runtime sentinel constructor only for ir.String, and
+emits NULL for Object, Array, Record, Map, Closure, Union and Weak.
+
+A Node-held 100,000,000-iteration guarded `(string | null)[]` read loop alternates
+"abc" and null and prints 150000000. Five release trials before inlining:
+1.036942, 1.050600, 0.988727, 1.029420, 1.015818 seconds. After inlining:
+0.826715, 0.788082, 0.810806, 0.793662, 0.794983 seconds. Median changes from
+1.029420 to 0.794983 seconds, approximately 22.8% lower elapsed time. This is an
+observation on this worker, not a cross-target performance guarantee. Both
+versions assert one IR indexed-presence check and match Node stdout/exit/stderr.
+No semantic mutant is claimed for the inline optimization.
+
+Logs: runtime-review-before.log and runtime-review-after-inline.log. Commands:
+`ADAMIC_NULL_BENCH=before go test ./stage3/stricter-indexed-d -run '^TestNullableGuardTiming$' -count=1 -v`
+and the same with ADAMIC_NULL_BENCH=after-inline. Migration backstop passes in
+runtime-review-kinds.log. Existing nullable controls and D151 pass in 17.556s,
+including the sentinel-to-NULL and erased-presence mutants
+(runtime-review-inline-controls.log). Setup/environment is reused; nproc 5.
+
+
+## Runtime review: Map/Set identity, bytes and conversions
+
+String-key hashing checks the sentinel address before reading bytes; null gets
+its own fixed hash. String-key comparison checks either sentinel address first
+and compares sentinel values by identity, then handles undefined NULL and normal
+string contents. The normal byte comparison follows the existing canonical
+WTF-8 equality used by strings. Set uses the same map storage. The fixture
+stores empty string, null, a runtime-built real string "null", and undefined
+in one Map and one Set. It exercises size, get/has, overwrite, duplicate add
+and delete. All four keys stay distinct in source Node, JS, native release and
+ASan/UBSan. Removing exactly the Map hash and comparison sentinel-address
+branches from a temporary replacement map.o compiles and runs, but exits 0
+with size 3 instead of Node's 4 and wrong lookups/deletions. The byte-for-byte
+Node fixture catches it. The original archive and runtime cache are unchanged.
+
+The one adamic_null_string definition in internal/native/runtime/nullable.c
+now uses ADAMIC_STRING("null"), retaining its immortal string-kind header.
+adamic.h contains its sole extern declaration and both inline predicates.
+A direct C runtime backstop checks the header (references 0, string kind),
+constructor address and raw sentinel output against Node's String(null), in
+release and ASan/UBSan. Null equality remains by address, distinct from a real
+string with the same bytes.
+
+Ten independent project .ts programs hold these requested shapes to Node:
+Map/Set, narrowed concatenation, narrowed length, narrowed JSON.stringify,
+narrowed slice, narrowed equality/order comparison, null template, null +
+string in both orders, null JSON.stringify, and String(null). Narrowed controls
+pass a runtime-built string, empty string, real "null" and literal null through
+a string | null function. Conversion controls include literal-null templates
+and both literal-null concatenation orders as well as a nullable variable.
+All stdout/stderr/exit observations match in both backends, including native
+release and ASan/UBSan (runtime-review-controls-final.log, 5.781s).
+
+The controls first exposed a real pre-existing native call gap: literal null
+passed to a string | null parameter still emitted NULL because argument fitting
+handled maybe/union/weak but not null's reference kind. This could incorrectly
+enter a narrowed branch and panic, or print undefined. Native arguments now
+fit ir.Null to the parameter's reference kind before normal evaluation through
+nullReference. It is shared across kinds, and UsesNullSentinel continues to
+keep unmigrated kinds off the constructor's default path. Literal null in
+string concatenation/templates is spelled "null" directly. No mixed numeric
+coercion or general object ToPrimitive support is introduced.
+
+JSON schema validation now recognizes null members, allowing the sentinel-backed
+string | null representation. Runtime scalar classification identifies the
+sentinel as JSON null, so it writes null while the real string "null" is quoted;
+NULL remains undefined. An additional isolated JSON runtime mutant erases that
+classification branch, compiles and exits 0 with quoted "null" for null. The
+null JSON Node fixture catches it. Initial failing observations are retained
+in runtime-review-controls.log; the intermediate literal-call fix is retained
+in runtime-review-controls-fixed.log. Compiler lower/IR packages pass in
+22.345s and 14.473s; JavaScript has no standalone tests.
+
+
+## D119 completed alongside runtime review
+
+Merged codex/stricter-records b150f83c as a160f053. The finite readonly nested
+record validator merged cleanly and preserves this branch's string-record cast
+scoping correction. D119's existing source still declares
+`{ readonly [key: string]: { readonly [path: string]: string[] } }`, reads
+`typesVersions[key]` and observes the record-valued result. The present key
+prints 7 under Node, JS, native release and ASan/UBSan. The absent key prints
+undefined under source Node; both compiled backends instead stop with empty
+stdout, exit 70 and exact independently located indexed-read stderr.
+IR inventory and CLI explain both assert exactly one indexed-presence guard
+and zero trusted checks. The witness is a record read, so no array-hole variant
+is generated for it. Existing record-to-array chains keep their explicit hole
+controls and two guards.
+
+D119's erased single guard is compiled and run independently in native release
+and ASan/UBSan. Both mutants exit 0, stdout "undefined\n", empty stderr. Both
+are caught by the named-stop comparison. D119's complete witness passes in
+7.488s (runtime-review-D119.log). All 27 assigned rows are now proven, all 26
+array/record-chain hole variants are proven, no rows blocked or remaining.
+Earlier refusal descriptions in this report are historical checkpoints;
+the per-row table now marks D119 proven. Every row's current state is proven.
+The published validator still refuses mutable/cyclic record payloads and
+finite nesting beyond its conservative bound; D119 needs none of those.
+
+
+## Final runtime review and nested-record validation
+
+Final state: all 27 rows in the per-row table are proven; all 26 supported hole
+variants pass; zero blocked rows and zero remaining rows. D119 has one check,
+D129/D130/D131 each have two chained checks; all other assigned reads have one.
+All four requested runtime changes are pushed, and b150f83c is merged.
+
+Final complete unit after the nested merge: 90.128s, pass. It runs all 27 rows,
+57 erased site guard binaries (including D119 in both native modes), the two
+existing sentinel-conflation runtime mutants, the Map address-check mutant,
+the JSON sentinel-classification mutant, all nullable controls and all new
+conversion/header controls. The opt-in timing test is skipped in this ordinary
+run; its five before/after measurements are recorded above and in separate logs.
+Final dependency suites pass: stricter-options 23.115s, stricter-records 26.896s.
+They include the published hole/typed-array and nested-record controls/mutants.
+Lower after merging nested records passes in 14.932s. Native's full package
+passes in 137.050s for the final runtime/emitter changes; the later nested-record
+merge changes only lower validation and witnesses. IR passes in 14.473s.
+
+The 68 affected ordinary Node oracle fixtures pass uncached in 22.248s for the
+runtime review changes (native 0 hits/203 misses, Node 0 hits/136 misses).
+The selection covers Map/Set, JSON, string conversion, indexing, optional strings
+and legacy RegExp/null typeof shapes. This oracle run preceded the nested lower
+merge; the final lower, complete unit and dependency suites ran after that merge.
+Vet, exact ledger census (27 rows, zero missing/extra) and whitespace checks
+against 71897d7e all pass. Toolchain is unchanged; nproc 5.
+
+One in-flight dependency command straddled the user's nested-record update:
+its test binaries contained the old validator while sites.json already contained
+the new nested witnesses. It therefore refused those added shapes. That run
+(runtime-review-witnesses.log) is retained but is not claimed as verification.
+Rebuilt final dependency binaries pass all nested controls, as above. The two
+indent-only blank lines in the earlier failing conversion log were normalized
+for whitespace checking; quoted program output and all diagnostics remain.
+
+Commands (all output sent to evidence logs, never piped):
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/ir ./internal/javascript -count=1 -timeout 10m
+go test ./internal/native -count=1 -timeout 10m
+go test ./internal/lower -count=1 -timeout 10m
+go test ./stage3/stricter-indexed-d -count=1 -timeout 10m -v
+go test -p 1 ./stage3/stricter-options ./stage3/stricter-records -count=1 -timeout 10m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(json_stringify.*|map.*|set.*|library_map_set.*|library_string.*|typeof_null.*|undefined_strings|optional_strings|string_index)\.a$' -count=1 -timeout 8m -v
+go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d ./stage3/stricter-options ./stage3/stricter-records
+python3 stage3/stricter-indexed-d/census.py
+git diff 71897d7e --check
+```
+
+Evidence: runtime-review-final-witnesses.log, runtime-review-final-dependencies.log,
+runtime-review-nested-lower.log, runtime-review-native.log,
+runtime-review-oracle.log and runtime-review-final-{vet,census,diff}.log.
+No full repository gate, whole TypeScript native build or Wasm performance
+measurement is claimed. Runtime review locations: the one adamic_null_string
+definition is nullable.c, its extern and static inline predicates are adamic.h,
+nullable string key hash/comparison is map.c, and JSON classification is
+json_stringify.c. Other reference kinds keep their existing representation;
+nullReference's migration assertion prevents emission of an unmigrated default
+sentinel constructor call.

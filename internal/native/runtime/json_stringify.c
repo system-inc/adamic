@@ -124,6 +124,9 @@ static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
 	} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array || kind == adamic_json_record) && value.reference == NULL) {
 		kind = adamic_json_undefined;
 	}
+	if (kind == adamic_json_string && adamic_reference_is_sentinel(value.reference)) {
+		kind = adamic_json_null;
+	}
 	return (json_scalar){kind, value};
 }
 static void indent(json_writer *w, size_t depth) {

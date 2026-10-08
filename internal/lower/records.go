@@ -456,23 +456,30 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 	return nil
 }
 
-const recordLimit = "a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars"
+const recordLimit = "a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars"
 
-// recordInfo deliberately bounds the first compiler view of the existing record
-// runtime. No mutable table or recursive payload is admitted until its writable
-// slots and reachability are part of the cycle proof.
+// Finite readonly record edges cannot point back through a writable slot.
+// Cyclic and expanding generic payloads remain outside the cycle proof.
 func (l *lowering) recordInfo(t *checker.Type) (*checker.IndexInfo, bool) {
+	return l.recordInfoSeen(t, map[*checker.Type]bool{})
+}
+
+func (l *lowering) recordInfoSeen(t *checker.Type, path map[*checker.Type]bool) (*checker.IndexInfo, bool) {
 	if t == nil {
 		return nil, false
 	}
 	t = l.concrete(t)
-	if t.Flags()&checker.TypeFlagsObject == 0 {
+	// The depth bound also terminates generics whose payload instantiation grows
+	// on every edge, without revisiting an identical checker type.
+	if t.Flags()&checker.TypeFlagsObject == 0 || path[t] || len(path) >= 64 {
 		return nil, false
 	}
 	infos := l.checker.GetIndexInfosOfType(t)
 	if len(infos) != 1 || !infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString || len(l.checker.GetPropertiesOfType(t)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return nil, false
 	}
+	path[t] = true
+	defer delete(path, t)
 	value := l.concrete(infos[0].ValueType())
 	scalar := func(t *checker.Type) bool {
 		return t.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsStringLike) != 0
@@ -485,6 +492,9 @@ func (l *lowering) recordInfo(t *checker.Type) (*checker.IndexInfo, bool) {
 		if len(args) == 1 && scalar(l.concrete(args[0])) {
 			return infos[0], true
 		}
+	}
+	if _, ok := l.recordInfoSeen(value, path); ok {
+		return infos[0], true
 	}
 	return nil, false
 }
@@ -510,7 +520,7 @@ func (l *lowering) sameRecordView(from, to *checker.Type) bool {
 	}
 	fv, _ := l.representation(f.ValueType())
 	tv, _ := l.representation(t.ValueType())
-	return fv == tv && l.widened(f.ValueType(), t.ValueType(), map[[2]*checker.Type]bool{}) == nil
+	return fv == tv && l.sameKeeping(f.ValueType(), t.ValueType(), map[[2]*checker.Type]bool{}) && l.widened(f.ValueType(), t.ValueType(), map[[2]*checker.Type]bool{}) == nil
 }
 
 func (l *lowering) recordUse(node *ast.Node) error {
