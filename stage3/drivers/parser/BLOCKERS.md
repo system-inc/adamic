@@ -1,3 +1,61 @@
+# Main-based parser run: fifteen ordered stops, native red
+
+Fresh main ef3141e9 plus clean namespace 47a6fabe, enum reachability 2152fc3b
+and front3 a36d1c04 merges yields unpushed scratch cadeac4f. Front3 was added
+for the Node-loader stop and merged cleanly, but did not clear it. Remaining
+library 51761b0 and callable views 37fa06d3 merges conflicted and were aborted;
+no compiler edits or conflict resolutions. Front3 supplies method-presence,
+predicates-2 and debugger. Full ancestry/merge logs are retained.
+
+Both split modes exit 1 on the unchanged validated slice with eight checker
+diagnostics. First: parser-proof-main.a:3:21 TS2591 Cannot find name node:fs.
+Node dependencies are installed; the clean merge lacks their loader. Unsplit
+0.4154s, split 0.4679s, repeat 0.4716s are build-attempt wall times, not clang
+times. No C, binary, native comparison, performance or native-output mutant.
+
+| Order | Slice location | Stop | Minimal program |
+|---|---|---|---|
+| 1 | parser-proof-main.a:3:21 | Node filesystem binding | [native-node-fs-import.a](native-node-fs-import.a) |
+| 2 | src/compiler/core.ts:883:25 | NodeJS namespace | [native-nodejs-process-type.a](native-nodejs-process-type.a) |
+| 3 | src/compiler/performanceCore.ts:37:37 | require / perf_hooks | [native-require-perf-hooks.a](native-require-perf-hooks.a) |
+| 4 | src/compiler/tracing.ts:24:27 | fs type import | [native-fs-type-import.a](native-fs-type-import.a) |
+| 5 | src/compiler/tracing.ts:47:22 | require / process | [native-require-fs.a](native-require-fs.a) |
+| 6 | src/compiler/core.ts:195:37 | sameMap array return cast | [native-same-map-return-cast.a](native-same-map-return-cast.a) |
+| 7 | src/compiler/core.ts:421:34 | toSorted readonly empty conditional | [native-sorted-empty-conditional.a](native-sorted-empty-conditional.a) |
+| 8 | src/compiler/core.ts:525:17 | arguments.length | [native-arguments-length.a](native-arguments-length.a) |
+| 9 | src/compiler/core.ts:594:5 | isArray predicate | [native-array-is-array-predicate.a](native-array-is-array-predicate.a) |
+| 10 | src/compiler/core.ts:616:97 | predicate callback parameter | [native-predicate-callback-parameter.a](native-predicate-callback-parameter.a) |
+| 11 | src/compiler/debug.ts:429:5 | namespace this receiver | [native-namespace-object-receiver.a](native-namespace-object-receiver.a) |
+| 12 | src/compiler/debug.ts:526:5 | namespace this receiver | [native-namespace-object-receiver.a](native-namespace-object-receiver.a) |
+| 13 | src/compiler/debug.ts:739:5 | class inside namespace | [native-namespace-class.a](native-namespace-class.a) |
+| 14 | src/compiler/debug.ts:50:5 | function merged with namespace | [native-callable-namespace.a](native-callable-namespace.a) |
+| 15 | src/compiler/debug.ts:80:31 | key-array cast | [native-key-array-cast.a](native-key-array-cast.a) |
+
+[Ordered evidence](evidence/front30/ordered-stops.json) retains exact messages,
+coordinates and placeholder edits. All rows after 1 are found behind stubs;
+rows 3 and 5 each remove additional host diagnostics in their throwing bodies.
+The five checker sites cover all eight original diagnostic rows.
+
+Fourteen distinct minimal programs run on Node with exit 0 and empty stderr;
+all fourteen native builds reject the corresponding family. The shared receiver
+minimal covers rows 11 and 12. No silent miscompile is observed in this run.
+
+Discovery changes remain uncommitted in a separate copy. The compressed exact
+patch is evidence, not an adaptation. Host placeholders have intentionally any
+return types; removed mode initialization is replaced by a throwing typed
+initializer. A namespace class becomes an interface plus a throwing value
+initializer; the unused merged log function is renamed and made throwing.
+These changes have no Node identity or native acceptance claim. Three artificial
+TS2454 errors from the first pass were excluded and fixed in the canonical
+discovery pass. Row 15 has a recorded placeholder but no subsequent build: the
+requested fifteen-stop limit was reached.
+
+[Final run report](evidence/front30/result.json) and compressed raw logs retain
+commands, outputs and split-mode results. The prior Node references remain the
+acceptance targets; this run cannot compare native output against them.
+
+---
+
 # Main-based parser run: first checker stop, continuing discovery
 
 Fresh scratch uses origin/main ef3141e9 plus clean namespace 47a6fabe and enum

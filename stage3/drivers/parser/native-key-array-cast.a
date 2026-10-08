@@ -1,0 +1,5 @@
+// Reduced from TypeScript 6.0.3, Debug.setAssertionLevel:80.
+type AssertionKeys = "first" | "second";
+const names: string[] = ["first"];
+const keys = names as AssertionKeys[];
+console.log(`${keys.length}`);
