@@ -1,0 +1,30 @@
+{
+  "head": "29f7a0008a029b8f8fd6ce7479e8425ae8fa68c6",
+  "a_check": {
+    "stage3/parser-ahead/factories/already-complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/escaped.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/scout.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/factories/scout.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-ca"
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "scope": "changed .a only; pre-push record, not the full fast gate"
+}
