@@ -399,6 +399,11 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.typeMapper == nil {
+		if err := l.explicitGenericArrayViews(node); err != nil {
+			return err
+		}
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
