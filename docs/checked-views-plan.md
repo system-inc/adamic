@@ -1098,6 +1098,10 @@ JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
 
+Lane 5 next group adds known-void signature metadata at the owned read adapter
+and runtime shape selection, including native method producer certificates.
+Void remains distinct from unknown and discarded-result contracts. Original
+FileWatcher.close witnesses pin this fixed zero-argument shape.
 ### Dictionary boxed-record helper checkpoint after ba59427c
 
 The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
@@ -1182,6 +1186,7 @@ Fixtures live under stage3/interface-downcasts/lane2/node-array-*.a; their oracl
 is TestCheckedViewNodeArrayRecords. This checkpoint covers scalar own-field
 reads/writes and lazy object element reads. It does not certify reference element
 writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
@@ -1302,3 +1307,14 @@ undefined-payload certificate for approved string/phantom-void contracts.
 Null-containing and ordinary nullable contracts retain the lazy owner's reader.
 Open-key reduced witnesses use that owner's now-present primitive member selector;
 they do not certify the full original CompilerOptions dictionary extraction.
+
+Lane 5 integration nullable-callable hook: native/view_nullish.go and
+javascript/view_nullish.go invoke owned viewCallableNullishCertificate helpers
+after the owner presence/readiness/kind checks. Non-null callable values retain
+the same signature check; permitted null/undefined preserve their identities.
+
+The nullable-callable reconciliation also attaches complete fixed signatures to
+boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
+proof exemption would admit nullable function reads without a signature check.
+TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
+refusal in both backends rather than the older compile-time refusal.

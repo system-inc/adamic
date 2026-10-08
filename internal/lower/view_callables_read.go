@@ -29,6 +29,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 	// of parameter/result types while preparing a callable read.
 	build := func(child *checker.Type) (ir.ViewContractID, error) {
 		of, known := l.representation(child)
+		if child.Flags()&checker.TypeFlagsVoid != 0 {
+			of, known = ir.Type(254), true
+		}
 		if !known || of == 0 {
 			return 0, l.notYet(node, "checked callable signature representation "+l.checker.TypeToString(child))
 		}
@@ -46,7 +49,7 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 // shared allocation pass decides whether their refusal is demanded. This also
 // handles helper bodies lowered before a cast appears in another function.
 func (l *lowering) prepareViewCallableProperty(node *ast.Node, declared *checker.Type, property *ir.Property) {
-	if property.Of != ir.Closure || l.includesNull(declared) {
+	if property.Of != ir.Closure && (property.Of != ir.Union || !l.runtimeViewCallableShape(declared)) {
 		return
 	}
 	if l.viewCallableMarkerType(declared) {
@@ -83,7 +86,11 @@ func (l *lowering) runtimeViewCallableShape(target *checker.Type) bool {
 			return false
 		}
 	}
-	of, known := l.representation(l.checker.GetReturnTypeOfSignature(s))
+	result := l.checker.GetReturnTypeOfSignature(s)
+	if result.Flags()&checker.TypeFlagsVoid != 0 {
+		return true
+	}
+	of, known := l.representation(result)
 	return known && viewCallableScalarRepresentation(of)
 }
 

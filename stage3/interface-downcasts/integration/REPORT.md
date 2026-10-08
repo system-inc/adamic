@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-188 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+194 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -667,3 +667,46 @@ Final restored owner-reference gates: lower 11.207s, native 20.568s, JavaScript
 2.218s; full IR 16.792s; uncached filtered Node oracle 213.260s; vet exit 0.
 Original-declaration controls enabled. Existing array-callback proof exclusion
 unchanged; no new failure remains.
+
+
+Latest callable contracts, f3a2646a09db4666676eacfd09306d0f0f06bb61
+
+Six conflicts resolved individually: two plan hunks preserve the moved lane-5
+hook list once, known-void metadata and lane-4 probes/inventory. object.go keeps
+the approved branded-string-undefined dispatch exception. view_callables_read.go
+attaches complete producer-comparable signatures to boxed nullable Union reads.
+Native/JavaScript view_nullish.go keep owner member selection and Map certificates
+and use the lane-owned callable certificate afterward, guarded for null/undefined.
+Known void 254 is exact, unknown zero and discarded-result 255 remain distinct.
+
+The old nullable wrong-result source still refuses, now at the actual field read:
+exit 70 node.value expected () => string, incompatible result representation.
+This replaces its older compile refusal only because an independent producer
+signature now establishes the ABI and the runtime check can reject the value.
+The same-name proof exemption is paired with descriptor completion and both
+backend checks, not trusted target annotations. The nullable wrong-arity fixture
+reads and would call a string-returning function that never touches its missing
+argument; omission evidence therefore executes valid code without an ABI fault.
+Overlap oracle passes 68.322s, including Map certificates and CompleteBrand.
+
+FileWatcher.close retains its complete original declaration. Program canonical
+handoff keeps the original callable alias but reduces the receiver/helper. Four
+candidate member contracts / 34 static reads are fixture-certified; 304 / 1469
+remain in the static table. Whole Program and whole-tsc reachability are unclaimed.
+Debug.assert and detached intrinsics remain named proof/dispatch boundaries until
+separately checked after the queued predicate dependency. Optional-boolean hold
+remains active. No cohere source was copied.
+
+Six new callable implementation defects caught and restored: native and JavaScript
+arity guards (both canonical-name and watcher wrong-arity witnesses), native and
+JavaScript exact-result guards (watcher wrong-result exits 0, no output), and both
+nullable-dispatch hook omissions (nullable-wrong-arity exits 0 with forbidden
+output). Native canonical wrong-result also crashes without its guard; that is
+recorded separately and is not credited as valid-code kill evidence. The watcher
+witness establishes the native result guard can fail in valid code. Total 194
+executed implementation/component defects. Logs: callable-latest-mutants/.
+
+Final callable gates: lower 15.494s, native 23.472s, JavaScript 1.615s; full IR
+30.111s; uncached filtered Node oracle 261.199s; vet exit 0. Original declaration
+controls enabled; no new exclusions or failures. The existing array-callback
+proof baseline and optional-boolean hold remain.

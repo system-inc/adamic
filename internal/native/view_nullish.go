@@ -20,14 +20,7 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 	}
 	e.nullishMemberSelection(property, value)
 	e.mapViewCertificate(property, value)
-	if property.Of == ir.Closure && property.ViewContract != 0 {
-		contract := e.program.ViewContracts[property.ViewContract-1]
-		if contract.Result != 0 || contract.DiscardResult {
-			callable := e.temporary()
-			e.line("adamic_closure *%s = (adamic_closure *)%s;", callable, value)
-			e.line("(void)%s;", e.emitViewCallableCertificate(property, callable))
-		}
-	}
+	e.viewCallableNullishCertificate(property, value)
 	if property.Of == ir.Union {
 		return value
 	}
