@@ -1,0 +1,9 @@
+FIRST FAILURE (a-check, at 70.0 s):
+Traceback (most recent call last):
+  File "/home/ahra/fast-gate/tools-2/cloud/fast-gate/run.py", line 724, in body
+    target(*arguments)
+  File "/home/ahra/fast-gate/tools-2/cloud/fast-gate/run.py", line 551, in aCheck
+    with open(os.path.join(self.arguments.tree, path), errors="replace") as handle:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-2/stage3/interface-downcasts/default-boxed-write.a'
+
