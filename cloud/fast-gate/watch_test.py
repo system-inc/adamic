@@ -617,6 +617,16 @@ class WatchTests(unittest.TestCase):
         self.assertNotIn('preempted cloud/land-lint', w.read('output'))
         self.assertNotIn('cloud/land-train-4-v3 ', w.read('starts'))
 
+    def test_the_train_runs_bottom_first_among_equal_keys(self):
+        # Train-3 queued after train-2 would win a tie newest-first; the lower train number goes first.
+        w = self.reservation('server B\n', [('cloud/land-train-2-v1', 'B'), ('cloud/land-train-3-v2', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-train-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 1)
+        self.assertTrue([x for x in w.read('starts').splitlines() if not x.startswith('canary/')][0].startswith('cloud/land-train-2-v1 '))
+        ranked = (w.state / 'queue.ranked').read_text().split()
+        self.assertEqual(len((w.state / 'queue.ranked').read_text().splitlines()[0].split()), 6, 'ranked lines keep their six fields')
+
     def test_a_box_running_the_star_takes_no_other_gate(self):
         # No Server in the table: the star runs wherever a big slot is free, and that box is then its own.
         w = self.reservation('workshop B\nworkshop S\n',
@@ -624,9 +634,10 @@ class WatchTests(unittest.TestCase):
         (w.state / 'front').write_text('cloud/land-train-*\n')
         w.put('initial', 'pass')
         w.wait(lambda: any(x.startswith('cloud/land-train-1-views-slice1 ') for x in w.read('starts').splitlines()))
+        # star-boxes is written at the start of each pass, so it names the box a pass after the star starts.
+        w.wait(lambda: (w.state / 'star-boxes').read_text() == 'workshop\n')
         time.sleep(.3)
         self.assertNotIn('codex/side', w.read('starts'))
-        self.assertEqual((w.state / 'star-boxes').read_text(), 'workshop\n')
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side' in w.read('starts'))
 

@@ -179,7 +179,8 @@ reservedBranch() {
 }
 slotReserved() {
   local branch=$1 box=$2 slot=$3 b c glob
-  [ "${slot}" = B ] && [ "$(starSecondBox "${branch}")" = "${box}" ] && return 0
+  starSecondBoxOf "${branch}"
+  [ "${slot}" = B ] && [ -n "${starSecond}" ] && [ "${starSecond}" = "${box}" ] && return 0
   while read -r b c glob; do
     [ "${b}" = "${box}" ] && [ "${c}" = "${slot}" ] || continue
     if [ -n "${glob}" ]; then
@@ -416,11 +417,15 @@ gateRank() {
   else rank=4; fi
   echo $(( $(stepPosition "${branch}") * 100 + rank ))
 }
-starSecondBox() {
-  local branch box
-  while read -r branch box; do
-    [ "${branch}" = "$1" ] && { echo "${box}"; return; }
-  done <<< "${starSeconds:-}"
+# Sets starSecond to the branch's second star box, or empty. A function setting a global, not $(...): the slot checks
+# call it for every queued tip on every pick, and a fork each time made a pass take 45 to 90 s (Oct 8 23:10Z).
+starSecondBoxOf() {
+  starSecond=""
+  [ -n "${starSeconds:-}" ] || return 0
+  local line
+  while read -r line; do
+    [ "${line%% *}" = "$1" ] && { starSecond=${line#* }; return 0; }
+  done <<< "${starSeconds}"
 }
 # Every other gate on a star box is stopped on purpose and queued again, so the star never shares CPU or waits
 # out a drain (Oct 8 21:47Z: other gates on Workshop held its load at 51 to 64 of 64 while the star sat in
@@ -503,8 +508,12 @@ rankQueue() {
       for name in ${priorityList[@]+"${priorityList[@]}"}; do [ "${name}" = "${branch}" ] && rank=2; done
     fi
     if [ "${rank}" = 0 ]; then position=0; else position=$(stepPosition "${branch}"); fi
-    echo "$(( position * 100 + rank )) ${queued} ${class} ${branch} ${sha} ${reserved}"
-  done < "${state}/queue" | sort -k1,1n -k2,2nr > "${state}/queue.ranked"
+    # Among equal keys the star's train runs bottom first: cloud/land-train-<n>, lower n first (@system_adamic, Oct 8
+    # 23:17Z: train-3 outranked train-2 because ties break newest first). Other tips sort as 0, newest first.
+    train=0
+    if [[ ${branch} =~ ^cloud/land-train-([0-9]+) ]]; then train=${BASH_REMATCH[1]}; fi
+    echo "$(( position * 100 + rank )) ${train} ${queued} ${class} ${branch} ${sha} ${reserved}"
+  done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3nr | cut -d' ' -f1,3- > "${state}/queue.ranked"
 }
 # The box a big tip may borrow a small slot on: the first box among these slots' with a free small slot and
 # fewer big gates running than its limit.
@@ -616,9 +625,9 @@ drainingBoxes() {
 # The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
 # waits out the drain for the whole box rather than borrowing a share of another.
 reservedBoxes() {
-  local branch=$1 class=$2 b c glob second
-  second=$(starSecondBox "${branch}")
-  [ -n "${second}" ] && { echo "${second}"; return; }
+  local branch=$1 class=$2 b c glob
+  starSecondBoxOf "${branch}"
+  [ -n "${starSecond}" ] && { echo "${starSecond}"; return; }
   while read -r b c glob; do
     [ "${c}" = "${class}" ] && slotReserved "${branch}" "${b}" "${c}" && echo "${b}"
   done < "${state}/slots"
