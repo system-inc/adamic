@@ -1,0 +1,285 @@
+{
+  "classification": "rehearsal",
+  "status": "pending",
+  "milestone": false,
+  "runner_status": "scanner-blocked",
+  "stack": {
+    "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+    "merges": [
+      {
+        "ref": "origin/compiler/area-stack",
+        "sha": "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+        "exit": 0,
+        "conflicts": []
+      },
+      {
+        "ref": "origin/codex/records-maplike-next",
+        "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c",
+        "exit": 1,
+        "conflicts": [
+          "internal/lower/refusals.go",
+          "internal/oracle/counts.md",
+          "stage3/fixtures/objects/status.json"
+        ]
+      },
+      {
+        "ref": "origin/area/library",
+        "sha": "7778b3606a22ef53a181f7c1508428a6491e781b",
+        "exit": 1,
+        "conflicts": [
+          "internal/flow/build.go",
+          "internal/flow/flow_test.go",
+          "internal/fresh/fresh.go",
+          "internal/ir/ir.go",
+          "internal/ir/library_object.go",
+          "internal/javascript/javascript.go",
+          "internal/load/load.go",
+          "internal/load/node_library.go",
+          "internal/load/source_fs.go",
+          "internal/lower/cast.go",
+          "internal/lower/cast_proof.go",
+          "internal/lower/control.go",
+          "internal/lower/exceptions.go",
+          "internal/lower/expression.go",
+          "internal/lower/functions.go",
+          "internal/lower/generic.go",
+          "internal/lower/invariance.go",
+          "internal/lower/library_array_predicate.go",
+          "internal/lower/library_json_stringify.go",
+          "internal/lower/library_math_number.go",
+          "internal/lower/library_node_buffer.go",
+          "internal/lower/library_node_fs_file.go",
+          "internal/lower/library_node_fs_file_test.go",
+          "internal/lower/library_node_test.go",
+          "internal/lower/library_object.go",
+          "internal/lower/library_string.go",
+          "internal/lower/lower_test.go",
+          "internal/lower/modules.go",
+          "internal/lower/object.go",
+          "internal/lower/refusals.go",
+          "internal/lower/regexp.go",
+          "internal/lower/regexp_test.go",
+          "internal/lower/statements.go",
+          "internal/native/class_accessors.go",
+          "internal/native/emit_functions.go",
+          "internal/native/emit_objects.go",
+          "internal/native/emit_statements.go",
+          "internal/native/fields.go",
+          "internal/native/library.go",
+          "internal/native/native.go",
+          "internal/native/runtime/adamic.h",
+          "internal/native/runtime/class_static.c",
+          "internal/native/runtime/heap.c",
+          "internal/native/runtime/library_object.c",
+          "internal/native/runtime/node_fs_file.c",
+          "internal/native/runtime/node_fs_file.h",
+          "internal/native/runtime/object.c",
+          "internal/native/runtime/regexp.h",
+          "internal/native/runtime/union.c",
+          "internal/oracle/counts.md",
+          "internal/oracle/node_fs_file_test.go",
+          "internal/oracle/oracle_test.go",
+          "internal/oracle/testdata/node_fs_file_close.a",
+          "internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+          "review/unknown-narrowing/require_pending.a",
+          "stage1/cohere/yaml/GAPS.md",
+          "stage1/cohere/yaml/gaps_test.go",
+          "stage3/fixtures/cycles/status.json",
+          "stage3/fixtures/host/status.json",
+          "stage3/fixtures/objects/status.json",
+          "stage3/fixtures/predicates/status.json"
+        ]
+      },
+      {
+        "ref": "origin/codex/placeholder-nonnull",
+        "sha": "711312292569ca30e0ac075f600da9bdba926def",
+        "exit": 0,
+        "conflicts": []
+      },
+      {
+        "ref": "origin/codex/entries-provenance",
+        "sha": "05a6006690f4e69b270b17f00ccff8afef59fee9",
+        "exit": 1,
+        "conflicts": [
+          "internal/lower/assignments.go",
+          "internal/lower/library_object.go",
+          "internal/lower/refusals.go",
+          "internal/oracle/counts.md"
+        ]
+      },
+      {
+        "ref": "origin/codex/assignment-proofs",
+        "sha": "4d17f1d4d8206111171c4a8ff54fc3da8beb7a47",
+        "exit": 1,
+        "conflicts": [
+          "internal/lower/statements.go",
+          "internal/oracle/counts.md"
+        ]
+      },
+      {
+        "ref": "origin/codex/scanner-cast-checks",
+        "sha": "77ed4464215592f8f95354c8f7400bac31de2f53",
+        "exit": 1,
+        "conflicts": [
+          "CohereSettings.json",
+          "docs/0.1.md",
+          "internal/flow/flow_test.go",
+          "internal/fresh/fresh.go",
+          "internal/ir/call_targets_guard_test.go",
+          "internal/ir/ir.go",
+          "internal/ir/library_object.go",
+          "internal/javascript/javascript.go",
+          "internal/load/load.go",
+          "internal/lower/cast.go",
+          "internal/lower/cast_proof.go",
+          "internal/lower/census_small.go",
+          "internal/lower/class_inheritance.go",
+          "internal/lower/collections.go",
+          "internal/lower/cycles.go",
+          "internal/lower/expression.go",
+          "internal/lower/functions.go",
+          "internal/lower/generic.go",
+          "internal/lower/invariance.go",
+          "internal/lower/library_node_fs_file_test.go",
+          "internal/lower/library_node_test.go",
+          "internal/lower/library_object.go",
+          "internal/lower/library_string.go",
+          "internal/lower/locals.go",
+          "internal/lower/lower_test.go",
+          "internal/lower/object.go",
+          "internal/lower/predicates.go",
+          "internal/lower/readiness.go",
+          "internal/lower/refusals.go",
+          "internal/lower/regexp.go",
+          "internal/lower/statements.go",
+          "internal/native/emit_arrays.go",
+          "internal/native/emit_branches.go",
+          "internal/native/emit_expressions.go",
+          "internal/native/emit_functions.go",
+          "internal/native/emit_maps.go",
+          "internal/native/emit_objects.go",
+          "internal/native/emit_statements.go",
+          "internal/native/fields.go",
+          "internal/native/from.go",
+          "internal/native/library_object.go",
+          "internal/native/reuse.go",
+          "internal/native/runtime/adamic.h",
+          "internal/native/runtime/closure.c",
+          "internal/native/runtime/heap.c",
+          "internal/native/runtime/node_fs_file.c",
+          "internal/native/runtime/union.c",
+          "internal/oracle/counts.md",
+          "internal/oracle/interface_cast_counts_test.go",
+          "internal/oracle/interface_cast_test.go",
+          "internal/oracle/nested_functions_test.go",
+          "internal/oracle/node_fs_file_test.go",
+          "internal/oracle/oracle_test.go",
+          "internal/oracle/readiness_test.go",
+          "internal/oracle/testdata/node_fs_file_close.a",
+          "internal/oracle/view_fields_test.go",
+          "stage3/fixtures/assertions/status.json",
+          "stage3/fixtures/host/status.json",
+          "stage3/fixtures/nested-functions/status.json",
+          "stage3/fixtures/objects/status.json"
+        ]
+      },
+      {
+        "ref": "origin/codex/stricter-options-next",
+        "sha": "8f32e51e8fc41b8f1177453213ca5453ce764486",
+        "exit": 1,
+        "conflicts": [
+          "internal/ir/ir.go",
+          "internal/javascript/javascript.go",
+          "internal/lower/class_inheritance.go",
+          "internal/lower/exceptions.go",
+          "internal/lower/expression.go",
+          "internal/lower/lower_test.go",
+          "internal/lower/object.go",
+          "internal/lower/refusals.go",
+          "internal/native/emit_objects.go",
+          "internal/native/runtime/node_process.c",
+          "internal/native/runtime/parallel.c",
+          "internal/oracle/counts.md"
+        ]
+      }
+    ],
+    "accepted": [
+      "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+      "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+      "711312292569ca30e0ac075f600da9bdba926def"
+    ],
+    "missing": [
+      "library/area-on-next-2"
+    ]
+  },
+  "compiler": {
+    "exit": 0,
+    "sha": "ceb93620339d8d63e2df0a0420d4b2a92998740e",
+    "binary_sha256": "5cd341acf6de4e1834e7dca23f1a893ef84f8106bd800a2b447245923fe959cd"
+  },
+  "integrated_sha": "ceb93620339d8d63e2df0a0420d4b2a92998740e",
+  "first_stop": {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/corePublic.ts",
+    "file": "corePublic.ts",
+    "line": 9,
+    "column": 5,
+    "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+    "order": 1,
+    "build_exit": 1,
+    "scope": "first unchanged stop",
+    "witness": {
+      "file": "discovery/witness-01-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "catalogue_origin": "native3/01-index"
+    },
+    "placeholder": "index-signature removal with throwing marker; later record observations are dependent"
+  },
+  "scanner": [
+    {
+      "split": 0,
+      "exit": 1,
+      "report": {
+        "tokens": 1369432,
+        "errors": 466,
+        "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+        "bytes": 108021555,
+        "input_tree": "/workspace/scratch/scanner-rehearsal-retry/inputs",
+        "files": 81,
+        "node_exit": 0,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1,
+        "native": "blocked at compilation",
+        "build_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    },
+    {
+      "split": 1,
+      "exit": 1,
+      "report": {
+        "tokens": 1369432,
+        "errors": 466,
+        "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+        "bytes": 108021555,
+        "input_tree": "/workspace/scratch/scanner-rehearsal-retry/inputs",
+        "files": 81,
+        "node_exit": 0,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1,
+        "native": "blocked at compilation",
+        "build_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    }
+  ],
+  "marks": "marks.json",
+  "awaits": [
+    "clean records integration",
+    "clean library and compiler topic integrations",
+    "actual scanner native execution without discovery placeholders"
+  ],
+  "stub_or_contract_results": "pending; discovery awaits implementations of the removed functions and declarations",
+  "whole_rehearsal_branch_lands": false
+}
