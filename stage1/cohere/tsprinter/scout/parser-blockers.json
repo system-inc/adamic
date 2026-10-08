@@ -1,0 +1,50 @@
+[
+  {
+    "Label": "computed-method",
+    "Source": "({[z](){return z;}})",
+    "Path": "witness.ts",
+    "NodeExpressionDriver": "notyet\texpression-file",
+    "Go": "({\n    [z]() {\n        return z;\n    },\n});\n",
+    "Prettier": "({\n    [z]() {\n        return z;\n    },\n});\n",
+    "NodeFileDriver": {
+      "kind": "Ok",
+      "text": "({\n    [z]() {\n        return z;\n    },\n});\n"
+    }
+  },
+  {
+    "Label": "returning-object-method",
+    "Source": "({resolve(){return {foo:100};}})",
+    "Path": "witness.ts",
+    "NodeExpressionDriver": "notyet\texpression-file",
+    "Go": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n",
+    "Prettier": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n",
+    "NodeFileDriver": {
+      "kind": "Ok",
+      "text": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n"
+    }
+  },
+  {
+    "Label": "export-default-abstract",
+    "Source": "export default abstract;",
+    "Path": "witness.ts",
+    "NodeExpressionDriver": "notyet\texpression-file",
+    "Go": "export default abstract;\n",
+    "Prettier": "export default abstract;\n",
+    "NodeFileDriver": {
+      "kind": "Ok",
+      "text": "abstract;\n"
+    }
+  },
+  {
+    "Label": "comment-nbsp",
+    "Source": "// x\t\u00a0",
+    "Path": "witness.ts",
+    "NodeExpressionDriver": "notyet\tcomment-attachment",
+    "Go": "// x\t\u00a0\n",
+    "Prettier": "// x\n",
+    "NodeFileDriver": {
+      "kind": "NotYet",
+      "reason": "comment-attachment"
+    }
+  }
+]

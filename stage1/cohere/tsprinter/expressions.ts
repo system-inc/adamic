@@ -628,6 +628,12 @@ export class Expressions {
                 }
                 return this.docs.concat(parts);
             }
+            case 'ImportDeclaration':
+                return this.docs.concat([
+                    this.docs.text('import '),
+                    this.print(this.child(index, 0)),
+                    this.docs.text(';'),
+                ]);
             case 'FunctionDeclaration':
                 return this.functionDoc(index);
             case 'VariableStatement':

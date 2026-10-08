@@ -478,6 +478,11 @@ export function statementUnsupported(parser: Parser, source: string, index: numb
                 if(reason !== '') return reason;
             }
             return '';
+        case 'ImportDeclaration':
+            if(node.children.length !== 1) return 'ImportDeclaration';
+            if(syntaxNode(parser, node.children[0] ?? panic('missing import source')).kind !== 'StringLiteral')
+                return 'ImportDeclaration';
+            return unsupported(parser, source, node.children[0] ?? panic('missing import source'));
         case 'FunctionDeclaration':
             return functionUnsupported(parser, source, index);
         case 'VariableStatement': {

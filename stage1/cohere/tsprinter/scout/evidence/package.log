@@ -1,0 +1,400 @@
+=== RUN   TestClassInterfaceMethodGap
+    class_interface_gap_test.go:41: Node prints 17; lowering refuses before native emission: /tmp/adamic-gate/TestClassInterfaceMethodGap2668911069/001/gap.ts:6:28: stage 0 can't lower a class method through a view that erases its prototype origin yet
+    class_interface_gap_test.go:65: explicit callback prints 17 on Node, native and backend; leak-free; gap check rejects this normal-run mutant
+--- PASS: TestClassInterfaceMethodGap (0.30s)
+=== RUN   TestOptionalBooleanFunctionGap
+    class_interface_gap_test.go:92: Node prints absent; stage 0 /tmp/adamic-gate/TestOptionalBooleanFunctionGap2250681482/001/gap.ts:1:15: stage 0 can't lower a function value taking boolean | undefined yet
+    class_interface_gap_test.go:115: required callback parameter prints absent on all three, leak-free; gap check rejects successful-lowering mutant
+--- PASS: TestOptionalBooleanFunctionGap (0.26s)
+=== RUN   TestTrackedCorpusRoots
+=== PAUSE TestTrackedCorpusRoots
+=== RUN   TestDocumentsAgainstGoAndPrettier
+=== PAUSE TestDocumentsAgainstGoAndPrettier
+=== RUN   TestExpressionsAgainstGoAndPrettier
+    expressions_test.go:61: corpus root bench: 6 git-tracked .ts files
+    expressions_test.go:61: corpus root bridge: 1 git-tracked .ts files
+    expressions_test.go:61: corpus root cmd: 5 git-tracked .ts files
+    expressions_test.go:61: corpus root internal: 18 git-tracked .ts files
+    expressions_test.go:61: corpus root stage1: 480 git-tracked .ts files
+    expressions_test.go:61: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    expressions_test.go:61: corpus root src/compiler: 77 git-tracked .ts files
+    expressions_test.go:61: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 887 files, 1 full-file parse refusals, 171003 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (3.24s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	3.268s
+        
+    expressions_test.go:61: cases: 171003 cases in 5 largest-first processes
+    expressions_test.go:65: Node exit 0 stderr  diff /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+--- FAIL: TestExpressionsAgainstGoAndPrettier (6.85s)
+=== RUN   TestCompilerGaps
+=== PAUSE TestCompilerGaps
+=== RUN   TestNumberConstructor
+--- PASS: TestNumberConstructor (0.18s)
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestScoutSideEffectImports
+=== PAUSE TestScoutSideEffectImports
+=== RUN   TestCorpusShardAssignment
+=== PAUSE TestCorpusShardAssignment
+=== RUN   TestCorpusShardCoverage
+=== PAUSE TestCorpusShardCoverage
+=== RUN   TestCorpusShardTransport
+=== PAUSE TestCorpusShardTransport
+=== RUN   TestStatementsAgainstGoAndPrettier
+    statements_test.go:60: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:60: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:60: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:60: corpus root internal: 18 git-tracked .ts files
+    statements_test.go:60: corpus root stage1: 480 git-tracked .ts files
+    statements_test.go:60: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:60: corpus root src/compiler: 77 git-tracked .ts files
+    statements_test.go:60: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:144: 887 files, 1 parse failures, 58312 supported statement/program fragments, 13 complete files
+        --- PASS: TestAdamicStatementCorpus (1.52s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	1.529s
+        
+    statements_test.go:60: cases: 58312 cases in 5 largest-first processes
+    statements_test.go:100: npm Prettier: 58312 cases; 1 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    statements_test.go:103: embedded Prettier: 58312 cases; 1 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    statements_test.go:118: 58312 statement/program fragments byte-identical
+--- PASS: TestStatementsAgainstGoAndPrettier (46.21s)
+=== RUN   TestTSCCorpusAgreement
+    tsc_corpus_test.go:21: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+=== RUN   TestTSCCorpusAgreement/expressions
+    tsc_corpus_test.go:57: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 300 files, 1 full-file parse refusals, 34790 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (0.79s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.798s
+        
+    tsc_corpus_test.go:89: tsc-cases: 1729 cases in 5 largest-first processes
+    tsc_corpus_test.go:111: Node stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    tsc_corpus_test.go:111: Node stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/capturedParametersInInitializers1.ts:857:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n"
+    tsc_corpus_test.go:111: native stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    tsc_corpus_test.go:111: native stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/capturedParametersInInitializers1.ts:857:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n"
+    tsc_corpus_test.go:111: backend stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    tsc_corpus_test.go:111: backend stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/capturedParametersInInitializers1.ts:857:KindObjectLiteralExpression: port "notyet\texpression-file"; Go cohere "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n"
+    tsc_corpus_test.go:138: expressions: 1729 tsc corpus fragments, 6 disagreements
+=== RUN   TestTSCCorpusAgreement/statements
+    tsc_corpus_test.go:57: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:144: 300 files, 1 parse failures, 1164 supported statement/program fragments, 0 complete files
+        --- PASS: TestAdamicStatementCorpus (0.03s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.037s
+        
+    tsc_corpus_test.go:89: tsc-cases: 874 cases in 5 largest-first processes
+    tsc_corpus_test.go:138: statements: 874 tsc corpus fragments, 0 disagreements
+--- FAIL: TestTSCCorpusAgreement (45.74s)
+    --- FAIL: TestTSCCorpusAgreement/expressions (20.30s)
+    --- PASS: TestTSCCorpusAgreement/statements (25.43s)
+=== RUN   TestTSCCorpusUpstreamDifferences
+=== PAUSE TestTSCCorpusUpstreamDifferences
+=== RUN   TestStatementUpstreamDifferences
+    upstream_test.go:29: === RUN   TestAdamicStatementUpstreamDifferences
+            adamic_statements_test.go:168: 5 exact Go fork differences pinned
+        --- PASS: TestAdamicStatementUpstreamDifferences (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.006s
+        
+    upstream_test.go:65: 5 exact npm differences pinned
+        
+--- PASS: TestStatementUpstreamDifferences (1.19s)
+=== CONT  TestTrackedCorpusRoots
+=== CONT  TestCorpusShardTransport
+    shards_test.go:318: cases: 23 cases in 5 largest-first processes
+=== NAME  TestTrackedCorpusRoots
+    corpus_test.go:85: corpus root named: 1 git-tracked .ts files
+--- PASS: TestTrackedCorpusRoots (0.01s)
+=== CONT  TestCorpusShardCoverage
+=== RUN   TestCorpusShardCoverage/missing
+=== RUN   TestCorpusShardCoverage/extra
+=== RUN   TestCorpusShardCoverage/unterminated
+--- PASS: TestCorpusShardCoverage (0.00s)
+    --- PASS: TestCorpusShardCoverage/missing (0.00s)
+    --- PASS: TestCorpusShardCoverage/extra (0.00s)
+    --- PASS: TestCorpusShardCoverage/unterminated (0.00s)
+=== CONT  TestMutants
+--- PASS: TestCorpusShardTransport (0.04s)
+=== CONT  TestScoutSideEffectImports
+=== NAME  TestMutants
+    mutants_test.go:82: docs: 5072 cases in 5 largest-first processes
+    mutants_test.go:83: corpus root bench: 6 git-tracked .ts files
+    mutants_test.go:83: corpus root bridge: 1 git-tracked .ts files
+    mutants_test.go:83: corpus root cmd: 5 git-tracked .ts files
+    mutants_test.go:83: corpus root internal: 18 git-tracked .ts files
+    mutants_test.go:83: corpus root stage1: 480 git-tracked .ts files
+    mutants_test.go:83: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    mutants_test.go:83: corpus root src/compiler: 77 git-tracked .ts files
+    mutants_test.go:83: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 887 files, 1 full-file parse refusals, 171003 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (3.80s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	3.822s
+        
+    mutants_test.go:83: cases: 171003 cases in 5 largest-first processes
+    mutants_test.go:87: corpus root bench: 6 git-tracked .ts files
+    mutants_test.go:87: corpus root bridge: 1 git-tracked .ts files
+    mutants_test.go:87: corpus root cmd: 5 git-tracked .ts files
+    mutants_test.go:87: corpus root internal: 18 git-tracked .ts files
+    mutants_test.go:87: corpus root stage1: 480 git-tracked .ts files
+    mutants_test.go:87: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    mutants_test.go:87: corpus root src/compiler: 77 git-tracked .ts files
+    mutants_test.go:87: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:144: 887 files, 1 parse failures, 58312 supported statement/program fragments, 13 complete files
+        --- PASS: TestAdamicStatementCorpus (1.74s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	1.746s
+        
+    mutants_test.go:87: cases: 58312 cases in 5 largest-first processes
+=== RUN   TestMutants/protocol_width_confuses_Number_with_parseFloat
+=== PAUSE TestMutants/protocol_width_confuses_Number_with_parseFloat
+=== RUN   TestMutants/program_loses_its_statement_separator
+=== PAUSE TestMutants/program_loses_its_statement_separator
+=== RUN   TestMutants/declaration_loses_its_function_keyword
+=== PAUSE TestMutants/declaration_loses_its_function_keyword
+=== RUN   TestMutants/assignment_chain_ignores_statement_boundaries
+=== PAUSE TestMutants/assignment_chain_ignores_statement_boundaries
+=== RUN   TestMutants/hashbang_loses_its_refusal
+=== PAUSE TestMutants/hashbang_loses_its_refusal
+=== RUN   TestMutants/variable_statement_loses_its_keyword
+=== PAUSE TestMutants/variable_statement_loses_its_keyword
+=== RUN   TestMutants/await_loses_its_keyword
+=== PAUSE TestMutants/await_loses_its_keyword
+=== RUN   TestMutants/yield_loses_delegation
+=== PAUSE TestMutants/yield_loses_delegation
+=== RUN   TestMutants/tagged_template_loses_its_tag
+=== PAUSE TestMutants/tagged_template_loses_its_tag
+=== RUN   TestMutants/template_preview_loses_optional_stopping_boundaries
+=== PAUSE TestMutants/template_preview_loses_optional_stopping_boundaries
+=== RUN   TestMutants/computed_key_forgets_its_clean_text
+=== PAUSE TestMutants/computed_key_forgets_its_clean_text
+=== RUN   TestMutants/method_loses_its_key
+=== PAUSE TestMutants/method_loses_its_key
+=== RUN   TestMutants/function_loses_its_keyword
+=== PAUSE TestMutants/function_loses_its_keyword
+=== RUN   TestMutants/optional_chain_loses_its_stopping_parentheses
+=== PAUSE TestMutants/optional_chain_loses_its_stopping_parentheses
+=== RUN   TestMutants/return_and_throw_lose_their_keyword
+=== PAUSE TestMutants/return_and_throw_lose_their_keyword
+=== RUN   TestMutants/statement_expression_loses_its_semicolon
+=== PAUSE TestMutants/statement_expression_loses_its_semicolon
+=== RUN   TestMutants/body_loses_its_opening_brace
+=== PAUSE TestMutants/body_loses_its_opening_brace
+=== RUN   TestMutants/simple_statement_loses_debugger
+=== PAUSE TestMutants/simple_statement_loses_debugger
+=== RUN   TestMutants/arrow_loses_its_arrow_token
+=== PAUSE TestMutants/arrow_loses_its_arrow_token
+=== RUN   TestMutants/template_loses_its_interpolation_dollar
+=== PAUSE TestMutants/template_loses_its_interpolation_dollar
+=== RUN   TestMutants/member_chain_loses_its_method_dot
+=== PAUSE TestMutants/member_chain_loses_its_method_dot
+=== RUN   TestMutants/arguments_lose_their_trailing_comma
+=== PAUSE TestMutants/arguments_lose_their_trailing_comma
+=== RUN   TestMutants/object_loses_its_property_colon
+=== PAUSE TestMutants/object_loses_its_property_colon
+=== RUN   TestMutants/conditional_swaps_its_separator
+=== PAUSE TestMutants/conditional_swaps_its_separator
+=== RUN   TestMutants/assignment_loses_its_operator
+=== PAUSE TestMutants/assignment_loses_its_operator
+=== RUN   TestMutants/sequence_loses_a_comma
+=== PAUSE TestMutants/sequence_loses_a_comma
+=== RUN   TestMutants/group_ignores_width
+=== PAUSE TestMutants/group_ignores_width
+=== RUN   TestMutants/fill_never_packs_a_pair
+=== PAUSE TestMutants/fill_never_packs_a_pair
+=== RUN   TestMutants/expression_loses_required_parentheses
+=== PAUSE TestMutants/expression_loses_required_parentheses
+=== CONT  TestTSCCorpusUpstreamDifferences
+    upstream_protocol_test.go:115: npm Prettier: 15 cases; 2 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    upstream_protocol_test.go:118: embedded Prettier: 15 cases; 2 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    upstream_protocol_test.go:115: npm Prettier: 14 cases; 1 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    upstream_protocol_test.go:118: embedded Prettier: 14 cases; 1 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+--- PASS: TestTSCCorpusUpstreamDifferences (0.33s)
+=== CONT  TestCompilerGaps
+=== RUN   TestCompilerGaps/prefixUpdateValue
+=== PAUSE TestCompilerGaps/prefixUpdateValue
+=== RUN   TestCompilerGaps/defaultSort
+=== PAUSE TestCompilerGaps/defaultSort
+=== CONT  TestDocumentsAgainstGoAndPrettier
+    doc_test.go:35: docs: 5072 cases in 5 largest-first processes
+    doc_test.go:56: 5072 docs identical to Go and Prettier on native, Node and backend; sanitizer and leak checks pass
+--- PASS: TestDocumentsAgainstGoAndPrettier (4.79s)
+=== CONT  TestCorpusShardAssignment
+--- PASS: TestCorpusShardAssignment (0.00s)
+=== CONT  TestMutants/protocol_width_confuses_Number_with_parseFloat
+    mutants_test.go:131: Node caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 4: line 1: "ok\t\\n", Go cohere "ok\t"
+    mutants_test.go:131: native caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 4: line 1: "ok\t\\n", Go cohere "ok\t"
+=== CONT  TestMutants/statement_expression_loses_its_semicolon
+=== RUN   TestScoutSideEffectImports/import_keyword_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\texport 'x';\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\texport 'x';\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_separator_lost
+=== NAME  TestMutants/statement_expression_loses_its_semicolon
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => {\\n    count += 1\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => {\\n    count += 1\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+=== CONT  TestMutants/expression_loses_required_parentheses
+=== NAME  TestScoutSideEffectImports/import_separator_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\timport'x';\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\timport'x';\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_semicolon_lost
+=== NAME  TestMutants/expression_loses_required_parentheses
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:2455:KindBinaryExpression: line 1: "ok\tstep / squared * Math.sqrt(squared);\\n", Go cohere "ok\tstep / (squared * Math.sqrt(squared));\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:2455:KindBinaryExpression: line 1: "ok\tstep / squared * Math.sqrt(squared);\\n", Go cohere "ok\tstep / (squared * Math.sqrt(squared));\\n"
+=== CONT  TestMutants/arguments_lose_their_trailing_comma
+=== NAME  TestScoutSideEffectImports/import_semicolon_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\timport 'x'\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\timport 'x'\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_attributes_silently_dropped
+=== NAME  TestMutants/arguments_lose_their_trailing_comma
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:624:KindArrayLiteralExpression: line 1: "ok\t[\\n    new Body(0, 0, 0, 0, 0, 0, solarMass),\\n    new Body(\\n        4.8414314424647209,\\n        -1.16032004402742839,\\n        -1.03622044471123109e-1,\\n        1.66007664274403694e-3 * daysPerYear,\\n        7.69901118419740425e-3 * daysPerYear,\\n        -6.90460016972063023e-5 * daysPerYear,\\n        9.54791938424326609e-4 * solarMass\\n    ),\\n    new Body(\\n        8.34336671824457987,\\n        4.12479856412430479,\\n        -4.03523417114321381e-1,\\n        -2.76742510726862411e-3 * daysPerYear,\\n        4.99852801234917238e-3 * daysPerYear,\\n        2.30417297573763929e-5 * daysPerYear,\\n        2.85885980666130812e-4 * solarMass\\n    ),\\n    new Body(\\n        1.2894369562139131e1,\\n        -1.51111514016986312e1,\\n        -2.23307578892655734e-1,\\n        2.96460137564761618e-3 * daysPerYear,\\n        2.3784717395948095e-3 * daysPerYear,\\n        -2.96589568540237556e-5 * daysPerYear,\\n        4.36624404335156298e-5 * solarMass\\n    ),\\n    new Body(\\n        1.53796971148509165e1,\\n        -2.59193146099879641e1,\\n        1.79258772950371181e-1,\\n        2.68067772490389322e-3 * daysPerYear,\\n        1.62824170038242295e-3 * daysPerYear,\\n        -9.5159225451971587e-5 * daysPerYear,\\n        5.15138902046611451e-5 * solarMass\\n    ),\\n];\\n", Go cohere "ok\t[\\n    new Body(0, 0, 0, 0, 0, 0, solarMass),\\n    new Body(\\n        4.8414314424647209,\\n        -1.16032004402742839,\\n        -1.03622044471123109e-1,\\n        1.66007664274403694e-3 * daysPerYear,\\n        7.69901118419740425e-3 * daysPerYear,\\n        -6.90460016972063023e-5 * daysPerYear,\\n        9.54791938424326609e-4 * solarMass,\\n    ),\\n    new Body(\\n        8.34336671824457987,\\n        4.12479856412430479,\\n        -4.03523417114321381e-1,\\n        -2.76742510726862411e-3 * daysPerYear,\\n        4.99852801234917238e-3 * daysPerYear,\\n        2.30417297573763929e-5 * daysPerYear,\\n        2.85885980666130812e-4 * solarMass,\\n    ),\\n    new Body(\\n        1.2894369562139131e1,\\n        -1.51111514016986312e1,\\n        -2.23307578892655734e-1,\\n        2.96460137564761618e-3 * daysPerYear,\\n        2.3784717395948095e-3 * daysPerYear,\\n        -2.96589568540237556e-5 * daysPerYear,\\n        4.36624404335156298e-5 * solarMass,\\n    ),\\n    new Body(\\n        1.53796971148509165e1,\\n        -2.59193146099879641e1,\\n        1.79258772950371181e-1,\\n        2.68067772490389322e-3 * daysPerYear,\\n        1.62824170038242295e-3 * daysPerYear,\\n        -9.5159225451971587e-5 * daysPerYear,\\n        5.15138902046611451e-5 * solarMass,\\n    ),\\n];\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:624:KindArrayLiteralExpression: line 1: "ok\t[\\n    new Body(0, 0, 0, 0, 0, 0, solarMass),\\n    new Body(\\n        4.8414314424647209,\\n        -1.16032004402742839,\\n        -1.03622044471123109e-1,\\n        1.66007664274403694e-3 * daysPerYear,\\n        7.69901118419740425e-3 * daysPerYear,\\n        -6.90460016972063023e-5 * daysPerYear,\\n        9.54791938424326609e-4 * solarMass\\n    ),\\n    new Body(\\n        8.34336671824457987,\\n        4.12479856412430479,\\n        -4.03523417114321381e-1,\\n        -2.76742510726862411e-3 * daysPerYear,\\n        4.99852801234917238e-3 * daysPerYear,\\n        2.30417297573763929e-5 * daysPerYear,\\n        2.85885980666130812e-4 * solarMass\\n    ),\\n    new Body(\\n        1.2894369562139131e1,\\n        -1.51111514016986312e1,\\n        -2.23307578892655734e-1,\\n        2.96460137564761618e-3 * daysPerYear,\\n        2.3784717395948095e-3 * daysPerYear,\\n        -2.96589568540237556e-5 * daysPerYear,\\n        4.36624404335156298e-5 * solarMass\\n    ),\\n    new Body(\\n        1.53796971148509165e1,\\n        -2.59193146099879641e1,\\n        1.79258772950371181e-1,\\n        2.68067772490389322e-3 * daysPerYear,\\n        1.62824170038242295e-3 * daysPerYear,\\n        -9.5159225451971587e-5 * daysPerYear,\\n        5.15138902046611451e-5 * solarMass\\n    ),\\n];\\n", Go cohere "ok\t[\\n    new Body(0, 0, 0, 0, 0, 0, solarMass),\\n    new Body(\\n        4.8414314424647209,\\n        -1.16032004402742839,\\n        -1.03622044471123109e-1,\\n        1.66007664274403694e-3 * daysPerYear,\\n        7.69901118419740425e-3 * daysPerYear,\\n        -6.90460016972063023e-5 * daysPerYear,\\n        9.54791938424326609e-4 * solarMass,\\n    ),\\n    new Body(\\n        8.34336671824457987,\\n        4.12479856412430479,\\n        -4.03523417114321381e-1,\\n        -2.76742510726862411e-3 * daysPerYear,\\n        4.99852801234917238e-3 * daysPerYear,\\n        2.30417297573763929e-5 * daysPerYear,\\n        2.85885980666130812e-4 * solarMass,\\n    ),\\n    new Body(\\n        1.2894369562139131e1,\\n        -1.51111514016986312e1,\\n        -2.23307578892655734e-1,\\n        2.96460137564761618e-3 * daysPerYear,\\n        2.3784717395948095e-3 * daysPerYear,\\n        -2.96589568540237556e-5 * daysPerYear,\\n        4.36624404335156298e-5 * solarMass,\\n    ),\\n    new Body(\\n        1.53796971148509165e1,\\n        -2.59193146099879641e1,\\n        1.79258772950371181e-1,\\n        2.68067772490389322e-3 * daysPerYear,\\n        1.62824170038242295e-3 * daysPerYear,\\n        -9.5159225451971587e-5 * daysPerYear,\\n        5.15138902046611451e-5 * solarMass,\\n    ),\\n];\\n"
+=== CONT  TestMutants/member_chain_loses_its_method_dot
+=== NAME  TestScoutSideEffectImports/import_attributes_silently_dropped
+    scout_test.go:125: Node killed by bytes: line 32: "ok\timport 'x';\\n", Go cohere "notyet\tImportDeclaration"
+    scout_test.go:125: native killed by bytes: line 32: "ok\timport 'x';\\n", Go cohere "notyet\tImportDeclaration"
+=== NAME  TestScoutSideEffectImports
+    scout_test.go:129: 69 fixtures, 40 accepted, 30 full pinned real sources; Go/npm/Node/native/backend and four mutants
+--- PASS: TestScoutSideEffectImports (103.23s)
+    --- PASS: TestScoutSideEffectImports/import_keyword_lost (18.43s)
+    --- PASS: TestScoutSideEffectImports/import_separator_lost (21.11s)
+    --- PASS: TestScoutSideEffectImports/import_semicolon_lost (21.28s)
+    --- PASS: TestScoutSideEffectImports/import_attributes_silently_dropped (21.02s)
+=== CONT  TestMutants/template_loses_its_interpolation_dollar
+=== NAME  TestMutants/member_chain_loses_its_method_dot
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:2455:KindBinaryExpression: line 1: "ok\tstep / (squared * Mathsqrt(squared));\\n", Go cohere "ok\tstep / (squared * Math.sqrt(squared));\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:2455:KindBinaryExpression: line 1: "ok\tstep / (squared * Mathsqrt(squared));\\n", Go cohere "ok\tstep / (squared * Math.sqrt(squared));\\n"
+=== CONT  TestMutants/arrow_loses_its_arrow_token
+=== NAME  TestMutants/template_loses_its_interpolation_dollar
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:1006:KindCallExpression: line 1: "ok\tconsole.log(`{ordered} {checksum.toFixed(3)}`);\\n", Go cohere "ok\tconsole.log(`${ordered} ${checksum.toFixed(3)}`);\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:1006:KindCallExpression: line 1: "ok\tconsole.log(`{ordered} {checksum.toFixed(3)}`);\\n", Go cohere "ok\tconsole.log(`${ordered} ${checksum.toFixed(3)}`);\\n"
+=== CONT  TestMutants/simple_statement_loses_debugger
+=== NAME  TestMutants/arrow_loses_its_arrow_token
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:447:KindCallExpression: line 1: "ok\trandom.sort((left, right)  left - right);\\n", Go cohere "ok\trandom.sort((left, right) => left - right);\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:447:KindCallExpression: line 1: "ok\trandom.sort((left, right)  left - right);\\n", Go cohere "ok\trandom.sort((left, right) => left - right);\\n"
+=== CONT  TestMutants/body_loses_its_opening_brace
+=== NAME  TestMutants/simple_statement_loses_debugger
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/tagged_template_loses_its_tag
+=== NAME  TestMutants/body_loses_its_opening_brace
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => [\\n    count += 1;\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => [\\n    count += 1;\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+=== CONT  TestMutants/return_and_throw_lose_their_keyword
+=== NAME  TestMutants/tagged_template_loses_its_tag
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/optional_chain_loses_its_stopping_parentheses
+=== NAME  TestMutants/return_and_throw_lose_their_keyword
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => {\\n    count += 1;\\n    throw count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => {\\n    count += 1;\\n    throw count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+=== CONT  TestMutants/function_loses_its_keyword
+=== NAME  TestMutants/optional_chain_loses_its_stopping_parentheses
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/method_loses_its_key
+=== NAME  TestMutants/function_loses_its_keyword
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/computed_key_forgets_its_clean_text
+=== NAME  TestMutants/method_loses_its_key
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/080_builtinIterator/builtinIterator.ts:287:KindCallExpression: line 1: "ok\tIterator.from({\\n    () {\\n        return {\\n            done: Math.random() < 0.5,\\n            value: 'a string',\\n        };\\n    },\\n});\\n", Go cohere "ok\tIterator.from({\\n    next() {\\n        return {\\n            done: Math.random() < 0.5,\\n            value: 'a string',\\n        };\\n    },\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/080_builtinIterator/builtinIterator.ts:287:KindCallExpression: line 1: "ok\tIterator.from({\\n    () {\\n        return {\\n            done: Math.random() < 0.5,\\n            value: 'a string',\\n        };\\n    },\\n});\\n", Go cohere "ok\tIterator.from({\\n    next() {\\n        return {\\n            done: Math.random() < 0.5,\\n            value: 'a string',\\n        };\\n    },\\n});\\n"
+=== CONT  TestMutants/template_preview_loses_optional_stopping_boundaries
+=== NAME  TestMutants/computed_key_forgets_its_clean_text
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/sequence_loses_a_comma
+=== NAME  TestMutants/template_preview_loses_optional_stopping_boundaries
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/fill_never_packs_a_pair
+    mutants_test.go:131: Node caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 5: line 1: "ok\txéé\\n\\nword\\n\\n ", Go cohere "ok\txéé\\nword\\n "
+    mutants_test.go:131: native caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 5: line 1: "ok\txéé\\n\\nword\\n\\n ", Go cohere "ok\txéé\\nword\\n "
+=== CONT  TestMutants/group_ignores_width
+    mutants_test.go:131: Node caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 17: line 1: "ok\t\\n", Go cohere "ok\ttab\\tbctab\\tbc"
+    mutants_test.go:131: native caught by successful-run output mismatch: /tmp/adamic-gate/TestMutants4052347562/001/docs.json:case 17: line 1: "ok\t\\n", Go cohere "ok\ttab\\tbctab\\tbc"
+=== CONT  TestMutants/assignment_loses_its_operator
+=== NAME  TestMutants/sequence_loses_a_comma
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1/assignmentToParenthesizedExpression1.ts:28:KindParenthesizedExpression: line 1: "ok\t(1 x);\\n", Go cohere "ok\t(1, x);\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1/assignmentToParenthesizedExpression1.ts:28:KindParenthesizedExpression: line 1: "ok\t(1 x);\\n", Go cohere "ok\t(1, x);\\n"
+=== CONT  TestMutants/hashbang_loses_its_refusal
+=== NAME  TestMutants/assignment_loses_its_operator
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:403:KindBinaryExpression: line 1: "ok\tthis.x  x;\\n", Go cohere "ok\tthis.x = x;\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/nbody.ts:403:KindBinaryExpression: line 1: "ok\tthis.x  x;\\n", Go cohere "ok\tthis.x = x;\\n"
+=== CONT  TestMutants/yield_loses_delegation
+=== NAME  TestMutants/hashbang_loses_its_refusal
+    mutants_test.go:131: Node caught by successful-run output mismatch: line 11: "notyet\texpression-file", Go cohere "notyet\tfunction-types"
+    mutants_test.go:131: native caught by successful-run output mismatch: line 11: "notyet\texpression-file", Go cohere "notyet\tfunction-types"
+=== CONT  TestMutants/await_loses_its_keyword
+=== NAME  TestMutants/yield_loses_delegation
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestMutants/variable_statement_loses_its_keyword
+=== NAME  TestMutants/await_loses_its_keyword
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts:783:KindAwaitExpression: line 1: "ok\tvoid authorPromise.then(mapper);\\n", Go cohere "ok\tawait authorPromise.then(mapper);\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts:783:KindAwaitExpression: line 1: "ok\tvoid authorPromise.then(mapper);\\n", Go cohere "ok\tawait authorPromise.then(mapper);\\n"
+=== CONT  TestMutants/object_loses_its_property_colon
+=== NAME  TestMutants/variable_statement_loses_its_keyword
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage1/cohere/graphql/printer/printer.ts:5893:KindCallExpression: line 1: "ok\tchildren.sort((leftIndex, rightIndex) => {\\n     left = this.node(leftIndex);\\n     right = this.node(rightIndex);\\n    return left.start === right.start\\n        ? left.end - right.end\\n        : left.start - right.start;\\n});\\n", Go cohere "ok\tchildren.sort((leftIndex, rightIndex) => {\\n    const left = this.node(leftIndex);\\n    const right = this.node(rightIndex);\\n    return left.start === right.start\\n        ? left.end - right.end\\n        : left.start - right.start;\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage1/cohere/graphql/printer/printer.ts:5893:KindCallExpression: line 1: "ok\tchildren.sort((leftIndex, rightIndex) => {\\n     left = this.node(leftIndex);\\n     right = this.node(rightIndex);\\n    return left.start === right.start\\n        ? left.end - right.end\\n        : left.start - right.start;\\n});\\n", Go cohere "ok\tchildren.sort((leftIndex, rightIndex) => {\\n    const left = this.node(leftIndex);\\n    const right = this.node(rightIndex);\\n    return left.start === right.start\\n        ? left.end - right.end\\n        : left.start - right.start;\\n});\\n"
+=== CONT  TestMutants/declaration_loses_its_function_keyword
+=== NAME  TestMutants/object_loses_its_property_colon
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/trees.ts:389:KindObjectLiteralExpression: line 1: "ok\t({ left undefined, right undefined });\\n", Go cohere "ok\t({ left: undefined, right: undefined });\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/trees.ts:389:KindObjectLiteralExpression: line 1: "ok\t({ left undefined, right undefined });\\n", Go cohere "ok\t({ left: undefined, right: undefined });\\n"
+=== CONT  TestMutants/conditional_swaps_its_separator
+=== NAME  TestMutants/declaration_loses_its_function_keyword
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/commentInNamespaceDeclarationWithIdentifierPathName.ts:56:KindFunctionDeclaration: line 1: "ok\t foo() {}\\n", Go cohere "ok\tfunction foo() {}\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/commentInNamespaceDeclarationWithIdentifierPathName.ts:56:KindFunctionDeclaration: line 1: "ok\t foo() {}\\n", Go cohere "ok\tfunction foo() {}\\n"
+=== CONT  TestMutants/assignment_chain_ignores_statement_boundaries
+=== NAME  TestMutants/conditional_swaps_its_separator
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:571:KindCallExpression: line 1: "ok\tnearly.push(index + (next() < 0.01 : next() * 1000 : 0));\\n", Go cohere "ok\tnearly.push(index + (next() < 0.01 ? next() * 1000 : 0));\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/bench/sort.ts:571:KindCallExpression: line 1: "ok\tnearly.push(index + (next() < 0.01 : next() * 1000 : 0));\\n", Go cohere "ok\tnearly.push(index + (next() < 0.01 ? next() * 1000 : 0));\\n"
+=== CONT  TestMutants/program_loses_its_statement_separator
+=== NAME  TestMutants/assignment_chain_ignores_statement_boundaries
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+=== CONT  TestCompilerGaps/prefixUpdateValue
+    gaps_test.go:37: Node "2\n"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/prefixUpdateValue.ts:2:16: stage 0 can't lower a PrefixUnaryExpression on a number yet
+=== CONT  TestCompilerGaps/defaultSort
+    gaps_test.go:37: Node "im\n"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts:2:1: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]
+--- PASS: TestCompilerGaps (0.00s)
+    --- PASS: TestCompilerGaps/prefixUpdateValue (0.06s)
+    --- PASS: TestCompilerGaps/defaultSort (0.06s)
+=== NAME  TestMutants/program_loses_its_statement_separator
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:0:KindSourceFile: line 1: "ok\tconst values = [7, 9];let index = 0;console.log(\\n    `${values[index++] ?? -1}`,\\n);console.log(`${index}`);\\n", Go cohere "ok\tconst values = [7, 9];\\nlet index = 0;\\nconsole.log(`${values[index++] ?? -1}`);\\nconsole.log(`${index}`);\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:0:KindSourceFile: line 1: "ok\tconst values = [7, 9];let index = 0;console.log(\\n    `${values[index++] ?? -1}`,\\n);console.log(`${index}`);\\n", Go cohere "ok\tconst values = [7, 9];\\nlet index = 0;\\nconsole.log(`${values[index++] ?? -1}`);\\nconsole.log(`${index}`);\\n"
+--- PASS: TestMutants (8.21s)
+    --- PASS: TestMutants/protocol_width_confuses_Number_with_parseFloat (4.04s)
+    --- PASS: TestMutants/statement_expression_loses_its_semicolon (27.94s)
+    --- PASS: TestMutants/expression_loses_required_parentheses (28.11s)
+    --- PASS: TestMutants/arguments_lose_their_trailing_comma (27.26s)
+    --- PASS: TestMutants/member_chain_loses_its_method_dot (33.30s)
+    --- PASS: TestMutants/template_loses_its_interpolation_dollar (33.36s)
+    --- PASS: TestMutants/arrow_loses_its_arrow_token (32.89s)
+    --- PASS: TestMutants/simple_statement_loses_debugger (31.92s)
+    --- PASS: TestMutants/body_loses_its_opening_brace (33.54s)
+    --- PASS: TestMutants/tagged_template_loses_its_tag (34.30s)
+    --- PASS: TestMutants/return_and_throw_lose_their_keyword (32.96s)
+    --- PASS: TestMutants/optional_chain_loses_its_stopping_parentheses (31.41s)
+    --- PASS: TestMutants/function_loses_its_keyword (33.80s)
+    --- PASS: TestMutants/method_loses_its_key (33.78s)
+    --- PASS: TestMutants/computed_key_forgets_its_clean_text (33.22s)
+    --- PASS: TestMutants/template_preview_loses_optional_stopping_boundaries (33.40s)
+    --- PASS: TestMutants/fill_never_packs_a_pair (4.69s)
+    --- PASS: TestMutants/group_ignores_width (3.81s)
+    --- PASS: TestMutants/sequence_loses_a_comma (29.01s)
+    --- PASS: TestMutants/assignment_loses_its_operator (29.03s)
+    --- PASS: TestMutants/hashbang_loses_its_refusal (20.33s)
+    --- PASS: TestMutants/yield_loses_delegation (29.56s)
+    --- PASS: TestMutants/await_loses_its_keyword (31.08s)
+    --- PASS: TestMutants/variable_statement_loses_its_keyword (32.99s)
+    --- PASS: TestMutants/object_loses_its_property_colon (32.09s)
+    --- PASS: TestMutants/declaration_loses_its_function_keyword (25.31s)
+    --- PASS: TestMutants/conditional_swaps_its_separator (29.90s)
+    --- PASS: TestMutants/assignment_chain_ignores_statement_boundaries (29.94s)
+    --- PASS: TestMutants/program_loses_its_statement_separator (22.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	565.910s
+FAIL

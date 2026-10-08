@@ -368,3 +368,7 @@ macOS leak-check integration is waiting for internal/leakcheck to land on main f
 origin/devtools/stage1-leaks (f6eef5df). This branch does not merge that development branch or
 replace the helper with local ASan option switching. Named oracle skips now cite
 #xq2ecw6 (setup --gate-inputs), the work that installs the pins and removes the skips.
+
+## Step 26 side-effect imports
+
+Bare side-effect imports are supported through the existing literal and document printers. Clauses, specifiers, phases and attributes still return ImportDeclaration. The 23-public-pin census ranks import declarations first at 109,305 files and 557,705 sites; exact whole-file Go matches rise from 73 to 114. [SCOUT.md](SCOUT.md) and scout/validation.txt retain all refusals, existing disagreements, the green 69-fixture import slice and the full package's two unchanged expression/parser failures. No shared parser fix or ignore was added.

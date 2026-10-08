@@ -224,3 +224,7 @@ TypeScript compiler file is supported.
 The deliberate tsc-driver corpus gate and its complete disagreement audit are documented in
 [TSC_CORPUS.md](TSC_CORPUS.md). Its focused test reports every differing fragment with the originating
 file, on source Node, sanitized native and emitted JavaScript. Go cohere remains the formatting oracle.
+
+## Step 26 scout
+
+Bare side-effect import declarations now compose with supported statements at the house defaults. Import clauses, attributes and comment attachment remain explicit gaps. [SCOUT.md](SCOUT.md) records the complete formatter/options inventory, all 23 public pins, whole-file and unmasked AST measurements, fixtures/mutants and the shared-parser regressions blocking a fully green package.

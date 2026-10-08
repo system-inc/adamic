@@ -1,0 +1,24 @@
+=== RUN   TestScoutSideEffectImports
+=== PAUSE TestScoutSideEffectImports
+=== CONT  TestScoutSideEffectImports
+=== RUN   TestScoutSideEffectImports/import_keyword_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\texport 'x';\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\texport 'x';\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_separator_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\timport'x';\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\timport'x';\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_semicolon_lost
+    scout_test.go:125: Node killed by bytes: line 12: "ok\timport 'x'\\n", Go cohere "ok\timport 'x';\\n"
+    scout_test.go:125: native killed by bytes: line 12: "ok\timport 'x'\\n", Go cohere "ok\timport 'x';\\n"
+=== RUN   TestScoutSideEffectImports/import_attributes_silently_dropped
+    scout_test.go:125: Node killed by bytes: line 32: "ok\timport 'x';\\n", Go cohere "notyet\tImportDeclaration"
+    scout_test.go:125: native killed by bytes: line 32: "ok\timport 'x';\\n", Go cohere "notyet\tImportDeclaration"
+=== NAME  TestScoutSideEffectImports
+    scout_test.go:129: 67 fixtures, 39 accepted, 30 full pinned real sources; Go/npm/Node/native/backend and four mutants
+--- PASS: TestScoutSideEffectImports (90.80s)
+    --- PASS: TestScoutSideEffectImports/import_keyword_lost (18.06s)
+    --- PASS: TestScoutSideEffectImports/import_separator_lost (17.58s)
+    --- PASS: TestScoutSideEffectImports/import_semicolon_lost (17.65s)
+    --- PASS: TestScoutSideEffectImports/import_attributes_silently_dropped (17.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	90.815s

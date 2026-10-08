@@ -1,0 +1,10 @@
+Final release build: PASS
+Final go vet ./stage1/cohere/tsprinter: PASS (empty output)
+Final gofmt -l stage1/cohere/tsprinter: PASS (empty output)
+Final TestScoutSideEffectImports: PASS, 69 fixtures, 40 accepted, 30 pinned complete public files, exact TypeScript/Go excerpts, all four mutants killed on Node and native.
+All external inputs set; zero skips.
+Final full package: FAIL; TestExpressionsAgainstGoAndPrettier and TestTSCCorpusAgreement/expressions fail on the unchanged object-method expression parser boundary. Statement, document, upstream, gap, scout and mutant checks passed.
+Shared parser untouched: fully green package requirement is blocked, explicitly reported in SCOUT.md.
+Public Go corpus: PASS, 152660 files, exact source hashes and original AST census.
+Public Node before/after: complete, each 152660 file outcomes; 73 -> 114 Go-identical outputs; 9 existing output differences and 17 existing acceptance conflicts retained.
+Logs: scout/evidence/.
