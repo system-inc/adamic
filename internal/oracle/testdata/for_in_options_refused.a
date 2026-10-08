@@ -1,0 +1,10 @@
+function optionNames(options: { readonly stable: string; readonly missing?: string | undefined }): string {
+	const names: string[] = [];
+	for (const name in options) {
+		names.push(name);
+	}
+	return names.join('|');
+}
+
+console.log(optionNames({ stable: 'present' }));
+console.log(optionNames({ stable: 'present', missing: undefined }));
