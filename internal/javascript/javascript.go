@@ -463,7 +463,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))

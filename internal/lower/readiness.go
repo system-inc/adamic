@@ -15,13 +15,16 @@ func sourceExpression(node *ast.Node) string {
 	return file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
 }
 
-// Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
-// and assertions outside initializer positions continue to use the nullish check.
+// Literal placeholder initializers reserve the existing uninitialized slot.
+// An outer type annotation, as in scanner.ts Script_Extensions, carries no value.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
 	node = ast.SkipParentheses(node)
+	for node.Kind == ast.KindAsExpression {
+		node = ast.SkipParentheses(node.AsAsExpression().Expression)
+	}
 	if node.Kind != ast.KindNonNullExpression {
 		return false
 	}
@@ -49,12 +52,16 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 	return false
 }
 
-// readiness uses the existing CFG, including its exceptional edges. Readiness is monotone
-// between declarations: an assignment makes the slot ready, and calls cannot unset it.
+// readiness uses the existing CFG, including its exceptional edges. Ordinary
+// assignments make slots ready; placeholder assignments reset their readiness.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
 	names := map[string]bool{}
+	resettable := map[int]bool{}
 	walk(program.Main, func(node any) bool {
+		if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {
+			resettable[assign.Local] = true
+		}
 		if value, ok := node.(ir.ObjectLiteral); ok {
 			for _, field := range value.Fields {
 				if field.Uninitialized {
@@ -69,6 +76,9 @@ func readiness(program *ir.Program) {
 	})
 	for _, function := range program.Functions {
 		walk(function.Body, func(node any) bool {
+			if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {
+				resettable[assign.Local] = true
+			}
 			if value, ok := node.(ir.ObjectLiteral); ok {
 				for _, field := range value.Fields {
 					if field.Uninitialized {
@@ -168,6 +178,12 @@ func readiness(program *ir.Program) {
 				for _, id := range block.Instructions {
 					instruction := graph.Instructions[id]
 					if readinessCalls(instruction) {
+						// A called closure can reset a captured or global placeholder.
+						for i, local := range program.Locals {
+							if resettable[i] && (local.Captured || local.Global) {
+								state[i] = false
+							}
+						}
 						for _, slot := range fieldSlots {
 							state[slot] = false
 						}
@@ -190,6 +206,12 @@ func readiness(program *ir.Program) {
 			for _, id := range block.Instructions {
 				instruction := graph.Instructions[id]
 				if readinessCalls(instruction) {
+					// A called closure can reset a captured or global placeholder.
+					for i, local := range program.Locals {
+						if resettable[i] && (local.Captured || local.Global) {
+							state[i] = false
+						}
+					}
 					for _, slot := range fieldSlots {
 						state[slot] = false
 					}
@@ -209,6 +231,9 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		ready := true
 		if declare, ok := (*instruction.At).(ir.Declare); ok {
 			ready = !declare.Uninitialized
+		}
+		if assign, ok := (*instruction.At).(ir.Assign); ok {
+			ready = !assign.Uninitialized
 		}
 		state[local] = ready
 		for field, slot := range fields {

@@ -16,6 +16,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if l.uninitializedInitializer(binary.Right) && !ast.IsIdentifier(target) && target.Kind != ast.KindPropertyAccessExpression {
+		return nil, l.notYet(target, "a placeholder reset without a represented variable or field slot")
+	}
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
@@ -53,6 +56,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
+	}
+	if !isCompound && l.uninitializedInitializer(binary.Right) {
+		l.result.Locals[local].Uninitialized = true
+		return []ir.Statement{ir.Assign{Local: local, Value: placeholderZero(l.result.Locals[local].Type), Checked: l.checked(local), Uninitialized: true}}, nil
 	}
 	value, err := l.expression(binary.Right)
 	if err != nil {

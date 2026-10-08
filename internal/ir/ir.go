@@ -1124,9 +1124,10 @@ type (
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool // A literal placeholder resets the existing readiness flag.
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
