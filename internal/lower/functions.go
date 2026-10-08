@@ -68,7 +68,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// reason, a variable the checker narrowed to nothing, isn't one.
 		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
-			valueType, isKnown := l.representation(returns)
+			valueType, isKnown := l.signatureResult(returns)
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
@@ -238,4 +238,15 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
 	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
 	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
+}
+
+// An undefined-only result still has a value: callers can observe it. Use the
+// existing reference's absent sentinel rather than a void ABI, which would discard it.
+// This belongs to signatures; values in ordinary typed slots are checked separately.
+func (l *lowering) signatureResult(proven *checker.Type) (ir.Type, bool) {
+	concrete := l.concrete(proven)
+	if concrete.Flags()&checker.TypeFlagsUndefined != 0 {
+		return ir.Object, true
+	}
+	return l.representation(proven)
 }
