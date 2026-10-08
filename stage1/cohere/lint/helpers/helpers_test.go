@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -19,9 +20,7 @@ import (
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, name, args...)
+	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
@@ -31,7 +30,7 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = cmd.Run(); err != nil {
+	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
