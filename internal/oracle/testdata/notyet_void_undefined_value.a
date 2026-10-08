@@ -1,0 +1,9 @@
+interface Trace {
+    readonly pop: () => void;
+}
+function observe(trace: Trace | undefined): string {
+    return typeof trace?.pop();
+}
+const trace: Trace = { pop: (): number => 42 };
+console.log(observe(trace));
+console.log(observe(undefined));
