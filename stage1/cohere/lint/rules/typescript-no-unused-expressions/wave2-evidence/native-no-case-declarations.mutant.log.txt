@@ -1,0 +1,6 @@
+case 0
+/tmp/lint03-wave2-native-proof/no-case-declarations-witness.ts:1:21
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+range 20 32 unexpected suggestion-edits:addBraces	20:20:{ |39:39:	Wrap the clause body in braces.	20 32
+fixed	switch(x) { case 1: const a = 1; break; }\u000a

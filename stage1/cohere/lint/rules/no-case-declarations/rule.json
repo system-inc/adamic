@@ -1,0 +1,14 @@
+{
+  "name": "no-case-declarations",
+  "kinds": [
+    "CaseBlock"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoCaseDeclarations",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoCaseDeclarations",
+  "finish": "finish",
+  "node": true
+}

@@ -1,0 +1,43 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic, Edit, Suggestion, publish, requireRepairs } from '../typescript-no-unused-expressions/records.a';
+import { message, suggestion } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    lexical(index: number): boolean {
+        const node = this.context.node(index);
+        for(const child of node.children) { if(this.context.node(child).kind === 'DeclareKeyword') { return false; } }
+        if(node.kind === 'ClassDeclaration' || node.kind === 'FunctionDeclaration') { return true; }
+        if(node.kind !== 'VariableStatement') { return false; }
+        for(const child of node.children) {
+            if(this.context.node(child).kind === 'VariableDeclarationList') { return this.context.node(child).semantic !== '0'; }
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        for(const clause of node.children) {
+            const node = this.context.node(clause);
+            const statements = node.children.slice(node.kind === 'CaseClause' ? 1 : 0);
+            const first = statements[0] ?? -1;
+            const last = statements[statements.length - 1] ?? -1;
+            if(first < 0 || last < 0) { continue; }
+            for(const statement of statements) {
+                if(!this.lexical(statement)) { continue; }
+                const record = new Diagnostic(this.context, statement, 'no-case-declarations', 'unexpected', message);
+                const repair = new Suggestion('addBraces', suggestion);
+                const opening = this.context.start(first);
+                const closing = this.context.node(last).end;
+                repair.edits.push(new Edit(opening, opening, '{ '));
+                repair.edits.push(new Edit(closing, closing, ' }'));
+                record.suggestions.push(repair);
+                this.records.push(record);
+                publish(this.context, statement, record);
+            }
+        }
+    }
+    finish(root: number): void { requireRepairs(this.records); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

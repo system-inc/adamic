@@ -1,0 +1,7 @@
+source /workspace/adamic-tools/env.sh
+go run ./cmd/lint-registry
+gofmt -l stage1/cohere/lint/rules/{typescript-no-unused-expressions,typescript-unified-signatures,class-methods-use-this,no-async-promise-executor,no-case-declarations,no-compare-neg-zero}/oracle.go stage1/cohere/lint/rules/typescript-no-unused-expressions/native-proof/main.go
+go vet ./stage1/cohere/lint ./stage1/cohere/lint/rules/typescript-no-unused-expressions/native-proof
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^(TestRulesAgree|TestOwnedWitnesses|TestMutants)$/^(identifier_expression_ignored|parameter_difference_silenced|empty_method_silenced|async_executor_ignored|closing_brace_missing|negative_zero_ignored)$' -count=1 -v -timeout=30m
+go run ./stage1/cohere/lint/rules/typescript-no-unused-expressions/native-proof /tmp/lint03-wave2-oracle /tmp/lint03-wave2-native-proof
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint03-wave2-typescript ADAMIC_LINT_BENCH=1 ADAMIC_LINT_PROFILE_DIR=/tmp/lint03-wave2-profile ADAMIC_LINT_PROFILE_SNAPSHOTS=/tmp/lint03-wave2-profile ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -count=1 -json -timeout=90m

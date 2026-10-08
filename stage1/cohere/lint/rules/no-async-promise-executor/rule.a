@@ -1,0 +1,24 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic, publish } from '../typescript-no-unused-expressions/records.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(node.list < 1) { return; }
+        const callee = this.context.unwrap(node.children[0] ?? -1);
+        if(this.context.node(callee).kind !== 'Identifier' || this.context.node(callee).text !== 'Promise') { return; }
+        const executor = this.context.unwrap(node.children[node.children.length - node.list] ?? -1);
+        for(const child of this.context.node(executor).children) {
+            if(this.context.node(child).kind !== 'AsyncKeyword') { continue; }
+            const record = new Diagnostic(this.context, child, 'no-async-promise-executor', 'noAsyncPromiseExecutor', message);
+            this.records.push(record);
+            publish(this.context, child, record);
+            return;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

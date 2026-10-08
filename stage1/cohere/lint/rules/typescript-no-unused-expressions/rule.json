@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-unused-expressions",
+  "kinds": [
+    "ExpressionStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnusedExpressions",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnusedExpressions",
+  "node": true
+}

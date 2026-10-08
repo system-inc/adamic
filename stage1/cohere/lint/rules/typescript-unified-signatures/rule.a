@@ -1,0 +1,198 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { Finding } from '../../finding.ts';
+import { Diagnostic } from '../typescript-no-unused-expressions/records.a';
+import { beginning } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    children(index: number, kind: string): number[] {
+        const result: number[] = [];
+        for(const child of this.context.node(index).children) { if(this.context.node(child).kind === kind) { result.push(child); } }
+        return result;
+    }
+    name(index: number): number {
+        for(const child of this.context.node(index).children) {
+            if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.context.node(child).kind)) { return child; }
+        }
+        return -1;
+    }
+    text(index: number): string { return index < 0 ? '' : this.context.source.slice(this.context.start(index), this.context.node(index).end); }
+    annotation(index: number): number {
+        const name = this.name(index);
+        if(name < 0) { return -1; }
+        let previous = this.context.node(name).end;
+        const scanner = new Scanner(this.context.source);
+        for(const child of this.context.node(index).children) {
+            if(this.context.node(child).end <= previous) { continue; }
+            scanner.pos = previous;
+            if(scanner.scan() === 'ColonToken') { return child; }
+            previous = this.context.node(child).end;
+        }
+        return -1;
+    }
+    returnType(index: number): number {
+        const node = this.context.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        if(last < 0 || last === this.name(index) || ['Parameter', 'TypeParameter', 'Block', 'QuestionToken'].includes(this.context.node(last).kind)) { return -1; }
+        return last;
+    }
+    flag(index: number, kind: string): boolean { return index >= 0 && this.children(index, kind).length > 0; }
+    equal(a: number, b: number): boolean { return a === b || (a >= 0 && b >= 0 && this.text(a) === this.text(b)); }
+    sigils(a: number, b: number): boolean { return this.flag(a, 'QuestionToken') === this.flag(b, 'QuestionToken') && this.flag(a, 'DotDotDotToken') === this.flag(b, 'DotDotDotToken'); }
+    overload(index: number): boolean {
+        const kind = this.context.node(index).kind;
+        return ['CallSignature', 'ConstructSignature', 'MethodSignature'].includes(kind) || (['MethodDeclaration', 'FunctionDeclaration', 'Constructor'].includes(kind) && !this.flag(index, 'Block'));
+    }
+    key(index: number): string {
+        const kind = this.context.node(index).kind;
+        if(kind === 'CallSignature') { return '11()'; }
+        if(kind === 'ConstructSignature') { return '11constructor'; }
+        if(kind === 'Constructor') { return '11identifier_constructor'; }
+        const name = this.name(index);
+        const computed = name >= 0 && this.context.node(name).kind === 'ComputedPropertyName';
+        const info = name < 0 ? 'identifier_' : this.context.node(name).kind === 'Identifier' ? `identifier_${this.context.node(name).text}` : this.context.node(name).kind === 'PrivateIdentifier' ? `private_identifier_${this.context.node(name).text}` : this.text(name);
+        return `${computed ? '0' : '1'}${this.flag(index, 'StaticKeyword') ? '0' : '1'}${info}`;
+    }
+    constraint(index: number): number {
+        const name = this.name(index);
+        if(name < 0) { return -1; }
+        const scanner = new Scanner(this.context.source);
+        scanner.pos = this.context.node(name).end;
+        if(scanner.scan() !== 'ExtendsKeyword') { return -1; }
+        let passed = false;
+        for(const child of this.context.node(index).children) {
+            if(passed) { return child; }
+            if(child === name) { passed = true; }
+        }
+        return -1;
+    }
+    generics(a: number, b: number): boolean {
+        const left = this.children(a, 'TypeParameter');
+        const right = this.children(b, 'TypeParameter');
+        if(left.length !== right.length) { return false; }
+        for(let index = 0; index < left.length; index++) {
+            const first = left[index] ?? -1;
+            const second = right[index] ?? -1;
+            if(this.text(this.name(first)) !== this.text(this.name(second))) { return false; }
+            const x = this.constraint(first);
+            const y = this.constraint(second);
+            if(x < 0 || y < 0) { if(x !== y) { return false; } }
+            else if(this.context.node(x).kind !== this.context.node(y).kind) { return false; }
+        }
+        return true;
+    }
+    mentions(index: number, names: readonly string[]): boolean {
+        if(index < 0) { return false; }
+        const node = this.context.node(index);
+        const name = node.children[0] ?? -1;
+        if(node.kind === 'TypeReference' && name >= 0 && this.context.node(name).kind === 'Identifier' && names.includes(this.context.node(name).text)) { return true; }
+        for(const child of node.children) { if(this.mentions(child, names)) { return true; } }
+        return false;
+    }
+    uses(index: number, names: readonly string[]): boolean {
+        for(const parameter of this.children(index, 'Parameter')) { if(this.mentions(this.annotation(parameter), names)) { return true; } }
+        return false;
+    }
+    comment(index: number): string {
+        let end = this.context.start(index);
+        while(end > 0 && [' ', '\t', '\n', '\r'].includes(this.context.source.slice(end - 1, end))) { end--; }
+        if(this.context.source.slice(end - 2, end) !== '*/') { return ''; }
+        const opening = this.context.source.slice(0, end - 2).lastIndexOf('/*');
+        return opening < 0 ? '' : this.context.source.slice(opening + 2, end - 2);
+    }
+    isThis(index: number): boolean { const name = index < 0 ? -1 : this.name(index); return name >= 0 && this.context.node(name).kind === 'Identifier' && this.context.node(name).text === 'this'; }
+    thisVoid(index: number): boolean { const type = index < 0 ? -1 : this.annotation(index); return this.isThis(index) && type >= 0 && this.context.node(type).kind === 'VoidKeyword'; }
+    union(index: number, result: number[]): void {
+        if(index < 0) { return; }
+        const node = this.context.node(index);
+        if(node.kind === 'ParenthesizedType') { this.union(node.children[0] ?? -1, result); }
+        else if(node.kind === 'UnionType') { for(const child of node.children) { this.union(child, result); } }
+        else if(!result.some((existing) => this.equal(existing, index))) { result.push(index); }
+    }
+    unionText(a: number, b: number): string {
+        const members: number[] = [];
+        this.union(a, members); this.union(b, members);
+        const texts: string[] = [];
+        for(const member of members) { texts.push(['ConditionalType', 'ConstructorType', 'FunctionType'].includes(this.context.node(member).kind) ? `(${this.text(member)})` : this.text(member)); }
+        return texts.join(' | ');
+    }
+    start(other: number, onlyTwo: boolean): string { return beginning(this.context.source.slice(0, this.context.start(other)).split('\n').length, onlyTwo); }
+    report(index: number, id: string, message: string, rangeStart = -1): void {
+        const record = new Diagnostic(this.context, index, '@typescript-eslint/unified-signatures', id, message, rangeStart);
+        this.records.push(record);
+        this.context.findings.push(new Finding(record.rule, record.id, record.message, record.start, record.end, '', '', ''));
+    }
+    compare(a: number, b: number, onlyTwo: boolean, outer: readonly string[]): void {
+        const left = this.children(a, 'Parameter');
+        const right = this.children(b, 'Parameter');
+        const common = Math.min(left.length, right.length);
+        if(this.context.settings.read('ignoredifferentlynamedparameters', 'false') === 'true') {
+            for(let index = 0; index < common; index++) {
+                const x = this.name(left[index] ?? -1); const y = this.name(right[index] ?? -1);
+                if(x >= 0 && y >= 0 && this.context.node(x).kind === 'Identifier' && this.context.node(y).kind === 'Identifier' && this.text(x) !== this.text(y)) { return; }
+            }
+        }
+        if(this.context.settings.read('ignoreoverloadswithdifferentjsdoc', 'false') === 'true' && this.comment(a) !== this.comment(b)) { return; }
+        if(!this.equal(this.returnType(a), this.returnType(b)) || !this.generics(a, b) || this.uses(a, outer) !== this.uses(b, outer)) { return; }
+        const first = left[0] ?? -1; const second = right[0] ?? -1;
+        if(this.thisVoid(first) || this.thisVoid(second)) { return; }
+        if(left.length === right.length) {
+            let difference = -1;
+            for(let index = 0; index < common; index++) {
+                const x = left[index] ?? -1; const y = right[index] ?? -1;
+                if(!this.sigils(x, y) || !this.equal(this.annotation(x), this.annotation(y))) { if(difference >= 0) { return; } difference = index; }
+            }
+            if(difference < 0) {
+                const name = this.name(b);
+                const range = this.context.node(b).kind === 'MethodDeclaration' && name >= 0 ? this.context.node(name).end : -1;
+                this.report(b, 'allParametersAreSame', `${this.start(a, onlyTwo)} with identical parameters.`, range);
+                return;
+            }
+            const x = left[difference] ?? -1; const y = right[difference] ?? -1;
+            if(!this.sigils(x, y) || this.flag(x, 'DotDotDotToken')) { return; }
+            this.report(y, 'singleParameterDifference', `${this.start(x, onlyTwo)} taking \`${this.unionText(this.annotation(x), this.annotation(y))}\`.`);
+            return;
+        }
+        if(this.isThis(first) !== this.isThis(second)) { return; }
+        const longer = left.length > right.length ? left : right;
+        const shorter = left.length > right.length ? right : left;
+        const shorterSignature = left.length > right.length ? b : a;
+        for(let index = common + 1; index < longer.length; index++) { const parameter = longer[index] ?? -1; if(!this.flag(parameter, 'QuestionToken') && !this.flag(parameter, 'DotDotDotToken')) { return; } }
+        for(let index = 0; index < common; index++) { if(!this.equal(this.annotation(left[index] ?? -1), this.annotation(right[index] ?? -1))) { return; } }
+        if(common > 0 && this.flag(shorter[common - 1] ?? -1, 'DotDotDotToken')) { return; }
+        const extra = longer[longer.length - 1] ?? -1;
+        const rest = this.flag(extra, 'DotDotDotToken');
+        this.report(extra, rest ? 'omittingRestParameter' : 'omittingSingleParameter', `${this.start(shorterSignature, onlyTwo)} with ${rest ? 'a rest' : 'an optional'} parameter.`);
+    }
+    scope(node: ParseNode, index: number, outer: readonly string[]): void {
+        const groups = new Map<string, number[]>();
+        for(const member of node.children) {
+            if(!this.overload(member)) { continue; }
+            const key = this.key(member);
+            let group = groups.get(key);
+            if(group === undefined) { const created: number[] = []; group = created; groups.set(key, created); }
+            group.push(member);
+        }
+        for(const group of groups.values()) {
+            for(let a = 0; a < group.length; a++) { for(let b = a + 1; b < group.length; b++) { this.compare(group[a] ?? -1, group[b] ?? -1, group.length === 2, outer); } }
+        }
+        for(const child of node.children) { this.nested(child, outer); }
+    }
+    nested(index: number, outer: readonly string[]): void {
+        if(['ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration', 'TypeLiteral', 'ModuleBlock'].includes(this.context.node(index).kind)) {
+            const names = outer.slice();
+            if(['ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration'].includes(this.context.node(index).kind)) {
+                for(const parameter of this.children(index, 'TypeParameter')) { const name = this.name(parameter); if(name >= 0) { names.push(this.context.node(name).text); } }
+            }
+            this.scope(this.context.node(index), index, names);
+            return;
+        }
+        for(const child of this.context.node(index).children) { this.nested(child, outer); }
+    }
+    visit(node: ParseNode, index: number): void { this.scope(node, index, []); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

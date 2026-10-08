@@ -1,0 +1,1 @@
+export function beginning(line: number, onlyTwo: boolean): string { return onlyTwo ? 'These overloads can be combined into one signature' : `This overload and the one on line ${line} can be combined into one signature`; }

@@ -1,0 +1,90 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic, publish } from '../typescript-no-unused-expressions/records.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    readonly frames: boolean[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    modifier(index: number, kind: string): boolean {
+        for(const child of this.context.node(index).children) { if(this.context.node(child).kind === kind) { return true; } }
+        return false;
+    }
+    name(index: number): number {
+        for(const child of this.context.node(index).children) {
+            if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(this.context.node(child).kind)) { return child; }
+        }
+        return -1;
+    }
+    field(index: number): number {
+        const parent = this.context.parents[index] ?? -1;
+        if(parent < 0 || this.context.node(parent).kind !== 'PropertyDeclaration') { return -1; }
+        const children = this.context.node(parent).children;
+        return children[children.length - 1] === index ? parent : -1;
+    }
+    member(index: number): number {
+        const node = this.context.node(index);
+        if(['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind)) {
+            const parent = this.context.parents[index] ?? -1;
+            return parent >= 0 && ['ClassDeclaration', 'ClassExpression'].includes(this.context.node(parent).kind) ? index : -1;
+        }
+        return ['FunctionExpression', 'FunctionDeclaration', 'ArrowFunction'].includes(node.kind) ? this.field(index) : -1;
+    }
+    included(index: number): boolean {
+        if(this.modifier(index, 'StaticKeyword')) { return false; }
+        if(this.context.node(index).kind === 'PropertyDeclaration') {
+            if(this.context.settings.read('enforceforclassfields', 'true') === 'false') { return false; }
+        }
+        else if(!this.modifier(index, 'Block')) { return false; }
+        if(this.context.settings.read('ignoreoverridemethods', 'false') === 'true' && this.modifier(index, 'OverrideKeyword')) { return false; }
+        const parent = this.context.parents[index] ?? -1;
+        let implementsInterface = false;
+        if(parent >= 0) {
+            for(const child of this.context.node(parent).children) { if(this.context.node(child).kind === 'HeritageClause' && this.context.node(child).operator === 'ImplementsKeyword') { implementsInterface = true; } }
+        }
+        const ignore = this.context.settings.read('ignoreclasseswithimplements', '');
+        const name = this.name(index);
+        if(implementsInterface && (ignore === 'all' || (ignore === 'public-fields' && name >= 0 && this.context.node(name).kind !== 'PrivateIdentifier' && !this.modifier(index, 'PrivateKeyword') && !this.modifier(index, 'ProtectedKeyword')))) { return false; }
+        if(name < 0 || this.context.node(name).kind === 'ComputedPropertyName') { return true; }
+        return !this.context.settings.list('exceptmethods', []).includes(this.context.node(name).text);
+    }
+    describe(index: number, member: number): string {
+        const name = this.name(member);
+        const tokens: string[] = [];
+        if(name >= 0 && this.context.node(name).kind === 'PrivateIdentifier') { tokens.push('private'); }
+        if(this.modifier(member, 'AsyncKeyword')) { tokens.push('async'); }
+        if(this.modifier(index, 'AsteriskToken')) { tokens.push('generator'); }
+        tokens.push(this.context.node(member).kind === 'GetAccessor' ? 'getter' : this.context.node(member).kind === 'SetAccessor' ? 'setter' : 'method');
+        if(name < 0 || this.context.node(name).kind === 'ComputedPropertyName') { return tokens.join(' '); }
+        const text = this.context.node(name).text;
+        return `${tokens.join(' ')} ${this.context.node(name).kind === 'PrivateIdentifier' ? text : `'${text}'`}`;
+    }
+    walk(node: ParseNode, index: number): void {
+        if((node.kind === 'ThisKeyword' || node.kind === 'SuperKeyword') && this.frames.length > 0) { this.frames[this.frames.length - 1] = true; }
+        if(node.kind === 'PropertyDeclaration') {
+            const name = this.name(index);
+            if(name >= 0) { this.walk(this.context.node(name), name); }
+            this.frames.push(false);
+            for(const child of node.children) { if(child !== name) { this.walk(this.context.node(child), child); } }
+            this.frames.pop();
+            return;
+        }
+        const opens = ['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration'].includes(node.kind) || (node.kind === 'ArrowFunction' && this.field(index) >= 0 && this.context.settings.read('enforceforclassfields', 'true') !== 'false');
+        if(opens) { this.frames.push(false); }
+        for(const child of node.children) { this.walk(this.context.node(child), child); }
+        if(!opens) { return; }
+        const used = this.frames.pop() ?? false;
+        const member = this.member(index);
+        if(member >= 0 && !used && this.included(member)) {
+            const name = this.name(member);
+            const anchor = name < 0 ? member : name;
+            const record = new Diagnostic(this.context, anchor, 'class-methods-use-this', 'missingThis', message(this.describe(index, member)));
+            this.records.push(record);
+            publish(this.context, anchor, record);
+        }
+    }
+    visit(node: ParseNode, index: number): void { this.walk(node, index); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

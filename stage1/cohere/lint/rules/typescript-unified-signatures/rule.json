@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/unified-signatures",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleUnifiedSignatures",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestUnifiedSignatures",
+  "node": true
+}
