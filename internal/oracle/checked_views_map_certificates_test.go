@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckedViewMapCertificates(t *testing.T) {
-	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number"}
+	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive"}
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-value-schema", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
@@ -96,8 +96,45 @@ func TestCheckedViewMapPhantomRefusal(t *testing.T) {
 }
 
 func mapReadField(name string) string {
+	if name == "array-payload-wrong" {
+		return "values[0]"
+	}
 	if name == "structural-payload-wrong" {
 		return "entry.count"
 	}
 	return "node.value"
+}
+
+func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
+	for _, family := range []string{"nullable-entry", "mixed-entry", "callable-entry", "tuple-entry"} {
+		for _, use := range []string{"read", "unread"} {
+			t.Run(family+"-"+use, func(t *testing.T) {
+				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				truth := onNode(t, path)
+				program, err := lowered(t, path)
+				if use == "read" {
+					if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map key/value certificate") {
+						t.Fatalf("unsupported entry escaped or refused away from read: %v", err)
+					}
+					t.Logf("Node stdout=%q; named read refusal: %v", truth.stdout, err)
+					return
+				}
+				if err != nil {
+					t.Fatal(err)
+				}
+				native, binary := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatalf("%s: %#v", diff, got)
+					}
+				}
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			})
+		}
+	}
 }

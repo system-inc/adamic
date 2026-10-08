@@ -82,5 +82,19 @@
     ],
     "exit": 1,
     "log": "evidence/map-structural-mutant.log.gz"
+  },
+  {
+    "mutant": "trust-physical-array-kind-as-Map-entry-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^array-schema-unused-payload$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-array-mutant.log.gz"
   }
 ]

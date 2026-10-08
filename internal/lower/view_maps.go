@@ -20,8 +20,8 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 		if args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
 			contract.Unsupported = "Map phantom/intersection certificate"
 		}
-		contract.Key = l.slotContract(node, l.concrete(args[0]))
-		contract.Element = l.slotContract(node, l.concrete(args[1]))
+		contract.Key = l.mapEntrySlot(node, l.concrete(args[0]))
+		contract.Element = l.mapEntrySlot(node, l.concrete(args[1]))
 		for _, child := range []ir.ViewContractID{contract.Key, contract.Element} {
 			if child == 0 || !mapEntryContract(l.result.ViewContracts[child-1]) {
 				contract.Unsupported = "Map key/value certificate"
@@ -36,8 +36,8 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 	if len(args) != 2 || args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
 		return value
 	}
-	key := l.slotContract(node, l.concrete(args[0]))
-	element := l.slotContract(node, l.concrete(args[1]))
+	key := l.mapEntrySlot(node, l.concrete(args[0]))
+	element := l.mapEntrySlot(node, l.concrete(args[1]))
 	if key != 0 && element != 0 && mapEntryContract(l.result.ViewContracts[key-1]) && mapEntryContract(l.result.ViewContracts[element-1]) {
 		l.result.MapCertificates = append(l.result.MapCertificates, [2]ir.ViewContractID{key, element})
 		value.KeyContract = key
@@ -50,5 +50,16 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 // slotContract has already checked every member recursively. Unknown or lazy
 // descriptors cannot certify entries merely because their storage is a pointer.
 func mapEntryContract(contract ir.ViewContract) bool {
-	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject)
+	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray)
+}
+
+func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if !l.checker.IsArrayType(target) {
+		return l.slotContract(node, target)
+	}
+	id, err := l.viewContract(node, target)
+	if err != nil || !supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
+		return 0
+	}
+	return id
 }

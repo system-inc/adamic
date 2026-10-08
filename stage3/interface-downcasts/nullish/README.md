@@ -217,3 +217,38 @@ outside the Map certificate adapter. Some nullable Map entry representations
 also remain blocked by mapTypes/slotless, independently of view admission.
 Production inventory is unchanged: 2,018 pairs/9,101 reads remain unverified by
 whole-program lowering and reaching-view proof. Ledger checks are outside scope.
+
+## Array Map entries and boundaries, October 8 follow-up
+
+Map key/value certificates now include complete array contracts, retaining the
+shared adapter's readonly bit. Readonly arrays permit element covariance;
+writable arrays require element invariance and reject readonly sources. Every
+comparison preserves the physical element representation. Recursive array schema
+comparison terminates through active contract pairs. Producer descriptors with
+unsupported descendants still cannot stamp a constructor.
+
+Array values, readonly finite-element covariance, mutable same-schema writes
+and a recursive empty array match Node in both native modes and JavaScript,
+with leak checks. Wrong array schemas stop at node.value. A bad viewed array
+payload passed through Map.get to a helper prints 1 then stops at values[0];
+Node prints 1 then wrong. Mutable element widening is rejected by the Map read
+certificate. An additional wrong-schema fixture leaves entries unread: only
+reading node.value is enough to catch the incompatible schema. Temporarily
+accepting all array pointer schemas makes it print object and exit 0; the oracle
+fails. Restoring comparison passes the Map and nullable-selection suite in
+30.336s, and the recursive-array control in 0.479s. Scoped IR/lower/native/JS
+checks pass in 0.018s/4.106s/34.052s/0.867s.
+
+Four demanded family controls (null-containing entry union, mixed scalar entry
+union, callable entry, tuple entry) each refuse at node.value with the Map
+key/value certificate family. Their four unread twins all compile and match
+Node/backend/leak checks. This boundary suite passes in 9.691s. The remaining
+entry gaps require storage and producer adapters: mapTypes explicitly refuses
+Union and MaybeBoolean slot storage; callable contracts need implementation/body
+proof from producers rather than asserted signatures; tuples need position/rest
+contracts; nominal/phantom entries still lack authorized identity certificates.
+These controls measure refusals, not implementation of those families.
+
+After this push the exact production table remains 2,018 pairs/9,101 reads
+awaiting whole-program lowering and reaching-view proof. No site is removed from
+that table on fixture evidence. The complete repository gate remains unrun.
