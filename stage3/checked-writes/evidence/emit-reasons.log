@@ -1,0 +1,695 @@
+=== RUN   TestCheckedWritesCensus
+SITE 1
+SITE 2
+SITE 3
+SITE 4
+SITE 5
+SITE 6
+SITE 7
+SITE 8
+SITE 9
+SITE 10
+SITE 11
+SITE 12
+SITE 13
+SITE 14
+SITE 15
+SITE 16
+SITE 17
+SITE 18
+SITE 19
+SITE 20
+SITE 21
+SITE 22
+SITE 23
+SITE 24
+SITE 25
+SITE 26
+SITE 27
+SITE 28
+SITE 29
+SITE 30
+SITE 31
+SITE 32
+SITE 33
+SITE 34
+SITE 35
+SITE 36
+SITE 37
+SITE 38
+SITE 39
+SITE 40
+SITE 41
+SITE 42
+SITE 43
+SITE 44
+SITE 45
+SITE 46
+SITE 47
+SITE 48
+SITE 49
+SITE 50
+SITE 51
+SITE 52
+SITE 53
+BLOCK 101: AccessorDeclaration[] -> (T | AccessorDeclaration)[]
+BLOCK 66: AccessorDeclaration[] -> T | (T | AccessorDeclaration)[] | AccessorDeclaration
+SITE 54
+SITE 55
+SITE 56
+SITE 57
+SITE 58
+SITE 59
+SITE 60
+SITE 61
+SITE 62
+DETAIL: members NodeArray<ClassElement> -> SymbolTable | undefined (view kind 6)
+BLOCK 116: ClassDeclaration -> Symbol
+BLOCK 58: ClassLikeDeclaration -> Symbol
+BLOCK 127: ConstructorDeclaration -> Symbol
+BLOCK 58: SignatureDeclaration -> Symbol
+BLOCK 127: ParameterDeclaration -> Symbol
+SITE 63
+SITE 64
+SITE 65
+SITE 66
+SITE 67
+SITE 68
+SITE 69
+SITE 70
+SITE 71
+SITE 72
+SITE 73
+SITE 74
+SITE 75
+SITE 76
+SITE 77
+SITE 78
+SITE 79
+SITE 80
+SITE 81
+SITE 82
+SITE 83
+SITE 84
+SITE 85
+SITE 86
+SITE 87
+SITE 88
+SITE 89
+BLOCK 101: Set<__String> -> Set<__String | undefined>
+SITE 90
+SITE 91
+SITE 92
+SITE 93
+SITE 94
+SITE 95
+SITE 96
+SITE 97
+SITE 98
+SITE 99
+SITE 100
+SITE 101
+SITE 102
+SITE 103
+SITE 104
+SITE 105
+SITE 106
+SITE 107
+SITE 108
+SITE 109
+SITE 110
+SITE 111
+SITE 112
+DETAIL: members NodeArray<ClassElement> -> SymbolTable | undefined (view kind 6)
+BLOCK 116: ClassDeclaration -> Symbol
+BLOCK 58: ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined -> Symbol
+SITE 113
+SITE 114
+SITE 115
+SITE 116
+SITE 117
+SITE 118
+SITE 119
+SITE 120
+SITE 121
+SITE 122
+SITE 123
+SITE 124
+SITE 125
+SITE 126
+SITE 127
+SITE 128
+SITE 129
+SITE 130
+SITE 131
+SITE 132
+SITE 133
+SITE 134
+SITE 135
+SITE 136
+SITE 137
+SITE 138
+SITE 139
+SITE 140
+SITE 141
+SITE 142
+SITE 143
+SITE 144
+SITE 145
+SITE 146
+SITE 147
+SITE 148
+SITE 149
+SITE 150
+SITE 151
+SITE 152
+BLOCK 121: GenericType -> AnonymousType
+BLOCK 127: DeferredTypeReference -> AnonymousType
+BLOCK 58: AnonymousType | DeferredTypeReference -> AnonymousType
+SITE 153
+SITE 154
+SITE 155
+SITE 156
+SITE 157
+SITE 158
+SITE 159
+SITE 160
+SITE 161
+SITE 162
+SITE 163
+SITE 164
+SITE 165
+DETAIL: value number -> string | number | PseudoBigInt (view kind 10)
+BLOCK 116: NumberLiteralType -> LiteralType
+SITE 166
+DETAIL: value string -> string | number | PseudoBigInt (view kind 10)
+BLOCK 116: StringLiteralType -> LiteralType
+SITE 167
+SITE 168
+SITE 169
+SITE 170
+SITE 171
+SITE 172
+SITE 173
+SITE 174
+SITE 175
+SITE 176
+SITE 177
+SITE 178
+BLOCK 101: undefined -> T
+SITE 179
+SITE 180
+SITE 181
+SITE 182
+SITE 183
+SITE 184
+SITE 185
+SITE 186
+SITE 187
+SITE 188
+SITE 189
+SITE 190
+SITE 191
+SITE 192
+SITE 193
+SITE 194
+SITE 195
+SITE 196
+SITE 197
+SITE 198
+SITE 199
+SITE 200
+SITE 201
+SITE 202
+SITE 203
+BLOCK 110: CallExpression -> NodeArray<Expression>
+SITE 204
+SITE 205
+SITE 206
+SITE 207
+BLOCK 101: (readonly [() => IntrinsicType, __String])[] -> (readonly [() => Type, __String])[]
+SITE 208
+BLOCK 101: (readonly [() => IntrinsicType, __String])[] -> (readonly [() => Type, __String])[]
+SITE 209
+SITE 210
+SITE 211
+SITE 212
+SITE 213
+SITE 214
+SITE 215
+SITE 216
+SITE 217
+SITE 218
+SITE 219
+SITE 220
+SITE 221
+SITE 222
+SITE 223
+SITE 224
+SITE 225
+SITE 226
+SITE 227
+SITE 228
+SITE 229
+SITE 230
+SITE 231
+SITE 232
+SITE 233
+DETAIL: members NodeArray<ClassElement> -> SymbolTable | undefined (view kind 6)
+BLOCK 116: ClassDeclaration -> Symbol
+BLOCK 58: ClassLikeDeclaration -> Symbol
+BLOCK 127: ConstructorDeclaration -> Symbol
+BLOCK 58: JSDocSignature | SignatureDeclaration | undefined -> Symbol
+SITE 234
+SITE 235
+SITE 236
+SITE 237
+SITE 238
+SITE 239
+SITE 240
+SITE 241
+SITE 242
+SITE 243
+SITE 244
+SITE 245
+SITE 246
+SITE 247
+SITE 248
+SITE 249
+SITE 250
+SITE 251
+SITE 252
+SITE 253
+SITE 254
+SITE 255
+SITE 256
+SITE 257
+SITE 258
+SITE 259
+SITE 260
+SITE 261
+SITE 262
+SITE 263
+SITE 264
+SITE 265
+SITE 266
+SITE 267
+SITE 268
+SITE 269
+SITE 270
+SITE 271
+SITE 272
+SITE 273
+SITE 274
+SITE 275
+SITE 276
+SITE 277
+SITE 278
+SITE 279
+SITE 280
+SITE 281
+SITE 282
+SITE 283
+SITE 284
+SITE 285
+SITE 286
+SITE 287
+SITE 288
+SITE 289
+SITE 290
+SITE 291
+SITE 292
+SITE 293
+SITE 294
+SITE 295
+SITE 296
+SITE 297
+SITE 298
+SITE 299
+SITE 300
+SITE 301
+SITE 302
+SITE 303
+SITE 304
+SITE 305
+SITE 306
+SITE 307
+SITE 308
+SITE 309
+SITE 310
+SITE 311
+SITE 312
+SITE 313
+BLOCK 101: Map<string, [VariableDeclarationList, VariableDeclaration[]]> -> Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>
+SITE 314
+SITE 315
+SITE 316
+SITE 317
+SITE 318
+SITE 319
+SITE 320
+SITE 321
+SITE 322
+SITE 323
+SITE 324
+SITE 325
+SITE 326
+SITE 327
+SITE 328
+SITE 329
+SITE 330
+SITE 331
+SITE 332
+SITE 333
+SITE 334
+SITE 335
+SITE 336
+SITE 337
+SITE 338
+SITE 339
+SITE 340
+SITE 341
+SITE 342
+SITE 343
+SITE 344
+DETAIL: members NodeArray<ClassElement> -> SymbolTable | undefined (view kind 6)
+BLOCK 116: ClassDeclaration -> Symbol
+BLOCK 58: InferTypeNode | DeclarationWithTypeParameterChildren -> Symbol
+BLOCK 127: TypeParameterDeclaration -> Symbol
+SITE 345
+SITE 346
+SITE 347
+SITE 348
+SITE 349
+SITE 350
+SITE 351
+SITE 352
+SITE 353
+SITE 354
+SITE 355
+SITE 356
+SITE 357
+SITE 358
+SITE 359
+SITE 360
+SITE 361
+SITE 362
+SITE 363
+SITE 364
+SITE 365
+SITE 366
+SITE 367
+SITE 368
+SITE 369
+SITE 370
+SITE 371
+SITE 372
+SITE 373
+BLOCK 101: [() => Type, __String][] -> (readonly [() => Type, __String])[]
+SITE 374
+SITE 375
+SITE 376
+SITE 377
+SITE 378
+SITE 379
+SITE 380
+SITE 381
+SITE 382
+SITE 383
+SITE 384
+SITE 385
+SITE 386
+SITE 387
+SITE 388
+SITE 389
+SITE 390
+SITE 391
+SITE 392
+SITE 393
+SITE 394
+SITE 395
+SITE 396
+SITE 397
+SITE 398
+SITE 399
+SITE 400
+SITE 401
+SITE 402
+SITE 403
+SITE 404
+SITE 405
+SITE 406
+SITE 407
+SITE 408
+SITE 409
+SITE 410
+SITE 411
+SITE 412
+SITE 413
+BLOCK 101: any -> Node
+BLOCK 87: (node: T) => T -> ParenthesizerRule<any>
+SITE 414
+SITE 415
+SITE 416
+SITE 417
+SITE 418
+SITE 419
+SITE 420
+SITE 421
+SITE 422
+SITE 423
+SITE 424
+SITE 425
+SITE 426
+SITE 427
+SITE 428
+SITE 429
+SITE 430
+SITE 431
+SITE 432
+SITE 433
+SITE 434
+SITE 435
+SITE 436
+SITE 437
+SITE 438
+SITE 439
+SITE 440
+SITE 441
+SITE 442
+SITE 443
+SITE 444
+SITE 445
+SITE 446
+DETAIL: multiLine boolean | undefined -> boolean | undefined (view kind 9)
+BLOCK 116: ImportTypeAssertionContainer -> Mutable<ImportTypeAssertionContainer>
+SITE 447
+SITE 448
+SITE 449
+SITE 450
+SITE 451
+SITE 452
+SITE 453
+SITE 454
+SITE 455
+SITE 456
+SITE 457
+SITE 458
+SITE 459
+SITE 460
+SITE 461
+DETAIL: multiLine boolean | undefined -> boolean | undefined (view kind 9)
+BLOCK 116: AssertClause -> Mutable<AssertClause>
+SITE 462
+SITE 463
+DETAIL: multiLine boolean | undefined -> boolean | undefined (view kind 9)
+BLOCK 116: ImportTypeAssertionContainer -> Mutable<ImportTypeAssertionContainer>
+SITE 464
+DETAIL: multiLine boolean | undefined -> boolean | undefined (view kind 9)
+BLOCK 116: ImportAttributes -> Mutable<ImportAttributes>
+SITE 465
+SITE 466
+SITE 467
+SITE 468
+SITE 469
+SITE 470
+SITE 471
+SITE 472
+SITE 473
+SITE 474
+SITE 475
+SITE 476
+SITE 477
+SITE 478
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocTemplateTag -> Mutable<JSDocTemplateTag>
+SITE 479
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocTypedefTag -> Mutable<JSDocTypedefTag>
+SITE 480
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocParameterTag -> Mutable<JSDocParameterTag>
+SITE 481
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocPropertyTag -> Mutable<JSDocPropertyTag>
+SITE 482
+BLOCK 78: (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier -> { (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi...
+SITE 483
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocCallbackTag -> Mutable<JSDocCallbackTag>
+SITE 484
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocOverloadTag -> Mutable<JSDocOverloadTag>
+SITE 485
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocAugmentsTag -> Mutable<JSDocAugmentsTag>
+SITE 486
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocSeeTag -> Mutable<JSDocSeeTag>
+SITE 487
+SITE 488
+SITE 489
+SITE 490
+SITE 491
+SITE 492
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocImplementsTag -> Mutable<JSDocImplementsTag>
+SITE 493
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocUnknownTag -> Mutable<JSDocUnknownTag>
+SITE 494
+DETAIL: comment string | NodeArray<JSDocComment> | undefined -> string | NodeArray<JSDocComment> | undefined (view kind 10)
+BLOCK 116: JSDocImportTag -> Mutable<JSDocImportTag>
+SITE 495
+SITE 496
+SITE 497
+SITE 498
+SITE 499
+SITE 500
+SITE 501
+SITE 502
+SITE 503
+SITE 504
+SITE 505
+SITE 506
+SITE 507
+SITE 508
+SITE 509
+SITE 510
+SITE 511
+SITE 512
+SITE 513
+SITE 514
+SITE 515
+SITE 516
+SITE 517
+SITE 518
+SITE 519
+SITE 520
+SITE 521
+SITE 522
+SITE 523
+SITE 524
+SITE 525
+SITE 526
+SITE 527
+SITE 528
+SITE 529
+SITE 530
+SITE 531
+SITE 532
+SITE 533
+SITE 534
+SITE 535
+SITE 536
+SITE 537
+BLOCK 101: string[] -> DiagnosticArguments
+SITE 538
+SITE 539
+SITE 540
+SITE 541
+SITE 542
+SITE 543
+SITE 544
+SITE 545
+SITE 546
+SITE 547
+SITE 548
+SITE 549
+SITE 550
+SITE 551
+SITE 552
+SITE 553
+SITE 554
+SITE 555
+SITE 556
+SITE 557
+SITE 558
+SITE 559
+SITE 560
+SITE 561
+SITE 562
+SITE 563
+SITE 564
+SITE 565
+SITE 566
+SITE 567
+SITE 568
+SITE 569
+SITE 570
+SITE 571
+SITE 572
+SITE 573
+SITE 574
+SITE 575
+SITE 576
+SITE 577
+SITE 578
+SITE 579
+SITE 580
+SITE 581
+SITE 582
+SITE 583
+SITE 584
+SITE 585
+SITE 586
+SITE 587
+SITE 588
+SITE 589
+SITE 590
+SITE 591
+SITE 592
+SITE 593
+SITE 594
+SITE 595
+SITE 596
+SITE 597
+SITE 598
+SITE 599
+SITE 600
+SITE 601
+SITE 602
+SITE 603
+SITE 604
+SITE 605
+SITE 606
+SITE 607
+DETAIL: members NodeArray<ClassElement> -> SymbolTable | undefined (view kind 6)
+BLOCK 116: ClassDeclaration -> Symbol
+BLOCK 58: ClassLikeDeclaration -> Symbol
+BLOCK 127: ConstructorDeclaration -> Symbol
+BLOCK 58: SignatureDeclaration -> Symbol
+BLOCK 127: ParameterDeclaration -> Symbol
+SITE 608
+SITE 609
+SITE 610
+SITE 611
+SITE 612
+SITE 613
+BLOCK 101: any -> T
+SITE 614
+SITE 615
+class-d relation counts: map[checked relation:466 stopped:49]
+--- PASS: TestCheckedWritesCensus (42.82s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	42.930s

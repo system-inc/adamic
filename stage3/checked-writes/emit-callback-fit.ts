@@ -1,0 +1,13 @@
+interface GeneratedNamePart { readonly text: string }
+interface AutoGenerateInfo { flags: number; readonly id: number; readonly prefix?: string | GeneratedNamePart | undefined; readonly suffix?: string | undefined }
+interface EmitNode { flags: number; comments?: number[]; constantValue?: string | number; autoGenerate: AutoGenerateInfo | undefined }
+interface Node { emitNode: EmitNode | undefined }
+interface GeneratedIdentifier extends Node { readonly emitNode: EmitNode & { autoGenerate: AutoGenerateInfo } }
+const original: EmitNode & { autoGenerate: AutoGenerateInfo } = { flags: 0, autoGenerate: { flags: 1, id: 7 } };
+const node: GeneratedIdentifier = { emitNode: original };
+const good: EmitNode & { autoGenerate: AutoGenerateInfo } = { flags: 0, autoGenerate: { flags: 2, id: 8 } };
+const bad: EmitNode = { flags: 0, autoGenerate: undefined };
+function store(view: Node, value: EmitNode): void { view.emitNode = value; }
+function replace(view: Node): boolean { view.emitNode = good; return view.emitNode.autoGenerate === undefined; }
+function invoke(callback: (view: GeneratedIdentifier) => boolean, value: GeneratedIdentifier): boolean { return callback(value); }
+console.log(invoke(replace, node).toString());

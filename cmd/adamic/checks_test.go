@@ -63,7 +63,7 @@ func TestExplainChecksDriver(t *testing.T) {
 
 func TestExplainCheckedWritesOutput(t *testing.T) {
 	for _, fixture := range []struct{ name, expression string }{
-		{"number-misfit", "view.count"}, {"flow-node-misfit", "view.node"},
+		{"emit-node-misfit", "view.emitNode"}, {"number-misfit", "view.count"}, {"flow-node-misfit", "view.node"},
 		{"container-number-misfit", "values[0]"}, {"container-map-misfit", "values[value]"},
 		{"container-fill-misfit", "values[]"},
 	} {

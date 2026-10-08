@@ -1,0 +1,43 @@
+=== RUN   TestCheckedEmitContractsMutants
+=== RUN   TestCheckedEmitContractsMutants/emit-drop-check
+    checked_writes_test.go:567: gate cache node miss
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-node-misfit
+    checked_writes_test.go:567: gate cache node hit
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-auto-misfit
+    checked_writes_test.go:567: gate cache node miss
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-callback-misfit
+    checked_writes_test.go:567: gate cache node miss
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-comment-misfit
+    checked_writes_test.go:567: gate cache node miss
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "false\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-resolution-misfit
+    checked_writes_test.go:567: gate cache node miss
+    checked_writes_test.go:572: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_writes_test.go:578: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+--- PASS: TestCheckedEmitContractsMutants (5.60s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-drop-check (1.39s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-node-misfit (0.86s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-auto-misfit (0.74s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-callback-misfit (0.94s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-comment-misfit (0.84s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-resolution-misfit (0.83s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=1 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.645s

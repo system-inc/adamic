@@ -13,6 +13,16 @@ import (
 )
 
 var checkedWriteFixtures = []struct{ name, stdout, message string }{
+	{"emit-comment-fit", "true\n", ""},
+	{"emit-comment-misfit", "", "write failed: view.pos expects -1, got 0"},
+	{"emit-resolution-fit", "false\n", ""},
+	{"emit-resolution-misfit", "", "write failed: view.fileName expects string, got undefined"},
+	{"emit-callback-fit", "false\n", ""},
+	{"emit-callback-misfit", "", "write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object"},
+	{"emit-node-fit", "false\n", ""},
+	{"emit-node-misfit", "", "write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object"},
+	{"emit-auto-fit", "false\n", ""},
+	{"emit-auto-misfit", "", "write failed: view.autoGenerate expects AutoGenerateInfo, got undefined"},
 	{"container-slice-fit", "2\n", ""},
 	{"container-slice-misfit", "", "write failed: values[0] expects 1 | 2, got 3"},
 	{"container-map-values-fit", "2\n", ""},
@@ -218,12 +228,12 @@ func checkedWriteCounts(t *testing.T) []string {
 		}
 		rows = append(rows, fmt.Sprintf("| stage3/checked-writes/%s.ts | %s | %s | %s | %s | %s | %s |", fixture.name, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
-	rows = append(rows, counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-containers.a", false, nil, false, false))
+	rows = append(rows, counted(t, "stage3/checked-writes/proven-emit.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-containers.a", false, nil, false, false))
 	return rows
 }
 
 func TestCheckedWiderWritesAdamicRefuses(t *testing.T) {
-	for _, name := range []string{"flags-refused", "string-refused", "shared-never", "flow-refused", "array-refused", "map-refused"} {
+	for _, name := range []string{"flags-refused", "string-refused", "shared-never", "flow-refused", "array-refused", "map-refused", "emit-refused"} {
 		path := filepath.Join(repository, "stage3/checked-writes", name+".a")
 		expected, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
 		if err != nil {
@@ -481,5 +491,118 @@ func TestCheckedFlowContainerContractMutants(t *testing.T) {
 			}
 			t.Logf("caught drop allocation contract: expected exit 70; mutant exit %d stdout %q", got.exitCode, got.stdout)
 		})
+	}
+}
+
+// Each newly admitted direction has a store or allocation-contract mutant.
+func TestCheckedEmitContractsMutants(t *testing.T) {
+	for _, fixture := range []string{"emit-drop-check", "emit-node-misfit", "emit-auto-misfit", "emit-callback-misfit", "emit-comment-misfit", "emit-resolution-misfit"} {
+		t.Run(fixture, func(t *testing.T) {
+			sourceFixture := fixture
+			if fixture == "emit-drop-check" {
+				sourceFixture = "emit-node-misfit"
+			}
+			program, path := checkedWriteFixture(t, sourceFixture)
+			changes := 0
+			if fixture == "emit-drop-check" {
+				var visit func(reflect.Value)
+				visit = func(value reflect.Value) {
+					switch value.Kind() {
+					case reflect.Interface:
+						if value.IsNil() {
+							return
+						}
+						if write, ok := value.Interface().(ir.SetProperty); ok && write.Name == "emitNode" && write.WriteCheck != "" {
+							write.WriteCheck = ""
+							value.Set(reflect.ValueOf(write))
+							changes++
+							return
+						}
+						visit(value.Elem())
+					case reflect.Struct:
+						for i := 0; i < value.NumField(); i++ {
+							visit(value.Field(i))
+						}
+					case reflect.Slice:
+						for i := 0; i < value.Len(); i++ {
+							visit(value.Index(i))
+						}
+					}
+				}
+				visit(reflect.ValueOf(&program.Main).Elem())
+				visit(reflect.ValueOf(&program.Functions).Elem())
+			}
+			change := func(value ir.Expression) ir.Expression {
+				object, ok := value.(ir.ObjectLiteral)
+				if !ok {
+					return value
+				}
+				for i, field := range object.Fields {
+					if field.Contract == nil {
+						continue
+					}
+					copy := *field.Contract
+					switch {
+					case strings.Contains(fixture, "auto") && field.Name == "autoGenerate":
+						copy.Nullable = true
+					case (strings.Contains(fixture, "node") || strings.Contains(fixture, "callback")) && field.Name == "emitNode":
+						copy.Reference = false
+					case strings.Contains(fixture, "comment") && field.Name == "pos":
+						copy.Allowed = nil
+					case strings.Contains(fixture, "resolution") && field.Name == "fileName":
+						copy.Nullable = true
+					default:
+						continue
+					}
+					object.Fields[i].Contract = &copy
+					changes++
+				}
+				return object
+			}
+			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), change)
+			mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), change)
+			if changes == 0 {
+				t.Fatal("mutant changed no contract")
+			}
+			truth := onNode(t, path)
+			got, binary := nativelyUncached(t, program)
+			if d := disagreement(truth, got); d != "" {
+				t.Fatal(d)
+			}
+			if d := disagreement(truth, onJavaScriptBackend(t, program)); d != "" {
+				t.Fatal(d)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("caught drop contract: pinned exit 70; mutant exit %d stdout %q", got.exitCode, got.stdout)
+		})
+	}
+}
+
+func TestCheckedEmitProvenAdamic(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/checked-writes/proven-emit.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(program.WriteChecks) != 0 {
+		t.Fatal("proven EmitNode store inserted a check")
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "8\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	got, binary := nativelyUncached(t, program)
+	for name, result := range map[string]run{"sanitized": got, "release": releasedUncached(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+		if d := disagreement(truth, result); d != "" {
+			t.Fatalf("%s: %s", name, d)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

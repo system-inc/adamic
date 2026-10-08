@@ -1,0 +1,21 @@
+# Source /workspace/adamic-tools/env.sh for each compiler invocation.
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/emit-contract-setup.log 2>&1
+nproc
+# origin/main was 54cbc125, containing the requested e96b7d43.
+git fetch origin
+git merge origin/main
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/emit-baseline-census.log
+# After plain-intersection representations:
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/emit-intersection-census.log
+# After compatible callback relations:
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/emit-callback-census.log
+# After receiver resolution, including shorthand 482:
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/emit-final-census.log
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/lower ./internal/native -run 'TestCheckedWider|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestCheckedFlowContainerContractMutants|TestCheckedEmit|TestExplainCheckedWritesOutput|TestProvenRelations|TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestRuntimeFieldLayoutsAreIncluded|TestUniformFieldsMatchNode|TestCEndsInNewline' -count=1 -v -timeout 10m > /tmp/emit-final-tests.log 2>&1
+go test ./internal/oracle -run '^TestCheckedEmitContractsMutants$' -count=1 -v > /tmp/emit-mutants-final.log 2>&1
+python3 stage3/checked-writes/a-check.py --out /tmp/emit-a-check > /tmp/emit-a-check.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts > /tmp/emit-counts.log 2>&1
+python3 stage3/checked-writes/latent-controls.py --typescript /home/agent/.cache/adamic-stage3/api/node_modules/typescript --out /tmp/emit-latent > /tmp/emit-latent.log 2>&1
+python3 stage3/checked-writes/emit-ledger.py > /tmp/emit-ledger.log 2>&1
+git diff --check

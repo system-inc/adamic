@@ -94,6 +94,7 @@ func TestCheckedWritesCensus(t *testing.T) {
 	rows := []map[string]any{}
 	counts := map[string]int{}
 	for _, r := range records {
+		recovered := false
 		candidates := nodes[r.Where]
 		var matched *ast.Node
 		for _, node := range candidates {
@@ -143,6 +144,24 @@ func TestCheckedWritesCensus(t *testing.T) {
 				reason = "pinned census source type did not map uniquely to a stock-checker expression; no proof or checked admission measured"
 			}
 		}
+		// Some pinned reasons name a nested generic return rather than the enclosing
+		// expression type. Resolve the actual unique receiving site, not a guessed T.
+		if matched == nil && r.OriginalType == "" && r.Expression == "" {
+			matches := []*ast.Node{}
+			for _, candidate := range candidates {
+				if candidate.Kind == ast.KindShorthandPropertyAssignment || ((&lowering{}).isExpression(candidate) && viewSite(candidate)) {
+					matches = append(matches, candidate)
+				}
+			}
+			if len(matches) == 1 {
+				matched = matches[0]
+				recovered = true
+			}
+		}
+		if matched != nil && matched.Parent != nil && matched.Parent.Kind == ast.KindShorthandPropertyAssignment && matched.Parent.Name() == matched {
+			matched = matched.Parent
+			recovered = true
+		}
 		if matched != nil {
 			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 			failure := l.refuseWidening(matched)
@@ -161,6 +180,13 @@ func TestCheckedWritesCensus(t *testing.T) {
 					contextual = l.impliedTarget(matched)
 				}
 				own := checker.GetTypeAtLocation(matched)
+				if matched.Kind == ast.KindShorthandPropertyAssignment {
+					own = checker.GetTypeAtLocation(matched.Name())
+					literal := checker.GetContextualType(matched.Parent, 0)
+					if literal != nil {
+						contextual = checker.GetTypeOfPropertyOfType(literal, matched.Name().Text())
+					}
+				}
 				if matched.Kind == ast.KindAsExpression {
 					own = checker.GetTypeAtLocation(matched.AsAsExpression().Expression)
 					contextual = checker.GetTypeAtLocation(matched)
@@ -169,8 +195,22 @@ func TestCheckedWritesCensus(t *testing.T) {
 					status = "proven relation"
 					reason = "fresh or invariant relation: " + checker.TypeToString(own) + " into " + checker.TypeToString(contextual)
 				} else {
-					status = "unmatched"
-					reason = "no runtime-check admission or static relation proof recorded"
+					if contextual != nil {
+						found := l.freshOrWidened(matched, own, contextual)
+						if found != nil {
+							failure := l.wideningRefusal(matched, own, contextual, found)
+							if failure != nil {
+								status = "stopped"
+								reason = failure.Error()
+							} else {
+								status = "checked relation"
+								reason = "actual-shape field contract"
+							}
+						}
+					} else {
+						status = "stopped"
+						reason = r.Where + ": no contextual slot for the pinned generic relation; instantiate the receiving signature before proving its mutable return"
+					}
 				}
 			}
 		}
@@ -179,7 +219,17 @@ func TestCheckedWritesCensus(t *testing.T) {
 		if r.Classification == "d" {
 			counts[status]++
 		}
-		rows = append(rows, map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "source_family": r.SourceFamily, "original_reason": r.Reason, "status": status, "first_reason": reason, "fields": fields})
+		row := map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "source_family": r.SourceFamily, "original_reason": r.Reason, "status": status, "first_reason": reason, "fields": fields}
+		if recovered {
+			expression := sourceExpression(matched)
+			if len(expression) > 512 {
+				expression = expression[:512]
+			}
+			row["resolved_receiving_expression"] = expression
+			row["resolved_receiving_type"] = checker.TypeToString(checker.GetTypeAtLocation(matched))
+			row["resolution"] = "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation"
+		}
+		rows = append(rows, row)
 	}
 	report := map[string]any{"measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced", "class_d_counts": counts, "records": rows}
 	data, err := json.MarshalIndent(report, "", "  ")

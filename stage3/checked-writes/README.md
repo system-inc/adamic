@@ -61,3 +61,13 @@ The largest remaining contract family has 38 EmitNode.autoGenerate sites.
 flow-container-results.json records every remaining first reason and original
 census reason. Earlier numbers above are historical measurements with the earlier
 matcher; the new comparison uses the same corrected matcher for all groups.
+
+EmitNode group after main merge: all 38 EmitNode.autoGenerate relations now admit
+checks. Plain intersections preserve ordinary field representations, and compatible
+single-signature callbacks carry checked field relations through parameters/results.
+Two adjacent callback sites are also admitted. Eleven source matches are resolved
+and retain explicit refusals. The 515 split is 466 checked, zero proven, 49 refused,
+zero unmatched. There are 83 checked .ts witnesses, seven refused .a controls and
+three proven .a controls. Twenty-five mutants are caught. emit-report.md and
+emit-results.json record the old 78 refusal groups, all recovered sites, the new
+remaining groups and the contract capability each requires.

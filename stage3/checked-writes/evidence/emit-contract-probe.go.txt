@@ -2,15 +2,15 @@ package lower
 
 import (
 	"strings"
+"fmt"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Admit only field contracts that have a runtime representation. Compatible callbacks
-// follow parameter and result field views; uninstantiated and overloaded signatures
-// retain their refusals. The name summary follows aliases and calls.
+// Admit only field contracts that have a runtime representation. Container invariance and
+// callable variance retain their existing refusals. The name summary follows aliases and calls.
 func (l *lowering) checkedWidening(node *ast.Node, from, to *checker.Type) bool {
 	module := ast.GetSourceFileOfNode(node)
 	if !strings.HasSuffix(l.program.FileName(module), ".ts") {
@@ -49,13 +49,13 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		to = l.checker.GetBaseConstraintOfType(to)
 	}
 	if from == nil || to == nil {
-		return false
+		fmt.Printf("BLOCK 52: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
 	if members := l.definedMembers(from); len(members) > 1 {
 		for _, member := range members {
 			if !l.checkedFieldRelation(member, to, fields, seen) {
-				return false
+				fmt.Printf("BLOCK 58: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 		}
 		return true
@@ -63,7 +63,7 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 	if members := l.definedMembers(to); len(members) > 1 {
 		for _, member := range members {
 			if l.checker.IsTypeAssignableTo(from, member) && !l.checkedFieldRelation(from, member, fields, seen) {
-				return false
+				fmt.Printf("BLOCK 66: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 		}
 		return true
@@ -75,16 +75,16 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 	toCalls := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromCalls) != 0 || len(toCalls) != 0 {
 		if len(fromCalls) != 1 || len(toCalls) != 1 || len(fromCalls[0].TypeParameters()) != 0 || len(toCalls[0].TypeParameters()) != 0 {
-			return false
+			fmt.Printf("BLOCK 78: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 		}
 		a, b := fromCalls[0].Parameters(), toCalls[0].Parameters()
 		if len(a) != len(b) {
-			return false
+			fmt.Printf("BLOCK 82: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 		}
 		for i := range a {
 			takes, given := l.censusCallableParameterType(a[i]), l.censusCallableParameterType(b[i])
 			if !l.checker.IsTypeAssignableTo(given, takes) || !l.enumAssignable(given, takes) || !l.checkedFieldRelation(given, takes, fields, seen) {
-				return false
+				fmt.Printf("BLOCK 87: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 		}
 		return l.checkedFieldRelation(l.checker.GetReturnTypeOfSignature(fromCalls[0]), l.checker.GetReturnTypeOfSignature(toCalls[0]), fields, seen)
@@ -92,13 +92,13 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 
 	if own, view := l.containerRelation(from, to); own != nil {
 		if l.widened(own, view, map[[2]*checker.Type]bool{}) != nil && !interfaceScalar(l.checker.GetNonNullableType(own)) && !l.checkedFieldRelation(own, view, fields, seen) {
-			return false
+			fmt.Printf("BLOCK 95: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 		}
 		l.result.CheckedElements = true
 		return true
 	}
 	if len(l.containers(from)) != 0 || len(l.containers(to)) != 0 || !l.structured(from) || !l.structured(to) || l.callableViewContract(from) || l.callableViewContract(to) || isClassInstance(to) {
-		return false
+		fmt.Printf("BLOCK 101: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 	}
 	for _, target := range l.checker.GetPropertiesOfType(to) {
 		source := l.checker.GetPropertyOfType(from, target.Name)
@@ -107,24 +107,25 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		}
 		own, viewed := l.contractType(l.checker.GetTypeOfSymbol(source)), l.contractType(l.checker.GetTypeOfSymbol(target))
 		if accessorSymbol(source) || accessorSymbol(target) || source.Flags&ast.SymbolFlagsMethod != 0 || target.Flags&ast.SymbolFlagsMethod != 0 {
-			return false
+			fmt.Printf("BLOCK 110: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 		}
 		if !l.checker.IsReadonlySymbol(target) && (l.checker.IsReadonlySymbol(source) || !l.checker.IsTypeAssignableTo(viewed, own) || !l.enumAssignable(viewed, own)) {
 			contract := l.fieldContract(own)
 			viewKind, viewKnown := l.representation(viewed)
 			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber) && !(contract.NullishOnly && viewKind >= ir.String && viewKind <= ir.Map)) {
-				return false
+ fmt.Printf("DETAIL: %s %s -> %s (view kind %d)\n", target.Name, l.checker.TypeToString(own), l.checker.TypeToString(viewed),viewKind)
+				fmt.Printf("BLOCK 116: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 			a, b := l.checker.GetNonNullableType(own), l.checker.GetNonNullableType(viewed)
 			// A present reference needs a directional type proof or a reifiable allocation shape.
 			if !interfaceScalar(a) && !identicalTypes(l.checker, a, b) && !contract.Structural && !(contract.Kind == ir.Object && contract.Reference) {
-				return false
+				fmt.Printf("BLOCK 121: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 			fields[target.Name] = true
 		}
 		if l.widened(own, viewed, map[[2]*checker.Type]bool{}) != nil && (l.structured(l.withoutUndefined(own)) || len(l.definedMembers(own)) > 1 && !interfaceScalar(l.checker.GetNonNullableType(own))) {
 			if !l.checkedFieldRelation(own, viewed, fields, seen) {
-				return false
+				fmt.Printf("BLOCK 127: %s -> %s\n", l.checker.TypeToString(from), l.checker.TypeToString(to)); return false
 			}
 		}
 	}

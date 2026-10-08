@@ -1,0 +1,539 @@
+=== RUN   TestCheckedWiderWrites
+=== RUN   TestCheckedWiderWrites/emit-comment-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-comment-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.pos expects -1, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-resolution-fit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-resolution-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.fileName expects string, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-callback-fit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/emit-callback-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/emit-node-fit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-node-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/emit-auto-fit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/emit-auto-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.autoGenerate expects AutoGenerateInfo, got undefined\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/container-slice-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-slice-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-map-values-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/container-map-values-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/container-boolean-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-boolean-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects true, got false\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-fill-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-fill-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-map-object-fit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-map-object-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[value] expects DiagnosticWithLocation, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-alias-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-alias-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: item.count expects number, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-number-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-number-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-string-fit
+    checked_writes_test.go:140: Node exit 0 stdout "right\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-string-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "outside\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects \"left\" | \"right\", got outside\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-map-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-map-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[value] expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-splice-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-splice-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "2\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-object-fit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-object-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects DiagnosticWithLocation, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/container-nested-fit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/container-nested-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects (1 | 2)[], got array\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-node-fit
+    checked_writes_test.go:140: Node exit 0 stdout "call\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-node-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "identifier\n"; checked exit 70 stderr "adamic: panic: write failed: view.node expects BinaryExpression | CallExpression, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-undefined-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-undefined-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.node expects undefined, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-array-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/flow-array-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.antecedents expects undefined, got array\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-nullable-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-nullable-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: view[] expects never, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-index-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-splice-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-wide-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-number-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-number-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-string-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-string-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got badbad\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-object-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-object-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-fit
+    checked_writes_test.go:140: Node exit 0 stdout "16\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: wide.flags expects 16, got 0\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-fit
+    checked_writes_test.go:140: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: (view as Mutable<T>).file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-fit
+    checked_writes_test.go:140: Node exit 0 stdout "newnew 3 2 3 4\nNaN -Infinity\n"; checked exit 0 stderr ""; 3 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-related-fit
+    checked_writes_test.go:140: Node exit 0 stdout "7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-related-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.start expects number, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-fit
+    checked_writes_test.go:140: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-fit
+    checked_writes_test.go:140: Node exit 0 stdout "32\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file.metadata.flags expects 16 | 32, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/reference-structure
+    checked_writes_test.go:140: Node exit 0 stdout "right\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).parent expects { readonly name: \"left\"; }, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/flags-fit
+    checked_writes_test.go:140: Node exit 0 stdout "16\n268435472\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/flags-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "before 16\nafter 0\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/string-fit
+    checked_writes_test.go:140: Node exit 0 stdout "right\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/string-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "outsideoutside\n"; checked exit 70 stderr "adamic: panic: write failed: view.text expects \"left\" | \"right\", got outsideoutside\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/boolean-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/boolean-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.enabled expects true, got false\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-fit
+    checked_writes_test.go:140: Node exit 0 stdout "inputinput\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/number-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/number-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/compound-fit
+    checked_writes_test.go:140: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/compound-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 0 | 1, got 2\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/nullable-number-fit
+    checked_writes_test.go:140: Node exit 0 stdout "true\n2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/nullable-number-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2 | undefined, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/range-fit
+    checked_writes_test.go:140: Node exit 0 stdout "0 1\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/range-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "0 2\n"; checked exit 70 stderr "adamic: panic: write failed: range.end expects 1, got 2\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/receiver-fit
+    checked_writes_test.go:140: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:140: Node exit 0 stdout "parentparent\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/parent-misfit
+    checked_writes_test.go:140: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: (copy as Mutable<T>).parent expects Parent, got undefined\n"; 1 checks
+--- PASS: TestCheckedWiderWrites (125.26s)
+    --- PASS: TestCheckedWiderWrites/emit-comment-fit (1.34s)
+    --- PASS: TestCheckedWiderWrites/emit-comment-misfit (0.95s)
+    --- PASS: TestCheckedWiderWrites/emit-resolution-fit (0.91s)
+    --- PASS: TestCheckedWiderWrites/emit-resolution-misfit (0.64s)
+    --- PASS: TestCheckedWiderWrites/emit-callback-fit (0.72s)
+    --- PASS: TestCheckedWiderWrites/emit-callback-misfit (0.76s)
+    --- PASS: TestCheckedWiderWrites/emit-node-fit (1.17s)
+    --- PASS: TestCheckedWiderWrites/emit-node-misfit (0.58s)
+    --- PASS: TestCheckedWiderWrites/emit-auto-fit (0.58s)
+    --- PASS: TestCheckedWiderWrites/emit-auto-misfit (0.61s)
+    --- PASS: TestCheckedWiderWrites/container-slice-fit (0.56s)
+    --- PASS: TestCheckedWiderWrites/container-slice-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/container-map-values-fit (0.63s)
+    --- PASS: TestCheckedWiderWrites/container-map-values-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/container-boolean-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/container-boolean-misfit (0.56s)
+    --- PASS: TestCheckedWiderWrites/container-fill-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/container-fill-misfit (0.71s)
+    --- PASS: TestCheckedWiderWrites/container-map-object-fit (1.28s)
+    --- PASS: TestCheckedWiderWrites/container-map-object-misfit (1.64s)
+    --- PASS: TestCheckedWiderWrites/container-alias-fit (1.14s)
+    --- PASS: TestCheckedWiderWrites/container-alias-misfit (0.83s)
+    --- PASS: TestCheckedWiderWrites/container-number-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/container-number-misfit (0.73s)
+    --- PASS: TestCheckedWiderWrites/container-string-fit (1.06s)
+    --- PASS: TestCheckedWiderWrites/container-string-misfit (0.79s)
+    --- PASS: TestCheckedWiderWrites/container-map-fit (0.63s)
+    --- PASS: TestCheckedWiderWrites/container-map-misfit (0.83s)
+    --- PASS: TestCheckedWiderWrites/container-splice-fit (0.63s)
+    --- PASS: TestCheckedWiderWrites/container-splice-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/container-object-fit (0.78s)
+    --- PASS: TestCheckedWiderWrites/container-object-misfit (1.26s)
+    --- PASS: TestCheckedWiderWrites/container-nested-fit (1.27s)
+    --- PASS: TestCheckedWiderWrites/container-nested-misfit (1.14s)
+    --- PASS: TestCheckedWiderWrites/flow-node-fit (1.63s)
+    --- PASS: TestCheckedWiderWrites/flow-node-misfit (2.92s)
+    --- PASS: TestCheckedWiderWrites/flow-undefined-fit (3.11s)
+    --- PASS: TestCheckedWiderWrites/flow-undefined-misfit (1.62s)
+    --- PASS: TestCheckedWiderWrites/flow-array-fit (1.37s)
+    --- PASS: TestCheckedWiderWrites/flow-array-misfit (1.17s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-fit (1.20s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-misfit (1.18s)
+    --- PASS: TestCheckedWiderWrites/never-index-misfit (1.12s)
+    --- PASS: TestCheckedWiderWrites/never-splice-misfit (1.75s)
+    --- PASS: TestCheckedWiderWrites/never-wide-fit (2.12s)
+    --- PASS: TestCheckedWiderWrites/never-number-fit (3.01s)
+    --- PASS: TestCheckedWiderWrites/never-number-misfit (1.88s)
+    --- PASS: TestCheckedWiderWrites/never-string-fit (1.81s)
+    --- PASS: TestCheckedWiderWrites/never-string-misfit (1.95s)
+    --- PASS: TestCheckedWiderWrites/never-object-fit (1.20s)
+    --- PASS: TestCheckedWiderWrites/never-object-misfit (2.70s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-fit (2.24s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-misfit (3.45s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-fit (2.06s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-misfit (1.94s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-fit (2.26s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-misfit (1.02s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-fit (1.90s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-misfit (2.32s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-fit (4.54s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-misfit (2.71s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-fit (2.80s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-misfit (1.72s)
+    --- PASS: TestCheckedWiderWrites/reference-structure (1.53s)
+    --- PASS: TestCheckedWiderWrites/flags-fit (1.96s)
+    --- PASS: TestCheckedWiderWrites/flags-misfit (1.57s)
+    --- PASS: TestCheckedWiderWrites/string-fit (1.25s)
+    --- PASS: TestCheckedWiderWrites/string-misfit (1.63s)
+    --- PASS: TestCheckedWiderWrites/boolean-fit (1.33s)
+    --- PASS: TestCheckedWiderWrites/boolean-misfit (1.30s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-fit (1.33s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-misfit (1.81s)
+    --- PASS: TestCheckedWiderWrites/number-fit (1.77s)
+    --- PASS: TestCheckedWiderWrites/number-misfit (1.93s)
+    --- PASS: TestCheckedWiderWrites/compound-fit (2.86s)
+    --- PASS: TestCheckedWiderWrites/compound-misfit (1.94s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-fit (1.91s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-misfit (1.43s)
+    --- PASS: TestCheckedWiderWrites/range-fit (3.61s)
+    --- PASS: TestCheckedWiderWrites/range-misfit (1.53s)
+    --- PASS: TestCheckedWiderWrites/receiver-fit (2.08s)
+    --- PASS: TestCheckedWiderWrites/parent-fit (2.20s)
+    --- PASS: TestCheckedWiderWrites/parent-misfit (1.24s)
+=== RUN   TestCheckedWiderWriteMutants
+=== RUN   TestCheckedWiderWriteMutants/drop_check
+    checked_writes_test.go:210: caught drop check: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+=== RUN   TestCheckedWiderWriteMutants/drop_literal_set
+    checked_writes_test.go:210: caught drop literal set: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+--- PASS: TestCheckedWiderWriteMutants (3.09s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_check (1.41s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_literal_set (1.68s)
+=== RUN   TestCheckedWiderWritesAdamicRefuses
+--- PASS: TestCheckedWiderWritesAdamicRefuses (0.82s)
+=== RUN   TestCheckedWiderWritesProvenAdamic
+--- PASS: TestCheckedWiderWritesProvenAdamic (1.68s)
+=== RUN   TestCheckedNeverContractMutant
+    checked_writes_test.go:307: caught drop never contract: expected exit 70, mutant exit 0 stdout "1\n"
+--- PASS: TestCheckedNeverContractMutant (0.69s)
+=== RUN   TestCheckedWiderWritesKeepSpreadOverrideRefusal
+--- PASS: TestCheckedWiderWritesKeepSpreadOverrideRefusal (0.16s)
+=== RUN   TestCheckedDiagnosticReferenceMutants
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:410: caught drop alias check: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:410: caught drop allocation proof: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:410: caught drop nested contract: expected exit 70, mutant exit 0 stdout "0\n"
+--- PASS: TestCheckedDiagnosticReferenceMutants (2.53s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_alias_check (0.66s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_allocation_proof (0.88s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_nested_contract (0.99s)
+=== RUN   TestCheckedWiderWritesProvenContainers
+--- PASS: TestCheckedWiderWritesProvenContainers (2.32s)
+=== RUN   TestCheckedFlowContainerContractMutants
+=== RUN   TestCheckedFlowContainerContractMutants/flow-node-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "identifier\n"
+=== RUN   TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== RUN   TestCheckedFlowContainerContractMutants/flow-array-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-number-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-string-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "outside\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-map-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-splice-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "2\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-object-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-nested-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-boolean-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-fill-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-map-object-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== RUN   TestCheckedFlowContainerContractMutants/container-alias-misfit
+    checked_writes_test.go:492: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "0\n"
+--- PASS: TestCheckedFlowContainerContractMutants (18.04s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-node-misfit (1.94s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-undefined-misfit (1.05s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-array-misfit (1.16s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-number-misfit (0.97s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-string-misfit (1.42s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-map-misfit (2.06s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-splice-misfit (1.80s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-object-misfit (1.89s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-nested-misfit (1.15s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-boolean-misfit (1.18s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-fill-misfit (1.17s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-map-object-misfit (0.77s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-alias-misfit (1.47s)
+=== RUN   TestCheckedEmitContractsMutants
+=== RUN   TestCheckedEmitContractsMutants/emit-node-misfit
+    checked_writes_test.go:546: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-auto-misfit
+    checked_writes_test.go:546: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-callback-misfit
+    checked_writes_test.go:546: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-comment-misfit
+    checked_writes_test.go:546: caught drop contract: pinned exit 70; mutant exit 0 stdout "false\n"
+=== RUN   TestCheckedEmitContractsMutants/emit-resolution-misfit
+    checked_writes_test.go:546: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+--- PASS: TestCheckedEmitContractsMutants (8.08s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-node-misfit (1.37s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-auto-misfit (1.19s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-callback-misfit (2.36s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-comment-misfit (1.52s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-resolution-misfit (1.65s)
+=== RUN   TestCheckedEmitProvenAdamic
+--- PASS: TestCheckedEmitProvenAdamic (0.86s)
+PASS
+gate cache: native hits=0 misses=68
+gate cache: node hits=0 misses=220
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	163.660s
+=== RUN   TestExplainCheckedWritesOutput
+=== RUN   TestExplainCheckedWritesOutput/emit-node-misfit
+=== RUN   TestExplainCheckedWritesOutput/number-misfit
+=== RUN   TestExplainCheckedWritesOutput/flow-node-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-number-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-map-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-fill-misfit
+--- PASS: TestExplainCheckedWritesOutput (4.11s)
+    --- PASS: TestExplainCheckedWritesOutput/emit-node-misfit (0.85s)
+    --- PASS: TestExplainCheckedWritesOutput/number-misfit (0.63s)
+    --- PASS: TestExplainCheckedWritesOutput/flow-node-misfit (0.99s)
+    --- PASS: TestExplainCheckedWritesOutput/container-number-misfit (0.58s)
+    --- PASS: TestExplainCheckedWritesOutput/container-map-misfit (0.58s)
+    --- PASS: TestExplainCheckedWritesOutput/container-fill-misfit (0.48s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	4.140s
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsErase
+=== PAUSE TestProvenRelationsErase
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestProvenRelationsErase
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== CONT  TestProvenRelationsRefuse
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.values(view);
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.values(view);
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+--- PASS: TestProvenRelationsErase (0.70s)
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+--- PASS: TestProvenRelationsRefuse (0.01s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.23s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.29s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.30s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.31s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.20s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.26s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.28s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.38s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.14s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.13s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.13s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.18s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.14s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.12s)
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.values(view);
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+--- PASS: TestObjectRefusalsExplainSoundness (0.02s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.13s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.09s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.12s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.11s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.15s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.12s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.11s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.12s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.16s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.11s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.17s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.14s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.14s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.16s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.02s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.values(view); (0.14s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.06s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.08s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.14s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.14s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.12s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.399s
+=== RUN   TestUniformFieldsMatchNode
+=== PAUSE TestUniformFieldsMatchNode
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestCEndsInNewline
+=== PAUSE TestCEndsInNewline
+=== CONT  TestUniformFieldsMatchNode
+=== CONT  TestCEndsInNewline
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 30 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+--- PASS: TestCEndsInNewline (0.11s)
+--- PASS: TestUniformFieldsMatchNode (1.55s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.593s
