@@ -1,0 +1,162 @@
+{
+  "sha": "0052defb60c3f4ff4d8181a27f19f431e4789cd1",
+  "branch": "devtools/fast-gate",
+  "branch_source": "given",
+  "session": "01a11428-2ea6-72f1-8d60-4253ea0c0024",
+  "session_source": "ai.db reply naming the branch",
+  "base": "132a0ed5b4bec3dc7bc838d9dfec882e5ff9505a",
+  "tools_sha": "45f4d067562204fd4f100aefd8234b8921e40087",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "changed_files": [
+    "cloud/box-run.sh",
+    "cloud/build-cache-worker/README.md",
+    "cloud/build-cache-worker/worker.js",
+    "cloud/build-cache-worker/wrangler.toml",
+    "cloud/build-one-file-box.sh",
+    "cloud/build-one-file.sh",
+    "cloud/fast-gate-watch.sh",
+    "cloud/fast-gate.sh",
+    "cloud/fast-gate/deferred.txt",
+    "cloud/fast-gate/rewritten-logs.tsv",
+    "cloud/fast-gate/run.py",
+    "cloud/fast-gate/run_test.py",
+    "cloud/fast-gate/smoke.txt",
+    "cloud/full-gate-main.sh",
+    "internal/skipcensus/README.md",
+    "internal/skipcensus/census.go",
+    "internal/skipcensus/census_test.go",
+    "internal/skipcensus/cmd/main.go",
+    "internal/skipcensus/log.go",
+    "internal/skipcensus/optin.go",
+    "internal/skipcensus/testdata/plain-skips.jsonl",
+    "internal/skipcensus/testdata/proofs.py",
+    "internal/skipcensus/testdata/provided-historical-rows.json",
+    "internal/skipcensus/testdata/provided-plain-skips.jsonl",
+    "internal/skipcensus/testdata/skips.json"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/cloud",
+    "github.com/system-inc/adamic/internal/skipcensus",
+    "github.com/system-inc/adamic/internal/skipcensus/cmd"
+  ],
+  "unowned_files": [
+    "cloud/build-cache-worker/README.md",
+    "cloud/build-cache-worker/worker.js",
+    "cloud/build-cache-worker/wrangler.toml",
+    "cloud/fast-gate/deferred.txt",
+    "cloud/fast-gate/rewritten-logs.tsv",
+    "cloud/fast-gate/run.py",
+    "cloud/fast-gate/run_test.py",
+    "cloud/fast-gate/smoke.txt"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tree",
+    "from": "gated tree"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "internal/oracle/testdata/array_from_length.a",
+    "internal/oracle/testdata/bitwise.a",
+    "internal/oracle/testdata/borrow_chain_reassigned.a",
+    "internal/oracle/testdata/call_targets_sort.a",
+    "internal/oracle/testdata/casts.a",
+    "internal/oracle/testdata/class_oct6_parameters.a",
+    "internal/oracle/testdata/classes.a",
+    "internal/oracle/testdata/closures_throw_uncaught.a",
+    "internal/oracle/testdata/devirtualize_abstract.a",
+    "internal/oracle/testdata/enums_names.a",
+    "internal/oracle/testdata/exceptions_empty.a",
+    "internal/oracle/testdata/finally_leaves.a",
+    "internal/oracle/testdata/fresh_calls.a",
+    "internal/oracle/testdata/generic_method_return.a",
+    "internal/oracle/testdata/inherited_static_field_read.a",
+    "internal/oracle/testdata/json_stringify_numbers.a",
+    "internal/oracle/testdata/library_object_freeze_write.a",
+    "internal/oracle/testdata/lint_runtime_search_calls.a",
+    "internal/oracle/testdata/map_zero_keys.a",
+    "internal/oracle/testdata/maybe_boolean_panic.a",
+    "internal/oracle/testdata/narrowed_writes.a",
+    "internal/oracle/testdata/nbody_runtime_fields.a",
+    "internal/oracle/testdata/normalize_form.a",
+    "internal/oracle/testdata/number_parsing.a",
+    "internal/oracle/testdata/optional_numbers.a",
+    "internal/oracle/testdata/override_same_representation.a",
+    "internal/oracle/testdata/panic.a",
+    "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "internal/oracle/testdata/regions_constructor_capture.a",
+    "internal/oracle/testdata/reuse_global_sibling.a",
+    "internal/oracle/testdata/route_targets_accessor.a",
+    "internal/oracle/testdata/search_halves.a",
+    "internal/oracle/testdata/set_foreach_fnexpr.a",
+    "internal/oracle/testdata/spread_calls.a",
+    "internal/oracle/testdata/stack_forever.a",
+    "internal/oracle/testdata/string_too_long.a",
+    "internal/oracle/testdata/throw_in_writes.a",
+    "internal/oracle/testdata/timsort.a",
+    "internal/oracle/testdata/typeof_string_literal.a",
+    "internal/oracle/testdata/undefined_elements.a",
+    "internal/oracle/testdata/utf8_view_fails.a",
+    "internal/oracle/testdata/weak_narrowed.a",
+    "internal/oracle/testdata/writes.a",
+    "internal/oracle/testdata/devirtualize_modules/main.a",
+    "internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tests": {
+    "github.com/system-inc/adamic/cloud": 1,
+    "github.com/system-inc/adamic/internal/skipcensus": 12
+  },
+  "split_tally": {
+    "packages": 2,
+    "planned": 13,
+    "passed": 13,
+    "touched": 3
+  },
+  "wall_seconds": 29.6,
+  "steps_seconds": {
+    "vet": 2.2,
+    "smoke": 16.1,
+    "build": 22.7,
+    "tests": 28.4,
+    "census": 0.5
+  },
+  "pass": 66,
+  "fail": 0,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "tests",
+    "detail": "planned stages without a recorded exit 0: tests (exits {'vet': 0, 'smoke': 0, 'build': 0, 'tests': 1, 'census': 0})",
+    "after_seconds": 29.6
+  },
+  "planned_stages": [
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "tests": 1,
+    "census": 0
+  },
+  "finished": true
+}
