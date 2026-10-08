@@ -1,0 +1,714 @@
+{
+  "area_base": "337aa466bf7b519ffdc50c6f16e976a330a4a4f5",
+  "previous_tip": "cef8fd7ebf9d69478bd0bba8a765a0fd9ffd9ae8",
+  "migration_manifest": "non-null-fixture-migration.json",
+  "moved_files": 50,
+  "program_bytes_changed": 0,
+  "package_comparison_after_normalizing_only_moved_filenames": {
+    "base": {
+      "log": "/tmp/non-null-next-base-packages.json",
+      "sha256": "0f25c45a52f0f9422f7791608cd5cdc2e9fa7b37ad0e5c8313b5d9d8a6f10469",
+      "results": {
+        "github.com/system-inc/adamic/internal/ir": {
+          "result": "pass",
+          "seconds": 1.221
+        },
+        "github.com/system-inc/adamic/internal/lower": {
+          "result": "pass",
+          "seconds": 77.958
+        },
+        "github.com/system-inc/adamic/internal/flow": {
+          "result": "pass",
+          "seconds": 136.073
+        }
+      }
+    },
+    "candidate": {
+      "log": "/tmp/non-null-migration-packages.json",
+      "sha256": "b252a73086401cb72bbb9c3197de078b7d35f531414c46589be610e32bb0cc01",
+      "results": {
+        "github.com/system-inc/adamic/internal/ir": {
+          "result": "pass",
+          "seconds": 29.249
+        },
+        "github.com/system-inc/adamic/internal/lower": {
+          "result": "pass",
+          "seconds": 154.77
+        },
+        "github.com/system-inc/adamic/internal/flow": {
+          "result": "pass",
+          "seconds": 248.443
+        }
+      }
+    },
+    "final_flow": {
+      "log": "/tmp/non-null-migration-flow-final.json",
+      "sha256": "0e6aee85d9a95659e907ff39f2ecd4af9c2272e9241a7e1dd06f452d31613d36",
+      "results": {
+        "github.com/system-inc/adamic/internal/flow": {
+          "result": "pass",
+          "seconds": 105.154
+        }
+      }
+    },
+    "shared_named_results": 3380,
+    "lost": [],
+    "added": [
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_let_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_narrowed.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_present.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_undefined.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_undefined.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_let_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_narrowed.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_present.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_undefined.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_undefined.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_let_initializer.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_narrowed.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_present.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_undefined.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_null.ts",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_undefined.ts",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=null!}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_+_1}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_===_undefined}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(null!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_absent_=_null;_console.log(absent!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_box:_{value:_number;_other:_number}_=_{value:_null!,_get_other():_number_{_return_1;_}};",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_1_||_null!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_true_?_null!_:_1;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values=[1];_values[0]=null!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[...null!];",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[null!];",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f():_number_{_return_null!;_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f(value:_null):_void_{_console.log(value!);_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f(value:_number_=_null!):_number_{return_value;}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_console.log(`${value=null!}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_absent=null;_value=absent!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_assigned=(value=null!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_clear=():_number_=>_value=null!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_function_f():_number_{_return_value=null!;_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_let_other=2;_value=other=null!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value=(null!_+_1);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value_+=_null!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=undefined!}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_+_1}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_===_undefined}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(undefined!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_absent_=_undefined;_console.log(absent!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_box:_{value:_number;_other:_number}_=_{value:_undefined!,_get_other():_number_{_return_1;_}};",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_1_||_undefined!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_true_?_undefined!_:_1;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values=[1];_values[0]=undefined!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[...undefined!];",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[undefined!];",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f():_number_{_return_undefined!;_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f(value:_number_=_undefined!):_number_{return_value;}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f(value:_undefined):_void_{_console.log(value!);_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_console.log(`${value=undefined!}`);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_absent=undefined;_value=absent!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_assigned=(value=undefined!);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_clear=():_number_=>_value=undefined!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_function_f():_number_{_return_value=undefined!;_}",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_let_other=2;_value=other=undefined!;",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value=(undefined!_+_1);",
+      "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value_+=_undefined!;"
+    ],
+    "changed": [],
+    "restored_flow_cases": [
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_array.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_boolean.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_read.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_static.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_assignment.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_return.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_statement.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_map.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_append.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_const.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_exception.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_loop.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_union.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_weak.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_weak_freed.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_array.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_boolean.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_read.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_static.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_assignment.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_return.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_statement.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_map.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_append.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_const.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_exception.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_interface.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_loop.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_optional.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_spread.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_union.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_weak.a",
+      "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_weak_freed.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_array.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_boolean.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_read.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_static.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_assignment.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_return.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_statement.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_map.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_null.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_initialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_append.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_capture.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_const.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_default.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_exception.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_field.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_loop.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_union.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_weak.a",
+      "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_weak_freed.a"
+    ]
+  },
+  "oracle_comparison_after_normalizing_only_moved_filenames": {
+    "base": {
+      "log": "/tmp/non-null-next-base-oracle.json",
+      "sha256": "6c35d384b427f4f68d7f435ca19ddf4dd721a962c38111c2f48214b0a9fd9914",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 16.724
+        }
+      }
+    },
+    "candidate": {
+      "log": "/tmp/non-null-migration-oracle-final.json",
+      "sha256": "46376f3c850bafd0ef23cbe67b588c63586a3c298e9553ceafc7974ae24d83ac",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 19.345
+        }
+      }
+    },
+    "shared_named_results": 108,
+    "lost": [],
+    "added": [
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_initializer.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_let_initializer.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_narrowed.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_null.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_present.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_undefined.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_refuse_null.ts",
+      "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_refuse_undefined.ts"
+    ],
+    "changed": []
+  },
+  "counts": {
+    "before_rows": 819,
+    "after_rows": 827,
+    "retired": [],
+    "renamed": [
+      {
+        "from": "internal/oracle/testdata/non_null.a",
+        "to": "internal/oracle/testdata/non_null.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_map.a",
+        "to": "internal/oracle/testdata/non_null_map.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_catch.a",
+        "to": "internal/oracle/testdata/non_null_catch.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_field.a",
+        "to": "internal/oracle/testdata/non_null_field.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_capture.a",
+        "to": "internal/oracle/testdata/non_null_capture.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_array.a",
+        "to": "internal/oracle/testdata/non_null_array.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_union.a",
+        "to": "internal/oracle/testdata/non_null_union.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_boolean.a",
+        "to": "internal/oracle/testdata/non_null_boolean.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_null.a",
+        "to": "internal/oracle/testdata/non_null_null.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_initialized.a",
+        "to": "internal/oracle/testdata/non_null_initialized.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_field.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_field.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_capture.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_capture.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_exception.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_exception.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_loop.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_loop.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_default.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_default.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_const.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_const.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_weak.a",
+        "to": "internal/oracle/testdata/non_null_weak.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_definite.a",
+        "to": "internal/oracle/testdata/non_null_definite.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_definite_local.a",
+        "to": "internal/oracle/testdata/non_null_definite_local.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_definite_field.a",
+        "to": "internal/oracle/testdata/non_null_definite_field.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_static_initialized.a",
+        "to": "internal/oracle/testdata/non_null_static_initialized.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_static_uninitialized.a",
+        "to": "internal/oracle/testdata/non_null_static_uninitialized.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_optional.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_optional.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_spread.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_spread.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_literal_return.a",
+        "to": "internal/oracle/testdata/non_null_literal_return.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_literal_assignment.a",
+        "to": "internal/oracle/testdata/non_null_literal_assignment.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_literal_statement.a",
+        "to": "internal/oracle/testdata/non_null_literal_statement.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_iteration.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_iteration.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_catch.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_catch.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_interface.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_interface.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_append.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_append.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_uninitialized_map_entry.a",
+        "to": "internal/oracle/testdata/non_null_uninitialized_map_entry.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_lazy_initialized.a",
+        "to": "internal/oracle/testdata/non_null_lazy_initialized.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_lazy_read.a",
+        "to": "internal/oracle/testdata/non_null_lazy_read.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_lazy_field.a",
+        "to": "internal/oracle/testdata/non_null_lazy_field.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_lazy_static.a",
+        "to": "internal/oracle/testdata/non_null_lazy_static.ts"
+      },
+      {
+        "from": "internal/oracle/testdata/non_null_lazy_default.a",
+        "to": "internal/oracle/testdata/non_null_lazy_default.ts"
+      },
+      {
+        "from": "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a",
+        "to": "stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/default-staged.a",
+        "to": "stage3/interface-downcasts/default-staged.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/default-boxed-write.a",
+        "to": "stage3/interface-downcasts/default-boxed-write.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/default-read-before-set.a",
+        "to": "stage3/interface-downcasts/default-read-before-set.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/readiness-identifier.a",
+        "to": "stage3/interface-downcasts/readiness-identifier.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/readiness-identifier-uninitialized.a",
+        "to": "stage3/interface-downcasts/readiness-identifier-uninitialized.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/readiness-number.a",
+        "to": "stage3/interface-downcasts/readiness-number.ts"
+      },
+      {
+        "from": "stage3/interface-downcasts/readiness-number-uninitialized.a",
+        "to": "stage3/interface-downcasts/readiness-number-uninitialized.ts"
+      },
+      {
+        "from": "internal/lower/testdata/predicates/overload_every.a",
+        "to": "internal/lower/testdata/predicates/overload_every.ts"
+      }
+    ],
+    "changed_measurements": [
+      {
+        "before": "| internal/oracle/testdata/non_null_initialized.a | 42 | 42 | 23 | 67 | 12 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_initialized.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_field.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_field.ts | 1 | 0 | 0 | 0 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_capture.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_capture.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_exception.a | 1 | 1 | 3 | 2 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_exception.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_static_initialized.a | 8 | 8 | 6 | 16 | 5 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_static_initialized.ts | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_static_uninitialized.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_static_uninitialized.ts | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_optional.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_optional.ts | 1 | 0 | 0 | 0 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_spread.a | 2 | 0 | 3 | 2 | 2 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_spread.ts | 1 | 0 | 0 | 0 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_iteration.a | 6 | 1 | 7 | 8 | 6 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_iteration.ts | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_interface.a | 1 | 0 | 1 | 1 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_interface.ts | 1 | 0 | 1 | 0 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_uninitialized_append.a | 0 | 0 | 1 | 0 | 0 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_uninitialized_append.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_lazy_initialized.a | 13 | 13 | 29 | 46 | 4 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_lazy_initialized.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_lazy_read.a | 0 | 0 | 2 | 0 | 0 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_lazy_read.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_lazy_field.a | 1 | 0 | 1 | 3 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_lazy_field.ts | 1 | 0 | 0 | 0 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_lazy_static.a | 1 | 0 | 1 | 3 | 1 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_lazy_static.ts | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| internal/oracle/testdata/non_null_lazy_default.a | 0 | 0 | 1 | 1 | 0 | 0 |",
+        "after": "| internal/oracle/testdata/non_null_lazy_default.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/default-staged.a | 2 | 2 | 4 | 5 | 2 | 0 |",
+        "after": "| stage3/interface-downcasts/default-staged.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/default-boxed-write.a | 5 | 5 | 5 | 12 | 4 | 0 |",
+        "after": "| stage3/interface-downcasts/default-boxed-write.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/default-read-before-set.a | 1 | 0 | 3 | 2 | 1 | 0 |",
+        "after": "| stage3/interface-downcasts/default-read-before-set.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/readiness-identifier.a | 2 | 2 | 4 | 6 | 2 | 0 |",
+        "after": "| stage3/interface-downcasts/readiness-identifier.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/readiness-identifier-uninitialized.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+        "after": "| stage3/interface-downcasts/readiness-identifier-uninitialized.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/readiness-number.a | 3 | 3 | 4 | 8 | 3 | 0 |",
+        "after": "| stage3/interface-downcasts/readiness-number.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      },
+      {
+        "before": "| stage3/interface-downcasts/readiness-number-uninitialized.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+        "after": "| stage3/interface-downcasts/readiness-number-uninitialized.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The same program now executes an eager checked assertion and stops earlier than the historical readiness behavior."
+      }
+    ],
+    "unchanged_measurements": 796,
+    "added": [
+      "| internal/oracle/testdata/non_null_checked_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |"
+    ]
+  },
+  "checks": {
+    "runtime-green": {
+      "log": "/tmp/non-null-migration-runtime-green.json",
+      "sha256": "a642355be12ef07a10018bf50782d6474b2d1240931615254b979f3bc433bf9c",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 29.837
+        }
+      }
+    },
+    "original-controls": {
+      "log": "/tmp/non-null-migration-original-controls.json",
+      "sha256": "dde57b27bf123df8ca664e19b58d2238cd70e666baa8d1e19edf827b322a3d2c",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 5.087
+        }
+      }
+    },
+    "lower-controls": {
+      "log": "/tmp/non-null-migration-lower-controls.json",
+      "sha256": "6f0d1352c0a4eb71163a72d6fb53aead1afca0e9b45f724d07ddfa1ec01e2ac1",
+      "results": {
+        "github.com/system-inc/adamic/internal/lower": {
+          "result": "pass",
+          "seconds": 16.613
+        }
+      }
+    },
+    "counts-resolved": {
+      "log": "/tmp/non-null-migration-counts-resolved.json",
+      "sha256": "6ed5a8069786dd077d149a7961cfd95e294f85b2de6eb83ec625cf1e9bfc0a61",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 41.881
+        }
+      }
+    },
+    "coverage-guard": {
+      "log": "/tmp/non-null-migration-coverage-guard.json",
+      "sha256": "4fa14c8ee5e2e26186d26f5880b9e1fc3cc2ebae667e31637cd45b350ef50aa6",
+      "results": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 0.014
+        }
+      }
+    },
+    "ssa-final": {
+      "log": "/tmp/non-null-migration-ssa-final.json",
+      "sha256": "1272a95bd4ded3e31b11213e0c4fe545c26a114782b21c57c357799b9a2e0ca0",
+      "results": {
+        "github.com/system-inc/adamic/internal/flow": {
+          "result": "pass",
+          "seconds": 29.701
+        }
+      }
+    }
+  },
+  "mutant_observations": [
+    "real_nested_functions_test.go:74: zero constituent count caught by Node stdout in both backends; valid C, no sanitizer findings or leaks",
+    "readiness_test.go:57: drop-check mutant caught for non_null_uninitialized.ts: stdout \"before\\n0\\n\"",
+    "readiness_test.go:68: drop-check mutant caught for non_null_initialized.ts: stdout \"0 0 false\\n23\\n23\\n8\\n9\\n0 0 false\\n12 12 false\\n0\\n-1\\n5 0 false\\n0 1\\n\\n-1\\ntrue\\nfalse\\n17\\n\"",
+    "non_null_migration_test.go:21: drop-check mutant caught for main.ts: stdout \"1\\n\"",
+    "readiness_test.go:151: drop-check mutant caught for non_null_lazy_initialized.ts: stdout \"scanner\\nscanner\\nassigned 1\\n0 false\\n0 2\\nstatic\\ndefault\\n\"",
+    "readiness_test.go:142: freed Weak diagnostic mutant caught: adamic: panic: a weak reference was read after what it pointed to was freed",
+    "readiness_test.go:57: drop-check mutant caught for non_null_lazy_read.ts: stdout \"before\\n\\n\"",
+    "readiness_test.go:57: drop-check mutant caught for non_null_uninitialized_exception.ts: stdout \"caught\\n0\\n\"",
+    "non_null_migration_test.go:21: drop-check mutant caught for main.ts: stdout \"1\\n\"",
+    "readiness_test.go:57: drop-check mutant caught for non_null_weak.ts: stdout \"before\\ntrue\\n\"",
+    "readiness_test.go:57: drop-check mutant caught for non_null_uninitialized_capture.ts: stdout \"before\\n0\\n\"",
+    "readiness_test.go:57: drop-check mutant caught for non_null_uninitialized.ts: stdout \"before\\n0\\n\"",
+    "readiness_test.go:57: drop-check mutant caught for non_null_uninitialized_loop.ts: stdout \"0\\n\"",
+    "non_null_checked_test.go:132: look-through mutant caught before either backend: union return where number is required",
+    "non_null_checked_test.go:97: no-check mutant caught: stdout \"before\\ntrue\\n\" exit 0"
+  ],
+  "native_literal_emission_fix": "Coalesce recognizes literal ir.Undefined and ir.Null as absent without comparing constant sentinel addresses. Moved non_null_initialized.ts and default-boxed-write.ts exposed the clang warning; both now run. TestNonNullLiteralUnionInitializers pins both literals and catches no-check mutants by stdout.",
+  "native_package_existing_failure": {
+    "candidate": {
+      "log": "/tmp/non-null-migration-packages.json",
+      "sha256": "b252a73086401cb72bbb9c3197de078b7d35f531414c46589be610e32bb0cc01",
+      "results": {
+        "github.com/system-inc/adamic/internal/native": {
+          "result": "fail",
+          "seconds": 428.389
+        }
+      }
+    },
+    "clean_base_probe": {
+      "log": "/tmp/non-null-migration-base-decode.json",
+      "sha256": "c6c8440c56cd54348c6c9be81473ffdaf3af09399b269fb3b08731d6c08c3d6a",
+      "results": {
+        "github.com/system-inc/adamic/internal/native": {
+          "result": "fail",
+          "seconds": 18.576
+        }
+      }
+    },
+    "test": "TestDecodeASCII/native",
+    "reason": "Both candidate and clean 337aa466 fail to link the same unchanged runtime sources: missing adamic_write_raw, adamic_share, adamic_stack_thread_start and adamic_heap_thread_end. Other completed native tests pass; this unrelated failure is left unchanged."
+  },
+  "intermediate_failures": [
+    "Migration exposed constant NULL-versus-adamic_null comparison in C for literal assertions stored into a union; fixed in check emission, preserving fixture bytes.",
+    "A test-only const-never interpolation hit an unrelated NotYet; the added union-emission probe uses a normal subsequent assignment instead.",
+    "A liveness filter selecting only three definite-declaration programs hit its non-vacuity guard; the final whole flow suite passes.",
+    "Root disk exhaustion interrupted one final count-table check while saving gate-cache results. Discarding only reproducible Go-cache artifacts allowed the complete resolved check to pass."
+  ],
+  "source_policy": "Runtime programs use .ts. Only deliberate .a refusal controls are excluded from flow and runtime counts. Definite declarations retain readiness; ordinary initializer assertions stop eagerly.",
+  "limitations": [
+    "The full repository gate, census replay and scanner slice were not run.",
+    "The complete native package retains the proven pre-existing DecodeASCII/native linker failure.",
+    "The lazy-initializer drop-check mutant prints additional output before a later existing hoisted-var readiness panic; it is caught by stdout alone, without relying on that later panic."
+  ],
+  "delivery": "One additional own commit and one push to codex/non-null-checked-next only; no main or area branch changes."
+}
