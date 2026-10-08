@@ -1,0 +1,24 @@
+function diamond
+entry 1
+bound 5
+identifier 0 -
+identifier 1 x
+identifier 1 x
+identifier 1 x
+block 1
+edge 2 Real
+edge 3 Real
+instruction -1
+define 1 x
+block 2
+edge 4 Real
+instruction -1
+define 2 x
+block 3
+edge 4 Real
+block 4
+return
+instruction -1
+use 3 x
+terminal-use 3 x
+passes construct
