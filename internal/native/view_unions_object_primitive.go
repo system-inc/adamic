@@ -16,7 +16,7 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 			undefined = true
 			continue
 		}
-		if child.Kind != ir.ViewScalar && child.Kind != ir.ViewObject {
+		if child.Kind != ir.ViewScalar && child.Kind != ir.ViewObject && child.Kind != ir.ViewArray {
 			panic("compiler bug: unavailable object primitive member adapter")
 		}
 		if child.Unsupported != "" {

@@ -13,6 +13,13 @@ import (
 // Source admission exercises the four minimal object/primitive read hooks.
 func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 	for _, sample := range []struct{ name, source, output, message string }{
+		{"comment-good", "plain\nnested:7\nabsent\ngenerated\ngenerated:8\n", "plain\nnested:7\nabsent\ngenerated\ngenerated:8\n", ""},
+		{"comment-flags-wrong", "nested:false\n", "", "field read failed: first.flags is not a number; expected number, found boolean"},
+		{"comment-boolean", "wrong\n", "", "field read failed: value.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean"},
+		{"literal-good", "text\n42\ntrue:123\n43\nfalse:456\n", "text\n42\ntrue:123\n43\nfalse:456\n", ""},
+		{"literal-boolean", "wrong\n", "", "field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean"},
+		{"literal-negative-wrong", "42:123\n", "", "field read failed: member.negative is not a boolean; expected boolean, found number"},
+		{"literal-text-wrong", "false:123\n", "", "field read failed: member.base10Value is not a string; expected string, found number"},
 		{"node-indicator-false", "false\n", "", "field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean"},
 		{"diagnostic-boolean", "undefined\n", "", "field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found boolean"},
 		{"diagnostic-code-wrong", "false\n", "", "field read failed: member.code is not a number; expected number, found boolean"},
@@ -49,6 +56,35 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					t.Fatalf("%s: %#v", diff, got)
 				}
 			}
+			if sample.name == "comment-boolean" || sample.name == "literal-boolean" {
+				var root ir.Property
+				if count := changeObjectPrimitiveRead(program, func(read ir.Property) bool { return read.View == "value.comment" || read.View == "type.value" }, func(read ir.Property) ir.Property { root = read; return read }); count != 1 {
+					t.Fatalf("want one union read, got %d", count)
+				}
+				members := program.ViewContracts[root.ViewContract-1].Members
+				changed := false
+				for _, id := range members {
+					child := &program.ViewContracts[id-1]
+					if child.Kind != ir.ViewScalar || child.Of != ir.String {
+						continue
+					}
+					original := *child
+					child.Of, child.Allowed = ir.Boolean, nil
+					for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+						if got.exitCode != 0 || disagreement(want, got) == "" {
+							t.Fatalf("outer wrong-member mutant must run and fail pin: %#v", got)
+						}
+						t.Logf("outer wrong-member acceptance caught (%s): exit %d stdout %q", sample.name, got.exitCode, got.stdout)
+					}
+					*child = original
+					changed = true
+					break
+				}
+				if !changed {
+					t.Fatal("no scalar member available for independent acceptance mutant")
+				}
+			}
+
 			if sample.name == "node-indicator-false" {
 				changed := 0
 				for index := range program.ViewContracts {
@@ -74,9 +110,21 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					}
 				}
 			}
-			if sample.name == "diagnostic-code-wrong" || sample.name == "node-indicator-flags-wrong" {
-				match := func(read ir.Property) bool { return read.View == "member.code" || read.View == "member.flags" }
-				if changed := changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property { read.Of = ir.Boolean; return read }); changed != 1 {
+			if sample.name == "diagnostic-code-wrong" || sample.name == "node-indicator-flags-wrong" || sample.name == "literal-negative-wrong" || sample.name == "comment-flags-wrong" {
+				match := func(read ir.Property) bool {
+					return read.View == "member.code" || read.View == "member.flags" || read.View == "member.negative" || read.View == "first.flags"
+				}
+				var original ir.Property
+				if changed := changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property {
+					original = read
+					read.ViewAllowed = nil
+					if sample.name == "literal-negative-wrong" {
+						read.Of = ir.Number
+					} else {
+						read.Of = ir.Boolean
+					}
+					return read
+				}); changed != 1 {
 					t.Fatalf("want one wrong-shape mutation, got %d", changed)
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -85,17 +133,23 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					}
 					t.Logf("wrong-shape acceptance caught: exit %d stdout %q", got.exitCode, got.stdout)
 				}
-				changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property { read.Of = ir.Number; return read })
+				changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property { return original })
 			}
-			if sample.message != "" && sample.name != "diagnostic-wrong" && sample.name != "node-indicator-wrong" && sample.name != "diagnostic-boolean" {
+			if sample.message != "" && sample.name != "diagnostic-wrong" && sample.name != "node-indicator-wrong" && sample.name != "diagnostic-boolean" && sample.name != "literal-text-wrong" {
 				count := changeObjectPrimitiveRead(program, func(read ir.Property) bool {
+					if sample.name == "literal-boolean" {
+						return read.View == "type.value"
+					}
+					if sample.name == "comment-boolean" {
+						return read.View == "value.comment"
+					}
 					if sample.name == "node-indicator-false" {
 						return read.View == "value.externalModuleIndicator"
 					}
 					if sample.name == "diagnostic-boolean" {
 						return read.View == "value.messageText"
 					}
-					return read.View == "member.code" || read.View == "member.flags"
+					return read.View == "member.code" || read.View == "member.flags" || read.View == "member.negative" || read.View == "first.flags"
 				}, func(read ir.Property) ir.Property { read.View = ""; return read })
 				if count != 1 {
 					t.Fatalf("want one nested read mutant, got %d", count)
