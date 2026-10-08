@@ -394,7 +394,8 @@ def main():
             archive_input = name == 'ADAMIC_CLANG_TSGO_ARCHIVE'
             selected = phase == 'env' or (phase == 'env-archive') == archive_input
             if selected:
-                print('export ' + name + '=' + __import__('shlex').quote(str(root / relative)))
+                value = '1' if name == 'ADAMIC_GITIGNORE_LARGEST' else str(root / relative)
+                print('export ' + name + '=' + __import__('shlex').quote(value))
             else:
                 print('unset ' + name)
         return
@@ -409,6 +410,8 @@ def main():
     for name, action in tasks[phase]:
         started = time.monotonic()
         answer = action()
+        if answer.startswith('skipped'):
+            answer += '; no network work'
         print(f'setup: gate input {name} {answer}; step-duration={time.monotonic() - started:.3f}s', flush=True)
 
 
