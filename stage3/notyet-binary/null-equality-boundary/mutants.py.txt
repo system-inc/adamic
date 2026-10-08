@@ -1,0 +1,11 @@
+from pathlib import Path
+import subprocess,os
+p=Path('internal/lower/expression.go');original=p.read_text();before='if (l.includesNull(leftProven) || l.includesNull(rightProven)) && (left.Type() != right.Type() || l.includesUndefined(leftProven) || l.includesUndefined(rightProven)) {';assert original.count(before)==1
+for name,after in [('remove-boundary','if false && (l.includesNull(leftProven) || l.includesNull(rightProven)) && (left.Type() != right.Type() || l.includesUndefined(leftProven) || l.includesUndefined(rightProven)) {'),('drop-same-representation-undefined','if (l.includesNull(leftProven) || l.includesNull(rightProven)) && left.Type() != right.Type() {')]:
+ try:
+  p.write_text(original.replace(before,after))
+  log=Path('/tmp/binary-null-equality-mutant-'+name+'.log')
+  with log.open('w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestMixedEqualityBoxedNullBoundary','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  text=log.read_text();assert r.returncode and 'lowering succeeded' in text and 'native "true:false' in text and 'Node "false:true' in text and '[build failed]' not in text and 'clang failed' not in text and text.count('(exit 0)') == 2,text
+  print(name,'caught after valid C compilation: Node false:true, native true:false',flush=True)
+ finally:p.write_text(original)

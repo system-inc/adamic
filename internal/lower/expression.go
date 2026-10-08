@@ -786,6 +786,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			return test, nil
 		}
 	}
+	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+		leftProven := l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)
+		rightProven := l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)
+		if (l.includesNull(leftProven) || l.includesNull(rightProven)) && (left.Type() != right.Type() || l.includesUndefined(leftProven) || l.includesUndefined(rightProven)) {
+			return nil, l.notYet(node, "strict comparison requiring a boxed null distinct from undefined")
+		}
+	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() != right.Type() {
 		// A pair against what it holds, or against another pair: each made a pair, and compared as one.
 		if pair := left.Type(); pair.IsMaybe() && right.Type() == pair.Present() {

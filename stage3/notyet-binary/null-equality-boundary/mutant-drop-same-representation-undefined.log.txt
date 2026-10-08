@@ -1,0 +1,8 @@
+--- FAIL: TestMixedEqualityBoxedNullBoundary (0.51s)
+    binary_null_boundary_test.go:40: expected explicit boxed-null equality boundary; lowering succeeded: Node "false:true\nfalse:true\n" native "true:false\nfalse:true\n" (exit 0) backend "false:true\nfalse:true\n" (exit 0)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.518s
+FAIL
