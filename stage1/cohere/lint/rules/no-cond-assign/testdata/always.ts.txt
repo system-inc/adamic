@@ -1,0 +1,7 @@
+for (a = (b = 1); c = d; e = f) {}
+if ((a = b) || (c = d)) {}
+while (a /* = */ = b) {}
+if ((() => a = 1)()) {}
+if ({ get p() { a = 1; return 1; } }) {}
+if (a) b = c; else d = e;
+const value = a ? (b = c) : (d = e);

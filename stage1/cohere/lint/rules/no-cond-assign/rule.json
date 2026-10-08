@@ -1,0 +1,17 @@
+{
+  "name": "no-cond-assign",
+  "kinds": [
+    "BinaryExpression",
+    "IfStatement",
+    "WhileStatement",
+    "DoStatement",
+    "ForStatement",
+    "ConditionalExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoCondAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoCondAssign"
+}

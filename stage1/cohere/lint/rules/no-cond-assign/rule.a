@@ -1,0 +1,79 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { condAssign } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly always: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.always = context.settings.read('option', 'except-parens') === 'always';
+    }
+    assignment(index: number): boolean {
+        if(this.context.kind(index) !== 'BinaryExpression') { return false; }
+        const operator = this.context.kind(this.context.child(index, 1));
+        return [
+            'EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+            'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+            'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+            'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken',
+            'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken',
+        ].includes(operator);
+    }
+    // Absent for clauses have no child. Skip the complete initializer before scanning its delimiter.
+    test(index: number): number {
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'IfStatement':
+            case 'WhileStatement':
+            case 'ConditionalExpression': return this.context.child(index, 0);
+            case 'DoStatement': return this.context.child(index, 1);
+            case 'ForStatement': {
+                this.context.scanAt(node.pos);
+                let token = this.context.scanAt(this.context.scanEnd());
+                if(token !== 'OpenParenToken') { panic('missing for opening delimiter'); }
+                token = this.context.scanAt(this.context.scanEnd());
+                let child = 0;
+                if(token !== 'SemicolonToken') {
+                    this.context.scanAt(this.context.node(this.context.child(index, child)).end);
+                    child++;
+                }
+                if(this.context.scanKind() !== 'SemicolonToken') { panic('missing for initializer delimiter'); }
+                token = this.context.scanAt(this.context.scanEnd());
+                return token === 'SemicolonToken' ? -1 : this.context.child(index, child);
+            }
+            default: return -1;
+        }
+    }
+    inTest(index: number): boolean {
+        const assignment = this.context.node(index);
+        let ancestor = this.context.parent(index);
+        while(ancestor >= 0) {
+            const node = this.context.node(ancestor);
+            if(node.kind === 'ArrowFunction' || node.kind === 'Block') { return false; }
+            const test = this.test(ancestor);
+            if(test >= 0) {
+                const condition = this.context.node(test);
+                if(condition.pos <= assignment.pos && assignment.end <= condition.end) { return true; }
+            }
+            ancestor = this.context.parent(ancestor);
+        }
+        return false;
+    }
+    report(index: number): void {
+        this.context.report(this.context.child(index, 1), 'no-cond-assign', 'condAssign', condAssign, '', '', '');
+    }
+    visit(index: number): void {
+        if(this.always) {
+            if(this.assignment(index) && this.inTest(index)) { this.report(index); }
+            return;
+        }
+        if(this.context.kind(index) === 'BinaryExpression') { return; }
+        let test = this.test(index);
+        // Go strips ternary test parentheses even in the permissive mode.
+        if(test >= 0 && this.context.kind(index) === 'ConditionalExpression') { test = this.context.unwrap(test); }
+        if(this.assignment(test)) { this.report(test); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

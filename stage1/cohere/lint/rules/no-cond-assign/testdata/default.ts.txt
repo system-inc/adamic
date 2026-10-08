@@ -1,0 +1,6 @@
+if (a = b) {}
+while (c += d) {}
+do {} while (e ??= f);
+for (x = 0; y ||= z; x++) {}
+if ((a = b)) {}
+const value = (((c = d))) ? 1 : 0;

@@ -1,0 +1,50 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestNoCondAssignPort
+=== PAUSE TestNoCondAssignPort
+=== CONT  TestMutants
+=== CONT  TestNoCondAssignPort
+=== RUN   TestMutants/conditional-assignment-ternary-parentheses
+=== PAUSE TestMutants/conditional-assignment-ternary-parentheses
+=== CONT  TestMutants/conditional-assignment-ternary-parentheses
+    lint_test.go:1000: checker compilation phases: load=221.960416ms lower=8.373969288s C=865.399345ms JavaScript=50.232291ms
+    lint_test.go:1006: conditional-assignment-ternary-parentheses caught on Node: case 89 line 4634: port "fixed\tif (a = b) {}\\u000awhile (c += d) {}\\u000ado {} while (e ??= f);\\u000afor (x = 0; y ||= z; x++) {}\\u000aif ((a = b)) {}\\u000aconst value = (((c = d))) ? 1 : 0;\\u000a", Go "/tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:6:20"
+        Go context:
+        range 47 50 condAssign 			47 50
+        /tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:4:15
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 69 72 condAssign 			69 72
+        /tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:6:20
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 119 120 condAssign 			119 120
+        fixed	if (a = b) {}\u000awhile (c += d) {}\u000ado {} while (e ??= f);\u000afor (x = 0; y ||= z; x++) {}\u000aif ((a = b)) {}\u000aconst value = (((c = d))) ? 1 : 0;\u000a
+    lint_test.go:1006: conditional-assignment-ternary-parentheses caught on emitted JavaScript: case 89 line 4634: port "fixed\tif (a = b) {}\\u000awhile (c += d) {}\\u000ado {} while (e ??= f);\\u000afor (x = 0; y ||= z; x++) {}\\u000aif ((a = b)) {}\\u000aconst value = (((c = d))) ? 1 : 0;\\u000a", Go "/tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:6:20"
+        Go context:
+        range 47 50 condAssign 			47 50
+        /tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:4:15
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 69 72 condAssign 			69 72
+        /tmp/adamic-gate/TestMutantsconditional-assignment-ternary-parentheses2981010770/020/no-cond-assign-1.ts:6:20
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 119 120 condAssign 			119 120
+        fixed	if (a = b) {}\u000awhile (c += d) {}\u000ado {} while (e ??= f);\u000afor (x = 0; y ||= z; x++) {}\u000aif ((a = b)) {}\u000aconst value = (((c = d))) ? 1 : 0;\u000a
+=== NAME  TestNoCondAssignPort
+    lint_test.go:295: cohere cases: 5278 unique source/rule/options combinations
+    registration_test.go:354: no-cond-assign upstream cases: 73
+    registration_test.go:364: no-cond-assign witnesses: 5
+    registration_test.go:368: checker compilation phases: load=292.01737ms lower=9.215746864s C=621.125546ms JavaScript=31.035856ms
+=== NAME  TestMutants/conditional-assignment-ternary-parentheses
+    lint_test.go:155: checker native mutant build: 1m7.91996622s
+    lint_test.go:1014: sanitized native canary no-cond-assign equals mutated Node: 536428 bytes
+--- PASS: TestMutants (55.17s)
+    --- PASS: TestMutants/conditional-assignment-ternary-parentheses (209.07s)
+=== NAME  TestNoCondAssignPort
+    registration_test.go:368: checker native build: 1m8.812826262s
+    registration_test.go:368: Go, Node, emitted JavaScript, native identical: 608654 bytes
+--- PASS: TestNoCondAssignPort (266.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	266.161s

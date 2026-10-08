@@ -1,0 +1,27 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-timeout=60m",
+    "-json"
+  ],
+  "compiler": "/workspace/typescript-no-cond-pin",
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "profile": "/tmp/adamic-gate/no-cond-assign-profile-cgrejsst",
+  "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "nproc": 5,
+  "load_before": "1.19 6.33 4.76 1/150 6678",
+  "exit": 0,
+  "wall_seconds": 1095.83859318,
+  "load_after": "4.74 5.47 4.87 1/149 141123",
+  "counts": {
+    "pass": 152,
+    "skip": 1,
+    "fail": 0
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}
