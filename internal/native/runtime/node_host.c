@@ -127,9 +127,6 @@ static void host_directory_error(int error, const char *operation, const adamic_
     if (error == ENOENT && strcmp(operation, "uv_cwd") == 0) {
         description = "process.cwd failed with error no such file or directory, the current working directory was likely removed without changing the working directory";
     }
-    static const char *const directory_error_names[] = {"name", "message", "code"};
-    static const bool references[] = {true, true, true};
-    static const adamic_shape shape = {3, directory_error_names, references, NULL};
     static adamic_string error_name = ADAMIC_STRING("Error");
     adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
     adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));
@@ -146,10 +143,11 @@ static void host_directory_error(int error, const char *operation, const adamic_
         adamic_release(message);
         message = closed;
     }
-    adamic_thrown = adamic_object_new(&shape);
-    adamic_thrown->slots[0].reference = &error_name;
-    adamic_thrown->slots[1].reference = message;
-    adamic_thrown->slots[2].reference = prefix;
+    adamic_object *thrown = adamic_host_error_new(&error_name, message, prefix);
+    adamic_release(message);
+    adamic_release(prefix);
+    adamic_thrown = &thrown->heap;
+    adamic_exception_pending = true;
     adamic_release(reason);
     adamic_release(syscall);
 }

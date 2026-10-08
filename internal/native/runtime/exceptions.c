@@ -25,8 +25,22 @@ adamic_object *adamic_error_new(adamic_string *message) {
 // The filesystem producer owns its distinct Error shape with a code field.
 extern bool adamic_fs_file_is_error(const adamic_object *value);
 
+// Area host Errors carry code in addition to name and message. Their factory
+// owns the shape identity, just as adamic_error_new owns error_shape.
+static const char *const host_error_names[] = {"name", "message", "code"};
+static const bool host_error_references[] = {true, true, true};
+static const adamic_shape host_error_shape = {3, host_error_names, host_error_references, NULL};
+
+adamic_object *adamic_host_error_new(adamic_string *name, adamic_string *message, adamic_string *code) {
+ adamic_object *error = adamic_object_new(&host_error_shape);
+ error->slots[0].reference = adamic_retain(name);
+ error->slots[1].reference = adamic_retain(message);
+ error->slots[2].reference = adamic_retain(code);
+ return error;
+}
+
 bool adamic_is_error(const adamic_heap *value) {
-	return value != NULL && value->kind == adamic_kind_object && (((const adamic_object *)value)->shape == &error_shape || adamic_fs_file_is_error((const adamic_object *)value));
+	return value != NULL && value->kind == adamic_kind_object && (((const adamic_object *)value)->shape == &host_error_shape || ((const adamic_object *)value)->shape == &error_shape || adamic_fs_file_is_error((const adamic_object *)value));
 }
 
 _Noreturn void adamic_uncaught(void) {

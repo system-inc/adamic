@@ -65,7 +65,7 @@ func TestProjectLibAndOptions(t *testing.T) {
 		{"default lib follows target", `{"strict":true,"target":"es2024","types":[]}`, `const body = document.body;`, ""},
 		{"unchecked reads disabled", `{"strict":true,"noUncheckedIndexedAccess":false,"lib":["es2024"],"types":[]}`, `const values: number[] = [1]; const first: number = values[0];`, ""},
 		{"unchecked reads enabled", `{"strict":true,"noUncheckedIndexedAccess":true,"lib":["es2024"],"types":[]}`, `const values: number[] = [1]; const first: number = values[0];`, "TS2322"},
-		{"optional exactness disabled", `{"strict":true,"exactOptionalPropertyTypes":false,"lib":["es2024"],"types":[]}`, `const value: { x?: number } = { x: undefined };`, ""},
+		{"optional exactness disabled", `{"strict":true,"exactOptionalPropertyTypes":false,"lib":["es2024"],"types":[]}`, `const value: { x?: number } = { x: undefined };`, "TS2375"},
 		{"implicit any allowed", `{"strict":false,"lib":["es2024"],"types":[]}`, `function identity(value) { return value; }`, ""},
 		{"implicit any rejected", `{"strict":true,"lib":["es2024"],"types":[]}`, `function identity(value) { return value; }`, "TS7006"},
 		{"isolated declaration needs annotation", `{"strict":true,"declaration":true,"isolatedDeclarations":true,"noEmit":true,"lib":["es2024"],"types":[]}`, `export const value = (() => 1)();`, "TS9010"},

@@ -111,6 +111,10 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 			if strings.Contains(fixture.typed, "[]") || strings.Contains(fixture.name, "typed") {
 				lookup = "adamic_array_at("
 			}
+			// The area represents three kinds as native typed arrays, each with one lookup.
+			if strings.Contains(c, "adamic_typed_array_get(") {
+				lookup = "adamic_typed_array_get("
+			}
 			count := strings.Count(c, lookup)
 			if lookup == "adamic_array_at(" {
 				count += strings.Count(c, "adamic_array_at_integer(")

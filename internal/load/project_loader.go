@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
@@ -28,6 +29,10 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 	var project string
 	var adamic, standalone bool
 	for _, root := range roots {
+		// Ambient declarations share the implementation roots' checker ownership.
+		if strings.HasSuffix(root.AsString(), ".d.ts") {
+			continue
+		}
 		if _, isAdamic := fs.adamicFile(root); isAdamic {
 			adamic = true
 			continue
@@ -38,7 +43,7 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 			continue
 		}
 		if project != "" && project != owner {
-			return nil, "", fmt.Errorf("load: separate checker ownership is not implemented for projects %s and %s", project, owner)
+			return nil, "", fmt.Errorf("load: TypeScript roots belong to different projects; separate checker ownership is not implemented for %s and %s", project, owner)
 		}
 		project = owner
 	}

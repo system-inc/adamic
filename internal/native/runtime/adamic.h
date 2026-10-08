@@ -917,6 +917,8 @@ extern adamic_heap adamic_null;
 
 adamic_heap *adamic_caught_property(adamic_heap *value, const adamic_string *name);
 adamic_object *adamic_error_new(adamic_string *message);
+// Genuine host Errors have a known code-bearing shape; arguments are borrowed.
+adamic_object *adamic_host_error_new(adamic_string *name, adamic_string *message, adamic_string *code);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

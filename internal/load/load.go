@@ -131,7 +131,10 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, err
 	}
 	fs.projectConsole = project != ""
-	checkRoots := append(append([]tspath.RootedFilePath{}, userRoots...), preludePath, setPreludePath)
+	checkRoots := append(append([]tspath.RootedFilePath{}, userRoots...), preludePath)
+	if project == "" {
+		checkRoots = append(checkRoots, setPreludePath)
+	}
 	var projectConfig *tsoptions.ParsedCommandLine
 	if project != "" {
 		// Composite projects must retain their complete root list. Checking only
@@ -146,7 +149,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 		if options.Composite == core.TSTrue {
-			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath, setPreludePath)
+			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath)
 		}
 	}
 	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
@@ -164,7 +167,19 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
-	if usesNodeModules(program) {
+	// Remove the prelude console only when the selected host actually declares it.
+	if projectConfig != nil && !hasHostConsole(program.GetSourceFiles()) {
+		fs.projectConsole = false
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, errors.New("load: the compiler built no project console program")
+		}
+	}
+
+	// Project files use their own selected Node declarations.
+	if project == "" && usesNodeModules(program) {
 		index, err := nodeTypesIndex(workingDirectory)
 		if err != nil {
 			return nil, err
@@ -173,7 +188,8 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		fs.projectConsole = true
 		checkRoots = append(checkRoots, currentDirectory.ResolveFile(index))
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-		config = tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
+		// Preserve project directory, references, and ConfigFile when adding Node declarations.
+		config = config.WithFileNames(checkRoots)
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
 		if program == nil {
@@ -194,9 +210,6 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 	}
 	if project != "" {
-		if len(overlay) != 0 {
-			return nil, errors.New("load: project option attribution for source overlays is not implemented yet")
-		}
 		// A project checker must never assign relaxed types to an imported .a file,
 		// or to a file owned by another project. Refuse until separate checker
 		// ownership is supported; sharing the FS host does not share parsed ASTs.
@@ -213,7 +226,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 		report := &ProjectOptionReport{}
 		if !alreadyStricter(options) {
-			report, err = AuditProjectOptions(context.Background(), project)
+			report, err = auditProjectOptions(context.Background(), project, fs, userRoots)
 			if err != nil {
 				return nil, err
 			}

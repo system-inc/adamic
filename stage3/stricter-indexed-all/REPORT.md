@@ -1,3 +1,5 @@
+Area-next transplant status: see ../stricter-options/whole-program/REPORT.md. This area schedules 106 contracts and retains 67 optional errors; D069 is a named presence dependency. The report below is historical source-branch evidence, not a validation claim for this area transplant.
+
 Integrated all four indexed slices on the newest stricter-options base; reconciled sparse-array witnesses and attempted the exact whole compiler tree.
 Commits: merge chain 49812121, 9aa2035f, d19185d6, a5ff080b, c6ba3399, 899cae18, 44ac98bb, f2d8c2d4; integration evidence committed separately on codex/stricter-indexed-all.
 Commands: all six merged test packages and vet passed; 79 dated source hashes matched; strict native pipeline stopped at 171 checker diagnostics, production pipeline at 72.

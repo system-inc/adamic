@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestOptionalReturnAttribution(t *testing.T) {
@@ -58,7 +59,7 @@ func TestOptionalReturnAttribution(t *testing.T) {
 	}
 }
 
-func TestDifferentOverloadStorageRefuses(t *testing.T) {
+func TestDifferentOverloadStorageUsesAreaAdapter(t *testing.T) {
 	directory := t.TempDir()
 	path := filepath.Join(directory, "main.ts")
 	write(t, filepath.Join(directory, "tsconfig.json"), `{"compilerOptions":{"strict":true,"noUncheckedIndexedAccess":false,"lib":["es2024"],"module":"esnext","noEmit":true},"files":["main.ts"]}`)
@@ -67,7 +68,19 @@ func TestDifferentOverloadStorageRefuses(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := lower.Lower(context.Background(), checked); err == nil || !strings.Contains(err.Error(), "different parameter or return representations") {
-		t.Fatalf("different storage needs an adapter: %v", err)
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "native")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	expected := run("node", "--eval", "function read(value) { return value; } console.log(`${read(7)}`);")
+	if expected.code != 0 || expected.stdout != "7\n" {
+		t.Fatalf("Node oracle: %+v", expected)
+	}
+	if got := run(binary); got != expected {
+		t.Fatalf("area overload adapter: %+v, want %+v", got, expected)
 	}
 }

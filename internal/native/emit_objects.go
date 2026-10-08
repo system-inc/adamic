@@ -432,6 +432,10 @@ func (e *emitter) cache() string {
 func (e *emitter) dynamicProperties() bool {
 	found := false
 	walkExpressions(e.program, func(expression ir.Expression) {
+		// Caught property reads use field kinds, even without general reflection.
+		if call, ok := expression.(ir.ObjectCall); ok && call.Method == "catchProperty" {
+			found = true
+		}
 		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
 			found = true
 		}

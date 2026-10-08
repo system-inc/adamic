@@ -27,7 +27,8 @@ func (p *Program) scheduleOptionSite(site OptionSite) OptionDisposition {
 	default:
 		row.State = OptionRemainingError
 		row.Reason = "no use-site guard contract supports this diagnostic: " + site.Message
-		if row.Kind == "optional-presence" {
+		if len(site.Options) == 1 && site.Options[0] == "exactOptionalPropertyTypes" {
+			row.Kind = "optional-presence"
 			row.Reason = "missing own-presence representation: 5bb775ca and alias fixes through 7e7464e6; " + site.Message
 		}
 	}

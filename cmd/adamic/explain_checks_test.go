@@ -12,8 +12,8 @@ func TestExplainChecksCountsIntegratedContracts(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
 	for name, source := range map[string]string{
-		"tsconfig.json": `{"compilerOptions":{"strict":true,"exactOptionalPropertyTypes":false,"noUncheckedIndexedAccess":false,"lib":["es2024"],"types":[]},"files":["main.ts"]}`,
-		"main.ts":       `const items: string[] = ['ready']; const first: string = items[0]; const text: string = JSON.stringify(undefined); console.log(first);`,
+		"tsconfig.json": `{"compilerOptions":{"strict":true,"useUnknownInCatchVariables":false,"exactOptionalPropertyTypes":false,"noUncheckedIndexedAccess":false,"lib":["es2024"],"types":[]},"files":["main.ts"]}`,
+		"main.ts":       `const items: string[] = ['ready']; const first: string = items[0]; const text: string = JSON.stringify(undefined); try { throw {message: "ready"}; } catch(error) { const message: string = error.message; console.log(message); } console.log(first);`,
 	} {
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0600); err != nil {
 			t.Fatal(err)
@@ -25,7 +25,7 @@ func TestExplainChecksCountsIntegratedContracts(t *testing.T) {
 	}
 	var report bytes.Buffer
 	explainChecks(lowered, &report)
-	want := "checked: indexed-presence=1 catch-error=0 json-stringify-defined=1 optional-write=0\ntrusted: 0\n"
+	want := "checked: indexed-presence=1 catch-error=0 json-stringify-defined=1 optional-write=0 caught-type=1\ntrusted: 0\n"
 	if !strings.Contains(report.String(), want) {
 		t.Fatalf("missing actual guard counts: %s", report.String())
 	}

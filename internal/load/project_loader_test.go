@@ -93,12 +93,21 @@ func TestProductionCompositeKeepsProjectRoots(t *testing.T) {
 	}
 }
 
-func TestProductionProjectOverlayRefused(t *testing.T) {
+func TestProductionProjectOverlaySites(t *testing.T) {
 	t.Parallel()
 	paths := writeProgram(t,
 		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
 		[2]string{"main.ts", `export const value = 1;`})
-	if _, err := LoadOverlay(paths[1:], map[string]string{paths[1]: `const items: number[] = []; const first: number = items[0];`}); err == nil || !strings.Contains(err.Error(), "source overlays") {
-		t.Fatalf("disk audit must not attest to unchecked overlay sites: %v", err)
+	program, err := LoadOverlay(paths[1:], map[string]string{paths[1]: `const items: number[] = []; const first: number = items[0];`})
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := program.OptionDispositions()
+	if len(rows) != 1 || rows[0].Kind != "indexed-presence" || rows[0].State != OptionCheckScheduled || rows[0].Site.Line != 1 {
+		t.Fatalf("overlay read needs its own recorded contract: %+v", rows)
+	}
+	_, err = LoadOverlay(paths[1:], map[string]string{paths[1]: `const wrong: number = 'wrong';`})
+	if err == nil || !strings.Contains(err.Error(), "not assignable") {
+		t.Fatalf("ordinary overlay error was lost: %v", err)
 	}
 }

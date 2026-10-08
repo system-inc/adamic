@@ -139,9 +139,6 @@ static void host_directory_error(int error, const char *operation, const adamic_
         case EIO: code = "EIO"; description = "i/o error"; break;
         default: { static const char message[] = "unsupported host directory errno"; adamic_panic(message, sizeof message - 1); }
     }
-    static const char *const directory_error_names[] = {"name", "message", "code"};
-    static const bool references[] = {true, true, true};
-    static const adamic_shape shape = {3, directory_error_names, references, NULL};
     static adamic_string error_name = ADAMIC_STRING("Error");
     adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
     adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));
@@ -158,10 +155,11 @@ static void host_directory_error(int error, const char *operation, const adamic_
         adamic_release(message);
         message = closed;
     }
-    adamic_thrown = adamic_object_new(&shape);
-    adamic_thrown->slots[0].reference = &error_name;
-    adamic_thrown->slots[1].reference = message;
-    adamic_thrown->slots[2].reference = prefix;
+    adamic_object *thrown = adamic_host_error_new(&error_name, message, prefix);
+    adamic_release(message);
+    adamic_release(prefix);
+    adamic_thrown = &thrown->heap;
+    adamic_exception_pending = true;
     adamic_release(reason);
     adamic_release(syscall);
 }
@@ -315,8 +313,10 @@ static double mark_time(const adamic_string *name, double fallback) {
     adamic_string prefix = ADAMIC_STRING("The \""), suffix = ADAMIC_STRING("\" performance mark has not been set");
     static adamic_string name_error = ADAMIC_STRING("SyntaxError");
     adamic_string *message = adamic_string_concat(3, (adamic_string *const[]){&prefix, (adamic_string *)name, &suffix});
-    adamic_thrown = adamic_error_new(message);
-    adamic_thrown->slots[0].reference = &name_error;
+    adamic_object *thrown = adamic_error_new(message);
+    thrown->slots[0].reference = &name_error;
+    adamic_thrown = &thrown->heap;
+    adamic_exception_pending = true;
     adamic_release(message);
     return 0;
 }
@@ -459,11 +459,7 @@ adamic_string *adamic_node_tmpdir(void) {
 }
 
 void adamic_node_error(adamic_string *name, adamic_string *message, adamic_string *code) {
-    static const char *const process_error_names[] = {"name", "message", "code"};
-    static const bool references[] = {true, true, true};
-    static const adamic_shape shape = {3, process_error_names, references, NULL};
-    adamic_thrown = adamic_object_new(&shape);
-    adamic_thrown->slots[0].reference = adamic_retain(name);
-    adamic_thrown->slots[1].reference = adamic_retain(message);
-    adamic_thrown->slots[2].reference = adamic_retain(code);
+    adamic_object *thrown = adamic_host_error_new(name, message, code);
+    adamic_thrown = &thrown->heap;
+    adamic_exception_pending = true;
 }

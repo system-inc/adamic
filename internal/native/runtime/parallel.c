@@ -35,7 +35,7 @@ typedef struct scope {
 	size_t completed;
 	size_t grain;
 	size_t exception_index;
-	adamic_object *exception;
+	adamic_heap *exception;
 } scope;
 
 typedef struct range {
@@ -190,19 +190,19 @@ static bool claim(scope **scope_out, size_t *from_out, size_t *end_out) {
 }
 
 static void execute_range(scope *scope, size_t from, size_t end) {
-	adamic_object *outer_exception = adamic_thrown;
+	adamic_heap *outer_exception = adamic_thrown;
 	adamic_thrown = NULL;
 	for (size_t index = from; index < end; index++) {
 		adamic_value arguments[] = {scope->items->elements[index], {.number = (double)index}};
 		adamic_value result = adamic_closure_call(scope->work, arguments, 2);
 		if (adamic_thrown != NULL) {
-			adamic_object *error = adamic_thrown;
+			adamic_heap *error = adamic_thrown;
 			adamic_thrown = NULL;
 			if (scope->results->references) { adamic_release(result.reference); }
 			adamic_share(error);
 			pthread_mutex_lock(&scheduler);
 			if (index < scope->exception_index) {
-				adamic_object *previous = scope->exception;
+				adamic_heap *previous = scope->exception;
 				scope->exception = error;
 				scope->exception_index = index;
 				error = previous;

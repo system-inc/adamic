@@ -173,11 +173,9 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 					}
 					if absent {
 						panicCall := regexp.MustCompile(`adamic_panic\([^;\n]*->bytes[^;\n]*\);`)
-						if len(panicCall.FindAllString(c, -1)) != len(reads) {
-							t.Fatal("mutant must erase exactly one guard")
-						}
+
 						binary := filepath.Join(directory, "mutant")
-						if err := native.Build(eraseSitePanic(t, c, panicCall, locations, where), binary, native.Options{Sanitize: true}); err != nil {
+						if err := native.Build(eraseSitePanic(t, c, panicCall, program, where), binary, native.Options{Sanitize: true}); err != nil {
 							t.Fatalf("mutant must build: %v", err)
 						}
 						got := run(binary)
@@ -207,15 +205,30 @@ func assertRefusal(t *testing.T, cli, path string, fixture witness, err error) {
 }
 
 // Erase only the selected binding's panic, retaining every other binding guard.
-func eraseSitePanic(t *testing.T, c string, pattern *regexp.Regexp, locations []string, where string) string {
+func eraseSitePanic(t *testing.T, c string, pattern *regexp.Regexp, program *ir.Program, where string) string {
 	t.Helper()
-	matches := pattern.FindAllStringIndex(c, -1)
-	for index, location := range locations {
-		if location == where {
-			match := matches[index]
-			return c[:match[0]] + "(void)0;" + c[match[1]:]
+	constant := -1
+	for index, text := range program.Strings {
+		if text == "indexed read is absent: "+where {
+			constant = index
+			break
 		}
 	}
-	t.Fatal("mutant site missing")
-	return c
+	if constant < 0 {
+		t.Fatal("mutant site message missing")
+	}
+	symbol := fmt.Sprintf("&adamic_string_%d)", constant)
+	matches := pattern.FindAllStringIndex(c, -1)
+	selected := [2]int{}
+	count := 0
+	for _, match := range matches {
+		if strings.Contains(c[match[0]:match[1]], symbol) {
+			selected = [2]int{match[0], match[1]}
+			count++
+		}
+	}
+	if count != 1 {
+		t.Fatalf("mutant must erase exactly one indexed site, got %d", count)
+	}
+	return c[:selected[0]] + "(void)0;" + c[selected[1]:]
 }

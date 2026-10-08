@@ -1,3 +1,5 @@
+Area-next transplant status: see ../stricter-options/whole-program/REPORT.md. This area schedules 106 contracts and retains 67 optional errors; D069 is a named presence dependency. The report below is historical source-branch evidence, not a validation claim for this area transplant.
+
 Built: merged the approved optional-field presence dependency and closed D069's initially absent-field context; 27 sites proven, 0 blocked, 0 remaining.
 Commits: dependency tip 7e7464e6 merged at 2a519a00; records 28d30cd3 remains in ancestry through dfd3da59; this closure report follows the merge.
 Commands: indexed witnesses PASS 173.287s, records PASS 67.047s, full affected compiler packages PASS, 45 selected Node oracle fixtures PASS 12.378s, measured counts PASS 82.977s, vet and formatting PASS.

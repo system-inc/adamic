@@ -29,13 +29,6 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
 			var notYet *NotYet
-			if probe.name == "class merge" {
-				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "declaration merging of class N") {
-					t.Fatalf("got %v, want class merge refusal", err)
-				}
-				return
-			}
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, probe.reason)
 			}

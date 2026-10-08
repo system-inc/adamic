@@ -4,5 +4,7 @@
   ],
   "read": "getTypeArguments(type)[0]",
   "receiver": "returned readonly object array, constant zero",
-  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nfunction getTypeArguments(type: Type): readonly Type[] { return absent ? [] : [type]; }\nconst type: Type = { flags: 7 };\nconst typeAsPromise: { promisedTypeOfPromise?: Type } = {};\ntypeAsPromise.promisedTypeOfPromise = getTypeArguments(type)[0];\nconst value = typeAsPromise.promisedTypeOfPromise;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n"
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nfunction getTypeArguments(type: Type): readonly Type[] { return absent ? [] : [type]; }\nconst type: Type = { flags: 7 };\nconst typeAsPromise: { promisedTypeOfPromise?: Type } = {};\ntypeAsPromise.promisedTypeOfPromise = getTypeArguments(type)[0];\nconst value = typeAsPromise.promisedTypeOfPromise;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n",
+  "block_stage": "lower",
+  "block": "own-presence representation 5bb775ca"
 }
