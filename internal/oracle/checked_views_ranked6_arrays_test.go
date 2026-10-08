@@ -14,6 +14,7 @@ import (
 func TestCheckedViewRanked6ArrayContracts(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, printed, diagnostic string }{
+		{"ranked6-class-like-union-cast", "1\n", "", ""},
 		{"ranked6-calls", "2:value:0\n", "", ""},
 		{"ranked6-calls-filter", "2\n", "", ""},
 		{"ranked6-calls-lazy", "2:1\n", "", ""},
@@ -78,13 +79,11 @@ func TestCheckedViewRanked6ArrayContracts(t *testing.T) {
 	}
 }
 
-// Two programs Node runs stay refused before lowering, never compiled: a direct cast to the
-// ClassDeclaration | ClassExpression union needs lane 4's union-target admission, and a JSDocArray
-// built with its own jsDocCache field needs array own-field production for that field.
+// A JSDocArray built with its own jsDocCache field still needs array own-field production.
+// Its Node control remains a named refusal before either backend executes.
 func TestCheckedViewRanked6Frontiers(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, refusal string }{
-		{"ranked6-class-like-union-cast", "1\n", ":34:77: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"},
 		{"ranked6-jsdoc-parent-cache", "1:param\n", ":36:50: stage 0 can't lower array own-field production with unsupported field jsDocCache yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

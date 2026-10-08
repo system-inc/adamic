@@ -1,0 +1,706 @@
+{
+  "integration_base": "4e67894aae94cba46212458d604e1b886edf56b5",
+  "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
+  "total_pairs": 30,
+  "total_reads": 543,
+  "certified_pairs": 27,
+  "certified_reads": 540,
+  "remaining_pairs": 3,
+  "remaining_reads": 3,
+  "pairs": [
+    {
+      "receiver_type_id": 6997,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 866,
+        "column": 33
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 4329,
+      "type": "Symbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 383,
+        "column": 54
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 7618,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6360,
+        "column": 51
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 7619,
+      "type": "Identifier | PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 858,
+        "column": 39
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 10393,
+      "type": "TransientSymbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 1565,
+        "column": 17
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 9170,
+      "type": "MemberName",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10821,
+        "column": 12
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicElements",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34017,
+        "column": 54
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 70883,
+      "type": "__String[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 14206,
+        "column": 49
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 9228,
+      "type": "Identifier | undefined",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 8397,
+        "column": 13
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22898,
+        "column": 56
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 34691,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44924,
+        "column": 88
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 55713,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 24388,
+        "column": 54
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "Element",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34285,
+        "column": 27
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicClassAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22899,
+        "column": 61
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "JSX",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34094,
+        "column": 113
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 77441,
+      "type": "typeof ReactNames",
+      "field": "Fragment",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 37535,
+        "column": 46
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 10782,
+      "type": "UniqueESSymbolType",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11172,
+        "column": 16
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 70885,
+      "type": "{ name: __String; oldSymbol: Symbol; }",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 8307,
+        "column": 64
+      },
+      "state": "blocked original named compile refusal"
+    },
+    {
+      "receiver_type_id": 103520,
+      "type": "ActiveLabel",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 1609,
+        "column": 17
+      },
+      "state": "blocked original named compile refusal"
+    },
+    {
+      "receiver_type_id": 7612,
+      "type": "GeneratedIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6327,
+        "column": 44
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 9185,
+      "type": "GeneratedPrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6351,
+        "column": 51
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 46232,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 43
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 9477,
+      "type": "LeftHandSideExpression & Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38035,
+        "column": 62
+      },
+      "state": "blocked original named compile refusal"
+    },
+    {
+      "receiver_type_id": 53493,
+      "type": "Mutable<Identifier>",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1338,
+        "column": 13
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 8588,
+      "type": "Symbol | undefined",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38412,
+        "column": 20
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementAttributesPropertyNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34162,
+        "column": 57
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementChildrenAttributeNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34170,
+        "column": 57
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementClass",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34279,
+        "column": 33
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementType",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34153,
+        "column": 65
+      },
+      "state": "certified original declarations"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "LibraryManagedAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34148,
+        "column": 65
+      },
+      "state": "certified original declarations"
+    }
+  ],
+  "undefined_fields": {
+    "total_pairs": 5,
+    "total_reads": 9,
+    "certified_pairs": 5,
+    "certified_reads": 9,
+    "remaining_pairs": 0,
+    "remaining_reads": 0,
+    "pairs": [
+      {
+        "receiver_type_id": 8654,
+        "type": "UnionType",
+        "field": "keyPropertyName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 3,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 28038,
+          "column": 13
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 6998,
+        "type": "SourceFile",
+        "field": "localJsxFragmentNamespace",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 2,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 2441,
+          "column": 25
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 6998,
+        "type": "SourceFile",
+        "field": "localJsxNamespace",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 2,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 2487,
+          "column": 13
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 10560,
+        "type": "SymbolLinks",
+        "field": "typeOnlyExportStarName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 1,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 4472,
+          "column": 98
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 10933,
+        "type": "WideningContext",
+        "field": "propertyName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 1,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 25949,
+          "column": 64
+        },
+        "state": "certified original declarations"
+      }
+    ]
+  },
+  "original_mixed_primitive_column": {
+    "total_pairs": 63,
+    "total_reads": 690,
+    "certified_brand_subset_pairs": 32,
+    "certified_brand_subset_reads": 549,
+    "remaining_pairs": 31,
+    "remaining_reads": 141,
+    "note": "Includes the three pending branded pairs and 28 nonbrand pairs / 138 reads. Dictionary handoff remains a separately sourced shared-selector queue."
+  }
+}

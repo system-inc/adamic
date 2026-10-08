@@ -1888,6 +1888,7 @@ again. Owned resume/dictionary-member-handoff.json records this split and counts
 Full dynamic lookup validation awaits lane 6's hooks in views-integration,
 currently ba59427c locally; no dictionary branch was merged.
 
+
 ### Dictionary source hooks, October 8 rule change
 
 The user now authorizes minimal named shared hooks. This supersedes the waiting
@@ -2075,3 +2076,40 @@ fields. fieldInitialRepresentation in native/emit_objects.go preserves physical
 Union 10 on reserved uninitialized slots; readiness still refuses reads, and
 initialized undefined uses semantic 13. Both fixes have executed omission
 mutants and prior-lane Node controls.
+
+### Lane 4 original branded-read certification on the new branch
+
+Lane 4 resumes from integration 4e67894a on codex/views-mixed-unions-2.
+Its original/prepare.cjs verifies pinned upstream and the shared complete
+declaration output, plus the original thirty-pair / 543-read candidate inventory.
+checked_views_brands_original_test.go imports those complete declarations,
+requires every original receiver field in the view contract, compares Node with
+release native, sanitized native and JavaScript, and runs a member-check bypass
+for each certified pair. Unread unsupported fields remain lazy obligations.
+This checkpoint adds no shared compiler hook and no separate flow analysis.
+
+Lane 4 original certification now also owns
+internal/oracle/checked_views_brand_arrays_original_test.go and
+internal/oracle/checked_views_brands_original_gaps_test.go. The array oracle
+verifies the complete original primitive-member descriptor and dynamic index
+read, including a release-mode check-removal mutant. The gap suite retains
+original full declarations and named compile refusals for the three remaining
+shared blockers. Private namespace declarations are generated from original
+checker.ts AST, and private ActiveLabel from original binder.ts AST; the inferred
+anonymous renamed-binding type is emitted by the stock checker. Every original
+field and source hash is retained. No source admission hook or flow solver is
+added by these tests. Field-name fallback currently blocks two supported name
+reads with an unrelated never descriptor; recursive intersection admission
+blocks the third. Scoped admission must preserve checks through wider helpers.
+
+### Lane 4 direct tagged union target admission
+
+Named hook viewUnionTargetProof in lower/view_union_targets.go is called by
+cast_proof.go for a broad object source and union target. Each target arm must
+preserve source slots and carry a distinct, readonly, non-accessor literal tag.
+Existing cast.go emits its multi-value tag guard and enters the shared lazy
+view. No payload is trusted by the tag test. Lane 4 owns the corresponding
+union-target oracle and original FunctionLikeDeclaration/ClassDeclaration union
+fixtures. The integrator reconciles this small cast-proof dispatch hook.
+The existing certifiedCheckedCast hook also retains the union target contract
+on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.

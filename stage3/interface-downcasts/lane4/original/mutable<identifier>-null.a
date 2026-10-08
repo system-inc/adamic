@@ -1,0 +1,9 @@
+import type { Identifier } from 'original-tsc-types';
+import type { Mutable } from 'original-tsc-utilities';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: Mutable<Identifier>; }
+function helper(value: Mutable<Identifier>): void { console.log(String(value.escapedText)); }
+const raw = {kind: 'box' as const, child: {kind: 80, escapedText: null}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

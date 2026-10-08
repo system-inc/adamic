@@ -19,8 +19,8 @@ func viewRankedArrayCounts(t *testing.T) []string {
 			// Named compile-refusal fixtures have no executable runtime to count.
 			// Their refusal and Node controls remain in the ranked frontier suites.
 			switch filepath.Base(path) {
-			case "ranked3-mutable-array-read.a", "ranked5-function-union-cast.a",
-				"ranked6-class-like-union-cast.a", "ranked6-jsdoc-parent-cache.a",
+			case "ranked3-mutable-array-read.a",
+				"ranked6-jsdoc-parent-cache.a",
 				"ranked7-related-assign.a", "ranked10-resolved-arguments-assign.a",
 				"ranked14-text-name-fallback.a":
 				continue

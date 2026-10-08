@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Final checkpoint gates cover focused packages, full IR, filtered Node oracle and vet; the rejected-owner publication was immediately corrected.
-448 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+487 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -1255,3 +1255,56 @@ shown to break the owner's required entry-live-mutation Map agreement, so no cle
 resolution keeps all refusals and new Node agreements. See the previous 706 retry
 and publication correction for exact evidence and the reverted-owner ancestry.
 Lane 4 original-brand tip 6858d196802c9826a62188c8d4887fe0810e4700 is next.
+
+
+## Original brand and direct tagged union checkpoint
+
+Merged codex/views-mixed-unions-2 d5738b8e863f47ff798ea88fed8ae53901b5d84d
+(supersedes requested 6858d196802c9826a62188c8d4887fe0810e4700) on
+213c43771bd2f3a3dd9abd69ea088bf13e4c629e. One conflict hunk in
+docs/checked-views-plan.md: keep the integration dictionary and untagged
+inventories and append both incoming original-brand evidence and direct-tag
+hook descriptions. Resolved that append hunk individually. No production
+conflicts, whole-file picks or bulk resolution strategy.
+
+Production proof requires each target arm preserve source slots, distinct
+same-held immutable literal tags and supported schemas. Payload reads remain
+lazy. The preflight caught two old valid-cast NotYet receipts becoming admitted:
+ranked5-function-union-cast.a and ranked6-class-like-union-cast.a. These unchanged
+Node-valid fixtures now run in the full runtime contracts suites, with Node
+stdout 1, release native, sanitized native, JavaScript and leaks checked. Their
+two measured rows are added before predicate counts. The unchanged jsdoc-parent
+cache frontier still refuses. This is an explicit supported-frontier migration,
+not retention of the now-obsolete compile-only expectation. Wrong tags, payloads
+and unsafe admission refusals remain. Mutable target tag has a new independent
+negative proof control.
+
+Three source guard erasures independently admit duplicate target tags,
+incompatible source slots and mutable target tags; the named negative tests
+catch each with unsafe union target admitted. Finally restored production after
+each. Expanded proof controls pass in 0.171s. Original-brand oracle executes
+34 IR member-check bypass cases in both release backends (68 catches); two
+original direct-target tag bypass cases run in both release backends (4 catches).
+These 36 component cases plus three source guards add 39 unique mutants, not
+72 unique mutants. Cumulative explicit total 448 + 39 = 487.
+
+Required restored gates: lower 10.427s, native 19.611s, JavaScript 2.262s,
+full IR 13.356s; go vet ./... exit 0. Uncached filtered oracle PASS 942.203s,
+Node misses 3608, native misses 1024, no configured exclusions. Original brand,
+object-primitive and intersection declarations enabled, required untagged
+source dispatch enabled. Original declarations are independently prepared from
+unchanged TypeScript pin 050880ce59e30b356b686bd3144efe24f875ebc8; original
+file hashes verified. Count refresh PASS 56.955s, exactly two new rows.
+Exact commands are the existing integration gate helper selection with
+ADAMIC_BRAND_ORIGINAL_DECLS additionally pointing to the prepared declarations.
+Raw logs below preserve failures, restored runs and mutants.
+
+Limits: 27 original __String pairs / 540 candidate reads and five nullable
+pairs / nine reads are fixture evidence. Three original pairs / three reads
+remain blocked: ActiveLabel.name and anonymousRenamedBinding.name have never
+fields, and the recursive LeftHandSideExpression & Identifier carrier.child.
+Original class members still refuse Map certificate fallback; all seven
+FunctionLike and two class tags are checked, not full class member certification.
+Full original tsc execution and exact reaching-view census remain unmeasured.
+The user has authorized lifting the optional-boolean hold after integrating
+its fix; a2eb65ca76816f895f846f78a210bc1717a5f7c4 is next, ahead of lane 5.

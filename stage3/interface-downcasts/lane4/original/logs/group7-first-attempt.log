@@ -1,0 +1,118 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/wrong
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/wrong
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/wrong
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/good
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnamegood2512339781/001/activelabel-good.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/internal
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnameinternal2200833375/001/activelabel-internal.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/undefined
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnameundefined3773283526/001/activelabel-undefined.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/wrong
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnamewrong1376938775/001/activelabel-wrong.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/null
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnamenull300353265/001/activelabel-null.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/missing
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsActiveLabelnamemissing487648103/001/activelabel-missing.a:4:64: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/good
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnamegood2253545665/001/renamedbinding-good.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/internal
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnameinternal2979610990/001/renamedbinding-internal.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/undefined
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnameundefined2644834379/001/renamedbinding-undefined.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/wrong
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnamewrong4287403346/001/renamedbinding-wrong.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/null
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnamenull994095719/001/renamedbinding-null.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/missing
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsRenamedBindingnamemissing1575942674/001/renamedbinding-missing.a:4:67: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/wrong
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:175: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/good
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden2021277553/001/lefthandsideexpression & identifier-good.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/internal
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden3162284915/001/lefthandsideexpression & identifier-internal.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/undefined
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden2289908599/001/lefthandsideexpression & identifier-undefined.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/wrong
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden2931762444/001/lefthandsideexpression & identifier-wrong.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/null
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden2878348690/001/lefthandsideexpression & identifier-null.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/missing
+    checked_views_brands_original_test.go:100: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsLeftHandSideExpression_&_Iden708258168/001/lefthandsideexpression & identifier-missing.a:8:8: Adamic 0.1 refuses checked view read of field child with unsupported recursive intersection payload contract; prove or implement the recursive intersection payload contract before reading this field
+--- FAIL: TestCheckedViewBrandsOriginalPairs (47.96s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/good (2.04s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/internal (1.69s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/undefined (1.86s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/wrong (1.44s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/null (1.34s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@34691/escapedText/missing (1.44s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/good (2.00s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/internal (1.64s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/undefined (1.62s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/wrong (1.41s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/null (1.37s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier@55713/escapedText/missing (1.31s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/good (1.63s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/internal (1.60s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/undefined (1.72s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/wrong (1.60s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/null (1.36s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier@46232/escapedText/missing (1.21s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/good (0.51s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/internal (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/undefined (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/wrong (0.51s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/null (0.51s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/ActiveLabel/name/missing (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/good (0.63s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/internal (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/undefined (0.57s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/wrong (0.53s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/null (0.50s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/RenamedBinding/name/missing (0.52s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/good (1.80s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/internal (1.60s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/undefined (1.71s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/wrong (1.78s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/null (1.30s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Mutable<Identifier>/escapedText/missing (1.39s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/good (0.90s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/internal (0.68s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/undefined (0.53s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/wrong (0.49s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/null (0.52s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/missing (0.54s)
+FAIL
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=70
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	47.996s
+FAIL

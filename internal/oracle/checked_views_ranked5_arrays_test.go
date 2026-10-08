@@ -1,20 +1,18 @@
 package oracle
 
-import (
-	"path/filepath"
-	"testing"
-)
+import "testing"
 
 // The fifth ranked group of lane 2 array contracts: ResolvedType.constructSignatures,
 // ClassDeclaration.modifiers, TupleTypeNode.elements, ExpressionWithTypeArguments.typeArguments,
 // JSDoc.tags and FunctionLikeDeclaration.parameters, each modeled on tsc's declaration with a
 // synthetic tagged root. FunctionLikeDeclaration is reached through member casts and a proven
-// upcast to the union; a direct cast to the union is lane 4's union-target admission and stays a
-// named frontend refusal. A refused probe pins what Adamic printed before its lazy read failed.
+// upcast to the union; lane 4's checked union-target admission also covers the direct cast.
+// A refused probe pins what Adamic printed before its lazy read failed.
 func TestCheckedViewRanked5ArrayContracts(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, printed, diagnostic string }{
 		{"ranked5-function", "2:first,second\n", "", ""},
+		{"ranked5-function-union-cast", "1\n", "", ""},
 		{"ranked5-function-arrow", "arrow:0\n", "", ""},
 		{"ranked5-function-mixed", "3\n", "", ""},
 		{"ranked5-function-wrong-array", "undefined\n", "", "field read failed: declaration.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number"},
@@ -78,25 +76,5 @@ func TestCheckedViewRanked5ArrayContracts(t *testing.T) {
 				}
 			}
 		})
-	}
-}
-
-// A direct cast to the FunctionLikeDeclaration union needs union-target view admission, which the
-// plan assigns to lane 4's cast routing. Until then it is refused before lowering, never compiled.
-func TestCheckedViewRanked5UnionCastFrontier(t *testing.T) {
-	t.Parallel()
-	path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane2/ranked5-function-union-cast.a"))
-	if pathErr != nil {
-		t.Fatal(pathErr)
-	}
-	if got := onNode(t, path); got.exitCode != 0 || string(got.stdout) != "1\n" {
-		t.Fatalf("Node: %#v", got)
-	}
-	_, err := lowered(t, path)
-	if err == nil {
-		t.Fatal("cast to the FunctionLikeDeclaration union was admitted")
-	}
-	if got := err.Error(); got != path+":33:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)" {
-		t.Fatalf("refusal: %s", got)
 	}
 }
