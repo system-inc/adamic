@@ -1,0 +1,18 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: commandLineParser.ts:2707:25
+interface MapLike<T> { [key: string]: T; }
+interface CompilerOptions { strict?: boolean; [key: string]: boolean | undefined; }
+const computedOptions: Record<string, {dependencies: readonly string[]; computeValue: (options: CompilerOptions) => boolean}> = {
+    strict: {dependencies: ['base'], computeValue: options => options.strict !== false},
+    base: {dependencies: [], computeValue: options => options.strict === false},
+};
+const seen = new Set<string>();
+const dependsOn = new Set<string>(); dependsOn.add('base');
+function optionDependsOnRecursive(option: string): boolean {
+    if (!seen.has(option)) {
+        seen.add(option);
+        return computedOptions[option]?.dependencies.some(dep => dependsOn.has(dep) || optionDependsOnRecursive(dep)) === true;
+    }
+    return false;
+}
+console.log(String(optionDependsOnRecursive('strict')));
+console.log(String(optionDependsOnRecursive('missing')));

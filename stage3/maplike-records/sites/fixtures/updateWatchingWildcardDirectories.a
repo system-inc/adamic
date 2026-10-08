@@ -1,0 +1,9 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: watchUtilities.ts:522:21
+interface MapLike<T> { [key: string]: T; }
+const wildcardDirectories: MapLike<number> = {};
+const name = 'dir' + String(1);
+wildcardDirectories[name] = 1; wildcardDirectories['10'] = 2; wildcardDirectories['2'] = 1;
+const existingWatchedForWildcards = new Map(Object.entries(wildcardDirectories));
+for (const [key, flags] of existingWatchedForWildcards) console.log(key + ':' + String(flags));
+delete wildcardDirectories[name]; wildcardDirectories[name] = 2;
+for (const [key, flags] of Object.entries(wildcardDirectories)) console.log(key + ':' + String(flags));

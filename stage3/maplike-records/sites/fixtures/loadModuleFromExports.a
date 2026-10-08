@@ -1,0 +1,7 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:2630:26
+interface MapLike<T> { [key: string]: T; }
+const scope = {contents: {packageJsonContent: {exports: {'.': './main' + String(1)}}}};
+const mainExport = (scope.contents.packageJsonContent.exports as MapLike<unknown>)['.'];
+if (typeof mainExport === 'string') console.log(mainExport);
+const missing = (scope.contents.packageJsonContent.exports as MapLike<unknown>)['./missing'];
+console.log(String(missing));

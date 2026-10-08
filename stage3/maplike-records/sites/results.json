@@ -158,5 +158,165 @@
     },
     "outcome": "Checker",
     "diagnostic": "stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 11,
+    "batch": 2,
+    "source": "moduleNameResolver.ts:2630:26",
+    "function": "loadModuleFromExports",
+    "static_calls": 4,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromExports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./main1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "NotYet",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromExports.a:4:21: stage 0 can't lower a { '.': string; } seen as MapLike\u003cunknown\u003e (fixed objects and records have different storage; copy explicitly) yet"
+  },
+  {
+    "rank": 12,
+    "batch": 2,
+    "source": "moduleNameResolver.ts:3177:34",
+    "function": "tryLoadModuleUsingPaths",
+    "static_calls": 3,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryLoadModuleUsingPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "base/src/1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 13,
+    "batch": 2,
+    "source": "watchUtilities.ts:522:21",
+    "function": "updateWatchingWildcardDirectories",
+    "static_calls": 3,
+    "fixture": "stage3/maplike-records/sites/fixtures/updateWatchingWildcardDirectories.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "2:1\n10:2\ndir1:1\n2:1\n10:2\ndir1:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 14,
+    "batch": 2,
+    "source": "commandLineParser.ts:2688:5",
+    "function": "convertToTSConfig",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a",
+    "adaptation": "Original computed-option loop retained; options specialized to boolean-or-undefined and dependencies to a small function table; serialization and host work removed.",
+    "node": {
+      "stdout": "strict:false\nloose:true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:13:26: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:14:68: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 15,
+    "batch": 2,
+    "source": "commandLineParser.ts:2690:29",
+    "function": "convertToTSConfig",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a",
+    "adaptation": "Original computed-option loop retained; options specialized to boolean-or-undefined and dependencies to a small function table; serialization and host work removed.",
+    "node": {
+      "stdout": "strict:false\nloose:true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:13:26: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:14:68: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 16,
+    "batch": 2,
+    "source": "commandLineParser.ts:2691:34",
+    "function": "convertToTSConfig",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a",
+    "adaptation": "Original computed-option loop retained; options specialized to boolean-or-undefined and dependencies to a small function table; serialization and host work removed.",
+    "node": {
+      "stdout": "strict:false\nloose:true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:13:26: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:14:68: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 17,
+    "batch": 2,
+    "source": "commandLineParser.ts:2693:17",
+    "function": "convertToTSConfig",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a",
+    "adaptation": "Original computed-option loop retained; options specialized to boolean-or-undefined and dependencies to a small function table; serialization and host work removed.",
+    "node": {
+      "stdout": "strict:false\nloose:true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:13:26: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:14:68: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 18,
+    "batch": 2,
+    "source": "commandLineParser.ts:2693:50",
+    "function": "convertToTSConfig",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a",
+    "adaptation": "Original computed-option loop retained; options specialized to boolean-or-undefined and dependencies to a small function table; serialization and host work removed.",
+    "node": {
+      "stdout": "strict:false\nloose:true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:13:26: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/convertToTSConfig.a:14:68: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 19,
+    "batch": 2,
+    "source": "commandLineParser.ts:2707:25",
+    "function": "optionDependsOnRecursive",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/optionDependsOnRecursive.a",
+    "adaptation": "Dependency recursion and optional table read retained; addToSeen expanded to Set.has/add and some to Array.some with explicit boolean fallback.",
+    "node": {
+      "stdout": "true\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "NotYet",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/optionDependsOnRecursive.a:13:16: stage 0 can't lower a call through ?. (an optional call) yet"
+  },
+  {
+    "rank": 20,
+    "batch": 2,
+    "source": "moduleNameResolver.ts:464:5",
+    "function": "getPackageJsonTypesVersionsPaths",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "\u003e=1 ts/1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS18048: 'result.paths' is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS2554: Expected 1 arguments, but got 2."
   }
 ]

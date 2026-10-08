@@ -1,0 +1,15 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:3177:34
+interface MapLike<T> { [key: string]: T; }
+function forEach<T>(array: readonly T[] | undefined, callback: (value: T) => string | undefined): string | undefined {
+    if (array !== undefined) for (const item of array) { const value = callback(item); if (value) return value; }
+    return undefined;
+}
+const paths: MapLike<string[]> = {};
+const matchedPatternText = '@name' + String(1);
+paths[matchedPatternText] = ['miss', 'src/' + String(1)];
+const resolved = forEach(paths[matchedPatternText], subst => {
+    const candidate = 'base/' + subst;
+    return subst === 'miss' ? undefined : candidate;
+});
+console.log(String(resolved));
+console.log(String(forEach(paths['absent'], subst => subst)));

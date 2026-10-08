@@ -1,6 +1,6 @@
-Built: Step 22 (#p9v82wa), source reductions for 10 of 56 MapLike and Record operation sites, in static-use order.
+Built: Step 22 (#p9v82wa), source reductions for 20 of 56 MapLike and Record operation sites, in static-use order.
 Commits: continued from e379d2321c081e0e3b02a0dad326eb1a7b3d9a8a on codex/maplike-records; delivery tips are reported after each batch push.
-Commands and outputs: 2 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 4 stop in the checker, 3 are Refused, and 1 are NotYet. Counts are regenerated for each added compiling reduction.
+Commands and outputs: 4 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 10 stop in the checker, 3 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
 Mutants: removing an integer dictionary input is caught only by Node stdout in both backends, with valid builds, exit 0 and clean leaks; the earlier step 22 ordering and entries omission mutants remain available.
 Not covered: complete tsc functions, host filesystem/package resolution, runtime frequency, or backends for reductions that stop before emission; the full gate was not run.
 
@@ -34,5 +34,15 @@ The evidence log for each batch names every outcome. Compiles means its Node std
 | 8 | 4 | core.ts:1314:5 | Checker | stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 | 9 | 4 | core.ts:1315:13 | Checker | stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 | 10 | 4 | core.ts:1316:25 | Checker | stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 11 | 4 | moduleNameResolver.ts:2630:26 | NotYet | stage3/maplike-records/sites/fixtures/loadModuleFromExports.a:4:21: stage 0 can't lower a { '.': string; } seen as MapLike<unknown> (fixed objects and records have different storage; copy explicitly) yet |
+| 12 | 3 | moduleNameResolver.ts:3177:34 | Compiles |  |
+| 13 | 3 | watchUtilities.ts:522:21 | Compiles |  |
+| 14 | 2 | commandLineParser.ts:2688:5 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
+| 15 | 2 | commandLineParser.ts:2690:29 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
+| 16 | 2 | commandLineParser.ts:2691:34 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
+| 17 | 2 | commandLineParser.ts:2693:17 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
+| 18 | 2 | commandLineParser.ts:2693:50 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
+| 19 | 2 | commandLineParser.ts:2707:25 | NotYet | stage3/maplike-records/sites/fixtures/optionDependsOnRecursive.a:13:16: stage 0 can't lower a call through ?. (an optional call) yet |
+| 20 | 2 | moduleNameResolver.ts:464:5 | Checker | stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS18048: 'result.paths' is possibly 'undefined'. |
 
 The concrete Node observations and each reduction adaptation are in results.json.

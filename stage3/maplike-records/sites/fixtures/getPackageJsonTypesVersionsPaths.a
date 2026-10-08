@@ -1,0 +1,11 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:464:5, moduleNameResolver.ts:474:43
+interface MapLike<T> { [key: string]: T; }
+const typesVersions: MapLike<MapLike<string[]>> = {};
+const paths: MapLike<string[]> = {}; paths['*'] = ['ts/' + String(1)];
+typesVersions['>=1'] = paths;
+for (const key in typesVersions) {
+    if (key === '>=1') {
+        const result = {version: key, paths: typesVersions[key]};
+        console.log(result.version, result.paths['*'].join(','));
+    }
+}

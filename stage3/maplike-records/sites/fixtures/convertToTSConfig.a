@@ -1,0 +1,16 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: commandLineParser.ts:2688:5, commandLineParser.ts:2690:29, commandLineParser.ts:2691:34, commandLineParser.ts:2693:17, commandLineParser.ts:2693:50
+interface MapLike<T> { [key: string]: T; }
+interface CompilerOptions { strict?: boolean; [key: string]: boolean | undefined; }
+type CompilerOptionsValue = boolean | undefined;
+const computedOptions: Record<string, {dependencies: readonly string[]; computeValue: (options: CompilerOptions) => CompilerOptionsValue}> = {
+    strict: {dependencies: ['base'], computeValue: options => options.strict !== false},
+    loose: {dependencies: [], computeValue: options => options.strict === false},
+};
+const configParseResult = {options: {strict: false} as CompilerOptions};
+const impliedCompilerOptions: Record<string, CompilerOptionsValue> = {};
+for (const option in computedOptions) {
+    const implied = computedOptions[option].computeValue(configParseResult.options);
+    const defaultValue = computedOptions[option].computeValue({});
+    if (implied !== defaultValue) impliedCompilerOptions[option] = computedOptions[option].computeValue(configParseResult.options);
+}
+for (const [key, value] of Object.entries(impliedCompilerOptions)) console.log(key + ':' + String(value));
