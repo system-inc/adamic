@@ -124,7 +124,7 @@ git -C "$worktree" submodule update -q --init --recursive --depth 1
 git fetch -q origin "+refs/heads/main:refs/remotes/origin/main"
 mainTip=$(git rev-parse --verify refs/remotes/origin/main)
 tookMain=""
-if ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
+if ! git merge-base --is-ancestor "$mainTip" "$areaTip" && ! git merge-base --is-ancestor "$mainTip" "$sha"; then
 	if ! git -C "$worktree" merge -q --no-ff -m "Merge main ${mainTip:0:8} into area/$area" "$mainTip"; then
 		echo "conflict merging main ${mainTip:0:8} into area/$area ${areaTip:0:8}; merge main into the area by hand, keeping both sides' intent, then run this again:"
 		git -C "$worktree" diff --name-only --diff-filter=U
@@ -134,6 +134,12 @@ if ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
 	git -C "$worktree" submodule update -q --init --recursive --depth 1
 	tookMain=" with main ${mainTip:0:8} merged in first"
 	echo "merged main ${mainTip:0:8} into the area first ($(git rev-list --count "${areaTip}..${mainTip}") commits the area lacked)"
+elif ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
+	# A manually reconciled branch already contains main. Retrying the unresolved main merge
+	# before that branch would refuse forever; merge the resolved branch below and judge all
+	# of its changes against areaTip with the same tests, locks and push checks.
+	tookMain=" with main ${mainTip:0:8} reconciled in $branch"
+	echo "requested branch already contains main ${mainTip:0:8}; its reconciliation is included in the area's tests"
 fi
 
 if ! git -C "$worktree" merge -q --no-ff -m "Merge $branch at ${sha:0:8} into area/$area" "$sha"; then
