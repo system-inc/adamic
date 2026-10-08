@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_extraneous_class",
+  "from": "id = 'empty'; message = emptyMessage;",
+  "to": "id = 'onlyStatic'; message = staticMessage;"
+}

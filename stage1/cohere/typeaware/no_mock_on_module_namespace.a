@@ -3,7 +3,7 @@ import { Diagnostic } from './diagnostic.ts';
 import { SymbolContext } from './symbol_context.a';
 import { SignatureContext } from './signature_context.a';
 export class NoMockOnModuleNamespace {
-    readonly syntaxKinds: readonly number[] = [214];
+    readonly syntaxKinds: readonly string[] = ['CallExpression'];
     readonly rules: Rules;
     constructor(rules: Rules) {
         this.rules = rules;

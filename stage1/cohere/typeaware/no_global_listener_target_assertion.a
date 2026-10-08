@@ -6,7 +6,7 @@ import { Frames, header } from './frames.ts';
 import { SymbolContext } from './symbol_context.a';
 import { InterfaceBases } from './interface_bases.a';
 export class NoGlobalListenerTargetAssertion {
-    readonly syntaxKinds: readonly number[] = [214];
+    readonly syntaxKinds: readonly string[] = ['CallExpression'];
     readonly rules: Rules;
     readonly shape: Shadow;
     constructor(rules: Rules) {

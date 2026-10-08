@@ -1,0 +1,130 @@
+import { baseMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { types } from '../../../typeaware/facts.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { StringificationType } from './stringification_type.a';
+
+export class NoBaseToString {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    typeName(index: number, id: number): string {
+        const metadata = new StringificationType(this.rules, index, id);
+        if((metadata.flags & (32 | 1024 | 4194304 | 8388608)) !== 0) { return 'string'; }
+        if((metadata.flags & 524288) !== 0 && metadata.constraint !== 0) { return this.typeName(index, metadata.constraint); }
+        if((metadata.flags & 134217728) !== 0 && metadata.parts.every((part) => this.typeName(index, part) === 'string')) { return 'string'; }
+        if((metadata.flags & 268435456) !== 0 && metadata.parts.some((part) => this.typeName(index, part) === 'string')) { return 'string'; }
+        return metadata.name;
+    }
+    ignored(index: number, id: number, visited: readonly number[]): boolean {
+        if(visited.includes(id)) { return false; }
+        const metadata = new StringificationType(this.rules, index, id);
+        if(this.rules.context.settings.list('ignoredtypenames', ['Error', 'RegExp', 'URL', 'URLSearchParams']).includes(this.typeName(index, id)) ||
+            this.rules.context.settings.list('ignoredtypenames', ['Error', 'RegExp', 'URL', 'URLSearchParams']).includes(metadata.genericName)) { return true; }
+        const next = visited.slice();
+        next.push(id);
+        return metadata.bases.some((base) => this.ignored(index, base, next));
+    }
+    certainty(index: number, id: number, visited: readonly number[], join: boolean): string {
+        if(!join && visited.includes(id)) { return 'always'; }
+        const metadata = new StringificationType(this.rules, index, id);
+        if(!join) {
+            if(metadata.flags === 2 && this.rules.context.settings.read('checkunknown', 'false') === 'true') { return 'may'; }
+            if((metadata.flags & 524288) !== 0) {
+                return metadata.constraint === 0 ? (this.rules.context.settings.read('checkunknown', 'false') === 'true' ? 'may' : 'always') : this.certainty(index, metadata.constraint, visited, false);
+            }
+            if((metadata.flags & (256 | 8192)) !== 0 || this.ignored(index, id, [])) { return 'always'; }
+        }
+        if((metadata.flags & (134217728 | 268435456)) !== 0) {
+            const values = metadata.parts.map((part) => this.certainty(index, part, visited, join));
+            if((metadata.flags & 268435456) !== 0) { return values.includes('always') ? 'always' : 'will'; }
+            if(values.every((value) => value === 'will')) { return 'will'; }
+            return values.every((value) => value === 'always') ? 'always' : 'may';
+        }
+        if(metadata.tuple || metadata.array) {
+            const next = visited.slice();
+            if(!join) { next.push(id); }
+            if(metadata.tuple) {
+                const values = metadata.arguments.map((argument) => this.certainty(index, argument, next, false));
+                return values.includes('will') ? 'will' : values.includes('may') ? 'may' : 'always';
+            }
+            return metadata.element === 0 ? 'always' : this.certainty(index, metadata.element, next, false);
+        }
+        if(join || metadata.primitive) { return 'always'; }
+        for(let at = 0; at < metadata.parentKinds.length; at++) {
+            if(metadata.parentKinds[at] !== 'InterfaceDeclaration' || metadata.parentNames[at] !== 'Object') { return 'always'; }
+        }
+        return metadata.parentKinds.length > 0 ? 'will' : 'always';
+    }
+    check(index: number, join = false): void {
+        const subject = join ? index : this.rules.skip(index);
+        const node = this.rules.parser.node(subject);
+        if(!join && ['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'RegularExpressionLiteral', 'NoSubstitutionTemplateLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return; }
+        const question = join ? 'type-shape' : 'raw-shape';
+        const facts = types(this.rules.ask(subject, question), question);
+        const certainty = this.certainty(subject, facts.root().id, [], join);
+        if(certainty === 'always') { return; }
+        const name = this.rules.text(node);
+        const message = baseMessage(name, certainty, join);
+        this.rules.add('no-base-to-string', join ? 'baseArrayJoin' : 'baseToString', message, subject);
+    }
+    builtin(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'resolved-name\nString'));
+        header(frames, 'resolved-name');
+        let builtin = true;
+        if(frames.yes()) {
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field(); frames.yes();
+                if(!frames.yes()) { builtin = false; }
+            }
+        }
+        frames.end();
+        return builtin;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(operator !== 'PlusToken' && operator !== 'PlusEqualsToken') { return; }
+            const left = node.children[0] ?? -1;
+            const right = node.children[2] ?? -1;
+            const a = types(this.rules.ask(left, 'raw-shape'), 'raw-shape');
+            const b = types(this.rules.ask(right, 'raw-shape'), 'raw-shape');
+            if(this.typeName(left, a.root().id) === 'string') { this.check(right); }
+            else if(this.rules.parser.node(left).kind !== 'PrivateIdentifier' && this.typeName(right, b.root().id) === 'string') { this.check(left); }
+        }
+        else if(node.kind === 'CallExpression') {
+            const calleeIndex = node.children[0] ?? -1;
+            const callee = this.rules.parser.node(calleeIndex);
+            if(callee.kind === 'Identifier' && callee.text === 'String' && node.list > 0 && this.builtin(calleeIndex)) {
+                const argument = node.children[node.children.length - node.list] ?? -1;
+                if(this.rules.parser.node(argument).kind !== 'SpreadElement') { this.check(argument); }
+                return;
+            }
+            if(callee.kind !== 'PropertyAccessExpression') { return; }
+            const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            if(name.kind !== 'Identifier') { return; }
+            const receiver = callee.children[0] ?? -1;
+            if(name.text === 'join') { this.check(receiver, true); }
+            else if(name.text === 'toString' || name.text === 'toLocaleString') { this.check(receiver); }
+        }
+        else if(node.kind === 'TemplateExpression') {
+            const parent = this.rules.parents[index] ?? -1;
+            if(parent >= 0 && this.rules.parser.node(parent).kind === 'TaggedTemplateExpression') { return; }
+            for(const child of node.children) {
+                const span = this.rules.parser.node(child);
+                if(span.kind === 'TemplateSpan') { this.check(span.children[0] ?? -1); }
+            }
+        }
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoBaseToString;
+    constructor(rules: Rules, listener: NoBaseToString) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const listener = new NoBaseToString(rules); return new Rule(rules, listener); }

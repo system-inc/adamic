@@ -1,0 +1,142 @@
+import { leakedNumberMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { StringificationType } from './stringification_type.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+
+export class NoLeakedNumberRender {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    classify(index: number, id: number, depth: number): number {
+        const part = new StringificationType(this.rules, index, id);
+        if((part.flags & (4 | 8 | 16 | 262144 | 8192)) !== 0) {
+            return 1;
+        }
+        if((part.flags & (64 | 128)) !== 0) {
+            return 2;
+        }
+        if((part.flags & (2048 | 4096)) !== 0) {
+            if((part.flags & 4096) !== 0) {
+                // TypeToString prints a bigint literal's value with its n suffix.
+                return ['0n', '-0n'].includes(part.name) ? 2 : 1;
+            }
+            const frame = new Frames(this.rules.ask(index, `literal-value\n${id}`));
+            header(frame, 'literal-value');
+            const kind = frame.field();
+            const value = frame.field();
+            frame.end();
+            return kind === 'number' && ['0', '-0', 'NaN'].includes(value) ? 2 : 1;
+        }
+        if((part.flags & 268435456) !== 0) {
+            for(const member of part.parts) {
+                if((new StringificationType(this.rules, index, member).flags & (64 | 128)) !== 0) {
+                    return 2;
+                }
+            }
+            return 0;
+        }
+        if((part.flags & (524288 | 2097152 | 4194304 | 8388608 | 16777216 | 33554432 | 67108864)) !== 0) {
+            if(depth > 4 || part.constraint === 0 || part.constraint === id) {
+                return 0;
+            }
+            return this.union(index, part.constraint, depth + 1);
+        }
+        return 0;
+    }
+    union(index: number, id: number, depth: number): number {
+        const part = new StringificationType(this.rules, index, id);
+        const members = (part.flags & 134217728) !== 0 ? part.parts : [id];
+        let verdict = 1;
+        for(const member of members) {
+            const classified = this.classify(index, member, depth);
+            if(classified === 0) {
+                return 0;
+            }
+            if(classified === 2) {
+                verdict = 2;
+            }
+        }
+        return verdict;
+    }
+    falsy(index: number): void {
+        const subject = this.rules.skip(index);
+        const node = this.rules.parser.node(subject);
+        if(node.kind === 'ConditionalExpression') {
+            this.falsy(node.children[2] ?? -1);
+            this.falsy(node.children[4] ?? -1);
+            return;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(operator === 'AmpersandAmpersandToken' || operator === 'QuestionQuestionToken') {
+                this.falsy(node.children[0] ?? -1);
+                this.falsy(node.children[2] ?? -1);
+                return;
+            }
+            if(operator === 'BarBarToken') {
+                this.falsy(node.children[2] ?? -1);
+                return;
+            }
+        }
+        const facts = types(this.rules.ask(subject, 'raw-shape'), 'raw-shape');
+        if(this.union(subject, facts.root().id, 0) === 2) {
+            this.rules.findings.push(
+                new Diagnostic(
+                    'correctness-no-leaked-number-render',
+                    'leakedNumberRender',
+                    leakedNumberMessage,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    'nexus/',
+                ),
+            );
+        }
+    }
+    rendered(index: number): void {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(node.kind === 'ConditionalExpression') {
+            this.rendered(node.children[2] ?? -1);
+            this.rendered(node.children[4] ?? -1);
+        }
+        else if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(operator === 'AmpersandAmpersandToken') {
+                this.falsy(node.children[0] ?? -1);
+                this.rendered(node.children[2] ?? -1);
+            }
+            else if(operator === 'BarBarToken') {
+                this.rendered(node.children[2] ?? -1);
+            }
+            else if(operator === 'QuestionQuestionToken') {
+                this.rendered(node.children[0] ?? -1);
+                this.rendered(node.children[2] ?? -1);
+            }
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        if(
+            node.children.length === 0 ||
+            node.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')
+        ) {
+            return;
+    }
+    const parent = this.rules.parents[index] ?? -1;
+    if(parent < 0 || !['JsxElement', 'JsxFragment'].includes(this.rules.parser.node(parent).kind)) {
+        return;
+    }
+    this.rendered(node.children[node.children.length - 1] ?? -1);
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoLeakedNumberRender;
+    constructor(rules: Rules, listener: NoLeakedNumberRender) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const listener = new NoLeakedNumberRender(rules); return new Rule(rules, listener); }

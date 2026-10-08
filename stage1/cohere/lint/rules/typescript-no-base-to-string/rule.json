@@ -1,0 +1,20 @@
+{
+  "name": "@typescript-eslint/no-base-to-string",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "BinaryExpression",
+    "CallExpression",
+    "TemplateExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave14NoBaseToString",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoBaseToString",
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ]
+}

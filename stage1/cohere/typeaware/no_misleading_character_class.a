@@ -32,7 +32,7 @@ class ClassFinding {
 // Native literal and constructor judgments, with global reference tracking
 // and cooked-to-raw source mapping.
 export class NoMisleadingCharacterClass {
-    readonly syntaxKinds: readonly number[] = [307, 13];
+    readonly syntaxKinds: readonly string[] = ['SourceFile', 'RegularExpressionLiteral'];
     readonly rules: Rules;
     readonly found: ClassFinding[] = [];
     pattern = '';

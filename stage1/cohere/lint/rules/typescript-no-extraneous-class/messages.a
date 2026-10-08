@@ -1,0 +1,4 @@
+// Upstream descriptions, verbatim.
+export const emptyMessage = 'Unexpected empty class.';
+export const constructorMessage = 'Unexpected class with only a constructor.';
+export const staticMessage = 'Unexpected class with only static properties.';

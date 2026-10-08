@@ -1,0 +1,14 @@
+{
+  "name": "no-label-var",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "LabeledStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave14NoLabelVar",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoLabelVar"
+}

@@ -7,7 +7,7 @@ import { RegexpPatternValidation } from './regexp_pattern_validation.a';
 // Constructor selection, flags and the ASCII/flat-class pattern slice are native.
 // Remaining grammar needs ECMAScript rewriting and regexp2-compatible errors.
 export class NoInvalidRegexp {
-    readonly syntaxKinds: readonly number[] = [214, 215];
+    readonly syntaxKinds: readonly string[] = ['CallExpression', 'NewExpression'];
     readonly rules: Rules;
     constructor(rules: Rules) {
         this.rules = rules;

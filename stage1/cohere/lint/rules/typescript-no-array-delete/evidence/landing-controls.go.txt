@@ -1,0 +1,124 @@
+// Loaded as an additional test through a Go overlay. Shared checks remain unchanged.
+package lint
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"testing"
+)
+
+func TestWave14UnifiedRuleCases(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	module := emittedJavaScript(t, directory)
+	rows := upstream(t)
+	type captured struct {
+		Rule, File, Source string
+		Options            json.RawMessage
+		Findings           []json.RawMessage
+		OtherFiles         int
+	}
+	// In addition to replay equality, retain the original upstream finding count.
+	// A capture that drops project files or compiler options cannot pass vacuously.
+	original := map[string]int{}
+	files, err := filepath.Glob(filepath.Join(sharedDirectory, "upstream-*", "capture", "*.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, line := range strings.Split(string(data), "\n") {
+			if line == "" {
+				continue
+			}
+			var record captured
+			if err := json.Unmarshal([]byte(line), &record); err != nil {
+				t.Fatal(err)
+			}
+			var normalized any
+			if len(record.Options) != 0 && string(record.Options) != "null" {
+				if err := json.Unmarshal(record.Options, &normalized); err != nil {
+					t.Fatal(err)
+				}
+			}
+			options, _ := json.Marshal(normalized)
+			original[record.Rule+"\n"+record.Source+"\n"+string(options)] = len(record.Findings)
+		}
+	}
+	names := []string{"@typescript-eslint/no-array-delete", "@typescript-eslint/no-base-to-string", "@typescript-eslint/no-extraneous-class", "nexus/correctness-no-global-listener-target-assertion", "nexus/correctness-no-leaked-number-render", "nexus/correctness-no-mock-on-module-namespace", "no-label-var"}
+	for _, name := range names {
+		t.Run(name, func(t *testing.T) {
+			count := 0
+			for _, row := range rows {
+				fields := strings.Split(row, "\t")
+				if fields[1] != name {
+					continue
+				}
+				count++
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+				if err := os.WriteFile(config, []byte(options), 0600); err != nil {
+					t.Fatal(err)
+				}
+				path := manifest(t, []string{"program " + config, row})
+				source, err := os.ReadFile(fields[0])
+				if err != nil {
+					t.Fatal(err)
+				}
+				var normalized any
+				if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {
+					if err := json.Unmarshal([]byte(fields[5]), &normalized); err != nil {
+						t.Fatal(err)
+					}
+				}
+				encoded, _ := json.Marshal(normalized)
+				expected, found := original[name+"\n"+string(source)+"\n"+string(encoded)]
+				if !found {
+					t.Fatalf("original upstream outcome missing for %s", fields[0])
+				}
+				output := execute(t, "", oracle, "--manifest", path, "--count")
+				actual, err := strconv.Atoi(strings.TrimSpace(string(output.output)))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if actual != expected {
+					t.Fatalf("shared project replay lost the original upstream outcome: %s Go count=%d original count=%d source=%q", fields[0], actual, expected, source)
+				}
+				compareWithJavaScript(t, oracle, binary, directory, path, module)
+			}
+			if count == 0 {
+				t.Fatal("no upstream cases captured")
+			}
+			t.Logf("%s: %d original upstream cases retain their Go finding count and match all four runtimes", name, count)
+			for _, descriptor := range prepareRegistry(t, directory) {
+				if descriptor.Name != name {
+					continue
+				}
+				for _, row := range ownedWitnessRows(t, directory, descriptor) {
+					source := strings.SplitN(row, "\t", 2)[0]
+					config := filepath.Join(t.TempDir(), "tsconfig.json")
+					options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, source)
+					if err := os.WriteFile(config, []byte(options), 0600); err != nil {
+						t.Fatal(err)
+					}
+					path := manifest(t, []string{"program " + config, row, source + "\tall"})
+					compareWithJavaScript(t, oracle, binary, directory, path, module)
+					if string(execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count").output) == "0\n" {
+						t.Fatalf("%s owned witness does not fire", name)
+					}
+				}
+			}
+		})
+	}
+}

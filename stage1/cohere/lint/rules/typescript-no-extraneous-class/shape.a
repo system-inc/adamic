@@ -1,0 +1,27 @@
+import type { Rules } from './facts.a';
+export class Shadow {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    name(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'BindingElement') {
+            const initializer = this.initializer(index);
+            const names = node.children.filter((child) => child !== initializer && this.rules.parser.node(child).kind !== 'DotDotDotToken');
+            return names[names.length - 1] ?? -1;
+        }
+        if(['ImportSpecifier', 'NamespaceImport'].includes(node.kind)) { return node.children[node.children.length - 1] ?? -1; }
+        for(const child of node.children) {
+            if(['Identifier', 'ThisKeyword', 'ArrayBindingPattern', 'ObjectBindingPattern'].includes(this.rules.parser.node(child).kind)) { return child; }
+        }
+        return -1;
+    }
+    initializer(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(!['VariableDeclaration', 'Parameter', 'PropertyDeclaration', 'BindingElement'].includes(node.kind)) { return -1; }
+        const child = node.children[node.children.length - 1] ?? -1;
+        if(child < 0) { return -1; }
+        let at = this.rules.parser.node(child).pos - 1;
+        while(at >= node.pos && [' ', '\t', '\r', '\n'].includes(this.rules.scanner.text.slice(at, at + 1))) { at--; }
+        return this.rules.scanner.text.slice(at, at + 1) === '=' ? child : -1;
+    }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_leaked_number_render",
+  "from": "this.union(subject, facts.root().id, 0) === 2",
+  "to": "this.union(subject, facts.root().id, 0) === 1"
+}

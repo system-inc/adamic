@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_base_to_string",
+  "from": "return metadata.parentKinds.length > 0 ? 'will' : 'always';",
+  "to": "return metadata.parentKinds.length > 0 ? 'may' : 'always';"
+}

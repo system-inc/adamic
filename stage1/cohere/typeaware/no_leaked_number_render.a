@@ -7,7 +7,7 @@ import { Diagnostic } from './diagnostic.ts';
 // The judgment is ready for JSX nodes. The shared parser currently cannot
 // produce those nodes; the isolated probe supplies only the enclosing context.
 export class NoLeakedNumberRender {
-    readonly syntaxKinds: readonly number[] = [295];
+    readonly syntaxKinds: readonly string[] = ['JsxExpression'];
     readonly rules: Rules;
     constructor(rules: Rules) {
         this.rules = rules;

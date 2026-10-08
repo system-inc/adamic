@@ -1,0 +1,53 @@
+// Compatibility for this rule's existing fact grammar. The run owns the only checker.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+export class Rules {
+    readonly context: RuleContext;
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly parents: readonly number[];
+    readonly path: string;
+    readonly offsets: readonly number[];
+    readonly findings: Diagnostic[] = [];
+    constructor(context: RuleContext) {
+        this.context = context; this.parser = context.parser; this.scanner = context.scanner;
+        this.parents = context.parents;
+        this.path = context.checker?.path ?? ''; this.offsets = context.checker?.offsets ?? [];
+    }
+    byte(position: number): number { return this.offsets[position] ?? panic('source position outside checker file'); }
+    utf16(position: number): number {
+        const result = this.offsets.indexOf(position);
+        if(result < 0) { panic('finding byte position is not a UTF-16 boundary'); }
+        return result;
+    }
+    start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    text(node: ParseNode): string { return this.scanner.text.slice(this.start(node), node.end); }
+    ask(index: number, question: string): string {
+        const answer = this.context.checker?.ask(index, question);
+        return answer?.value ?? panic(answer?.reason ?? 'typed rule without checker');
+    }
+    skip(index: number): number { return this.context.unwrap(index); }
+    add(rule: string, id: string, message: string, index: number): Diagnostic {
+        const node = this.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
+        this.findings.push(finding); return finding;
+    }
+    flush(): void {
+        for(const diagnostic of this.findings) {
+            const edits: SuggestionEdit[] = [];
+            if(diagnostic.fixStart >= 0) { edits.push(new SuggestionEdit(this.utf16(diagnostic.fixStart), this.utf16(diagnostic.fixEnd), diagnostic.replacement)); }
+            for(const repair of diagnostic.repairs) { edits.push(new SuggestionEdit(this.utf16(repair.start), this.utf16(repair.end), repair.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of diagnostic.suggestions) {
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, suggestion.repairs.map((repair) => new SuggestionEdit(this.utf16(repair.start), this.utf16(repair.end), repair.text))));
+            }
+            this.context.reportRange(this.utf16(diagnostic.start), this.utf16(diagnostic.end), diagnostic.rule, diagnostic.id, diagnostic.message, edits, suggestions);
+        }
+        while(this.findings.length > 0) { this.findings.pop(); }
+    }
+}

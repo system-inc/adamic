@@ -1,0 +1,56 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from './facts.a';
+
+export class StringificationType {
+    readonly flags: number;
+    readonly name: string;
+    readonly genericName: string;
+    readonly constraint: number;
+    readonly array: boolean;
+    readonly tuple: boolean;
+    readonly element: number;
+    readonly parts: readonly number[];
+    readonly arguments: readonly number[];
+    readonly bases: readonly number[];
+    readonly primitive: boolean;
+    readonly parentKinds: readonly string[];
+    readonly parentNames: readonly string[];
+    constructor(rules: Rules, index: number, id: number) {
+        const frames = new Frames(rules.ask(index, `stringification-type\n${id}`));
+        header(frames, 'stringification-type');
+        this.flags = frames.natural();
+        this.name = frames.field();
+        this.genericName = frames.field();
+        this.constraint = frames.natural();
+        this.array = frames.yes();
+        this.tuple = frames.yes();
+        this.element = frames.natural();
+        this.parts = frames.ids();
+        this.arguments = frames.ids();
+        this.bases = frames.ids();
+        let primitive = false;
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const computed = frames.yes();
+            const receiver = frames.field();
+            const property = frames.field();
+            const builtin = frames.yes();
+            if(computed && receiver === 'Symbol' && property === 'toPrimitive' && builtin) {
+                primitive = true;
+            }
+        }
+        this.primitive = primitive;
+        const kinds: string[] = [];
+        const names: string[] = [];
+        for(let method = 0; method < 3; method++) {
+            const declarations = frames.natural();
+            for(let at = 0; at < declarations; at++) {
+                kinds.push(frames.field());
+                names.push(frames.field());
+            }
+        }
+        this.parentKinds = kinds;
+        this.parentNames = names;
+        frames.end();
+    }
+}

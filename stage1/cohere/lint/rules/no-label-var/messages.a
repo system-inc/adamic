@@ -1,0 +1,2 @@
+// Upstream descriptions, verbatim.
+export const labelMessage = 'This label has the same name as a variable in scope, so the same word means two different things a few lines apart and neither reading is wrong on sight. A reader who sees `break x` has to know whether `x` is the label or the variable before they can say what the statement does. Rename the label.';

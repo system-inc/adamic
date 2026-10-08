@@ -1,0 +1,33 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from './facts.a';
+export class SymbolContext {
+    readonly id: number;
+    readonly flags: number;
+    readonly paths: string[] = [];
+    readonly kinds: string[] = [];
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    readonly libraries: boolean[] = [];
+    readonly typeOnly: boolean[] = [];
+    readonly parentFlags: number[] = [];
+    constructor(rules: Rules, index: number) {
+        const f = new Frames(rules.ask(index, 'symbol-context'));
+        header(f, 'symbol-context');
+        this.id = f.natural();
+        this.flags = f.natural();
+        const count = f.natural();
+        for(let at = 0; at < count; at++) {
+            this.paths.push(f.field());
+            this.kinds.push(f.field());
+            this.starts.push(f.natural());
+            this.ends.push(f.natural());
+            this.libraries.push(f.yes());
+            this.typeOnly.push(f.yes());
+            this.parentFlags.push(f.natural());
+        }
+        f.end();
+    }
+    builtin(): boolean {
+        return this.libraries.length > 0 && this.libraries.every((value) => value);
+    }
+}

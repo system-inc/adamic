@@ -2,7 +2,7 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { ScopeSymbols } from './scope_symbols.a';
 export class NoLabelVar {
-    readonly syntaxKinds: readonly number[] = [257];
+    readonly syntaxKinds: readonly string[] = ['LabeledStatement'];
     readonly rules: Rules;
     constructor(rules: Rules) {
         this.rules = rules;

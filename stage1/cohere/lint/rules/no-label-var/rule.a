@@ -1,0 +1,36 @@
+import { labelMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { ScopeSymbols } from './scope_symbols.a';
+export class NoLabelVar {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    visit(node: ParseNode, index: number): void {
+        const label = this.rules.parser.node(node.children[0] ?? -1).text;
+        if(label === '' || !new ScopeSymbols(this.rules, index).names.includes(label)) {
+            return;
+    }
+    this.rules.findings.push(
+        new Diagnostic(
+            'no-label-var',
+            'identifierClashWithLabel',
+            labelMessage,
+            this.rules.byte(this.rules.start(node)),
+            this.rules.byte(node.end),
+            '',
+        ),
+    );
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoLabelVar;
+    constructor(rules: Rules, listener: NoLabelVar) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const listener = new NoLabelVar(rules); return new Rule(rules, listener); }

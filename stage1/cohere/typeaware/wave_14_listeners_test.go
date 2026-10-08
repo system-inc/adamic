@@ -8,16 +8,15 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 )
 
-// The shared parser still exposes string kinds. These declarations prepare the
-// owned rules for numeric dispatch without changing that parser or its driver.
-func TestWave14NumericListenerDeclarations(t *testing.T) {
+// Listener names follow the registry contract and stay stable when the parser adds a kind.
+// Keep the production comparison and its independent wrong-kind mutation.
+func TestWave14NamedListenerDeclarations(t *testing.T) {
 	kinds := map[string]ast.Kind{
 		"KindDeleteExpression":         ast.KindDeleteExpression,
 		"KindBinaryExpression":         ast.KindBinaryExpression,
@@ -31,7 +30,7 @@ func TestWave14NumericListenerDeclarations(t *testing.T) {
 		"KindJsxExpression":            ast.KindJsxExpression,
 		"KindSourceFile":               ast.KindSourceFile,
 	}
-	declaration := regexp.MustCompile(`readonly syntaxKinds: readonly number\[\] = \[([^\]]*)\];`)
+	declaration := regexp.MustCompile(`readonly syntaxKinds: readonly string\[\] = \[([^\]]*)\];`)
 	for _, rule := range []struct{ native, directory, production string }{
 		{"no_array_delete", "typescript", "no_array_delete"},
 		{"no_base_to_string", "typescript", "no_base_to_string"},
@@ -72,7 +71,7 @@ func TestWave14NumericListenerDeclarations(t *testing.T) {
 					if !ok {
 						t.Fatal("unknown production kind", key.Sel.Name)
 					}
-					expected = append(expected, strconv.Itoa(int(kind)))
+					expected = append(expected, "'"+strings.TrimPrefix(kind.String(), "Kind")+"'")
 				}
 				return true
 			})
@@ -87,14 +86,14 @@ func TestWave14NumericListenerDeclarations(t *testing.T) {
 			check := func(source []byte) error {
 				matches := declaration.FindAllSubmatch(source, -1)
 				if len(matches) != 1 || string(matches[0][1]) != want {
-					return fmt.Errorf("numeric listeners disagree with production Go: want [%s]", want)
+					return fmt.Errorf("named listeners disagree with production Go: want [%s]", want)
 				}
 				return nil
 			}
 			if err := check(source); err != nil {
 				t.Fatal(err)
 			}
-			mutant := []byte(strings.Replace(string(source), "= ["+want+"];", "= [999999];", 1))
+			mutant := []byte(strings.Replace(string(source), "= ["+want+"];", "= ['MissingSyntaxKind'];", 1))
 			if err := check(mutant); err == nil {
 				t.Fatal("listener declaration mutant survived")
 			}

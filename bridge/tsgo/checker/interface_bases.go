@@ -38,7 +38,7 @@ func (p *Program) interfaceBases(out *fields, c *checker.Checker, question strin
 	if s != nil {
 		for _, d := range s.Declarations {
 			f := ast.GetSourceFileOfNode(d)
-			out.yes(f != nil && p.Compiler.IsSourceFileDefaultLibrary(f.Path()))
+			out.yes(f != nil && p.Compiler.IsSourceFileDefaultLibrary(f.PathKey()))
 		}
 	}
 	var parts, bases []uint64

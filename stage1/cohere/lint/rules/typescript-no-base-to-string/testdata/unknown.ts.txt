@@ -1,0 +1,1 @@
+declare const unknownValue: unknown; String(unknownValue); const object = {}; String(object);

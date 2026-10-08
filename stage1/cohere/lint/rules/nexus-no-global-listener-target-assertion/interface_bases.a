@@ -1,0 +1,29 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from './facts.a';
+export class InterfaceBases {
+    readonly flags: number;
+    readonly nonNullable: number;
+    readonly symbolFlags: number;
+    readonly name: string;
+    readonly libraries: boolean[] = [];
+    readonly parts: readonly number[];
+    readonly bases: readonly number[];
+    constructor(rules: Rules, index: number, id: number) {
+        const f = new Frames(rules.ask(index, `interface-bases\n${id}`));
+        header(f, 'interface-bases');
+        this.flags = f.natural();
+        this.nonNullable = f.natural();
+        this.symbolFlags = f.natural();
+        this.name = f.field();
+        const count = f.natural();
+        for(let at = 0; at < count; at++) {
+            this.libraries.push(f.yes());
+        }
+        this.parts = f.ids();
+        this.bases = f.ids();
+        f.end();
+    }
+    builtin(): boolean {
+        return this.libraries.length > 0 && this.libraries.every((value) => value);
+    }
+}

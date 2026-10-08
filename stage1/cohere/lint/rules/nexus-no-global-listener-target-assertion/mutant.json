@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_global_listener_target_assertion",
+  "from": "return assignable ? -1 : outer;",
+  "to": "return assignable ? outer : -1;"
+}

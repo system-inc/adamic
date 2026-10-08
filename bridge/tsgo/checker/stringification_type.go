@@ -89,7 +89,7 @@ func (p *Program) stringificationType(out *fields, c *checker.Checker, question 
 					if s != nil {
 						for _, decl := range s.Declarations {
 							file := ast.GetSourceFileOfNode(decl)
-							if file != nil && p.Compiler.IsSourceFileDefaultLibrary(file.Path()) {
+							if file != nil && p.Compiler.IsSourceFileDefaultLibrary(file.PathKey()) {
 								builtin = true
 							}
 						}

@@ -1,0 +1,16 @@
+import type { Rules } from './facts.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+export class ScopeSymbols {
+    readonly names: string[] = [];
+    readonly flags: number[] = [];
+    constructor(rules: Rules, index: number) {
+        const f = new Frames(rules.ask(index, 'scope-symbols'));
+        header(f, 'scope-symbols');
+        const count = f.natural();
+        for(let at = 0; at < count; at++) {
+            this.names.push(f.field());
+            this.flags.push(f.natural());
+        }
+        f.end();
+    }
+}

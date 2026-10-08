@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_label_var",
+  "from": "!new ScopeSymbols(this.rules, index).names.includes(label)",
+  "to": "new ScopeSymbols(this.rules, index).names.includes(label)"
+}

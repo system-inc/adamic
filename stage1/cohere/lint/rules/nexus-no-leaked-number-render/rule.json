@@ -1,0 +1,14 @@
+{
+  "name": "nexus/correctness-no-leaked-number-render",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "JsxExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave14CorrectnessNoLeakedNumberRender",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoLeakedNumberRender"
+}

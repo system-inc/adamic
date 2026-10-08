@@ -4,7 +4,7 @@ import { Suggestion } from './suggestion.ts';
 import { Repair } from './repair.ts';
 
 export class NoArrayDelete {
-    readonly syntaxKinds: readonly number[] = [221];
+    readonly syntaxKinds: readonly string[] = ['DeleteExpression'];
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     visit(index: number): void {

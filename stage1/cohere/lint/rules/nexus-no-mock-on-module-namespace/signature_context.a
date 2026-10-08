@@ -1,0 +1,20 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from './facts.a';
+export class SignatureContext {
+    readonly moduleKind: number;
+    readonly kinds: string[] = [];
+    readonly names: string[] = [];
+    readonly nameKinds: string[] = [];
+    constructor(rules: Rules, index: number) {
+        const f = new Frames(rules.ask(index, 'signature-context'));
+        header(f, 'signature-context');
+        this.moduleKind = f.natural();
+        const count = f.natural();
+        for(let at = 0; at < count; at++) {
+            this.kinds.push(f.field());
+            this.names.push(f.field());
+            this.nameKinds.push(f.field());
+        }
+        f.end();
+    }
+}

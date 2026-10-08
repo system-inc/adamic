@@ -1,0 +1,25 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from './facts.a';
+
+export class ReferenceContext {
+    readonly symbol: number;
+    readonly typePosition: boolean;
+    readonly own: number;
+    readonly contextual: number;
+    readonly constructs: readonly number[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'reference-context'));
+        header(frames, 'reference-context');
+        this.symbol = frames.natural();
+        this.typePosition = frames.yes();
+        this.own = frames.natural();
+        this.contextual = frames.natural();
+        const counts: number[] = [];
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            counts.push(frames.natural());
+        }
+        this.constructs = counts;
+        frames.end();
+    }
+}

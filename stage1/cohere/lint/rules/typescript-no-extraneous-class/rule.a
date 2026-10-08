@@ -1,0 +1,120 @@
+import { emptyMessage, constructorMessage, staticMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Shadow } from './shape.a';
+import { ReferenceContext } from './reference_context.a';
+
+export class NoExtraneousClass {
+    readonly rules: Rules;
+    readonly shape: Shadow;
+    constructor(rules: Rules, shape: Shadow) { this.rules = rules; this.shape = shape; }
+    modifier(index: number, kind: string): boolean {
+        return this.rules.parser.node(index).children.some((child) => this.rules.parser.node(child).kind === kind);
+    }
+    slot(index: number): boolean {
+        const context = new ReferenceContext(this.rules, index);
+        return context.contextual !== 0 && context.contextual !== context.own && context.constructs.some((count) => count > 0);
+    }
+    loadBearing(index: number, name: number): boolean {
+        const node = this.rules.parser.node(index);
+        let holder = index;
+        let binding = name;
+        if(node.kind === 'ClassExpression') {
+            let outer = index;
+            let parent = this.rules.parents[outer] ?? -1;
+            while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+                outer = parent; parent = this.rules.parents[outer] ?? -1;
+            }
+            if(parent < 0 || this.rules.parser.node(parent).kind !== 'VariableDeclaration' ||
+                this.rules.parser.node(parent).children[this.rules.parser.node(parent).children.length - 1] !== outer) { return this.slot(index); }
+            binding = this.shape.name(parent);
+            const list = this.rules.parents[parent] ?? -1;
+            holder = this.rules.parents[list] ?? -1;
+        }
+        if(binding < 0 || holder < 0 || this.rules.parser.node(binding).kind !== 'Identifier' || this.modifier(holder, 'ExportKeyword')) { return false; }
+        const identity = new ReferenceContext(this.rules, binding);
+        if(identity.symbol === 0) { return false; }
+        const text = this.rules.parser.node(binding).text;
+        let extended = false;
+        let valueUses = 0;
+        let slots = 0;
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const reference = this.rules.parser.node(at);
+            if(reference.kind === 'ExportSpecifier') {
+                const local = reference.children.find((child) => this.rules.parser.node(child).kind === 'Identifier') ?? -1;
+                let parent = this.rules.parents[at] ?? -1;
+                while(parent >= 0 && this.rules.parser.node(parent).kind !== 'ExportDeclaration') { parent = this.rules.parents[parent] ?? -1; }
+                if(local >= 0 && this.rules.parser.node(local).text === text && parent >= 0 &&
+                    !this.rules.parser.node(parent).children.some((child) => this.rules.parser.node(child).kind === 'StringLiteral')) { return false; }
+            }
+            if(at === binding || reference.kind !== 'Identifier' || reference.text !== text) { continue; }
+            const context = new ReferenceContext(this.rules, at);
+            if(context.symbol !== identity.symbol) { continue; }
+            const parent = this.rules.parents[at] ?? -1;
+            const kind = this.rules.parser.node(parent).kind;
+            if(kind === 'ExportAssignment') { return false; }
+            const grandparent = this.rules.parents[parent] ?? -1;
+            if(kind === 'ExpressionWithTypeArguments' && this.rules.parser.node(grandparent).kind === 'HeritageClause') { extended = true; }
+            else if(!context.typePosition) {
+                valueUses++;
+                if(context.contextual !== 0 && context.contextual !== context.own && context.constructs.some((count) => count > 0)) { slots++; }
+            }
+        }
+        return extended || (valueUses > 0 && valueUses === slots);
+    }
+    visit(node: ParseNode, index: number): void {
+        if(this.rules.context.settings.read('allowwithdecorator', 'false') === 'true' && node.children.some((child) => this.rules.parser.node(child).kind === 'Decorator')) { return; }
+        const members: number[] = [];
+        for(const child of node.children) {
+            const member = this.rules.parser.node(child);
+            if(member.kind === 'HeritageClause' && member.operator === 'ExtendsKeyword') { return; }
+            if(['Constructor', 'PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'IndexSignature', 'ClassStaticBlockDeclaration', 'SemicolonClassElement'].includes(member.kind)) { members.push(child); }
+        }
+        const name = this.shape.name(index);
+        let id = '';
+        let message = '';
+        if(members.length === 0) {
+            if(this.loadBearing(index, name)) { return; }
+            id = 'empty'; message = emptyMessage;
+        }
+        else {
+            let onlyConstructor = true;
+            let onlyStatic = true;
+            for(const member of members) {
+                const kind = this.rules.parser.node(member).kind;
+                if(kind === 'Constructor') {
+                    for(const parameter of this.rules.parser.node(member).children) {
+                        if(this.rules.parser.node(parameter).kind === 'Parameter' && ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].some((modifier) => this.modifier(parameter, modifier))) { onlyConstructor = false; onlyStatic = false; }
+                    }
+                }
+                else {
+                    onlyConstructor = false;
+                    if(kind === 'IndexSignature' || (['PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(kind) &&
+                        (!this.modifier(member, 'StaticKeyword') || this.modifier(member, 'AbstractKeyword')))) { onlyStatic = false; }
+                }
+            }
+            if(onlyConstructor) { id = 'onlyConstructor'; message = constructorMessage; }
+            else if(onlyStatic) { id = 'onlyStatic'; message = staticMessage; }
+        }
+        if(id === '') { return; }
+        if(this.rules.context.settings.read(id === 'empty' ? 'allowempty' : id === 'onlyConstructor' ? 'allowconstructoronly' : 'allowstaticonly', 'false') === 'true') { return; }
+        if(node.kind === 'ClassDeclaration' && name >= 0) { this.rules.add('no-extraneous-class', id, message, name); }
+        else {
+            // classAnchorRange excludes leading export/default/decorator modifiers.
+            this.rules.scanner.pos = node.pos;
+            this.rules.scanner.scan();
+            while(this.rules.scanner.kind !== 'ClassKeyword' && this.rules.scanner.pos < node.end) { this.rules.scanner.scan(); }
+            this.rules.findings.push(new Diagnostic('no-extraneous-class', id, message, this.rules.byte(this.rules.scanner.start), this.rules.byte(node.end)));
+        }
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoExtraneousClass;
+    constructor(rules: Rules, listener: NoExtraneousClass) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const shape = new Shadow(rules); const listener = new NoExtraneousClass(rules, shape); return new Rule(rules, listener); }

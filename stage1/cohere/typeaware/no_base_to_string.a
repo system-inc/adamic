@@ -4,7 +4,7 @@ import { Frames, header } from './frames.ts';
 import { StringificationType } from './stringification_type.a';
 
 export class NoBaseToString {
-    readonly syntaxKinds: readonly number[] = [227, 214, 229];
+    readonly syntaxKinds: readonly string[] = ['BinaryExpression', 'CallExpression', 'TemplateExpression'];
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     typeName(index: number, id: number): string {

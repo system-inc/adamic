@@ -1,0 +1,1 @@
+declare const count: number; const view = <div>{count && <span />}</div>;

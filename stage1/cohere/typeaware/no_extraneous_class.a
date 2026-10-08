@@ -4,7 +4,7 @@ import { Shadow } from './shadow.ts';
 import { ReferenceContext } from './reference_context.a';
 
 export class NoExtraneousClass {
-    readonly syntaxKinds: readonly number[] = [264, 232];
+    readonly syntaxKinds: readonly string[] = ['ClassDeclaration', 'ClassExpression'];
     readonly rules: Rules;
     readonly shape: Shadow;
     constructor(rules: Rules) { this.rules = rules; this.shape = new Shadow(rules); }

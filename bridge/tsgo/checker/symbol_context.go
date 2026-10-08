@@ -29,11 +29,11 @@ func (p *Program) symbolContext(out *fields, c *checker.Checker, node *ast.Node,
 			if f == nil {
 				return "", fmt.Errorf("declaration has no source")
 			}
-			out.text(f.FileName())
+			out.text(f.FileName().AsString())
 			out.text(strings.TrimPrefix(d.Kind.String(), "Kind"))
 			out.number(uint64(d.Pos()))
 			out.number(uint64(d.End()))
-			out.yes(p.Compiler.IsSourceFileDefaultLibrary(f.Path()))
+			out.yes(p.Compiler.IsSourceFileDefaultLibrary(f.PathKey()))
 			out.yes(d.Kind == ast.KindNamespaceImport && ast.IsTypeOnlyImportOrExportDeclaration(d))
 			parentFlags := uint64(0)
 			if d.Parent != nil {

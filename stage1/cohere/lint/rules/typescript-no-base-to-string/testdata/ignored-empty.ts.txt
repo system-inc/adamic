@@ -1,0 +1,1 @@
+class Error {} const error = new Error(); String(error); const object = {}; String(object);

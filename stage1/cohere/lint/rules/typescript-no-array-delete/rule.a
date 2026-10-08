@@ -1,0 +1,42 @@
+import { arrayDeleteMessage, spliceMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { types } from '../../../typeaware/facts.ts';
+import { Suggestion } from '../../../typeaware/suggestion.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+
+export class NoArrayDelete {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    visit(node: ParseNode, index: number): void {
+        const operand = this.rules.skip(node.children[0] ?? -1);
+        const access = this.rules.parser.node(operand);
+        if(access.kind !== 'ElementAccessExpression') { return; }
+        const receiver = access.children[0] ?? -1;
+        const argument = access.children[access.children.length - 1] ?? -1;
+        const facts = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
+        const root = facts.root();
+        const parts = (root.flags & (134217728 | 268435456)) !== 0 ? root.parts : [root.id];
+        const arrays = parts.map((id) => facts.type(id).array || facts.type(id).tuple >= 0);
+        const underlying = (root.flags & 268435456) !== 0 ? arrays.some((array) => array) : arrays.every((array) => array);
+        if(!underlying) { return; }
+        const finding = this.rules.add('no-array-delete', 'noArrayDelete', arrayDeleteMessage, index);
+        const repairs: Repair[] = [];
+        const scanner = this.rules.scanner;
+        for(let at = 0; at < 3; at++) {
+            scanner.pos = at === 0 ? node.pos : at === 1 ? this.rules.parser.node(receiver).end : this.rules.parser.node(argument).end;
+            scanner.scan();
+            repairs.push(new Repair(this.rules.byte(scanner.start), this.rules.byte(scanner.pos), at === 0 ? '' : at === 1 ? '.splice(' : ', 1)'));
+        }
+        finding.suggestions.push(new Suggestion('useSplice', spliceMessage, repairs));
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoArrayDelete;
+    constructor(rules: Rules, listener: NoArrayDelete) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const listener = new NoArrayDelete(rules); return new Rule(rules, listener); }

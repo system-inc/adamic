@@ -1,0 +1,224 @@
+import { targetAssertionMessage } from './messages.a';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from './facts.a';
+import { Shadow } from './shape.a';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { SymbolContext } from './symbol_context.a';
+import { InterfaceBases } from './interface_bases.a';
+export class NoGlobalListenerTargetAssertion {
+    readonly rules: Rules;
+    readonly shape: Shadow;
+    constructor(rules: Rules, shape: Shadow) { this.rules = rules; this.shape = shape; }
+    lookup(kind: string, start: number, end: number): number {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const n = this.rules.parser.node(at);
+            if(n.kind === kind && this.rules.byte(n.pos) === start && this.rules.byte(n.end) === end) {
+                return at;
+            }
+        }
+        return -1;
+    }
+    handler(index: number, call: ParseNode): number {
+        if(call.list < 2) {
+            return -1;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') {
+            return -1;
+        }
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        const property = this.rules.parser.node(name);
+        if(property.kind !== 'Identifier' || property.text !== 'addEventListener') {
+            return -1;
+        }
+        const receiver = this.rules.skip(callee.children[0] ?? -1);
+        const object = this.rules.parser.node(receiver);
+        if(object.kind !== 'Identifier' || !['document', 'window'].includes(object.text)) {
+            return -1;
+        }
+        const origin = new SymbolContext(this.rules, receiver);
+        if(
+            !origin.builtin() ||
+            !origin.kinds.every((kind) => kind === 'VariableDeclaration') ||
+            !new SymbolContext(this.rules, name).builtin()
+        ) {
+            return -1;
+        }
+        const argument = this.rules.skip(call.children[call.children.length - call.list + 1] ?? -1);
+        const node = this.rules.parser.node(argument);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) {
+            return argument;
+        }
+        if(node.kind !== 'Identifier') {
+            return -1;
+        }
+        const binding = new SymbolContext(this.rules, argument);
+        if(
+            binding.id === 0 ||
+            (binding.flags & 2097152) !== 0 ||
+            binding.kinds.length !== 1 ||
+            binding.paths[0] !== this.rules.path
+        ) {
+            return -1;
+        }
+        const declaration = this.lookup(binding.kinds[0] ?? '', binding.starts[0] ?? -1, binding.ends[0] ?? -1);
+        if(declaration < 0) {
+            return -1;
+        }
+        if(binding.kinds[0] === 'FunctionDeclaration') {
+            return declaration;
+        }
+        if(binding.kinds[0] !== 'VariableDeclaration' || ((binding.parentFlags[0] ?? 0) & 2) === 0) {
+            return -1;
+        }
+        const initializer = this.shape.initializer(declaration);
+        if(initializer < 0) {
+            return -1;
+        }
+        const value = this.rules.skip(initializer);
+        return ['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(value).kind) ? value : -1;
+    }
+    extendsElement(index: number, id: number, seen: readonly number[]): boolean {
+        if(seen.includes(id)) {
+            return false;
+        }
+        const data = new InterfaceBases(this.rules, index, id);
+        const next = seen.slice();
+        next.push(id);
+        for(const base of data.bases) {
+            const metadata = new InterfaceBases(this.rules, index, base);
+            if(metadata.name === 'Element' && metadata.builtin()) {
+                return true;
+            }
+            if(this.extendsElement(index, base, next)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    specific(index: number, id: number): boolean {
+        const data = new InterfaceBases(this.rules, index, id);
+        const parts = (data.flags & 134217728) !== 0 ? data.parts : [id];
+        let specific = false;
+        for(const part of parts) {
+            const member = new InterfaceBases(this.rules, index, part);
+            if((member.flags & (4 | 8)) !== 0) {
+                continue;
+            }
+            if(
+                (member.symbolFlags & 64) === 0 ||
+                ['Element', 'HTMLElement', 'SVGElement', 'MathMLElement'].includes(member.name) ||
+                !member.builtin() ||
+                !this.extendsElement(index, part, [])
+            ) {
+                return false;
+            }
+            specific = true;
+        }
+        return specific;
+    }
+    assertion(index: number, event: number): number {
+        const access = this.rules.parser.node(index);
+        const name = access.children[access.children.length - 1] ?? -1;
+        const property = this.rules.parser.node(name);
+        if(property.kind !== 'Identifier' || property.text !== 'target') {
+            return -1;
+        }
+        const receiver = this.rules.skip(access.children[0] ?? -1);
+        if(
+            this.rules.parser.node(receiver).kind !== 'Identifier' ||
+            new SymbolContext(this.rules, receiver).id !== event ||
+            !new SymbolContext(this.rules, name).builtin()
+        ) {
+            return -1;
+        }
+        const known = types(this.rules.ask(index, 'raw-shape'), 'raw-shape').root().id;
+        for(let outer = this.rules.parents[index] ?? -1; outer >= 0; outer = this.rules.parents[outer] ?? -1) {
+            const node = this.rules.parser.node(outer);
+            if(['ParenthesizedExpression', 'NonNullExpression'].includes(node.kind)) {
+                continue;
+            }
+            if(!['AsExpression', 'TypeAssertionExpression'].includes(node.kind)) {
+                return -1;
+            }
+            const annotation =
+                node.kind === 'AsExpression'
+                    ? (node.children[node.children.length - 1] ?? -1)
+                    : (node.children[0] ?? -1);
+            const asserted = types(this.rules.ask(annotation, 'annotation-shape'), 'annotation-shape').root().id;
+            if(!this.specific(annotation, asserted)) {
+                continue;
+            }
+            const from = new InterfaceBases(this.rules, index, known).nonNullable;
+            const to = new InterfaceBases(this.rules, annotation, asserted).nonNullable;
+            const f = new Frames(this.rules.ask(index, `assignable-types\n${from}\n${to}`));
+            header(f, 'assignable-types');
+            const assignable = f.yes();
+            f.end();
+            return assignable ? -1 : outer;
+        }
+        return -1;
+    }
+    walk(index: number, event: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'PropertyAccessExpression') {
+            const asserted = this.assertion(index, event);
+            if(asserted >= 0) {
+                const n = this.rules.parser.node(asserted);
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'correctness-no-global-listener-target-assertion',
+                        'globalListenerTargetAssertion',
+                        targetAssertionMessage,
+                        this.rules.byte(this.rules.start(n)),
+                        this.rules.byte(n.end),
+                        'nexus/',
+                    ),
+                );
+            }
+        }
+        for(const child of node.children) {
+            this.walk(child, event);
+        }
+    }
+    visit(call: ParseNode, index: number): void {
+        const handler = this.handler(index, call);
+        if(handler < 0) {
+            return;
+    }
+    const node = this.rules.parser.node(handler);
+    const parameter = node.children.find((child) => this.rules.parser.node(child).kind === 'Parameter') ?? -1;
+    const body = node.children[node.children.length - 1] ?? -1;
+    if(
+        parameter < 0 ||
+        body < 0 ||
+        (!['Block', 'ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(body).kind) &&
+            this.rules.parser.node(handler).kind !== 'ArrowFunction')
+    ) {
+        return;
+    }
+    const name = this.shape.name(parameter);
+    if(
+        name < 0 ||
+        this.rules.parser.node(name).kind !== 'Identifier' ||
+        this.rules.parser.node(name).text === 'this'
+    ) {
+        return;
+    }
+    const event = new SymbolContext(this.rules, name).id;
+    if(event !== 0) {
+        this.walk(body, event);
+    }
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoGlobalListenerTargetAssertion;
+    constructor(rules: Rules, listener: NoGlobalListenerTargetAssertion) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const shape = new Shadow(rules); const listener = new NoGlobalListenerTargetAssertion(rules, shape); return new Rule(rules, listener); }
