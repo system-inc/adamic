@@ -1,0 +1,1 @@
+async function f(xs:number[]){for(const x of xs){await Promise.resolve(1);}}

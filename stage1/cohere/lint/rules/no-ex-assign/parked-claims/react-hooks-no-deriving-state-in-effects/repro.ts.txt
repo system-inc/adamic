@@ -1,0 +1,1 @@
+function Component(){const [x,setX]=useState(0);useEffect(()=>{setX(1)},[]);return null;}
