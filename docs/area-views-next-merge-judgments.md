@@ -1,8 +1,8 @@
 # Area views next merge decisions
 
-The branch includes 506441dd and the replacement candidate d5c6292b. Fifty new conflict hunks across fifteen files were resolved individually. Their exact sides and decisions are in area-views-next-merge-hunks.json. The original approved judgments 1 through 17 remain applied. No landing push has occurred.
+The branch includes 506441dd, d5c6292b and current candidate 4885cec50290686df487b62aac47c85d871ed40c, merged at d53b51f3. Protected work is on compiler/area-views-wip2 at 2df48668eb2165ff1785c8d977336364a6cb3ca0. Fifty new conflict hunks across fifteen files were resolved individually. Their exact sides and decisions are in area-views-next-merge-hunks.json. The original approved judgments 1 through 17 remain applied. No landing push has occurred.
 
-## Pending judgments
+## Approved judgments 18 through 23
 
 | Number | File | Area behavior | Views behavior | Proposed resolution | Witness |
 | --- | --- | --- | --- | --- | --- |
@@ -12,7 +12,7 @@ The branch includes 506441dd and the replacement candidate d5c6292b. Fifty new c
 | 21 | internal/fresh/fresh.go | Unknown IR nodes conservatively refuse cycles. | ArrayRecord carries existing array identity and own property references. | Follow operands and stored references through the existing freshness and cycle proofs; do not exempt cycles. | ranked11-arrow-modifiers.a. |
 | 22 | internal/native/taste.go | Logical operations retain a falsy absent reference. | Record is a distinct representation; conversion to String panics. | Use the existing falsy-reference proof only in the retained && branch to emit the absent String value. Keep || and ordinary conversion boundaries. | stage3/fixtures/taste/06_localized_message.a, native panic converting tag 14 to 3. |
 
-All five remain unapplied pending a ruling. The independently observed taste/07_compact.a NotYet regression is also unresolved; its positive expectation is not changed to hide the regression.
+Judgments 18 through 23 were approved and applied in 2df48668 and c6a8c98b. The earlier observations below describe prior checkpoints. Current evidence and pending judgments are recorded at the end.
 
 ## Changes beyond conflict resolution
 
@@ -30,7 +30,7 @@ Lower still fails four phantom metadata equality tests; IR passed in 2.124 secon
 
 ## Additional array judgment
 
-23. internal/lower/object.go elementType: the candidate compiles taste/07_compact.a, while the merged slotless-element guard rejects number[] | {flags:number} | undefined. Proposed resolution retains the ordinary boxed Union-array path only where no checked-view contract is erased, preserving views element-proof and unknown-array refusal boundaries. This remains unapplied pending ruling; the positive expectation stays unchanged.
+23. internal/lower/object.go elementType: the candidate compiles taste/07_compact.a, while the merged slotless-element guard rejects number[] | {flags:number} | undefined. Proposed resolution retains the ordinary boxed Union-array path only where no checked-view contract is erased, preserving views element-proof and unknown-array refusal boundaries. Applied as ruled, only without erasing a registered checked-view array element contract. taste/07_compact.a now agrees with Node and is recorded as Compiles.
 
 ## Stage3 path and record repair
 
@@ -60,4 +60,32 @@ Counts refresh after the three optional-write expectation updates failed 98 leaf
 
 Ruling 10 expectation repairs pin all ten stored-marker probes plus marker/parser-cache.a, marker/discarded-required.a and marker/stored-call.a to their retained result-erasure or never-rest call boundary. Ruling 11 expectation repairs pin lazy/optional-error.a and lazy/optional-error-fields.a to the plain Error relation refusal. All source Node checks remain and independently certified immediate/lazy positive cases still execute all backends. The combined marker/lazy controls passed in 5.559 seconds. Isolated result-erasure mutants failed the eight stored result controls and the three additional marker controls; a stored-call guard mutant failed void and field-good; removing both Error relation guards failed both optional-Error controls. The first stored-call mutant had an unused local and was corrected before the semantic run; that build failure is not counted as a caught mutant.
 
-Judgments 18 through 23 remain unapplied. No landing push has occurred.
+Judgments 18 through 23 are now applied. No landing push has occurred.
+
+
+## Current step 11 validation
+
+The 4885cec5 merge resolved two conflicts individually. The constituent-recursion fixture keeps its views .ts path and takes the candidate origin ?? type proof. The scanner pin takes the candidate var refusal at 69:5 after its masked assertions were rewritten. The merge commit names the constituent fixture with a Moved-result trailer. c6a8c98b names the localized-message and compact stage0 transitions with Moved-result trailers.
+
+TestCheckedViewCallableSourceFileUpdateBoxedOptional passed in 0.821 seconds. Removing producer padding and using caller-sized slots failed under ASan with stack-buffer-overflow. Merely changing allocation capacity did not catch the mutant and is not counted as evidence. The wider producer source-file-update fixture directly exercises the boxed adapter.
+
+The four phantom-erasure controls passed. Clearing FunctionTypeTargets fails all four with missing function-type target evidence. The original metadata remains intact; direct-call and count checks use CallTargets. TestCallTargetReaders passed in 2.181 seconds after removing two unaudited direct Call.Function reads in the new test helper.
+
+The certified void-mask removal mutant fails performance-measure/good and optional-values. TestCheckedViewArrayRecordCycleRefused and TestCheckedViewLogicalStringNullRefused passed together in 0.177 seconds. The contained-reference mutant and null-guard mutant each fail with got <nil> instead of the required refusal. The ordinary boxed-array removal mutant fails TestFixtures/taste/07_compact.a with the old NotYet boundary. The first native string mutant did not propagate into the stage3 oracle subprocess; that green result is not counted as a caught mutant. A forwarded GOFLAGS overlay rerun is recorded separately.
+
+The configured 4885cec5 comparison passed lower in 86.788 seconds and flow in 136.817 seconds. The first comparison lacked its declared @types/node installation and is not inherited-failure evidence. The configured comparison reproduces three stale stage3 host records: 09_realpath.a, 14_getCurrentDirectory.a and 24_useCaseSensitiveFileNames.a. Those inherited records remain unchanged.
+
+The merged counts refresh remains red on 97 lowering leaves and one additional fixture control. Eighty-six are cycle fixtures inconsistent with the approved judgment 1 refusal boundary; every one exits successfully on Node. The complete paths, exact refusal diagnostics and Node observations are in /tmp/area-views-cycle-node-observations.json. An automatic approval review rejected converting those executable/count expectations to named refusal expectations because it broadly changes validation. No changes from that rejected command were applied. Explicit approval for the 86 named expectation updates was requested. Cycle admissions remain refused.
+
+TestOptionalWriteErasure/fresh now requires the candidate's missing optional-own-field write NotYet, retaining all other erasure controls. The targeted optional-write and phantom controls passed in 0.890 seconds. The merged full oracle and full stage3 checks are logged separately and are not claimed green. Counts, the .a audit and the final catalog remain incomplete or red.
+
+## Pending lowering judgments 24 through 27
+
+| Number | File | Two sides | Proposed resolution | Witness |
+| --- | --- | --- | --- | --- |
+| 24 | internal/lower/collections.go | The candidate admits ordinary Union-valued Map callbacks; the added views slotless guard refuses them. | Keep the existing boxed adapter for ordinary Map callbacks only where no checked-view value contract is erased. Keep every descriptor and unknown callback refusal. | host_map_union.a, host_map_generic_union.a, host_map_iterator_union.a; entry-live-mutation.a remains refused. |
+| 25 | internal/lower/detached_own.go | The candidate admits known intrinsic alias .apply calls; the views guard admits only .call. | Retain the existing intrinsic adapter only for const aliases and literal one-key argument tuples. Keep escaping aliases and unknown signatures refused. | library_method_values.a and method_coverage_object_descriptors.a. |
+| 26 | internal/lower/records.go | The candidate handles Object.values on a fixed object; views contextual storage conversion rejects the ArrayLike-or-Record contextual type. | Keep the existing fixed-object intrinsic path without converting to Record. Retain ordinary storage-cast refusals. | method_coverage_object_statics.a. |
+| 27 | internal/lower/census_small.go and phantom_overload_results.go | The candidate evaluates extra direct-overload arguments ignored by the implementation; views rejects the call. | Keep the existing certified direct-overload path, including evaluation of extra arguments and all overload relation and callback proofs. | census_overload_contracts.a, including next() counts; TestCensusOverloadRelation. |
+
+All four remain unapplied pending rulings. No landing push has occurred.

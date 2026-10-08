@@ -2,6 +2,7 @@ package lower
 
 import (
 	"context"
+	"errors"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
@@ -34,6 +35,13 @@ func TestOptionalWriteErasure(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := Lower(context.Background(), loaded)
+			if probe.name == "fresh" {
+				var notYet *NotYet
+				if !errors.As(err, &notYet) || notYet.What != "writing a possibly absent optional own field" {
+					t.Fatalf("got %v, want the candidate optional-own-field write boundary", err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}

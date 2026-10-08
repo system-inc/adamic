@@ -47,7 +47,7 @@ func phantomExecutableIRMatches(t *testing.T, got, want *ir.Program) bool {
 			case reflect.Struct:
 				if call, ok := value.Interface().(ir.Call); ok {
 					targets := program.CallTargets(call)
-					if call.Virtual != 0 || !reflect.DeepEqual(targets, []int{call.Function}) || len(call.Arguments) != len(program.Functions[call.Function].Parameters) {
+					if call.Virtual != 0 || len(targets) != 1 || len(call.Arguments) != len(program.Functions[targets[0]].Parameters) {
 						t.Fatalf("phantom erasure changed direct call facts: %#v targets %v", call, targets)
 					}
 				}
