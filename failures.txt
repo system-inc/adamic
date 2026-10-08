@@ -85,6 +85,22 @@
         Node.js v24.19.0
 --- FAIL: TestMarkdownInline (289.88s)
 
+== github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures
+--- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+--- FAIL: TestCountsAreRecorded (275.98s)
+
 == github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
 census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 === RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
