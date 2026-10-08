@@ -1,0 +1,4 @@
+const table = { files: { word: "owned:" + "files" }, directories: { word: "owned:" + "dirs" } };
+let kind: "files" | "directories" | "other" = "files";
+function receiver(): typeof table { kind = "other"; return table; }
+if (kind === "files") console.log(receiver()[kind].word);

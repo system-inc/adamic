@@ -783,6 +783,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.recordIndex(node); handled {
 			return value, err
 		}
+		if value, handled, err := l.finitePropertyIndex(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		if l.isLibraryGlobal(node.AsNewExpression().Expression, "Promise") {
