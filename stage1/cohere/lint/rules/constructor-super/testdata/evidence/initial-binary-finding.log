@@ -1,0 +1,62 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestConstructorSuperParity
+    lint_test.go:295: cohere cases: 5325 unique source/rule/options combinations
+    lint_test.go:943: constructor-super: 120 unique captured upstream cases
+    lint_test.go:948: checker compilation phases: load=217.928627ms lower=5.886756414s C=736.06511ms JavaScript=35.639242ms
+    lint_test.go:948: checker native build: 1m4.708570172s
+    lint_test.go:948: Node: case 5 line 20: port "/tmp/adamic-gate/lint-shared-2180748168/upstream-2587356098/case-1114/repository/source/Subject.js:1:44", Go "fixed\tclass A extends (5 && B) { constructor() { super(); } }"
+        Go context:
+          constructor-super  This `super()` call has no constructor to call, because the `extends` clause names something that cannot be constructed.
+        
+        range 45 52 badSuper 			45 52
+        fixed	class A extends (() => {}) { constructor() { super(); } }
+        case 5
+        fixed	class A extends (5 && B) { constructor() { super(); } }
+        case 6
+        fixed	class A extends (5 ?? B) { constructor() { super(); } }
+        case 7
+        fixed	class A extends (5 || B) { constructor() { super(); } }
+--- FAIL: TestConstructorSuperParity (100.06s)
+=== CONT  TestMutants
+=== RUN   TestMutants/constructor-super-conditional-call-guaranteed
+=== PAUSE TestMutants/constructor-super-conditional-call-guaranteed
+=== CONT  TestMutants/constructor-super-conditional-call-guaranteed
+    lint_test.go:858: checker compilation phases: load=220.263714ms lower=6.963414591s C=728.628413ms JavaScript=30.813595ms
+    lint_test.go:864: constructor-super-conditional-call-guaranteed caught on Node: case 88 line 4604: port "/tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:3:57", Go "/tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:2:30"
+        Go context:
+        case 88
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:1:30
+          constructor-super  This derived constructor never calls `super()`, so constructing the class throws a ReferenceError before the body finishes.
+        
+        range 29 45 missingAll 			29 45
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:2:30
+          constructor-super  This derived constructor calls `super()` on some paths and not others, so the paths without it throw a ReferenceError.
+        
+        range 77 113 missingSome 			77 113
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:3:57
+    lint_test.go:864: constructor-super-conditional-call-guaranteed caught on emitted JavaScript: case 88 line 4604: port "/tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:3:57", Go "/tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:2:30"
+        Go context:
+        case 88
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:1:30
+          constructor-super  This derived constructor never calls `super()`, so constructing the class throws a ReferenceError before the body finishes.
+        
+        range 29 45 missingAll 			29 45
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:2:30
+          constructor-super  This derived constructor calls `super()` on some paths and not others, so the paths without it throw a ReferenceError.
+        
+        range 77 113 missingSome 			77 113
+        /tmp/adamic-gate/TestMutantsconstructor-super-conditional-call-guaranteed3760024891/019/constructor-super-0.ts:3:57
+    lint_test.go:155: checker native mutant build: 5.570119287s
+    lint_test.go:872: sanitized native canary constructor-super equals mutated Node: 526136 bytes
+--- PASS: TestMutants (0.02s)
+    --- PASS: TestMutants/constructor-super-conditional-call-guaranteed (14.95s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	115.160s
+FAIL
+Traceback (most recent call last):
+  File "/workspace/constructor-super/stage1/cohere/lint/rules/constructor-super/testdata/native_mutant.py", line 39, in <module>
+    subprocess.run([
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'test', '-overlay=/tmp/adamic-gate/constructor-super-native-mutant-pke1niip/overlay.json', './stage1/cohere/lint', '-run', '^TestConstructorSuperParity$|^TestMutants$/^constructor-super-conditional-call-guaranteed$', '-count=1', '-v', '-timeout=10m']' returned non-zero exit status 1.

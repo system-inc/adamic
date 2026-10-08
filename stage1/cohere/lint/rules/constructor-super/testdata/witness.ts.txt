@@ -1,0 +1,4 @@
+class Missing extends Base { constructor() {} }
+class Partial extends Base { constructor() { if (flag) super(); } }
+class Duplicate extends Base { constructor() { super(); super(); } }
+class Invalid extends null { constructor() { super(); } }
