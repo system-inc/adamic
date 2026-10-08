@@ -18,6 +18,9 @@ spec = importlib.util.spec_from_file_location('floor', Path(__file__).with_name(
 floor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(floor)
 
+# Hermetic git: a global core.hooksPath (Kirk's Mac sets one) would skip the tests' rejection hooks.
+os.environ['GIT_CONFIG_GLOBAL'] = os.devnull
+
 STUB = r'''#!/usr/bin/env python3
 import json, os, pathlib, sys
 root = pathlib.Path(os.environ['STUB_ROOT'])
@@ -25,13 +28,16 @@ args = sys.argv[1:]
 with (root / 'calls').open('a') as f:
     f.write(json.dumps(args) + '\n')
 world = json.loads((root / 'world.json').read_text())
-if args[:2] == ['ai', 'fleet']:
+if args[:2] == ['ai', 'fleets']:
+    assert args[2:] == ['--json'], args
+    print(json.dumps({'fleets': [{'fleet': name} for name in sorted({m['fleet'] for m in world['members']})]}))
+elif args[:2] == ['ai', 'fleet']:
     assert args[3:] == ['--json', '--live'], args
     selector = args[2]
-    if world.get('fleet_error'):
+    # As the real ahra: a fleet is a name, never a pattern.
+    if world.get('fleet_error') or '*' in selector:
         sys.exit(1)
-    values = [m for m in world['members'] if
-              (m['fleet'].startswith(selector[:-1]) if selector.endswith('*') else m['fleet'] == selector)]
+    values = [m for m in world['members'] if m['fleet'] == selector]
     print(json.dumps(values))
 elif args[:2] == ['ai', 'usage']:
     assert args == ['ai', 'usage', '--provider', 'codex', '--json'], args
@@ -161,7 +167,9 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(len(list(self.queue.iterdir())), 5)
         self.assertIn(2, [r[2] for r in self.rows() if r[-1] == 'started'])
         self.assertIn('pass_cap', [r[-1] for r in self.rows()])
-        self.assertEqual([c[2] for c in self.calls(['ai', 'fleet'])], ['devtools', 'devtools-*'])
+        # devtools-* is expanded from the roster: ahra ai fleet takes a name, never a pattern.
+        self.assertEqual([c[2] for c in self.calls(['ai', 'fleet'])], ['devtools', 'devtools-extra', 'devtools-sub'])
+        self.assertEqual(len(self.calls(['ai', 'fleets'])), 1)
         self.assertFalse(self.calls(['ai', 'list']))
 
     def test_credit_and_percent_floors_and_unknown_usage_fail_closed(self):
@@ -322,7 +330,7 @@ class RecordTests(unittest.TestCase):
             lane = {'lane': 'test', 'floor': 4}
             records.row(lane, 0, 0, outcome='first')
             hook = remote / 'hooks/pre-receive'
-            hook.write_text('#!/bin/sh\\nexit 1\\n')
+            hook.write_text('#!/bin/sh\nexit 1\n')
             hook.chmod(0o755)
             records.flush()
             self.assertTrue(records.transaction.exists())

@@ -28,8 +28,13 @@ BRANCH = 'records/fleet-floor'
 CSV = 'documentation/velocity/fleet-floor.csv'
 
 
+# ahra resolves only from its project root, so every ahra call runs there (when it exists: tests stub it).
+AHRA = Path(os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/Projects/ahra'))
+
+
 def run(*args, input=None):
-    return subprocess.run(list(map(str, args)), input=input, text=True,
+    directory = str(AHRA) if args[0] == 'ahra' and AHRA.is_dir() else None
+    return subprocess.run(list(map(str, args)), input=input, text=True, cwd=directory,
                           capture_output=True, timeout=60, check=True).stdout.strip()
 
 
@@ -160,27 +165,43 @@ def lanes(path):
     return result
 
 
-def members(lane):
+def fleets(selector, listing):
+    """A lane's selector as fleet names: itself, or for a trailing *, every fleet on the roster it
+    prefixes. ahra ai fleet takes a name, never a pattern ('No session is in fleet lint-*')."""
+    if not selector.endswith('*'):
+        return [selector]
+    if listing.get('names') is None:
+        response = json.loads(run('ahra', 'ai', 'fleets', '--json'))
+        listing['names'] = sorted(entry['fleet'] for entry in response['fleets'])
+    return [name for name in listing['names'] if name.startswith(selector[:-1])]
+
+
+def members(lane, listing=None):
     found, first = {}, []
+    listing = {} if listing is None else listing
     for selector in lane['fleets']:
-        values = json.loads(run('ahra', 'ai', 'fleet', selector, '--json', '--live'))
-        if not isinstance(values, list):
-            raise ValueError('fleet response must be a list')
-        for member in values:
-            fleet = member.get('fleet', selector)
-            matches = (fleet.startswith(selector[:-1]) if selector.endswith('*') else fleet == selector)
-            if not matches or member.get('provider', 'Codex').lower() != 'codex':
-                continue
-            session = member['session']
-            if member.get('pollError') or member.get('statusStale'):
-                raise ValueError('fleet live status unavailable')
-            if session['status'] not in {'Running', 'Idle', 'Completed', 'Failed', 'Cancelled'}:
-                raise ValueError('unknown session status')
-            key = session['sessionId']
-            found[key] = member
-            if selector == lane['fleets'][0] and key not in {m['session']['sessionId'] for m in first}:
-                first.append(member)
+        for name in fleets(selector, listing):
+            values = json.loads(run('ahra', 'ai', 'fleet', name, '--json', '--live'))
+            if not isinstance(values, list):
+                raise ValueError('fleet response must be a list')
+            collect(lane, selector, name, values, found, first)
     return sum(m['session']['status'] == 'Running' for m in found.values()), first
+
+
+def collect(lane, selector, name, values, found, first):
+    for member in values:
+        fleet = member.get('fleet', name)
+        if fleet != name or member.get('provider', 'Codex').lower() != 'codex':
+            continue
+        session = member['session']
+        if member.get('pollError') or member.get('statusStale'):
+            raise ValueError('fleet live status unavailable')
+        if session['status'] not in {'Running', 'Idle', 'Completed', 'Failed', 'Cancelled'}:
+            raise ValueError('unknown session status')
+        key = session['sessionId']
+        found[key] = member
+        if selector == lane['fleets'][0] and key not in {m['session']['sessionId'] for m in first}:
+            first.append(member)
 
 
 def credit_block(floor):
@@ -266,10 +287,11 @@ def one_pass(state, configured, checkout, credit_floor, dry=False, records=None)
         blocked = credit_block(credit_floor)
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         blocked = 'usage_unavailable: ' + str(error)
+    listing = {}
     for lane in configured:
         briefs = queue(state, lane)
         try:
-            running, first = members(lane)
+            running, first = members(lane, listing)
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
             records.row(lane, '', len(briefs), outcome='fleet_unavailable: ' + str(error))
             continue
