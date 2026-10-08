@@ -1,0 +1,28 @@
+id,ledger_file,ledger_line,ledger_column,ledger_expression,receiver,witness,indexed_read,read_line,read_column,disposition,reason
+D037,src/compiler/checker.ts,12034,30,file.endFlowNode,object array input followed by optional function return,D037.json,declarations[0],6,34,blocked,Type 'SourceFile | undefined' is not assignable to type 'SourceFile'
+D054,src/compiler/checker.ts,17946,29,elementTypes[unionIndex],"readonly object array, variable index",D054.json,elementTypes[unionIndex],5,21,proven minimal read shape,
+D056,src/compiler/checker.ts,19044,25,types[unionIndex],"readonly object array, variable index",D056.json,types[unionIndex],5,21,proven minimal read shape,
+D057,src/compiler/checker.ts,20595,32,targets[i],"readonly callable array, loop index",D057.json,targets[i],6,27,proven minimal read shape,
+D060,src/compiler/checker.ts,22498,29,reportError(...stack[0]),"array of variadic tuples, constant zero",D060-D061.json,stack[0],5,39,proven minimal read shape,
+D061,src/compiler/checker.ts,22498,32,stack[0],"array of variadic tuples, constant zero",D060-D061.json,stack[0],5,39,proven minimal read shape,
+D067,src/compiler/checker.ts,38430,64,"getTupleElementLabel(associatedName, index, elementFlags, restParameter)","object field containing number array, subtraction index",D067.json,tupleType.elementFlags[index],7,23,proven minimal read shape,
+D068,src/compiler/checker.ts,42849,65,getConstraintOfTypeParameter(relevantTypeParameter),"readonly object array, position local",D068.json,typeParameters[typeArgumentPosition],5,31,proven minimal read shape,
+D069,src/compiler/checker.ts,43517,20,typeAsPromise.promisedTypeOfPromise,"returned readonly object array, constant zero",D069.json,getTypeArguments(type)[0],6,39,proven minimal read shape,
+D071,src/compiler/checker.ts,46114,128,"resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)","returned readonly object array, three-element destructuring",D071.json,getTypeArguments(type),5,43,blocked,destructuring anything but a tuple into [names]
+D072,src/compiler/checker.ts,46114,208,"resolver.resolveIterationType(returnType, /*errorNode*/ undefined)","returned readonly object array, three-element destructuring",D072.json,getTypeArguments(type),5,43,blocked,destructuring anything but a tuple into [names]
+D073,src/compiler/checker.ts,46128,128,"resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)","returned readonly object array, one-element destructuring",D073.json,getTypeArguments(type),5,21,blocked,destructuring anything but a tuple into [names]
+D077,src/compiler/checker.ts,50153,121,copy.declarations,"object field containing object array, constant zero",D077.json,copy.declarations[0],4,21,proven minimal read shape,
+D082,src/compiler/checker.ts,52426,13,parameter.dotDotDotToken,"NodeArray object field, constant zero",D082.json,node.parameters[0],4,19,proven minimal read shape,
+D083,src/compiler/checker.ts,52427,39,parameter.dotDotDotToken,"NodeArray object field, constant zero",D083.json,node.parameters[0],4,19,proven minimal read shape,
+D084,src/compiler/checker.ts,52429,35,hasEffectiveModifiers(parameter),"NodeArray object field, constant zero",D084.json,node.parameters[0],4,19,proven minimal read shape,
+D085,src/compiler/checker.ts,52430,39,parameter.name,"NodeArray object field, constant zero",D085.json,node.parameters[0],4,19,proven minimal read shape,
+D086,src/compiler/checker.ts,52432,13,parameter.questionToken,"NodeArray object field, constant zero",D086.json,node.parameters[0],4,19,proven minimal read shape,
+D087,src/compiler/checker.ts,52433,39,parameter.questionToken,"NodeArray object field, constant zero",D087.json,node.parameters[0],4,19,proven minimal read shape,
+D088,src/compiler/checker.ts,52435,13,parameter.initializer,"NodeArray object field, constant zero",D088.json,node.parameters[0],4,19,proven minimal read shape,
+D089,src/compiler/checker.ts,52436,39,parameter.name,"NodeArray object field, constant zero",D089.json,node.parameters[0],4,19,proven minimal read shape,
+D090,src/compiler/checker.ts,52438,14,parameter.type,"NodeArray object field, constant zero",D090.json,node.parameters[0],4,19,proven minimal read shape,
+D091,src/compiler/checker.ts,52439,39,parameter.name,"NodeArray object field, constant zero",D091.json,node.parameters[0],4,19,proven minimal read shape,
+D092,src/compiler/checker.ts,52441,42,parameter.type,"NodeArray object field, constant zero",D092.json,node.parameters[0],4,19,proven minimal read shape,
+D093,src/compiler/checker.ts,52443,39,parameter.name,"NodeArray object field, constant zero",D093.json,node.parameters[0],4,19,proven minimal read shape,
+D094,src/compiler/checker.ts,52446,39,parameter.name,"NodeArray object field, constant zero",D094.json,node.parameters[0],4,19,proven minimal read shape,
+D095,src/compiler/checker.ts,5311,45,merged,"mutable object array, property index",D095.json,mergedSymbols[symbol.mergeId],5,21,proven minimal read shape,
