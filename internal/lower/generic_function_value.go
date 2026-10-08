@@ -15,16 +15,10 @@ import (
 func instantiateSignatureInContextOf(receiver *checker.Checker, signature *checker.Signature, contextual *checker.Signature, inference *checker.InferenceContext, compare checker.TypeComparer) *checker.Signature
 
 func (l *lowering) genericFunctionValue(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
-	contextual := l.concrete(l.checker.GetContextualType(node, checker.ContextFlagsNone))
-	if contextual == nil {
+	resolved := l.contextualGenericSignature(node, l.checker.GetSignatureFromDeclaration(declaration))
+	if resolved == nil {
 		return nil, l.notYet(node, "a generic function value without a concrete contextual signature")
 	}
-	signatures := l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
-	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {
-		return nil, l.notYet(node, "a generic function value without one concrete contextual signature")
-	}
-	target := l.checker.GetSignatureFromDeclaration(declaration)
-	resolved := instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)
 	index, err := l.instantiateFunctionSignature(node, declaration, resolved)
 	if err != nil {
 		return nil, err
@@ -130,4 +124,49 @@ func (l *lowering) genericFunctionIdentityNew(node *ast.Node) error {
 		return l.notYet(node, "function identity observation in a program with specialized generic function values")
 	}
 	return nil
+}
+
+// Context belongs to the operand itself. The checker propagates it through
+// conditional/logical expressions and parentheses; lowering need not infer it
+// by climbing the syntax tree or borrowing the other operand's signature.
+func (l *lowering) contextualGenericSignature(node *ast.Node, target *checker.Signature) *checker.Signature {
+	contextual := l.concrete(l.checker.GetContextualType(node, checker.ContextFlagsNone))
+	if contextual == nil || target == nil {
+		return nil
+	}
+	signatures := l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), checker.SignatureKindCall)
+	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {
+		return nil
+	}
+	return instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)
+}
+
+//go:linkname typeFromSignature github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getOrCreateTypeFromSignature
+func typeFromSignature(receiver *checker.Checker, signature *checker.Signature) *checker.Type
+
+func (l *lowering) contextualGenericType(node *ast.Node, own *checker.Type) *checker.Type {
+	signatures := l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
+	if len(signatures) != 1 || len(signatures[0].TypeParameters()) == 0 {
+		return own
+	}
+	if resolved := l.contextualGenericSignature(node, signatures[0]); resolved != nil {
+		return typeFromSignature(l.checker, resolved)
+	}
+	return own
+}
+
+// Functions are truthy exactly when their nullable pointer is present. Reuse
+// the IR's lazy branches, so neither operand is evaluated twice or eagerly.
+func (l *lowering) functionLogical(node *ast.Node, left, right ir.Expression) (ir.Expression, bool) {
+	operator := node.AsBinaryExpression().OperatorToken.Kind
+	if left.Type() != ir.Closure || (right.Type() != ir.Closure) {
+		return nil, false
+	}
+	if operator == ast.KindBarBarToken {
+		return ir.Coalesce{Value: left, Fallback: fit(right, ir.Closure), Of: ir.Closure}, true
+	}
+	if operator == ast.KindAmpersandAmpersandToken {
+		return ir.Conditional{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: left}}, WhenTrue: fit(right, ir.Closure), WhenNot: ir.Undefined{Of: ir.Closure}, Of: ir.Closure}, true
+	}
+	return nil, false
 }

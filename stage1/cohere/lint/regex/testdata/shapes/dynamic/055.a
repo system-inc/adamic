@@ -1,0 +1,15 @@
+// react/boolean_prop_naming.go:182; settings.Rule
+import { observe } from '../observe.a';
+const pattern = "^(is|has)[A-Z]";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "isA", 4);
+observe(regex, "xisA", 5);
+observe(regex, "isA\n", 6);
+observe(regex, "isDeclarationFileName", 7);
+observe(regex, "isExternalOrCommonJsModule", 8);
+observe(regex, "isGlobalScopeAugmentation", 9);

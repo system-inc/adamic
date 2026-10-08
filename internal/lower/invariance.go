@@ -124,6 +124,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			}
 			return l.widened(source, target, visited)
 		}
+		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
+			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
@@ -471,8 +474,13 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			// its name, so each element is the view, seen as its name's type, and the pattern isn't one.
 			return l.refuseElementWidening(node, pattern)
 		}
+		// Conditional and logical operands inherit a context even though they
+		// are not direct assignment sites. Query the checker before using the
+		// expression's uninstantiated inferred type as an implied target.
 		if viewSite(node) {
 			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		} else if candidate := l.checker.GetContextualType(node, checker.ContextFlagsNone); candidate != nil && len(l.checker.GetSignaturesOfType(l.withoutUndefined(candidate), checker.SignatureKindCall)) > 0 {
+			contextual = candidate
 		}
 		if contextual == nil {
 			// With no type written for it, a value can still be taken into a wider one tsc made: the
@@ -527,6 +535,7 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	own = l.contextualGenericType(node, own)
 	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
 	// It cannot write a value into the contextual slot, including a closed string-enum slot.
 	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
@@ -626,10 +635,9 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	case ast.KindBinaryExpression:
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
-			// A returned fallback may infer a mutable array even when its
-			// destination exposes only a readonly view. Judge the branch against
-			// that actual destination; an inferred mutable local still has none.
-			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+			// Arrays and generic callable operands inherit the actual destination
+			// instead of an inferred mutable array or an unbound generic result.
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && (l.checker.IsArrayType(l.withoutUndefined(contextual)) || len(l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), checker.SignatureKindCall)) > 0) {
 				return contextual
 			}
 			return l.checker.GetTypeAtLocation(parent)

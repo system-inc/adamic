@@ -684,6 +684,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if lowered, handled := l.functionLogical(node, left, right); handled {
+			return lowered, nil
+		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			if text, known, err := l.dateStringAddition(node, left, right); known {
 				return text, err

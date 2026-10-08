@@ -1,0 +1,45 @@
+function identity<T>(x: T): T { return x; }
+function lower(x: string): string { return x.toLowerCase(); }
+function choose(b: boolean): (x: string) => string { return b ? identity : lower; }
+function parenthesized(b: boolean): (x: string) => string { return ((b ? ((identity)) : ((lower)))); }
+function nested(a: boolean, b: boolean): (x: string) => string { return a ? (b ? identity : lower) : lower; }
+function orFallback(f: ((x: string) => string) | undefined): (x: string) => string { return f || identity; }
+function nullishFallback(f: ((x: string) => string) | undefined): (x: string) => string { return f ?? (identity); }
+console.log(choose(true)('KIRK'));
+console.log(choose(false)('KIRK'));
+console.log(parenthesized(true)('AHRA'));
+console.log(parenthesized(false)('AHRA'));
+console.log(nested(true, true)('NESTED'));
+console.log(nested(true, false)('NESTED'));
+console.log(nested(false, true)('NESTED'));
+console.log(orFallback(undefined)('OR'));
+console.log(orFallback(lower)('OR'));
+console.log(nullishFallback(undefined)('NULLISH'));
+console.log(nullishFallback(lower)('NULLISH'));
+
+function andFallback(f: ((x: string) => string) | undefined): ((x: string) => string) | undefined { return f && identity; }
+const absent = andFallback(undefined);
+console.log(absent === undefined ? 'absent' : absent('AND'));
+const present = andFallback(lower);
+console.log(present === undefined ? 'absent' : present('AND'));
+let evaluations = 0;
+let fallbacks = 0;
+function observed(b: boolean): ((x: string) => string) | undefined {
+ evaluations++;
+ return b ? lower : undefined;
+}
+function fallback(): (x: string) => string {
+ fallbacks++;
+ return identity;
+}
+console.log((observed(true) || fallback())('FIRST'));
+console.log((observed(false) || fallback())('SECOND'));
+console.log((observed(true) ?? fallback())('THIRD'));
+console.log((observed(false) ?? fallback())('FOURTH'));
+const andMissing = observed(false) && fallback();
+console.log(andMissing === undefined ? 'missing' : andMissing('FIFTH'));
+const andPresent = observed(true) && fallback();
+console.log(andPresent === undefined ? 'missing' : andPresent('SIXTH'));
+console.log(`${evaluations},${fallbacks}`);
+function chooseNumber(b: boolean): (x: number) => number { return b ? identity : (x) => x + 1; }
+console.log(`${chooseNumber(true)(40)},${chooseNumber(false)(40)}`);
