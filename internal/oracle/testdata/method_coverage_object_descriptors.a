@@ -1,0 +1,16 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
+const own = Object.prototype.hasOwnProperty;
+const enumerable = Object.prototype.propertyIsEnumerable;
+function declared(): number {
+    return 1;
+}
+const arrow = (): number => 2;
+for(const key of ['length', 'name', 'prototype', 'x']) {
+    console.log(`${own.call(declared, key)} ${own.apply(arrow, [key])} ${enumerable.call(declared, key)}`);
+}
+for(const key of ['length', '0', '1', '2', '01', '-0', '1x', '1.5']) {
+    console.log(`${own.apply('🌍', [key])} ${enumerable.call('🌍', key)} ${own.call([true, false], key)}`);
+}
+console.log(
+    `${own.call(1, 'x')} ${own.call(true, 'x')} ${own.call(new Map<string, number>(), 'size')} ${enumerable.call(new Set<number>(), 'size')}`,
+);

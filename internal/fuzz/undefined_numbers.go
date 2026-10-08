@@ -23,7 +23,7 @@ import (
 const interfaceOmittedOptional = "interface-omitted-optional"
 
 // optionalFieldWrite is the opt-in that writes an optional field an object was made without, then
-// reads it: native panics that a field the checker proved is there is missing.
+// reads it: stage 0 refuses that write until optional presence lands (#r3chqza).
 const optionalFieldWrite = "optional-field-write"
 
 // OptIn are the features the generator leaves out unless asked for by name: shapes stage 0 is known
@@ -215,12 +215,6 @@ func (g *generator) undefinedNumbersProgram() []*Statement {
 			statement("const record: MaybeRecord = value === undefined ? {} : { slot: value };"),
 			statement("return record.slot;"),
 		)),
-		// The record made without the field, which is written later.
-		statement("function maybeRecordWrite(value: number | undefined): number | undefined @b", maybeBlock(
-			statement("const record: MaybeRecord = {};"),
-			statement("if (value !== undefined) @b", maybeBlock(statement("record.slot = value;"))),
-			statement("return record.slot;"),
-		)),
 		// The arrays the built-ins' callbacks run over, made through a call of their own.
 		statement("function maybePair(first: number | undefined, second: number | undefined): (number | undefined)[] @b", maybeBlock(statement("return [first, second];"))),
 		statement("const maybeArrow = (value: number | undefined): number | undefined => value;"),
@@ -237,6 +231,15 @@ func (g *generator) undefinedNumbersProgram() []*Statement {
 			statement("if (Number.isNaN(value)) @b", maybeBlock(statement("return -2000;"))),
 			statement("return Math.max(-1000, Math.min(1000, value));"),
 		)),
+	}
+	// The record made without the field, which is written later. Stage 0 refuses that write until
+	// optional presence lands, so the function is declared only when its opt-in calls it.
+	if g.with[optionalFieldWrite] {
+		parts = append(parts, statement("function maybeRecordWrite(value: number | undefined): number | undefined @b", maybeBlock(
+			statement("const record: MaybeRecord = {};"),
+			statement("if (value !== undefined) @b", maybeBlock(statement("record.slot = value;"))),
+			statement("return record.slot;"),
+		)))
 	}
 	shapes := g.maybeShapes()
 	for range 6 + g.random.IntN(8) {

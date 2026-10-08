@@ -6,7 +6,12 @@ import "github.com/system-inc/adamic/internal/ir"
 // for their reachability until the cycle finder has a more precise model of reflected keys and
 // the current closure: operands escape, results are outside, and parameters are clobbered.
 func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
-	switch expression.(type) {
+	if value, known := a.typedArray(expression); known {
+		return value, true
+	}
+	switch expression := expression.(type) {
+	case ir.NodeBufferCall:
+		return a.nodeBufferCall(expression), true
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return a.call(a.operands(expression), expression.Type()), true
 	}

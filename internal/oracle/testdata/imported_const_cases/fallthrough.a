@@ -1,0 +1,19 @@
+import { NUMBER, NEGATIVE, WORD, OTHER } from './constants.a';
+function numeric(value: number): string {
+	switch (value) {
+		case NUMBER:
+		case NEGATIVE:
+			return 'numeric group';
+		default: return 'other';
+	}
+}
+function text(value: string): string {
+	switch (value) {
+		case WORD:
+		case OTHER:
+			return 'string group';
+		default: return 'other';
+	}
+}
+console.log(`${numeric(17)} ${numeric(-2)} ${numeric(99)}`);
+console.log(`${text('alpha')} ${text('beta')} ${text('other')}`);
