@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-54 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+58 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -299,3 +299,37 @@ full IR 27.981s, uncached filtered oracle 82.549s, vet exit 0. All sixteen
 backend mutants are verified in the final log (12 incoming, 4 optional-policy
 rollbacks); all eleven source controls pass. The same sole parent predicate
 fixture exclusion remains. Full repository/census reruns are not claimed.
+
+## Lazy owner nullish and callable follow-up, October 8
+
+Priority tip 36de78996 is integrated before lane 4b f4e5993e. Two conflicted
+hunks are reconciled individually, with no whole-file or strategy selection.
+The interface_cast.go read guard retains both nullable/callable exemptions and
+objectPrimitiveViewType while preserving accessor refusal and owner family
+naming. The object.go slotless guard retains both null-containing unions and
+object-plus-primitive unions. Nullable Map reads remain named collection refusals.
+
+Overlapping auto-merged dispatch needed explicit reconciliation: JavaScript's
+object-primitive dispatcher excludes Nullish reads; readObjectField marks
+nullish metadata only when the object-primitive adapter is not the matching
+contract. This prevents the broad nullish mask from replacing finite primitive
+membership selection for true|Node|undefined. Owner nullish matrix and callable
+signature controls prove the new path; lane4b node-indicator-false,
+optional-absent, optional-receiver and required-missing prove retained behavior.
+Source producers, readiness, narrowed-kind checks and distinct null/undefined
+identities remain owner behavior. No asserted type supplies a producer fact.
+
+Validation uses the standard focused lower/native/JavaScript filter (plus
+TestRecordsAgainstNode), full internal/ir, uncached filtered Node oracle and
+full vet. The sole exclusion remains library_array_holes_callbacks.a, reproduced
+on the parent as recorded above. No complete repository or census rerun is claimed.
+
+Owner nullish gates pass: lower 11.092s, native 40.954s, JavaScript 1.298s,
+full IR 21.062s, uncached filtered oracle 115.168s, vet exit 0. Four independent
+implementation mutations were executed and restored: collapse-null is caught
+by number-both Node output, allow-forbidden-undefined by number-null-opposite's
+exit-70 pin, skip-kind by string-both-wrong's named field refusal, and
+skip-callable-proof by the callable-signature-mutant read refusal. Every mutant
+fails an executed oracle assertion, with no build failure; individual logs and
+the runner summary are preserved. Source wrong/missing/opposite/nested fixtures
+also run in the standard oracle, distinct from these implementation mutants.

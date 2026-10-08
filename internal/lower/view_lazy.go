@@ -15,6 +15,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 && l.includesNull(target) {
+		return l.nullishViewContract(node, target)
+	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
@@ -52,8 +55,6 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
 		return "intersection"
-	case flags&checker.TypeFlagsNull != 0:
-		return "nullish"
 	case isClassInstance(target):
 		return "nominal class"
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):

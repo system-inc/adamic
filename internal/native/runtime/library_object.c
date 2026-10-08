@@ -20,7 +20,7 @@ bool adamic_object_is(const adamic_heap *left, const adamic_heap *right) {
 bool adamic_object_is_frozen(const adamic_heap *value) {
  if (value == NULL) return true;
  if (value->kind == adamic_kind_object) return ((const adamic_object *)value)->frozen;
- return value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
+ return value->kind == adamic_kind_null || value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
 }
 
 adamic_object *adamic_object_freeze(adamic_object *object) {
