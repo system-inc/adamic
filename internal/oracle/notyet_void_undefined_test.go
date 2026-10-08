@@ -12,7 +12,7 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
-	}{"internal/oracle/testdata/notyet_void_undefined_mixed.a", false, false})
+	}{"internal/oracle/testdata/notyet_call_boundaries/notyet_void_undefined_mixed.a", false, false})
 	for _, path := range []string{
 		"internal/oracle/testdata/notyet_void_undefined_push.a",
 		"internal/oracle/testdata/notyet_void_undefined_pop.a",
@@ -28,7 +28,7 @@ func init() {
 // access adds undefined to the call type without erasing the number on Node.
 func TestOptionalVoidValueStillNotYet(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_void_undefined_value.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_call_boundaries/notyet_void_undefined_value.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

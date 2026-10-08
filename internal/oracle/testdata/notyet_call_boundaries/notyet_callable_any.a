@@ -1,0 +1,13 @@
+interface TimerHost {
+    readonly setTimeout: (callback: () => void, interval: number) => any;
+}
+function schedule(host: TimerHost): void {
+    host.setTimeout((): void => { console.log('tick'); }, 1);
+}
+const host: TimerHost = {
+    setTimeout: (callback: () => void, interval: number): number => {
+        callback();
+        return interval;
+    },
+};
+schedule(host);

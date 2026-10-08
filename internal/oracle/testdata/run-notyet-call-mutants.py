@@ -30,6 +30,9 @@ cases = [
     ("nullable-signature", "l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression))",
      "l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)",
      "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_union_callable_adapter", "Lower:"),
+    ("accept-any-return", 'return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))',
+     'if result.Flags()&checker.TypeFlagsAny != 0 { returns = ir.Number } else { return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result)) }',
+     "TestCallableAnyResultStaysNotYet", "want the unrepresented any return stop"),
     ("ignore-generic-substitution", "if returns, isKnown = l.representation(result); !isKnown {",
      "if returns, isKnown = l.representation(result); !isKnown || result.Flags()&checker.TypeFlagsTypeParameter != 0 {",
      "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_callable_type_parameter", "a call returning T"),
@@ -53,7 +56,7 @@ try:
     source.write_text(original)
     for name, before, after, selector, catcher in [
         ("accept-mixed-void", "if member.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) == 0 {", "if false {",
-         "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_void_undefined_mixed", "want stage 0 to refuse"),
+         "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_call_boundaries/notyet_void_undefined_mixed", "want stage 0 to refuse"),
     ]:
         if before not in original_helper:
             raise RuntimeError(f"{name}: mutation target absent")

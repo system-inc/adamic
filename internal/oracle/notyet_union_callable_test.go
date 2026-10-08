@@ -7,8 +7,8 @@ import (
 
 func init() {
 	for _, path := range []string{
-		"internal/oracle/testdata/notyet_union_callable_name.a",
-		"internal/oracle/testdata/notyet_union_callable_location.a",
+		"internal/oracle/testdata/notyet_call_boundaries/notyet_union_callable_name.a",
+		"internal/oracle/testdata/notyet_call_boundaries/notyet_union_callable_location.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string
@@ -33,10 +33,10 @@ func init() {
 func TestUnionCallableSourceObservations(t *testing.T) {
 	t.Parallel()
 	for fixture, expected := range map[string]string{
-		"notyet_union_callable_name.a":             "name1\nnode2\n",
-		"notyet_union_callable_location.a":         "1:3\n2:3\nmissing:3\n",
-		"notyet_union_callable_adapter.a":          "name1\nnode2\nmissing\ndirect3\nmissing\n",
-		"notyet_union_callable_adapter_location.a": "1:3\n2:3\nmissing:3\nno resolver\n4:5\nno resolver\n",
+		"notyet_call_boundaries/notyet_union_callable_name.a":     "name1\nnode2\n",
+		"notyet_call_boundaries/notyet_union_callable_location.a": "1:3\n2:3\nmissing:3\n",
+		"notyet_union_callable_adapter.a":                         "name1\nnode2\nmissing\ndirect3\nmissing\n",
+		"notyet_union_callable_adapter_location.a":                "1:3\n2:3\nmissing:3\nno resolver\n4:5\nno resolver\n",
 	} {
 		t.Run(fixture, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
