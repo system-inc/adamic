@@ -93,11 +93,6 @@ static bool valid_index(const adamic_typed_array *array, double index) {
 	return index >= 0 && index < (double)array->length && index == trunc(index);
 }
 
-adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {
-	if (!valid_index(array, index)) { return (adamic_maybe_number){false, 0}; }
-	return (adamic_maybe_number){true, read_element(array, (size_t)index)};
-}
-
 void adamic_typed_array_check_write(const adamic_typed_array *array, double index) {
 	if (!valid_index(array, index)) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
@@ -108,7 +103,7 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
 	}
 }
 
-void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
+void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value) {
 	adamic_typed_array_check_write(array, index);
 	write_element(array, (size_t)index, value);
 }

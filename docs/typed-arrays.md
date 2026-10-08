@@ -15,9 +15,9 @@ string sharing, even short or empty subarrays are views, never copies.
 |---|---|
 | `adamic_typed_array_new(kind, length)` | Owned, zero-filled; JavaScript ToIndex of length, with RangeError panic for invalid length |
 | `adamic_typed_array_from_numbers(kind, numbers)` | Owned; borrowed plain number[] copied with element conversion |
-| `adamic_typed_array_get(array, index)` | Present number at an existing integer index; absent (`present = false`, number initialized to 0) otherwise; numeric -0 addresses index 0 |
+| `adamic_typed_array_get(array, index)` | Inline in adamic.h. Present number at an existing integer index; absent (`present = false`, number initialized to 0) otherwise; numeric -0 addresses index 0 |
 | `adamic_typed_array_check_write(array, index)` | Compiler write check; rejects absent indexes |
-| `adamic_typed_array_set(array, index, value)` | Checks index itself, then converts and writes |
+| `adamic_typed_array_set(array, index, value)` | Inline in adamic.h: an in-bounds whole index with a value already in the kind's range stores directly; anything else calls `adamic_typed_array_set_slow`, which checks the index itself, then converts and writes |
 | `adamic_typed_array_length(array)` | Element count as double |
 | `adamic_typed_array_fill(array, value, start, end, has_start, has_end)` | Converts value, uses relative clamped indexes; returns borrowed self |
 | `adamic_typed_array_set_from(array, source, offset, has_offset)` | Same kind only; offset defaults to 0, ToIntegerOrInfinity, negative or insufficient room panics with RangeError; overlap behaves as a temporary copy |
