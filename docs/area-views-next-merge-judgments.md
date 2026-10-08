@@ -111,3 +111,74 @@ optional_checked_test.go updates only exact optional-read diagnostics to the adm
 The current compiler's a-check passed the three new approved fixtures: array-record-cycle and logical-string-null refused their exact named rules; boxed-optional checked. This is a three-file control, not a green claim for the full 2980-file audit. The new stage3 run passed 625 frames and reproduces only the same three inherited host Checker records in 50.789 seconds.
 
 The full oracle started before the 34c20abb merge and later test repairs, and finished red in 1952.661 seconds: 5147 passing frames and 427 failed frames. It is not a completed validation of the later tree. The requested 4885cec5 comparison of additional failure families found only TestUnknownNarrowingMutants present; its two mutants passed in 0.558 seconds. Process and regexp-surrogate suites are absent from that base and their failures are not called inherited. Current unknown-narrowing skip-inner-typeof stops at an inserted check, while its stale mutant expectation demands only a stdout difference; no expectation change is applied to it here. Judgments 24 through 27 and explicit approval of the 86 named cycle expectations remain pending.
+
+## Review artifacts on e3440508 plus f0c6e6fc
+
+Judgments 24 through 27 remain proposals. The 86 individual cycle proposals and exact measured Node observations are in [area-views-next-cycle-updates.json](area-views-next-cycle-updates.json). No production lowering or cycle expectation update is made by these review artifacts. Baseline 4885cec5 evidence below is distinguished from the new f0c6e6fc comparison in area-views-next-failure-comparison.json.
+
+### Judgment 24: internal/lower/collections.go
+
+Area record: The configured 4885cec5 candidate lowered these ordinary Union-valued Map.forEach fixtures and native output agreed with Node. The candidate path uses the existing boxed callback adapter.
+
+Views record: The added views slotless-value guard stops each fixture before callback lowering: stage 0 can't lower a Map forEach callback with a slotless value representation yet.
+
+Proposal: Use the existing ordinary boxed Map callback adapter only when no checked-view value contract is erased. Preserve dynamic descriptor checks and unknown-signature/callback refusals, including entry-live-mutation.a.
+
+Reason: Union storage alone does not erase a checked-view contract. The ordinary adapter already agrees with Node; its admission must remain separate from certified checked-view callbacks.
+
+Fixtures and measured Node observations (exit 0, empty stderr):
+
+- `internal/oracle/testdata/host_map_union.a`: stdout `"1 x undefined\none:0:number\ntext::string\nnew:new:string\nvalue:0:number\nvalue::string\nvalue:new:string\ncopy:one:0\ncopy:text:\ncopy:new:new\nvisit:one:0:9\nvisit:text::9\nvisit:new:new:9\nafter:one:9\nafter:text:9\nafter:new:9\nfalse undefined\nfalse:false:boolean\nmissing:undefined:undefined\nzero:0:number\ntext:x:string\ntrue undefined undefined\n"`.
+- `internal/oracle/testdata/host_map_generic_union.a`: stdout `"true false undefined\n0 \none:0:number\ntwo::string\nvalue:0:number\nvalue::string\nvisit:one:0\nvisit:two:\nfirst:one:0\ntrue false undefined\n7 8\none:7:number\ntwo:8:number\nvalue:7:number\nvalue:8:number\nvisit:one:7\nvisit:two:8\nfirst:one:7\n"`.
+- `internal/oracle/testdata/host_map_iterator_union.a`: stdout `"entry:one:1:number\nentry:text:x:string\nkey:one\nkey:text\nvalue:1:number\nvalue:x:string\nmap:one:1:number\nmap:text:x:string\nvisit:one:1:number\nvisit:text:x:string\nentry:one:0:number\nentry:text::string\nkey:one\nkey:text\nvalue:0:number\nvalue::string\nmap:one:0:number\nmap:text::string\nvisit:one:0:number\nvisit:text::string\nentry:zero:0:number\nentry:empty::string\nentry:false:false:boolean\nentry:missing:undefined:undefined\nkey:zero\nkey:empty\nkey:false\nkey:missing\nvalue:0:number\nvalue::string\nvalue:false:boolean\nvalue:undefined:undefined\nmap:zero:0:number\nmap:empty::string\nmap:false:false:boolean\nmap:missing:undefined:undefined\nvisit:zero:0:number\nvisit:empty::string\nvisit:false:false:boolean\nvisit:missing:undefined:undefined\nlive:one:0\nlive:text:\nlive:later:3\nnext:0\nremaining:\nremaining:3\n"`.
+
+Required controls after approval: the named positive witnesses must agree with Node; existing negative boundaries must still refuse. No changed lowering is authorized by this ledger entry.
+
+### Judgment 25: internal/lower/detached_own.go
+
+Area record: The configured 4885cec5 candidate lowered const aliases of Object.prototype.hasOwnProperty called through .apply with a literal single-key tuple; native agreed with Node.
+
+Views record: The views upfront detached-own guard permits .call only and refuses .apply: Adamic 0.1 refuses detached Object.prototype.hasOwnProperty; bind it to a const and use only .call(target, key), or use that call directly. The fixture failures occur at library_method_values.a:26:41 and method_coverage_object_descriptors.a:9:47.
+
+Proposal: Retain the existing intrinsic adapter only for proven const aliases and literal one-key argument tuples. Keep receiver/key evaluation order, and refuse escaping aliases, unknown signatures and unsupported receiver shapes.
+
+Reason: This preserves the independently proven intrinsic call path without admitting arbitrary function values or widening views calling-convention boundaries.
+
+Fixtures and measured Node observations (exit 0, empty stderr):
+
+- `internal/oracle/testdata/library_method_values.a`: stdout `"0 2 2\n2 0 true\n2|1\n1|2|1|NaN\nhello\nbcd\n[]\ntrue false true\ntrue false true\n[object Object] [object Array] [object Number] [object String] [object Boolean]\n12 255 5 1.25\n1|0|NaN|Infinity\ntrue|false\n10|NaN|2|3|4\n10|NaN|2\n1.25|2.5\n1 rsp\nhello  changed\nsaved\nsaved|saved\nSTRASSE\n1.3 1 ff 42\n4 5\nAB\n42\n0 0\n[object Array]\n1\n[object Null]\n3 3\n3|2|1\nx  \nx\ntrue false\n2 rs\nx|undefined|y\n"`.
+- `internal/oracle/testdata/method_coverage_object_descriptors.a`: stdout `"true true false\ntrue true false\ntrue false false\nfalse false false\ntrue false true\ntrue true true\ntrue true true\nfalse false false\nfalse false false\nfalse false false\nfalse false false\nfalse false false\nfalse false false false\n"`.
+
+Required controls after approval: the named positive witnesses must agree with Node; existing negative boundaries must still refuse. No changed lowering is authorized by this ledger entry.
+
+### Judgment 26: internal/lower/records.go
+
+Area record: The configured 4885cec5 candidate lowered Object.values(object) through the existing fixed-object intrinsic path; native agreed with Node.
+
+Views record: Views contextual storage conversion stops method_coverage_object_statics.a:12:20: stage 0 can't lower a { '2': number; x: number; '1': number; } seen as ArrayLike<number> | { [s: string]: number; } (fixed objects and records have different storage; copy explicitly) yet.
+
+Proposal: Retain the existing fixed-object Object.values intrinsic path without converting the object to Record. Keep every ordinary fixed-object/Record storage-cast refusal.
+
+Reason: Object.values already consumes the fixed object directly and preserves Node key order. Avoiding an incidental contextual storage cast does not authorize that cast for ordinary storage.
+
+Fixtures and measured Node observations (exit 0, empty stderr):
+
+- `internal/oracle/testdata/method_coverage_object_statics.a`: stdout `"true false\ntrue false true\n1|2|x\n1|2|3\n1=1\n2=2\nx=3\n"`.
+
+Required controls after approval: the named positive witnesses must agree with Node; existing negative boundaries must still refuse. No changed lowering is authorized by this ledger entry.
+
+### Judgment 27: internal/lower/census_small.go; internal/lower/phantom_overload_results.go
+
+Area record: The configured 4885cec5 candidate lowered the certified direct overload whose implementation ignores an extra actual argument; native agreed with Node. next() still runs for that ignored argument.
+
+Views record: Views stops census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet. TestCensusOverloadRelation also requires this certified path.
+
+Proposal: Keep the existing certified direct-overload path and evaluate all actual arguments in source order before discarding extras. Preserve implementation/overload relation proofs and every callback/refused overload boundary.
+
+Reason: The ignored argument has observable side effects. Node prints 2:2 after fixed('xx', next()), proving the second next() ran; dropping evaluation would silently change defaults from 2 to 1.
+
+Fixtures and measured Node observations (exit 0, empty stderr):
+
+- `internal/oracle/testdata/census_overload_contracts.a`: stdout `"3\nname\n2:2:1\n2:2\n5\n"`.
+
+Required controls after approval: the named positive witnesses must agree with Node; existing negative boundaries must still refuse. No changed lowering is authorized by this ledger entry.
