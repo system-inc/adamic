@@ -252,3 +252,54 @@ These controls measure refusals, not implementation of those families.
 After this push the exact production table remains 2,018 pairs/9,101 reads
 awaiting whole-program lowering and reaching-view proof. No site is removed from
 that table on fixture evidence. The complete repository gate remains unrun.
+
+## NodeArray and undefined entry completion, October 8
+
+Integration 267fd75b is merged in fc55836a. Array certificates now retain the
+readonly bit from the inherited array base, not just the interface's own name,
+and compare every target own-field schema with producer evidence. Missing own
+fields are refused even when optional: an erased producer schema cannot prove
+an unknown extra property's type. Own writable fields retain invariance.
+NodeArray values and finite element covariance match Node. Wrong own schemas
+and a readonly source viewed as a writable array stop at node.value. Their
+unread-payload controls prove this is the Map certificate check, not a later
+property or element guard.
+
+Undefined-containing array and structural entries now use their pointer ABI and
+complete optional descriptor. Both controls print true, undefined, 7 on Node and
+all compiled runs. A Map containing undefined-valued arrays cannot certify a
+nonoptional array-entry target. This was proved independently by disabling the
+undefined source-schema guard: the wrong-schema control ran on (exit 0).
+
+Phantom intersections are refused recursively inside Map entry arrays and object
+fields, as well as directly. Finite primitive kind evidence cannot manufacture
+a brand. Two demanded nested-brand controls refuse at node.value; their unread
+twins compile and match Node. Disabling the recursive brand exclusion makes both
+named-refusal assertions fail because lowering admits the read. This mutation
+is an admission failure, not an observed runtime crash.
+
+Four new implementation mutations were independently caught: skip array own-field
+comparison, forget readonly producer restrictions, allow undefined schemas for
+nonoptional entries, and omit nested phantom exclusions. The first three run on
+and print object with exit 0; the fourth admits two forbidden reads. All guards
+were restored before the final checks.
+
+Final commands (outputs retained under evidence/):
+
+```
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewMap|^TestCheckedViewNullableSelection|^TestCheckedViewNodeArray|^TestCheckedViewOptionalArray' -v -count=1 -timeout 10m
+PASS, 34.060s
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract' -count=1 -timeout 10m
+PASS, 0.010s / 4.044s / 31.999s / 0.809s
+go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript
+PASS, no output
+```
+
+Remaining Map entry blockers: null-containing and mixed unions need the Map
+storage ABI beyond slotless Union/MaybeBoolean; callable entries need producer
+implementation/body evidence; tuples need per-position/rest contracts; nominal
+and phantom entries need authorized identity witnesses. Repeated reference-kind
+nullable union alternatives retain their named selector refusal. Production
+inventory stays 2,018 pairs/9,101 reads awaiting whole-program lowering and shared
+reaching-view proof. Ledger checks remain with worker 01a118d0. The whole
+repository gate was not run.

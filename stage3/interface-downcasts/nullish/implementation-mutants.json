@@ -96,5 +96,61 @@
     ],
     "exit": 1,
     "log": "evidence/map-array-mutant.log.gz"
+  },
+  {
+    "mutant": "skip-Map-array-own-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^node-array-own-schema-unused-payload$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nodearray-mutant-skip-own-schema.log.gz"
+  },
+  {
+    "mutant": "skip-Map-readonly-array-source",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^node-array-readonly-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nodearray-mutant-skip-readonly-source.log.gz"
+  },
+  {
+    "mutant": "allow-undefined-Map-array-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^optional-array-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-optional-mutant.log.gz"
+  },
+  {
+    "mutant": "omit-nested-Map-phantom-exclusion",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapEntryFamilyBoundaries$/^nested.*-read$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nested-brand-mutant.log.gz"
   }
 ]

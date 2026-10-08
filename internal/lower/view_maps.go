@@ -54,7 +54,13 @@ func mapEntryContract(contract ir.ViewContract) bool {
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
-	if !l.checker.IsArrayType(target) {
+	if !l.mapEntryTypeProven(target, map[*checker.Type]bool{}) {
+		return 0
+	}
+	present := l.checker.GetNonNullableType(target)
+	array := l.viewArrayBase(present) != nil
+	optionalObject := l.includesUndefined(target) && !l.includesNull(target) && present.Flags()&checker.TypeFlagsObject != 0
+	if !array && !optionalObject {
 		return l.slotContract(node, target)
 	}
 	id, err := l.viewContract(node, target)
@@ -62,4 +68,42 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 		return 0
 	}
 	return id
+}
+
+// A primitive phantom intersection has no runtime nominal witness. Reject it
+// throughout entries, including beneath structural fields or array elements.
+func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Type]bool) bool {
+	target = l.concrete(target)
+	if target.Flags()&checker.TypeFlagsIntersection != 0 || isClassInstance(target) {
+		return false
+	}
+	if seen[target] {
+		return true
+	}
+	seen[target] = true
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if !l.mapEntryTypeProven(member, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if base := l.viewArrayBase(target); base != nil {
+		if !l.mapEntryTypeProven(l.checker.GetElementTypeOfArrayType(base), seen) {
+			return false
+		}
+		for _, field := range l.viewArrayOwnProperties(target, base) {
+			if !l.mapEntryTypeProven(l.checker.GetTypeOfSymbol(field), seen) {
+				return false
+			}
+		}
+	} else if target.Flags()&checker.TypeFlagsObject != 0 {
+		for _, field := range l.checker.GetPropertiesOfType(target) {
+			if !l.mapEntryTypeProven(l.checker.GetTypeOfSymbol(field), seen) {
+				return false
+			}
+		}
+	}
+	return true
 }

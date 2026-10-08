@@ -15,7 +15,7 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 		return 0, l.notYet(node, "a checked tuple view with per-position optional and rest contracts")
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), ArrayReadonly: l.isLibraryType(target, "ReadonlyArray")}
+	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
 	handled, err := l.viewArrayContract(node, target, func(element *checker.Type) error {
