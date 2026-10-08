@@ -36,6 +36,9 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 		}
 		for _, name := range []string{"ArrayBuffer", "DataView", "Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
 			if l.isLibraryType(proven, name) {
+				if l.program.UsesProjectOptions() && l.numericTypedArray(proven) {
+					continue
+				}
 				return l.notYet(node, "typed array facility "+name)
 			}
 		}
@@ -56,6 +59,9 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 		}
 		for _, name := range []string{"Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
 			if l.isLibraryGlobal(made.Expression, name) {
+				if l.program.UsesProjectOptions() && l.numericTypedArray(l.checker.GetTypeAtLocation(node)) {
+					continue
+				}
 				return l.notYet(node, "typed array element type "+name)
 			}
 		}
