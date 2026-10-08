@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/component-compare.py", line 24, in <module>
+    raise RuntimeError('cache integrity failure: ' + name)
+RuntimeError: cache integrity failure: golden.stdout

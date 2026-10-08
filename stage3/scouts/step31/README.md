@@ -1,6 +1,8 @@
 Step 31 scouts the real TypeScript 6.0.3 binder, checker and emitter. The delivered
-implementation is the Node binder observer, its fixtures and process comparator.
-REPORT.md separates measurements from the proposed native harnesses.
+implementations are Node binder, checker and emitter observers, with fixtures,
+mutants and native process comparators. REPORT.md retains the initial research;
+COMPONENTS.md specifies the checker/emitter protocol and changed-input workflow.
+COMPONENTS-REPORT.md records their measured results.
 
 Run after sourcing the environment printed by cloud/setup.sh:
 

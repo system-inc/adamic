@@ -1,0 +1,7 @@
+{"record":"project","format":"adamic-checker-v1","typescript":"6.0.3","id":"checker-chain","options":{"module":"esnext","strict":true,"target":"es2020","types":[]}}
+{"record":"global","diagnostics":[]}
+{"record":"file","path":"checker-use.a","diagnostics":[{"file":"checker-use.a","code":2322,"start":122,"length":6,"category":1,"message":{"message":"Type '{ nested: { value: string; }; }' is not assignable to type 'Shape'.","code":2322,"category":1,"next":[{"message":"The types of 'nested.value' are incompatible between these types.","code":2200,"category":1,"next":[{"message":"Type 'string' is not assignable to type 'number'.","code":2322,"category":1,"next":[]}]}]},"related":[]},{"file":"checker-use.a","code":2345,"start":157,"length":7,"category":1,"message":"Argument of type 'string' is not assignable to parameter of type 'number'.","related":[]}]}
+{"record":"file","path":"checker-values.a","diagnostics":[]}
+{"record":"project","format":"adamic-checker-v1","typescript":"6.0.3","id":"emitter-text","options":{"declaration":true,"declarationMap":true,"module":"commonjs","newLine":"lf","sourceMap":true,"strict":true,"target":"es2015","types":[]}}
+{"record":"global","diagnostics":[]}
+{"record":"file","path":"emitter-text.a","diagnostics":[]}

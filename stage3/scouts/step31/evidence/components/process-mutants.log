@@ -1,0 +1,4 @@
+baseline: exit 0, differences []
+stdout-byte: exit 1, differences ['stdout']
+stderr-byte: exit 1, differences ['stderr']
+exit-byte: exit 1, differences ['exit']

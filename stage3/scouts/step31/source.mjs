@@ -2,7 +2,7 @@
 import {readFileSync, existsSync} from 'node:fs';
 import {registerHooks, createRequire} from 'node:module';
 import {fileURLToPath, pathToFileURL} from 'node:url';
-import {resolve} from 'node:path';
+import {resolve, dirname} from 'node:path';
 const require = createRequire(import.meta.url);
 const stock = require(process.env.STEP31_TYPESCRIPT);
 const {dump} = require('./binder-dump.cjs');
@@ -26,6 +26,12 @@ const api = await import(pathToFileURL(resolve(process.argv[2], 'src/compiler/_n
 if (process.argv[3] === '--probes') {
     const {probes} = require('./piece-probes.cjs');
     console.log(JSON.stringify(probes(api), null, 2));
+} else if (['--checker', '--emitter'].includes(process.argv[3])) {
+    const mode = process.argv[3].slice(2);
+    const {observer} = require('./component-dump.cjs');
+    const compiler = observer(api, dirname(process.env.STEP31_TYPESCRIPT));
+    const request = JSON.parse(readFileSync(process.argv[4], 'utf8'));
+    for (const project of request.projects) process.stdout.write(compiler.observe(project, mode).map(row => JSON.stringify(row)).join('\n') + '\n');
 } else {
     process.stdout.write(dump(api, JSON.parse(readFileSync(process.argv[3], 'utf8'))));
 }

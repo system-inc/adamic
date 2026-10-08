@@ -1,0 +1,164 @@
+{
+  "projects": 6563,
+  "acceptance": 301,
+  "upstream": 6262,
+  "source_matches_stock": {
+    "checker": true,
+    "emitter": true
+  },
+  "native_run": {
+    "checker": false,
+    "emitter": false
+  },
+  "benchmark": {
+    "projects": 6563,
+    "acceptance": 301,
+    "upstream": 6262,
+    "runs": [
+      {
+        "mode": "checker",
+        "run": "full",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs",
+          "/tmp/step31-components-final/projects.json",
+          "/tmp/step31-components-final/benchmark/checker-full"
+        ],
+        "wall_seconds": 19.826385029999983,
+        "driver_seconds": 19.648781018999998,
+        "selected": 6563,
+        "reused": 0,
+        "sha256": "d3c4bbd20d1b60b1c78b8cc58a50f7a9911626c17e2a54536570653afc94b4dc",
+        "bytes": 7374390,
+        "records": 19691,
+        "diagnostics": 20274,
+        "output_files": 0,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 4.224763928000003,
+        "upstream_compile_seconds": 14.889190663000045
+      },
+      {
+        "mode": "checker",
+        "run": "unchanged",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs",
+          "/tmp/step31-components-final/projects.json",
+          "/tmp/step31-components-final/benchmark/checker-unchanged",
+          "--previous",
+          "/tmp/step31-components-final/benchmark/checker-full",
+          "--changed-only"
+        ],
+        "wall_seconds": 0.3147298909998426,
+        "driver_seconds": 0.25025739399999997,
+        "selected": 0,
+        "reused": 6563,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "records": 0,
+        "diagnostics": 0,
+        "output_files": 0,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 0.0,
+        "upstream_compile_seconds": 0.0
+      },
+      {
+        "mode": "checker",
+        "run": "one-change",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs",
+          "/tmp/step31-components-final/benchmark/changed.json",
+          "/tmp/step31-components-final/benchmark/checker-one-change",
+          "--previous",
+          "/tmp/step31-components-final/benchmark/checker-unchanged",
+          "--changed-only"
+        ],
+        "wall_seconds": 1.0209990889998153,
+        "driver_seconds": 0.9336468309999999,
+        "selected": 1,
+        "reused": 6562,
+        "sha256": "42906092111169fb19b748cc8495a4b4a980597a6c60c614be5310181f0c6592",
+        "bytes": 646,
+        "records": 5,
+        "diagnostics": 2,
+        "output_files": 0,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 0.680644821,
+        "upstream_compile_seconds": 0.0
+      },
+      {
+        "mode": "emitter",
+        "run": "full",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/emitter-dump.cjs",
+          "/tmp/step31-components-final/projects.json",
+          "/tmp/step31-components-final/benchmark/emitter-full"
+        ],
+        "wall_seconds": 22.157212892999723,
+        "driver_seconds": 22.008853743,
+        "selected": 6563,
+        "reused": 0,
+        "sha256": "b72f09302786fb06b8f2a0a9a938ecf92690e454dd89baa852eaa300a2c4f00e",
+        "bytes": 6175615,
+        "records": 19682,
+        "diagnostics": 0,
+        "output_files": 6556,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 4.369889156999998,
+        "upstream_compile_seconds": 17.104733584999973
+      },
+      {
+        "mode": "emitter",
+        "run": "unchanged",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/emitter-dump.cjs",
+          "/tmp/step31-components-final/projects.json",
+          "/tmp/step31-components-final/benchmark/emitter-unchanged",
+          "--previous",
+          "/tmp/step31-components-final/benchmark/emitter-full",
+          "--changed-only"
+        ],
+        "wall_seconds": 0.3147033039999769,
+        "driver_seconds": 0.260519881,
+        "selected": 0,
+        "reused": 6563,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "records": 0,
+        "diagnostics": 0,
+        "output_files": 0,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 0.0,
+        "upstream_compile_seconds": 0.0
+      },
+      {
+        "mode": "emitter",
+        "run": "one-change",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/scouts/step31/emitter-dump.cjs",
+          "/tmp/step31-components-final/benchmark/changed.json",
+          "/tmp/step31-components-final/benchmark/emitter-one-change",
+          "--previous",
+          "/tmp/step31-components-final/benchmark/emitter-unchanged",
+          "--changed-only"
+        ],
+        "wall_seconds": 0.9801275750000968,
+        "driver_seconds": 0.91592095,
+        "selected": 1,
+        "reused": 6562,
+        "sha256": "797062ccef6c38ec6d44def63a65ef7412f7fc3e046640b928e082a1129d8b21",
+        "bytes": 602,
+        "records": 5,
+        "diagnostics": 0,
+        "output_files": 3,
+        "emit_skipped": 0,
+        "acceptance_compile_seconds": 0.678339531,
+        "upstream_compile_seconds": 0.0
+      }
+    ]
+  }
+}

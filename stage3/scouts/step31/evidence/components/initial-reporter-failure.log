@@ -1,0 +1,17 @@
+{"mode": "checker", "run": "full", "command": ["node", "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs", "/tmp/step31-components-proof/projects.json", "/tmp/step31-components-proof/benchmark/checker-full"], "wall_seconds": 20.330895140999928, "driver_seconds": 20.176837809000002, "selected": 6563, "reused": 0, "sha256": "d3c4bbd20d1b60b1c78b8cc58a50f7a9911626c17e2a54536570653afc94b4dc", "bytes": 7374390, "records": 19691, "diagnostics": 20274, "output_files": 0, "emit_skipped": 0, "acceptance_compile_seconds": 4.305121928999999, "upstream_compile_seconds": 15.332805875999888}
+{"mode": "checker", "run": "unchanged", "command": ["node", "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs", "/tmp/step31-components-proof/projects.json", "/tmp/step31-components-proof/benchmark/checker-unchanged", "--previous", "/tmp/step31-components-proof/benchmark/checker-full", "--changed-only"], "wall_seconds": 0.3145993550001549, "driver_seconds": 0.254528597, "selected": 0, "reused": 6563, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "bytes": 0, "records": 0, "diagnostics": 0, "output_files": 0, "emit_skipped": 0, "acceptance_compile_seconds": 0.0, "upstream_compile_seconds": 0.0}
+{"mode": "checker", "run": "one-change", "command": ["node", "/workspace/adamic/stage3/scouts/step31/checker-dump.cjs", "/tmp/step31-components-proof/benchmark/changed.json", "/tmp/step31-components-proof/benchmark/checker-one-change", "--previous", "/tmp/step31-components-proof/benchmark/checker-unchanged", "--changed-only"], "wall_seconds": 0.9168976310002108, "driver_seconds": 0.8656494939999999, "selected": 1, "reused": 6562, "sha256": "42906092111169fb19b748cc8495a4b4a980597a6c60c614be5310181f0c6592", "bytes": 646, "records": 5, "diagnostics": 2, "output_files": 0, "emit_skipped": 0, "acceptance_compile_seconds": 0.6198369330000001, "upstream_compile_seconds": 0.0}
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/benchmark-components.py", line 43, in <module>
+    rows = [json.loads(line) for line in (output / 'golden.stdout').read_text().splitlines()]
+            ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 354, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 1 column 57 (char 56)

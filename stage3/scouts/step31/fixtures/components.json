@@ -1,0 +1,42 @@
+{
+  "projects": [
+    {
+      "id": "checker-chain",
+      "options": {
+        "strict": true,
+        "target": "es2020",
+        "module": "esnext",
+        "types": []
+      },
+      "files": [
+        {
+          "path": "checker-use.a",
+          "text": "import { source, needNumber } from \"./checker-values\";\nexport interface Shape { nested: { value: number }; }\nexport const target: Shape = source;\nneedNumber(\"wrong\");\n"
+        },
+        {
+          "path": "checker-values.a",
+          "text": "export const source = { nested: { value: \"wrong\" } };\nexport function needNumber(value: number): number { return value; }\n"
+        }
+      ]
+    },
+    {
+      "id": "emitter-text",
+      "options": {
+        "strict": true,
+        "target": "es2015",
+        "module": "commonjs",
+        "declaration": true,
+        "sourceMap": true,
+        "declarationMap": true,
+        "newLine": "lf",
+        "types": []
+      },
+      "files": [
+        {
+          "path": "emitter-text.a",
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport async function answer(): Promise<number> { return value; }\n"
+        }
+      ]
+    }
+  ]
+}

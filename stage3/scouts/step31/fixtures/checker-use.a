@@ -1,0 +1,4 @@
+import { source, needNumber } from "./checker-values";
+export interface Shape { nested: { value: number }; }
+export const target: Shape = source;
+needNumber("wrong");
