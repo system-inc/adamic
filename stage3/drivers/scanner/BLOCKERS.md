@@ -1,3 +1,17 @@
+## October 8: scratch records resolution stopped at verification
+
+A scratch-merge measurement resolved the six conflicts from records-lowering
+456c981b against the existing b05a9306 scratch base, which includes main efe9f404.
+The Go compiler built in 10.315s, but its targeted tests failed: nullable-record
+admission disagrees with the records refusal test, the Buffer typed-array view
+reports a changed diagnostic, and the automatically merged JSON runtime passes
+an enum where main now requires a schema pointer. The semantic integration in
+internal/lower/expression.go is not verified. Scratch remains uncommitted and
+never pushed. No scanner rebuild or native comparison follows this failed
+prerequisite. No blocker retirement or mutant catch is claimed.
+
+[Scratch-merge report, each resolution and raw test logs](evidence/scratch-records-merge/REPORT.md).
+
 # Scanner blockers
 
 ## October 8: records follow-up, both requested merges skipped
