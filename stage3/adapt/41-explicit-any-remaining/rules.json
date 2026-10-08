@@ -78,5 +78,21 @@
     "before": "export type PragmaArgumentType<KPrag extends keyof ConcretePragmaSpecs> = ConcretePragmaSpecs[KPrag] extends { args: readonly PragmaArgumentSpecification<any>[]; } ? UnionToIntersection<ArgumentDefinitionToFieldUnion<ConcretePragmaSpecs[KPrag][\"args\"]>>",
     "after": "export type PragmaArgumentType<KPrag extends keyof ConcretePragmaSpecs> = ConcretePragmaSpecs[KPrag] extends { args: readonly PragmaArgumentSpecification<string>[]; } ? UnionToIntersection<ArgumentDefinitionToFieldUnion<ConcretePragmaSpecs[KPrag][\"args\"]>>",
     "reason": "The parameter denotes a pragma argument name and its declared bound is string."
+  },
+  {
+    "id": 13,
+    "kind": "timers",
+    "file": "src/compiler/sys.ts",
+    "before": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+    "after": "declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;",
+    "reason": "Only getNodeSystem captures this ambient Node global. The callback parameters are not inspected by this owner. Node returns its Timeout object."
+  },
+  {
+    "id": 14,
+    "kind": "timers",
+    "file": "src/compiler/sys.ts",
+    "before": "declare function clearTimeout(handle: any): void;",
+    "after": "declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;",
+    "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
   }
 ]
