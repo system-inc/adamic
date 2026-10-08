@@ -1,0 +1,29 @@
+class Base {
+	readonly label: string;
+	constructor(label: string) {
+		this.label = label;
+	}
+	describe(): string {
+		return 'base ' + this.label;
+	}
+	get title(): string {
+		return 'title ' + this.label;
+	}
+}
+class Child extends Base {
+	override describe(): string {
+		return (() => super.describe())() + ' child';
+	}
+	override get title(): string {
+		const read = (): string => super.title;
+		return read() + '!';
+	}
+	later(): () => string {
+		return () => super.describe() + ' later';
+	}
+}
+const child = new Child('one');
+console.log(child.describe());
+console.log(child.title);
+const read = child.later();
+console.log(read());

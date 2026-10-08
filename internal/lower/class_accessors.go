@@ -61,6 +61,7 @@ func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expr
 	if err := l.useOfThis(receiver); err != nil {
 		return nil, true, err
 	}
+	l.touch(l.this)
 	prefix := "$get:"
 	if valueNode != nil {
 		prefix = "$set:"
