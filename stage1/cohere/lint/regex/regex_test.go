@@ -24,7 +24,7 @@ func run(t *testing.T, cwd, command string, args ...string) []byte {
 	c.Stdout = &out
 	c.Stderr = &err
 	if e := c.Run(); e != nil || err.Len() != 0 {
-		t.Fatalf("%s: %v stderr=%s", command, e, err.String())
+		t.Fatalf("%s: %v stdout=%s stderr=%s", command, e, out.String(), err.String())
 	}
 	return out.Bytes()
 }
@@ -205,20 +205,33 @@ func TestOptionInventoryMatchesPinnedSource(t *testing.T) {
 	}
 	t.Log("34 esregexp sites retained separately from the 89 Go-regexp sites; unchanged JavaScript sources")
 }
-func TestCompiledOptionCaptureGap(t *testing.T) {
+func TestCompiledOptionCaptureSources(t *testing.T) {
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
-	virtual := filepath.Join(cohere, "adamic_regex_capture_gap.go")
-	data, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(root, "testdata/esregexp_capture_gap.go")}})
-	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	directory := t.TempDir()
+	helper, err := os.ReadFile("testdata/capture_options.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if os.Getenv("ADAMIC_CAPTURE_SOURCE_MUTANT") == "1" {
+		helper = []byte(strings.Replace(string(helper), "return pattern.Source()", "return map[string]any{}", 1))
+		helper = []byte(strings.Replace(string(helper), "if pattern, ok :=", "if _, ok :=", 1))
+	}
+	side := filepath.Join(directory, "capture_options.go")
+	if err := os.WriteFile(side, helper, 0644); err != nil {
+		t.Fatal(err)
+	}
+	base := filepath.Join(cohere, "internal/lint/testing")
+	data, _ := json.Marshal(map[string]any{"Replace": map[string]string{
+		filepath.Join(base, "adamic_capture_options.go"):      side,
+		filepath.Join(base, "adamic_capture_options_test.go"): filepath.Join(root, "testdata/capture_options_test.go"),
+	}})
+	overlay := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlay, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	actual := run(t, cohere, "go", "run", "-overlay="+overlay, virtual)
-	if string(actual) != "source=^_ captured=[{}]\n" {
-		t.Fatalf("compiled option capture gap changed: %q; remove named blocker and replay sources", actual)
-	}
-	t.Logf("shared cohere docs capture loses esregexp source: %s", actual)
+	actual := run(t, cohere, "go", "test", "-overlay="+overlay, "./internal/lint/testing", "-run", "^TestAdamicCompiledOptionSources$", "-v", "-count=1")
+	t.Logf("source-preserving port capture: %s", actual)
 }
 
 func TestNativeSplitAttributeGap(t *testing.T) {
@@ -259,9 +272,14 @@ func TestNativeCheckerRegexLinkGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = native.BuildTSGo(native.C(lowered), filepath.Join(t.TempDir(), "dynamic-with-checker"), regexCheckerArchive(t, repository), native.Options{Sanitize: true})
-	if err == nil || !strings.Contains(err.Error(), "undefined reference to `adamic_regex_new_owned'") {
-		t.Fatalf("checker runtime regex link gap changed; remove blocker and require complete native fixtures: %v", err)
+	binary := filepath.Join(t.TempDir(), "dynamic-with-checker")
+	err = native.BuildTSGo(native.C(lowered), binary, regexCheckerArchive(t, repository), native.Options{Sanitize: true})
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("dynamic_gap.a with canonical checker-linked native: %v", err)
+	actual := run(t, ".", binary)
+	if string(actual) != "true\n" {
+		t.Fatalf("checker runtime constructor: %q", actual)
+	}
+	t.Log("dynamic_gap.a passes canonical checker-linked sanitized native")
 }

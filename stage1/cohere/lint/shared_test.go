@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"testing"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
@@ -183,7 +184,26 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
 		return nil, fmt.Errorf("%v", err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
+	// Compiled esregexp options have private fields. Capture their original sources,
+	// while retaining the upstream JSON representation of every other option.
+	docsHarness := filepath.Join(root, "internal/lint/testing/docs_capture.go")
+	docsData, err := os.ReadFile(docsHarness)
+	if err != nil {
+		return nil, err
+	}
+	docsAnchor := "json.Marshal(result.capture.options)"
+	if strings.Count(string(docsData), docsAnchor) != 1 {
+		return nil, fmt.Errorf("compiled option capture overlay anchor changed")
+	}
+	docsSide := filepath.Join(directory, "docs_capture.go")
+	docsText := strings.Replace(string(docsData), docsAnchor, "marshalCapturedOptions(result.capture.options)", 1)
+	docsText = strings.Replace(docsText, "\"encoding/json\"\n", "", 1)
+	if err := os.WriteFile(docsSide, []byte(docsText), 0644); err != nil {
+		return nil, err
+	}
+	optionsVirtual := filepath.Join(root, "internal/lint/testing/adamic_capture_options.go")
+	optionsSide := filepath.Join(packageDirectory, "regex/testdata/capture_options.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide, docsHarness: docsSide, optionsVirtual: optionsSide}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
@@ -334,4 +354,64 @@ func classifyRecoveryRows(rows, flags []string) ([]string, error) {
 		result[index] = strings.Join(fields, "\t")
 	}
 	return result, nil
+}
+
+// Not parallel: validates the capture overlay against the three migrated rules.
+func TestRegexCompiledOptionCapture(t *testing.T) {
+	root := t.TempDir()
+	for _, slug := range []string{"id-length", "no-inline-comments", "no-warning-comments"} {
+		directory := filepath.Join(root, "rules", slug)
+		if err := os.MkdirAll(directory, 0755); err != nil {
+			t.Fatal(err)
+		}
+		source := filepath.Join(packageDirectory, "rules", slug)
+		err := filepath.WalkDir(source, func(path string, entry os.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			relative, err := filepath.Rel(source, path)
+			if err != nil {
+				return err
+			}
+			target := filepath.Join(directory, relative)
+			if entry.IsDir() {
+				return os.MkdirAll(target, 0755)
+			}
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(target, data, 0644)
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	directory := t.TempDir()
+	rows, err := captureUpstream(root, directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sources := 0
+	for _, row := range rows {
+		fields := strings.Split(row, "\t")
+		if fields[1] != "id-length" || fields[5] == "" {
+			continue
+		}
+		var options struct{ ExceptionPatterns []json.RawMessage }
+		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
+			t.Fatal(err)
+		}
+		for _, pattern := range options.ExceptionPatterns {
+			var source string
+			if err := json.Unmarshal(pattern, &source); err != nil {
+				t.Fatalf("compiled option source lost: %s", pattern)
+			}
+			sources++
+		}
+	}
+	if sources == 0 {
+		t.Fatal("capture exercised no compiled exception patterns")
+	}
+	t.Logf("%d upstream cases replayed through the Go oracle; %d compiled pattern sources preserved", len(rows), sources)
 }

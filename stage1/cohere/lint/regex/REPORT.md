@@ -1,3 +1,5 @@
+Latest follow-up: [capture and native link rerun](CAPTURE_LINK_RERUN.md) closes the compiled-source and canonical link gaps. The historical scout results below are retained.
+
 Built: scout merges, 123-row engine-aware table, 89 mandatory native shapes and three directory-owned runtime RegExp migrations.
 Commits: implementation and evidence commits on lint-scout/regex; requested merges preserved without rebasing.
 Checks: 82 fixed patterns, 126,778 matches and 2,420,827 bytes agree on four paths; 89 shapes and 1,670 matcher calls pass all three backends; 350 upstream fixtures agree on Go, Node and emitted JavaScript.
