@@ -272,6 +272,9 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, source := range []string{"Number()", "Number('17')", "Number('')", "Number('0x11')", "Number('0b101')", "Number('17tail')", "Number(true)", "Number(null)", "Number(undefined)", "Number(-0)"} {
 		add("number-constructor", source)
 	}
+	for _, source := range []string{"yield 0", "yield 1n", "yield 'x'", "yield true", "yield null", "yield value", "yield(0)", "yield + 0", "yield * value", "yield?.(0)", "(yield).x", "f(yield 0)", "{}[0]", "{}['x']"} {
+		add("tsc-corpus-boundary", source)
+	}
 	memberBases := []string{"obj", "this", "Factory", "_", "$$", "longIdentifierName", "namespace.Factory", "f()", "f(x)", "[a,b]", "({a:1})", "(a+b)", "(a?b:c)", "1", "new C()"}
 	memberArguments := []string{"", "x", "x,y", "veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma", "{x:1,y:2}", "[1,2,3]", "[x,y,z]", "f(x)", "a+b"}
 	for _, base := range memberBases {
