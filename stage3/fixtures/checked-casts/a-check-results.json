@@ -1,0 +1,287 @@
+{
+  "gate_revision": "914ea6d7d3ef0aeca2ac68baa76eb4604556479b",
+  "fixtures": {
+    "/workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration.a:8:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/n"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/01_enum_declaration_fails.a:8:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (ad"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/02_name_subunion.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/02_name_subunion_fails.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/03_chain_info.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/03_chain_info.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unch"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/03_chain_info_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/03_chain_info_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/n"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (ada"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/05_extension.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/05_extension.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unche"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/05_extension_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/05_extension_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/06_parser_keyword_fails.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adam"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/07_generic_next.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-un"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/07_generic_next_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next_fails.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/08_generic_node.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-un"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/08_generic_node_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node_fails.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/n"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/09_primitive_string_fails.a:6:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (ad"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/10_generator_label.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no"
+    },
+    "/workspace/adamic/stage3/fixtures/checked-casts/10_generator_label_fails.a": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-unchecked-cast",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label_fails.a:7:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (ada"
+    }
+  },
+  "mutants": [
+    {
+      "file": "/tmp/step09-a-check/remove-01_enum_declaration.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-01_enum_declaration_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-03_chain_info.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-03_chain_info_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-04_literal_payload.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-04_literal_payload_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-05_extension.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-05_extension_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-06_parser_keyword.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-06_parser_keyword_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-07_generic_next.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-07_generic_next_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-08_generic_node.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-08_generic_node_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-09_primitive_string.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-09_primitive_string_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-10_generator_label.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/remove-10_generator_label_fails.a",
+      "mutation": "remove",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-01_enum_declaration.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-01_enum_declaration_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-03_chain_info.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-03_chain_info_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-04_literal_payload.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-04_literal_payload_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-05_extension.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-05_extension_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-06_parser_keyword.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-06_parser_keyword_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-07_generic_next.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-07_generic_next_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-08_generic_node.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-08_generic_node_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-09_primitive_string.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-09_primitive_string_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-10_generator_label.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    },
+    {
+      "file": "/tmp/step09-a-check/wrong-10_generator_label_fails.a",
+      "mutation": "wrong",
+      "caught_by": "unchanged Gate.aCheck expected-error predicate"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+=== RUN   TestScannerCastCounts
+--- PASS: TestScannerCastCounts (1.22s)
+=== RUN   TestStep09AcceptanceTagged
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration_fails.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    step09_acceptance_test.go:88: gate cache node miss
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion_fails.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    step09_acceptance_test.go:88: gate cache node miss
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+--- PASS: TestStep09AcceptanceTagged (2.39s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration.a (0.62s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration_fails.a (0.58s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion.a (0.66s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion_fails.a (0.53s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.630s

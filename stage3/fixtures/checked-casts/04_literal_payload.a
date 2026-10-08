@@ -1,0 +1,15 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/checker.ts:6852:52:as_cast; support types and driver are local.
+interface Type { readonly flags: number; }
+interface StringLiteralType extends Type { readonly value: string; }
+function select(type: Type): void {
+    console.log('before');
+    const result = type as StringLiteralType;
+    console.log('view');
+    console.log(`value=${result.value}`);
+    value.value = 'Ahra';
+    console.log(`again=${result.value}`);
+    console.log('after');
+}
+const value: { flags: number; value: string | number } = { flags: 128, value: 'Ken' };
+select(value);

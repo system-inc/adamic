@@ -1,0 +1,12 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/parser.ts:3119:38:as_cast; support types and driver are local.
+interface Node { readonly position: number; }
+interface Identifier extends Node { readonly text: string; }
+function consumeNode(node: Node): Node { return node; }
+function select<T extends Node | undefined>(node: Node): T { return consumeNode(node) as T; }
+console.log('before');
+const value = { position: 0, text: 'Ken' };
+const result = select<Identifier>(value);
+console.log('view');
+console.log(`text=${result.text}`);
+console.log('after');

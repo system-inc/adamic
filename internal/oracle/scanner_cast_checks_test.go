@@ -116,6 +116,9 @@ func scannerCastCounts(t *testing.T) []string {
 	for _, name := range []string{"string-any", "string-checked"} {
 		rows = append(rows, counted(t, "stage3/drivers/scanner/cast-checks/"+name+".a", false, nil, false, false))
 	}
+	for _, name := range []string{"01_enum_declaration", "01_enum_declaration_fails", "02_name_subunion", "02_name_subunion_fails"} {
+		rows = append(rows, counted(t, "stage3/fixtures/checked-casts/"+name+".a", false, nil, false, false))
+	}
 	return rows
 }
 
@@ -138,7 +141,7 @@ func TestScannerCastCounts(t *testing.T) {
 	parts := strings.SplitN(string(data), "\n## Predicate direction counts", 2)
 	var lines []string
 	for _, line := range strings.Split(strings.TrimSuffix(parts[0], "\n"), "\n") {
-		if !strings.HasPrefix(line, "| stage3/drivers/scanner/cast-checks/") {
+		if !strings.HasPrefix(line, "| stage3/drivers/scanner/cast-checks/") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/01_") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/02_") {
 			lines = append(lines, line)
 		}
 	}

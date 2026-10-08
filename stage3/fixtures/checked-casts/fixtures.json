@@ -1,0 +1,202 @@
+[
+  {
+    "file": "01_enum_declaration.a",
+    "category": "tagged",
+    "site": "src/compiler/binder.ts:359:34:as_cast",
+    "failing": false,
+    "node_stdout": "before\nkind=267\nafter\n",
+    "runtime_stdout": "before\nkind=267\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "01_enum_declaration_fails.a",
+    "category": "tagged",
+    "site": "src/compiler/binder.ts:359:34:as_cast",
+    "failing": true,
+    "node_stdout": "before\nkind=279\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "02_name_subunion.a",
+    "category": "tagged",
+    "site": "src/compiler/binder.ts:669:70:as_cast",
+    "failing": false,
+    "node_stdout": "before\nkind=Identifier\nafter\n",
+    "runtime_stdout": "before\nkind=Identifier\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "02_name_subunion_fails.a",
+    "category": "tagged",
+    "site": "src/compiler/binder.ts:669:70:as_cast",
+    "failing": true,
+    "node_stdout": "before\nkind=BindingPattern\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "03_chain_info.a",
+    "category": "untagged",
+    "site": "src/compiler/builder.ts:610:119:as_cast",
+    "failing": false,
+    "node_stdout": "before\nview\ninfo=12\nafter\n",
+    "runtime_stdout": "before\nview\ninfo=12\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "03_chain_info_fails.a",
+    "category": "untagged",
+    "site": "src/compiler/builder.ts:610:119:as_cast",
+    "failing": true,
+    "node_stdout": "before\nview\ninfo=wrong\nafter\n",
+    "runtime_stdout": "before\nview\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "04_literal_payload.a",
+    "category": "untagged",
+    "site": "src/compiler/checker.ts:6852:52:as_cast",
+    "failing": false,
+    "node_stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
+    "runtime_stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "04_literal_payload_fails.a",
+    "category": "untagged",
+    "site": "src/compiler/checker.ts:6852:52:as_cast",
+    "failing": true,
+    "node_stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
+    "runtime_stdout": "before\nview\nvalue=Ken\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "05_extension.a",
+    "category": "literal-enum",
+    "site": "src/compiler/moduleNameResolver.ts:2118:54:as_cast",
+    "failing": false,
+    "node_stdout": "before\nextension=.ts\nafter\n",
+    "runtime_stdout": "before\nextension=.ts\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "05_extension_fails.a",
+    "category": "literal-enum",
+    "site": "src/compiler/moduleNameResolver.ts:2118:54:as_cast",
+    "failing": true,
+    "node_stdout": "before\nextension=.wrong\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "06_parser_keyword.a",
+    "category": "literal-enum",
+    "site": "src/compiler/parser.ts:4566:61:as_cast",
+    "failing": false,
+    "node_stdout": "before\ntoken=118\nafter\n",
+    "runtime_stdout": "before\ntoken=118\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "06_parser_keyword_fails.a",
+    "category": "literal-enum",
+    "site": "src/compiler/parser.ts:4566:61:as_cast",
+    "failing": true,
+    "node_stdout": "before\ntoken=80\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "07_generic_next.a",
+    "category": "generic",
+    "site": "src/compiler/builder.ts:545:77:as_cast",
+    "failing": false,
+    "node_stdout": "before\nview\nelement=12\nagain=13\nafter\n",
+    "runtime_stdout": "before\nview\nelement=12\nagain=13\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "07_generic_next_fails.a",
+    "category": "generic",
+    "site": "src/compiler/builder.ts:545:77:as_cast",
+    "failing": true,
+    "node_stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
+    "runtime_stdout": "before\nview\nelement=12\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "08_generic_node.a",
+    "category": "generic",
+    "site": "src/compiler/parser.ts:3119:38:as_cast",
+    "failing": false,
+    "node_stdout": "before\nview\ntext=Ken\nafter\n",
+    "runtime_stdout": "before\nview\ntext=Ken\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "08_generic_node_fails.a",
+    "category": "generic",
+    "site": "src/compiler/parser.ts:3119:38:as_cast",
+    "failing": true,
+    "node_stdout": "before\nview\ntext=42\nafter\n",
+    "runtime_stdout": "before\nview\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "09_primitive_string.a",
+    "category": "other",
+    "site": "src/compiler/builder.ts:1466:70:as_cast",
+    "failing": false,
+    "node_stdout": "before\nvalue=Ken\nafter\n",
+    "runtime_stdout": "before\nvalue=Ken\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "09_primitive_string_fails.a",
+    "category": "other",
+    "site": "src/compiler/builder.ts:1466:70:as_cast",
+    "failing": true,
+    "node_stdout": "before\nvalue=42\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  },
+  {
+    "file": "10_generator_label.a",
+    "category": "other",
+    "site": "src/compiler/transformers/generators.ts:3057:43:as_cast",
+    "failing": false,
+    "node_stdout": "before\nlabel=12\nafter\n",
+    "runtime_stdout": "before\nlabel=12\nafter\n",
+    "runtime_exit": 0,
+    "mutant": "change final output marker"
+  },
+  {
+    "file": "10_generator_label_fails.a",
+    "category": "other",
+    "site": "src/compiler/transformers/generators.ts:3057:43:as_cast",
+    "failing": true,
+    "node_stdout": "before\nlabel=undefined\nafter\n",
+    "runtime_stdout": "before\n",
+    "runtime_exit": 70,
+    "mutant": "erase runtime cast check"
+  }
+]

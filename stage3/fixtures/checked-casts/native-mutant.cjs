@@ -1,0 +1,21 @@
+// Remove exactly the cast panic from real emitted C; require valid, sanitizer-clean execution.
+const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process');
+const [scratchArg, runtimeArg] = process.argv.slice(2);
+const scratch = path.resolve(scratchArg), runtime = path.resolve(runtimeArg);
+const fixture = '02_name_subunion_fails.a';
+const source = fs.readFileSync(path.join(scratch, fixture + '.c.stdout'), 'utf8');
+const call = 'adamic_panic(message, sizeof message - 1);';
+if (source.split(call).length !== 2 || !source.includes('cast failed: this DeclarationName')) throw Error('expected exactly one real cast panic');
+const mutant = path.join(scratch, fixture + '.skip-check.c'), binary = path.join(scratch, fixture + '.skip-check.native');
+fs.writeFileSync(mutant, source.replace(call, '(void)0;'));
+const flags = ['-std=c11','-Wall','-Wextra','-Werror','-pedantic','-Wno-unused-variable','-Wno-unused-but-set-variable','-Wno-unused-function','-Wno-unused-parameter','-Wno-self-assign','-ffp-contract=off','-fno-optimize-sibling-calls','-O1','-g','-fsanitize=address,undefined','-fno-sanitize-recover=all'];
+const command = ['clang', ...flags, '-I', runtime, mutant, '-Xlinker','--whole-archive',path.join(runtime,'runtime.a'),'-Xlinker','--no-whole-archive','-lm','-o',binary];
+const build = cp.spawnSync(command[0], command.slice(1), {encoding: 'utf8'});
+fs.writeFileSync(path.join(scratch, 'native-mutant-build.log'), build.stdout + build.stderr);
+if (build.status !== 0) throw Error('native mutant must build valid C');
+const actual = cp.spawnSync(binary, [], {encoding: 'utf8', env: {...process.env, ASAN_OPTIONS: 'detect_leaks=1', UBSAN_OPTIONS: 'halt_on_error=1'}});
+const fixtureRow = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures.json'))).find(r => r.file === fixture);
+if (actual.status !== 0 || actual.stderr !== '' || actual.stdout !== fixtureRow.node_stdout) throw Error('native mutant must finish normally, leak-clean, exactly as erased source on Node');
+if (actual.status === fixtureRow.runtime_exit && actual.stdout === fixtureRow.runtime_stdout) throw Error('native check omission survived');
+fs.writeFileSync(path.join(__dirname, 'native-mutant.json'), JSON.stringify({fixture, mutant: 'remove cast panic from emitted C', caught_by: 'panic exit and stdout contract', build_command: command, build_exit: build.status, actual: {exit: actual.status, stdout: actual.stdout, stderr: actual.stderr}, expected: {exit: fixtureRow.runtime_exit, stdout: fixtureRow.runtime_stdout}}, null, 2) + '\n');
+console.log('caught native check omission: exit 0 and post-cast output; expected exit 70 before cast result');

@@ -1,0 +1,12 @@
+// a-check: refused adamic/no-unchecked-cast
+// Reduced from src/compiler/builder.ts:545:77:as_cast; support types and driver are local.
+interface Chain { readonly next: (number | string)[] | undefined; }
+function next<T>(chain: Chain): T[] { return chain.next as T[]; }
+console.log('before');
+const values: (number | string)[] = [12];
+const result = next<number>({ next: values });
+console.log('view');
+console.log(`element=${result[0]}`);
+values[0] = 13;
+console.log(`again=${result[0]}`);
+console.log('after');
