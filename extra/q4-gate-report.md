@@ -29,7 +29,9 @@ JSON terminal-event counts (nested test events included; no-test-files packages 
 | q4-whole-restart.jsonl | 8371 | 35 | 72 | 40 | 10 | 24 |
 | q4-rerun-cmd-adamic-gate.jsonl | 48 | 2 | 0 | 0 | 1 | 0 |
 | q4-rerun-internal-fuzz.jsonl | 30 | 2 | 0 | 0 | 1 | 0 |
-| q4-rerun-stage1-cohere-estree.jsonl | 6 | 0 | 2 | 0 | 0 | 0 |
+| q4-rerun-stage1-cohere-estree.jsonl | 44 | 0 | 2 | 0 | 0 | 0 |
+| q4-rerun-stage1-cohere-lint.jsonl | 100 | 0 | 5 | 1 | 0 | 0 |
+| q4-rerun-stage1-cohere-typeaware.jsonl | 25 | 0 | 0 | 1 | 0 | 0 |
 
 Command timings and exits:
 ```json
@@ -183,10 +185,63 @@ Command timings and exits:
       "./internal/fuzz"
     ],
     "log": "/workspace/q4-rerun-internal-fuzz.jsonl"
+  },
+  "rerun:./stage1/cohere/estree": {
+    "exit": null,
+    "status": "interrupted-environment",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "60m",
+      "-json",
+      "./stage1/cohere/estree"
+    ],
+    "log": "/workspace/q4-rerun-stage1-cohere-estree.jsonl"
+  },
+  "rerun:./stage1/cohere/lint": {
+    "exit": 0,
+    "wall_seconds": 3175.298,
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "60m",
+      "-json",
+      "./stage1/cohere/lint"
+    ],
+    "log": "/workspace/q4-rerun-stage1-cohere-lint.jsonl"
+  },
+  "rerun:./stage1/cohere/typeaware": {
+    "exit": 0,
+    "wall_seconds": 1781.578,
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "60m",
+      "-json",
+      "./stage1/cohere/typeaware"
+    ],
+    "log": "/workspace/q4-rerun-stage1-cohere-typeaware.jsonl"
+  },
+  "census": {
+    "exit": 1,
+    "wall_seconds": 0.293,
+    "command": [
+      "go",
+      "run",
+      "./internal/skipcensus/cmd",
+      "/workspace/q4-whole-restart.jsonl"
+    ],
+    "log": "/workspace/q4-census.txt"
   }
 }
 ```
-Overall corrected-run wall time: pending seconds.
+Overall corrected-run wall time: 13052.38 seconds.
 
 Required test counts and output:
 q4-whole-restart.jsonl: github.com/system-inc/adamic/stage1/cohere/lint/TestCompilerAndStage1Agree pass 175.14 seconds
@@ -208,6 +263,14 @@ q4-whole-restart.jsonl: github.com/system-inc/adamic/stage1/cohere/tsprinter/Tes
         
     statements_test.go:141: 56759 statement/program fragments byte-identical
 --- PASS: TestStatementsAgainstGoAndPrettier (177.29s)
+```
+q4-rerun-stage1-cohere-lint.jsonl: github.com/system-inc/adamic/stage1/cohere/lint/TestCompilerAndStage1Agree pass 98.88 seconds
+```text
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:528: compiler and stage1: 550 files
+    lint_test.go:137: clang build: 35.812s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:529: Go, Node, emitted JavaScript, native identical: 22284158 bytes
+--- PASS: TestCompilerAndStage1Agree (98.88s)
 ```
 
 Every gate cache line:
@@ -335,6 +398,53 @@ q4-whole-restart.jsonl
 q4-rerun-stage1-cohere-estree.jsonl
 - github.com/system-inc/adamic/stage1/cohere/estree/TestRepositoryAgreement: corpus_test.go:18: set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory
 - github.com/system-inc/adamic/stage1/cohere/estree/TestCorpusNativeRefusals: corpus_test.go:84: completed frozen corpus required
+
+q4-rerun-stage1-cohere-lint.jsonl
+- github.com/system-inc/adamic/stage1/cohere/lint/TestJsxLintReleaseAndThroughput: jsx_integration_test.go:74: set ADAMIC_LINT_BENCH=1 for JSX throughput
+- github.com/system-inc/adamic/stage1/cohere/lint/TestThroughput: lint_test.go:666: set ADAMIC_LINT_BENCH=1
+- github.com/system-inc/adamic/stage1/cohere/lint/TestProfileArtifacts: profile_test.go:20: set ADAMIC_LINT_PROFILE_DIR to a scratch directory
+- github.com/system-inc/adamic/stage1/cohere/lint/TestProfileSnapshotsAgree: profile_test.go:162: set ADAMIC_LINT_PROFILE_SNAPSHOTS
+- github.com/system-inc/adamic/stage1/cohere/lint/TestRule: rule_check_test.go:132: use cmd/adamic-lint-check <slug> or -args -rule <slug>
+
+Every skipped package (no test files):
+- q4-whole.jsonl: github.com/system-inc/adamic/bench: ?   	github.com/system-inc/adamic/bench	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/bench/regex: ?   	github.com/system-inc/adamic/bench/regex	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/bridge/tsgo/archive: ?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/bridge/tsgo/cost: ?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/bridge/tsgo/oracle: ?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/bridge/tsgo/spec: ?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cloud/reports/decode-ascii: ?   	github.com/system-inc/adamic/cloud/reports/decode-ascii	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cloud/reports/release-lto: ?   	github.com/system-inc/adamic/cloud/reports/release-lto	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cmd/adamic-lint-check: ?   	github.com/system-inc/adamic/cmd/adamic-lint-check	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cmd/adamic-metamorphic: ?   	github.com/system-inc/adamic/cmd/adamic-metamorphic	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cmd/adamic-reduce: ?   	github.com/system-inc/adamic/cmd/adamic-reduce	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cmd/adamic-refusals: ?   	github.com/system-inc/adamic/cmd/adamic-refusals	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/cmd/lint-registry: ?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+- q4-whole.jsonl: github.com/system-inc/adamic/internal/boundedrun/testfixture: ?   	github.com/system-inc/adamic/internal/boundedrun/testfixture	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bench: ?   	github.com/system-inc/adamic/bench	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bench/regex: ?   	github.com/system-inc/adamic/bench/regex	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bridge/tsgo/archive: ?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bridge/tsgo/cost: ?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bridge/tsgo/oracle: ?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/bridge/tsgo/spec: ?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cmd/adamic-reduce: ?   	github.com/system-inc/adamic/cmd/adamic-reduce	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cmd/lint-registry: ?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/internal/javascript: ?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes: ?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities: ?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width: ?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage3/census/latent/tool: ?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage3/census/tool: ?   	github.com/system-inc/adamic/stage3/census/tool	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/stage3/drivers/parser/probe: ?   	github.com/system-inc/adamic/stage3/drivers/parser/probe	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cloud/reports/decode-ascii: ?   	github.com/system-inc/adamic/cloud/reports/decode-ascii	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cloud/reports/release-lto: ?   	github.com/system-inc/adamic/cloud/reports/release-lto	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cmd/adamic-lint-check: ?   	github.com/system-inc/adamic/cmd/adamic-lint-check	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cmd/adamic-metamorphic: ?   	github.com/system-inc/adamic/cmd/adamic-metamorphic	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/cmd/adamic-refusals: ?   	github.com/system-inc/adamic/cmd/adamic-refusals	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/internal/boundedrun/testfixture: ?   	github.com/system-inc/adamic/internal/boundedrun/testfixture	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/internal/leakcheck: ?   	github.com/system-inc/adamic/internal/leakcheck	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/internal/skipcensus/cmd: ?   	github.com/system-inc/adamic/internal/skipcensus/cmd	[no test files]
+- q4-whole-restart.jsonl: github.com/system-inc/adamic/verify/coverage/runtimelibrary: ?   	github.com/system-inc/adamic/verify/coverage/runtimelibrary	[no test files]
 
 Skipped tests naming one of the 12 required variables: []
 
@@ -933,15 +1043,79 @@ Stage 3 apply exit: 0; apply wall seconds: 199.573. Stage 3 oracle expected lane
 Only failing name: unittests:: Public APIs for typescript.d.ts should be acknowledged when they change
 
 Census command: go run ./internal/skipcensus/cmd /workspace/q4-whole-restart.jsonl
-Exit: pending
+Exit: 1
 Output verbatim:
 ```text
-pending
+removed skip internal/native/wasm_test.go:TestWASI:84bb45dda60b9ac4a325def472053ec24083a3eca7b2cf2474e71763541bf80c
+removed skip internal/native/wasm_test.go:TestWASI:c21b865ade4f7ec33e3c43e989d4915bb320441b56260e70d1b404d8e6ee400c
+removed skip internal/native/wasm_test.go:TestWASI:e331d554fc45e12edd105c0ed30539b5b8161c822ca013eeb9b559b9a29e4822
+removed skip internal/native/wasm_test.go:TestWASI:f69cd3364c297e515a7579901e72251584219181e3d65f6db4443ff8a7833420
+removed skip internal/oracle/wasi_test.go:TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9
+stale metadata stage1/cohere/lint/jsx_integration_test.go:TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+stale metadata stage1/cohere/lint/lint_test.go:TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e
+stale metadata stage1/cohere/lint/lint_test.go:TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+stale metadata stage1/cohere/lint/profile_test.go:TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70
+stale metadata stage1/cohere/lint/profile_test.go:TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4
+stale metadata stage1/cohere/mediaquery/mediaquery_test.go:TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc
+undeclared skip internal/flow/trace_test.go:TestEveryMutationIsInItsRange,TestEveryPathNodeTakesIsInTheGraph,TestLivenessHoldsOnEveryPath:0fab93ebdc409e2c882854da7ee4876174932de554e8a4034caf08f918745b89 (traced:142)
+undeclared skip internal/lower/optional_widening_census_test.go:TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e (TestOptionalWideningCensus:28)
+undeclared skip internal/native/async_host_test.go:TestHostPromises:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestHostPromises:15)
+undeclared skip internal/native/decode_ascii_test.go:TestDecodeASCII:61c6fa0cd43d747dcf949e034bc32ba274f18b3f25d119861563ea595401a244 (TestDecodeASCII:51)
+undeclared skip internal/native/parallel_test.go:TestParallelChecksCatchMutants:3f847aa069f947d81c80543e463b52ad870fd8ad0692974a7c00a0df67d67833 (TestParallelChecksCatchMutants:169)
+undeclared skip internal/native/release_build_test.go:TestReleaseArithmeticIsNeverFused:68a1e560349b814265320601735313cc56fd64f117739324596c52aefd7d984f (TestReleaseArithmeticIsNeverFused:66)
+undeclared skip internal/native/release_fma_test.go:TestReleaseFixtureKeepsArithmeticUnfused:68a1e560349b814265320601735313cc56fd64f117739324596c52aefd7d984f (TestReleaseFixtureKeepsArithmeticUnfused:20)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsParallel:ce67b85daa601c9aa68993e04d7663cace983a4d8f9bba6c6583037686007983 (TestRuntimeStaticsParallel:23)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsParallel:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestRuntimeStaticsParallel:20)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsProtectionMutants:c66914a59c280557b646280862238d05ed610351c13156e96f1e5e03f4a14f41 (TestRuntimeStaticsProtectionMutants:64)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsProtectionMutants:ce67b85daa601c9aa68993e04d7663cace983a4d8f9bba6c6583037686007983 (TestRuntimeStaticsProtectionMutants:41)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsProtectionMutants:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestRuntimeStaticsProtectionMutants:38)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStaticsSignalAndExit:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestRuntimeStaticsSignalAndExit:77)
+undeclared skip internal/native/runtime_statics_parallel_test.go:TestRuntimeStopWholeLines:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestRuntimeStopWholeLines:108)
+undeclared skip internal/native/scaling_test.go:TestParallelScalingGuardMutants:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f (TestParallelScalingGuardMutants:115)
+undeclared skip internal/native/slab_quarantine_test.go:TestQuarantineIsPerThreadUnderTSan:701d2a3533c5212a7b59aaee1f8878684921ad94ea3f04625e5044b6f646a6b1 (TestQuarantineIsPerThreadUnderTSan:119)
+undeclared skip internal/native/wasi_async_test.go:TestWASIHostPromises:fe0965f6ad8055451ece4b79755b16d393d56775cf2603f98f8d94df4896a5e4 (TestWASIHostPromises:15)
+undeclared skip internal/oracle/release_test.go:TestReleaseAgreesWithNode:e47aabbc9efa57a91e222bd6f8d548829c1cd375d0416a52db3b0a4cfc9f7411 (TestReleaseAgreesWithNode:16)
+undeclared skip internal/oracle/release_test.go:TestReleaseOracleCatchesOneByte:e47aabbc9efa57a91e222bd6f8d548829c1cd375d0416a52db3b0a4cfc9f7411 (TestReleaseOracleCatchesOneByte:59)
+undeclared skip internal/oracle/stack_test.go:TestLongArgumentsLeaveTheStackItsLimit:d12d1cc68d86eaafea6f4e5d3652a0b51df91eb3e5611700a04519725b54fc6a (TestLongArgumentsLeaveTheStackItsLimit:48)
+undeclared skip stage1/cohere/estree/corpus_test.go:TestCorpusNativeRefusals:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestCorpusNativeRefusals:84)
+undeclared skip stage1/cohere/estree/corpus_test.go:TestRepositoryAgreement:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestRepositoryAgreement:18)
+undeclared skip stage1/cohere/estree/estree_test.go:TestDecoratedExportLibraries,TestOriginalLibraries,TestRecoveryLibraryGaps,TestScalarOriginalLibraries,TestSyntaxLibraries:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (checkOriginalLibraries:255)
+undeclared skip stage1/cohere/estree/jsx_test.go:TestJSXOriginalLibraries:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestJSXOriginalLibraries:56)
+undeclared skip stage1/cohere/estree/recovery_test.go:TestRecoveryLibraryGaps:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestRecoveryLibraryGaps:65)
+undeclared skip stage1/cohere/estree/scalars_test.go:TestPinnedNumericGaps:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPinnedNumericGaps:47)
+undeclared skip stage1/cohere/estree/syntax_test.go:TestSyntaxLibraries:9cade7ba924f6ed08f401df7e3c2f1f41340ca749a7c28f6ee1f1601fd23a333 (TestSyntaxLibraries:92)
+undeclared skip stage1/cohere/estree/syntax_test.go:TestTypeMemberLibraryGap:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestTypeMemberLibraryGap:100)
+undeclared skip stage1/cohere/estree/throughput_test.go:TestThroughput:b18c5c4c1d30b0d2ed916a7feb1e3c3cdfbcb3406d42826d8dfdd75ce55b4a1f (TestThroughput:16)
+undeclared skip stage1/cohere/estree/utf8_test.go:TestCookedSurrogateLibraryGap:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCookedSurrogateLibraryGap:41)
+undeclared skip stage1/cohere/graphql/printer/gaps_test.go:TestPrinterWhitespaceGap:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterWhitespaceGap:39)
+undeclared skip stage1/cohere/graphql/printer/performance_test.go:TestPrinterThroughput:7913deb2bb218b5c8b24eb345bc3f95f94d85d107e1fdc2794cf7bc34ccc6c03 (TestPrinterThroughput:17)
+undeclared skip stage1/cohere/graphql/printer/printer_test.go:TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterUpstreamPreflight:84)
+undeclared skip stage1/cohere/graphql/printer/testdata/cohere_side_test.go:TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicPrinter:19)
+undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+undeclared skip stage1/cohere/tsprinter/doc_test.go:TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestDocumentsAgainstGoAndPrettier:51)
+undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (expressionCorpus:19)
+undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestExpressionsAgainstGoAndPrettier:102)
+undeclared skip stage1/cohere/tsprinter/statements_test.go:TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (statementCorpus:19)
+undeclared skip stage1/cohere/tsprinter/statements_test.go:TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementsAgainstGoAndPrettier:120)
+undeclared skip stage1/cohere/tsprinter/testdata/expressions_side_test.go:TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicExpressionBenchmark:685)
+undeclared skip stage1/cohere/tsprinter/upstream_test.go:TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementUpstreamDifferences:58)
+undeclared skip stage1/cohere/yaml/compose_test.go:TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestComposeMatchGo:137)
+undeclared skip stage1/cohere/yaml/cst_test.go:TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCSTMatchesGo:82)
+undeclared skip stage1/cohere/yaml/format_test.go:TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestBundledParserDifference:199)
+undeclared skip stage1/cohere/yaml/format_test.go:TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestFormatterMatchesGo:141)
+undeclared skip stage1/cohere/yaml/lexer_test.go:TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestLexerMatchesGo:225)
+undeclared skip stage1/cohere/yaml/props_test.go:TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPropsMatchGo:109)
+undeclared skip stage1/cohere/yaml/scalar_test.go:TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestScalarsMatchGo:136)
+undeclared skip stage1/cohere/yaml/schema_test.go:TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestSchemaMatchesGo:106)
+undeclared skip stage1/cohere/yaml/unist_test.go:TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestUnistMatchesGo:84)
+exit status 1
 ```
 
-Gate-logs branch: gate-logs/dc135a74f70d/20261007T220149/whole
-Interrupted-attempt gate-logs branch: gate-logs/dc135a74f70d/20261007T215717/whole
+Gate-logs branch: gate-logs/dc135a74f70d/20261008T001644/whole
+Earlier gate-logs branches: ["gate-logs/dc135a74f70d/20261007T215717/whole", "gate-logs/dc135a74f70d/20261007T220149/whole"]
 Publisher worktree commit: 37163b619ce52650da319f06554721c18b1a1d1b. Default signals verified as SigIgn=0000000000000000 (none).
+
+Environment restart and compiler cleanup: {"resumed": 1791418604.37154, "reason": "Environment reconnect killed supervisor, publisher and active ESTree solo rerun. Whole run intact. Count interrupted ESTree as its one solo attempt; finish lint/typeaware once each.", "corpus_cleanup": {"time": 1791418556.2661936, "before": 78, "after": 77, "preserved_file": "/workspace/q4-generated-diagnostics-for-ledger.ts", "sha256": "0723b987e560fda262b1281223c4d842d30c70b4ff3d9430758eefa11ee3a5c3", "ignored_by": ".gitignore:23:src/compiler/diagnosticInformationMap.generated.ts\t/workspace/adamic-tools/gate-inputs/typescript/src/compiler/diagnosticInformationMap.generated.ts", "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8", "pushed_sha": "dc135a74f70de5016f3025d876bc96920dc3fb0a", "reason": "Remove only the ignored diagnostic map generated for the completed cycle-ledger gate; keep official setup compiler corpus pristine before lint/typeaware solo reruns."}}
 
 Runner limitations: the first partial whole run used ./... because the runner misread workspace module names; it was stopped and replaced with the exact longest-first order on the same SHA. The Stage 3 supervisor was interrupted during that restart, and the complete oracle was rerun successfully to the expected Linux report. stage3/apply.sh changed patch-set.md; its generated copy was preserved outside the repository and the file restored to the pushed commit before later gates. Broad deadline matching also reran cmd/adamic-gate and internal/fuzz due passing deadline-mutant output; original assertion failures remain failures. All conflict Go files were read whole; a full file-by-file incoming formatter audit was not completed.
 

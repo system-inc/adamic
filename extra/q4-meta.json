@@ -165,6 +165,45 @@
         "./stage1/cohere/estree"
       ],
       "log": "/workspace/q4-rerun-stage1-cohere-estree.jsonl"
+    },
+    "rerun:./stage1/cohere/lint": {
+      "exit": 0,
+      "wall_seconds": 3175.298,
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "60m",
+        "-json",
+        "./stage1/cohere/lint"
+      ],
+      "log": "/workspace/q4-rerun-stage1-cohere-lint.jsonl"
+    },
+    "rerun:./stage1/cohere/typeaware": {
+      "exit": 0,
+      "wall_seconds": 1781.578,
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "60m",
+        "-json",
+        "./stage1/cohere/typeaware"
+      ],
+      "log": "/workspace/q4-rerun-stage1-cohere-typeaware.jsonl"
+    },
+    "census": {
+      "exit": 1,
+      "wall_seconds": 0.293,
+      "command": [
+        "go",
+        "run",
+        "./internal/skipcensus/cmd",
+        "/workspace/q4-whole-restart.jsonl"
+      ],
+      "log": "/workspace/q4-census.txt"
     }
   },
   "reruns": [
@@ -183,6 +222,16 @@
       "log": "/workspace/q4-rerun-stage1-cohere-estree.jsonl",
       "exit": null,
       "status": "interrupted-environment"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "log": "/workspace/q4-rerun-stage1-cohere-lint.jsonl",
+      "exit": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "log": "/workspace/q4-rerun-stage1-cohere-typeaware.jsonl",
+      "exit": 0
     }
   ],
   "order_starts": [
@@ -307,5 +356,8 @@
     "gate-logs/dc135a74f70d/20261007T215717/whole",
     "gate-logs/dc135a74f70d/20261007T220149/whole"
   ],
-  "gate_logs_branch": "gate-logs/dc135a74f70d/20261008T001644/whole"
+  "gate_logs_branch": "gate-logs/dc135a74f70d/20261008T001644/whole",
+  "stage3_exit": 1,
+  "finished": 1791423561.653151,
+  "wall_seconds": 13052.38
 }

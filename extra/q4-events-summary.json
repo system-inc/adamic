@@ -281,6 +281,7 @@
         "output": "=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a\n=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a\n=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a\n    ranges_test.go:28: suspension-state tracing is NotYet; these programs use no synchronous lifetime proofs and have a separate async Node oracle\n--- SKIP: TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a (0.08s)\n"
       }
     ],
+    "package_skips": [],
     "required": [],
     "gate_cache": [],
     "non_json": [],
@@ -298,6 +299,106 @@
     },
     "failures": [],
     "skips": [],
+    "package_skips": [
+      {
+        "package": "github.com/system-inc/adamic/bench",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bench\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bench/regex",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/archive",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/archive\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/cost",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/cost\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/oracle",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/oracle\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/spec",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/spec\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cloud/reports/decode-ascii\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cloud/reports/release-lto",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cloud/reports/release-lto\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-lint-check",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-lint-check\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-metamorphic",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-metamorphic\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-reduce",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-reduce\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-refusals",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-refusals\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/lint-registry",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/lint-registry\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/internal/boundedrun/testfixture",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/internal/boundedrun/testfixture\t[no test files]\n"
+      }
+    ],
     "required": [],
     "gate_cache": [],
     "non_json": [],
@@ -1161,6 +1262,176 @@
         "output": "=== RUN   TestThroughput\n    throughput_test.go:16: set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput\n--- SKIP: TestThroughput (0.00s)\n"
       }
     ],
+    "package_skips": [
+      {
+        "package": "github.com/system-inc/adamic/bench",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bench\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bench/regex",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/archive",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/archive\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/cost",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/cost\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/oracle",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/oracle\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/bridge/tsgo/spec",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/bridge/tsgo/spec\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-reduce",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-reduce\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/lint-registry",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/lint-registry\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/internal/javascript",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/internal/javascript\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage3/census/latent/tool",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage3/census/latent/tool\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage3/census/tool",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage3/census/tool\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/stage3/drivers/parser/probe\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cloud/reports/decode-ascii\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cloud/reports/release-lto",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cloud/reports/release-lto\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-lint-check",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-lint-check\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-metamorphic",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-metamorphic\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic-refusals",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/cmd/adamic-refusals\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/internal/boundedrun/testfixture",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/internal/boundedrun/testfixture\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/internal/leakcheck",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/internal/leakcheck\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/internal/skipcensus/cmd",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/internal/skipcensus/cmd\t[no test files]\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/verify/coverage/runtimelibrary",
+        "test": "",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "?   \tgithub.com/system-inc/adamic/verify/coverage/runtimelibrary\t[no test files]\n"
+      }
+    ],
     "required": [
       {
         "package": "github.com/system-inc/adamic/stage1/cohere/lint",
@@ -1290,6 +1561,7 @@
       }
     ],
     "skips": [],
+    "package_skips": [],
     "required": [],
     "gate_cache": [],
     "non_json": [],
@@ -1327,6 +1599,7 @@
       }
     ],
     "skips": [],
+    "package_skips": [],
     "required": [],
     "gate_cache": [],
     "non_json": [],
@@ -1336,7 +1609,7 @@
   },
   "q4-rerun-stage1-cohere-estree.jsonl": {
     "counts": {
-      "test_pass": 6,
+      "test_pass": 44,
       "test_skip": 2
     },
     "failures": [],
@@ -1356,11 +1629,87 @@
         "output": "=== RUN   TestCorpusNativeRefusals\n    corpus_test.go:84: completed frozen corpus required\n--- SKIP: TestCorpusNativeRefusals (0.00s)\n"
       }
     ],
+    "package_skips": [],
     "required": [],
     "gate_cache": [],
     "non_json": [],
     "starts": [
       "github.com/system-inc/adamic/stage1/cohere/estree"
+    ]
+  },
+  "q4-rerun-stage1-cohere-lint.jsonl": {
+    "counts": {
+      "test_pass": 100,
+      "test_skip": 5,
+      "package_pass": 1
+    },
+    "failures": [],
+    "skips": [
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestJsxLintReleaseAndThroughput",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "=== RUN   TestJsxLintReleaseAndThroughput\n    jsx_integration_test.go:74: set ADAMIC_LINT_BENCH=1 for JSX throughput\n--- SKIP: TestJsxLintReleaseAndThroughput (0.00s)\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestThroughput",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "=== RUN   TestThroughput\n    lint_test.go:666: set ADAMIC_LINT_BENCH=1\n--- SKIP: TestThroughput (0.00s)\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestProfileArtifacts",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "=== RUN   TestProfileArtifacts\n    profile_test.go:20: set ADAMIC_LINT_PROFILE_DIR to a scratch directory\n--- SKIP: TestProfileArtifacts (0.00s)\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestProfileSnapshotsAgree",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "=== RUN   TestProfileSnapshotsAgree\n    profile_test.go:162: set ADAMIC_LINT_PROFILE_SNAPSHOTS\n--- SKIP: TestProfileSnapshotsAgree (0.00s)\n"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestRule",
+        "action": "skip",
+        "elapsed": 0,
+        "output": "=== RUN   TestRule\n    rule_check_test.go:132: use cmd/adamic-lint-check <slug> or -args -rule <slug>\n--- SKIP: TestRule (0.00s)\n"
+      }
+    ],
+    "package_skips": [],
+    "required": [
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "test": "TestCompilerAndStage1Agree",
+        "action": "pass",
+        "elapsed": 98.88,
+        "output": "=== RUN   TestCompilerAndStage1Agree\n    lint_test.go:528: compiler and stage1: 550 files\n    lint_test.go:137: clang build: 35.812s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]\n    lint_test.go:529: Go, Node, emitted JavaScript, native identical: 22284158 bytes\n--- PASS: TestCompilerAndStage1Agree (98.88s)\n"
+      }
+    ],
+    "gate_cache": [],
+    "non_json": [],
+    "starts": [
+      "github.com/system-inc/adamic/stage1/cohere/lint"
+    ]
+  },
+  "q4-rerun-stage1-cohere-typeaware.jsonl": {
+    "counts": {
+      "test_pass": 25,
+      "package_pass": 1
+    },
+    "failures": [],
+    "skips": [],
+    "package_skips": [],
+    "required": [],
+    "gate_cache": [],
+    "non_json": [],
+    "starts": [
+      "github.com/system-inc/adamic/stage1/cohere/typeaware"
     ]
   }
 }
