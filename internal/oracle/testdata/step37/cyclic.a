@@ -1,0 +1,56 @@
+// Reduced parser.ts:1814,2594,2600,3094 shapes: per-file SourceElements,
+// fresh node list, positions, then an owned acyclic AST returned through the join.
+// Grammar here is deliberately only: ("const " ASCIIIdentifier "=" Decimal ";")*.
+import { parallelMap } from 'adamic';
+interface Declaration {
+    readonly pos: number;
+    readonly end: number;
+    readonly name: string;
+    value: number;
+    parent: SourceFile | undefined;
+}
+interface SourceFile {
+    readonly index: number;
+    readonly end: number;
+    readonly statements: Declaration[];
+}
+function identifierPart(code: number): boolean {
+    return (code >= 65 && code <= 90) || (code >= 97 && code <= 122) ||
+        (code >= 48 && code <= 57) || code === 95;
+}
+function parseSourceElements(text: string, index: number): SourceFile {
+    const list: Declaration[] = [];
+    const file: SourceFile = { index, end: text.length, statements: list };
+    let position = 0;
+    while (position < text.length) {
+        const pos = position;
+        if (text.slice(position, position + 6) !== 'const ') { throw new Error('expected const'); }
+        position += 6;
+        const start = position;
+        while (position < text.length && identifierPart(text.charCodeAt(position))) { position++; }
+        if (position === start || text.charCodeAt(start) >= 48 && text.charCodeAt(start) <= 57) { throw new Error('expected identifier'); }
+        const name = text.slice(start, position);
+        if (text.charCodeAt(position) !== 61) { throw new Error('expected equals'); }
+        position++;
+        const numberStart = position;
+        let value = 0;
+        while (position < text.length && text.charCodeAt(position) >= 48 && text.charCodeAt(position) <= 57) {
+            value = value * 10 + text.charCodeAt(position) - 48;
+            position++;
+        }
+        if (position === numberStart || text.charCodeAt(position) !== 59) { throw new Error('expected number and semicolon'); }
+        position++;
+        const node: Declaration = { pos, end: position, name, value, parent: undefined };
+        node.parent = file;
+        list.push(node);
+    }
+    return file;
+}
+const cases: readonly string[] = ['', 'const alpha=1;const beta=2;', 'const gamma=3;', 'const long_name=42;'];
+const files: readonly string[] = Array.from({ length: 128 }, (_unused, index) => cases[index % cases.length] ?? '');
+const parsed = parallelMap(files, parseSourceElements);
+for (const file of parsed) {
+    const lines: string[] = [];
+    for (const node of file.statements) { node.value += 10; lines.push(`${node.pos}:${node.end}:${node.name}:${node.value}`); }
+    console.log(`${file.index}/${file.end}/${lines.join('|')}`);
+}

@@ -310,7 +310,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	f.graphFlows()
-	return nil
+	return f.parallelJoinResults(modules)
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {

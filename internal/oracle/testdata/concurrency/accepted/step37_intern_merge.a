@@ -1,0 +1,52 @@
+// Each parse invocation owns its pool and cache. Join order is file order,
+// followed by each file's insertion order, independent of executor assignment.
+import { parallelMap } from 'adamic';
+interface FilePool {
+    readonly names: readonly string[];
+    readonly uses: readonly number[];
+}
+const cases: readonly string[] = ['beta alpha beta', '__proto__ constructor', 'βeta 𐐀name βeta', '', 'alpha gamma beta'];
+const files: readonly string[] = Array.from({ length: 128 }, (_unused, index) => cases[index % cases.length] ?? '');
+const pools = parallelMap(files, (text: string): FilePool => {
+    const intern = new Map<string, number>();
+    const cache = new Map<string, string>();
+    const names: string[] = [];
+    const uses: number[] = [];
+    for (const token of text.split(' ')) {
+        if (token === '') { continue; }
+        const name = `!${token}!`.slice(1, -1);
+        let local = intern.get(name);
+        if (local === undefined) {
+            local = names.length;
+            intern.set(name, local);
+            names.push(name);
+            cache.set(name, name.toUpperCase());
+        }
+        uses.push(local);
+    }
+    return { names, uses };
+});
+const merged = new Map<string, number>();
+const names: string[] = [];
+for (let file = 0; file < pools.length; file++) {
+    const pool = pools[file];
+    if (pool === undefined) { throw new Error('missing file pool'); }
+    const remap: number[] = [];
+    for (const name of pool.names) {
+        let canonical = merged.get(name);
+        if (canonical === undefined) {
+            canonical = names.length;
+            merged.set(name, canonical);
+            names.push(name);
+        }
+        remap.push(canonical);
+    }
+    const uses: number[] = [];
+    for (const local of pool.uses) {
+        const canonical = remap[local];
+        if (canonical === undefined) { throw new Error('missing intern remap'); }
+        uses.push(canonical);
+    }
+    console.log(`${file}/${uses.join(',')}`);
+}
+console.log(names.join('|'));
