@@ -33,9 +33,9 @@ esac
                         ADAMIC_FAST_GATE_WATCH_STATE=str(self.root), ADAMIC_FAST_GATE_WATCH_LOG=str(self.root / 'watch.log'),
                         ADAMIC_FAST_GATE_AHRA_DIR=str(self.root), ADAMIC_FULL_GATE_LOG=str(self.root / 'full.log'),
                         ADAMIC_MAIN_REDS=str(self.root / 'main-reds.tsv'), ADAMIC_LANDED_SHAS=str(self.root / 'landed'),
-                        ADAMIC_MAIN_HEAD=str(self.root / 'main-head'))
+                        ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'))
         self.now = int(time.time())
-        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head'):
+        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running'):
             (self.root / name).write_text('')
 
     def check(self):
@@ -65,6 +65,15 @@ esac
         (self.root / 'running/123').write_text('cloud/land-stack-x1-views-slice1 %s S server B token log\n' % star)
         self.assertEqual(len(self.check()), 2)
         (self.root / 'running/123').unlink()
+
+    def test_a_whole_gate_running_on_the_star_is_a_live_turn(self):
+        # Oct 8 22:21Z: the star's fast gate went red, and its one-off full-main run on Home was the live turn.
+        (self.root / 'seen').write_text('cloud/land-train-1-views-slice1 %s\n' % star)
+        (self.root / 'watch.log').write_text('22:21:39 done cloud/land-train-1-views-slice1: red: %s fast gate, first failure at deferred\n' % star)
+        (self.root / 'full-running').write_text(other + '\n' + star + '\n')
+        self.assertEqual(self.check(), [])
+        (self.root / 'full-running').write_text(other + '\n')
+        self.assertEqual(len(self.check()), 2, 'a whole gate of another commit is not the star\'s turn')
 
     def test_a_red_with_no_newer_push_pages_and_a_push_rearms(self):
         # Case two (Oct 8, 20:29Z): the star's first red sat until a tick read the log.

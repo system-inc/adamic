@@ -93,6 +93,16 @@ def matches(branch, globs):
     return any(fnmatch.fnmatchcase(branch, glob) for glob in globs)
 
 
+def fullRuns():
+    """The commits a one-off whole gate is running on now (cloud/full-gate-main.sh <sha>, started by hand on a
+    star candidate); a test names them in ADAMIC_FULL_GATE_RUNNING."""
+    stand = os.environ.get('ADAMIC_FULL_GATE_RUNNING')
+    if stand is not None:
+        return [line.strip() for line in lines(Path(stand)) if line.strip()]
+    listing = subprocess.run(['ps', '-axo', 'command'], capture_output=True, text=True).stdout
+    return re.findall(r'full-gate-main\.sh ([0-9a-f]{40})\b', listing)
+
+
 def check(step, now):
     """The star's state and, when it has no live turn, the alarm's key and text."""
     globs = step['globs']
@@ -100,6 +110,16 @@ def check(step, now):
         fields = (lines(entry) or [''])[0].split()
         if fields and matches(fields[0], globs):
             return 'running %s %s' % (fields[0], fields[1][:12]), None, None
+    # A whole gate of a star candidate is a live turn too (@system_adamic, Oct 8: the alarm called the star
+    # turn-less while its one-off full-main run on Home was 30 minutes in).
+    tips = {}
+    for line in lines(state / 'seen'):
+        fields = line.split()
+        if len(fields) == 2 and matches(fields[0], globs):
+            tips[fields[1]] = fields[0]
+    for sha in fullRuns():
+        if sha in tips:
+            return 'running full-main %s %s' % (tips[sha], sha[:12]), None, None
     queued = [line.split() for line in lines(state / 'queue') if len(line.split()) >= 4 and matches(line.split()[2], globs)]
     if queued:
         _, since, branch, sha = min(queued, key=lambda fields: int(fields[1]))[:4]
