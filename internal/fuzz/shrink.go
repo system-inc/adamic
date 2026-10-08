@@ -17,12 +17,12 @@ import (
 // that now fails some other way, is simply not kept. try runs one candidate at a time.
 func Shrink(program *Program, key string, try func(*Program) Outcome) *Program {
 	reduced := reduce(&programTree{program: program.Clone()}, func(candidate Reducible) bool {
-		program := candidate.(*programTree).program
-		// Keep the actual task boundary of a move refusal, not only its comments.
-		if program.RefusalFix != "" && !strings.Contains(program.Source(), "parallelMap(") {
+		// A move refusal's comments alone would make any accepted empty program
+		// look like the same compiler regression. Keep the actual task boundary.
+		if program.RefusalFix != "" && !strings.Contains(candidate.Source(), "parallelMap(") {
 			return false
 		}
-		outcome := try(program)
+		outcome := try(candidate.(*programTree).program)
 		return outcome.Verdict == Finding && outcome.Key == key
 	}, 1, 3000)
 	return reduced.(*programTree).program

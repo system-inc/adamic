@@ -41,6 +41,8 @@ static bool visited(pending_values *pending, void *value) {
 }
 static void append(pending_values *pending, void *value) {
 	if (value == NULL) { return; }
+	adamic_heap *heap = value;
+	if (heap->kind == adamic_kind_cell && ((adamic_cell *)value)->owner != NULL) value = ((adamic_cell *)value)->owner;
 	if (pending->count == pending->capacity) {
 		size_t capacity = pending->capacity == 0 ? 64 : pending->capacity * 2;
 		void **values = realloc(pending->values, capacity * sizeof *values);
@@ -58,6 +60,11 @@ void adamic_share(void *value) {
 	append(&pending, value);
 	while (pending.count != 0) {
 		adamic_heap *heap = pending.values[--pending.count];
+		// A graph region's counts are plain and single-threaded (graph_regions.c); the compiler
+		// refuses a graph value reaching a task, and this is the backstop.
+		if ((heap->slab & ADAMIC_GRAPH_FLAG) != 0) {
+			adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);
+		}
 		bool shared = adamic_is_shared(heap);
 		// Immutable shared leaves cannot gain children. Containers can have gained fresh descendants
 		// through unique reuse before the caller retained them again, so always revisit containers.
@@ -98,6 +105,13 @@ void adamic_share(void *value) {
 			}
 			break;
 		}
+		case adamic_kind_environment: {
+            adamic_environment *environment = (adamic_environment *)heap;
+            for (size_t index = 0; index < environment->count; index++) {
+                if (environment->cells[index].references) append(&pending, environment->cells[index].value.reference);
+            }
+            break;
+        }
 		case adamic_kind_cell: {
 			adamic_cell *cell = (adamic_cell *)heap;
 			if (cell->references) { append(&pending, cell->value.reference); }
@@ -109,7 +123,7 @@ void adamic_share(void *value) {
 			break;
 		}
 		case adamic_kind_number: case adamic_kind_boolean: break;
-		case adamic_kind_weak: case adamic_kind_map_iterator:
+		case adamic_kind_weak: case adamic_kind_map_iterator: case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);
 		}
 	}

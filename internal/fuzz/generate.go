@@ -30,8 +30,7 @@ func Generate(seed uint64) *Program {
 // Features are the parts of the language the generator can leave out by name, so it can stay inside
 // what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
 var Features = []string{
-	"moves",             // inferred task ownership of fresh mutable records
-	"parallel",          // readonly parallelMap and refusal shapes
+	"moves",             // inferred task ownership of fresh mutable records, plus exact refusals
 	"field-updates",     // +=, ++ and the rest on a field (holder.value += 1), not plain =
 	"number-tostring",   // (1.5).toString()
 	"number-functions",  // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
@@ -54,6 +53,7 @@ var Features = []string{
 	"optional-chains",   // ?. and ?? through a linked list that may end anywhere
 	"number-formats",    // toExponential and toPrecision
 	"array-from",        // Array.from({ length }, callback)
+	"parallel",          // parallelMap over readonly values, plus a share of programs that must be refused
 	"inheritance",       // a subclass, an override, a super call, and a base-typed virtual call
 	"map-keys",          // a number Map and a number Set, including NaN and -0
 	"regex",             // regular expression literals: exec, replace, replaceAll and split
@@ -77,13 +77,13 @@ func GenerateFeatures(seed uint64, without []string, with []string) *Program {
 	for _, feature := range without {
 		generator.without[feature] = true
 	}
+	for _, feature := range with {
+		generator.with[feature] = true
+	}
 	// Select the family on a separate stream: adding moves must not perturb
 	// established ordinary seeds into unrelated invalid programs.
 	if generator.allowed("parallel") && generator.allowed("moves") && rand.New(rand.NewPCG(seed, 0x6d6f766573)).IntN(2) == 0 {
 		return generator.movesProgram()
-	}
-	for _, feature := range with {
-		generator.with[feature] = true
 	}
 	return generator.program()
 }

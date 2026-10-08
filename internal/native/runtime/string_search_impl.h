@@ -5,6 +5,9 @@
 // supplementary character, which UTF-16 sees and the bytes (four of them, whole) don't. Only those
 // searches go unit by unit.
 static bool halves_pairs(const adamic_string *search) {
+	if (search->units == search->length + 1) {
+		return false;
+	}
 	units walk = units_start(search);
 	unsigned unit, first = 0, last = 0;
 	bool any = false;
@@ -51,6 +54,20 @@ double adamic_string_index_of(const adamic_string *string, const adamic_string *
 double adamic_string_index_of_at(const adamic_string *string, const adamic_string *search, size_t from) {
 	if (search->length == 0) {
 		return (double)from;
+	}
+	if (string->units == string->length + 1) {
+		// ASCII positions are bytes. Even an uncounted needle can be compared by bytes:
+		// no surrogate half can match this haystack.
+		if (from > string->length || search->length > string->length - from) {
+			return -1;
+		}
+		for (size_t offset = from; offset <= string->length - search->length; offset++) {
+			if (string->bytes[offset] == search->bytes[0] &&
+				memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
+				return (double)offset;
+			}
+		}
+		return -1;
 	}
 	if (halves_pairs(search)) {
 		size_t haystack_count, needle_count;

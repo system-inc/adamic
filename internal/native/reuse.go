@@ -370,7 +370,7 @@ func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 // checkDefined emits ir.Defined's check of a value: NULL panics with the message.
 func (e *emitter) checkDefined(value string, message string) {
 	e.line("if (%s == NULL) {", value)
-	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 }
@@ -521,6 +521,9 @@ type taking struct {
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
+	if e.graphTypes(literal.GraphTypes) {
+		return "", false
+	}
 	read, ok := variableRead(literal.Spread)
 	if !ok || !e.reuse.spreads[e.at][read.Local] {
 		return "", false
@@ -529,7 +532,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := fmt.Sprintf("(%s && !%s->frozen && !%s->nonextensible && !%s->has_captured_stack)", uniquelyHeld(source), source, source, source)
+	held := fmt.Sprintf("(%s && !%s->frozen && !%s->nonextensible && !%s->has_captured_stack)", e.graphUnique(source), source, source, source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
@@ -690,13 +693,16 @@ func sameSlots(left, right ir.Type) bool {
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
 func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+	if e.graphTypes(expression.GraphTypes) {
+		return "", false
+	}
 	read, ok := variableRead(expression.Array)
 	if !ok || !e.reuse.arrays[e.at][read.Local] {
 		return "", false
 	}
 	source := e.variable(expression.Array, read)
 	unique := e.temporary()
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
+	e.line("bool %s = %s;", unique, e.graphUnique(source))
 	callback := e.value(expression.Callback)
 	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
@@ -724,6 +730,9 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 // when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
 // new array, as any literal.
 func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+	if e.graphTypes(literal.GraphTypes) {
+		return "", false
+	}
 	if len(literal.Spread) == 0 || !literal.Spread[0] {
 		return "", false
 	}
@@ -733,7 +742,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	}
 	source := e.variable(literal.Elements[0], read)
 	unique := e.temporary()
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
+	e.line("bool %s = %s;", unique, e.graphUnique(source))
 	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
 	e.line("if (!%s) {", unique)
 	e.line("\tadamic_array_append(%s, %s);", array, source)

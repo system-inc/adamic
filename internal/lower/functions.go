@@ -88,6 +88,25 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.Returns = valueType
 		}
 	}
+	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) {
+		returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
+		if !l.isLibraryType(returns, "Promise") {
+			return l.notYet(declaration, "an async result other than the library Promise")
+		}
+		arguments := l.checker.GetTypeArguments(returns)
+		if len(arguments) != 1 {
+			return l.notYet(declaration, "full Promise compatibility")
+		}
+		function.Async = true
+		function.Returns = ir.Promise
+		if arguments[0].Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined|checker.TypeFlagsNever) == 0 {
+			var known bool
+			function.AsyncReturns, known = l.representation(arguments[0])
+			if !known {
+				return l.notYet(declaration, "an async payload of "+l.checker.TypeToString(arguments[0]))
+			}
+		}
+	}
 	outerIndexForParameters := l.functionIndex
 	l.functionIndex = index
 	defer func() { l.functionIndex = outerIndexForParameters }()
@@ -211,7 +230,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	}
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
-	} else if function.Returns == 0 || l.isPanicCall(body) {
+	} else if function.BodyReturns() == 0 || l.isPanicCall(body) {
 		// An arrow function's expression body, when it returns nothing or never returns (() =>
 		// panic('why')), is a statement.
 		lowered, err = l.expressionStatement(body)
@@ -219,7 +238,8 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		// Otherwise its value is what it returns.
 		var value ir.Expression
 		if value, err = l.expression(body); err == nil {
-			lowered = []ir.Statement{ir.Return{Value: fit(value, function.Returns)}}
+			err = l.checkAsyncReturn(body, value)
+			lowered = []ir.Statement{ir.Return{Value: fit(value, function.BodyReturns())}}
 		}
 	}
 	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
@@ -240,6 +260,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Environment = l.result.Functions[index].Environment
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }

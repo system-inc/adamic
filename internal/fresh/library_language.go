@@ -6,6 +6,9 @@ import "github.com/system-inc/adamic/internal/ir"
 // for their reachability until the cycle finder has a more precise model of reflected keys and
 // the current closure: operands escape, results are outside, and parameters are clobbered.
 func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
+	if value, known := a.typedArray(expression); known {
+		return value, true
+	}
 	switch expression := expression.(type) {
 	case ir.ArrayHoles, ir.ArraySetLength, ir.ArrayRangeErrorIs:
 		return a.arrayHoles(expression), true

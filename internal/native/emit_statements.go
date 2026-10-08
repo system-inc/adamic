@@ -67,7 +67,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			local := e.program.Locals[statement.Local]
+			if local.Captured {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
 		if e.elementBorrows[e.at] {
 			e.borrowElement(statement)
 			return
@@ -144,8 +157,13 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
+		if statement.Array.Type().IsTypedArray() {
+			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
+			e.end()
+			break
+		}
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		setter := "adamic_array_set"
 		if e.hasArrayHoles() {
@@ -159,7 +177,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
 		e.line("if (%s == NULL) {", object)
-		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
+		e.line("\tstatic const char message[] = %s;", cArray("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
@@ -169,8 +187,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, e.kept(value))
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -280,6 +302,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}
@@ -309,7 +332,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
 	overRegex := statement.RegexIterator
-	if overMap {
+	overTyped := statement.Iterable.Type().IsTypedArray()
+	if overTyped {
+		e.line("adamic_typed_array_iterator *%s = adamic_typed_array_iterate(%s);", held, iterable)
+	} else if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
 	} else if e.elementBorrows[e.at] {
 		// The same proof lends both the element and the array. Neither owns a count here.
@@ -326,7 +352,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.temporaries++
 	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
 	entryKey, entryValue := e.temporary(), e.temporary()
-	if overMap {
+	if overTyped {
+		e.line("double %s;", entryValue)
+		e.line("while (adamic_typed_array_iterator_next(%s, &%s)) {", held, entryValue)
+	} else if overMap {
 		e.line("adamic_value %s, %s;", entryKey, entryValue)
 		e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", held, entryKey, entryValue)
 	} else if overRegex {
@@ -384,6 +413,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
 			}
 			e.declareLocal(binding.Local, field, false)
 		}
+	} else if overTyped {
+		e.declareLocal(statement.Local, entryValue, false)
 	} else if overRegex {
 		e.declareLocal(statement.Local, entryValue, true)
 	} else if overString {

@@ -1,0 +1,92 @@
+// A bounded cache and an id-indexed record store, with a set of active names. Churn builds keys
+// afresh on every request; final rolling checksums depend on insertion order, not just contents.
+interface RecordValueInterface {
+    readonly value: number;
+    readonly revision: number;
+}
+
+let seed = 23;
+function next(limit: number): number {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return (seed >>> 8) % limit;
+}
+
+function key(identifier: number): string {
+    return `tenant_${identifier % 17}/item_${`${identifier}`.padStart(5, '0')}`;
+}
+
+function fold(total: number, value: number): number {
+    return (total * 33 + value) % 2147483647;
+}
+
+function foldText(initial: number, text: string): number {
+    let total = initial;
+    for(let index = 0; index < text.length; index += 1) {
+        total = fold(total, text.charCodeAt(index));
+    }
+    return total;
+}
+
+function workload(initial: number): number {
+    let total = initial;
+    const cache = new Map<string, number>();
+    const records = new Map<number, RecordValueInterface>();
+    const active = new Set<string>();
+    for(let identifier = 0; identifier < 2048; identifier += 1) {
+        const name = key(identifier);
+        const value = next(10000);
+        cache.set(name, value);
+        records.set(identifier, { value, revision: 0 });
+        active.add(name);
+    }
+    for(let request = 0; request < 16384; request += 1) {
+        const identifier = next(4096);
+        const name = key(identifier);
+        const operation = next(100);
+        if(operation < 20) {
+            const value = next(10000);
+            cache.set(name, value);
+            records.set(identifier, { value, revision: request });
+            active.add(name);
+        }
+        else if(operation < 65) {
+            const cached = cache.get(name);
+            const record = records.get(identifier);
+            total = fold(total, cached ?? 10001);
+            total = fold(total, record === undefined ? 10002 : record.value);
+            total = fold(total, active.has(name) ? 1 : 0);
+        }
+        else if(operation < 85) {
+            cache.set(name, (cache.get(name) ?? 0) + 1);
+            const record = records.get(identifier);
+            if(record !== undefined) {
+                records.set(identifier, { value: record.value + 1, revision: request });
+            }
+            active.add(name);
+        }
+        else {
+            total = fold(total, cache.delete(name) ? 1 : 0);
+            total = fold(total, records.delete(identifier) ? 1 : 0);
+            total = fold(total, active.delete(name) ? 1 : 0);
+        }
+    }
+    for(const [name, value] of cache) {
+        total = foldText(total, name);
+        total = fold(total, value);
+    }
+    for(const [identifier, record] of records) {
+        total = fold(total, identifier);
+        total = fold(total, record.value);
+        total = fold(total, record.revision);
+    }
+    for(const name of active) {
+        total = foldText(total, name);
+    }
+    return fold(fold(fold(total, cache.size), records.size), active.size);
+}
+
+let total = 0;
+for(let batch = 0; batch < 4; batch += 1) {
+    total = workload(total);
+}
+console.log(`${total}`);

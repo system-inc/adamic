@@ -242,3 +242,110 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 		t.Fatalf("want one published entry with no temporary builds, got %d", len(entries))
 	}
 }
+
+func TestRuntimeCacheRemembersFailure(t *testing.T) {
+	// Not parallel: publish the compiler wrapper before other tests fork, as in the success test.
+	const variable = "ADAMIC_TEST_RUNTIME_FAILURE"
+	files := []runtimeFile{{"answer.c", []byte("#ifndef REPAIRED\n#error deliberately broken runtime\n#endif\nint answer(void) { return 42; }\n")}}
+	flags := Flags(Options{})
+	if directory := os.Getenv(variable); directory != "" {
+		library, err := cachedRuntime(files, flags, filepath.Join(directory, "clang"), "failure test", filepath.Join(directory, "cache"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		runLibrary(t, library, "42\n")
+		return
+	}
+	directory := t.TempDir()
+	compiler, err := exec.LookPath("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	wrapper := filepath.Join(directory, "clang")
+	log := filepath.Join(directory, "compiled")
+	repaired := filepath.Join(directory, "repaired")
+	quote := func(value string) string { return "'" + strings.ReplaceAll(value, "'", "'\\''") + "'" }
+	// Repair the compiler's external include environment without changing any cache-key input.
+	// This proves a fresh process retries the exact failed key, rather than merely a new source key.
+	script := fmt.Sprintf("#!/bin/sh\necho compiled >> %s\nif [ -f %s ]; then exec %s -DREPAIRED \"$@\"; fi\nexec %s \"$@\"\n", quote(log), quote(repaired), quote(compiler), quote(compiler))
+	if err := os.WriteFile(wrapper, []byte(script), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	cache := filepath.Join(directory, "cache")
+	const callers = 10
+	failures := make([]error, callers)
+	start := make(chan struct{})
+	var workers sync.WaitGroup
+	for index := range callers {
+		workers.Go(func() {
+			<-start
+			_, failures[index] = cachedRuntime(files, flags, wrapper, "failure test", cache)
+		})
+	}
+	close(start)
+	workers.Wait()
+	for index, failure := range failures {
+		if failure == nil || !strings.Contains(failure.Error(), "deliberately broken runtime") {
+			t.Fatalf("caller %d: expected compiler diagnostic, got %v", index, failure)
+		}
+		if failure != failures[0] || failure.Error() != failures[0].Error() {
+			t.Fatalf("caller %d received a different error: %v", index, failure)
+		}
+	}
+	compilations := func(want int) {
+		t.Helper()
+		compiled, err := os.ReadFile(log)
+		if err != nil || string(compiled) != strings.Repeat("compiled\n", want) {
+			t.Fatalf("want %d clang calls, got %q: %v", want, compiled, err)
+		}
+	}
+	compilations(1)
+	entries, err := os.ReadDir(cache)
+	if err != nil || len(entries) != 0 {
+		t.Fatalf("failed build published disk entries: %v, %v", entries, err)
+	}
+	if err := os.WriteFile(repaired, nil, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := cachedRuntime(files, flags, wrapper, "failure test", cache); err != failures[0] {
+		t.Fatalf("same process forgot its failure: %v", err)
+	}
+	compilations(1)
+	// Another flag set gets its own attempt even in the process holding the failed key.
+	library, err := cachedRuntime(files, append(append([]string{}, flags...), "-DOTHER_FLAGS"), wrapper, "failure test", cache)
+	if err != nil {
+		t.Fatal(err)
+	}
+	runLibrary(t, library, "42\n")
+	compilations(2)
+	command := exec.Command(os.Args[0], "-test.run=^TestRuntimeCacheRemembersFailure$")
+	command.Env = append(os.Environ(), variable+"="+directory)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("fresh process failed to rebuild repaired runtime: %v\n%s", err, output)
+	}
+	compilations(3)
+}
+
+func TestRuntimeCacheRemembersSetupFailure(t *testing.T) {
+	t.Parallel()
+	compiler, err := exec.LookPath("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cache := filepath.Join(t.TempDir(), "cache")
+	if err := os.WriteFile(cache, nil, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
+	flags := Flags(Options{})
+	_, first := cachedRuntime(files, flags, compiler, "setup failure test", cache)
+	if first == nil || !strings.Contains(first.Error(), "runtime cache") {
+		t.Fatalf("expected cache setup failure, got %v", first)
+	}
+	if err := os.Remove(cache); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := cachedRuntime(files, flags, compiler, "setup failure test", cache); err != first {
+		t.Fatalf("setup error was not remembered: %v", err)
+	}
+}

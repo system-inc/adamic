@@ -35,6 +35,9 @@ enum adamic_kind {
 	adamic_kind_async_frame,
 	adamic_kind_async_promise,
 	adamic_kind_async_reaction,
+	adamic_kind_typed_array,
+	adamic_kind_typed_array_iterator,
+	adamic_kind_environment,
 };
 
 typedef struct adamic_heap {
@@ -50,8 +53,17 @@ typedef struct adamic_heap {
 // immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
 #define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
 _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
+// adamic_heap.slab is a chunk number plus one (zero for malloc) in its low 29 bits, and three
+// flags above them: shared, a statement region's value (region.c), and a graph region member with
+// its two-word prefix (graph_regions.h). The heap keeps chunk numbers below the lowest flag.
 #define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+#define ADAMIC_GRAPH_FLAG UINT32_C(0x20000000)
+_Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
+	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
+// Values whose counts the inline paths below must not touch: shared ones count atomically, and a
+// graph member counts on its region too (graph_regions.c).
+#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG)
 static inline bool adamic_is_shared(const adamic_heap *heap) {
 	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
 }
@@ -67,11 +79,13 @@ void *adamic_retain_slow(void *value);
 void adamic_release_slow(void *value);
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
-// separate bit first: a plain read of a shared count would race with its atomic updates.
+// separate bit first: a plain read of a shared count would race with its atomic updates. A graph
+// member's header bit sends it the same way, to count on its region; an environment's interior cell
+// has count zero, so it too reaches the slow path, which counts its environment.
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (heap != NULL && !adamic_is_shared(heap)) {
+	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
 	}
@@ -81,12 +95,22 @@ static inline void *adamic_retain(void *value) {
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (heap != NULL && !adamic_is_shared(heap)) {
+	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
 	}
 	adamic_release_slow(value);
 }
+
+// Graph allocation and slot ownership (graph_regions.c). Ordinary references use
+// adamic_retain/release, which dispatch to the object's current region root.
+void *adamic_graph_adopt(void *value, size_t bytes);
+void *adamic_graph_adopt_owned(void *value, size_t bytes);
+void *adamic_graph_hold(void *holder, void *value);
+void adamic_graph_drop(void *holder, void *value);
+void *adamic_graph_escape(void *holder, void *value);
+void *adamic_graph_take(void *holder, void *value);
+bool adamic_graph_counted(const void *value);
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);
@@ -116,8 +140,20 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
+	adamic_heap *owner;
 	adamic_value value;
 } adamic_cell;
+
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
@@ -278,9 +314,20 @@ typedef struct adamic_region_block adamic_region_block;
 typedef struct adamic_region {
 	adamic_region_block *blocks;
 	size_t count;
+	bool holds_outside;
 } adamic_region;
-#define ADAMIC_REGION {NULL, 0}
+#define ADAMIC_REGION {NULL, 0, false}
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+// filled_in is only for a literal that fills every slot without a throwing operation or
+// publication between allocation and completion. Constructors use the zeroed allocator above.
+adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape);
+// Literal stores report a counted child; same-region values and constants need no cleanup.
+static inline void adamic_region_hold(adamic_region *region, const void *value) {
+	if (value != NULL && ((const adamic_heap *)value)->references != 0) {
+		region->holds_outside = true;
+	}
+}
+bool adamic_region_contains(const adamic_region *region, const void *value);
 void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
@@ -371,6 +418,44 @@ bool adamic_array_is_range_error(const adamic_object *value);
 adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
 void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
 void adamic_array_holes_set_length(adamic_array *array, double length);
+// Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
+// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+enum adamic_typed_array_kind {
+	adamic_typed_array_uint8 = 1,
+	adamic_typed_array_int32,
+	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
+};
+typedef struct adamic_typed_array {
+	adamic_heap heap;
+	enum adamic_typed_array_kind kind;
+	size_t length;
+	void *data;
+	// NULL owns data; a view holds one count on the ultimate owning array.
+	struct adamic_typed_array *owner;
+} adamic_typed_array;
+
+adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
+adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
+// The check is also called by compiler-inserted write checks. set always checks itself.
+// Panic text is the plain-array form: index <index> is outside an array of length <length>.
+void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
+void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+double adamic_typed_array_length(const adamic_typed_array *array);
+adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
+adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
+
+// A counted iterator holds the array until released, including on early loop exits.
+// next reads current storage, never a snapshot. false means exhausted.
+typedef struct adamic_typed_array_iterator {
+	adamic_heap heap;
+	adamic_typed_array *array;
+	size_t next;
+} adamic_typed_array_iterator;
+adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
+bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
@@ -832,6 +917,8 @@ adamic_weak *adamic_weak_of(void *target);
 void *adamic_weak_target(const adamic_weak *handle);
 void *adamic_weak_target_present(const adamic_weak *handle);
 void adamic_weak_forget(void *target);
+// One table check for a whole region, including a region with no outside children.
+void adamic_weak_forget_region(const adamic_region *region);
 void adamic_weak_dropped(adamic_weak *handle);
 // adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
 // nothing else can reach, and a Weak reaches without counting.
@@ -1023,6 +1110,8 @@ _Noreturn void adamic_process_exit_now(int code);
 int adamic_process_status(void);
 adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
 adamic_string *adamic_process_environment(const adamic_string *name);
+// Library host contracts, also needed by the generated entry point.
+#include "host_runtime.h"
 
 #endif
 

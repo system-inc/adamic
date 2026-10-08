@@ -54,6 +54,10 @@ func run() int {
 			}
 		}
 	}
+	if *moves && (slices.Contains(leftOut, "moves") || slices.Contains(leftOut, "parallel")) {
+		fmt.Fprintln(os.Stderr, "adamic-fuzz: -only-moves conflicts with -without moves or parallel")
+		return 2
+	}
 	var putIn []string
 	if *with != "" {
 		putIn = strings.Split(*with, ",")
@@ -63,10 +67,6 @@ func run() int {
 				return 2
 			}
 		}
-	}
-	if *moves && (slices.Contains(leftOut, "moves") || slices.Contains(leftOut, "parallel")) {
-		fmt.Fprintln(os.Stderr, "adamic-fuzz: -only-moves conflicts with -without moves or parallel")
-		return 2
 	}
 	generate := func(seed uint64) *fuzz.Program {
 		if *moves {

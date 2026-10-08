@@ -34,21 +34,21 @@ adamic_object *adamic_error_new(adamic_string *message) {
 }
 
 _Noreturn void adamic_uncaught(void) {
-	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
-	// when there is one.
+	// String(error), as Node's runner reports an error nothing caught (Error.prototype.toString): the
+	// name and the message joined by ": " when both are there, and whichever one is when the other is
+	// empty.
 	static adamic_slot_cache name_cache, message_cache;
 	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
 	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
-	size_t length = name->length + (message->length > 0 ? 2 + message->length : 0);
+	size_t separator = name->length > 0 && message->length > 0 ? 2 : 0;
+	size_t length = name->length + separator + message->length;
 	char *text = malloc(length + 1);
 	if (text == NULL) {
 		static const char out_of_memory[] = "out of memory";
 		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
 	}
 	memcpy(text, name->bytes, name->length);
-	if (message->length > 0) {
-		memcpy(text + name->length, ": ", 2);
-		memcpy(text + name->length + 2, message->bytes, message->length);
-	}
+	memcpy(text + name->length, ": ", separator);
+	memcpy(text + name->length + separator, message->bytes, message->length);
 	adamic_panic(text, length);
 }
