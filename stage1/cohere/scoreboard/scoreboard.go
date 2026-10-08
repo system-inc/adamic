@@ -24,13 +24,33 @@ type Snapshot struct {
 	SHA        string `json:"sha"`
 }
 
+// DependencyInputs names both execution inputs. An absent label is not evidence
+// that the same dependency snapshot was used.
+type DependencyInputs struct {
+	Go   string `json:"go"`
+	Node string `json:"node"`
+}
+
+func (d DependencyInputs) validate() error {
+	for _, state := range []string{d.Go, d.Node} {
+		if state != "uninstalled" && state != "installed" {
+			return fmt.Errorf("dependency snapshot must be explicitly installed or uninstalled; got %q", state)
+		}
+	}
+	if d.Go != d.Node {
+		return fmt.Errorf("different dependency snapshots: Go=%s Node=%s", d.Go, d.Node)
+	}
+	return nil
+}
+
 type Manifest struct {
-	Snapshots []Snapshot                 `json:"snapshots,omitempty"`
-	Name      string                     `json:"name"`
-	Files     []string                   `json:"files"`
-	Program   string                     `json:"program,omitempty"`
-	Rules     []string                   `json:"rules,omitempty"`
-	Options   map[string]json.RawMessage `json:"options,omitempty"`
+	Dependencies DependencyInputs           `json:"dependency_inputs"`
+	Snapshots    []Snapshot                 `json:"snapshots,omitempty"`
+	Name         string                     `json:"name"`
+	Files        []string                   `json:"files"`
+	Program      string                     `json:"program,omitempty"`
+	Rules        []string                   `json:"rules,omitempty"`
+	Options      map[string]json.RawMessage `json:"options,omitempty"`
 }
 type Execution struct {
 	Output string `json:"stdout"`
@@ -66,18 +86,19 @@ type Missing struct {
 	Status   string `json:"status"`
 }
 type Report struct {
-	Corpus     string           `json:"corpus"`
-	Canonical  bool             `json:"canonical_quiet_hundred"`
-	Base       string           `json:"base"`
-	Cohere     string           `json:"cohere"`
-	Files      int              `json:"files"`
-	Registered int              `json:"registered_port_rules"`
-	Cells      []Cell           `json:"cells"`
-	PerRule    map[string]Total `json:"per_rule"`
-	PerFamily  map[string]Total `json:"per_family"`
-	PerFile    map[string]Total `json:"per_file"`
-	Missing    []Missing        `json:"unported_ranked"`
-	Blockers   []string         `json:"blockers,omitempty"`
+	Dependencies DependencyInputs `json:"dependency_inputs"`
+	Corpus       string           `json:"corpus"`
+	Canonical    bool             `json:"canonical_quiet_hundred"`
+	Base         string           `json:"base"`
+	Cohere       string           `json:"cohere"`
+	Files        int              `json:"files"`
+	Registered   int              `json:"registered_port_rules"`
+	Cells        []Cell           `json:"cells"`
+	PerRule      map[string]Total `json:"per_rule"`
+	PerFamily    map[string]Total `json:"per_family"`
+	PerFile      map[string]Total `json:"per_file"`
+	Missing      []Missing        `json:"unported_ranked"`
+	Blockers     []string         `json:"blockers,omitempty"`
 }
 
 func family(name string) string {
@@ -154,6 +175,9 @@ func summarize(r *Report) {
 	r.PerFile = aggregate(r.Cells, func(c Cell) string { return c.File })
 }
 func validate(m Manifest, canonical bool, root string) error {
+	if err := m.Dependencies.validate(); err != nil {
+		return err
+	}
 	if m.Name == "" || len(m.Files) == 0 {
 		return fmt.Errorf("manifest needs name and files")
 	}
@@ -290,7 +314,7 @@ func (d *Driver) run(m Manifest, canonical, reduce bool) (Report, error) {
 	if err := validate(m, canonical, d.Root); err != nil {
 		return Report{}, err
 	}
-	r := Report{Corpus: m.Name, Canonical: canonical, Files: len(m.Files), Registered: len(d.Descriptors)}
+	r := Report{Dependencies: m.Dependencies, Corpus: m.Name, Canonical: canonical, Files: len(m.Files), Registered: len(d.Descriptors)}
 	r.Base, _ = checked(d.Root, "git", "rev-parse", "HEAD")
 	r.Cohere, _ = checked(filepath.Join(d.Root, "cohere"), "git", "rev-parse", "HEAD")
 	r.Base = strings.TrimSpace(r.Base)

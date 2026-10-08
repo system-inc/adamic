@@ -1,0 +1,36 @@
+=== RUN   TestMutantIsCaught
+=== PAUSE TestMutantIsCaught
+=== RUN   TestFailuresCannotAgree
+=== PAUSE TestFailuresCannotAgree
+=== RUN   TestMinimize
+=== PAUSE TestMinimize
+=== RUN   TestManifestRejectsSubstitution
+=== PAUSE TestManifestRejectsSubstitution
+=== RUN   TestProcessTimeoutIsBlocked
+=== PAUSE TestProcessTimeoutIsBlocked
+=== RUN   TestLiveOracleAndNode
+=== PAUSE TestLiveOracleAndNode
+=== RUN   TestPartitionPreservesBytes
+=== PAUSE TestPartitionPreservesBytes
+=== RUN   TestDependencySnapshotBoundary
+=== PAUSE TestDependencySnapshotBoundary
+=== CONT  TestMutantIsCaught
+--- PASS: TestMutantIsCaught (0.00s)
+=== CONT  TestManifestRejectsSubstitution
+=== CONT  TestProcessTimeoutIsBlocked
+=== CONT  TestLiveOracleAndNode
+--- PASS: TestProcessTimeoutIsBlocked (0.00s)
+=== CONT  TestPartitionPreservesBytes
+--- PASS: TestManifestRejectsSubstitution (0.00s)
+=== CONT  TestFailuresCannotAgree
+--- PASS: TestFailuresCannotAgree (0.00s)
+--- PASS: TestPartitionPreservesBytes (0.00s)
+=== CONT  TestMinimize
+--- PASS: TestMinimize (0.00s)
+=== CONT  TestDependencySnapshotBoundary
+--- PASS: TestDependencySnapshotBoundary (0.00s)
+=== NAME  TestLiveOracleAndNode
+    scoreboard_test.go:126: live witness debugger;: Go and Node agree; clean-running Node message mutant status=diverge, findings=1
+--- PASS: TestLiveOracleAndNode (7.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/scoreboard	7.163s

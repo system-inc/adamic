@@ -1,0 +1,2602 @@
+{
+  "dependency_inputs": {
+    "go": "uninstalled",
+    "node": "uninstalled"
+  },
+  "corpus": "Named Go debugger, TypeScript BOM, and Prisma comment-loss fixtures; dependency-uninstalled",
+  "canonical_quiet_hundred": false,
+  "base": "a38131387106f92253c70ae4c888b057ae97c444",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "files": 3,
+  "registered_port_rules": 93,
+  "cells": [
+    {
+      "file": "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+      "rule": "no-debugger",
+      "family": "core",
+      "sha256": "2242ca78ff9aff3dab9c00c6dfa5dafb0b61daa31a9ea7845fd0dcfb6a9f76f8",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\n/workspace/adamic/stage1/cohere/scoreboard/testdata/debugger.ts.txt:1:1\n  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.\n\nrange 0 9 unexpectedDebugger fix\t\t\t0 9\nfixed\t\\u000a\n"
+      },
+      "node": {
+        "stdout": "case 0\n/workspace/adamic/stage1/cohere/scoreboard/testdata/debugger.ts.txt:1:1\n  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.\n\nrange 0 9 unexpectedDebugger fix\t\t\t0 9\nfixed\t\\u000a\n"
+      },
+      "go_findings": 1
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+      "rule": "eqeqeq",
+      "family": "core",
+      "sha256": "2242ca78ff9aff3dab9c00c6dfa5dafb0b61daa31a9ea7845fd0dcfb6a9f76f8",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\nfixed\tdebugger;\\u000a\n"
+      },
+      "node": {
+        "stdout": "case 0\nfixed\tdebugger;\\u000a\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+      "rule": "format/typescript",
+      "family": "format",
+      "sha256": "2242ca78ff9aff3dab9c00c6dfa5dafb0b61daa31a9ea7845fd0dcfb6a9f76f8",
+      "status": "agree",
+      "go": {
+        "stdout": "ok\tdebugger;\\n\n"
+      },
+      "node": {
+        "stdout": "ok\tdebugger;\\n\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+      "rule": "no-debugger",
+      "family": "core",
+      "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\nfixed\t\\ufeffvar x=10;\\u000d\\u000a\n"
+      },
+      "node": {
+        "stdout": "case 0\nfixed\t\\ufeffvar x=10;\\u000d\\u000a\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+      "rule": "eqeqeq",
+      "family": "core",
+      "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\nfixed\t\\ufeffvar x=10;\\u000d\\u000a\n"
+      },
+      "node": {
+        "stdout": "case 0\nfixed\t\\ufeffvar x=10;\\u000d\\u000a\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+      "rule": "format/typescript",
+      "family": "format",
+      "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d",
+      "status": "diverge",
+      "go": {
+        "stdout": "ok\t﻿var x = 10;\\n\n"
+      },
+      "node": {
+        "stdout": "ok\tvar x = 10;\\n\n"
+      },
+      "go_findings": 0,
+      "input": "﻿var x=10;\r\n",
+      "reduction": "not reduced"
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/comment-loss.ts.txt",
+      "rule": "no-debugger",
+      "family": "core",
+      "sha256": "a2c2339691fc48fbd14fb307292dff3e21222712d9240810742d7df0c6d74dfb",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\nfixed\t//\n"
+      },
+      "node": {
+        "stdout": "case 0\nfixed\t//\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/comment-loss.ts.txt",
+      "rule": "eqeqeq",
+      "family": "core",
+      "sha256": "a2c2339691fc48fbd14fb307292dff3e21222712d9240810742d7df0c6d74dfb",
+      "status": "agree",
+      "go": {
+        "stdout": "case 0\nfixed\t//\n"
+      },
+      "node": {
+        "stdout": "case 0\nfixed\t//\n"
+      },
+      "go_findings": 0
+    },
+    {
+      "file": "stage1/cohere/scoreboard/testdata/comment-loss.ts.txt",
+      "rule": "format/typescript",
+      "family": "format",
+      "sha256": "a2c2339691fc48fbd14fb307292dff3e21222712d9240810742d7df0c6d74dfb",
+      "status": "diverge",
+      "go": {
+        "stdout": "ok\t//\\n\n"
+      },
+      "node": {
+        "stdout": "ok\t\n"
+      },
+      "go_findings": 0,
+      "input": "//",
+      "reduction": "not reduced"
+    }
+  ],
+  "per_rule": {
+    "eqeqeq": {
+      "checks": 3,
+      "agree": 3,
+      "diverge": 0,
+      "blocked": 0,
+      "go_findings": 0
+    },
+    "format/typescript": {
+      "checks": 3,
+      "agree": 1,
+      "diverge": 2,
+      "blocked": 0,
+      "go_findings": 0
+    },
+    "no-debugger": {
+      "checks": 3,
+      "agree": 3,
+      "diverge": 0,
+      "blocked": 0,
+      "go_findings": 1
+    }
+  },
+  "per_family": {
+    "core": {
+      "checks": 6,
+      "agree": 6,
+      "diverge": 0,
+      "blocked": 0,
+      "go_findings": 1
+    },
+    "format": {
+      "checks": 3,
+      "agree": 1,
+      "diverge": 2,
+      "blocked": 0,
+      "go_findings": 0
+    }
+  },
+  "per_file": {
+    "stage1/cohere/scoreboard/testdata/comment-loss.ts.txt": {
+      "checks": 3,
+      "agree": 2,
+      "diverge": 1,
+      "blocked": 0,
+      "go_findings": 0
+    },
+    "stage1/cohere/scoreboard/testdata/debugger.ts.txt": {
+      "checks": 3,
+      "agree": 3,
+      "diverge": 0,
+      "blocked": 0,
+      "go_findings": 1
+    },
+    "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt": {
+      "checks": 3,
+      "agree": 2,
+      "diverge": 1,
+      "blocked": 0,
+      "go_findings": 0
+    }
+  },
+  "unported_ranked": [
+    {
+      "rule": "id-length",
+      "findings": 1,
+      "files": 1,
+      "status": "complete"
+    },
+    {
+      "rule": "@eslint-community/eslint-comments/require-description",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/google-font-display",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/google-font-preconnect",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/inline-script-id",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/next-script-for-ga",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-assign-module-variable",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-async-client-component",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@next/next/no-before-interactive-script-outside-document",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-css-tags",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-document-import-in-page",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-duplicate-head",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@next/next/no-head-element",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-head-import-in-document",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-html-link-for-pages",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-img-element",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-page-custom-font",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-script-component-in-head",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@next/next/no-styled-jsx-in-document",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@next/next/no-title-in-document-head",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@next/next/no-unwanted-polyfillio",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/array-type",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/await-thenable",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/ban-ts-comment",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/ban-tslint-comment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-assertions",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/default-param-last",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/dot-notation",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-array-constructor",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-array-delete",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-base-to-string",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-confusing-non-null-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-confusing-void-expression",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-deprecated",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-dupe-class-members",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-duplicate-enum-values",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-dynamic-delete",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-empty-object-type",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-explicit-any",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/no-extra-non-null-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-floating-promises",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-for-in-array",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-implied-eval",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-invalid-this",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-new",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-promises",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-spread",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-redeclare",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-require-imports",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-restricted-types",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-shadow",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-constraint",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-function-type",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-unary-minus",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-expressions",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-vars",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/only-throw-error",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-as-const",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-enum-initializers",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-for-of",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-function-type",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-includes",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-namespace-keyword",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/related-getter-setter-pairs",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/restrict-plus-operands",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/return-await",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/strict-void-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/switch-exhaustiveness-check",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/triple-slash-reference",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/unbound-method",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "@typescript-eslint/unified-signatures",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "accessor-pairs",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "adamic/invariant-mutable",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "adamic/no-definite-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "adamic/no-optional-widening",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "adamic/no-unchecked-cast",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "adamic/nominal-class",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "adamic/single-spread",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "array-callback-return",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "arrow-body-style",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "base/consistency-no-bare-throw",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-matching-inject-type",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-matching-operation-context",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-matching-provider-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-optional-relation",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-orm-column-declare",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-verify-array-parity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/correctness-require-verify-optional-parity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "base/security-require-context-access",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-canonical-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-class-order",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-important-position",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-variable-syntax",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-variant-order",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/enforce-shorthand-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-concatenated-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-conflicting-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-deprecated-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-duplicate-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-unknown-classes",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "better-tailwindcss/no-unnecessary-whitespace",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "block-scoped-var",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "boundaries/dependencies",
+      "findings": 0,
+      "files": 0,
+      "status": "requires options"
+    },
+    {
+      "rule": "class-methods-use-this",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "complexity",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "consistent-return",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "consistent-this",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "constructor-super",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "default-case",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "default-case-last",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "default-param-last",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "dot-notation",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "for-direction",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "func-name-matching",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "getter-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "grouped-accessor-pairs",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "guard-for-in",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "id-denylist",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "id-match",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "logical-assignment-operators",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "max-lines",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/boundary-no-internal-import",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/boundary-no-nexus-outside-import",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/boundary-no-project-import",
+      "findings": 0,
+      "files": 0,
+      "status": "requires options"
+    },
+    {
+      "rule": "nexus/concurrency-no-check-then-write",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/concurrency-no-lost-update",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/consistency-no-boolean-outcome",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "nexus/consistency-no-hand-rolled-delay",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/consistency-no-property-alias",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/consistency-no-return-void",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/consistency-no-screaming-snake-case",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "nexus/consistency-no-utils-folder",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/consistency-require-constant-casing",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/consistency-require-matching-return-type",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-caller-data-mutation",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-collection-misuse",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-identical-branches",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-implicit-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-load-time-import-meta-path",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-no-write-only-collection",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/correctness-require-response-status-check",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/import-no-forbidden-source",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/import-require-module-alias",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "nexus/import-require-node-namespace",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/import-require-path-alias",
+      "findings": 0,
+      "files": 0,
+      "status": "requires options"
+    },
+    {
+      "rule": "nexus/localization-no-untranslated-value",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-alert",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-async-promise-executor",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-case-declarations",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-class-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-compare-neg-zero",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-cond-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-const-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-constant-binary-expression",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-constant-condition",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-constructor-return",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-control-regex",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-delete-var",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-dupe-class-members",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-else-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-empty-function",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-eq-null",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-eval",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-extend-native",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-extra-bind",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-extra-boolean-cast",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-extra-label",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-fallthrough",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-func-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-global-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-implicit-coercion",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-implicit-globals",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-implied-eval",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-import-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-inline-comments",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-inner-declarations",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-invalid-regexp",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-invalid-this",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-irregular-whitespace",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-label-var",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-lone-blocks",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-lonely-if",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-loop-func",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-loss-of-precision",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-misleading-character-class",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-multi-str",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-new-func",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-new-native-nonconstructor",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-new-wrappers",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-nonoctal-decimal-escape",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-obj-calls",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-object-constructor",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-octal",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-param-reassign",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-promise-executor-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-regex-spaces",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-restricted-exports",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-restricted-globals",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-restricted-imports",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-restricted-properties",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-self-assign",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-setter-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-shadow-restricted-names",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-this-before-super",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-throw-literal",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-unassigned-vars",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-undef-init",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-unmodified-loop-condition",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-unreachable-loop",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-use-before-define",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-useless-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-useless-backreference",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "no-useless-call",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-useless-computed-key",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "no-useless-escape",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "no-useless-return",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "object-shorthand",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "one-var",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "prefer-arrow-callback",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-const",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-exponentiation-operator",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-numeric-literals",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-object-has-own",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-object-spread",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-promise-reject-errors",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-regex-literals",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-rest-params",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "prefer-spread",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "preserve-caught-error",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "radix",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/config",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react-hooks/exhaustive-deps",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/gating",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react-hooks/globals",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/immutability",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/incompatible-library",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/preserve-manual-memoization",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/purity",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/refs",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/rules-of-hooks",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react-hooks/set-state-in-effect",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/set-state-in-render",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/static-components",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/unsupported-syntax",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/use-memo",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react-hooks/void-use-memo",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/boolean-prop-naming",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/button-has-type",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/default-props-match-prop-types",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/display-name",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/forbid-dom-props",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/forbid-elements",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/forbid-foreign-prop-types",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react/forbid-prop-types",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/iframe-missing-sandbox",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/jsx-fragments",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/jsx-key",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/jsx-no-duplicate-props",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react/jsx-no-script-url",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/jsx-no-target-blank",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/jsx-no-undef",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/jsx-no-useless-fragment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/jsx-props-no-spread-multi",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-access-state-in-setstate",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-adjacent-inline-elements",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-array-index-key",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-arrow-function-lifecycle",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-children-prop",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react/no-danger",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-danger-with-children",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-deprecated",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-did-mount-set-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-did-update-set-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-direct-mutation-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-invalid-html-attribute",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-multi-comp",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-namespace",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-object-type-as-default-prop",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-render-return-value",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-set-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-string-refs",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-this-in-sfc",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-typos",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-unescaped-entities",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-unknown-property",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-unsafe",
+      "findings": 0,
+      "files": 0,
+      "status": "option decode: no options were configured"
+    },
+    {
+      "rule": "react/no-unstable-nested-components",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/no-unused-class-component-methods",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-unused-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/no-will-update-set-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/prefer-es6-class",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/prefer-stateless-function",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/require-render-return",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/self-closing-comp",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/sort-comp",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "react/sort-default-props",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/static-property-placement",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/style-prop-object",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "react/void-dom-elements-no-children",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "require-atomic-updates",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "require-await",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "sort-vars",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "strict",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/boundary-no-project-theme-value",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/consistency-require-matching-file-name",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/consistency-require-organized-imports",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/import-require-react-namespace",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-no-forbidden-import",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-no-invalidate-cache-in-on-success",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-no-invalidate-cache-literal-key",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-no-string-literal-query",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-require-hook-options-parameter",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-require-hook-request-suffix",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/network-require-hook-variables-type",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/next-no-near-miss-route-export",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/next-no-page-state",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/next-require-api-parameter-name",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/next-require-page-default-export",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-no-const-assignment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-no-destructuring",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-no-display-name",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-no-forward-ref",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-no-separate-named-export",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-require-named-export",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-require-properties-parameter",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-component-require-properties-type-suffix",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-element-no-anchor",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-element-no-horizontal-rule",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-hook-no-any-type",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "structure/react-hook-no-destructuring",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-hook-no-properties-in-dependencies",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-hook-require-effect-comment",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/react-hook-require-result-naming",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/storage-no-direct-local-storage",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "structure/tailwind-no-physical-direction",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    },
+    {
+      "rule": "symbol-description",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "use-isnan",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "valid-typeof",
+      "findings": 0,
+      "files": 0,
+      "status": "no program"
+    },
+    {
+      "rule": "yoda",
+      "findings": 0,
+      "files": 0,
+      "status": "complete"
+    }
+  ]
+}

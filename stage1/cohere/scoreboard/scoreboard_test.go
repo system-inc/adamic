@@ -46,13 +46,13 @@ func TestManifestRejectsSubstitution(t *testing.T) {
 	if err := os.WriteFile(p, []byte("debugger;"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	if validate(Manifest{Name: "quiet", Files: []string{p}}, true, dir) == nil {
+	if validate(Manifest{Dependencies: DependencyInputs{Go: "uninstalled", Node: "uninstalled"}, Name: "quiet", Files: []string{p}}, true, dir) == nil {
 		t.Fatal("accepted one file as quiet hundred")
 	}
-	if validate(Manifest{Name: "fixtures", Files: []string{p, p}}, false, dir) == nil {
+	if validate(Manifest{Dependencies: DependencyInputs{Go: "uninstalled", Node: "uninstalled"}, Name: "fixtures", Files: []string{p, p}}, false, dir) == nil {
 		t.Fatal("accepted duplicate")
 	}
-	if err := validate(Manifest{Name: "fixtures", Files: []string{p}}, false, dir); err != nil {
+	if err := validate(Manifest{Dependencies: DependencyInputs{Go: "uninstalled", Node: "uninstalled"}, Name: "fixtures", Files: []string{p}}, false, dir); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -83,6 +83,15 @@ func TestLiveOracleAndNode(t *testing.T) {
 	a, b := d.pair(path, "no-debugger", "", "")
 	if classify(a, b) != "agree" || !strings.Contains(a.Output, "\nrange ") {
 		t.Fatalf("Go/Node live check: %+v\n%+v", a, b)
+	}
+	for _, fixture := range []struct{ name, path, marker string }{
+		{"comment-loss", "comment-loss.ts.txt", "//"},
+		{"BOM preservation", "typescript-compiler.ts.txt", "\ufeff"},
+	} {
+		a, b := d.format(filepath.Join(root, "stage1/cohere/scoreboard/testdata", fixture.path))
+		if classify(a, b) != "diverge" || !strings.Contains(a.Output, fixture.marker) || strings.Contains(b.Output, fixture.marker) {
+			t.Fatalf("named fixture %s lost its failure: Go=%+v Node=%+v", fixture.name, a, b)
+		}
 	}
 	// Formatting reductions must not switch a valid witness to a parser error.
 	invalid := filepath.Join(scratch, "invalid.ts")
@@ -136,5 +145,19 @@ func TestPartitionPreservesBytes(t *testing.T) {
 	}
 	if classify(first, ruleAnswer(Execution{Output: mutant}, "no-debugger")) != "agree" {
 		t.Fatal("other rule polluted")
+	}
+}
+
+func TestDependencySnapshotBoundary(t *testing.T) {
+	t.Parallel()
+	for _, inputs := range []DependencyInputs{{}, {Go: "uninstalled"}, {Go: "installed", Node: "uninstalled"}, {Go: "uninstalled", Node: "installed"}, {Go: "unknown", Node: "unknown"}} {
+		if inputs.validate() == nil {
+			t.Fatalf("accepted incomparable snapshots: %+v", inputs)
+		}
+	}
+	for _, state := range []string{"installed", "uninstalled"} {
+		if err := (DependencyInputs{Go: state, Node: state}).validate(); err != nil {
+			t.Fatal(err)
+		}
 	}
 }

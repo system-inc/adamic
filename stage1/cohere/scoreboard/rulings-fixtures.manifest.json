@@ -1,0 +1,16 @@
+{
+  "name": "Named Go debugger, TypeScript BOM, and Prisma comment-loss fixtures; dependency-uninstalled",
+  "files": [
+    "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+    "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+    "stage1/cohere/scoreboard/testdata/comment-loss.ts.txt"
+  ],
+  "rules": [
+    "no-debugger",
+    "eqeqeq"
+  ],
+  "dependency_inputs": {
+    "go": "uninstalled",
+    "node": "uninstalled"
+  }
+}

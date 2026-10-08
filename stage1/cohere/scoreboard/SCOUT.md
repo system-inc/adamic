@@ -159,15 +159,21 @@ cannot certify typed findings. Go's independent census likewise records `no prog
 
 ## Open questions for @system_adamic
 
-No new TypeScript syntax or ownership rule is proposed or decided here. These
-integration questions remain open, rather than answered with language workarounds:
+Both questions below were resolved by @system_adamic. No new language question
+is raised by this receipt.
 
-1. Should the eventual scoreboard itself be required to compile as Adamic, or is
-   host Go orchestration with an Adamic adapter the intended test-tool boundary?
-2. What is the accepted checker/program contract for the Mac corpus when a public
-   source snapshot is intentionally fetched without its dependencies? The existing
-   native-record/Node-replay path is used only when supplied; no Node checker bridge
-   is invented here.
+* Host-tool boundary: **the scoreboard may remain Go**. It measures Adamic
+  binaries through stdout, exit code and timing; none of it links into the
+  product's Adamic build. Source Node remains a separately identified reference
+  execution, not evidence of an Adamic binary run.
+* Dependency-input boundary: **a snapshot without installed dependencies is a
+  different input**. It must be labeled and compared only with another snapshot
+  of that kind. Manifests now require `dependency_inputs.go` and
+  `dependency_inputs.node`, each `installed` or `uninstalled`, and reject absent
+  or differing labels before building or executing adapters. Reports retain the
+  labels. `TestDependencySnapshotBoundary` plants both mismatch directions and
+  missing/unknown labels; all must fail validation. Matching labels identify the
+  kind, not identical installed dependency versions or checker configuration.
 
 Stage 0 successfully built `format.a`; no new language refusal was encountered.
 `native-node.json` holds identical native/source-Node output and exit codes for
@@ -211,9 +217,9 @@ A canonical manifest still needs the actual Mac file-selection/options contract;
 
 ## Validation receipt
 
-All **7 top-level Go tests** pass without skips, including the actual Go/source-Node
-fixture and clean-running message mutant. `validation/tests.log` retains the
-complete final run; `validation/vet.log` is clean. `gofmt -l` and
+All **8 top-level Go tests** pass without skips, including the actual Go/source-Node
+fixture and clean-running message mutant. `validation/tests.txt` retains the
+complete final run; `validation/vet.txt` is clean. `gofmt -l` and
 `git diff --check` are clean. Both scoreboard commands exit nonzero by design
 because their reports contain named divergences/coverage blocks; these expected
 nonzero receipts are retained. Stage 0 built the owned adapter successfully, and
@@ -231,3 +237,39 @@ checker configs/native recordings; add whole-file Markdown composition only
 through its owner. Finish project-preserving reductions and their failure
 controls. Do not treat the probe ranking or deletion-minimal inputs as the
 requested quiet-hundred ranking or globally shortest inputs.
+
+## Full-tree continuation receipt
+
+`requested-all.manifest.json.gz` enumerates the exact requested eight extensions
+from all 23 pinned Git trees: **235,377 files**.
+`requested-all.inventory.json` gives per-snapshot and per-extension counts and
+bytes. This is an inventory, **not a full-tree scoreboard run**. An independent NUL-delimited `git ls-files -z` census agrees on that count,
+including 51 symlinks. The earlier
+242,883 denominator used a broader extension set; it is not this request's
+denominator. The manifest explicitly labels both execution inputs uninstalled.
+Tracked symlink contents are hashed as Git blobs during inventory rather than
+following their targets; a future executor must preserve those bytes and path
+semantics or report the input unavailable. The current per-file executor reads
+the checkout and is not yet suitable for certifying those symlink inputs.
+
+The existing executor also starts fresh Go/Node processes per file and stores
+all cells and repeated input bytes in memory. Persistent workers, bounded
+streamed reports, resume checks and project-preserving reductions remain
+unimplemented. No all-tree agreement counts, missing-rule frequency ranking,
+or all-divergence attribution is claimed in this receipt. These are the next
+scout's concrete work, not permission or language questions.
+
+`stage1/cohere/lint/main.ts:13` is the lint lane's option transport. A distinct
+per-rule option table must be implemented there by that lane; this scout has
+not changed it. The current scoreboard's adapter-options/census-options
+dialect distinction remains material.
+
+The named `comment-loss` and `BOM preservation` fixtures are retained in
+`testdata/extra-fixtures.json` with hashes and provenance, and both are asserted
+as successful-but-different Go/Node executions in the live package test.
+`rulings-fixtures.json` records nine cells: seven agree and these two formatter
+fixtures diverge, with dependency labels.
+The BOM fixture keeps its original CRLF bytes; package-local `.gitattributes`
+marks it binary for diffs. Earlier validation `.log` receipts were ignored by
+the repository's global pattern; this receipt includes fresh tracked `.txt`
+receipts instead.

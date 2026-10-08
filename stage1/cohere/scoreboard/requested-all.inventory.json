@@ -1,0 +1,169 @@
+{
+  "scope": "inventory only; no full-tree comparison executed",
+  "dependency_inputs": {
+    "go": "uninstalled",
+    "node": "uninstalled"
+  },
+  "files": 235377,
+  "extension_files": {
+    ".css": 958,
+    ".js": 48511,
+    ".json": 21636,
+    ".jsx": 25,
+    ".md": 10348,
+    ".ts": 127288,
+    ".tsx": 25372,
+    ".yaml": 1239
+  },
+  "extension_bytes": {
+    ".css": 4084231,
+    ".js": 177256314,
+    ".json": 196065183,
+    ".jsx": 66685,
+    ".md": 162895712,
+    ".ts": 527774314,
+    ".tsx": 108887117,
+    ".yaml": 18152507
+  },
+  "snapshots": [
+    {
+      "repo": "actualbudget/actual",
+      "sha": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+      "tracked_supported_files": 2440,
+      "selected_files": 2440
+    },
+    {
+      "repo": "angular/angular",
+      "sha": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+      "tracked_supported_files": 8608,
+      "selected_files": 8608
+    },
+    {
+      "repo": "babel/babel",
+      "sha": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+      "tracked_supported_files": 25714,
+      "selected_files": 25714
+    },
+    {
+      "repo": "backstage/backstage",
+      "sha": "532931240eec03b318efaadb39e24d9ee6d7076c",
+      "tracked_supported_files": 11026,
+      "selected_files": 11026
+    },
+    {
+      "repo": "calcom/cal.diy",
+      "sha": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+      "tracked_supported_files": 5755,
+      "selected_files": 5755
+    },
+    {
+      "repo": "date-fns/date-fns",
+      "sha": "717ce0a807ea4c6b540d015b5c408723175b2838",
+      "tracked_supported_files": 1975,
+      "selected_files": 1975
+    },
+    {
+      "repo": "excalidraw/excalidraw",
+      "sha": "ed10ac7dca7e40f3f4a31269b4bfba980d0db41e",
+      "tracked_supported_files": 815,
+      "selected_files": 815
+    },
+    {
+      "repo": "grafana/grafana",
+      "sha": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+      "tracked_supported_files": 12321,
+      "selected_files": 12321
+    },
+    {
+      "repo": "microsoft/playwright",
+      "sha": "2a8ba77a33a5a39a52372c42f12d254506296c76",
+      "tracked_supported_files": 2005,
+      "selected_files": 2005
+    },
+    {
+      "repo": "n8n-io/n8n",
+      "sha": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+      "tracked_supported_files": 26546,
+      "selected_files": 26546
+    },
+    {
+      "repo": "nestjs/nest",
+      "sha": "35142c3eca8edaaf6abc5984d915da2fbd458aa2",
+      "tracked_supported_files": 2263,
+      "selected_files": 2263
+    },
+    {
+      "repo": "outline/outline",
+      "sha": "478e8121cbe517b9d7773e9d68d20bfe26056c59",
+      "tracked_supported_files": 2622,
+      "selected_files": 2622
+    },
+    {
+      "repo": "prisma/prisma",
+      "sha": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+      "tracked_supported_files": 7607,
+      "selected_files": 7607
+    },
+    {
+      "repo": "shadcn-ui/ui",
+      "sha": "a2e305c2e15b6affdb760e65058be69e8212713f",
+      "tracked_supported_files": 5110,
+      "selected_files": 5110
+    },
+    {
+      "repo": "supabase/supabase",
+      "sha": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+      "tracked_supported_files": 9289,
+      "selected_files": 9289
+    },
+    {
+      "repo": "TanStack/query",
+      "sha": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+      "tracked_supported_files": 3219,
+      "selected_files": 3219
+    },
+    {
+      "repo": "tldraw/tldraw",
+      "sha": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+      "tracked_supported_files": 3778,
+      "selected_files": 3778
+    },
+    {
+      "repo": "trpc/trpc",
+      "sha": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+      "tracked_supported_files": 1440,
+      "selected_files": 1440
+    },
+    {
+      "repo": "twentyhq/twenty",
+      "sha": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+      "tracked_supported_files": 30755,
+      "selected_files": 30755
+    },
+    {
+      "repo": "typeorm/typeorm",
+      "sha": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+      "tracked_supported_files": 3742,
+      "selected_files": 3742
+    },
+    {
+      "repo": "microsoft/TypeScript",
+      "sha": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+      "tracked_supported_files": 26731,
+      "selected_files": 26731
+    },
+    {
+      "repo": "microsoft/TypeScript",
+      "sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "tracked_supported_files": 41029,
+      "selected_files": 41029
+    },
+    {
+      "repo": "vuejs/core",
+      "sha": "4ab865a848a1da3d10fb674f857e5fff13094644",
+      "tracked_supported_files": 587,
+      "selected_files": 587
+    }
+  ],
+  "manifest_sha256": "2b4565a81dda5448c6cacf22be8ce64bd0dff7bd86a4c1171270ed7775dc584b"
+}

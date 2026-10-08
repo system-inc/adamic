@@ -9,6 +9,14 @@
     "path": "testdata/typescript-compiler.ts.txt",
     "upstream": "cohere/TypeScript/tsc/testdata/tests/cases/compiler/bom-utf8.ts",
     "sha": "d92d9bfee114c80be2c375d72edae966176e3a4f",
-    "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d"
+    "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d",
+    "name": "BOM preservation"
+  },
+  {
+    "name": "comment-loss",
+    "path": "testdata/comment-loss.ts.txt",
+    "upstream": "prisma/prisma packages/1-framework/3-tooling/cli/test/fixtures/empty-module.ts (deletion-minimal)",
+    "sha": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+    "sha256": "a2c2339691fc48fbd14fb307292dff3e21222712d9240810742d7df0c6d74dfb"
   }
 ]
