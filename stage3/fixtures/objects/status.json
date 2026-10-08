@@ -92,10 +92,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/06_watch_close.a:14:15: Adamic 0.1 refuses 'file', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
   },
   {
     "file": "07_synthetic_reference.a",
@@ -126,10 +123,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:32:57: stage 0 can't lower a call through ?. (an optional call) yet"}
   },
   {
     "file": "10_build_options.a",
@@ -178,7 +172,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/14_comment_pending.a:20:13: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length \u003e 0 or count !== 0"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/14_comment_pending.a:28:13: stage 0 can't lower a case that isn't a constant yet"}
   },
   {
     "file": "15_accessor_absence.a",
@@ -240,10 +234,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/19_identifier_multimap.a:24:27: stage 0 can't lower a BinaryExpression with a value and a value yet"}
   },
   {
     "file": "20_queue_optional_call.a",

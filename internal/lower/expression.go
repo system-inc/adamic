@@ -274,6 +274,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	switch {
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			if !same(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
 				return false
@@ -318,6 +321,9 @@ func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visite
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
 		// A function is handed the other's arguments, and its results are seen as the other's.
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index]), visited); tuple != nil {
 				return tuple, array
@@ -714,22 +720,26 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
 		return l.incrementValue(node)
 	}
-	if prefix.Operator == ast.KindPlusToken {
-		return l.libraryNumber(prefix.Operand)
+	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
+		operand, err := l.libraryNumber(prefix.Operand)
+		if err != nil {
+			return nil, err
+		}
+		operator := ir.Plus
+		if prefix.Operator == ast.KindMinusToken {
+			operator = ir.Negate
+		}
+		if prefix.Operator == ast.KindTildeToken {
+			operator = ir.BitNot
+		}
+		return ir.Unary{Operator: operator, Operand: operand}, nil
 	}
 	operand, err := l.expression(prefix.Operand)
 	if err != nil {
 		return nil, err
 	}
-	switch {
-	case prefix.Operator == ast.KindMinusToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
-	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
-	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
-		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
-	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
+	if prefix.Operator == ast.KindExclamationToken {
+		return ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
@@ -848,13 +858,15 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && both(ir.Boolean) {
-		lowered := ir.And
-		if operator == ast.KindBarBarToken {
-			lowered = ir.Or
-		}
-		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	if operator == ast.KindBarBarToken && left.Type() == ir.Closure && right.Type() == ir.Closure {
+		// A present function is always truthy; nullable closures use undefined's
+		// null pointer. Coalesce preserves selection and evaluates each side once.
+		return ir.Coalesce{Value: left, Fallback: right, Of: ir.Closure}, nil
 	}
+	if value, known := l.censusBooleanLogical(node, operator, left, right); known {
+		return value, nil
+	}
+
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
@@ -1014,8 +1026,9 @@ func (l *lowering) writable(proven *checker.Type) bool {
 }
 
 // slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, or a cell. Function calls use argumentSlotless instead. number | undefined is packed into
-// one (a reserved NaN is undefined); boolean | undefined collection layouts remain unsupported, and a
+// map's value, a cell, or a function value's argument or result. number | undefined is packed into
+// one (a reserved NaN is undefined); boolean | undefined has a tagged byte for object fields
+// (censusFieldSlotless), but remains unsupported in the other slot contexts, and a
 // Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
 // result takes one.
 func slotless(valueType ir.Type) bool {
@@ -1089,6 +1102,10 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	if rest := l.censusRestDeclaration(function); rest != nil {
+		return l.censusRestCall(call, function, rest)
+	}
+
 	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -1097,7 +1114,7 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		}
 		arguments = append(arguments, lowered)
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -1156,19 +1173,32 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 
 // functionValue lowers a module function read as a value rather than called: a function value whose
 // code forwards its arguments to the function, made once for each function read so, before the
-// program runs. It takes exactly
-// the parameters the function declares, so one with a parameter that may be left out isn't made yet:
-// a function value is called with the arguments its caller has, and no more.
+// program runs. Its closure receives omitted arguments as undefined before forwarding them;
+// the declared function retains its ordinary default-parameter prologue.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
-	if held, isMade := l.forwarders[target]; isMade {
-		return ir.Read{Local: held, Of: ir.Closure}, nil
-	}
 	symbol := l.symbol(node)
-	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
-		symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
-		if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 			symbol = l.checker.GetAliasedSymbol(symbol)
 		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+	}
+	if symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+				return nil, l.notYet(node, "an overloaded function as a value")
+			}
+		}
+	}
+	if held, isMade := l.forwarders[target]; isMade {
+		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
 	for _, parameter := range symbol.Declarations[0].Parameters() {
 		declared := parameter.AsParameterDeclaration()
@@ -1177,7 +1207,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		}
 	}
 	callee := l.result.Functions[target]
-	if argumentSlotless(callee.Returns) {
+	if censusCallableSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
@@ -1185,7 +1215,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if argumentSlotless(declared.Type) {
+		if censusCallableSlotless(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1233,6 +1263,12 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
+		// never[] admits a zero-argument call in TypeScript. The erased slot does
+		// not retain a source signature to prove its required arguments or ABI.
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -1273,13 +1309,7 @@ func (l *lowering) callClosureValue(node *ast.Node, closure ir.Expression, resol
 	}
 	if len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-				// Defaulted parameters have a present body type but accept undefined at entry.
-				for _, declaration := range parameter.Declarations {
-					if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
-						takes = ir.Maybe(takes)
-					}
-				}
+			if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
 				if index < len(arguments) {
 					arguments[index] = fit(arguments[index], takes)
 				} else {
@@ -1289,11 +1319,11 @@ func (l *lowering) callClosureValue(node *ast.Node, closure ir.Expression, resol
 		}
 	}
 	for _, argument := range arguments {
-		if argumentSlotless(argument.Type()) {
+		if censusCallableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if argumentSlotless(returns) {
+	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil

@@ -53,8 +53,10 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 typedef union adamic_value {
 	double number;
 	uint8_t boolean;
+	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
+_Static_assert(sizeof(bool) == sizeof(uint8_t), "boolean slots require one-byte bool");
 
 // adamic_maybe_number is number | undefined: present, and the number when it is.
 typedef struct adamic_maybe_number {
@@ -97,6 +99,7 @@ typedef adamic_value (*adamic_code)(adamic_closure *self, size_t argument_count,
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
+	bool receiver;
 	size_t count;
 	adamic_environment *canonical_owner;
 	adamic_closure *canonical_previous;
@@ -206,6 +209,11 @@ static inline unsigned char *adamic_object_initialized(const adamic_object *obje
 	return (unsigned char *)(void *)(object->slots + object->shape->count);
 }
 void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+// Physical representation bytes are separate from the shared initialization bitmap.
+// Zero means no representation evidence, never permission to interpret a slot.
+static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
+	return adamic_object_initialized(object) + object->shape->count;
+}
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
@@ -219,6 +227,9 @@ typedef struct adamic_slot_cache {
 } adamic_slot_cache;
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
+void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
@@ -266,6 +277,7 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
@@ -626,6 +638,9 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 #define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
+// Slot encoding: false = 0, true = 1, undefined = 2.
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
 adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
@@ -762,6 +777,9 @@ adamic_heap *adamic_box_number(double number);
 
 // adamic_union_equal is === on two unions: the same member, equal as that member is compared.
 bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// ToBoolean on a boxed union; objects are truthy even when empty.
+bool adamic_census_to_boolean(const adamic_heap *value);
 
 // adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
 // string the caller owns.

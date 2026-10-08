@@ -10,6 +10,13 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks PredicateCheckCounts
+
+	// CheckedFields conservatively checks these field names at every object read.
+	CheckedFields map[string]bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -38,6 +45,23 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted overload-result directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -91,6 +115,9 @@ type Function struct {
 	FrameIdentity int
 	// ReferenceParents are lexical groups whose completed layouts this closure needs.
 	ReferenceParents []int
+
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -275,7 +302,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -330,6 +357,10 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// View names a required field read whose presence, readiness and representation are checked.
+		View        string
+		ViewType    string
+		ViewAllowed []Expression
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression
@@ -525,11 +556,12 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
-		Value     Expression
-		Field     string
-		FieldType Type
-		Allowed   []Expression
-		Message   string
+		CheckedFields bool
+		Value         Expression
+		Field         string
+		FieldType     Type
+		Allowed       []Expression
+		Message       string
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
@@ -970,6 +1002,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number

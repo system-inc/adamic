@@ -431,7 +431,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) {
+	if err != nil || censusFieldSlotless(of) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	value := uninitializedValue(of)
@@ -441,7 +441,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, err
 		}
 	}
-	if slotless(value.Type()) {
+	if censusFieldSlotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
@@ -487,7 +487,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := l.fieldName(target.Name())
-	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
+	current := l.readObjectField(target, ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}

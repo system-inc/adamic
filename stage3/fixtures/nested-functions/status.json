@@ -145,7 +145,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:14:16: stage 0 can't lower a PrefixUnaryExpression on a number yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:14:16: stage 0 can't lower a BinaryExpression with a boolean and a string yet"}
   },
   {
     "file": "10_checker_arrow_cleanup.a",

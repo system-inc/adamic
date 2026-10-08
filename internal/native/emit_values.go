@@ -39,8 +39,10 @@ func member(valueType ir.Type) string {
 	switch valueType {
 	case ir.Number, ir.MaybeNumber:
 		return "number"
-	case ir.Boolean, ir.MaybeBoolean:
+	case ir.Boolean:
 		return "boolean"
+	case ir.MaybeBoolean:
+		return "maybe_boolean"
 	}
 	return "reference"
 }

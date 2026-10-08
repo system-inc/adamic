@@ -75,7 +75,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/06_memoize_clear.a:8:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length \u003e 0 or count !== 0"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/06_memoize_clear.a:5:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
   },
   {
     "file": "07_indexed_operation.a",
@@ -114,10 +114,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/09_interface_kind.a:15:10: stage 0 can't lower checked view field properties of type readonly number[] yet"}
   },
   {
     "file": "10_union_kind.a",
@@ -146,10 +143,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: stage 0 can't lower checked view field expression of type Node yet"}
   },
   {
     "file": "12_union_target.a",
@@ -274,10 +268,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/19_identifier_kind.a:15:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"}
   },
   {
     "file": "20_type_flag_mask.a",

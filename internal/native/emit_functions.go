@@ -50,9 +50,10 @@ func (e *emitter) functionBody(function ir.Function) {
 		e.line("(void)self;")
 		e.line("(void)argument_count;")
 		e.line("(void)arguments;")
+		e.line("(void)argument_count;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
-			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
+			value := closureArgument(local.Type, index)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -168,6 +169,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
+		if index >= len(parameters) {
+			e.value(argument) // Extra arguments still run, before the call.
+			continue
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
@@ -242,7 +247,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %d, %s)", method, receiver, len(arguments), packed)
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %d, %s))", closure, call, method, receiver, len(arguments), packed)
+			received := "(adamic_value[]){ {.reference = " + receiver + "}"
+			if len(arguments) > 0 {
+				received += ", " + strings.Join(arguments, ", ")
+			}
+			received += "}"
+			call = fmt.Sprintf("(%s != NULL ? %s->code(%s, %d + (%s->receiver ? 1 : 0), %s->receiver ? %s : %s) : %s(%s, %d, %s))", closure, closure, closure, len(arguments), closure, closure, received, packed, method, receiver, len(arguments), packed)
 		}
 	}
 	if expression.Returns == 0 {

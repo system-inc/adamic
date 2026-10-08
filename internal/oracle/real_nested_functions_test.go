@@ -25,7 +25,7 @@ func TestRealNestedBlockers(t *testing.T) {
 		refused    bool
 	}{
 		{"01_scanner_frame", "comma operator", true},
-		{"09_checker_constituent_recursion", "PrefixUnaryExpression on a number", false},
+		{"09_checker_constituent_recursion", "BinaryExpression with a boolean and a string", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path := filepath.Join(repository, "stage3/fixtures/nested-functions", probe.name+".a")

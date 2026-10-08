@@ -1,0 +1,4 @@
+const flags: boolean[] = [true];
+console.log(String(!flags[0]));
+console.log(String(!flags[9]));
+console.log(String(!!flags[9]));

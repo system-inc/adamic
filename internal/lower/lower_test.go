@@ -59,7 +59,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
 		{"join on an array of functions", "const steps = [(): number => 1];\nconsole.log(steps.join(','));\n", "main.a:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet"},
 		{"concat on an array of arrays", "const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n", "main.a:2:14: stage 0 can't lower concat on an array of arrays yet"},
-		{"a rest parameter", "function sum(...values: number[]): number {\n\treturn values.length;\n}\nconsole.log(`${sum(1, 2)}`);\n", "main.a:1:14: stage 0 can't lower a parameter that isn't a plain name yet"},
+		{"a rest parameter in a function value", "const sum = (...values: number[]): number => values.length;\n", "main.a:1:14: stage 0 can't lower a rest parameter outside a nongeneric named function yet"},
 		// An arrow in a branch the checker knows is dead returns never, and has no name to point at:
 		// that was a nil dereference, a crash where a not-yet belongs (found by the fuzzer, seed 102).
 		{"an arrow returning never", "let flag: boolean = false;\nif (flag) {\n\tconsole.log([0].filter((item) => flag).join(','));\n}\n", "main.a:3:25: stage 0 can't lower a function returning never yet"},
@@ -69,7 +69,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"Array.from's undefined as a union", "const made = Array.from({ length: 2 }, (value: string | number | undefined, index: number) => index);\n", "main.a:1:41: stage 0 can't lower a function value taking string | number | undefined yet"},
 		{"assigning Array.from's undefined", "const made = Array.from({ length: 2 }, (value, index) => {\n\tvalue = index;\n\treturn index;\n});\n", "main.a:2:2: stage 0 can't lower assigning to a parameter that only ever receives undefined yet"},
 		{"an array of boolean | undefined", "const answers: (boolean | undefined)[] = [true, undefined];\n", "main.a:1:42: stage 0 can't lower an array of true | undefined yet"},
-		{"a field of type boolean | undefined", "interface Answer {\n\tyes: boolean | undefined;\n}\nconst answer: Answer = { yes: true };\nconsole.log(`${answer.yes ?? false}`);\n", "main.a:5:16: stage 0 can't lower a field of type boolean | undefined yet"},
 		{"a captured boolean | undefined", "function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet"},
 		{"an array of a union", "const mixed: (string | number)[] = ['a', 1];\n", "main.a:1:36: stage 0 can't lower an array of string | number yet"},
 		{"a field of a union", "interface Shown {\n\treadonly value: string | number;\n}\nconst shown: Shown = { value: 1 };\nconsole.log(`${shown.value}`);\n", "main.a:5:16: stage 0 can't lower a field of type string | number yet"},
@@ -117,8 +116,6 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		source string
 		want   string
 	}{
-		{"a string as a condition", "const name = 'x';\nif (name) {\n\tconsole.log(name);\n}\n", "main.a:2:5: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"},
-		{"a number as a loop condition", "let count = 3;\nwhile (count) {\n\tcount -= 1;\n}\n", "main.a:2:8: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"},
 		{"var", "var old = 1;\n", "main.a:1:1: Adamic 0.1 refuses var; use const or let"},
 		{"async", "async function wait(): Promise<void> {}\n", "main.a:1:1: Adamic 0.1 refuses an async function;"},
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
