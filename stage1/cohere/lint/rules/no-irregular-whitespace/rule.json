@@ -1,0 +1,12 @@
+{
+  "name": "no-irregular-whitespace",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoIrregularWhitespace",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoIrregularWhitespace"
+}
