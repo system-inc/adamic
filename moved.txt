@@ -1,0 +1,144 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/01_call_time/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/01_call_time/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/01_call_time/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/02_reverse_barrel/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/02_reverse_barrel/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/02_reverse_barrel/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/03_extensions/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/03_extensions/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/03_extensions/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/04_directory_callback/main.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/04_directory_callback/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/07_namespace_barrel/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/07_namespace_barrel/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/07_namespace_barrel/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/08_named_reexports/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/08_named_reexports/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/08_named_reexports/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/09_function_value_load/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/09_function_value_load/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/09_function_value_load/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/10_hoisted_before_body/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/10_hoisted_before_body/main.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/10_hoisted_before_body/main.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/04_debug_state.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/04_debug_state.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/04_debug_state.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/05_debug_log_merge.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/05_debug_log_merge.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/05_debug_log_merge.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/07_parser_singleton.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/07_parser_singleton.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/07_parser_singleton.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/08_parser_jsdoc_nested.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/08_parser_jsdoc_nested.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/08_parser_jsdoc_nested.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/09_incremental_parser.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/09_incremental_parser.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/09_incremental_parser.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/10_tracing_escape.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/10_tracing_escape.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/28_debugger.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/28_debugger.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/28_debugger.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/29_parameter_default.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/29_parameter_default.a/stage0
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/01_call_time/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/01_call_time/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/01_call_time/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/02_reverse_barrel/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/02_reverse_barrel/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/02_reverse_barrel/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/03_extensions/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/03_extensions/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/03_extensions/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/04_directory_callback/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/04_directory_callback/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/04_directory_callback/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/07_namespace_barrel/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/07_namespace_barrel/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/07_namespace_barrel/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/08_named_reexports/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/08_named_reexports/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/08_named_reexports/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/09_function_value_load/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/09_function_value_load/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/09_function_value_load/main.a:4:1: stage 0 can't lower reading performance yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/10_hoisted_before_body/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/10_hoisted_before_body/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/10_hoisted_before_body/main.a:4:1: stage 0 can't lower reading performance yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/04_debug_state.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/04_debug_state.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/04_debug_state.a:14:5: stage 0 can't lower a mutable namespace export; use a module or export functions around private state yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/05_debug_log_merge.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/05_debug_log_merge.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/05_debug_log_merge.a:19:5: stage 0 can't lower a mutable namespace export; use a module or export functions around private state yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/07_parser_singleton.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/07_parser_singleton.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/07_parser_singleton.a:7:5: stage 0 can't lower var inside a namespace; use initialized private let or const yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/08_parser_jsdoc_nested.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/08_parser_jsdoc_nested.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:12:5: stage 0 can't lower var inside a namespace; use initialized private let or const yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/09_incremental_parser.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/09_incremental_parser.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/09_incremental_parser.a:18:5: stage 0 can't lower a namespace member other than a function, type, initialized binding or nested namespace yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/10_tracing_escape.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/10_tracing_escape.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/namespaces/10_tracing_escape.a:38:11: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet}; recorded {Outcome:NotYet What:stage3/fixtures/namespaces/10_tracing_escape.a:9:9: stage 0 can't lower a namespace binding without a plain initialized name yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/objects/10_build_options.a:8:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet}; recorded {Outcome:Refused What:stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/28_debugger.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/28_debugger.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:Refused What:stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/29_parameter_default.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/29_parameter_default.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/objects/29_parameter_default.a:6:13: Adamic 0.1 refuses 'a', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)}; recorded {Outcome:NotYet What:stage3/fixtures/objects/29_parameter_default.a:11:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet}
