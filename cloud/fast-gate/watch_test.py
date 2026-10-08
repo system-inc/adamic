@@ -366,6 +366,21 @@ class WatchTests(unittest.TestCase):
         self.assertIn('nothing dispatched for', new)
         self.assertIn('queue head: codex/waiting', new)
 
+    def test_a_box_held_whole_is_not_a_free_slot_to_the_stall_alarm(self):
+        # Server's small slot is free in the table, but a reserved gate holds the box: fifteen minutes, not five.
+        w = self.reservation('server B cloud/land-area-next*\nserver S\n', [('codex/waiting', 'S')])
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('cloud/land-area-next-1 ' + 'c' * 40 + ' B server B x ' + str(w.state / 'logs/old.log') + '\n')
+        (w.state / 'reserved-running' / str(holder.pid)).write_text('server\n')
+        w.wait(lambda: 'done canary:' in w.read('output') or 'gating canary' not in w.read('output'))
+        w.put('clock', '1400')
+        time.sleep(.3)
+        self.assertNotIn('stall alarm sent', w.read('output'))
+        w.put('clock', '2000')
+        w.wait(lambda: 'stall alarm sent' in w.read('output'))
+        self.assertIn('and 0 slots free', w.read('messages'))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])

@@ -505,7 +505,9 @@ while true; do
   pollEnd=$(date -u +%s)
   # A void storm pauses dispatch on purpose and sends its own alarm.
   if [ -s "${state}/queue" ] && [ ! -f "${state}/storm" ]; then
-    freeCount=$(freeSlots | grep -c .)
+    # Slots a tip could take now: a box a reserved gate holds whole, or one draining for it, isn't free.
+    free=$(freeSlots) draining=$(drainingBoxes)
+    freeCount=$(usableSlots canary/main | grep -c .)
     stallLimit=900
     [ "${freeCount}" -gt 0 ] && stallLimit=300
     if [ $(( pollEnd - ${lastDispatch:-${watchStart}} )) -ge "${stallLimit}" ] && [ -z "${stallAlarmed:-}" ]; then
