@@ -1,0 +1,29 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:466: compiler and stage1: 953 files
+    lint_test.go:467: checker native build: 5.34198ms
+    lint_test.go:467: /tmp/adamic-gate/lint-shared-1438087071/oracle-1991927153/oracle [--manifest /tmp/adamic-gate/TestCompilerAndStage1Agree1465255839/002/manifest.txt]: exit status 2
+        panic: invalid corpus /workspace/adamic-w05-rules-landing/stage1/typescript/parser/testdata/lint_cases/decorated_async_promise_executor.ts: [Expression expected. ',' expected.]; source="new Promise(@dec async () => {})\n"
+        
+        goroutine 1 [running]:
+        main.collect({0x136eafae0c7b, 0x74}, {0x136eaf5e8150, 0x21}, {0x136eaf904400, 0x7, 0x8}, 0x0)
+        	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:186 +0xafe
+        main.run({0x136eafae0c7b?, 0x136eaf9a6d80?}, 0x0, 0x136eaf9a6d80, 0x0)
+        	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:68 +0x171
+        main.main()
+        	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:292 +0x595
+--- FAIL: TestCompilerAndStage1Agree (8.29s)
+=== RUN   TestProfileSnapshotsAgree
+    lint_test.go:290: cohere cases: 4394 unique source/rule/options combinations
+    profile_test.go:225: /tmp/checker-w05-shared-fixes-profiles release: case 5137 line 160719: port "/workspace/adamic-w05-rules-landing/stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts:1:7", Go "fixed\tawait new Promise();\\u000aexport {};\\u000a"
+        Go context:
+        case 5136
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        recovery findings only
+        case 5137
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        fixed	await new Promise();\u000aexport {};\u000a
+        case 5138
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        /workspace/adamic-w05-rules-landing/stage1/typescript/parser/testdata/lint_cases/wave15_octal_literal_decimal_tail.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+--- FAIL: TestProfileSnapshotsAgree (180.64s)

@@ -1,0 +1,126 @@
+{
+  "merged_fixes": [
+    "e7c196a9",
+    "dbe2fff0"
+  ],
+  "command": "source /workspace/adamic-tools/env.sh; python3 /tmp/w05-checker-runner.py w05-shared-fixes /workspace/adamic-w05-rules-landing 90m",
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/w05-typescript-corpus",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/checker-w05-shared-fixes-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/checker-w05-shared-fixes-profiles"
+  },
+  "tests_including_subtests": {
+    "pass": 125,
+    "skip": 1,
+    "fail": 2
+  },
+  "top_level_tests": {
+    "pass": 33,
+    "skip": 1,
+    "fail": 2
+  },
+  "failed": [
+    "TestCompilerAndStage1Agree",
+    "TestProfileSnapshotsAgree"
+  ],
+  "skipped": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "wall_seconds": 1687.587545933,
+  "nproc": "5",
+  "exit": 1,
+  "owned_rules": [
+    {
+      "rule": "@eslint-community/eslint-comments/require-description",
+      "matched_upstream_combinations": 109,
+      "mutant": "reason ignored",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        113,
+        114,
+        115
+      ]
+    },
+    {
+      "rule": "structure/tailwind-no-physical-direction",
+      "matched_upstream_combinations": 56,
+      "mutant": "rtl exemption removed",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+      "matched_upstream_combinations": 24,
+      "mutant": "parenthesized chain missed",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        95,
+        96,
+        97
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-assertion",
+      "matched_upstream_combinations": 36,
+      "mutant": "postfix assignment suggestion",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-function-type",
+      "matched_upstream_combinations": 39,
+      "mutant": "array function type unwrapped",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        233,
+        234,
+        235
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-namespace-keyword",
+      "matched_upstream_combinations": 22,
+      "mutant": "export report span misplaced",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        224,
+        225,
+        226
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/triple-slash-reference",
+      "matched_upstream_combinations": 70,
+      "mutant": "first repeated directive kept",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        242,
+        243,
+        244
+      ]
+    }
+  ]
+}

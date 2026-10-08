@@ -1,0 +1,42 @@
+Go exit=0
+case 0
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+fixed	await new Promise();\u000aexport {};\u000a
+
+native exit=0
+case 0
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+/workspace/adamic-w05-rules-landing/stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts:1:7
+  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+
+range 6 20 noNewStatement 			6 20
+fixed	await new Promise();\u000aexport {};\u000a
+
+Node exit=1
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'adamic' imported from /tmp/checker-w05-shared-fixes-profiles/main.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+
+case 0
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+/workspace/adamic-w05-rules-landing/stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts:1:7
+  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+
+range 6 20 noNewStatement 			6 20
+fixed	await new Promise();\u000aexport {};\u000a
