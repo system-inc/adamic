@@ -73,3 +73,27 @@ same-spelled constants/functions, type/value name coexistence, detached function
 identity, structural copies and module import/evaluation order.
 [Validation](parameter-properties-namespaces-validation.md) records the gate,
 counts, mutants and limits.
+
+## ESM namespace qualifications (October 8)
+
+The `performance` namespace in TypeScript's generated barrels is an ESM namespace
+import, rather than a `namespace` declaration. Qualified members now resolve to
+the checker's actual export bindings through named and star re-exports. A
+structural object with the same type keeps ordinary object semantics. Function
+declarations retain ESM hoisting and canonical detached identity; mutable module
+exports are live reads of their original storage.
+
+The existing import-cycle initialization proof applies to these reads. A provider
+that has completed before the consumer runs needs no readiness check. Deferred
+reads and reads whose ordering is undecided retain the runtime readiness check
+at the original binding, including reads reached through a helper. ESM namespace
+object escape, reflection, computed access and functions observing the namespace
+receiver remain named NotYet. A narrowed boxed union member also remains NotYet
+on this base; reading it into an ordinary local uses existing checked narrowing.
+
+Three sampled `reading Debug` census signatures did not reproduce with complete
+project bindings. Two imported `reading performance` signatures did reproduce
+and disappear with this qualification fix. This is a five-site replay result,
+not a claim that all 557 Debug or 51 performance roots lower. Exact sites, other
+blockers, Node fixtures and real readiness mutants are recorded in
+[the namespace-reads report](../stage3/notyet-namespace-reads/REPORT.md).
