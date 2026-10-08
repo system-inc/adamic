@@ -119,6 +119,10 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	if len(sources) > 0 {
 		l.typeMapper = newTypeMapper(sources, targets)
 	}
+	if err := l.refuseInstantiatedArrayViews(call, declaration, concreteTypes); err != nil {
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+		return 0, err
+	}
 	if err := l.refuseInstantiatedMutation(declaration); err != nil {
 		return 0, err
 	}

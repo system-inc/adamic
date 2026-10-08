@@ -1,0 +1,6 @@
+function write<T>(values: T[], value: T): void { values.push(value); }
+function collect<T>(result: NonNullable<T>[], next: T): T[] {
+    write<T>(result, next);
+    return result;
+}
+console.log(collect<string | undefined>(["first"], undefined).join(","));

@@ -207,6 +207,7 @@ func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited
 // widenedArguments is widenedElements with whether to's own slots can be written given: a fresh
 // container's can't be written through anything else (freshValue).
 func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+	from, to = l.concrete(from), l.concrete(to)
 	fromArguments, toArguments := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
 	if checker.IsTupleType(from) && !checker.IsTupleType(to) && len(toArguments) == 1 {
 		// A tuple seen as an array: every element of it is seen as the array's element.
@@ -218,6 +219,10 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
+		// This obligation is rechecked before any concrete function body is emitted.
+		if mutable && l.typeMapper == nil && l.deferredNullableArrayView(from, to, source, target) {
+			continue
+		}
 		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
