@@ -139,6 +139,8 @@ while true; do
     read -r _ queued branch sha class slot <<< "${next}"
     grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     grep -qx "${sha}" "${state}/gated" && continue
+    # The skip file ("branch sha" per line) takes a tip out by hand: a stale landing candidate, say.
+    grep -qxF "${branch} ${sha}" "${state}/skip" 2>/dev/null && { echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue; }
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     # A tip already on main has nothing left to prove: integration's landed cloud/land-* branches stay
