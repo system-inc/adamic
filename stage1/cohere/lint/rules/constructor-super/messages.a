@@ -1,0 +1,4 @@
+export const badSuper = 'This `super()` call has no constructor to call, because the `extends` clause names something that cannot be constructed.';
+export const duplicate = 'This `super()` call can run on a path that already called `super()`, which throws a ReferenceError because a constructor may only call it once.';
+export const missingAll = 'This derived constructor never calls `super()`, so constructing the class throws a ReferenceError before the body finishes.';
+export const missingSome = 'This derived constructor calls `super()` on some paths and not others, so the paths without it throw a ReferenceError.';

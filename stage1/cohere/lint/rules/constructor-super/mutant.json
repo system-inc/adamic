@@ -1,0 +1,1 @@
+{"name":"constructor-super-conditional-call-guaranteed","from":"return first === second ? first : 1;","to":"return first === second ? first : 2;"}

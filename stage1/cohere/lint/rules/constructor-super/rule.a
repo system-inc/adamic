@@ -1,0 +1,246 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { CoreArena, CoreNode } from '../../helpers/core/nodes.a';
+import { isSeparateEvaluationContext } from '../../helpers/core/is_separate_evaluation_context.a';
+import { badSuper, duplicate, missingAll, missingSome } from './messages.a';
+
+// The Go rule's structural lattice: never, sometimes, always. It deliberately does not model back edges.
+class Flow {
+    calls = 0;
+    exits = false;
+    acceptableExit = false;
+    escapedWithoutCalling = false;
+    constructor(calls = 0, exits = false, acceptableExit = false, escapedWithoutCalling = false) {
+        this.calls = calls; this.exits = exits; this.acceptableExit = acceptableExit;
+        this.escapedWithoutCalling = escapedWithoutCalling;
+    }
+}
+function sequential(before: number, after: number): number {
+    if(before === 2 || after === 2) { return 2; }
+    return before === 1 || after === 1 ? 1 : 0;
+}
+function mergeStates(first: number, second: number): number {
+    return first === second ? first : 1;
+}
+function branches(first: Flow, second: Flow): Flow {
+    const firstDropped = first.exits && first.acceptableExit;
+    const secondDropped = second.exits && second.acceptableExit;
+    if(firstDropped && secondDropped) { return new Flow(0, true, true); }
+    const calls = firstDropped ? second.calls : secondDropped ? first.calls : mergeStates(first.calls, second.calls);
+    return new Flow(calls, first.exits && second.exits,
+        first.exits && second.exits && first.acceptableExit && second.acceptableExit,
+        first.escapedWithoutCalling || second.escapedWithoutCalling ||
+        (first.exits && !first.acceptableExit && first.calls !== 2) ||
+        (second.exits && !second.acceptableExit && second.calls !== 2));
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly arena: CoreArena;
+    mayHaveCalled = false;
+    duplicates: number[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        // The shared evaluation-context helper needs only kind facts. Preserve the parser's indexes.
+        const nodes: CoreNode[] = [];
+        for(const parsed of context.parser.nodes) {
+            const node = new CoreNode(); node.kind = parsed.kind; nodes.push(node);
+        }
+        this.arena = new CoreArena(context.source, nodes);
+    }
+    part(index: number, position: number): number {
+        return index < 0 ? -1 : this.context.node(index).children[position] ?? -1;
+    }
+    last(index: number): number {
+        return index < 0 ? -1 : this.part(index, this.context.node(index).children.length - 1);
+    }
+    separate(index: number): boolean {
+        return index >= 0 && isSeparateEvaluationContext(this.arena, index);
+    }
+    superCall(index: number): boolean {
+        return this.context.kind(index) === 'CallExpression' && this.context.kind(this.part(index, 0)) === 'SuperKeyword';
+    }
+    possible(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'ParenthesizedExpression': case 'NonNullExpression': case 'AsExpression':
+                return this.possible(this.part(index, 0));
+            case 'ClassExpression': case 'FunctionExpression': case 'ThisKeyword':
+            case 'PropertyAccessExpression': case 'ElementAccessExpression': case 'CallExpression':
+            case 'NewExpression': case 'YieldExpression': case 'TaggedTemplateExpression': case 'MetaProperty': return true;
+            case 'Identifier': return node.text !== 'undefined';
+            case 'ConditionalExpression': return this.possible(this.part(index, 2)) || this.possible(this.part(index, 4));
+            case 'BinaryExpression':
+                switch(this.context.kind(this.part(index, 1))) {
+                    case 'EqualsToken': case 'AmpersandAmpersandEqualsToken': case 'AmpersandAmpersandToken': case 'CommaToken':
+                        return this.possible(this.last(index));
+                    case 'BarBarEqualsToken': case 'QuestionQuestionEqualsToken': case 'BarBarToken': case 'QuestionQuestionToken':
+                        return this.possible(this.part(index, 0)) || this.possible(this.last(index));
+                }
+        }
+        return false;
+    }
+    collect(index: number, calls: number[]): void {
+        if(index < 0 || this.separate(index)) { return; }
+        if(this.superCall(index)) { calls.push(index); }
+        for(const child of this.context.node(index).children) { this.collect(child, calls); }
+    }
+    hasCalls(index: number): boolean {
+        const calls: number[] = []; this.collect(index, calls); return calls.length > 0;
+    }
+    returnsValue(index: number): boolean {
+        if(index < 0 || this.separate(index)) { return false; }
+        if(this.context.kind(index) === 'ReturnStatement') { return this.part(index, 0) >= 0; }
+        for(const child of this.context.node(index).children) { if(this.returnsValue(child)) { return true; } }
+        return false;
+    }
+    flowList(statements: readonly number[]): Flow {
+        const result = new Flow();
+        for(const statement of statements) {
+            if(result.exits) { break; }
+            const flow = this.flow(statement);
+            result.calls = sequential(result.calls, flow.calls);
+            result.exits = flow.exits; result.acceptableExit = flow.acceptableExit;
+            result.escapedWithoutCalling = result.escapedWithoutCalling || flow.escapedWithoutCalling;
+        }
+        return result;
+    }
+    clauses(index: number): readonly number[] { return this.context.node(this.part(index, 1)).children; }
+    statements(clause: number): number[] {
+        return this.context.node(clause).children.slice(this.context.kind(clause) === 'CaseClause' ? 1 : 0);
+    }
+    flow(index: number): Flow {
+        if(index < 0) { return new Flow(); }
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'Block': return this.flowList(node.children);
+            case 'ReturnStatement': return new Flow(0, true, this.part(index, 0) >= 0);
+            case 'ThrowStatement': return new Flow(0, true, true);
+            case 'IfStatement': return branches(this.flow(this.part(index, 1)), this.flow(this.part(index, 2)));
+            case 'LabeledStatement': return this.flow(this.last(index));
+            case 'TryStatement': {
+                const catchClause = this.context.children(index, 'CatchClause')[0] ?? -1;
+                const finalBlock = this.context.children(index, 'Block')[1] ?? -1;
+                if(finalBlock >= 0) { const flow = this.flow(finalBlock); if(flow.calls === 2) { return flow; } }
+                const tryFlow = this.flow(this.part(index, 0));
+                return catchClause < 0 ? tryFlow : branches(tryFlow, this.flow(this.last(catchClause)));
+            }
+            case 'SwitchStatement': {
+                const clauses = this.clauses(index);
+                if(!clauses.some((clause) => this.context.kind(clause) === 'DefaultClause')) {
+                    return new Flow(this.hasCalls(index) ? 1 : 0);
+                }
+                let every = true; let any = false;
+                for(let position = 0; position < clauses.length; position++) {
+                    const statements = this.statements(clauses[position] ?? -1);
+                    if(statements.length === 0) { if(position === clauses.length - 1) { every = false; } continue; }
+                    const flow = this.flowList(statements);
+                    if(flow.calls === 2) { any = true; } else { every = false; if(flow.calls === 1) { any = true; } }
+                }
+                return new Flow(every ? 2 : any ? 1 : 0);
+            }
+            case 'WhileStatement': case 'DoStatement': case 'ForStatement': case 'ForInStatement': case 'ForOfStatement':
+                return new Flow(this.hasCalls(index) ? 1 : 0);
+            case 'ExpressionStatement': return this.expression(this.part(index, 0));
+        }
+        return new Flow();
+    }
+    expression(index: number): Flow {
+        if(index < 0) { return new Flow(); }
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'ParenthesizedExpression': return this.expression(this.part(index, 0));
+            case 'CallExpression': if(this.superCall(index)) { return new Flow(2); } break;
+            case 'ConditionalExpression': return branches(this.expression(this.part(index, 2)), this.expression(this.part(index, 4)));
+            case 'BinaryExpression':
+                if(this.context.kind(this.part(index, 1)) === 'CommaToken') {
+                    return new Flow(sequential(this.expression(this.part(index, 0)).calls, this.expression(this.last(index)).calls));
+                }
+                switch(this.context.kind(this.part(index, 1))) {
+                    case 'AmpersandAmpersandToken': case 'BarBarToken': case 'QuestionQuestionToken':
+                    case 'AmpersandAmpersandEqualsToken': case 'BarBarEqualsToken': case 'QuestionQuestionEqualsToken':
+                        return new Flow(this.expression(this.part(index, 0)).calls);
+                }
+        }
+        return new Flow();
+    }
+    duplicateList(statements: readonly number[]): void {
+        for(const statement of statements) { this.walk(statement); if(this.flow(statement).exits) { return; } }
+    }
+    breaks(statements: readonly number[]): boolean {
+        for(const statement of statements) {
+            if(this.context.kind(statement) === 'BreakStatement' || this.flow(statement).exits) { return true; }
+        }
+        return false;
+    }
+    walk(index: number): void {
+        if(index < 0 || this.separate(index)) { return; }
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'Block': this.duplicateList(node.children); return;
+            case 'IfStatement': {
+                this.walk(this.part(index, 0)); const entry = this.mayHaveCalled;
+                this.walk(this.part(index, 1)); const thenCalled = this.mayHaveCalled && !this.flow(this.part(index, 1)).exits;
+                this.mayHaveCalled = entry; this.walk(this.part(index, 2));
+                const elseCalled = this.mayHaveCalled && !this.flow(this.part(index, 2)).exits;
+                this.mayHaveCalled = thenCalled || elseCalled; return;
+            }
+            case 'ConditionalExpression': {
+                this.walk(this.part(index, 0)); const entry = this.mayHaveCalled;
+                this.walk(this.part(index, 2)); const yes = this.mayHaveCalled;
+                this.mayHaveCalled = entry; this.walk(this.part(index, 4)); this.mayHaveCalled = yes || this.mayHaveCalled; return;
+            }
+            case 'SwitchStatement': {
+                this.walk(this.part(index, 0)); const entry = this.mayHaveCalled; let any = entry;
+                for(const clause of this.clauses(index)) {
+                    const statements = this.statements(clause); this.duplicateList(statements);
+                    any = any || this.mayHaveCalled; if(this.breaks(statements)) { this.mayHaveCalled = entry; }
+                }
+                this.mayHaveCalled = any; return;
+            }
+            case 'WhileStatement': case 'DoStatement': case 'ForStatement': case 'ForInStatement': case 'ForOfStatement': {
+                const body = node.kind === 'DoStatement' ? this.part(index, 0) : this.last(index);
+                for(const child of node.children) { if(child !== body) { this.walk(child); } }
+                this.walk(body); return;
+            }
+            case 'TryStatement': {
+                const entry = this.mayHaveCalled; this.walk(this.part(index, 0)); const tryCalled = this.mayHaveCalled;
+                const catchClause = this.context.children(index, 'CatchClause')[0] ?? -1; let catchCalled = false;
+                if(catchClause >= 0) { this.mayHaveCalled = entry; this.walk(this.last(catchClause)); catchCalled = this.mayHaveCalled; }
+                this.mayHaveCalled = tryCalled || catchCalled;
+                this.walk(this.context.children(index, 'Block')[1] ?? -1); return;
+            }
+            case 'CallExpression':
+                if(this.superCall(index)) {
+                    for(const argument of this.context.arguments(index)) { this.walk(argument); }
+                    if(this.mayHaveCalled) { this.duplicates.push(index); }
+                    this.mayHaveCalled = true; return;
+                }
+        }
+        for(const child of node.children) { this.walk(child); }
+    }
+    report(index: number, id: string, message: string): void {
+        this.context.report(index, 'constructor-super', id, message, '', '', '');
+    }
+    visit(node: ParseNode, index: number): void {
+        const parent = this.context.parent(index);
+        const body = node.children.find((child) => this.context.kind(child) === 'Block') ?? -1;
+        if(parent < 0 || body < 0) { return; }
+        const heritage = this.context.children(parent, 'HeritageClause').find((clause) => this.context.node(clause).operator === 'ExtendsKeyword') ?? -1;
+        if(heritage < 0) { return; }
+        const base = this.part(this.part(heritage, 0), 0);
+        const calls: number[] = []; this.collect(body, calls);
+        if(!this.possible(base)) {
+            if(calls.length > 0) { for(const call of calls) { this.report(call, 'badSuper', badSuper); } }
+            else if(!this.returnsValue(body)) { this.report(index, 'missingAll', missingAll); }
+            return;
+        }
+        if(calls.length === 0) { this.report(index, 'missingAll', missingAll); return; }
+        const flow = this.flow(body);
+        if(flow.calls === 0) { this.report(index, 'missingAll', missingAll); }
+        else if(flow.calls === 1 || flow.escapedWithoutCalling) { this.report(index, 'missingSome', missingSome); }
+        this.mayHaveCalled = false; this.duplicates = []; this.walk(body);
+        for(const call of this.duplicates) { this.report(call, 'duplicate', duplicate); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
