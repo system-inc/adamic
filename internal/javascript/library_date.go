@@ -13,6 +13,10 @@ func (e *emitter) dateCall(call ir.DateCall) string {
 		return "new Date(" + args + ")"
 	case "copy":
 		return "new Date(" + e.value(call.Receiver) + ")"
+	case "prototypeHasOwn":
+		return "Date.prototype.hasOwnProperty(" + args + ")"
+	case "constructorHasOwn":
+		return "Date.hasOwnProperty(" + args + ")"
 	case "UTC", "parse":
 		return "Date." + call.Method + "(" + args + ")"
 	}

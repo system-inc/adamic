@@ -1,5 +1,0 @@
-=== RUN   TestDateStringWASIRefusal
-    library_date_string_test.go:187: whole archive builds; Denver conversion loudly refuses missing WASI zone database
---- PASS: TestDateStringWASIRefusal (0.90s)
-PASS
-ok  	github.com/system-inc/adamic/internal/oracle	0.950s

@@ -82,6 +82,20 @@ func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) 
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
 	written := node.AsCallExpression().Arguments.Nodes
+	if name == "hasOwnProperty" && (l.datePrototype(receiver) || l.isLibraryGlobal(receiver, "Date")) {
+		if len(written) != 1 || hasSpread(node) {
+			return nil, true, l.notYet(node, "Date hasOwnProperty with missing, extra or spread arguments")
+		}
+		key, err := l.stringConversion(written[0])
+		method := "constructorHasOwn"
+		if l.datePrototype(receiver) {
+			method = "prototypeHasOwn"
+		}
+		return ir.DateCall{Method: method, Arguments: []ir.Expression{key}, Returns: ir.Boolean}, true, err
+	}
+	if value, known, err := l.dateStringMethod(node); known {
+		return value, true, err
+	}
 	// Explicit .call binds the intrinsic's this without materializing Date.prototype.
 	if name == "call" {
 		method := ast.SkipParentheses(receiver)

@@ -47,7 +47,7 @@ static void date_string_parts(int64_t seconds, int *parts) {
 }
 
 adamic_string *adamic_fs_file_date_string(const adamic_object *date) {
- double time=adamic_fs_file_date_time(date);
+ double time=adamic_date_value(date);
  if (isnan(time)) return date_string_text("Invalid Date");
  const char *zone=getenv("TZ");
 #ifndef ADAMIC_TARGET_WASI

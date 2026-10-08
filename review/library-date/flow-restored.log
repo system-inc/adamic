@@ -1,7 +1,0 @@
-=== RUN   TestDateMutationRanges
-=== PAUSE TestDateMutationRanges
-=== CONT  TestDateMutationRanges
-    library_date_test.go:52: Node observed 92 Date mutations, all inside their ranges
---- PASS: TestDateMutationRanges (0.25s)
-PASS
-ok  	github.com/system-inc/adamic/internal/flow	0.269s

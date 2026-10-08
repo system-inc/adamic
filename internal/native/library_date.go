@@ -25,6 +25,8 @@ func (e *emitter) dateCall(call ir.DateCall) string {
 	}
 	code := ""
 	switch call.Method {
+	case "prototypeHasOwn", "constructorHasOwn":
+		code = fmt.Sprintf("adamic_date_has_own(%s, %t)", args[0], call.Method == "prototypeHasOwn")
 	case "UTC":
 		code = fmt.Sprintf("adamic_date_utc(%d, %s)", len(args), numbers)
 	case "components":
@@ -38,7 +40,7 @@ func (e *emitter) dateCall(call ir.DateCall) string {
 	case "parse":
 		code = "adamic_date_parse_iso(" + args[0] + ")"
 	case "getTime", "valueOf":
-		code = "adamic_date_value(" + receiver + ")"
+		code = "adamic_fs_file_date_time(" + receiver + ")"
 	case "toString", "toUTCString", "toDateString", "toTimeString":
 		style := map[string]int{"toString": 0, "toUTCString": 1, "toDateString": 2, "toTimeString": 3}[call.Method]
 		code = fmt.Sprintf("adamic_date_format(%s, %d)", receiver, style)

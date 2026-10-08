@@ -1013,6 +1013,7 @@ adamic_string *adamic_process_environment(const adamic_string *name);
 // Deterministic Date operations, stored with no enumerable fields.
 adamic_object *adamic_date_new(double time);
 double adamic_date_value(const adamic_object *date);
+bool adamic_date_has_own(const adamic_string *key, bool prototype);
 double adamic_date_utc(size_t count, const double *arguments);
 double adamic_date_get(const adamic_object *date, int field);
 double adamic_date_set(adamic_object *date, int field, size_t count, const double *arguments);

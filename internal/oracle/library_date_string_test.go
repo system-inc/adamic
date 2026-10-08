@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"library_date_string", "library_date_string_utc"} {
+	for _, name := range []string{"library_date_string", "library_date_string_utc", "library_date_own"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

@@ -10,6 +10,8 @@ static double time_clip(double time) {
 }
 adamic_object *adamic_date_new(double time) {
  adamic_object *date = adamic_allocate(sizeof *date + sizeof date->slots[0], adamic_kind_object);
+ // Initialize the current object layout without overwriting the allocator header.
+ memset((char *)date + sizeof date->heap, 0, sizeof *date - sizeof date->heap + sizeof date->slots[0]);
  date->shape = &date_shape; date->class = NULL; date->frozen = false;
  date->slots[0].number = time_clip(time);
  return date;
@@ -150,4 +152,16 @@ adamic_string *adamic_date_format(const adamic_object *date, int style) {
  adamic_string *result = adamic_string_allocate(length);
  memcpy((char *)result->bytes, text, length);
  return result;
+}
+
+// V8 bootstrapper.cc's Date installation. Mutation/expando writes stay refused.
+bool adamic_date_has_own(const adamic_string *key, bool prototype) {
+ static const char *const constructor_names[] = {"length", "name", "prototype", "now", "parse", "UTC"};
+ static const char *const prototype_names[] = {"constructor", "toString", "toDateString", "toTimeString", "toISOString", "toUTCString", "toGMTString", "getDate", "setDate", "getDay", "getFullYear", "setFullYear", "getHours", "setHours", "getMilliseconds", "setMilliseconds", "getMinutes", "setMinutes", "getMonth", "setMonth", "getSeconds", "setSeconds", "getTime", "setTime", "getTimezoneOffset", "getUTCDate", "setUTCDate", "getUTCDay", "getUTCFullYear", "setUTCFullYear", "getUTCHours", "setUTCHours", "getUTCMilliseconds", "setUTCMilliseconds", "getUTCMinutes", "setUTCMinutes", "getUTCMonth", "setUTCMonth", "getUTCSeconds", "setUTCSeconds", "valueOf", "getYear", "setYear", "toJSON", "toLocaleString", "toLocaleDateString", "toLocaleTimeString"};
+ const char *const *names = prototype ? prototype_names : constructor_names;
+ size_t count = prototype ? sizeof prototype_names / sizeof *prototype_names : sizeof constructor_names / sizeof *constructor_names;
+ for (size_t i = 0; i < count; i++) {
+  if (key->length == strlen(names[i]) && memcmp(key->bytes, names[i], key->length) == 0) return true;
+ }
+ return false;
 }
