@@ -208,3 +208,19 @@ The complete affected package gate for cleanup passed: native 146.446s, lower
 regeneration passed in 46.454s and updated nine existing rows, preserving their
 allocation/free balance. The shared Effects rule changes measured retain/release
 counts and releases the optional-join holder earlier. Date remains October 10 UTC.
+
+Propagated-result batch: six simple undefined-to-required diagnostics now insert
+a required-object result check at the use: moduleNameResolver.ts:642, 644, 647,
+648 and resolutionCache.ts:1282, 1297. Exact-optional failures prevent the strict
+checker from narrowing earlier assignments; the owning project accepts those
+assignments and narrows the result. Only the two-line undefined-to-required
+diagnostic shape is admitted; nested callback/container errors remain errors.
+The producer fixture preserves present-and-undefined fields, matches Node in both
+backends, passes sanitizer/leak checks, and emits both its earlier presence check
+and its later required-result check. A compiling mutant removes only the producer
+result after the earlier guard; the later check catches it with exit 70. Its
+absent-construction mutant still fails the earlier presence check. There are now
+20 run mutants. Focused proof passes in 0.831s; loader/lower/commands in 3.389s,
+0.779s, 0.008s. Production schedules 61/67, emits zero whole-program checks, and
+retains 200 errors: 90 declarations, 104 other flags, six optional contracts.
+The provisional all-67 date is October 10 UTC.

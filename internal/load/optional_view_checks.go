@@ -10,8 +10,9 @@ import (
 // Required source fields are present even when their values are undefined.
 // Optional source fields need a different contract: legitimate absence is allowed.
 type OptionalViewContract struct {
-	Site   OptionSite
-	Fields []string
+	Site    OptionSite
+	Fields  []string
+	Defined bool
 }
 
 func (p *Program) acceptOptionalView(site OptionSite) bool {
@@ -28,9 +29,18 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 		var names []string
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindIdentifier && site.Position == scanner.GetTokenPosOfNode(node, file, false) {
-				source := checked.GetTypeAtLocation(node)
-				target := checked.GetContextualType(node, checker.ContextFlagsNone)
+			candidate := node
+			matches := node.Kind == ast.KindIdentifier && site.Position == scanner.GetTokenPosOfNode(node, file, false)
+			if node.Kind == ast.KindBinaryExpression {
+				binary := node.AsBinaryExpression()
+				if binary.OperatorToken.Kind == ast.KindEqualsToken && site.Position >= binary.Left.Pos() && site.Position < binary.Left.End() {
+					candidate = ast.SkipParentheses(binary.Right)
+					matches = candidate.Kind == ast.KindIdentifier
+				}
+			}
+			if matches {
+				source := checked.GetTypeAtLocation(candidate)
+				target := checked.GetContextualType(candidate, checker.ContextFlagsNone)
 				if target != nil {
 					target = checked.GetNonNullableType(target)
 				}
@@ -48,7 +58,7 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 					names = append(names, field.Name)
 				}
 				if len(names) > 0 {
-					found = node
+					found = candidate
 					return true
 				}
 			}

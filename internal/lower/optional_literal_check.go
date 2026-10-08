@@ -7,7 +7,7 @@ import (
 
 func (l *lowering) checkedOptionalLiteral(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	if view, ok := l.program.OptionalViewSite(node); ok {
-		return l.checkedOptionalView(node, value, view.Fields)
+		return l.checkedOptionalView(node, value, view)
 	}
 	if value.Type() != ir.Object {
 		return nil, l.notYet(node, "optional construction check requires own-presence object storage")

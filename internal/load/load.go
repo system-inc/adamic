@@ -266,7 +266,7 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 	diagnostics := loaded.diagnostics(context.Background())
 	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) && !loaded.acceptOptionalView(site) {
+		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) && !loaded.acceptOptionalView(site) && !loaded.acceptOptionalDefined(site) {
 			diagnostics = append(diagnostics, site.Message)
 		} else {
 			scheduled = append(scheduled, site)

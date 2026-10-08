@@ -44,78 +44,12 @@
     ]
   },
   {
-    "position": 27024,
-    "file": "src/compiler/moduleNameResolver.ts",
-    "line": 642,
-    "column": 143,
-    "code": 2345,
-    "message": "src/compiler/moduleNameResolver.ts:642:143: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 27251,
-    "file": "src/compiler/moduleNameResolver.ts",
-    "line": 644,
-    "column": 144,
-    "code": 2345,
-    "message": "src/compiler/moduleNameResolver.ts:644:144: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 27313,
-    "file": "src/compiler/moduleNameResolver.ts",
-    "line": 647,
-    "column": 35,
-    "code": 2345,
-    "message": "src/compiler/moduleNameResolver.ts:647:35: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 27327,
-    "file": "src/compiler/moduleNameResolver.ts",
-    "line": 648,
-    "column": 5,
-    "code": 2322,
-    "message": "src/compiler/moduleNameResolver.ts:648:5: error TS2322: Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
     "position": 142603,
     "file": "src/compiler/moduleNameResolver.ts",
     "line": 2772,
     "column": 21,
     "code": 2322,
     "message": "src/compiler/moduleNameResolver.ts:2772:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 60312,
-    "file": "src/compiler/resolutionCache.ts",
-    "line": 1282,
-    "column": 21,
-    "code": 2322,
-    "message": "src/compiler/resolutionCache.ts:1282:21: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 60860,
-    "file": "src/compiler/resolutionCache.ts",
-    "line": 1297,
-    "column": 17,
-    "code": 2322,
-    "message": "src/compiler/resolutionCache.ts:1297:17: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
     "options": [
       "exactOptionalPropertyTypes"
     ]

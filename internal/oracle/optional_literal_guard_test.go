@@ -18,6 +18,9 @@ func TestOptionalLiteralGuard(t *testing.T) {
 func TestOptionalConditionalGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_conditional_guard.a", false)
 }
+func TestOptionalDefinedGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_defined_guard.a", false)
+}
 func TestOptionalRequiredViewGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_required_view_guard.a", false)
 }
@@ -51,7 +54,11 @@ func testOptionalConstruction(t *testing.T, fixtureName string, spread bool) {
 		t.Fatal(err)
 	}
 	checks := program.ExplainedOptionalChecks()
-	if len(checks) != 1 || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322") && !strings.Contains(checks[0], "checked TS2379")) {
+	wantChecks := 1
+	if fixtureName == "optional_defined_guard.a" {
+		wantChecks = 2
+	}
+	if len(checks) != wantChecks || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322") && !strings.Contains(checks[0], "checked TS2379")) {
 		t.Fatalf("want one emitted construction check, got %v", checks)
 	}
 	expected := onNode(t, fixture)
@@ -115,6 +122,25 @@ static void mutant_outer_cleanup(void *value) {
 			t.Fatalf("outer cleanup mutant not caught by counts: %s", report)
 		}
 		t.Log("outer-scope cleanup mutant compiles and matches Node output; LeakSanitizer and allocation/free counts catch leaked earlier guard values")
+	}
+	if fixtureName == "optional_defined_guard.a" {
+		declaration := regexp.MustCompile(`(?m)adamic_object \*\s*(adamic_local_[0-9]+_optionalView) = [^;]+;`)
+		matches := declaration.FindAllStringSubmatchIndex(c, -1)
+		if len(matches) != 2 {
+			t.Fatalf("want two view declarations, got %d", len(matches))
+		}
+		last := matches[len(matches)-1]
+		name := c[last[2]:last[3]]
+		missing := c[:last[1]] + "\nadamic_release(" + name + ");\n" + name + " = NULL;\n" + c[last[1]:]
+		mutantBinary := filepath.Join(t.TempDir(), "undefined-result-mutant")
+		if err := native.Build(missing, mutantBinary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, mutantBinary)
+		if result.exitCode != 70 || !strings.Contains(string(result.stderr), "optional contract produced undefined") {
+			t.Fatalf("defined guard did not catch missing producer result: %d %s", result.exitCode, result.stderr)
+		}
+		t.Logf("undefined producer-result mutant caught by required-result guard, exit 70; checks: %v", checks)
 	}
 	mutant := strings.ReplaceAll(c, "adamic_object_new(", "mutant_absent_literal(")
 	if mutant == c {
