@@ -1,0 +1,5 @@
+{
+  "name": "hook-single-invocation-gate-reversed",
+  "from": "if((this.counts.get(hook) ?? 0) !== 1)",
+  "to": "if((this.counts.get(hook) ?? 0) === 1)"
+}

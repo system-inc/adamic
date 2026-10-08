@@ -1,0 +1,8 @@
+export function utf8Length(text:string):number{
+ let size=0;
+ for(let index=0;index<text.length;index++){
+  const point=text.codePointAt(index) ?? 0;
+  if(point<128){size++;}else if(point<2048){size+=2;}else if(point<65536){size+=3;}else{size+=4;index++;}
+ }
+ return size;
+}
