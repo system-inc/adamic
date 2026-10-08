@@ -25,7 +25,7 @@ mutants.append(('defined-result', value_path,
                 value_source.replace('ir.Undefined{}', 'ir.StringConstant{Index: l.constant("wrong")}'),
                 './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/void_value_binder'))
 mutants.append(('lose-return', statement_path,
-                statement_source.replace('ir.Evaluate{Value: value}, ir.Return{}', 'ir.Evaluate{Value: value}'),
+                statement_source.replace('ir.Evaluate{Value: value}, ir.Return{}', 'ir.Evaluate{Value: value}').replace('return append(statements, ir.Return{}), nil', 'return statements, nil'),
                 './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/void_value_checker'))
 # Erasing a callable's actual result would make answer() print undefined instead of 7.
 closure = value_source.replace('case ir.ArrayVisit:\n\t\targuments',
