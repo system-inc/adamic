@@ -6,9 +6,43 @@
 const prefix = 'adamic/build-cache/';
 const keyPattern = /^[0-9a-f]{64}(\.[a-z]{1,16})?$/;
 
-async function sha256(bytes) {
-    const digest = await crypto.subtle.digest('SHA-256', bytes);
+function hex(digest) {
     return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+// Consume both tee branches together: a fast hasher must not queue the entire upload
+// while R2 is backpressured. FixedLengthStream gives R2 the required known length.
+async function stage(request, bucket, temporary, length) {
+    const [hashBody, uploadBody] = (request.body || new Response('').body).tee();
+    const hashReader = hashBody.getReader();
+    const uploadReader = uploadBody.getReader();
+    const digest = new crypto.DigestStream('SHA-256');
+    const hashWriter = digest.getWriter();
+    const fixed = new FixedLengthStream(length);
+    const uploadWriter = fixed.writable.getWriter();
+    const pump = (async () => {
+        try {
+            while (true) {
+                const [hashChunk, uploadChunk] = await Promise.all([hashReader.read(), uploadReader.read()]);
+                if (uploadChunk.done) break;
+                await Promise.all([hashWriter.write(hashChunk.value), uploadWriter.write(uploadChunk.value)]);
+            }
+            await Promise.all([hashWriter.close(), uploadWriter.close()]);
+        } catch (error) {
+            await Promise.allSettled([hashReader.cancel(error), uploadReader.cancel(error),
+                hashWriter.abort(error), uploadWriter.abort(error)]);
+            throw error;
+        }
+    })();
+    const put = bucket.put(temporary, fixed.readable);
+    // A failed R2 consumer must also release a pump blocked on its writer.
+    const guardedPut = put.catch(async (error) => {
+        await fixed.readable.cancel(error).catch(() => {});
+        throw error;
+    });
+    const results = await Promise.allSettled([pump, guardedPut, digest.digest]);
+    for (const result of results) if (result.status === 'rejected') throw result.reason;
+    return hex(results[2].value);
 }
 
 function authorized(request, environment) {
@@ -33,14 +67,30 @@ export default {
         }
         if (!authorized(request, environment)) return new Response('unauthorized\n', { status: 401 });
         if (request.method === 'PUT') {
-            const bytes = await request.arrayBuffer();
-            const hash = await sha256(bytes);
-            const existing = await environment.BUCKET.head(name);
-            if (existing !== null) {
-                return existing.customMetadata?.sha256 === hash ? new Response('same bytes\n', { status: 200 }) : new Response('different bytes under this key\n', { status: 409 });
+            const header = request.headers.get('Content-Length');
+            if (header === null) return new Response('length required\n', { status: 411 });
+            const length = Number(header);
+            if (!/^\d+$/.test(header) || !Number.isSafeInteger(length)) {
+                return new Response('bad length\n', { status: 400 });
             }
-            await environment.BUCKET.put(name, bytes, { customMetadata: { sha256: hash } });
-            return new Response('stored\n', { status: 201 });
+            const temporary = prefix + 'temporary/' + crypto.randomUUID();
+            try {
+                const hash = await stage(request, environment.BUCKET, temporary, length);
+                let existing = await environment.BUCKET.head(name);
+                if (existing === null) {
+                    const staged = await environment.BUCKET.get(temporary);
+                    const created = await environment.BUCKET.put(name, staged.body, {
+                        customMetadata: { sha256: hash }, onlyIf: { etagDoesNotMatch: '*' },
+                    });
+                    if (created !== null) return new Response('stored\n', { status: 201 });
+                    existing = await environment.BUCKET.head(name);
+                }
+                return existing?.customMetadata?.sha256 === hash
+                    ? new Response('same bytes\n', { status: 200 })
+                    : new Response('different bytes under this key\n', { status: 409 });
+            } finally {
+                await environment.BUCKET.delete(temporary);
+            }
         }
         if (request.method === 'DELETE') {
             await environment.BUCKET.delete(name);
