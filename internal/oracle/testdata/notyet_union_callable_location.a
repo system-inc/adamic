@@ -2,17 +2,14 @@ type Location = number | { readonly position: number } | undefined;
 interface Resolve {
     readonly resolve: (location: Location, suffix: string) => string;
 }
-class Resolver {
-    resolve(location: Location, suffix: string): string {
-        if (location === undefined) { return `missing${suffix}`; }
-        const position = typeof location === 'number' ? location : location.position;
-        return `${position}${suffix}`;
-    }
-}
 function lookup(resolve: Resolve, location: Location): string {
     return resolve.resolve(location, `:${3}`);
 }
-const resolver = new Resolver();
+const resolver: Resolve = { resolve: (location: Location, suffix: string): string => {
+    if (location === undefined) { return `missing${suffix}`; }
+    const position = typeof location === 'number' ? location : location.position;
+    return `${position}${suffix}`;
+} };
 console.log(lookup(resolver, 1));
 console.log(lookup(resolver, { position: 2 }));
 console.log(lookup(resolver, undefined));

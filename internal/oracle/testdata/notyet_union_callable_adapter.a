@@ -1,0 +1,20 @@
+type Name = string | { readonly escapedText: string };
+class Resolver {
+    resolve(name: Name): string {
+        return typeof name === 'string' ? name : name.escapedText;
+    }
+}
+function lookup(resolve: Resolver | undefined, name: Name): string {
+    return resolve?.resolve(name) ?? 'missing';
+}
+const resolver = new Resolver();
+const text = `name${1}`;
+console.log(lookup(resolver, text));
+console.log(lookup(resolver, { escapedText: `node${2}` }));
+console.log(lookup(undefined, text));
+
+function direct(resolve: Resolver | undefined): string {
+    return resolve?.resolve(`direct${3}`) ?? 'missing';
+}
+console.log(direct(resolver));
+console.log(direct(undefined));

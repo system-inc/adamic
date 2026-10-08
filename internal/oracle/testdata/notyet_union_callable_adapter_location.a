@@ -1,0 +1,16 @@
+type Location = number | { readonly position: number } | undefined;
+class Resolver {
+    resolve(location: Location, suffix: string): string {
+        if (location === undefined) { return `missing${suffix}`; }
+        const position = typeof location === 'number' ? location : location.position;
+        return `${position}${suffix}`;
+    }
+}
+function lookup(resolve: Resolver | undefined, location: Location): string {
+    return resolve?.resolve(location, `:${3}`) ?? 'no resolver';
+}
+const resolver = new Resolver();
+console.log(lookup(resolver, 1));
+console.log(lookup(resolver, { position: 2 }));
+console.log(lookup(resolver, undefined));
+console.log(lookup(undefined, 4));
