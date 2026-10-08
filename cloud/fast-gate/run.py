@@ -253,6 +253,7 @@ class Gate:
             return
         smoke, smokeSource = self.smokeList()
         self.deferred = self.deferredList()
+        self.runRequested()
         # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
         changed = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
@@ -761,6 +762,21 @@ class Gate:
                 self.result["deferred_list_blob"] = self.git(root, "hash-object", path)
                 return deferred
         return {}
+
+    def runRequested(self):
+        """A change may ask its fast gate to run a deferred test anyway (@system_adamic, Oct 8, for 04's
+        split-build fix-forward): a "Gate-runs: <package> <Test>" trailer on any commit since the base
+        takes that test off the deferred list for this gate, when its package is gated. Recorded in
+        fast.json as deferred_run_by_request."""
+        text = self.git(self.arguments.tree, "log", "--format=%(trailers:key=Gate-runs,valueonly)", "%s..%s" % (self.arguments.base, self.arguments.sha))
+        for line in text.splitlines():
+            fields = line.split()
+            if len(fields) != 2:
+                continue
+            importPath = module + "/" + fields[0].strip("/")
+            if fields[1] in self.deferred.get(importPath, set()):
+                self.deferred[importPath].discard(fields[1])
+                self.result.setdefault("deferred_run_by_request", []).append(importPath + " " + fields[1])
 
     def smokeList(self):
         for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):

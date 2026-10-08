@@ -248,6 +248,27 @@ class Coverage(FailClosed):
         self.assertEqual(result["executors"], {"stage3": 2})
 
 
+class GateRuns(unittest.TestCase):
+    def test_a_trailer_runs_a_deferred_test_in_this_gate(self):
+        with tempfile.TemporaryDirectory() as tree:
+            commit = lambda message: realRun(["git", "-C", tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "--allow-empty", "-m", message], check=True)
+            realRun(["git", "init", "-q", tree], check=True)
+            commit("base\n\nGate-runs: internal/native TestRecordMutants")
+            base = run.git(tree, "rev-parse", "HEAD")
+            commit("fix the split build\n\nGate-runs: internal/native TestSplitTSGoAgrees\nGate-runs: internal/native TestNotDeferred")
+            commit("unrelated")
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(tree=tree, base=base, sha=run.git(tree, "rev-parse", "HEAD"))
+            gate.result = {}
+            gate.spawn = lambda command, stdout, stderr=None, directory=None, environment=None: realPopen(command, stdout=stdout, stderr=stderr, cwd=directory, text=True)
+            native = run.module + "/internal/native"
+            gate.deferred = {native: {"TestSplitTSGoAgrees", "TestRecordMutants", "TestWASI"}}
+            gate.runRequested()
+            # Only trailers since the base count, and only for deferred tests.
+            self.assertEqual(gate.deferred[native], {"TestRecordMutants", "TestWASI"})
+            self.assertEqual(gate.result["deferred_run_by_request"], [native + " TestSplitTSGoAgrees"])
+
+
 class DeletedAFiles(unittest.TestCase):
     def test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate(self):
         with tempfile.TemporaryDirectory() as tree:
