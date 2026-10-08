@@ -542,3 +542,23 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-08T23:51:59.279400Z,runtime,0,8,2,,,"gate_backpressure: 107 queued, 10 slots"
 2026-10-08T23:52:01.337555Z,library,1,8,0,,,"gate_backpressure: 107 queued, 10 slots"
 2026-10-08T23:52:09.723659Z,developer_tools,1,4,0,,,"gate_backpressure: 107 queued, 10 slots"
+2026-10-08T23:55:08.066617Z,compiler,12,30,0,,,"gate_backpressure: 113 queued, 8 slots"
+2026-10-08T23:55:40.379643Z,cohere_adamic,3,30,0,,,"gate_backpressure: 113 queued, 8 slots"
+2026-10-08T23:55:51.740446Z,typescript,0,10,8,41-step24-remaining-67.md,01a113c5-c74b-715b-99b9-aa23ec2c8039,sent
+2026-10-08T23:56:01.903786Z,typescript,1,10,7,50-step31-checker-native.md,01a113e0-865b-7362-8f3a-3f200cf1b00c,sent
+2026-10-08T23:56:12.140195Z,typescript,2,10,6,51-step31-emitter-native.md,01a113e0-a860-71b5-a8c0-e869b10ac005,sent
+2026-10-08T23:56:12.144508Z,typescript,3,10,5,,,pass_cap
+2026-10-08T23:56:15.787968Z,runtime,0,8,0,,,"gate_backpressure: 113 queued, 8 slots"
+2026-10-08T23:56:17.691309Z,library,1,8,0,,,"gate_backpressure: 113 queued, 8 slots"
+2026-10-08T23:56:37.921457Z,compiler,13,30,7,05-exceptions-on-main.md,01a113e2-01c9-72f0-b65a-92ecfa072027,sent
+2026-10-08T23:56:37.924593Z,compiler,14,30,6,,,dispatch_stopped
+2026-10-08T23:57:10.794498Z,cohere_adamic,3,30,0,,,"gate_backpressure: 114 queued, 8 slots"
+2026-10-08T23:57:22.146169Z,typescript,3,10,5,52-step35-fuzz-scout.md,01a113e0-cb9f-7772-b63e-eac00e9d8011,sent
+2026-10-08T23:57:31.432216Z,typescript,4,10,4,53-step05-hidden-by-step.md,01a1140c-e8a3-7199-95a7-5b2f00153022,sent
+2026-10-08T23:57:39.404501Z,typescript,5,10,3,54-step09-adapted-casts.md,01a1140d-0d0c-731b-8259-304d5ae3f017,sent
+2026-10-08T23:57:39.966039Z,typescript,6,10,2,,,pass_cap
+2026-10-08T23:57:51.884612Z,runtime,0,8,2,11-step29-timers.md,01a11431-4432-7421-9353-50c70c0d8039,sent
+2026-10-08T23:57:58.813656Z,runtime,1,8,1,12-step06b-program-region-core.md,01a11477-b1e8-7134-8ed7-8360ef421013,sent
+2026-10-08T23:57:59.085864Z,runtime,2,8,0,,,queue_empty
+2026-10-08T23:58:00.973406Z,library,1,8,0,,,"gate_backpressure: 114 queued, 8 slots"
+2026-10-08T23:58:09.604553Z,developer_tools,0,4,0,,,"gate_backpressure: 114 queued, 8 slots"
