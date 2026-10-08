@@ -262,6 +262,30 @@ def gate_backpressure(state, configured, dry, records):
     return 'gate_backpressure: %d queued, %d slots' % (depth, slots) if holding else ''
 
 
+def critical_tasks():
+    """The critical path's task ids (ahra tasks waterfall system_adamic), which the star's train sits on. A brief naming
+    one never waits on gate backpressure (@system_adamic, Oct 8 23:53Z: backpressure holds side work only).
+    ADAMIC_FLEET_FLOOR_CRITICAL (comma-separated ids) stands in, in tests. Unreadable: none, so nothing bypasses."""
+    stand = os.environ.get('ADAMIC_FLEET_FLOOR_CRITICAL')
+    if stand is not None:
+        return {item.strip().lstrip('#') for item in stand.split(',') if item.strip()}
+    try:
+        waterfall = json.loads(run('ahra', 'tasks', 'waterfall', 'system_adamic', '--json'))
+        return set(waterfall.get('criticalPath', []))
+    except (OSError, ValueError, subprocess.SubprocessError):
+        return set()
+
+
+def is_critical(brief, critical):
+    """A brief names its task as #<id> (or a 'Task: <id>' line); it is critical when any it names is on the path."""
+    try:
+        text = brief.read_text(errors='replace')
+    except OSError:
+        return False
+    named = set(re.findall(r'#([0-9a-z]{6,9})\b', text)) | set(re.findall(r'^Task:\s*#?(\S+)', text, re.MULTILINE))
+    return bool(named & critical)
+
+
 def queue(state, lane):
     path = state / 'queues' / lane['lane']
     return sorted((p for p in path.iterdir() if p.is_file() and not p.is_symlink()),
@@ -317,7 +341,8 @@ def one_pass(state, configured, checkout, credit_floor, dry=False, records=None)
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         blocked = 'usage_unavailable: ' + str(error)
     pressure = gate_backpressure(state, configured, dry, records)
-    blocked = blocked or pressure
+    # Backpressure holds side work only: briefs for the critical path still start.
+    critical = critical_tasks() if pressure and not blocked else set()
     listing = {}
     for lane in configured:
         briefs = queue(state, lane)
@@ -327,8 +352,11 @@ def one_pass(state, configured, checkout, credit_floor, dry=False, records=None)
             records.row(lane, '', len(briefs), outcome='fleet_unavailable: ' + str(error))
             continue
         notify(state, lane, running, len(briefs), dry, records)
+        if pressure and not blocked:
+            briefs = [brief for brief in briefs if is_critical(brief, critical)]
         reason = ('off' if (state / 'off').exists() else blocked if blocked else
-                  'floor_met' if running >= lane['floor'] else 'queue_empty' if not briefs else '')
+                  'floor_met' if running >= lane['floor'] else
+                  pressure if pressure and not briefs else 'queue_empty' if not briefs else '')
         if reason:
             records.row(lane, running, len(briefs), outcome=reason)
             continue

@@ -253,6 +253,24 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(len(self.calls(['ai', 'start'])), 2)
         self.assertEqual(len([c for c in self.calls(['os', 'send']) if 'start again' in c[3]]), 1)
 
+    def test_backpressure_holds_side_work_but_a_critical_path_brief_starts(self):
+        # @system_adamic, Oct 8 23:53Z: runtime's brief 12 (#8p84qna, on the critical path) waited on backpressure.
+        (self.queue / '01.md').write_text('Label: side\nPolish a side tool for #zzzzzz1.\n')
+        (self.queue / '02.md').write_text('Label: core\nBuild the Program region core, #8p84qna.\n')
+        (self.watch / 'slots').write_text('box B\nbox S\n')
+        (self.watch / 'queue').write_text('S 1 codex/a x\n' * 7)
+        with patch.dict(os.environ, {'ADAMIC_FLEET_FLOOR_CRITICAL': '8p84qna,kvmcfr1'}):
+            self.step()
+        starts = self.calls(['ai', 'start'])
+        self.assertEqual([c[6] for c in starts], ['core'])
+        self.assertTrue((self.queue / '01.md').exists(), 'side work stays queued')
+        # Credit still holds everything, critical or not.
+        self.world(members=[], usage=usage(credits=10))
+        (self.queue / '03.md').write_text('Label: core2\nMore of #8p84qna.\n')
+        with patch.dict(os.environ, {'ADAMIC_FLEET_FLOOR_CRITICAL': '8p84qna'}):
+            self.step()
+        self.assertEqual(len(self.calls(['ai', 'start'])), 1)
+
     def test_off_records_without_dispatch(self):
         self.briefs(4)
         (self.state / 'off').touch()
