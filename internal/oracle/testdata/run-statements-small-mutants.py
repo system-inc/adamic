@@ -12,6 +12,7 @@ mutants = [
     ("prefix-result", "internal/lower/expression.go", "l.result.Functions[index].Body = append(body, ir.Return{Value: value})", "l.result.Functions[index].Body = append(body, ir.Return{Value: ir.Binary{Operator: ir.Subtract, Left: value, Right: ir.NumberConstant{Value: 1}}})", "TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_prefix", "stdout"),
 ]
 mutants.extend([
+    ("parameter-order", "internal/lower/functions.go", "(defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming)", "true", "TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_parameters", "stdout"),
     ("template-object", "internal/lower/expression.go", 'return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")', 'value = ir.StringConstant{Index: l.constant("[object Object]")}', "TestStatementsSmallRulings/template", "want preserved stop"),
     ("nonnull-refusal", "internal/lower/refusals.go", 'ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic(\'why it can\'t be missing\'), or narrow and handle the missing case"},', '', "TestStatementsSmallRulings/nonnull", "want preserved stop"),
     ("initializing-capture", "internal/lower/locals.go", 'l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")', '_ = name', "TestStatementsSmallRulings/capture", "want preserved stop"),

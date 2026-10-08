@@ -1,9 +1,11 @@
 package oracle
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path    string
-		lowers  bool
-		checked bool
-	}{"internal/oracle/testdata/statements_small_prefix.a", true, false})
+	for _, path := range []string{"internal/oracle/testdata/statements_small_prefix.a", "internal/oracle/testdata/statements_small_parameters.a"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{path, true, false})
+	}
 }
