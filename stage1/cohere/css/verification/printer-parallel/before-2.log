@@ -1,0 +1,57 @@
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:54: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:165 .scss:90]
+            adamic_port_side_test.go:216: 24014 cases, 4988 parsed
+            adamic_port_side_test.go:234: Go: 240140 stylesheets in 2.790083098s, 86069 stylesheets/s; 49880 parsed, 95770 children
+        --- PASS: TestAdamicPortCases (3.94s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.950s
+=== RUN   TestCSSPrinterAgreesWithGo/default
+    print_test.go:59: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24014 inputs, 4933 formatted, elapsed 1.37636868s
+        --- PASS: TestAdamicPrinterCases (1.38s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.386s
+    print_test.go:82: native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass
+    print_test.go:83: 24014 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons
+    print_test.go:103: native ASan/UBSan caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+    print_test.go:103: Node caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation
+    print_test.go:103: native ASan/UBSan caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+    print_test.go:103: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width
+    print_test.go:103: native ASan/UBSan caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+    print_test.go:103: Node caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/default
+    print_test.go:112: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6
+=== RUN   TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:59: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24014 inputs, 4933 formatted, elapsed 1.459943269s
+        --- PASS: TestAdamicPrinterCases (1.46s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.471s
+    print_test.go:82: native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass
+    print_test.go:83: 24014 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons
+    print_test.go:103: native ASan/UBSan caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+    print_test.go:103: Node caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation
+    print_test.go:103: native ASan/UBSan caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+    print_test.go:103: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width
+    print_test.go:103: native ASan/UBSan caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+    print_test.go:103: Node caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:112: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6
+--- PASS: TestCSSPrinterAgreesWithGo (629.99s)
+    --- SKIP: TestCSSPrinterAgreesWithGo/default (298.47s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons (60.01s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation (64.61s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width (63.20s)
+    --- SKIP: TestCSSPrinterAgreesWithGo/narrow (323.31s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons (63.30s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation (65.68s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width (64.51s)
+PASS
