@@ -32,6 +32,15 @@ for name, before, after, test in mutants:
         if result.returncode == 0 or '--- FAIL:' not in output or '[build failed]' in output:
             raise SystemExit(f'{name}: survived or failed outside the intended test: {output}')
         print(f'{name}: caught by {test}; exit {result.returncode}', flush=True)
+        if name in ('parameter', 'result'):
+            names = ['serializer'] if name == 'parameter' else ['token', 'trampoline']
+            selection = 'TestOverloadContractRulings/(' + '|'.join(names) + ')'
+            with (logs / f'{name}-contracts.log').open('w') as log:
+                result = subprocess.run(['go', 'test', './internal/oracle', '-run', selection, '-count=1', '-timeout', '10m'], cwd=root, stdout=log, stderr=subprocess.STDOUT, env={**os.environ, 'ADAMIC_GATE_UNCACHED': '1'})
+            output = (logs / f'{name}-contracts.log').read_text()
+            if result.returncode == 0 or '[build failed]' in output or any('--- FAIL: TestOverloadContractRulings/' + fixture not in output for fixture in names):
+                raise SystemExit(f'{name}: a refusal fixture survived: {output}')
+            print(f'{name}: also caught by {len(names)} Node-held refusal fixtures', flush=True)
         if name == 'additional-binder-refusal':
             fixtures = ['array_to_map', 'array_to_multimap', 'array_to_numeric_map', 'ancestor_directory', 'leading_comment_range', 'trailing_comment_range', 'original_node', 'mutate_map', 'mutate_map_skipping_new', 'resolve_type_names', 'sort_deduplicate']
             if any('overload_' + fixture + '.a' not in output for fixture in fixtures):
