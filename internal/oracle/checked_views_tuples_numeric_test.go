@@ -74,3 +74,13 @@ func TestCheckedViewTupleOriginalReferencedMap(t *testing.T) {
 		{"references-record-wrong", "7\n9\n", "", "field read failed: references[element] is not a [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId]; expected [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], found object"},
 	})
 }
+
+func TestCheckedViewTupleOriginalSignaturePositions(t *testing.T) {
+	verifyOriginalTupleCases(t, []originalTupleCase{
+		{"signature-position-good", "7\nstring\n", "", ""},
+		{"signature-position-empty", "7\nobject\n", "", ""},
+		{"signature-position-single", "7\nobject\n", "", ""},
+		{"signature-position-id-wrong", "false\nstring\n", "", "field read failed: value[0] is not a IncrementalBuildInfoFileId; expected IncrementalBuildInfoFileId, found boolean"},
+		{"signature-position-value-wrong", "7\nboolean\n", "7\n", "field read failed: value[1] matches no member of [] | EmitSignature; expected [] | EmitSignature, found boolean"},
+	})
+}

@@ -1797,7 +1797,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if slotless(of) {
+	if slotless(of) && !(of == ir.Union && l.tupleScalarUnionType(l.checker.GetTypeAtLocation(node))) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
 	return l.readTupleViewElement(node, object, index.Text(), of), nil

@@ -1685,3 +1685,10 @@ only on this flag. Native normalization owns its snapshot through the existing
 statement cleanup. Callback/loop transfer remains refused. Four original Root
 index fixtures, two semantic mutants, and lane 4/lane 2 array regressions certify
 this boundary. The previous unapplied review patch is archival.
+
+Tuple positional union hook: elementAccess admits boxed union positions only
+when tupleScalarUnionType proves scalar/fixed-tuple alternatives. Shared
+objectPrimitiveViewType recognizes that plan. When a field has multiple fixed
+tuple alternatives, both backends select one with the existing mixed-union
+selector and tuple predicate. Single-tuple field diagnostics are preserved.
+Original signature positions and regressions certify this shared extension.

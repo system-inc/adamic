@@ -46,8 +46,17 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 		}
 	}
 	checks := ""
+	tuples := 0
 	for _, id := range contract.Members {
 		if e.program.ViewContracts[id-1].FixedTuple {
+			tuples++
+		}
+	}
+	if tuples > 1 {
+		checks = e.tupleArrayUnionCheck(property.ViewContract, property.View, "v") + ";"
+	}
+	for _, id := range contract.Members {
+		if tuples <= 1 && e.program.ViewContracts[id-1].FixedTuple {
 			checked, _ := e.viewTuple(ir.Property{View: property.View, ViewContract: id}, "v")
 			checks += "if (v !== undefined && v !== null && typeof v === 'object' && !(v instanceof Map)) {" + checked + ";}"
 		}

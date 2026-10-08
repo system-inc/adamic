@@ -45,6 +45,18 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 	object := e.value(property.Object)
 	value := fmt.Sprintf("adamic_object_primitive_view(%s, %s, &%s, (const adamic_object_primitive_member[]){%s}, %d, %t, %t, %t, %s, %s)", object, cString(property.Name), e.cache(), strings.Join(members, ", "), len(members), undefined, property.Absent, property.Optional, cString(contract.Name), cString(property.View))
 	result := e.own(ir.Union, value)
+	tuples := 0
+	for _, id := range contract.Members {
+		if e.program.ViewContracts[id-1].FixedTuple {
+			tuples++
+		}
+	}
+	if tuples > 1 {
+		if !e.viewTupleHeapUnion(property.ViewContract, result, property.View) {
+			panic("compiler bug: missing tuple union plan")
+		}
+		return result
+	}
 	for _, id := range contract.Members {
 		if e.program.ViewContracts[id-1].FixedTuple {
 			e.line("if (%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_object) {", result, result)

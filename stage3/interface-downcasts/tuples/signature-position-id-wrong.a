@@ -1,0 +1,7 @@
+import type { IncrementalBuildInfoEmitSignature } from 'original-tsc-builder';
+interface Base { readonly kind:string; }
+interface Target extends Base { readonly signature: Exclude<IncrementalBuildInfoEmitSignature,number>; }
+const entry:readonly [boolean,string]=[false,'sig'];
+const raw={kind:'probe',signature:entry}; const base:Base=raw; const viewed=base as Target; const value=viewed.signature;
+console.log(String(value[0]));
+console.log(typeof value[1]);

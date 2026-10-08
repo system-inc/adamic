@@ -33,7 +33,7 @@ func (l *lowering) objectPrimitiveViewType(target *checker.Type) bool {
 			return false
 		}
 	}
-	return objects == 1 && primitives > 0
+	return objects == 1 && primitives > 0 || l.tupleScalarUnionType(target)
 }
 
 // Boxed unions already have a native reference slot and real heap tags. Permit

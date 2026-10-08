@@ -1,3 +1,37 @@
+Built: certified original emit-signature tuple positions, pair 97898 / 4 reads; total 5 pairs / 8 reads.
+Commits: Root dispatch f1f6355a; signature pair commit recorded in git history.
+Checks: positional oracle PASS 3.388s; existing outSignature and object-primitive regressions PASS 20.460s; scoped counts PASS 29.443s.
+Mutants: dropping ID or signature position guards returns false/string or 7/boolean with exit 0 instead of the named refusal.
+Remaining: 5 primary pairs / 7 reads, optional/rest forms, and two overlapping lane 4b frontier checks.
+
+The original IncrementalBuildInfoEmitSignature alias is unchanged. Five fixtures
+certify ID and signature positions, including string, empty tuple and singleton
+tuple alternatives. The existing constructor supplies all per-position
+certificates. Multiple fixed tuple alternatives now use the already-tested
+mixed-union selector instead of demanding every tuple arity simultaneously.
+Single-tuple alternatives retain their existing diagnostics. Selected tuple
+positions admit boxed union storage only for the same tuple/scalar plan.
+Node, JavaScript, native release and sanitized native pass; finishing native
+fixtures pass leak checks. This covers original tuple-producing objects;
+array-to-tuple cast admission remains the later lane 4b frontier obligation.
+
+Commands with ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations:
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalSignaturePositions$'
+-count=1 -v (/tmp/views-tuples-signature-positions.log): PASS 3.388s.
+ADAMIC_TUPLE_NUMERIC_MUTANT=0 on .../signature-position-id-wrong:
+FAIL 0.321s (/tmp/views-tuples-signature-mutant-id.log).
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on .../signature-position-value-wrong:
+FAIL 0.356s (/tmp/views-tuples-signature-mutant-value.log).
+Both are caught first by JavaScript semantic output/exit checks.
+go test ./internal/oracle -run
+'^(TestCheckedViewTupleOriginalOutSignature|TestCheckedViewObjectPrimitiveSource)$'
+-count=1 -timeout 3m (/tmp/views-tuples-signature-regression.log): PASS 20.460s.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m -args -update-counts
+(/tmp/views-tuples-signature-counts.log): PASS 29.443s; 34 fixture rows.
+
+---
+
 Built: certified original Root array index pair 97913; total 4 pairs / 4 reads, with explicitly flagged dispatch.
 Commits: prior 6fefeeeea61c9e433604855645a86d43b4d2b7a5; Root pair commit recorded in git history.
 Checks: Root index PASS 3.754s; lane 4/lane 2 array regressions PASS 27.314s; gap controls PASS 0.977s; counts refreshed PASS 32.451s.
