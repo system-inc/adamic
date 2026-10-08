@@ -1,0 +1,11 @@
+{
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "quota_cpus": 4,
+  "package_seconds": 3396.417,
+  "load_before": null,
+  "load_after": null,
+  "reason": "Unit 3 did not record package-boundary load. Its late performance samples ranged from 1.44 4.31 6.58 to 1.34 4.01 6.41; these are not boundary readings.",
+  "top_level_paused_tests": 0,
+  "top_level_tests": 33
+}
