@@ -518,6 +518,12 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 			return longRegExpRun(t, environment, name, arguments...)
 		}
 	}
+	// This decoding witness needs ordinary directory creation, not private
+	// temporary-directory semantics. Give concurrent backend/count/leak legs
+	// distinct scratch paths, all outside the checkout.
+	if strings.HasSuffix(t.Name(), "/node_buffer_fs_decode.a") {
+		environment = append(environment, "ADAMIC_BUFFER_DECODE_SCRATCH="+filepath.Join(t.TempDir(), "decode"))
+	}
 	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)

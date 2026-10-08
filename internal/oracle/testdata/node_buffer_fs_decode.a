@@ -1,9 +1,8 @@
-// The combined fs-file and Buffer host path, held to source Node on both backends.
+// The combined fs-file and Buffer host path, held to source Node on all three backends.
 // Explicit defaults satisfy checked indexed access without changing BOM semantics.
 import { Buffer, type Buffer as ByteBuffer } from 'node:buffer';
-import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { env } from 'node:process';
 function read(buffer: ByteBuffer): string {
  let len = buffer.length;
  if (len >= 2 && buffer[0] === 0xfe && buffer[1] === 0xff) {
@@ -19,7 +18,9 @@ function read(buffer: ByteBuffer): string {
  if (len >= 3 && buffer[0] === 0xef && buffer[1] === 0xbb && buffer[2] === 0xbf) { return buffer.toString('utf8', 3); }
  return buffer.toString('utf8');
 }
-const root = mkdtempSync(join(tmpdir(), 'adamic-buffer-decode-'));
+// The oracle supplies a fresh scratch path to each backend observation.
+const root = env.ADAMIC_BUFFER_DECODE_SCRATCH ?? 'adamic-buffer-decode-scratch';
+mkdirSync(root);
 try {
  for (const hex of ['', 'feff0041d8000042ff', 'feff0041d83cdf0d', 'feffdc00', 'fffe41004200ff', 'fffe00d8', 'fffe00dc', 'efbbbf61f09f8c8d', 'efbbbfe282ff', 'ed a0 80', '616263', 'fe', 'feff', 'fffe', 'efbbbf']) {
   const path = root + '/bytes';
