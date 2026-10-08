@@ -1,0 +1,27 @@
+--- FAIL: TestOverloadedShorthandFunctionValueStaysNotYet (0.11s)
+    census_optional_values_test.go:28: got <nil>, want overload-value diagnostic
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.20s)
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: <nil>
+--- FAIL: TestCensusOverloadRelation (0.40s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.10s)
+        census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance322116520/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestPhantomArrayCastsAreErased (0.30s)
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.23s)
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.09s)
+        phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+--- FAIL: TestNestedFunctionGapsAreLoud (1.10s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/optional (0.14s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/default (0.10s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/rest (0.13s)
+        nested_functions_test.go:28: want NotYet "parameter that isn't a plain name", got /tmp/adamic-gate/TestNestedFunctionGapsAreLoudrest1824302582/001/main.a:1:41: stage 0 can't lower a rest parameter in a named closure yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	4.340s
+ok  	github.com/system-inc/adamic/internal/ir	0.019s
+ok  	github.com/system-inc/adamic/internal/native	11.676s
+ok  	github.com/system-inc/adamic/internal/javascript	0.002s [no tests to run]
+FAIL
