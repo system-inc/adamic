@@ -1,0 +1,18 @@
+interface Trace {
+    readonly push: (label: string, data: { readonly path: string }, separate: boolean) => void;
+}
+function argument(label: string): string {
+    console.log(`argument ${label}`);
+    return label;
+}
+function run(trace: Trace | undefined): void {
+    trace?.push(argument('bind'), { path: argument('file') }, true);
+    console.log('after push');
+}
+const trace: Trace = {
+    push: (label: string, data: { readonly path: string }, separate: boolean): void => {
+        console.log(`${label} ${data.path} ${separate}`);
+    },
+};
+run(trace);
+run(undefined);
