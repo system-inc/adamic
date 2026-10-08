@@ -2452,3 +2452,10 @@ ASSIGNED-REPORT.md and assigned-lane4b-certificates.json. Remaining lane 7
 array blockers are pinned through actual string and original FileInfo objects;
 they need boxed union array storage and member adapters in the array consumers.
 Private 68704 remains excluded as instructed.
+
+### Dictionary group 9: string-index census rows on integration ffe428ab
+
+New lane file `internal/oracle/checked_view_dictionary_recheck_test.go` and original
+`dictionaries/source/{string-index,path-index}-*.a` controls certify numeric string
+indexing after checked field extraction. No shared production hook is needed.
+The cancelled non-null area port is excluded entirely.
