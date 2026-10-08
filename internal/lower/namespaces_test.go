@@ -80,7 +80,6 @@ func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 	for _, test := range []struct{ name, reason string }{
 		{"debug_log.a", "callable object properties"},
 		{"class_merge.a", "constructor identity"},
-		{"debug_class.a", "constructor registration"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			source, err := os.ReadFile("testdata/namespaces_notyet/" + test.name)

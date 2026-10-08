@@ -26,7 +26,7 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 func (l *lowering) needsStatics(declaration *ast.Node) bool {
 	// A class is in the temporal dead zone even when it has no static members.
 	// Cyclic graphs need the same ready storage for construction and extends.
-	if l.cyclicModules {
+	if l.cyclicModules || declaration.Parent != nil && declaration.Parent.Kind == ast.KindModuleBlock {
 		return true
 	}
 	for _, member := range declaration.Members() {
@@ -524,6 +524,7 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 	if inner, handled := l.staticClassRead(ast.SkipParentheses(node.AsNewExpression().Expression)); handled {
 		receiver = inner
 	}
+	receiver = l.namespaceReadyValue(expression, receiver)
 	index := len(l.result.Functions)
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "class", Type: ir.Object, Function: index})

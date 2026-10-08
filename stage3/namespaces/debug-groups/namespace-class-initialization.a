@@ -1,0 +1,15 @@
+let order:string='';
+function mark(value:string):number{order=order+value;return order.length;}
+namespace Debug {
+ export class DebugTypeMapper {
+  static stamp:number=mark('class;');
+  kind:number=mark('field;');
+  constructor(){order=order+'constructor;';}
+  read():number{return this.kind;}
+ }
+ export const after:number=mark('namespace;');
+}
+const first=new Debug.DebugTypeMapper();
+const second=new Debug.DebugTypeMapper();
+console.log(`${Debug.DebugTypeMapper.stamp}:${Debug.after}:${first.read()}:${second.read()}:${first===second}:${first instanceof Debug.DebugTypeMapper}`);
+console.log(order);

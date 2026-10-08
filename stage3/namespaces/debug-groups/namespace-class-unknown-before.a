@@ -1,0 +1,4 @@
+let make:()=>Debug.DebugTypeMapper=()=>new Debug.DebugTypeMapper();
+make();
+namespace Debug {export class DebugTypeMapper {kind:number=0;}}
+console.log('unreachable');

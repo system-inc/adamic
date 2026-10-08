@@ -360,3 +360,16 @@ must equal the receiver property's type. Named detached calls are Refused;
 function-value escape, receiver identity, writes through this, optional reads
 and unrepresented properties remain explicit NotYet boundaries. This subset
 needs no runtime namespace container. See `debug-groups/RECEIVERS.md`.
+
+## Debug classes
+
+A class declared directly in a namespace now uses existing module registration
+and class lowering. Every namespace class has constructor readiness storage,
+even without static members, initialized at its declaration in body order.
+Qualified new checks the namespace before checking the constructor, preserving
+the distinction between an absent namespace TypeError and a class TDZ
+ReferenceError. The exact front24 declaration probe and an expanded fixture
+cover ordered static and instance initialization, distinct instances and
+instanceof in both backends. Constructor identity/namespace merging retains
+its separate NotYet boundary. Debug's normalized shape next stops at Debug.log
+merging rather than the class. Details: `debug-groups/CLASSES.md`.

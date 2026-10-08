@@ -168,7 +168,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			switch member.Kind {
 			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindEnumDeclaration:
 			case ast.KindClassDeclaration:
-				return l.notYet(member, "a class inside a namespace; namespace constructor registration and initialization are not yet proven")
+				// declareModule registers its symbol; staticDeclaration keeps its ordered ready point.
 			case ast.KindExpressionStatement, ast.KindBlock, ast.KindIfStatement, ast.KindForStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForOfStatement, ast.KindSwitchStatement:
 				// Statement lowering keeps module evaluation order. Calls still pass preflight.
 			case ast.KindFunctionDeclaration:

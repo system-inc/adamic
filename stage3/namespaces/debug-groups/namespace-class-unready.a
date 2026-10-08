@@ -1,0 +1,6 @@
+namespace Debug {
+ function make():DebugTypeMapper{return new DebugTypeMapper();}
+ const value=make();
+ export class DebugTypeMapper {kind:number=0;}
+}
+console.log('unreachable');

@@ -24,7 +24,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 	for _, test := range []struct{ name, reason string }{
 		{"BuilderState", ""}, {"JsxNames", ""}, {"ReactNames", ""}, {"BinaryExpressionState", ""},
 		{"Parser.JSDocParser", ""},
-		{"Debug", "class inside a namespace"},
+		{"Debug", "callable object properties"},
 		{"Debug.log", "callable object properties"},
 		{"Parser", overloadReason},
 		{"IncrementalParser", overloadReason},
