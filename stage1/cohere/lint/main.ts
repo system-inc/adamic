@@ -1,4 +1,4 @@
-import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
+import { parallelMap, panic, programArguments, readTextFile, writeTextFile } from 'adamic';
 import { written } from '../../typescript/parser/nodes.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
@@ -10,7 +10,18 @@ import { hash } from './checker_hash.a';
 // Test only: see Linter.junkRows.
 const junkRows = programArguments().includes('--junk-rows');
 
-function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', recordPrefix = '', caseNumber = 0): number {
+interface FileResult {
+    readonly count: number;
+    readonly output: string;
+}
+interface FileJob {
+    readonly row: string;
+    readonly caseNumber: number;
+}
+
+// A worker owns its walk, fixes and rendering. Only immutable results cross the join.
+function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', recordPrefix = '', caseNumber = 0): FileResult {
+    const output: string[] = [];
     const fields = row.split('\t');
     const path = fields[0] ?? panic('missing path');
     const source = readTextFile(path);
@@ -48,12 +59,12 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
         if(replayError !== '') { checker.refuse(0, 0, replayError); }
         if(recordPrefix !== '') { save(`${recordPrefix}.${caseNumber}`, rowHeader + checker.transcript()); }
         for(const refusal of checker.refusals) {
-            console.log(`refused ${refusal.rule} ${path} ${refusal.start} ${refusal.end} ${written(refusal.reason)}`);
+            output.push(`refused ${refusal.rule} ${path} ${refusal.start} ${refusal.end} ${written(refusal.reason)}`);
         }
     }
-    if(!countOnly && program === 0 && replayPrefix === '') { for(const skipped of linter.skipped) { console.log(skipped); } }
+    if(!countOnly && program === 0 && replayPrefix === '') { for(const skipped of linter.skipped) { output.push(skipped); } }
     if(countOnly) {
-        return linter.findings.length;
+        return { count: linter.findings.length, output: output.length === 0 ? '' : output.join('\n') + '\n' };
     }
     const offsets: number[] = [0];
     const lines: number[] = [0];
@@ -86,7 +97,7 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
         }
         const line = left;
         const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
-        console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+        output.push(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
         let repair = finding.repair;
         let replacement = finding.replacement;
         let description = finding.suggestion;
@@ -130,21 +141,21 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
                 complete = true;
             }
         }
-        console.log(
+        output.push(
             `range ${start} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`,
         );
         for(const extra of finding.extraFixes) {
-            console.log(
+            output.push(
                 `fix-edit\t${offsets[extra.start] ?? panic('fix outside source')} ${offsets[extra.end] ?? panic('fix end outside source')}\t${written(extra.text)}`,
             );
         }
         if(complete) {
             for(const suggestion of finding.suggestions) {
-                console.log(
+                output.push(
                     `suggestion\t${written(suggestion.id)}\t${written(suggestion.message)}\t${suggestion.edits.length}`,
                 );
                 for(const edit of suggestion.edits) {
-                    console.log(
+                    output.push(
                         `suggestion-edit\t${offsets[edit.start] ?? panic('suggestion outside source')} ${offsets[edit.end] ?? panic('suggestion end outside source')}\t${written(edit.text)}`,
                     );
                 }
@@ -152,19 +163,19 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
         }
     }
     if(fields[6] === 'recovery') {
-        console.log('recovery findings only');
+        output.push('recovery findings only');
     }
     else {
         const fixed = linter.fixed();
         for(const rejection of linter.rejected) {
-            console.log(rejection);
+            output.push(rejection);
         }
         if(linter.unconverged.length > 0) {
-            console.log(`unconverged\t${linter.unconverged.join(',')}`);
+            output.push(`unconverged\t${linter.unconverged.join(',')}`);
         }
-        console.log(`fixed\t${written(fixed)}`);
+        output.push(`fixed\t${written(fixed)}`);
     }
-    return linter.findings.length;
+    return { count: linter.findings.length, output: output.length === 0 ? '' : output.join('\n') + '\n' };
 }
 
 function save(path: string, text: string): void {
@@ -217,32 +228,41 @@ if(first === '--manifest') {
         if(recorded.kind === 'Error') { headerError = recorded.message; }
         else if(recorded.text !== header) { headerError = 'transcript program differs'; }
     }
-    const opened: ProgramResult = config === '' || replayPrefix !== '' ? { kind: 'Ok', value: 0 } : openProgram(config, []);
-    const program = opened.kind === 'Ok' ? opened.value : 0;
-    if(opened.kind === 'Error') { headerError = opened.message; }
-    let count = 0;
+    const error = headerError;
+    const jobs: FileJob[] = [];
     let caseNumber = 0;
     for(const row of rows) {
-        if(row === '' || row.startsWith('program ')) {
-            continue;
-        }
-        if(caseNumber % shardCount === shardIndex) {
-            if(!countOnly) {
-                console.log(`case ${caseNumber}`);
-            }
-            if(headerError !== '') { console.log(`refused ${row.split('\t')[1] ?? 'all'} ${row.split('\t')[0] ?? ''} 0 0 ${written(headerError)}`); }
-        else { count += run(row, countOnly, program, replayPrefix, recordPrefix, caseNumber); }
-        }
+        if(row === '' || row.startsWith('program ')) { continue; }
+        if(caseNumber % shardCount === shardIndex) { jobs.push({ row, caseNumber }); }
         caseNumber++;
     }
-    if(program !== 0) {
-        const released = releaseProgram(program);
-        if(released.kind === 'Error') { console.log(`refused checker ${config} 0 0 ${written(released.message)}`); }
+    const results = parallelMap(jobs, (job): FileResult => {
+        const prefix = countOnly ? '' : `case ${job.caseNumber}\n`;
+        // Checker handles are task-local too, never one program shared across files.
+        const opened: ProgramResult = config === '' || replayPrefix !== '' ? { kind: 'Ok', value: 0 } : openProgram(config, []);
+        const program = opened.kind === 'Ok' ? opened.value : 0;
+        const refusal = error !== '' ? error : opened.kind === 'Error' ? opened.message : '';
+        const result = refusal !== '' ? {
+            count: 0,
+            output: `refused ${job.row.split('\t')[1] ?? 'all'} ${job.row.split('\t')[0] ?? ''} 0 0 ${written(refusal)}\n`,
+        } : run(job.row, countOnly, program, replayPrefix, recordPrefix, job.caseNumber);
+        let suffix = '';
+        if(program !== 0) {
+            const released = releaseProgram(program);
+            if(released.kind === 'Error') { suffix = `refused checker ${config} 0 0 ${written(released.message)}\n`; }
+        }
+        return { count: result.count, output: prefix + result.output + suffix };
+    });
+    let count = 0;
+    for(const result of results) {
+        count += result.count;
+        if(result.output !== '') { console.log(result.output.slice(0, -1)); }
     }
     if(countOnly) {
         console.log(`${count}`);
     }
 }
 else {
-    run(first, false);
+    const result = run(first, false);
+    if(result.output !== '') { console.log(result.output.slice(0, -1)); }
 }

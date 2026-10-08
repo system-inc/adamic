@@ -3,7 +3,7 @@ import { fencedBlock, inlineBackticks, doubleQuoted, singleQuotedToken,
     singleQuotedCapitalPhrase, notNewline, jsDocGutter, blockCommentGutter,
     exampleTag, anyJsDocTag, commandLine } from './patterns.a';
 
-// MatchString has no persistent cursor in Go. Reset JS global literals for each predicate.
+// MatchString has no persistent cursor in Go. Each caller supplies a local literal.
 export function accepts(pattern: RegExp, text: string): boolean {
     pattern.lastIndex = 0;
     return pattern.test(text);
@@ -19,7 +19,7 @@ function blank(text: string, pattern: RegExp, keepNewlines: boolean): string {
             break;
         }
         const value = match[0] ?? '';
-        const replacement = keepNewlines ? value.replace(notNewline, ' ') : ' '.repeat(utf8Length(value));
+        const replacement = keepNewlines ? value.replace(notNewline(), ' ') : ' '.repeat(utf8Length(value));
         result += text.slice(cursor, match.index) + replacement;
         cursor = match.index + value.length;
     }
@@ -32,11 +32,11 @@ function asciiLetterOrDigit(character: string): boolean {
 }
 
 function capitalPhrases(text: string): string {
-    singleQuotedCapitalPhrase.lastIndex = 0;
+    const expression = singleQuotedCapitalPhrase();
     let result = '';
     let cursor = 0;
     for(;;) {
-        const match = singleQuotedCapitalPhrase.exec(text);
+        const match = expression.exec(text);
         if(match === null) {
             break;
         }
@@ -75,7 +75,7 @@ function indentedBlocks(text: string): string {
     let insideBlock = false;
     for(let index = 0; index < lines.length; index++) {
         const line = lines[index] ?? '';
-        const content = line.replace(blockCommentGutter, '');
+        const content = line.replace(blockCommentGutter(), '');
         // Go strings.TrimSpace uses Unicode White_Space, including NEL but excluding BOM.
         if(/^[\t-\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*$/u.test(content)) {
             previousIsBlank = true;
@@ -96,13 +96,13 @@ function examplesAndCommands(text: string): string {
     let insideExample = false;
     for(let index = 0; index < lines.length; index++) {
         const line = lines[index] ?? '';
-        const content = line.replace(jsDocGutter, '');
-        if(accepts(exampleTag, content)) {
+        const content = line.replace(jsDocGutter(), '');
+        if(accepts(exampleTag(), content)) {
             insideExample = true;
             lines[index] = ' '.repeat(utf8Length(line));
             continue;
         }
-        if(insideExample && accepts(anyJsDocTag, content)) {
+        if(insideExample && accepts(anyJsDocTag(), content)) {
             insideExample = false;
         }
         if(insideExample) {
@@ -111,7 +111,7 @@ function examplesAndCommands(text: string): string {
     }
     for(let index = 0; index < lines.length; index++) {
         const line = lines[index] ?? '';
-        if(accepts(commandLine, line.replace(jsDocGutter, ''))) {
+        if(accepts(commandLine(), line.replace(jsDocGutter(), ''))) {
             lines[index] = ' '.repeat(utf8Length(line));
         }
     }
@@ -119,12 +119,12 @@ function examplesAndCommands(text: string): string {
 }
 
 export function maskCodeAndCommands(text: string): string {
-    let masked = blank(text, fencedBlock, true);
+    let masked = blank(text, fencedBlock(), true);
     masked = indentedBlocks(masked);
-    masked = blank(masked, inlineBackticks, true);
-    masked = blank(masked, doubleQuoted, false);
+    masked = blank(masked, inlineBackticks(), true);
+    masked = blank(masked, doubleQuoted(), false);
     masked = wrappedDoubleQuotes(masked);
-    masked = blank(masked, singleQuotedToken, false);
+    masked = blank(masked, singleQuotedToken(), false);
     masked = capitalPhrases(masked);
     return examplesAndCommands(masked);
 }

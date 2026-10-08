@@ -1,0 +1,5 @@
+import { parallelMap } from 'adamic';
+if(true) {
+    const jobs: { readonly row: string }[] = [{ row: 'file' }];
+    console.log(parallelMap(jobs, (job) => job.row).join(','));
+}

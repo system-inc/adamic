@@ -1,16 +1,16 @@
 // Literal translations from codex/lint-regex patterns.a at the pinned cohere revision.
-export const digitOrUnderscore = /[0-9_]/gu;
-export const vowel = /[AEIOUY]/gu;
-export const uppercaseToken = /\b[A-Z][A-Z0-9_]*\b/gu;
-export const fencedBlock = /```[\s\S]*?```/gu;
-export const inlineBackticks = /`[^`]*`/gu;
-export const doubleQuoted = /"[^"\n]*"/gu;
-export const singleQuotedToken = /'[A-Za-z0-9_.\-\/]+'/gu;
-export const singleQuotedCapitalPhrase = /'[A-Z0-9_][A-Z0-9_ .,:=\-\/]*[A-Z0-9_]'/gu;
-export const notNewline = /[^\n]/gu;
-export const jsDocGutter = /^[ \t\n\f\r]*\*?[ \t\n\f\r]?/gu;
-export const blockCommentGutter = /^[ \t]*\*(?: |\t|(?![\s\S]))/gu;
-export const exampleTag = /^@example\b/gu;
-export const anyJsDocTag = /^@\w+/gu;
-export const commandLine = /^[ \t\n\f\r]*(\$|ahra[ \t\n\f\r]|git[ \t\n\f\r]|pnpm[ \t\n\f\r]|npm[ \t\n\f\r]|sqlite3[ \t\n\f\r]|curl[ \t\n\f\r]|s[ \t\n\f\r]+c\b)/gu;
-export const structureCommandStarter = /s[ \t\n\f\r]+c/gu;
+export function digitOrUnderscore(): RegExp { return /[0-9_]/gu; }
+export function vowel(): RegExp { return /[AEIOUY]/gu; }
+export function uppercaseToken(): RegExp { return /\b[A-Z][A-Z0-9_]*\b/gu; }
+export function fencedBlock(): RegExp { return /```[\s\S]*?```/gu; }
+export function inlineBackticks(): RegExp { return /`[^`]*`/gu; }
+export function doubleQuoted(): RegExp { return /"[^"\n]*"/gu; }
+export function singleQuotedToken(): RegExp { return /'[A-Za-z0-9_.\-\/]+'/gu; }
+export function singleQuotedCapitalPhrase(): RegExp { return /'[A-Z0-9_][A-Z0-9_ .,:=\-\/]*[A-Z0-9_]'/gu; }
+export function notNewline(): RegExp { return /[^\n]/gu; }
+export function jsDocGutter(): RegExp { return /^[ \t\n\f\r]*\*?[ \t\n\f\r]?/gu; }
+export function blockCommentGutter(): RegExp { return /^[ \t]*\*(?: |\t|(?![\s\S]))/gu; }
+export function exampleTag(): RegExp { return /^@example\b/gu; }
+export function anyJsDocTag(): RegExp { return /^@\w+/gu; }
+export function commandLine(): RegExp { return /^[ \t\n\f\r]*(\$|ahra[ \t\n\f\r]|git[ \t\n\f\r]|pnpm[ \t\n\f\r]|npm[ \t\n\f\r]|sqlite3[ \t\n\f\r]|curl[ \t\n\f\r]|s[ \t\n\f\r]+c\b)/gu; }
+export function structureCommandStarter(): RegExp { return /s[ \t\n\f\r]+c/gu; }

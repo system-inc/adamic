@@ -10,10 +10,10 @@ function isShoutedToken(token: string): boolean {
     if(allowedUppercaseTokens.includes(token) || currencyCodes.includes(token)) {
         return false;
     }
-    if(accepts(digitOrUnderscore, token) || token.length < 2) {
+    if(accepts(digitOrUnderscore(), token) || token.length < 2) {
         return false;
     }
-    return token.length === 2 ? shoutedTwoLetterWords.includes(token) : accepts(vowel, token);
+    return token.length === 2 ? shoutedTwoLetterWords.includes(token) : accepts(vowel(), token);
 }
 
 export class Rule {
@@ -28,9 +28,9 @@ export class Rule {
             const masked = maskCodeAndCommands(comment.text);
             const seen = new Set<string>();
             const tokens: string[] = [];
-            uppercaseToken.lastIndex = 0;
+            const expression = uppercaseToken();
             for(;;) {
-                const match = uppercaseToken.exec(masked);
+                const match = expression.exec(masked);
                 if(match === null) {
                     break;
                 }
