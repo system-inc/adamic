@@ -699,6 +699,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:
+		if expression.Class == ir.ErrorClass {
+			return "(" + e.value(expression.Value) + " instanceof Error)"
+		}
 		if expression.Exact {
 			return fmt.Sprintf("adamicClassIdentities.get(%s) === %d", e.value(expression.Value), expression.Class)
 		}

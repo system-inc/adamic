@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_object *adamic_thrown;
+adamic_heap *adamic_thrown;
+bool adamic_exception_pending;
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
@@ -21,12 +22,24 @@ adamic_object *adamic_error_new(adamic_string *message) {
 	return error;
 }
 
+bool adamic_is_error(const adamic_heap *value) {
+	return value != NULL && value->kind == adamic_kind_object && ((const adamic_object *)value)->shape == &error_shape;
+}
+
 _Noreturn void adamic_uncaught(void) {
+	if (!adamic_is_error(adamic_thrown)) {
+		if (adamic_thrown != NULL && adamic_thrown->kind == adamic_kind_object) {
+			static const char message[] = "[object Object]";
+			adamic_panic(message, sizeof message - 1);
+		}
+		adamic_string *text = adamic_union_to_string(adamic_thrown);
+		adamic_panic(text->bytes, text->length);
+	}
 	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
 	// when there is one.
 	static adamic_slot_cache name_cache, message_cache;
-	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
-	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
+	const adamic_string *name = adamic_object_field((adamic_object *)adamic_thrown, "name", &name_cache)->reference;
+	const adamic_string *message = adamic_object_field((adamic_object *)adamic_thrown, "message", &message_cache)->reference;
 	size_t length = name->length + (message->length > 0 ? 2 + message->length : 0);
 	char *text = malloc(length + 1);
 	if (text == NULL) {

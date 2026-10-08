@@ -57,7 +57,7 @@ func (e *emitter) jumpThrown() {
 // the release of what holds names (what a loop around the call holds), then of every temporary the
 // statement owns so far, and the jump.
 func (e *emitter) checkThrown(holds ...string) {
-	e.line("if (adamic_thrown != NULL) {")
+	e.line("if (adamic_exception_pending) {")
 	e.indent++
 	for _, hold := range holds {
 		e.line("adamic_release(%s);", hold)
@@ -91,8 +91,9 @@ func (e *emitter) closureThrown(holds ...string) {
 
 // throwStatement emits throw: the error is the pending word's, and the jump is made.
 func (e *emitter) throwStatement(statement ir.Throw) {
-	value := e.value(statement.Value)
+	value := e.box(statement.Value)
 	e.line("adamic_thrown = adamic_retain(%s);", value)
+	e.line("adamic_exception_pending = true;")
 	e.end()
 	e.jumpThrown()
 }
@@ -170,10 +171,11 @@ func (e *emitter) tryStatement(statement ir.Try) {
 		e.scopes = append(e.scopes, nil)
 		caught := e.temporary()
 		// What was thrown is the catch's now; with nothing bound to it, it's let go at once.
-		e.line("adamic_object *%s = adamic_thrown;", caught)
+		e.line("adamic_heap *%s = adamic_thrown;", caught)
 		e.line("adamic_thrown = NULL;")
+		e.line("adamic_exception_pending = false;")
 		if statement.CatchLocal >= 0 {
-			e.declareLocal(statement.CatchLocal, caught, true)
+			e.declareLocal(statement.CatchLocal, "("+cType(e.program.Locals[statement.CatchLocal].Type)+")"+caught, true)
 		} else {
 			e.line("adamic_release(%s);", caught)
 		}
@@ -202,13 +204,15 @@ func (e *emitter) tryStatement(statement ir.Try) {
 		// The pending error waits in a scope of the finally's while it runs, so a throw from the
 		// finally, which replaces it, lets go of it on the way out.
 		pending := e.temporary()
-		e.line("adamic_object *%s = adamic_thrown;", pending)
+		e.line("adamic_heap *%s = adamic_thrown;", pending)
 		e.line("adamic_thrown = NULL;")
+		e.line("adamic_exception_pending = false;")
 		e.hold(pending)
 		e.line("{")
 		e.nested(statement.Finally, nil)
 		e.line("}")
 		e.line("adamic_thrown = %s;", pending)
+		e.line("adamic_exception_pending = true;")
 		e.line("%s = NULL;", pending)
 		e.jumpThrown()
 		e.scopes = e.scopes[:len(e.scopes)-1]
