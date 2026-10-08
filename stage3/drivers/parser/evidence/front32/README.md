@@ -48,3 +48,8 @@ An accidental proof-checkout library merge was quarantined on local branch
 codex/stage3-parser-front32-library-scratch (7493fa715). The proof branch was
 recreated from its published 6c34bb145 tip and main was merged normally; the
 library commit is not its ancestor. No pushed history was rewritten.
+
+Raw proposal patches are preserved as .patch.gz; small normalized .patch views
+ignore CRLF-only changes. A first packaging whitespace check was not enforced
+before the evidence commit; this correction preserves exact raw bytes and passes
+the enforced check. No adaptation or proof result changes.
