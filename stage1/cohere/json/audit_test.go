@@ -60,16 +60,10 @@ func TestUpstreamNumericSeparatorGap(t *testing.T) {
 	}
 }
 
-// corpusCases includes every checkout JSON file and the original generated edge cases.
-func corpusCases(t *testing.T) []textCase {
-	t.Helper()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		t.Fatal(err)
-	}
+// fileCorpus walks every JSON input, including provisioned files and submodules.
+func fileCorpus(root string) ([]textCase, error) {
 	var cases []textCase
-	groups := map[string]int{}
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -91,17 +85,20 @@ func corpusCases(t *testing.T) []textCase {
 			return err
 		}
 		relative = filepath.ToSlash(relative)
-		group := "Adamic"
-		if strings.HasPrefix(relative, "cohere/") {
-			group = "cohere"
-		}
-		if strings.HasPrefix(relative, "cohere/TypeScript/") {
-			group = "TypeScript"
-		}
-		groups[group]++
 		cases = append(cases, textCase{relative, string(encoded)})
 		return nil
 	})
+	return cases, err
+}
+
+// corpusCases validates the whole corpus before landing-gate sampling.
+func corpusCases(t *testing.T) []textCase {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases, err := fileCorpus(root)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -122,7 +119,7 @@ func corpusCases(t *testing.T) []textCase {
 			cases = append(cases, textCase{fmt.Sprintf("generated/%d/%s", index, name), text})
 		}
 	}
-	t.Logf("repository groups: %v; generated %d; total %d", groups, len(generated)*2, len(cases))
+	t.Logf("full corpus: %d cases before gate sampling", len(cases))
 	verifyCorpusPin(t, cases)
 	return cases
 }

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
@@ -35,7 +36,7 @@ func caseGroup(path string) string {
 	if strings.HasPrefix(path, "cohere/") {
 		return "cohere"
 	}
-	return "Adamic"
+	return "provisioned"
 }
 
 // The digest is SHA256 of sorted path<TAB>SHA256(text)<LF> identities.
@@ -87,7 +88,7 @@ func corpusPinError(want, got corpusPin) error {
 		return fmt.Errorf("corpus pin manifest/count/digest is inconsistent")
 	}
 	var differences []string
-	for _, group := range []string{"Adamic", "TypeScript", "cohere", "generated"} {
+	for _, group := range []string{"provisioned", "TypeScript", "cohere", "generated"} {
 		a, b := want.Groups[group], got.Groups[group]
 		if a != b {
 			differences = append(differences, fmt.Sprintf("%s: got %d, pinned %d (identity SHA256 got %s, pinned %s)", group, b.Count, a.Count, b.SHA256, a.SHA256))
@@ -129,12 +130,17 @@ func verifyCorpusPin(t *testing.T, cases []textCase) {
 	if err := json.Unmarshal(encoded, &expected); err != nil {
 		t.Fatalf("%s corpus pin: %v", t.Name(), err)
 	}
-	actual := pinForCases(cases)
-	for _, group := range []string{"Adamic", "TypeScript", "cohere", "generated"} {
-		t.Logf("corpus pin group %s: %d, SHA256 %s", group, actual.Groups[group].Count, actual.Groups[group].SHA256)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	if err := corpusPinError(expected, actual); err != nil {
+	actual, count, err := validateCorpus(root, cases, expected)
+	t.Logf("corpus repository: %d tracked JSON files; checked against Git HEAD", count)
+	if err != nil {
 		t.Fatalf("%s: %v", t.Name(), err)
+	}
+	for _, group := range []string{"provisioned", "TypeScript", "cohere", "generated"} {
+		t.Logf("corpus pin group %s: %d, SHA256 %s", group, actual.Groups[group].Count, actual.Groups[group].SHA256)
 	}
 }
 
@@ -156,7 +162,7 @@ func TestCorpusPinDiagnostics(t *testing.T) {
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			err := corpusPinError(pin, pinForCases(mutant.cases))
-			if err == nil || !strings.Contains(err.Error(), mutant.message) || !strings.Contains(err.Error(), "Adamic:") {
+			if err == nil || !strings.Contains(err.Error(), mutant.message) || !strings.Contains(err.Error(), "provisioned:") {
 				t.Fatalf("pin mutant survived: %v", err)
 			}
 			t.Logf("caught: %v", err)
@@ -167,21 +173,32 @@ func TestCorpusPinDiagnostics(t *testing.T) {
 func TestCorpusPinRejectsMissingProvisionedInputs(t *testing.T) {
 	t.Parallel()
 	cases := corpusCases(t)
-	full := pinForCases(cases)
+	encoded, err := os.ReadFile("testdata/corpus.pin")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var full corpusPin
+	if err := json.Unmarshal(encoded, &full); err != nil {
+		t.Fatal(err)
+	}
 	var short []textCase
 	for _, item := range cases {
 		if !strings.HasPrefix(item.Name, "stage3/api/node_modules/") {
 			short = append(short, item)
 		}
 	}
-	actual := pinForCases(short)
-	if len(cases)-len(short) != 18 || actual.Groups["Adamic"].Count != full.Groups["Adamic"].Count-18 {
+	if len(cases)-len(short) != 18 {
 		t.Fatal("provisioned input witness changed")
 	}
-	err := corpusPinError(full, actual)
-	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), fmt.Sprintf("Adamic: got %d, pinned %d", full.Groups["Adamic"].Count-18, full.Groups["Adamic"].Count)) {
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, _, err = validateCorpus(root, short, full)
+	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), "provisioned: got 0, pinned 18") {
 		t.Fatalf("short-box pin mutant survived: %v", err)
 	}
+
 	t.Logf("caught the 18-input provisioning mutant: %v", err)
 }
 
