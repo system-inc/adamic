@@ -1,0 +1,29 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D191
+=== RUN   TestLedgerWitnesses/D191/hole
+    witness_test.go:223: PROVEN D191 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D192
+=== RUN   TestLedgerWitnesses/D192/hole
+    witness_test.go:223: PROVEN D192 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D193
+=== RUN   TestLedgerWitnesses/D193/hole
+    witness_test.go:223: PROVEN D193 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D194
+=== RUN   TestLedgerWitnesses/D194/hole
+    witness_test.go:223: PROVEN D194 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D225
+=== RUN   TestLedgerWitnesses/D225/hole
+    witness_test.go:223: PROVEN D225 read=nonWhitespaceChildren[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (9.37s)
+    --- PASS: TestLedgerWitnesses/D191 (0.78s)
+        --- PASS: TestLedgerWitnesses/D191/hole (0.78s)
+    --- PASS: TestLedgerWitnesses/D192 (0.79s)
+        --- PASS: TestLedgerWitnesses/D192/hole (0.79s)
+    --- PASS: TestLedgerWitnesses/D193 (0.78s)
+        --- PASS: TestLedgerWitnesses/D193/hole (0.78s)
+    --- PASS: TestLedgerWitnesses/D194 (0.80s)
+        --- PASS: TestLedgerWitnesses/D194/hole (0.80s)
+    --- PASS: TestLedgerWitnesses/D225 (0.76s)
+        --- PASS: TestLedgerWitnesses/D225/hole (0.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	9.382s
