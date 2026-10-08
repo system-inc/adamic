@@ -262,17 +262,34 @@ def gate_backpressure(state, configured, dry, records):
     return 'gate_backpressure: %d queued, %d slots' % (depth, slots) if holding else ''
 
 
+def upstream_of_path(waterfall):
+    """The critical path's tasks and every task they wait on, transitively (an edge runs from a task to the one that
+    waits on it): the work the path needs. Runtime's #8p84qna, the Program region core step 24 waits on, is upstream,
+    not on the path itself (Oct 8)."""
+    waiting = {}
+    for edge in waterfall.get('edges', []):
+        waiting.setdefault(edge['to'], []).append(edge['from'])
+    found = set(waterfall.get('criticalPath', []))
+    stack = list(found)
+    while stack:
+        for task in waiting.get(stack.pop(), []):
+            if task not in found:
+                found.add(task)
+                stack.append(task)
+    return found
+
+
 def critical_tasks():
-    """The critical path's task ids (ahra tasks waterfall system_adamic), which the star's train sits on. A brief naming
-    one never waits on gate backpressure (@system_adamic, Oct 8 23:53Z: backpressure holds side work only).
-    ADAMIC_FLEET_FLOOR_CRITICAL (comma-separated ids) stands in, in tests. Unreadable: none, so nothing bypasses."""
+    """The critical path's work (upstream_of_path, from ahra tasks waterfall system_adamic), which the star's train sits
+    on. A brief naming one never waits on gate backpressure (@system_adamic, Oct 8 23:53Z: backpressure holds side work
+    only). ADAMIC_FLEET_FLOOR_CRITICAL (comma-separated ids) stands in, in tests. Unreadable: none, so nothing
+    bypasses."""
     stand = os.environ.get('ADAMIC_FLEET_FLOOR_CRITICAL')
     if stand is not None:
         return {item.strip().lstrip('#') for item in stand.split(',') if item.strip()}
     try:
-        waterfall = json.loads(run('ahra', 'tasks', 'waterfall', 'system_adamic', '--json'))
-        return set(waterfall.get('criticalPath', []))
-    except (OSError, ValueError, subprocess.SubprocessError):
+        return upstream_of_path(json.loads(run('ahra', 'tasks', 'waterfall', 'system_adamic', '--json')))
+    except (OSError, ValueError, KeyError, subprocess.SubprocessError):
         return set()
 
 

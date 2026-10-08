@@ -271,6 +271,12 @@ class DispatchTests(unittest.TestCase):
             self.step()
         self.assertEqual(len(self.calls(['ai', 'start'])), 1)
 
+    def test_the_path_s_work_is_the_path_and_everything_upstream_of_it(self):
+        waterfall = {'criticalPath': ['v1', 'v2'],
+                     'edges': [{'from': 'core', 'to': 'step24'}, {'from': 'step24', 'to': 'v2'}, {'from': 'v1', 'to': 'v2'},
+                               {'from': 'side', 'to': 'leaf'}, {'from': 'v2', 'to': 'after'}]}
+        self.assertEqual(floor.upstream_of_path(waterfall), {'v1', 'v2', 'step24', 'core'})
+
     def test_off_records_without_dispatch(self):
         self.briefs(4)
         (self.state / 'off').touch()
