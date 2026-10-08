@@ -72,6 +72,9 @@ func (l *lowering) deferredPhantomCast(node *ast.Node, value ir.Expression, sour
 // writable-slot and nominal proofs, then let the actual view dispatch validate
 // representations, fields and callable bodies when the expression is lowered.
 func (l *lowering) viewCastCandidate(source, target *checker.Type) bool {
+	if l.arrayTupleCastCandidate(source, target) {
+		return true
+	}
 	if checker.IsTupleType(source) || checker.IsTupleType(target) {
 		return false
 	}
@@ -82,6 +85,9 @@ func (l *lowering) viewCastCandidate(source, target *checker.Type) bool {
 }
 
 func (l *lowering) deferredViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if checked, err := l.viewArrayTupleCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
 	if l.readonlyArrayViewBridge(node, source, target) {
 		return value, nil
 	}

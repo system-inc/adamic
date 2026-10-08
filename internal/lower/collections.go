@@ -252,7 +252,8 @@ func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, 
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNumberLiteral == 0 {
 		return nil, l.notYet(node, "the length of a tuple with optional or rest elements")
 	}
-	return l.numericLiteral(node)
+	proven := l.checker.GetTypeAtLocation(tuple)
+	return ir.Length{Array: ir.Read{Local: local, Of: ir.Object}, Tuple: true, TupleArity: len(l.checker.GetTypeArguments(proven)), TupleType: l.checker.TypeToString(proven), TupleView: sourceExpression(node)}, nil
 }
 
 // destructure lowers const [a, b] = tuple and const { x, y } = object, and let: what's destructured

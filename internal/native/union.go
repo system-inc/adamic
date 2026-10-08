@@ -55,6 +55,9 @@ func (e *emitter) box(value ir.Expression) string {
 // narrow emits a union the checker proved to be one member, as that member. A number or a boolean is
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 func (e *emitter) narrow(narrow ir.Narrow) string {
+	if narrow.Tuple && narrow.To == ir.Object && narrow.Value.Type() == ir.Array {
+		return e.snapshot(ir.Object, fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value)))
+	}
 	if narrow.Undefined {
 		value := e.snapshot(ir.Object, fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value)))
 		message := "undefined storage conversion failed: " + narrow.UndefinedWhere + " expected undefined, found present reference"

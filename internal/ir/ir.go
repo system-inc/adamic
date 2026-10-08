@@ -418,9 +418,12 @@ type (
 		Spread          []bool
 	}
 
-	// Length is array.length.
+	// Length is array.length, or a fixed tuple length retaining its receiver.
 	Length struct {
-		Array Expression
+		Tuple                bool
+		TupleArity           int
+		TupleType, TupleView string
+		Array                Expression
 
 		// Optional is array?.length: undefined, a number | undefined, where the array is.
 		Optional bool

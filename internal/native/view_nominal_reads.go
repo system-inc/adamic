@@ -32,5 +32,8 @@ func (e *emitter) nominalViewRead(id ir.ViewContractID, value, where string, opt
 func (e *emitter) nominalViewReceiver(property ir.Property) string {
 	receiver := e.value(property.Object)
 	e.nominalViewRead(e.program.NominalReadContracts[property.ViewReceiverTypeID], receiver, property.View+" receiver", property.Optional)
+	if id := ir.ArrayTupleReceiver(e.program, property); id != 0 {
+		e.viewTuple(ir.Property{ViewContract: id, View: property.View + " receiver"}, receiver)
+	}
 	return receiver
 }
