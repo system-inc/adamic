@@ -57,6 +57,10 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 		if a < b && t[b-1].text == ";" {
 			b--
 		}
+		// A sole local declaration cannot be observed when construction throws.
+		if b-a >= 3 && (t[a].text == "let" || t[a].text == "const" || t[a].text == "var") && t[a+1].kind == "ident" && t[a+2].text == "=" {
+			a += 3
+		}
 		if a < b && t[a].text == "return" {
 			a++
 		}

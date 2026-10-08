@@ -1,0 +1,19 @@
+import { programArguments } from 'adamic';
+function show(error: Error): void {
+ console.log(`${error.name}: ${error.message}`);
+}
+try { new RegExp('[z-a]'); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+try { RegExp('a', 'gg'); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+try { new RegExp(undefined, 'ii'); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+const original = new RegExp('a/b', 'g');
+original.lastIndex = 3;
+try { new RegExp(original, 'x'); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+console.log(`${original.lastIndex}`);
+let events = '';
+function pattern(): string { events += 'P'; return programArguments()[0] ?? '[z-a]'; }
+function flags(): string { events += 'F'; return programArguments()[1] ?? 'u'; }
+try { new RegExp(pattern(), flags()); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+console.log(events);
+for (const bad of ['\0[', '\\u', '(?<x>a)(?<x>b)', '(?ii:a)', 'a{2,1}', '[z-a]']) {
+ try { new RegExp(bad, 'u'); console.log('accepted'); } catch (error) { if (error instanceof Error) show(error); }
+}

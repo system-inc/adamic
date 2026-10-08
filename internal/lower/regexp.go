@@ -14,6 +14,7 @@ import (
 func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	pattern, flags := "", ""
 	var evaluated []ir.Expression
+	var args []*ast.Node
 	if node.Kind == ast.KindRegularExpressionLiteral {
 		text := node.Text()
 		end := strings.LastIndex(text, "/")
@@ -22,7 +23,6 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 		}
 		pattern, flags = text[1:end], text[end+1:]
 	} else {
-		var args []*ast.Node
 		if node.Kind == ast.KindNewExpression {
 			if node.AsNewExpression().Arguments != nil {
 				args = node.AsNewExpression().Arguments.Nodes
@@ -79,6 +79,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 		var divergence *regex.V8DivergenceError
 		if errors.As(err, &divergence) {
 			return nil, l.notYet(node, divergence.Error())
+		}
+		var syntax *regex.SyntaxError
+		if node.Kind != ast.KindRegularExpressionLiteral && errors.As(err, &syntax) {
+			return l.regexpConstructorError(node, args, evaluated)
 		}
 		return nil, l.notYet(node, "a RegExp constructor that throws SyntaxError: "+err.Error())
 	}

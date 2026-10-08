@@ -222,12 +222,14 @@ SOFTWARE.
 
 ## In the compiler
 
-The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`
-and `cmd/adamic-test262/testdata/regexp-syntax/harness/` are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
+The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`,
+`cmd/adamic-test262/testdata/regexp-syntax/harness/`, and
+`cmd/adamic-test262/testdata/regexp-constructor-errors/harness/` are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
 `cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
 (Copyright (C) 2017 Mathias Bynens).
 Their BSD license is reproduced in [regexp/LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE)
-and [regexp-syntax/LICENSE](cmd/adamic-test262/testdata/regexp-syntax/LICENSE).
+[regexp-syntax/LICENSE](cmd/adamic-test262/testdata/regexp-syntax/LICENSE), and
+[regexp-constructor-errors/LICENSE](cmd/adamic-test262/testdata/regexp-constructor-errors/LICENSE).
 
 The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler it carries (typescript-go,
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in

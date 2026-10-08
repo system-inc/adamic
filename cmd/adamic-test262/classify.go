@@ -77,6 +77,13 @@ func classify(path string, source string, adapt bool) classified {
 		body = literalAdapted.Source
 		result.Adaptations = literalAdapted.Counts
 	}
+	if adapt && result.Original != "" {
+		legacy := adaptRegExpConstructorErrors(body)
+		body = legacy.Source
+		for kind, count := range legacy.Counts {
+			result.Adaptations[kind] += count
+		}
+	}
 	if reason := syntaxSkip(codeOnly(body)); reason != "" {
 		result.Skip = reason
 		return result
