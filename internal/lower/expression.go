@@ -40,6 +40,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if l.hasStringRecordIndex(proven) {
+			return 0, false
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
@@ -54,6 +57,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && l.hasStringRecordIndex(proven):
+		_, supported := l.recordInfo(proven)
+		if !supported {
+			return 0, false
+		}
+		return ir.Record, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
@@ -76,7 +85,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 		}
 		var shared ir.Type
-		mixed, weak := false, false
+		mixed, weak, record := false, false, false
 		for _, member := range proven.Types() {
 			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
@@ -92,6 +101,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if !isKnown {
 				return 0, false
 			}
+			record = record || memberType == ir.Record
 			if shared != 0 && memberType != shared {
 				mixed = true
 			}
@@ -99,6 +109,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		}
 		if weak {
 			return ir.Weak, shared == 0
+		}
+		if mixed && record {
+			return 0, false
 		}
 		if mixed {
 			// Members held differently (string | number) are one Union, which holds undefined too.
@@ -158,6 +171,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.recordUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.sparseExpression(node); err != nil {
 		return nil, err
 	}
@@ -227,6 +243,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.sameRecordView(from, to) {
+		return false
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -549,12 +568,18 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindConditionalExpression:
 		return l.conditional(node)
 	case ast.KindObjectLiteralExpression:
+		if value, handled, err := l.recordLiteral(node); handled {
+			return value, err
+		}
 		return l.objectLiteral(node)
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.recordIndex(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		if value, handled, err := l.newSparseArray(node); handled {

@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(recordRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -868,6 +869,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Pairs != nil {
 			return "new Map(" + e.value(expression.Pairs) + ")"
 		}
+		if expression.Record {
+			return "Object.fromEntries([" + strings.Join(entries, ", ") + "])"
+		}
 		return "new Map([" + strings.Join(entries, ", ") + "])"
 	case ir.MapKeys:
 		return "[..." + e.value(expression.Map) + ".keys()]"
@@ -878,6 +882,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapForEach:
 		return "adamicCollectionVisit(" + e.value(expression.Map) + ", " + e.value(expression.Callback) + ")"
 	case ir.MapGet:
+		if expression.Map.Type() == ir.Record {
+			return "adamicRecordGet(" + e.value(expression.Map) + ", " + e.value(expression.Key) + ")"
+		}
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
