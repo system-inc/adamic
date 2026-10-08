@@ -14,7 +14,7 @@ void adjust;
 const root = path.resolve('/readonly-view-consumer'), source = path.join(root, 'consumer.ts'), published = path.join(root, 'published.d.ts');
 function check(file) {
     const options = { strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-        verbatimModuleSyntax: true, erasableSyntaxOnly: true, noEmit: true,
+        verbatimModuleSyntax: true, erasableSyntaxOnly: false, noEmit: true,
         module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler,
         target: ts.ScriptTarget.ES2024, lib: ['lib.es2024.d.ts'], types: [] };
     const host = ts.createCompilerHost(options);

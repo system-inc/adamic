@@ -1,4 +1,10 @@
+import type { Suggestion, SuggestionEdit } from './suggestions.a';
+
 export class Finding {
+    readonly suggestions: Suggestion[] = [];
+    // The automatic edits after the first, which rides repair, replacement, editStart and editEnd. Cohere's
+    // edit engine proposes each one on its own, so fixed() expands them into proposals of their own.
+    readonly extraFixes: SuggestionEdit[] = [];
     editStart: number;
     editEnd: number;
     readonly rule: string;

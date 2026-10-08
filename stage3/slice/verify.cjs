@@ -8,7 +8,7 @@ const manifest = JSON.parse(fs.readFileSync(path.join(root,'slice.json'),'utf8')
 const sources = new Map(), outputs = new Map();
 for (const record of manifest.declarations) {
     if (!sources.has(record.file)) sources.set(record.file,fs.readFileSync(path.join(manifest.summary.tree,record.file),'utf8'));
-    if (!outputs.has(record.file)) outputs.set(record.file,fs.readFileSync(path.join(root,record.file),'utf8'));
+    if (!outputs.has(record.file)) outputs.set(record.file,fs.readFileSync(path.join(root,manifest.adaptations ? '.verbatim' : '',record.file),'utf8'));
     const original = Buffer.from(sources.get(record.file).slice(record.start,record.end));
     const copied = Buffer.from(outputs.get(record.file).slice(record.output_start,record.output_end));
     if (!original.equals(copied) || copied.length !== record.bytes
@@ -27,3 +27,7 @@ for (const module of manifest.evaluation || []) {
     }
 }
 console.log(`PASS: ${manifest.declarations.length} byte-identical source spans; ${(manifest.evaluation || []).length} ordered module import lists`);
+
+if (manifest.adaptations) for (const [file, hash] of Object.entries(manifest.adaptations.final_sha256)) {
+    if (crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex') !== hash) throw new Error('adapted bytes differ: ' + file);
+}

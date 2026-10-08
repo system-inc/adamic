@@ -1,0 +1,12 @@
+// nexus/abbreviation_vocabulary.go:178; word + `($|[A-Z0-9])`
+import { observe } from '../observe.a';
+const pattern = "Cfg((?![\\s\\S])|[A-Z0-9])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "Cfg", 4);
+observe(regex, "xCfg", 5);
+observe(regex, "Cfg\n", 6);
