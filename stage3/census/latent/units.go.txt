@@ -141,7 +141,10 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		base.latentRegisterNested(program.Files())
 		for _, candidate := range latentCandidates(program, file) {
 			node := candidate.node
-			if selection != nil && node != selection.node {
+			if selection != nil && selection.node != nil && node != selection.node {
+				continue
+			}
+			if selection != nil && selection.node == nil && (node.End() <= selection.start || node.Pos() >= selection.end) {
 				continue
 			}
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"

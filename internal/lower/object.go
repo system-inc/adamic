@@ -1729,6 +1729,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
+	if optional && object.Type() == ir.Array {
+		return l.optionalArrayElement(node, object)
+	}
 	if optional && object.Type() != ir.Object {
 		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
 		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
