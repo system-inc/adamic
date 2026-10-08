@@ -13,7 +13,7 @@ func (l *lowering) viewArrayContract(node *ast.Node, target *checker.Type, build
 	if checker.IsTupleType(target) {
 		return true, l.notYet(node, "a checked tuple view with per-position optional and rest contracts")
 	}
-	element := l.checker.GetElementTypeOfArrayType(target)
+	element := l.viewArrayElementType(target)
 	if element == nil {
 		return false, nil
 	}
@@ -34,7 +34,7 @@ func (l *lowering) viewArrayFields(node *ast.Node, target *checker.Type, fields 
 	if checker.IsTupleType(target) {
 		return l.notYet(node, "a checked tuple view")
 	}
-	element := l.checker.GetElementTypeOfArrayType(target)
+	element := l.viewArrayElementType(target)
 	if element == nil {
 		return l.notYet(node, "an array view without an element type")
 	}
@@ -54,7 +54,7 @@ func (l *lowering) viewArrayFields(node *ast.Node, target *checker.Type, fields 
 // final pass enables it only in a program containing an admitted array view.
 func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.ArrayIndex {
 	array := node.AsElementAccessExpression().Expression
-	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(array)))
+	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
 	if element != nil {
 		read.View = sourceExpression(node)
 		read.ViewType = l.checker.TypeToString(element)
@@ -76,7 +76,7 @@ func markProgramViewArrayRead(program *ir.Program, read ir.ArrayIndex) ir.ArrayI
 }
 
 func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool) ir.ArrayViewRead {
-	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(array)))
+	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
@@ -99,11 +99,11 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 		}
 		if part.Kind == ast.KindCallExpression {
 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
-			if callee.Kind == ast.KindPropertyAccessExpression && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+			if callee.Kind == ast.KindPropertyAccessExpression && l.viewArrayBase(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != nil {
 				switch callee.Name().Text() {
 				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push", "indexOf", "includes", "lastIndexOf":
 				case "join":
-					element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)))
+					element := l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
 					if l.checker.IsArrayType(l.checker.GetNonNullableType(element)) {
 						found = l.notYet(part, "checked nested array view consumer .join requiring recursive element conversion")
 					}
@@ -136,9 +136,9 @@ func (l *lowering) viewArrayCast(node *ast.Node, value ir.Expression, source, ta
 	}
 	// Readonly scalar elements introduce no writable slot; their type is checked
 	// lazily when read, including an unknown[] bridge into a readonly result.
-	readonlyScalar := l.isLibraryType(target, "ReadonlyArray") && interfaceScalar(l.concrete(l.checker.GetElementTypeOfArrayType(target)))
+	readonlyScalar := l.isLibraryType(target, "ReadonlyArray") && interfaceScalar(l.concrete(l.viewArrayElementType(target)))
 	consumer := l.readonlyArrayConsumer(node)
-	readonlyConsumer := consumer != nil && interfaceScalar(l.concrete(l.checker.GetElementTypeOfArrayType(target)))
+	readonlyConsumer := consumer != nil && interfaceScalar(l.concrete(l.viewArrayElementType(target)))
 	if !readonlyScalar && !readonlyConsumer {
 		if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
 			return nil, l.notYet(node, "a writable array view requiring source contract certification")

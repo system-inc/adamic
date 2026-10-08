@@ -35,7 +35,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		return id, nil
 	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
-	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	// Pure phantom brands retain their existing erased contract path.
+	// Real NodeArray own fields still require the array adapter.
+	if l.viewArrayBase(target) != nil && l.phantomArrayBase(target) == nil || checker.IsTupleType(target) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")
 		}
@@ -46,6 +48,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			return 0, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
 		}
 		return viewCallableContractHook(l, node, target, build)
+	}
+	if id, handled, err := l.viewOptionalArrayContract(node, target); handled {
+		return id, err
 	}
 	if l.includesUndefined(target) {
 		present := l.checker.GetNonNullableType(target)
