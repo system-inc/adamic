@@ -1,0 +1,74 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {Parser} from '../../../../typescript/parser/parser.ts';
+import {ParseNode} from '../../../../typescript/parser/nodes.ts';
+import {Settings} from '../../settings.ts';
+import {RuleContext} from '../../context.ts';
+import {enclosingFunctionOf} from './enclosing_function_of.a';
+import {isFunctionLike} from './is_function_like.a';
+import {isReactCompiledFunction} from './is_react_compiled_function.a';
+import {isTopLevelCompilationCandidate} from './is_top_level_compilation_candidate.a';
+import {reactFunctionNameOf} from './react_function_name_of.a';
+import {hasValidComponentParameters} from './has_valid_component_parameters.a';
+import {parametersOf} from './parameters_of.a';
+import {isRestParameter} from './is_rest_parameter.a';
+import {returnsNonNode} from './returns_non_node.a';
+import {isNonNodeExpression} from './is_non_node_expression.a';
+import {enclosingClassOf} from './enclosing_class_of.a';
+import {enclosingComponentOf} from './enclosing_component_of.a';
+import {functionBodyBlock} from './function_body_block.a';
+import {isComponentClass} from './is_component_class.a';
+import {isCreateReactClassCall} from './is_create_react_class_call.a';
+import {isPureComponentBase} from './is_pure_component_base.a';
+import {isReactComponentBase} from './is_react_component_base.a';
+import {isThisExpression} from './is_this_expression.a';
+import {semanticParentOf} from './semantic_parent_of.a';
+import {sortDefaultPropsInitializerOf} from './sort_default_props_initializer_of.a';
+import {stylePropObjectUnwrapParentheses} from './style_prop_object_unwrap_parentheses.a';
+import {skipParenthesesOptional} from './skip_parentheses_optional.a';
+import {attributesOf} from './attributes_of.a';
+import {sourceSliceOf} from './source_slice_of.a';
+import {reactPragmaFor} from './react_pragma_for.a';
+function units(text:string):string {let out='';for(let i=0;i<text.length;i++){out+=`${text.charCodeAt(i)},`;}return out;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+function field(row:number,key:string):number {const r=c.node(row);return r.children[r.keys.indexOf(key)] ?? panic(key);}
+function text(row:number,key:string):string {return c.node(field(row,key)).text;}
+function number(row:number,key:string):number {return Number(text(row,key));}
+function ints(id:number):number[] {const out:number[]=[];for(const n of c.node(id).children){out.push(Number(c.node(n).text));}return out;}
+const contexts:RuleContext[]=[];
+for(const arena of c.node(field(root,'Arenas')).children){
+ const source=text(arena,'Source');const parser=new Parser(source,'captured.tsx');
+ for(const row of c.node(field(arena,'Nodes')).children){const node=new ParseNode(text(row,'Kind'),number(row,'Pos'),number(row,'End'),ints(field(row,'Children')));node.text=text(row,'Text');node.operator=text(row,'Operator');parser.nodes.push(node);}
+ const r=number(arena,'Root');if(r>=0){parser.roots.push(r);}
+ contexts.push(new RuleContext(source,parser,parser.scanner,'all','','',false,ints(field(arena,'Parents')),new Settings(),r));
+}
+for(const call of c.node(field(root,'Calls')).children){
+ const name=text(call,'Name');const index=number(call,'Input');const context=contexts[number(call,'Arena')] ?? panic('arena');let out='';
+ if(name==='enclosingFunctionOf'){out=`${enclosingFunctionOf(context,index)}`;}
+ if(name==='isFunctionLike'){out=`${isFunctionLike(context,index)}`;}
+ if(name==='isReactCompiledFunction'){out=`${isReactCompiledFunction(context,index)}`;}
+ if(name==='isTopLevelCompilationCandidate'){out=`${isTopLevelCompilationCandidate(context,index)}`;}
+ if(name==='reactFunctionNameOf'){const value=reactFunctionNameOf(context,index);out=`${value.found}|${value.name}`;}
+ if(name==='hasValidComponentParameters'){out=`${hasValidComponentParameters(context,index)}`;}
+ if(name==='parametersOf'){out=parametersOf(context,index).join(',');}
+ if(name==='isRestParameter'){out=`${isRestParameter(context,index)}`;}
+ if(name==='returnsNonNode'){out=`${returnsNonNode(context,index)}`;}
+ if(name==='isNonNodeExpression'){out=`${isNonNodeExpression(context,index)}`;}
+ if(name==='enclosingClassOf'){out=`${enclosingClassOf(context,index)}`;}
+ if(name==='enclosingComponentOf'){out=`${enclosingComponentOf(context,index)}`;}
+ if(name==='functionBodyBlock'){out=`${functionBodyBlock(context,index)}`;}
+ if(name==='isComponentClass'){out=`${isComponentClass(context,index)}`;}
+ if(name==='isCreateReactClassCall'){out=`${isCreateReactClassCall(context,index)}`;}
+ if(name==='isPureComponentBase'){out=`${isPureComponentBase(context,index)}`;}
+ if(name==='isReactComponentBase'){out=`${isReactComponentBase(context,index)}`;}
+ if(name==='isThisExpression'){out=`${isThisExpression(context,index)}`;}
+ if(name==='semanticParentOf'){out=`${semanticParentOf(context,index)}`;}
+ if(name==='sortDefaultPropsInitializerOf'){out=`${sortDefaultPropsInitializerOf(context,index)}`;}
+ if(name==='stylePropObjectUnwrapParentheses'){out=`${stylePropObjectUnwrapParentheses(context,index)}`;}
+ if(name==='skipParenthesesOptional'){out=`${skipParenthesesOptional(context,index)}`;}
+ if(name==='attributesOf'){out=attributesOf(context,index).join(',');}
+ if(name==='sourceSliceOf'){out=sourceSliceOf(context,index);}
+ if(name==='reactPragmaFor'){out=reactPragmaFor(context);}
+ console.log(`${name}|${units(out)}`);
+}

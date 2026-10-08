@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function semanticParentOf(context:RuleContext,index:number):number {let parent=context.parent(index);while(parent>=0 && context.kind(parent)==='ParenthesizedExpression'){parent=context.parent(parent);}return parent;}

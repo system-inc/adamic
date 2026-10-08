@@ -1,0 +1,20 @@
+import type {RuleContext} from '../../context.ts';
+import {isFunctionLike} from './is_function_like.a';
+import {isNonNodeExpression} from './is_non_node_expression.a';
+export function returnsNonNode(context:RuleContext,index:number):boolean {
+    const children=context.node(index).children;
+    const body=children[children.length-1] ?? -1;
+    if(body<0){return false;}
+    if(context.kind(index)==='ArrowFunction' && context.kind(body)!=='Block'){return isNonNodeExpression(context,body);}
+    let answer=false;
+    const stack:number[]=[];
+    for(let i=context.node(body).children.length-1;i>=0;i--){stack.push(context.node(body).children[i] ?? -1);}
+    while(stack.length>0){
+        const current=stack.pop() ?? -1;
+        if(current<0 || isFunctionLike(context,current)){continue;}
+        const node=context.node(current);
+        if(node.kind==='ReturnStatement'){answer=isNonNodeExpression(context,node.children[0] ?? -1);}
+        for(let i=node.children.length-1;i>=0;i--){stack.push(node.children[i] ?? -1);}
+    }
+    return answer;
+}

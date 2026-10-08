@@ -1,0 +1,127 @@
+[
+  {
+    "File": "is_function_like.a",
+    "From": "return [",
+    "To": "return false && ["
+  },
+  {
+    "File": "enclosing_function_of.a",
+    "From": "return current;",
+    "To": "return -1;"
+  },
+  {
+    "File": "is_react_compiled_function.a",
+    "From": "if(!isTopLevelCompilationCandidate(context,index))",
+    "To": "if(isTopLevelCompilationCandidate(context,index))"
+  },
+  {
+    "File": "is_top_level_compilation_candidate.a",
+    "From": "return ['FunctionDeclaration','FunctionExpression','ArrowFunction'].includes(context.kind(index));",
+    "To": "return false;"
+  },
+  {
+    "File": "react_function_name_of.a",
+    "From": "return {name:context.node(name).text,found:true};",
+    "To": "return {name:context.node(name).text,found:false};"
+  },
+  {
+    "File": "has_valid_component_parameters.a",
+    "From": "if(parameters.length===0){return true;}",
+    "To": "if(parameters.length===0){return false;}"
+  },
+  {
+    "File": "parameters_of.a",
+    "From": "return context.children(index,'Parameter');",
+    "To": "return [];"
+  },
+  {
+    "File": "is_rest_parameter.a",
+    "From": "return index>=0 &&",
+    "To": "return false && index>=0 &&"
+  },
+  {
+    "File": "returns_non_node.a",
+    "From": "return answer;",
+    "To": "return !answer;"
+  },
+  {
+    "File": "is_non_node_expression.a",
+    "From": "return index<0 ||",
+    "To": "return index<0 &&"
+  },
+  {
+    "File": "enclosing_class_of.a",
+    "From": "return current;",
+    "To": "return -1;"
+  },
+  {
+    "File": "enclosing_component_of.a",
+    "From": "return current;",
+    "To": "return -1;"
+  },
+  {
+    "File": "function_body_block.a",
+    "From": "return body>=0 && context.kind(body)==='Block' ? body : -1;",
+    "To": "return -1;"
+  },
+  {
+    "File": "is_component_class.a",
+    "From": "return true;",
+    "To": "return false;"
+  },
+  {
+    "File": "is_create_react_class_call.a",
+    "From": "context.node(callee).text==='createReactClass'",
+    "To": "context.node(callee).text==='createClass'"
+  },
+  {
+    "File": "is_pure_component_base.a",
+    "From": "context.node(index).text==='PureComponent'",
+    "To": "false"
+  },
+  {
+    "File": "is_react_component_base.a",
+    "From": "return isReactComponentBaseName(context.node(index).text);",
+    "To": "return false;"
+  },
+  {
+    "File": "is_this_expression.a",
+    "From": "context.kind(index)==='ThisKeyword'",
+    "To": "context.kind(index)==='SuperKeyword'"
+  },
+  {
+    "File": "semantic_parent_of.a",
+    "From": "let parent=context.parent(index);",
+    "To": "let parent=index;"
+  },
+  {
+    "File": "sort_default_props_initializer_of.a",
+    "From": "return context.source[pos-1]==='=' ? last : -1;",
+    "To": "return -1;"
+  },
+  {
+    "File": "style_prop_object_unwrap_parentheses.a",
+    "From": "while(index>=0 &&",
+    "To": "while(false && index>=0 &&"
+  },
+  {
+    "File": "skip_parentheses_optional.a",
+    "From": "while(index>=0 &&",
+    "To": "while(false && index>=0 &&"
+  },
+  {
+    "File": "attributes_of.a",
+    "From": "? context.node(index).children : []",
+    "To": "? [] : []"
+  },
+  {
+    "File": "source_slice_of.a",
+    "From": "context.source.slice(start,end)",
+    "To": "''"
+  },
+  {
+    "File": "react_pragma_for.a",
+    "From": "return 'React';",
+    "To": "return 'Preact';"
+  }
+]
