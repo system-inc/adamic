@@ -13,6 +13,44 @@ such as the compiler's integrated checkout. Both variants use the same binary,
 with its default release build flags; this is a storage comparison, not a
 comparison between two compiler revisions.
 
+The original native column was a default `adamic build` release from that
+scratch compiler, with ThinLTO, not a sanitized or counted build. This was
+checked by rebuilding both drivers with the original `/tmp/typed-adamic`
+binary, a fresh runtime cache, and a forwarding clang wrapper that recorded
+every argument before executing the unchanged clang 20.1.8 executable. All
+57 runtime C compilation commands used `-O2 -flto=thin`; both program compile
+and link commands used `-O2 -flto=thin -fuse-ld=lld`. The retained original
+binaries and audited rebuilds have identical disassembly after normalizing
+LLVM's private symbol hashes. No `--sanitize`, `--count`, split-build option,
+CPU override, or allocator override was passed.
+
+The exact common clang flags were:
+
+```text
+-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable
+-Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter
+-Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread
+-O2 -flto=thin
+```
+
+Runtime compilation appended `-c <runtime-source.c> -o <runtime-object.o>`.
+Each program compile/link appended:
+
+```text
+-fuse-ld=lld -I <runtime-cache-directory> -o <native-binary> <generated-main.c>
+-Xlinker --whole-archive <runtime-cache-directory>/runtime.a
+-Xlinker --no-whole-archive -lm
+```
+
+Thus the reported native regression is not evidence of a missing LTO flag.
+The scratch merge is not the runtime team's standalone checkout; compare
+emitted code and the driver as well as flags before attributing a difference
+to typed-array lowering. This audit describes the original compiler; a newer
+integrated compiler may change flags. To audit another run, put a forwarding
+`clang` on PATH that records its arguments, forwards them unchanged to the
+real compiler, and use a fresh `XDG_CACHE_HOME` so runtime compilation is
+recorded too. Keep that argument log and benchmark results outside the repo.
+
 From the repository root, with Node 24, Python 3 and the configured native
 clang on PATH:
 
