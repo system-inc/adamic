@@ -764,6 +764,38 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+		operand := ast.SkipParentheses(prefix.Operand)
+		if !ast.IsIdentifier(operand) {
+			return nil, l.notYet(node, "a prefix update value whose target is not a plain name")
+		}
+		local, known := l.local(operand)
+		if !known || l.result.Locals[local].Type != ir.Number {
+			return nil, l.notYet(node, "a prefix update value whose name is not stored as a number")
+		}
+		// An immediately called helper makes the write and resulting read one expression.
+		// Capturing a local carries its existing cell, so the caller observes the write.
+		index := len(l.result.Functions)
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "prefix_update", Closure: true, Returns: ir.Number})
+		outerIndex := l.functionIndex
+		l.functionIndex = index
+		l.closures = append(l.closures, index)
+		body, err := l.increment(node)
+		var value ir.Expression
+		if err == nil {
+			value, err = l.expression(operand)
+		}
+		l.closures = l.closures[:len(l.closures)-1]
+		l.functionIndex = outerIndex
+		if err != nil {
+			return nil, err
+		}
+		if value.Type() != ir.Number {
+			return nil, l.notYet(node, "a prefix update of a non-number")
+		}
+		l.result.Functions[index].Body = append(body, ir.Return{Value: value})
+		return ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: ir.Number}, nil
+	}
 	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
 		operand, err := l.libraryNumber(prefix.Operand)
 		if err != nil {
