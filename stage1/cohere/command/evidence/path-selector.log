@@ -1,0 +1,7 @@
+=== RUN   TestSettingsPathAPISelector
+=== PAUSE TestSettingsPathAPISelector
+=== CONT  TestSettingsPathAPISelector
+    settings_test.go:587: real Path-backed adapter blocked at shared prelude: /tmp/adamic-gate/TestSettingsPathAPISelector1336959751/001/host_path.a:1:15: error TS2305: Module '"adamic"' has no exported member 'Path'.
+--- PASS: TestSettingsPathAPISelector (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/command	0.123s

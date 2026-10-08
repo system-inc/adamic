@@ -1,0 +1,44 @@
+// Link the settings answer to existing formatter APIs. Path-backed command I/O
+// remains blocked on the ruled host API; this entry receives a resolved answer.
+import { format as defaultFormat } from './format.a';
+import { format as cssFormat } from '../css/print.ts';
+import { format as graphqlFormat } from '../graphql/printer/printer.ts';
+import { prettier } from './settings/resolve.a';
+import type { Answer, Options } from './settings/resolve.a';
+import type { Failure } from './settings/host.a';
+export type Result = { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string } | { readonly kind: 'NotYet'; readonly reason: string } | Failure;
+function defaultOptions(options: Options): boolean {
+    return options.tabWidth === prettier.tabWidth && options.useTabs === prettier.useTabs && options.semi === prettier.semi && options.singleQuote === prettier.singleQuote && options.printWidth === prettier.printWidth && options.trailingComma === prettier.trailingComma && options.bracketSpacing === prettier.bracketSpacing && options.bracketSameLine === prettier.bracketSameLine && options.arrowParens === prettier.arrowParens && options.endOfLine === prettier.endOfLine;
+}
+function once(name: string, source: string, options: Options): Result {
+    const suffix = name.slice(name.lastIndexOf('.')).toLowerCase();
+    if(suffix !== '.css' && suffix !== '.graphql' && suffix !== '.gql') {
+        if(!defaultOptions(options)) return { kind: 'NotYet', reason: `${suffix} formatter does not expose complete resolved-option plumbing` };
+        return defaultFormat(name, source);
+    }
+    const bom = source.startsWith('\ufeff');
+    const text = (bom ? source.slice(1) : source).split('\r\n').join('\n').split('\r').join('\n');
+    let formatted = '';
+    if(suffix === '.css') {
+        const result = cssFormat(text, false, { width: options.printWidth, tabWidth: options.tabWidth, tabs: options.useTabs, single: options.singleQuote, trailingComma: options.trailingComma });
+        if(result.kind === 'Refused') return { kind: 'Error', message: result.message };
+        formatted = result.text;
+    }
+    else {
+        const result = graphqlFormat(text, { printWidth: options.printWidth, tabWidth: options.tabWidth, useTabs: options.useTabs, bracketSpacing: options.bracketSpacing });
+        if(result.kind === 'Error') return { kind: 'Error', message: result.message };
+        formatted = result.text;
+    }
+    return { kind: 'Ok', text: (bom ? '\ufeff' : '') + formatted };
+}
+export function formatResolved(name: string, source: string, answer: Answer): Result {
+    if(answer.kind === 'Refused') return answer;
+    let current = source;
+    for(let pass = 1; pass <= 3; pass++) {
+        const result = once(name, current, answer.options);
+        if(result.kind !== 'Ok') return result;
+        if(result.text === current) return result;
+        current = result.text;
+    }
+    return { kind: 'Error', message: `${name} is not idempotent under the formatter: pass 3 still changed it` };
+}

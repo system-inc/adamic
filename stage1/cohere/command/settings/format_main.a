@@ -1,0 +1,23 @@
+// Test the linked resolver/formatter composition; no pretend Path/OS-exit adapter.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Document } from './json.a';
+import { Resolver } from './resolve.a';
+import { formatResolved } from '../format_resolved.a';
+const read = readTextFile(programArguments()[0] ?? panic('format manifest required'));
+if(read.kind === 'Error') panic(read.message);
+const doc = new Document(read.text); doc.parse();
+if(doc.message !== '') panic(doc.message);
+for(const row of doc.node(doc.root).children) {
+    const directory = doc.node(doc.field(row, 'directory')).text;
+    const name = doc.node(doc.field(row, 'name')).text;
+    const source = doc.node(doc.field(row, 'source')).text;
+    const config = doc.node(doc.field(row, 'config')).text;
+    const resolver = new Resolver({
+        read: (path: string) => path === directory + '/CohereSettings.json' ? { kind: 'Ok', text: config } : { kind: 'Error', message: `open ${path}: no such file or directory` },
+        exists: (path: string) => path === directory + '/CohereSettings.json',
+    }, directory);
+    const result = formatResolved(directory + '/' + name, source, resolver.forFile(name));
+    if(result.kind === 'Ok') console.log('Ok:' + (JSON.stringify(result.text) ?? panic('formatted string')));
+    else if(result.kind === 'NotYet') console.log('NotYet:' + (JSON.stringify(result.reason) ?? panic('port refusal')));
+    else console.log(result.kind + ':' + (JSON.stringify(result.message) ?? panic('failure string')));
+}

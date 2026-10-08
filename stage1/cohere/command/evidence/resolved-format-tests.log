@@ -1,0 +1,10 @@
+=== RUN   TestResolvedFormatting
+=== PAUSE TestResolvedFormatting
+=== CONT  TestResolvedFormatting
+    resolved_format_test.go:85: lower+emit=1m17.99400386s C=15411307 bytes
+    resolved_format_test.go:85: C compile=2m31.45493021s
+    resolved_format_test.go:85: archive=8790766 binary=4640496 link=174.799846ms sanitized=false
+    resolved_format_test.go:90: linked resolver+formatters: 47 exact Go/Node/native outcomes, six pinned CSS sources, house/own/override/default/refusal cases
+--- PASS: TestResolvedFormatting (260.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/command	260.818s

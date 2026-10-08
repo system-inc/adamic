@@ -21,6 +21,12 @@ function compare(left: string, right: string): number {
     }
     return utf8Length(left) - utf8Length(right);
 }
+// Integer text is inspected before conversion, so a refused value is never rounded.
+function safeInteger(raw: string): boolean {
+    const digits = raw.startsWith('-') ? raw.slice(1) : raw;
+    const bound = '9007199254740991';
+    return digits.length < bound.length || (digits.length === bound.length && digits <= bound);
+}
 function integer64(raw: string): boolean {
     if(!/^-?\d+$/.test(raw)) return false;
     const negative = raw.startsWith('-');
@@ -200,6 +206,7 @@ export class Resolver {
             const string = ['trailingComma', 'arrowParens', 'endOfLine'].includes(key);
             const target = number ? 'int' : string ? 'string' : 'bool';
             if(value.kind !== (number ? 'number' : string ? 'string' : 'bool') || (number && !integer64(value.raw))) return refused(`${path}: format option ${quote(key)}: ${value.kind === 'number' && number ? `json: cannot unmarshal number ${value.raw} into Go value of type int` : mismatch(value, target)}`);
+            if(number && !safeInteger(value.raw)) return refused(`${path}: format option ${quote(key)} value ${value.raw} is outside the safe integer range [-9007199254740991, 9007199254740991]`);
             if(key === 'printWidth') options = { ...options, printWidth: Number(value.raw) };
             else if(key === 'tabWidth') options = { ...options, tabWidth: Number(value.raw) };
             else if(key === 'useTabs') options = { ...options, useTabs: value.text === 'true' };
@@ -248,7 +255,8 @@ export class Resolver {
             }
         }
         const patterns: string[] = [];
-        for(const layer of read.layers) patterns.push(...layer.ignores);
+        // #aqh658t: call spread is refused by stage 0; use single pushes until its selector test turns green.
+        for(const layer of read.layers) for(const pattern of layer.ignores) patterns.push(pattern);
         return { ...answer, source: path, ignorePatterns: patterns };
     }
     resolve(directory: string): Answer {

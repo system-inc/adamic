@@ -9,5 +9,6 @@ for(const message of ['', 'bad configuration', 'a\nb', '\ufeffé😀']) {
         stdout: (text: string) => { stdout.push(text); },
         stderr: (text: string) => { stderr.push(text); },
     }, { kind: 'Refused', message, status: 1, leftover: false });
-    console.log(JSON.stringify({ status, stdout: stdout.join(''), stderr: stderr.join('') }) ?? panic('report JSON'));
+    // #kqxkvg0: JSON literal shorthand is refused; write out the status property.
+    console.log(JSON.stringify({ status: status, stdout: stdout.join(''), stderr: stderr.join('') }) ?? panic('report JSON'));
 }

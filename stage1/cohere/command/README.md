@@ -54,3 +54,20 @@ inherited formatting CLI still uses its fixed defaults.
 embedded sets; `settings_cases.py` regenerates the Go-derived control list;
 `go run stage1/cohere/command/testdata/settings_tables.go` regenerates Go's
 quoting table. No downloaded config or repository script is executed.
+
+
+The native-settings follow-up checks safe integer options (named Go divergence
+#hnm8t56), the authorized #aqh658t/#kqxkvg0 workarounds and their compiler selectors,
+and a linked resolved-option formatter API:
+
+```sh
+go test -v -count=1 -run '^(TestSettings|TestResolvedFormatting)' -timeout 20m ./stage1/cohere/command
+```
+
+The scalar settings probe and checked integer probe build natively and sanitized.
+`settings/format_main.a` links the resolver with every inherited formatter, passing
+resolved options through CSS/GraphQL APIs and using the default-only routes where
+supported. It is a test driver; `main.a` remains the original fixed-default CLI.
+A real Path adapter and command exits still await the ruled shared host APIs.
+The original whole-answer JSON transport also retains a structural-reference
+serializer refusal. See the latest SCOUT sections for exact scope and evidence.

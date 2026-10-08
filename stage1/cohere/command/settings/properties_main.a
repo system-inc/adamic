@@ -1,4 +1,5 @@
-// Offline host adapter: exact source snapshots, no repository scripts executed.
+// Scalar property probe for the resolver, independent of the blocked full-object JSON transport.
+// Arrays are exposed as NUL-joined fixture strings plus counts; this is test transport only.
 import { panic, programArguments, readTextFile } from 'adamic';
 import { Document } from './json.a';
 import { Resolver } from './resolve.a';
@@ -28,6 +29,24 @@ for(const row of doc.node(doc.root).children) {
             // #kqxkvg0: JSON literal shorthand is refused; write out the status property.
             console.log(JSON.stringify({ kind: answer.kind, message: answer.message, status: status, leftover: answer.leftover, stderr: stderr.join(''), stdout: stdout.join('') }) ?? panic('JSON refusal'));
         }
-        else console.log(JSON.stringify(answer) ?? panic('JSON resolution'));
+        else console.log(JSON.stringify({
+            kind: answer.kind,
+            tabWidth: answer.options.tabWidth,
+            useTabs: answer.options.useTabs,
+            semi: answer.options.semi,
+            singleQuote: answer.options.singleQuote,
+            printWidth: answer.options.printWidth,
+            trailingComma: answer.options.trailingComma,
+            bracketSpacing: answer.options.bracketSpacing,
+            bracketSameLine: answer.options.bracketSameLine,
+            arrowParens: answer.options.arrowParens,
+            endOfLine: answer.options.endOfLine,
+            source: answer.source,
+            houseIgnore: answer.houseIgnore.join('\u0000'),
+            houseIgnoreCount: answer.houseIgnore.length,
+            houseIgnoreDeclared: answer.houseIgnoreDeclared,
+            ignorePatterns: answer.ignorePatterns.join('\u0000'),
+            ignorePatternsCount: answer.ignorePatterns.length,
+        }) ?? panic('property probe'));
     }
 }

@@ -1,0 +1,10 @@
+{
+  "task": "#hnm8t56",
+  "name": "Go int64 settings exceed Adamic safe integers",
+  "fixture": "settings-integer-boundary.json",
+  "key": "tabWidth",
+  "value": "9007199254740993",
+  "go": "accepted exactly",
+  "adamic": "checked settings refusal naming key and value",
+  "status": "named divergence until #hnm8t56 lands at the cohere pin"
+}

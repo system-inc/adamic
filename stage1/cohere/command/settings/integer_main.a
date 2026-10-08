@@ -1,0 +1,18 @@
+// Independent checked-option probe. Test transport prints scalar fields only;
+// the full resolution-object serialization remains a retained compiler refusal.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Document } from './json.a';
+import { Resolver } from './resolve.a';
+const input = readTextFile(programArguments()[0] ?? panic('integer cases required'));
+if(input.kind === 'Error') panic(input.message);
+const cases = new Document(input.text); cases.parse();
+if(cases.message !== '') panic(cases.message);
+const resolver = new Resolver({ read: (path: string) => ({ kind: 'Error', message: 'unused' }), exists: (path: string) => false }, '/');
+for(const row of cases.node(cases.root).children) {
+    const key = cases.node(cases.field(row, 'key')).text;
+    const value = cases.node(cases.field(row, 'value')).text;
+    const doc = new Document(`{"format":{"${key}":${value}}}`); doc.parse();
+    const answer = resolver.block('/CohereSettings.json', doc, doc.field(doc.root, 'format'));
+    if(answer.kind === 'Refused') console.log('Refused:' + (JSON.stringify(answer.message) ?? panic('refusal string')));
+    else console.log(`Ok:${key === 'tabWidth' ? answer.options.tabWidth : answer.options.printWidth}`);
+}

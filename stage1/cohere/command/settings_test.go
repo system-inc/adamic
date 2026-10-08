@@ -163,16 +163,29 @@ func TestSettingsResolution(t *testing.T) {
 	entry := filepath.Join(root, "stage1/cohere/command/settings/main.a")
 	actual := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", entry, manifest)
 	settingsCompare(t, actual, expected, cases, false)
+	properties := filepath.Join(root, "stage1/cohere/command/settings/properties_main.a")
+	projection := settingsPropertyExpected(t, expected)
+	nodeProperties := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", properties, manifest)
+	if !bytes.Equal(nodeProperties, projection) {
+		t.Fatal("Node settings property projection differs from Go")
+	}
+	for _, sanitize := range []bool{false, true} {
+		binary := build(t, root, properties, filepath.Join(temp, fmt.Sprintf("properties-%v", sanitize)), sanitize)
+		if got := run(t, root, binary, manifest); !bytes.Equal(got, projection) {
+			t.Fatal("native settings property projection differs from Go")
+		}
+	}
+	t.Log("283 exact Go/Node/release/sanitized scalar property projections; original full-object JSON transport remains blocked")
 	p, e := load.Load([]string{entry})
 	if e != nil {
 		t.Fatal(e)
 	}
 	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "stage 0 can't lower a SpreadElement yet") || !strings.Contains(e.Error(), "settings/resolve.a") {
-		t.Fatalf("expected retained shared compiler refusal, got %v", e)
+	if e == nil || !strings.Contains(e.Error(), "JSON.stringify object references") || !strings.Contains(e.Error(), "settings/main.a") {
+		t.Fatalf("expected retained structural JSON serializer refusal, got %v", e)
 	}
-	t.Logf("native integration blocked: %v", e)
-	gap := filepath.Join(root, "stage1/cohere/command/settings/gaps/call_spread.a")
+	t.Logf("native JSON transport blocked: %v", e)
+	gap := filepath.Join(root, "internal/lower/testdata/step42-command-settings/call_spread.a")
 	if got := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", gap); string(got) != "x\n" {
 		t.Fatalf("call-spread reduction: %s", got)
 	}
@@ -188,7 +201,7 @@ func TestSettingsResolution(t *testing.T) {
 	// This is a proven boundary, not native settings parity credit.
 	originals := string(read(t, "settings/resolve.a"))
 	mutants := []struct{ from, to string }{
-		{"let answer = this.house();", "let answer: Answer = { kind: 'Ok', options: prettier, source: '', houseIgnore: [], houseIgnoreDeclared: true, ignorePatterns: [] };"},
+		{"return { ...answer, houseIgnoreDeclared: true };", "return { ...answer, options: prettier, houseIgnore: [], houseIgnoreDeclared: true };"},
 		{"if(leftover !== '') return refused", "if(leftover === 'unreachable') return refused"},
 		{"return up === directory ? this.house() : this.resolve(up);", "return this.house();"},
 		{"const sources = [...read.layers].reverse();", "const sources = [...read.layers];"},
@@ -212,6 +225,14 @@ func TestSettingsResolution(t *testing.T) {
 		got := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", filepath.Join(directory, "main.a"), manifest)
 		t.Logf("source Node mutant %d", index)
 		settingsCompare(t, got, expected, cases, true)
+		propertyEntry := filepath.Join(directory, "properties_main.a")
+		nodeProperties := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", propertyEntry, manifest)
+		binary := build(t, root, propertyEntry, filepath.Join(directory, "native"), false)
+		nativeProperties := run(t, root, binary, manifest)
+		if !bytes.Equal(nativeProperties, nodeProperties) {
+			t.Fatal("settings mutant Node/native property disagreement")
+		}
+		settingsCompare(t, nativeProperties, projection, cases, true)
 	}
 	// Every input set is supplied to the upstream tree-comparison test: no skip.
 	c := exec.Command("go", "test", "-v", "-count=1", "./internal/format/formatoptions")
@@ -306,9 +327,9 @@ func TestSettingsJSON(t *testing.T) {
 
 }
 
-// A valid Go int64 beyond JavaScript's exact integers is an unresolved language
-// representation boundary. This proves the mismatch; it grants no parity credit.
-func TestSettingsIntegerRepresentationBoundary(t *testing.T) {
+// #hnm8t56: the ruled checked refusal differs from the current Go oracle.
+// Keep this named divergence until that task lands at our cohere pin.
+func TestSettingsIntegerNamedDivergence(t *testing.T) {
 	t.Parallel()
 	root, e := filepath.Abs("../../..")
 	if e != nil {
@@ -332,10 +353,14 @@ func TestSettingsIntegerRepresentationBoundary(t *testing.T) {
 	run(t, filepath.Join(root, "cohere"), "go", "build", "-overlay", overlay, "-o", oracle, "./command/formatter_comparison")
 	goOutput := run(t, root, oracle, manifest)
 	nodeOutput := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", filepath.Join(root, "stage1/cohere/command/settings/main.a"), manifest)
-	if !bytes.Contains(goOutput, []byte(`"tabWidth":9007199254740993`)) || !bytes.Contains(nodeOutput, []byte(`"tabWidth":9007199254740992`)) {
+	if !bytes.Contains(goOutput, []byte(`"tabWidth":9007199254740993`)) || !bytes.Contains(nodeOutput, []byte(`"kind":"Refused"`)) || !bytes.Contains(nodeOutput, []byte(`format option \"tabWidth\" value 9007199254740993`)) {
 		t.Fatalf("integer boundary changed: Go=%s Node=%s", goOutput, nodeOutput)
 	}
-	t.Logf("boundary: Go accepts tabWidth=9007199254740993; Node number becomes 9007199254740992")
+	var divergence struct{ Task string }
+	if e = json.Unmarshal(read(t, "testdata/settings-integer-divergences.json"), &divergence); e != nil || divergence.Task != "#hnm8t56" {
+		t.Fatal("named divergence task missing")
+	}
+	t.Log("#hnm8t56 named divergence: Go accepts tabWidth=9007199254740993 exactly; Adamic refuses with key/value, status 1")
 }
 
 func TestSettingsOutputInterface(t *testing.T) {
@@ -361,16 +386,13 @@ func TestSettingsOutputInterface(t *testing.T) {
 	if !bytes.Equal(got, expected) {
 		t.Fatalf("source output interface %s want %s", got, expected)
 	}
-	p, e := load.Load([]string{entry})
-	if e != nil {
-		t.Fatal(e)
+	temp := t.TempDir()
+	binary := build(t, root, entry, filepath.Join(temp, "report"), true)
+	if native := run(t, root, binary); !bytes.Equal(native, expected) {
+		t.Fatalf("native output interface %s want %s", native, expected)
 	}
-	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "JSON.stringify a literal with spread, shorthand or methods") || !strings.Contains(e.Error(), "settings/report_main.a") {
-		t.Fatalf("retained report compiler boundary: %v", e)
-	}
-	t.Logf("four captured Node report strings and returned status 1 agree; native reporting proof blocked: %v", e)
-	gap := filepath.Join(root, "stage1/cohere/command/settings/gaps/json_shorthand.a")
+	t.Log("four captured report strings and returned status 1 agree on Node and sanitized native; #kqxkvg0 written-property workaround active")
+	gap := filepath.Join(root, "internal/lower/testdata/step42-command-settings/json_shorthand.a")
 	if got := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", gap); string(got) != "{\"status\":1}\n" {
 		t.Fatalf("JSON shorthand reduction: %s", got)
 	}
@@ -383,4 +405,184 @@ func TestSettingsOutputInterface(t *testing.T) {
 		t.Fatalf("JSON shorthand reduction refusal: %v", ge)
 	}
 	t.Logf("shortest shorthand proof: %v", ge)
+}
+
+func settingsPropertyExpected(t *testing.T, data []byte) []byte {
+	t.Helper()
+	out := []byte{}
+	for _, line := range bytes.Split(bytes.TrimSpace(data), []byte("\n")) {
+		var answer struct {
+			Kind, Source string
+			Options      struct {
+				TabWidth, PrintWidth                                        int
+				UseTabs, Semi, SingleQuote, BracketSpacing, BracketSameLine bool
+				TrailingComma, ArrowParens, EndOfLine                       string
+			}
+			HouseIgnore, IgnorePatterns []string
+			HouseIgnoreDeclared         bool
+		}
+		if e := json.Unmarshal(line, &answer); e != nil {
+			t.Fatal(e)
+		}
+		if answer.Kind != "Ok" {
+			out = append(out, append(line, '\n')...)
+			continue
+		}
+		v := answer.Options
+		payload := struct {
+			Kind                string `json:"kind"`
+			TabWidth            int    `json:"tabWidth"`
+			UseTabs             bool   `json:"useTabs"`
+			Semi                bool   `json:"semi"`
+			SingleQuote         bool   `json:"singleQuote"`
+			PrintWidth          int    `json:"printWidth"`
+			TrailingComma       string `json:"trailingComma"`
+			BracketSpacing      bool   `json:"bracketSpacing"`
+			BracketSameLine     bool   `json:"bracketSameLine"`
+			ArrowParens         string `json:"arrowParens"`
+			EndOfLine           string `json:"endOfLine"`
+			Source              string `json:"source"`
+			HouseIgnore         string `json:"houseIgnore"`
+			HouseIgnoreCount    int    `json:"houseIgnoreCount"`
+			HouseIgnoreDeclared bool   `json:"houseIgnoreDeclared"`
+			IgnorePatterns      string `json:"ignorePatterns"`
+			IgnorePatternsCount int    `json:"ignorePatternsCount"`
+		}{answer.Kind, v.TabWidth, v.UseTabs, v.Semi, v.SingleQuote, v.PrintWidth, v.TrailingComma, v.BracketSpacing, v.BracketSameLine, v.ArrowParens, v.EndOfLine, answer.Source, strings.Join(answer.HouseIgnore, "\x00"), len(answer.HouseIgnore), answer.HouseIgnoreDeclared, strings.Join(answer.IgnorePatterns, "\x00"), len(answer.IgnorePatterns)}
+		encoded, e := json.Marshal(payload)
+		if e != nil {
+			t.Fatal(e)
+		}
+		out = append(out, append(encoded, '\n')...)
+	}
+	return out
+}
+
+func TestSettingsCheckedIntegers(t *testing.T) {
+	t.Parallel()
+	root, e := filepath.Abs("../../..")
+	if e != nil {
+		t.Fatal(e)
+	}
+	temp := t.TempDir()
+	var cases []struct {
+		Key, Value, GoDivergenceTask string
+		CheckedRefusal               bool
+	}
+	fixture := read(t, "testdata/settings-integer-cases.json")
+	if e = json.Unmarshal(fixture, &cases); e != nil {
+		t.Fatal(e)
+	}
+	if len(cases) != 36 {
+		t.Fatal("mandatory integer matrix")
+	}
+	snapshots := []settingsSnapshot{}
+	for index, c := range cases {
+		directory := filepath.Join(temp, fmt.Sprintf("case%d", index))
+		path := filepath.Join(directory, "CohereSettings.json")
+		source := fmt.Sprintf(`{"format":{"%s":%s}}`, c.Key, c.Value)
+		write(t, path, []byte(source))
+		snapshots = append(snapshots, settingsSnapshot{directory, map[string]string{path: source}, []string{filepath.Join(directory, "probe.css")}})
+	}
+	data, e := json.Marshal(snapshots)
+	if e != nil {
+		t.Fatal(e)
+	}
+	manifest := filepath.Join(temp, "go.json")
+	write(t, manifest, data)
+	overlayData, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): filepath.Join(root, "stage1/cohere/command/testdata/settings_oracle.go")}})
+	overlay := filepath.Join(temp, "overlay.json")
+	write(t, overlay, overlayData)
+	oracle := filepath.Join(temp, "oracle")
+	run(t, filepath.Join(root, "cohere"), "go", "build", "-overlay", overlay, "-o", oracle, "./command/formatter_comparison")
+	goLines := bytes.Split(bytes.TrimSpace(run(t, root, oracle, manifest)), []byte("\n"))
+	if len(goLines) != len(cases) {
+		t.Fatal("Go integer outcomes")
+	}
+	expected := []byte{}
+	divergences := 0
+	for index, c := range cases {
+		var answer struct {
+			Kind, Message string
+			Options       map[string]json.RawMessage
+		}
+		if e = json.Unmarshal(goLines[index], &answer); e != nil {
+			t.Fatal(e)
+		}
+		line := ""
+		if c.CheckedRefusal {
+			if answer.Kind != "Ok" || c.GoDivergenceTask != "#hnm8t56" {
+				t.Fatalf("named divergence %s=%s changed: %s", c.Key, c.Value, goLines[index])
+			}
+			divergences++
+			message := fmt.Sprintf(`/CohereSettings.json: format option %q value %s is outside the safe integer range [-9007199254740991, 9007199254740991]`, c.Key, c.Value)
+			encoded, e := json.Marshal(message)
+			if e != nil {
+				t.Fatal(e)
+			}
+			line = "Refused:" + string(encoded)
+		} else if answer.Kind == "Ok" {
+			line = "Ok:" + string(answer.Options[c.Key])
+		} else {
+			message := strings.ReplaceAll(answer.Message, filepath.Join(snapshots[index].CWD, "CohereSettings.json"), "/CohereSettings.json")
+			encoded, e := json.Marshal(message)
+			if e != nil {
+				t.Fatal(e)
+			}
+			line = "Refused:" + string(encoded)
+		}
+		expected = append(expected, []byte(line+"\n")...)
+	}
+	input := filepath.Join(temp, "integers.json")
+	write(t, input, fixture)
+	entry := filepath.Join(root, "stage1/cohere/command/settings/integer_main.a")
+	node := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", entry, input)
+	if !bytes.Equal(node, expected) {
+		t.Fatalf("checked integer Node\ngot %s\nwant %s", node, expected)
+	}
+	for _, sanitize := range []bool{false, true} {
+		binary := build(t, root, entry, filepath.Join(temp, fmt.Sprintf("integers-%v", sanitize)), sanitize)
+		if got := run(t, root, binary, input); !bytes.Equal(got, expected) {
+			t.Fatal("checked integer native mismatch")
+		}
+	}
+	// Removing the check must finish with wrong output; it cannot satisfy the ruling by silently rounding.
+	directory := filepath.Join(temp, "mutant")
+	files, e := filepath.Glob("settings/*.a")
+	if e != nil {
+		t.Fatal(e)
+	}
+	original := string(read(t, "settings/resolve.a"))
+	target := "if(number && !safeInteger(value.raw))"
+	if strings.Count(original, target) != 1 {
+		t.Fatal("integer mutant target")
+	}
+	for _, file := range files {
+		contents := read(t, file)
+		if filepath.Base(file) == "resolve.a" {
+			contents = []byte(strings.Replace(original, target, "if(false)", 1))
+		}
+		write(t, filepath.Join(directory, filepath.Base(file)), contents)
+	}
+	mutated := filepath.Join(directory, "integer_main.a")
+	wrongNode := run(t, root, "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", mutated, input)
+	binary := build(t, root, mutated, filepath.Join(directory, "native"), false)
+	wrongNative := run(t, root, binary, input)
+	if !bytes.Equal(wrongNode, wrongNative) || bytes.Equal(wrongNode, expected) {
+		t.Fatal("unchecked rounding mutant must fail identically on Node/native")
+	}
+	t.Logf("36 integer decisions exact on Node/release/sanitized; %d named Go divergences #hnm8t56; native/Node rounding mutant caught", divergences)
+}
+
+// This selector must fail when the ruled host API lands, forcing a real adapter
+// instead of allowing the UTF-8 fixture host to stand in for branded Path I/O.
+func TestSettingsPathAPISelector(t *testing.T) {
+	t.Parallel()
+	temp := t.TempDir()
+	path := filepath.Join(temp, "host_path.a")
+	write(t, path, read(t, "testdata/host_path.a.txt"))
+	_, e := load.Load([]string{path})
+	if e == nil || !strings.Contains(e.Error(), `has no exported member 'Path'`) {
+		t.Fatalf("Path host boundary changed; implement the real adapter: %v", e)
+	}
+	t.Logf("real Path-backed adapter blocked at shared prelude: %v", e)
 }

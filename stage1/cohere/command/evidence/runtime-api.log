@@ -1,0 +1,2 @@
+12:	// Paths and positions follow bridge/tsgo/tsgo.h. Release each handle exactly once.
+24:	export function readTextFile(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };

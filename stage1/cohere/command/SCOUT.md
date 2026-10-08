@@ -1,7 +1,8 @@
-# Step 42 settings: Go/Node resolution is held; native integration stops at compiler boundaries
+# Step 42: checked settings and native formatter wiring; real Path I/O awaits the host API
 
-Task **#2eq9rwz**, follow-up branch **scout/42-settings-resolution**, parent
-**1ad13f7cc64b78598e2e677b89238568083b53eb** (`scout/42-linked-command`).
+Task **#2eq9rwz**, current branch **scout/42-native-settings**, parent
+**f2a5a82377a933d18a674d949c4fbee4411de485** (`scout/42-settings-resolution`).
+The first linked command was **1ad13f7cc64b78598e2e677b89238568083b53eb**.
 The original lint-area base was **9156bf5c579a44d687c9955d13e44f9ad8bbb6f8**.
 Go oracle: cohere **7945d102a6c18dd36adf9114a758ce646e8b2359**;
 its TypeScript checkout is **d92d9bfee114c80be2c375d72edae966176e3a4f**.
@@ -9,7 +10,8 @@ its TypeScript checkout is **d92d9bfee114c80be2c375d72edae966176e3a4f**.
 This package owns `main.a`, `format.a`, `settings/`, its tests, fixtures and evidence only.
 No shared lint harness, parser, bridge, runtime or compiler file is changed.
 The four original host questions are resolved by the user-supplied rulings below.
-The integer representation question remains open for **@system_adamic**.
+The integer representation question is resolved by the later ruling below.
+Historical findings retain their original scope; the latest follow-up is at the end.
 
 ## Formatter composition inherited from the parent scout
 
@@ -370,7 +372,7 @@ The targeted settings suite passes, and gofmt/vet are clean. The unchanged
 formatter command's complete parent-scout suite and evidence remain on the branch;
 this follow-up does not claim a new full linked-command test run.
 
-## Proved boundaries: stop here, without language workarounds
+## Historical settings boundaries (superseded where stated below)
 
 1. **Native settings composition refuses a call spread.** The actual entry is
    `settings/main.a`; stage 0 reports `settings/resolve.a:251:55`:
@@ -424,3 +426,155 @@ passing targeted suite, upstream audit, mutants and boundary proofs;
 `evidence/settings-go.jsonl` and `settings-node.jsonl` retain every identical
 answer at the measured fixture paths. `settings-vet.log` and
 `settings-gofmt.log` are empty successful checks.
+
+
+## Latest ruling and implementation: checked integers, #hnm8t56
+
+The user supplied @system_adamic's ruling: a setting is a JSON number and an
+Adamic number is a JavaScript number. Beyond the safe integer range it is a
+checked **settings error naming the key and original value**, never silent
+rounding and never a bigint or a string-valued option. Go cohere will adopt a
+refusal too under **#hnm8t56**, already with @system_cohere according to the user.
+No duplicate message or issue was sent.
+
+`settings/resolve.a` checks the raw integer spelling after Go's integer/type
+validation and **before** Number conversion. The implemented safe-integer range
+is **[-9007199254740991, 9007199254740991]**, following the ruling's explicit
+JavaScript safe-integer wording: exactly ±2^53 is also refused. The source token
+is retained only by the JSON reader and diagnostic, not carried as an option.
+An error has this form:
+
+```
+/CohereSettings.json: format option "tabWidth" value 9007199254740993 is outside the safe integer range [-9007199254740991, 9007199254740991]
+```
+
+`testdata/settings-integer-boundary.json` stays the shortest named divergence:
+`{"format":{"tabWidth":9007199254740993}}`. Its task/provenance are named at
+`settings-integer-divergences.json`, the test and every divergent matrix row:
+**#hnm8t56**. The pinned Go oracle still accepts exactly 9007199254740993; Adamic
+now refuses with key/value and intended status 1. The test requires that named
+outcome, so a Go pin that changes it forces reconciliation rather than silently
+retiring the divergence.
+
+The **36-row** integer matrix holds both printWidth and tabWidth at zero, signs,
+safe bounds, ±2^53, the first rounding case, int64 bounds, out-of-int64 values,
+fractions, exponent spellings and null defaults. Source Node, release native and
+sanitized native match every ruled result. **12 current Go/Adamic differences**
+are named #hnm8t56; none is counted as oracle parity. Removing the check builds
+and finishes with wrong output on both Node and native, proving that silent
+rounding cannot pass. No Go cohere source or submodule pin is changed.
+
+## Filed compiler gaps and expressly authorized workarounds
+
+The user reports the call-spread gap filed as **#aqh658t** and JSON literal
+shorthand as **#kqxkvg0** in compiler's tree, and expressly authorizes their
+recorded workarounds so step 42 keeps moving. That instruction supersedes the
+previous prohibition for these two cases only.
+
+The unchanged shortest proving programs now live at:
+
+* `internal/lower/testdata/step42-command-settings/call_spread.a` (#aqh658t).
+* `internal/lower/testdata/step42-command-settings/json_shorthand.a` (#kqxkvg0).
+
+Their selector tests run source Node, require valid TypeScript, and require the
+specific stage-0 refusal. **They fail when stage 0 lowers either program**, so
+landing a compiler fix forces removal/review of the workaround. The compiler
+folder README records the issue IDs, scope, output and reproduction command.
+Only new proof files/documentation in that folder are added; no shared compiler
+implementation is modified.
+
+The inherited-ignore site uses **single pushes**, with an #aqh658t comment.
+The test report JSON literals write **status: status**, with #kqxkvg0 comments
+at every changed site (`settings/main.a`, `properties_main.a`, `report_main.a`).
+The report interface now agrees on Node and sanitized native for all four
+captured strings and returned status 1, without inventing an OS exit adapter.
+
+Native compilation then reveals a third refusal: the original full-answer
+transport's `JSON.stringify(answer)` at `settings/main.a:31:41` is refused:
+`JSON.stringify object references (structural types can hide fields and toJSON;
+runtime shapes need complete value metadata)`. The shortest reduction is
+`internal/lower/testdata/step42-command-settings/json_reference.a`.
+`internal/lower/library_json_stringify.go` owns that implementation. This gap
+has no supplied task ID, and **no production workaround is deployed for it**.
+The original full-answer program and its refusal remain held.
+
+An independent scalar property probe verifies the resolver's values. For the
+fixture arrays it emits NUL-joined contents plus counts, which are compared to
+Go's fixture projection; this is a test protocol, not a general lossless array
+serializer or a replacement CLI JSON reporter. All **283** property outcomes
+agree on Go, Node, release native and sanitized native. Four valid-TypeScript
+settings mutants disagree on **72, 47, 270 and one** outcomes on both Node and
+native. The original Go/Node whole-answer comparison remains exact as well.
+
+## Resolved options linked to formatter APIs
+
+`format_resolved.a` takes an immutable settings answer. It propagates settings
+refusals, normalizes file text/BOM as the original wrapper does, and converges
+up to three passes. CSS receives width, indentation, tabs, quote preference and
+trailing comma through its existing PrintOptions; GraphQL receives width,
+indentation, tabs and bracket spacing. Complete Prettier-default answers may
+also use the inherited JSON/YAML/partial-TS routes. A nondefault answer for
+those routes returns **NotYet** explicitly; it is not a Go configuration error.
+No output reindentation, copied printer or silent option dropping is introduced.
+
+The new API is a linked composition ready for a host adapter, not a claim that
+the original command flags now resolve real filesystem settings. The original
+`main.a` CLI remains its fixed-default slice until real Path I/O and the ruled
+main-return/exact-write APIs are available.
+
+The linked native archive passes **47 exact Go/Node/native outcomes**: six
+pinned quiet-hundred CSS files across house/default/own options, 25 GraphQL
+option/normalization controls, default JSON/YAML/numeric-TS controls and an exact
+configuration refusal. Three separate JSON/YAML/TS nondefault probes agree on
+an explicit NotYet owner boundary. The whole program still links all inherited
+formatters with the resolver; no reusable package ABI is introduced.
+
+Measured release composition: generated C **15,411,307 bytes**, program archive
+**8,790,766 bytes**, binary **4,640,496 bytes**, final link **175 ms**. The native
+settings property binary is **628,784 bytes**, with a **502,654-byte** program
+archive. The linked graph inventory (`testdata/native-settings-inventory.json`) covers
+**103 modules**, **55 repeated names at 141 sites**, **86 module-level
+const/let declarations**, and the same two identical-file groups. One closed
+program/one main linked without a new symbol clash. No formatter/parser/bridge/
+runtime/compiler implementation owned by another lane was changed. Existing formatter implementation and its original tests are
+unchanged; the added linked bridge has its own exact native test.
+
+## Real Path adapter: concrete shared-lane blocker
+
+The ruled branded Path API still does not exist in this checkout. The minimal
+fixture `testdata/host_path.a.txt` imports only the approved type and fails:
+
+```
+error TS2305: Module '"adamic"' has no exported member 'Path'.
+```
+
+The Path selector fails as soon as that export appears, forcing adapter work.
+Read-only checks of **origin/main 45487a809f89885a3fc651cd590e7dabf31362dc**
+and **area/runtime 9bc8201f1c97c4c18a03d263a40ece933ffa752e** found no Path export
+in their preludes either. Neither branch was merged.
+
+A real adapter requires the approved Path type, lossless path operations and
+Path-aware file calls in `internal/load/prelude.d.ts`, lowering in
+`internal/lower/input.go` and the owned runtime/oracle implementations. The
+ruled exact writes and main-return status likewise still need
+`internal/native/emit.go` and `oracle/adamic.mjs` support. Adding a string brand
+here would lose non-UTF-8 paths and violate the ruling. Therefore **no purported
+Path-backed adapter is added**, and full CLI settings/refusal exit parity is
+unfinished at this named shared-file boundary.
+
+Take the checked resolver and linked formatter API next. Land the actual host
+APIs, implement the real adapter, and wire the original CLI to this API. Let
+JSON/YAML/TS owners expose their remaining resolved-option contracts. Track
+#hnm8t56 at the oracle pin, and retire #aqh658t/#kqxkvg0 workarounds when their
+selectors fail. The full-object serializer refusal must also be addressed before
+claiming complete command JSON-report parity.
+
+
+Latest evidence: `evidence/native-settings-tests.log` records the passing
+settings/reader/report/selector/integer suite and all native mutants;
+`evidence/resolved-format-tests.log` records the linked archive test;
+`evidence/path-selector.log` and `host-path.log` retain the missing-Path proof.
+`native-settings-vet.log` and `native-settings-gofmt.log` are empty successful
+checks. These are targeted affected-package checks; the unchanged original
+fixed-default CLI's parent validation remains preserved, rather than claimed as
+a newly repeated full CLI suite.

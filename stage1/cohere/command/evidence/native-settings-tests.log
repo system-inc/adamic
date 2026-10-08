@@ -1,0 +1,281 @@
+=== RUN   TestSettingsResolution
+=== PAUSE TestSettingsResolution
+=== RUN   TestSettingsJSON
+=== PAUSE TestSettingsJSON
+=== RUN   TestSettingsIntegerNamedDivergence
+=== PAUSE TestSettingsIntegerNamedDivergence
+=== RUN   TestSettingsOutputInterface
+=== PAUSE TestSettingsOutputInterface
+=== RUN   TestSettingsCheckedIntegers
+=== PAUSE TestSettingsCheckedIntegers
+=== CONT  TestSettingsResolution
+=== CONT  TestSettingsOutputInterface
+=== CONT  TestSettingsIntegerNamedDivergence
+=== CONT  TestSettingsJSON
+=== CONT  TestSettingsCheckedIntegers
+=== NAME  TestSettingsResolution
+    settings_test.go:150: control sets=249 public pins=23 config blobs=20 total query sets=272
+=== NAME  TestSettingsOutputInterface
+    settings_test.go:390: lower+emit=507.782978ms C=13821 bytes
+    settings_test.go:390: C compile=484.765308ms
+=== NAME  TestSettingsJSON
+    settings_test.go:297: lower+emit=1.564147151s C=403973 bytes
+=== NAME  TestSettingsOutputInterface
+    settings_test.go:390: archive=65188 binary=4424608 link=983.736952ms sanitized=true
+    settings_test.go:394: four captured report strings and returned status 1 agree on Node and sanitized native; #kqxkvg0 written-property workaround active
+    settings_test.go:407: shortest shorthand proof: /workspace/adamic/internal/lower/testdata/step42-command-settings/json_shorthand.a:2:30: stage 0 can't lower JSON.stringify a literal with spread, shorthand or methods yet
+--- PASS: TestSettingsOutputInterface (5.27s)
+=== NAME  TestSettingsIntegerNamedDivergence
+    settings_test.go:363: #hnm8t56 named divergence: Go accepts tabWidth=9007199254740993 exactly; Adamic refuses with key/value, status 1
+--- PASS: TestSettingsIntegerNamedDivergence (6.05s)
+=== NAME  TestSettingsResolution
+    settings_test.go:165: exact answer lines=283 differences=0
+=== NAME  TestSettingsCheckedIntegers
+    settings_test.go:543: lower+emit=828.144935ms C=943467 bytes
+=== NAME  TestSettingsJSON
+    settings_test.go:297: C compile=4.285676465s
+    settings_test.go:297: archive=249774 binary=467440 link=291.444719ms sanitized=false
+    settings_test.go:297: lower+emit=712.445042ms C=403973 bytes
+=== NAME  TestSettingsResolution
+    settings_test.go:173: lower+emit=1.454941894s C=966916 bytes
+=== NAME  TestSettingsCheckedIntegers
+    settings_test.go:543: C compile=5.232774051s
+    settings_test.go:543: archive=484366 binary=620576 link=202.803456ms sanitized=false
+    settings_test.go:543: lower+emit=1.009824739s C=943467 bytes
+=== NAME  TestSettingsResolution
+    settings_test.go:173: C compile=4.914794605s
+    settings_test.go:173: archive=502654 binary=628784 link=304.717604ms sanitized=false
+=== NAME  TestSettingsJSON
+    settings_test.go:297: C compile=6.895665542s
+    settings_test.go:297: archive=938804 binary=4881352 link=815.422412ms sanitized=true
+    settings_test.go:303: strict JSON inputs=311 Go/Node/release/sanitized exact
+    settings_test.go:320: lower+emit=399.207609ms C=404151 bytes
+=== NAME  TestSettingsResolution
+    settings_test.go:173: lower+emit=588.50386ms C=966916 bytes
+=== NAME  TestSettingsJSON
+    settings_test.go:320: C compile=1.349589471s
+    settings_test.go:320: archive=250014 binary=467544 link=78.757549ms sanitized=false
+    settings_test.go:325: JSON mutant 0: successful wrong output caught on Node and native
+    settings_test.go:320: lower+emit=542.300652ms C=402969 bytes
+    settings_test.go:320: C compile=1.369574385s
+    settings_test.go:320: archive=248758 binary=467256 link=93.324853ms sanitized=false
+    settings_test.go:325: JSON mutant 1: successful wrong output caught on Node and native
+--- PASS: TestSettingsJSON (21.29s)
+=== NAME  TestSettingsCheckedIntegers
+    settings_test.go:543: C compile=10.207756994s
+    settings_test.go:543: archive=2075900 binary=5525536 link=466.045601ms sanitized=true
+    settings_test.go:568: lower+emit=349.541359ms C=942251 bytes
+    settings_test.go:568: C compile=4.950161885s
+    settings_test.go:568: archive=481374 binary=620176 link=119.147605ms sanitized=false
+    settings_test.go:573: 36 integer decisions exact on Node/release/sanitized; 12 named Go divergences #hnm8t56; native/Node rounding mutant caught
+--- PASS: TestSettingsCheckedIntegers (29.95s)
+=== NAME  TestSettingsResolution
+    settings_test.go:173: C compile=14.654608064s
+    settings_test.go:173: archive=2209156 binary=5600576 link=507.592021ms sanitized=true
+    settings_test.go:178: 283 exact Go/Node/release/sanitized scalar property projections; original full-object JSON transport remains blocked
+    settings_test.go:187: native JSON transport blocked: /workspace/adamic/stage1/cohere/command/settings/main.a:31:41: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet
+    settings_test.go:200: shortest call-spread proof: /workspace/adamic/internal/lower/testdata/step42-command-settings/call_spread.a:3:13: stage 0 can't lower a SpreadElement yet
+    settings_test.go:226: source Node mutant 0
+    settings_test.go:227: exact answer lines=283 differences=72
+    settings_test.go:230: lower+emit=322.425884ms C=967775 bytes
+    settings_test.go:230: C compile=2.520019262s
+    settings_test.go:230: archive=503774 binary=628936 link=129.790765ms sanitized=false
+    settings_test.go:235: exact answer lines=283 differences=72
+    settings_test.go:226: source Node mutant 1
+    settings_test.go:227: exact answer lines=283 differences=47
+    settings_test.go:230: lower+emit=431.437238ms C=966988 bytes
+    settings_test.go:230: C compile=2.766806652s
+    settings_test.go:230: archive=502830 binary=628888 link=121.907063ms sanitized=false
+    settings_test.go:235: exact answer lines=283 differences=47
+    settings_test.go:226: source Node mutant 2
+    settings_test.go:227: exact answer lines=283 differences=270
+    settings_test.go:230: lower+emit=445.467145ms C=966452 bytes
+    settings_test.go:230: C compile=2.967343887s
+    settings_test.go:230: archive=502550 binary=628784 link=91.676322ms sanitized=false
+    settings_test.go:235: exact answer lines=283 differences=270
+    settings_test.go:226: source Node mutant 3
+    settings_test.go:227: exact answer lines=283 differences=1
+    settings_test.go:230: lower+emit=1.691828739s C=966870 bytes
+    settings_test.go:230: C compile=7.735810654s
+    settings_test.go:230: archive=502590 binary=628784 link=90.676994ms sanitized=false
+    settings_test.go:235: exact answer lines=283 differences=1
+    settings_test.go:246: upstream settings tests (no skips):
+        === RUN   TestResolveFindsTheNearestSettingsAbove
+        === PAUSE TestResolveFindsTheNearestSettingsAbove
+        === RUN   TestTheHouseBlockResolvesThroughTheTiers
+        === PAUSE TestTheHouseBlockResolvesThroughTheTiers
+        === RUN   TestOurTiersRefuseAFormatBlockOutsideTheNexusTier
+        === PAUSE TestOurTiersRefuseAFormatBlockOutsideTheNexusTier
+        === RUN   TestZeroConfigIsTheHouseFormat
+        === PAUSE TestZeroConfigIsTheHouseFormat
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults
+        === RUN   TestAChainRefusesWhatOneFileWouldBeRefusedFor
+        === PAUSE TestAChainRefusesWhatOneFileWouldBeRefusedFor
+        === RUN   TestALeftoverIsRefusedEvenWhenItAgrees
+        === PAUSE TestALeftoverIsRefusedEvenWhenItAgrees
+        === RUN   TestALeftoverBelowTheSettingsIsRefused
+        === PAUSE TestALeftoverBelowTheSettingsIsRefused
+        === RUN   TestNothingConfiguredIsTheHouseNotPrettier
+        === PAUSE TestNothingConfiguredIsTheHouseNotPrettier
+        === RUN   TestResolveRefusesEveryOptionNobodyChose
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose
+        === RUN   TestALeftoverIsNamedWithItsFile
+        === PAUSE TestALeftoverIsNamedWithItsFile
+        === RUN   TestAPackageJSONWithoutPrettierIsNotALeftover
+        === PAUSE TestAPackageJSONWithoutPrettierIsNotALeftover
+        === RUN   TestTheHouseIgnoreListRidesInTheFormatBlock
+        === PAUSE TestTheHouseIgnoreListRidesInTheFormatBlock
+        === RUN   TestIgnorePatternsResolveWithTheOptions
+        === PAUSE TestIgnorePatternsResolveWithTheOptions
+        === RUN   TestADroppedKeyCanNeverReachPrettiersDefaults
+        === PAUSE TestADroppedKeyCanNeverReachPrettiersDefaults
+        === RUN   TestAResolverAnswersAsResolveDidOnOurTrees
+        === PAUSE TestAResolverAnswersAsResolveDidOnOurTrees
+        === RUN   TestAnEditAnywhereInTheChainIsSeen
+        === PAUSE TestAnEditAnywhereInTheChainIsSeen
+        === RUN   TestARememberedParentDoesNotAnswerForAChildWithLeftoverConfig
+        === PAUSE TestARememberedParentDoesNotAnswerForAChildWithLeftoverConfig
+        === CONT  TestResolveFindsTheNearestSettingsAbove
+        === CONT  TestResolveRefusesEveryOptionNobodyChose
+        === CONT  TestADroppedKeyCanNeverReachPrettiersDefaults
+        === CONT  TestARememberedParentDoesNotAnswerForAChildWithLeftoverConfig
+        === CONT  TestAChainRefusesWhatOneFileWouldBeRefusedFor
+        === RUN   TestAChainRefusesWhatOneFileWouldBeRefusedFor/an_unknown_option_in_the_Nexus_tier
+        === PAUSE TestAChainRefusesWhatOneFileWouldBeRefusedFor/an_unknown_option_in_the_Nexus_tier
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/plugin_key_in_the_block
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/plugin_key_in_the_block
+        === RUN   TestAChainRefusesWhatOneFileWouldBeRefusedFor/a_base_that_is_missing
+        === PAUSE TestAChainRefusesWhatOneFileWouldBeRefusedFor/a_base_that_is_missing
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/crlf
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/crlf
+        === CONT  TestAnEditAnywhereInTheChainIsSeen
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/package.json
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/package.json
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/.prettierrc
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/.prettierrc
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/old_config_and_no_settings
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/old_config_and_no_settings
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/javascript_config
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/javascript_config
+        === RUN   TestResolveRefusesEveryOptionNobodyChose/unknown_option
+        === PAUSE TestResolveRefusesEveryOptionNobodyChose/unknown_option
+        === CONT  TestNothingConfiguredIsTheHouseNotPrettier
+        --- PASS: TestARememberedParentDoesNotAnswerForAChildWithLeftoverConfig (0.00s)
+        --- PASS: TestNothingConfiguredIsTheHouseNotPrettier (0.00s)
+        --- PASS: TestADroppedKeyCanNeverReachPrettiersDefaults (0.01s)
+        === CONT  TestALeftoverBelowTheSettingsIsRefused
+        --- PASS: TestALeftoverBelowTheSettingsIsRefused (0.00s)
+        === CONT  TestTheHouseIgnoreListRidesInTheFormatBlock
+        === CONT  TestAPackageJSONWithoutPrettierIsNotALeftover
+        === CONT  TestIgnorePatternsResolveWithTheOptions
+        === CONT  TestAResolverAnswersAsResolveDidOnOurTrees
+        === RUN   TestAResolverAnswersAsResolveDidOnOurTrees//tmp/adamic-gate/TestSettingsResolution3764546600/001/trees
+        --- PASS: TestAnEditAnywhereInTheChainIsSeen (0.00s)
+        --- PASS: TestAPackageJSONWithoutPrettierIsNotALeftover (0.00s)
+        === PAUSE TestAResolverAnswersAsResolveDidOnOurTrees//tmp/adamic-gate/TestSettingsResolution3764546600/001/trees
+        === CONT  TestALeftoverIsRefusedEvenWhenItAgrees
+        === RUN   TestALeftoverIsRefusedEvenWhenItAgrees/.prettierrc,_the_house_options
+        === PAUSE TestALeftoverIsRefusedEvenWhenItAgrees/.prettierrc,_the_house_options
+        === RUN   TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_an_empty_prettier_key
+        === PAUSE TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_an_empty_prettier_key
+        === RUN   TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_the_house_options
+        === PAUSE TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_the_house_options
+        === RUN   TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_with_the_Tailwind_plugin
+        === PAUSE TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_with_the_Tailwind_plugin
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults
+        --- PASS: TestIgnorePatternsResolveWithTheOptions (0.00s)
+        === CONT  TestZeroConfigIsTheHouseFormat
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_empty_block
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_empty_block
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_block_of_its_own
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_block_of_its_own
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_base's_block
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_base's_block
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/the_project's_block_over_its_base's
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/the_project's_block_over_its_base's
+        === RUN   TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_unknown_option_in_an_outsider's_block
+        === PAUSE TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_unknown_option_in_an_outsider's_block
+        === CONT  TestOurTiersRefuseAFormatBlockOutsideTheNexusTier
+        === RUN   TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project_restating_the_house_block
+        === PAUSE TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project_restating_the_house_block
+        === RUN   TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project's_own_empty_block
+        === PAUSE TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project's_own_empty_block
+        === CONT  TestALeftoverIsNamedWithItsFile
+        === RUN   TestZeroConfigIsTheHouseFormat/settings_extending_nothing
+        === PAUSE TestZeroConfigIsTheHouseFormat/settings_extending_nothing
+        === RUN   TestZeroConfigIsTheHouseFormat/a_chain_of_the_project's_own_files
+        === PAUSE TestZeroConfigIsTheHouseFormat/a_chain_of_the_project's_own_files
+        === RUN   TestZeroConfigIsTheHouseFormat/a_cohere_set_that_is_not_ours
+        === PAUSE TestZeroConfigIsTheHouseFormat/a_cohere_set_that_is_not_ours
+        === CONT  TestTheHouseBlockResolvesThroughTheTiers
+        === RUN   TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/a_base_between_the_project_and_the_set
+        === PAUSE TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/a_base_between_the_project_and_the_set
+        --- PASS: TestALeftoverIsNamedWithItsFile (0.00s)
+        === CONT  TestAChainRefusesWhatOneFileWouldBeRefusedFor/an_unknown_option_in_the_Nexus_tier
+        --- PASS: TestResolveFindsTheNearestSettingsAbove (0.02s)
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/plugin_key_in_the_block
+        === CONT  TestAChainRefusesWhatOneFileWouldBeRefusedFor/a_base_that_is_missing
+        --- PASS: TestTheHouseBlockResolvesThroughTheTiers (0.00s)
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/old_config_and_no_settings
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/unknown_option
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/javascript_config
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/package.json
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/.prettierrc
+        === CONT  TestResolveRefusesEveryOptionNobodyChose/crlf
+        === CONT  TestAResolverAnswersAsResolveDidOnOurTrees//tmp/adamic-gate/TestSettingsResolution3764546600/001/trees
+        --- PASS: TestTheHouseIgnoreListRidesInTheFormatBlock (0.01s)
+        === CONT  TestALeftoverIsRefusedEvenWhenItAgrees/.prettierrc,_the_house_options
+        === CONT  TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_with_the_Tailwind_plugin
+        === CONT  TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_the_house_options
+        --- PASS: TestResolveRefusesEveryOptionNobodyChose (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/old_config_and_no_settings (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/plugin_key_in_the_block (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/javascript_config (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/package.json (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/.prettierrc (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/unknown_option (0.00s)
+            --- PASS: TestResolveRefusesEveryOptionNobodyChose/crlf (0.00s)
+        === CONT  TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_an_empty_prettier_key
+        === CONT  TestZeroConfigIsTheHouseFormat/settings_extending_nothing
+        --- PASS: TestAChainRefusesWhatOneFileWouldBeRefusedFor (0.00s)
+            --- PASS: TestAChainRefusesWhatOneFileWouldBeRefusedFor/an_unknown_option_in_the_Nexus_tier (0.00s)
+            --- PASS: TestAChainRefusesWhatOneFileWouldBeRefusedFor/a_base_that_is_missing (0.00s)
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_empty_block
+        --- PASS: TestALeftoverIsRefusedEvenWhenItAgrees (0.00s)
+            --- PASS: TestALeftoverIsRefusedEvenWhenItAgrees/.prettierrc,_the_house_options (0.00s)
+            --- PASS: TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_with_the_Tailwind_plugin (0.00s)
+            --- PASS: TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_the_house_options (0.00s)
+            --- PASS: TestALeftoverIsRefusedEvenWhenItAgrees/package.json,_an_empty_prettier_key (0.01s)
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_unknown_option_in_an_outsider's_block
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/the_project's_block_over_its_base's
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_base's_block
+        === CONT  TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_block_of_its_own
+        === CONT  TestZeroConfigIsTheHouseFormat/a_cohere_set_that_is_not_ours
+        === CONT  TestZeroConfigIsTheHouseFormat/a_chain_of_the_project's_own_files
+        === CONT  TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project_restating_the_house_block
+        === CONT  TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/a_base_between_the_project_and_the_set
+        --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults (0.00s)
+            --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_unknown_option_in_an_outsider's_block (0.00s)
+            --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/the_project's_block_over_its_base's (0.00s)
+            --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_block_of_its_own (0.00s)
+            --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/a_base's_block (0.01s)
+            --- PASS: TestAnOutsidersOwnBlockIsAppliedOverPrettiersDefaults/an_empty_block (0.05s)
+        === CONT  TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project's_own_empty_block
+        --- PASS: TestZeroConfigIsTheHouseFormat (0.00s)
+            --- PASS: TestZeroConfigIsTheHouseFormat/settings_extending_nothing (0.03s)
+            --- PASS: TestZeroConfigIsTheHouseFormat/a_chain_of_the_project's_own_files (0.00s)
+            --- PASS: TestZeroConfigIsTheHouseFormat/a_cohere_set_that_is_not_ours (0.04s)
+        --- PASS: TestOurTiersRefuseAFormatBlockOutsideTheNexusTier (0.05s)
+            --- PASS: TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/a_base_between_the_project_and_the_set (0.02s)
+            --- PASS: TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project_restating_the_house_block (0.03s)
+            --- PASS: TestOurTiersRefuseAFormatBlockOutsideTheNexusTier/the_project's_own_empty_block (0.02s)
+        === NAME  TestAResolverAnswersAsResolveDidOnOurTrees//tmp/adamic-gate/TestSettingsResolution3764546600/001/trees
+            resolve_test.go:498: 588 directories identical, 429 of them refusals
+        --- PASS: TestAResolverAnswersAsResolveDidOnOurTrees (0.00s)
+            --- PASS: TestAResolverAnswersAsResolveDidOnOurTrees//tmp/adamic-gate/TestSettingsResolution3764546600/001/trees (0.61s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/formatoptions	0.665s
+--- PASS: TestSettingsResolution (83.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/command	83.660s
