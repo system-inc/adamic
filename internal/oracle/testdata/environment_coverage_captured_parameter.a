@@ -1,0 +1,7 @@
+function wrap(read: () => string): () => number { return () => read().length; }
+function make(start: number): () => number {
+ const text = 'parameter' + String(start);
+ function read(): string { return text; }
+ return wrap(read);
+}
+const read = make(3); console.log(String(read()));

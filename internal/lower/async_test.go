@@ -32,6 +32,8 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
+		{"async function f(): Promise<void> { outer: while (true) { for (const item of [1, 2]) { await Promise.resolve(); break outer; } } }\nawait f();", "async for-of labeled outer break"},
+		{"async function f(): Promise<void> { outer: for (const item of [1, 2]) { await Promise.resolve(); continue outer; } }\nawait f();", "a labeled continue"},
 		{"import { parallelMap } from 'adamic'; async function f(): Promise<string> { const extra = 3; await Promise.resolve(); const items: readonly number[] = [1,2]; return parallelMap(items, item => item + extra).join(','); } console.log(await f());", "pool tasks capturing an async environment"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
@@ -137,7 +139,6 @@ func TestAsyncReaderRefusals(t *testing.T) {
 		cycle      bool
 	}{
 		{"async_refuse_frame_capture_cycle", "async frame capture cycle", true},
-		{"async_refuse_loop_body_capture", "async per-iteration captured cells", false},
 		{"async_refuse_return_thenable", "return of thenables", false},
 		{"async_refuse_arrow_thenable", "return of thenables", false},
 	} {
@@ -163,7 +164,7 @@ func TestAsyncReaderRefusals(t *testing.T) {
 	}
 }
 
-func TestAsyncRepeatedBindingRefusals(t *testing.T) {
+func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	t.Parallel()
 	for _, body := range []string{
 		"if (true) { const held = `item${i}`; readers.push(() => held); }",
@@ -176,8 +177,8 @@ func TestAsyncRepeatedBindingRefusals(t *testing.T) {
 		} {
 			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
 			_, err := lowerSource(t, source)
-			if err == nil || !strings.Contains(err.Error(), "async per-iteration captured cells") {
-				t.Fatalf("repeated binding must be refused: %s: %v", source, err)
+			if err != nil {
+				t.Fatalf("repeated binding must lower: %s: %v", source, err)
 			}
 		}
 	}

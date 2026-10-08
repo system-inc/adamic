@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "emitted_units": [
+    {
+      "name": "main.c",
+      "sha256": "abde80047c6f1f97ee1429ba70a0f373aa156cf2ce870d3ebc09775df2a8c0ac"
+    }
+  ],
+  "compiler_sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+  "link_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-flto=thin"
+  ],
+  "training_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-flto=thin",
+    "-fprofile-instr-generate"
+  ],
+  "training_link_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-flto=thin",
+    "-fprofile-instr-generate"
+  ],
+  "runtime_sha256": "2556c98a78b43faf3ef49e6c3efa2a1a8777caa0bf3f6d5a28866503838b2654",
+  "profile_sha256": "0f933db6490ed1eec67191f47e74a9343afb71e174b2905d44846f73031520fc",
+  "training_manifest_sha256": "5e519c9b82359dbd5e133c3d16ae994dbd70d3dbdef4cdabb77794737f4e3ea4",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "target": "darwin-arm64",
+  "flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-flto=thin"
+  ]
+}

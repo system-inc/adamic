@@ -604,6 +604,10 @@ recompute:
     }
   }
 
+  // fdlibm k_rem_pio2.c: when z is zero, the recomputation check above requires
+  // a nonzero iq term at or above jk. Chopping zero terms cannot remove them all.
+  if (jz < 0) { adamic_unreachable(); }
+
   /* convert integer "bit" chunk to floating-point value */
   fw = scalbn(one, q0);
   for (i = jz; i >= 0; i--) {

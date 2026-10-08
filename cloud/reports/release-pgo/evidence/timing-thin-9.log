@@ -1,0 +1,4 @@
+Benchmark 1: taskset -c 3 /workspace/scratch/release-pgo/thin/parse --manifest /workspace/scratch/release-pgo/held-out.txt --count
+0
+  Time (abs ≡):        569.5 ms               [User: 539.3 ms, System: 29.9 ms]
+ 

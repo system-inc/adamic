@@ -1,0 +1,7 @@
+{
+  "default_profiles": [],
+  "binary_has_pgo_setting": false,
+  "cohere_sha": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "build_command": "cd cohere && go build -overlay=/workspace/scratch/release-lto/parse-overlay.json -o /workspace/scratch/release-lto/go-parse /workspace/adamic/cohere/adamic_parse.go",
+  "observed_policy": "No default.pgo found and no explicit -pgo applied to this measured Go binary"
+}

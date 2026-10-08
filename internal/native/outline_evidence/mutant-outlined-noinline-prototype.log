@@ -1,0 +1,8 @@
+=== RUN   TestInitializerUnitOwnership
+=== PAUSE TestInitializerUnitOwnership
+=== CONT  TestInitializerUnitOwnership
+    outline_test.go:132: module initializer lost noinline prototype
+--- FAIL: TestInitializerUnitOwnership (0.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.737s
+FAIL

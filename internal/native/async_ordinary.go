@@ -30,7 +30,7 @@ func (e *emitter) asyncFunction(index int) string {
 	fmt.Fprintf(&out, "static void adamic_async_children_%d(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%d *frame = (void *)base; drop(frame->self); drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", index, index)
 	fmt.Fprintf(&out, "static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", index, index)
 	for position, local := range cells {
-		if e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured {
+		if e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured) {
 			fmt.Fprintf(&out, " void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; adamic_release(adamic_slot_%d);\n", position, position, position, position)
 		}
 	}
@@ -75,30 +75,40 @@ func (e *emitter) asyncFunction(index int) string {
 			for _, instructionID := range block.Instructions {
 				instruction := graph.Instructions[instructionID]
 				statement := *instruction.At
-				if instruction.Part == 1 {
-					if attempt, ok := statement.(ir.Try); ok {
-						if attempt.CatchLocal >= 0 {
-							e.declareLocal(attempt.CatchLocal, "frame->error", true)
-						} else {
-							e.line("adamic_release(frame->error);")
-						}
-						e.line("frame->error = NULL;")
+				if attempt, ok := statement.(ir.Try); ok && instruction.Part == 1 {
+					if attempt.CatchLocal >= 0 {
+						e.declareLocal(attempt.CatchLocal, "frame->error", true)
+					} else {
+						e.line("adamic_release(frame->error);")
 					}
+					e.line("frame->error = NULL;")
 					continue
 				}
 				switch statement := statement.(type) {
+				case ir.Switch:
+					if instruction.Part > 0 {
+						condition = e.snapshot(ir.Boolean, e.decide(ir.Binary{Operator: ir.Equal, Left: statement.Value, Right: instruction.Expression}))
+					}
 				case ir.If, ir.Loop:
 					condition = e.snapshot(ir.Boolean, e.decide(instruction.Expression))
 				case ir.Return:
 					result = statement.Value
 				case ir.Declare:
 					if _, ok := statement.Value.(ir.Await); ok {
+						// Fulfillment was bound by the resume entry above.
+						if instruction.Part == 1 {
+							continue
+						}
 						waiting = e.value(instruction.Expression)
 					} else {
 						e.statementAt(instruction.At)
 					}
 				case ir.Evaluate:
 					if _, ok := statement.Value.(ir.Await); ok {
+						// Fulfillment was bound by the resume entry above.
+						if instruction.Part == 1 {
+							continue
+						}
 						waiting = e.value(instruction.Expression)
 					} else {
 						e.statementAt(instruction.At)
@@ -150,7 +160,7 @@ func (e *emitter) asyncFunction(index int) string {
 		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
 	}
 	for position, local := range cells {
-		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference())
+		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference() || e.program.Locals[local].IterationCell)
 	}
 	for position, local := range function.Parameters {
 		value := e.localName(local)

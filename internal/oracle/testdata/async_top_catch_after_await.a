@@ -1,0 +1,10 @@
+// The same top-level catch, for an async function that throws after its own await.
+async function fail(): Promise<number> {
+    await Promise.resolve();
+    throw new Error("refused2");
+}
+try {
+    await fail();
+} catch (error) {
+    console.log(error instanceof Error ? error.message : "not");
+}

@@ -1,0 +1,12 @@
+import type { Edit } from './edit.a';
+export class Suggestion {
+    readonly recordKind = 'suggestion';
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    constructor(id: string, message: string, edits: readonly Edit[]) {
+        this.id = id;
+        this.message = message;
+        this.edits = edits;
+    }
+}

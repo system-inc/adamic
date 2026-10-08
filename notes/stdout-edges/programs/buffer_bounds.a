@@ -1,0 +1,9 @@
+// Lines whose byte length sits on either side of the 64 KiB stdout buffer, and the
+// same sizes on stderr, which is not buffered. 65536 is the buffer's exact size.
+console.log('a'.repeat(65535));
+console.error('b'.repeat(65535));
+console.log('c'.repeat(65536));
+console.error('d'.repeat(65536));
+console.log('e'.repeat(65537));
+console.error('f'.repeat(65537));
+console.log('tail');

@@ -1,0 +1,34 @@
+package native
+
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "testing"
+ "time"
+)
+func TestMeasureOutlinedBuild(t *testing.T) {
+ directory:=os.Getenv("OUTLINE_MEASURE")
+ originalPath:=os.Getenv("PATH")
+ type measurement struct { Round int; Source,Mode string; Seconds float64; RuntimeSeconds float64 }
+ var measurements []measurement
+ for round:=0;round<3;round++ {
+  sources:=[]string{"before","after"};if round==1 { sources=[]string{"after","before"} }
+  for _,mode:=range []string{"sanitized","release","line-tables"} {
+   wrapper:="full";if mode=="line-tables" { wrapper="line" }
+   t.Setenv("PATH",filepath.Join(directory,wrapper)+string(os.PathListSeparator)+originalPath)
+   options:=Options{Sanitize:mode!="release",Split:true,Jobs:5}
+   start:=time.Now();if _,err:=RuntimeLibrary("",options);err!=nil { t.Fatal(err) };warm:=time.Since(start).Seconds()
+   for _,source:=range sources {
+    code,err:=os.ReadFile(filepath.Join(directory,source+".c"));if err!=nil { t.Fatal(err) }
+    label:=fmt.Sprintf("%d-%s-%s",round,source,mode)
+    t.Setenv("OUTLINE_TRACE",filepath.Join(directory,label))
+    start:=time.Now();if err:=Build(string(code),filepath.Join(directory,label+".bin"),options);err!=nil { t.Fatal(err) }
+    measurements=append(measurements,measurement{round,source,mode,time.Since(start).Seconds(),warm})
+    encoded,_:=json.MarshalIndent(measurements,"","  ");if err:=os.WriteFile(filepath.Join(directory,"builds.json"),encoded,0644);err!=nil { t.Fatal(err) }
+    t.Logf("%s %.6fs",label,measurements[len(measurements)-1].Seconds)
+   }
+  }
+ }
+}

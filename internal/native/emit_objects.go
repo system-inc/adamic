@@ -175,7 +175,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.adoptGraphObject(object, literal)
 	}
 	if literal.Class != 0 {
-		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		e.line("%s->class = &%s;", object, e.className(literal.Class))
 	}
 	for index, field := range literal.Fields {
 		value := values[index]
@@ -200,7 +200,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 func (e *emitter) shape(fields []ir.Field) string {
 	names, types := []string{}, []ir.Type{}
 	for _, field := range fields {
-		names = append(names, field.Name)
+		names = append(names, e.printedFieldName(field))
 		types = append(types, field.Value.Type())
 	}
 	return e.shapeOf(names, types)
@@ -214,7 +214,7 @@ func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
 	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {
-		names = append(names, field.Name)
+		names = append(names, e.printedFieldName(field))
 		types = append(types, field.Value.Type())
 	}
 	return e.shapeWith(names, types, literal.Methods)
@@ -236,7 +236,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
 	for _, method := range methods {
-		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
+		key += fmt.Sprintf("|%s=%s", method.Name, e.functionName(method.Function))
 	}
 	if e.shapes == nil {
 		e.shapes = map[string]string{}
@@ -244,7 +244,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	if name, isDeclared := e.shapes[key]; isDeclared {
 		return name
 	}
-	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
+	name := stableName("adamic_shape", "layout", key)
 	e.shapes[key] = name
 	table := "NULL"
 	methodNames, thunks := []string{}, []string{}
@@ -293,14 +293,14 @@ func (e *emitter) dispatchable(function int) bool {
 // are its caller's, so one the method takes over (reuse.go) is given a count of its own first; and
 // its result, a reference, comes back owned, as a closure's does.
 func (e *emitter) methodThunk(function int) string {
-	name := fmt.Sprintf("adamic_method_%d", function)
-	if e.thunks[function] {
+	name := stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))
+	if e.thunks[name] {
 		return name
 	}
 	if e.thunks == nil {
-		e.thunks = map[int]bool{}
+		e.thunks = map[string]bool{}
 	}
-	e.thunks[function] = true
+	e.thunks[name] = true
 	method := e.program.Functions[function]
 	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
 	values := []string{}
@@ -331,8 +331,24 @@ func (e *emitter) methodThunk(function int) string {
 
 // cache declares a field cache for one place in the program that finds a field.
 func (e *emitter) cache() string {
-	e.temporaries++
-	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
-	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
+	e.caches++
+	owner := "main"
+	if e.mainModule != "" {
+		owner = e.mainModule
+	}
+	if e.function != nil {
+		owner = e.functionName(e.functionIndex)
+		if e.inRegion {
+			owner = e.regionFunctionName(e.functionIndex)
+		}
+	}
+	name := stableName("adamic_cache", "slot", owner) + fmt.Sprintf("_%d", e.caches)
+	if e.generatedDeclarations == nil {
+		e.generatedDeclarations = map[string]bool{}
+	}
+	if !e.generatedDeclarations[name] {
+		e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
+		e.generatedDeclarations[name] = true
+	}
 	return name
 }

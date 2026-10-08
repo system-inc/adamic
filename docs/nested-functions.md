@@ -306,3 +306,11 @@ The complete post-change stage1 gate remains uncovered. No escape proof, stack o
 region placement, count elision, whole tsc native compilation, or performance
 claim is included. The census's syntax counter is unchanged; seven-file structural
 clearance is the limited supplementary measurement, not successful compiler runs.
+
+## Follow-on environment placement
+
+The conservative escape proof, stack and call-region placement, shared cleanup,
+allocation and peak-memory measurements, mutants and exact gate results are
+recorded in [Closure environment placement](environment-placement.md). The
+implementation preserves this document's single AllocateEnvironment site and
+stable slot layout. The earlier heap-only measurements above describe the base.

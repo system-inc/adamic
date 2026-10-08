@@ -80,23 +80,29 @@ void adamic_release_slow(void *value);
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates. A graph
 // member's header bit sends it the same way, to count on its region; an environment's interior cell
-// has count zero, so it too reaches the slow path, which counts its environment.
-static inline void *adamic_retain(void *value) {
+// has count zero, so it too reaches the slow path, which counts its environment. Other zero-count
+// values are immortal and need no work. Keep these small wrappers inline: a larger slow helper must
+// not make ThinLTO outline the ordinary path or hide a constant's zero count from its caller.
+__attribute__((always_inline)) static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return value; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+		if (heap->kind != adamic_kind_cell) { return value; }
 	}
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+__attribute__((always_inline)) static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
+		if (count == 0 && heap->kind != adamic_kind_cell) { return; }
 	}
 	adamic_release_slow(value);
 }
@@ -148,9 +154,11 @@ typedef struct adamic_cell {
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
-	adamic_cell cells[];
+	adamic_cell *cells;
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_init(adamic_environment *, adamic_cell *, size_t);
+void adamic_environment_end(adamic_environment *);
 void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
 void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
@@ -319,6 +327,7 @@ static inline void adamic_region_hold(adamic_region *region, const void *value) 
 	}
 }
 bool adamic_region_contains(const adamic_region *region, const void *value);
+adamic_environment *adamic_environment_new_in(adamic_region *, size_t);
 void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
@@ -389,7 +398,7 @@ typedef struct adamic_array {
 } adamic_array;
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
-// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+// subarray return one owned reference. Arguments are borrowed; fill and sort return borrowed self.
 enum adamic_typed_array_kind {
 	adamic_typed_array_uint8 = 1,
 	adamic_typed_array_int32,
@@ -407,13 +416,71 @@ typedef struct adamic_typed_array {
 
 adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
-adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
 // The check is also called by compiler-inserted write checks. set always checks itself.
 // Panic text is the plain-array form: index <index> is outside an array of length <length>.
 void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
-void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+// set_slow is set for what the inline path leaves: a bad index (it panics) or a value that
+// needs ToUint8, ToUint16 or ToInt32's modulo.
+void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value);
+
+// Element reads and writes are inline, as adamic_array_at is, so a loop over a typed array is a
+// load or a store, not a call. The index test is adamic_array_at's: past the bounds,
+// (double)(size_t)index == index exactly when index is whole, and -0 is index 0.
+static inline adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return (adamic_maybe_number){false, 0};
+	}
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A value already in an integer kind's range stores by plain conversion: C truncates toward zero
+// as ToUint8, ToUint16 and ToInt32 do, and in range the modulo is the identity. NaN, infinities
+// and out-of-range values fail the range test and take set_slow.
+static inline void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
+	if (index >= 0 && index < (double)array->length) {
+		size_t whole = (size_t)index;
+		if ((double)whole == index) {
+			switch (array->kind) {
+			case adamic_typed_array_float64:
+				((double *)array->data)[whole] = value;
+				return;
+			case adamic_typed_array_uint8:
+				if (value > -1.0 && value < 256.0) {
+					((uint8_t *)array->data)[whole] = (uint8_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_uint16:
+				if (value > -1.0 && value < 65536.0) {
+					((uint16_t *)array->data)[whole] = (uint16_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_int32:
+				if (value > -2147483649.0 && value < 2147483648.0) {
+					((int32_t *)array->data)[whole] = (int32_t)value;
+					return;
+				}
+				break;
+			}
+		}
+	}
+	adamic_typed_array_set_slow(array, index, value);
+}
 double adamic_typed_array_length(const adamic_typed_array *array);
 adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+// Numeric ascending, stable for equal values; Float64 orders -0 before +0 and NaN last.
+adamic_typed_array *adamic_typed_array_sort(adamic_typed_array *array);
 void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
 adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
 

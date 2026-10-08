@@ -644,7 +644,7 @@ consumed-rejection harness checks balanced cleanup. Unrelated counts changed
 only row ordering inherited from the nested-functions merge, not numeric values.
 
 Explicit gaps remain: awaits in catch/finally, all async finally completion
-routing, async for-of/switch, captured per-iteration cells, structural-method
+routing, async for-of/switch, structural-method
 operands containing awaits, boolean-or-undefined slots, Promise.all, arbitrary
 executors, thenables and Promise adoption. Host services and source cancellation
 remain separate units. The broad ordinary async surface is implemented, but the
@@ -1332,7 +1332,7 @@ No automated review rejected an action.
 The review against 0b98846 and area/runtime 915b9e05 exposed ownership and
 representation holes outside the earlier controls. They are now held by the
 reader's source programs in `async_refused/async_refuse_frame_capture_cycle.a`,
-`async_refuse_loop_body_capture.a`, `async_refuse_return_thenable.a` and
+`async_loop_body_capture.a`, `async_refuse_return_thenable.a` and
 `async_promise_expression.a`, plus the expression-arrow thenable witness and a
 safe frame-capture control.
 
@@ -1350,11 +1350,17 @@ read slot's preservation restores the ownership cycle: it prints the same Node
 answer, but the common leak check detects 394 leaked bytes in three allocations.
 Removing the frame-owner edge independently makes the reader refusal test fail.
 
-Async loop normalization refuses captured declarations in every repeatedly
-executed test, body and update tree, including nested blocks and catch bindings,
-in addition to Loop.PerIteration. The reader's while-body binding now receives
-`async per-iteration captured cells` as NotYet. While, for and do-loop witnesses
-exercise nested conditional declarations and captured catch parameters.
+Async loop normalization represents captured declarations in repeatedly executed
+bodies, including nested blocks and catch bindings, and for-header bindings as
+separate counted cells. A frame slot owns the current cell; each closure retains
+the cell it captured. Header bindings are copied before the update runs. Body
+bindings allocate fresh cells when their declarations execute. Completion and
+rejection release the frame's current cells, leaving escaped captures alive.
+`async_loop_body_capture.a` and `async_loop_cells.a` compare these identities
+against Node across awaits, mutation, loop exit, frame completion and a throw.
+The shared-cell mutant is caught by the Node output comparison, and the ordinary
+oracle leak checks cover both fixtures. While, for and do-loop lowering witnesses
+also exercise nested conditional declarations and captured catch parameters.
 Expression arrows and ordinary return statements share one async-return
 adoption check. A `then` member on the value's checker type, including any
 union or intersection constituent, produces `return of thenables` as NotYet
@@ -1377,9 +1383,9 @@ regions.
 | async_promise_expression.a | 1 / 1 / 1 / 2 / 1 / 0 | A settled temporary Promise; no async activation |
 | async_frame_capture_safe.a | 14 / 14 / 22 / 39 / 11 / 0 | Ordinary async frames and closures with private closure-slot cleanup |
 
-Assumptions: conservatively refuse frame cycles rather than implement selective
-captured-slot liveness, and refuse all repeatedly executed captured bindings
-rather than allocate per-iteration environments. The Promise/host ABI, native
+That checkpoint conservatively refused frame cycles rather than implementing
+selective captured-slot liveness, and refused repeatedly executed captures.
+The iteration-cell implementation above supersedes the latter refusal. The Promise/host ABI, native
 emission hooks and mutable statics are unchanged. Existing named gaps, including
 non-suspending finally and shared-SSA reconciliation, remain explicit.
 

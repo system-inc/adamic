@@ -153,6 +153,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
 		return l.notYet(declaration, "a function without a body")
 	}
+	if function.Source.Module == "" {
+		function.Source = l.functionSource(declaration)
+	}
 	l.result.Functions[index] = function
 	if l.signed == nil {
 		l.signed = map[int]signed{}

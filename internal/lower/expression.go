@@ -1077,7 +1077,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns}
+	forwarder := ir.Function{Name: callee.Name + "_value", Source: callee.Source, Closure: true, Returns: callee.Returns}
+	forwarder.Source.Role = "value_adapter"
+	forwarder.Source.Declaration = append(append([]string{}, callee.Source.Declaration...), "value_adapter")
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -1099,7 +1101,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	// One function value for the function, made before anything runs and held by a global of its
 	// own, so reading the function twice gives the same value, === as JavaScript's.
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: callee.Name + "_value", Type: ir.Closure, Global: true, Function: -1})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "value_adapter", Source: forwarder.Source, Type: ir.Closure, Global: true, Function: -1})
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
 	if l.forwarders == nil {
 		l.forwarders = map[int]int{}

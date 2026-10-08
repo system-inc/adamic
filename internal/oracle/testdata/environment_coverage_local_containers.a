@@ -1,0 +1,11 @@
+function make(start: number): () => string {
+ const text = 'container' + String(start);
+ function read(): string { return text; }
+ const holder = { read };
+ const values: (() => string)[] = [read];
+ const byName = new Map<string, () => string>(); byName.set('read', read);
+ console.log(holder.read());
+ const first = values[0]; if (first !== undefined) { console.log(first()); }
+ return byName.get('read') ?? read;
+}
+const read = make(4); console.log(read());

@@ -38,13 +38,17 @@ type regionPlan struct {
 	escapes map[int]map[int]bool
 
 	// statements are the statements that get a region.
-	statements   map[*ir.Statement]bool
-	program      *ir.Program
-	classObjects map[int]int
+	statements           map[*ir.Statement]bool
+	program              *ir.Program
+	classObjects         map[int]int
+	environments         map[*ir.Statement]environmentPlacement
+	environmentArguments map[int]map[int]bool
+	asyncLocals          map[int]bool
+	cleanups             map[string]string
 }
 
 func planRegions(program *ir.Program) *regionPlan {
-	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}, environments: map[*ir.Statement]environmentPlacement{}, environmentArguments: map[int]map[int]bool{}, cleanups: map[string]string{}}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {
@@ -65,6 +69,7 @@ func planRegions(program *ir.Program) *regionPlan {
 			}
 		}
 	}
+	plan.planEnvironments()
 	// Fresh: start from every named function returning an object, and take away any that returns
 	// something else, until none changes.
 	for index, function := range program.Functions {
@@ -432,4 +437,266 @@ func (plan *regionPlan) writesReferences(body []ir.Statement) bool {
 	}
 	statements(body)
 	return writes
+}
+
+// Environment placement is one decision for the explicit entry allocation, never
+// a decision for an individual slot. Unknown operations keep the counted heap.
+type environmentPlacement uint8
+
+const (
+	environmentHeap environmentPlacement = iota
+	environmentStack
+	environmentRegion
+)
+
+// Keep at most 64 slots on the stack (about 2.6 KB on amd64). Larger fixed
+// layouts use a region owned by this call. The IR has no variable layouts yet.
+const stackEnvironmentSlots = 64
+
+func (plan *regionPlan) planEnvironments() {
+	plan.asyncLocals = map[int]bool{}
+	for local, binding := range plan.program.Locals {
+		if !binding.Global && binding.Function >= 0 && binding.Function < len(plan.program.Functions) && plan.program.Functions[binding.Function].Async {
+			plan.asyncLocals[local] = true
+		}
+	}
+	for index, function := range plan.program.Functions {
+		plan.environmentArguments[index] = map[int]bool{}
+		for position, parameter := range function.Parameters {
+			// Captured parameters can be forwarded through a closure not visible at
+			// this call site. They remain conservative even if the closure is local.
+			plan.environmentArguments[index][position] = function.Async || plan.program.Locals[parameter].Captured
+		}
+	}
+	for changed := true; changed; {
+		changed = false
+		for index, function := range plan.program.Functions {
+			for position, parameter := range function.Parameters {
+				if !plan.environmentArguments[index][position] && plan.environmentEscapes(nil, map[int]bool{parameter: true}, [][]ir.Statement{function.Body}) {
+					plan.environmentArguments[index][position] = true
+					changed = true
+				}
+			}
+		}
+	}
+	bodies := [][]ir.Statement{plan.program.Main}
+	for _, function := range plan.program.Functions {
+		bodies = append(bodies, function.Body)
+	}
+	for _, function := range plan.program.Functions {
+		// Suspended cells are owned by the counted async frame.
+		if function.Async {
+			continue
+		}
+		for index := range function.Body {
+			site := &function.Body[index]
+			allocation, ok := (*site).(ir.AllocateEnvironment)
+			if !ok {
+				continue
+			}
+			cells := map[int]bool{}
+			graph := false
+			for _, local := range allocation.Cells {
+				cells[local] = true
+				graph = graph || plan.program.Locals[local].GraphCell
+			}
+			if graph || plan.environmentEscapes(cells, map[int]bool{}, bodies) {
+				continue
+			}
+			placement := environmentStack
+			if len(allocation.Cells) > stackEnvironmentSlots {
+				placement = environmentRegion
+			}
+			plan.environments[site] = placement
+		}
+	}
+}
+
+func (plan *regionPlan) environmentCallEscapes(targets ir.FunctionTargets, position int) bool {
+	if targets.Unknown || len(targets.Functions) == 0 {
+		return true
+	}
+	for _, target := range targets.Functions {
+		escapes, known := plan.environmentArguments[target][position]
+		if !known || escapes {
+			return true
+		}
+	}
+	return false
+}
+
+// This monotone taint proof follows closure values through aliases and captures.
+// Cells identify the storage being proved; reading a slot's value does not itself
+// expose that storage. Making a closure retaining the slot does. We scan all
+// bodies because a forwarded ancestor slot can escape from a nested helper.
+// Stores into containers are deliberately escapes even for local containers.
+func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [][]ir.Statement) bool {
+	escaped, changed := false, true
+	var derived func(ir.Expression) bool
+	derived = func(value ir.Expression) bool {
+		switch value := value.(type) {
+		case nil:
+			return false
+		case ir.Read:
+			return aliases[value.Local]
+		case ir.ClosureSelf:
+			// A named function expression can return or store its current carrier.
+			// No caller-specific self identity is represented in this proof.
+			return len(cells) != 0
+		case ir.MakeClosure:
+			for _, local := range plan.program.Functions[value.Function].Environment {
+				if cells[local] || aliases[local] {
+					return true
+				}
+			}
+			return false
+		case ir.Call:
+			for position, argument := range value.Arguments {
+				if derived(argument) && plan.environmentCallEscapes(ir.FunctionTargets{Functions: plan.program.CallTargets(value)}, position) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.CallClosure:
+			// Visit the callee for evaluation effects without inspecting its target
+			// field. Calling a carrier synchronously does not retain the carrier.
+			eachOperand(value, func(operand ir.Expression) { derived(operand) })
+			targets := plan.program.ClosureTargets(value)
+			// An async callee retains self in its frame. Unknown void calls can
+			// also be async: a promise-returning function may be used as void.
+			if derived(value.Closure) && plan.environmentCalleeEscapes(targets, value.Returns) {
+				escaped = true
+			}
+			for position, argument := range value.Arguments {
+				if derived(argument) && plan.environmentCallEscapes(targets, position) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.ArrayMap, ir.ArrayVisit, ir.ArraySort, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+			targets := plan.program.ClosureTargets(value)
+			// These runtime loops borrow the callback for the duration of the
+			// operation. Their implementation never keeps it. Other operands may
+			// be handed to user code or retained by the result, so keep them out.
+			var callback ir.Expression
+			operands := []ir.Expression{}
+			switch call := value.(type) {
+			case ir.ArrayMap:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArrayVisit:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArraySort:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArrayReduce:
+				callback = call.Callback
+				operands = append(operands, call.Array, call.Initial)
+			case ir.ArrayFrom:
+				callback = call.Callback
+				operands = append(operands, call.Length)
+			case ir.MapForEach:
+				callback = call.Callback
+				operands = append(operands, call.Map)
+			}
+			if derived(callback) && plan.environmentCalleeEscapes(targets, 0) {
+				escaped = true
+			}
+			for _, operand := range operands {
+				if derived(operand) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.Defined:
+			return derived(value.Value)
+		case ir.Narrow:
+			return derived(value.Value)
+		case ir.Unwrap:
+			return derived(value.Value)
+		case ir.Box:
+			return derived(value.Value)
+		case ir.MaybeOf:
+			return derived(value.Value)
+		case ir.Conditional:
+			derived(value.Condition)
+			left, right := derived(value.WhenTrue), derived(value.WhenNot)
+			return left || right
+		case ir.Coalesce:
+			derived(value.Panic)
+			left, right := derived(value.Value), derived(value.Fallback)
+			return left || right
+		}
+		operands := false
+		eachOperand(value, func(operand ir.Expression) {
+			if derived(operand) {
+				operands = true
+			}
+		})
+		if operands && !consumes(value) {
+			escaped = true
+		}
+		// A consumer returns a primitive independent of its operands. Other
+		// reference results may still carry the taint (property/element reads).
+		return operands && value.Type().IsReference()
+	}
+	var statements func([]ir.Statement)
+	statements = func(body []ir.Statement) {
+		for _, statement := range body {
+			switch statement := statement.(type) {
+			case ir.Declare:
+				if derived(statement.Value) {
+					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+						escaped = true
+					}
+					if !aliases[statement.Local] {
+						aliases[statement.Local] = true
+						changed = true
+					}
+				}
+			case ir.Assign:
+				if derived(statement.Value) {
+					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+						escaped = true
+					}
+					if !aliases[statement.Local] {
+						aliases[statement.Local] = true
+						changed = true
+					}
+				}
+			case ir.Evaluate:
+				derived(statement.Value)
+			case ir.AllocateEnvironment:
+			default:
+				eachOperandOfStatement(statement, func(value ir.Expression) {
+					if derived(value) {
+						escaped = true
+					}
+				})
+			}
+			walkStatement(statement, func(ir.Expression) {}, statements)
+		}
+	}
+	for changed && !escaped {
+		changed = false
+		for _, body := range bodies {
+			statements(body)
+		}
+	}
+	return escaped
+}
+
+// Async entry keeps its carrier after the call returns. Unknown calls with a
+// non-void result outside Promise and Union cannot use the async ABI.
+func (plan *regionPlan) environmentCalleeEscapes(targets ir.FunctionTargets, returns ir.Type) bool {
+	if (targets.Unknown || len(targets.Functions) == 0) && (returns == 0 || returns == ir.Promise || returns == ir.Union) {
+		return true
+	}
+	for _, target := range targets.Functions {
+		if plan.program.Functions[target].Async {
+			return true
+		}
+	}
+	return false
 }

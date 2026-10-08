@@ -12,7 +12,7 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
-	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
+	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray, ir.TypedArraySort:
 		return e.typedArrayValue(expression)
 	case ir.PromiseValue:
 		return e.promiseValue(expression)
@@ -22,7 +22,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}
-		return e.own(ir.Object, fmt.Sprintf("adamic_regex_new(&adamic_regex_%d, &adamic_string_%d, &adamic_string_%d)", expression.Index, expression.Source, expression.Flags))
+		return e.own(ir.Object, fmt.Sprintf("adamic_regex_new(&%s, &%s, &%s)", e.regexName(expression.Index), stringName(e.program.Strings[expression.Source]), stringName(e.program.Strings[expression.Flags])))
 	case ir.RegExpCall:
 		return e.regexCall(expression)
 	case ir.RegExpGroup:
@@ -44,7 +44,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
-		return fmt.Sprintf("&adamic_string_%d", expression.Index)
+		return "&" + stringName(e.program.Strings[expression.Index])
 	case ir.Read:
 		return e.read(expression)
 	case ir.Unary:
@@ -100,9 +100,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.snapshot(ir.Boolean, "false")
 		}
 		if expression.Exact {
-			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &%s)", value, value, e.className(expression.Class)))
 		}
-		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &%s)", value, e.className(expression.Class)))
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
 	case ir.BooleanToString:
@@ -544,6 +544,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if array, ok := e.constantRecords(expression); ok {
+			return array
+		}
+		if array, ok := e.constantArray(expression); ok {
+			return array
+		}
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread
 		}

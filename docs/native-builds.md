@@ -51,6 +51,20 @@ with existing count/slab/CPU options in their existing order.
 TestNonShippingFlagsStayIdentical compares argument bytes and order
 against independent literals from before ThinLTO.
 
+Sanitized and counted native builds split generated C into stable owned units
+by default, and compile a cold runtime archive in parallel too. Options.Jobs
+selects the job limit, followed by ADAMIC_NATIVE_JOBS; zero or an unset value
+uses the machine CPU count. Each build bounds its workers by its unit count.
+ADAMIC_NATIVE_SPLIT=0 selects the previous single-unit path for comparisons;
+Options.Split or ADAMIC_NATIVE_SPLIT=1 explicitly selects splitting for other
+nonshipping native builds. The same policy applies with the TSGo checker.
+Shipped release builds always keep their single-unit ThinLTO/profile path,
+even under an explicit split request. WASI keeps its previous build policy.
+Scheduling does not change runtime archive order, compiler flags or cache keys.
+Handwritten C runtime harnesses keep their previous single-unit path; automatic
+splitting recognizes emitter output, including TSGoC output. Explicit split
+requests still invoke the emitter-declaration splitter and reject unknown syntax.
+
 ## Shipped release oracle
 
 The additional lane is opt-in and skipped in ordinary test runs:
@@ -59,7 +73,7 @@ The additional lane is opt-in and skipped in ordinary test runs:
 source /workspace/adamic-tools/env.sh
 ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1 \
   go test -count=1 -timeout 30m ./internal/oracle \
-  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte)$' \
+  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte|Stage1ProfilesAgree)$' \
   > /tmp/adamic-release-oracle.log 2>&1
 ~~~
 
@@ -79,3 +93,68 @@ machine-code archive. The cached archive saves runtime frontends; ThinLTO
 backend work is still paid at each program link. Linker-only options stay out
 of runtime clang -c. Developer-tool translation-unit splits must use the same
 Flags/LinkFlags policy and include that policy and toolchain in object keys.
+
+## Stage 1 executable profiles
+
+Only `go run ./cmd/adamic-stage1 -driver parse|lint -o <binary>` selects a
+committed profile. Ordinary `adamic build` keeps plain ThinLTO. The source
+paths are stage1/cohere/parse/parse.a and stage1/cohere/lint/main.ts.
+Profiles and their manifests live beside each driver in profiles/<os>-<arch>/.
+The committed format is LLVM's text format. The build converts it with the
+local llvm-profdata into a hash-addressed indexed copy in the user cache.
+Every runtime object and the link use that same immutable copy. Its content
+identity participates in runtime.a's existing flag-based cache key.
+
+Manifest version 2 records the name and SHA256 of every emitted C unit,
+every embedded runtime C/header (names and bytes), the text profile, the clang
+executable's SHA256 and full version, the target, and the complete compile/link
+flag lists for both training and use. Local indexed-profile paths are replaced
+by the text profile's content identity. The current Build API consumes exactly
+one emitted unit, main.c; all 48 runtime units and 18 headers are separately
+bound by the runtime snapshot. A future translation-unit split must extend this
+API and enumerate every emitted unit before it can use a profile. A missing or changed
+input produces one line saying the build uses plain ThinLTO. The stale
+profile never reaches clang. Version 1 manifests also fall back. The check uses bytes, never modification times.
+The stage 1 entrypoint also checks the recorded training-list hash against
+the committed list. A changed list falls back before any profile flag is set.
+A different Apple clang or target regenerates its own profile; this does not
+silently reuse a Linux profile. Unsupported text conversion also falls back.
+
+Regenerate both drivers from the committed training list:
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage1/profiles/regenerate.py --typescript <pinned TypeScript checkout> \
+  --work <scratch directory> --llvm-profdata <matching llvm-profdata>
+```
+
+The script builds instrumented release binaries with the same semantic flags,
+runs only the fixed training corpus, merges to text, writes manifests and
+builds the profile outputs. stage1/profiles/training.json names paths/hashes
+outside the entire 77-file compiler benchmark set in benchmarks.json. Both
+regeneration and TestTrainingNeverIncludesBenchmarks reject path or content
+hash overlap. Every added speed corpus must be registered there first.
+
+The opt-in release oracle now includes the actual shipping stage 1 artifacts.
+Set ADAMIC_TYPESCRIPT_SOURCE to that pinned checkout and
+ADAMIC_STAGE1_PARSE_BINARY / ADAMIC_STAGE1_LINT_BINARY to the regenerated
+parse-profile / lint-profile paths when running the release oracle command
+above. It compares those exact binaries to Go and Node and rebuilds them to
+check binary determinism across independent cold native/profile caches. It is an error to enable that lane without its
+shipping binaries. Ordinary tests keep their flags and skip this extra lane.
+
+TestStage1ProfileStalenessAndDeterminism audits the actual source argument on
+every profile compile/link, requiring stable relative names matching the bound
+units. Restoring an absolute temporary main.c path must fail that audit even
+when its binary happens to match. It checks each binding mismatch clears the
+profile flag and produces one fallback line, including changed build options.
+TestRuntimeFingerprintCoversEveryFile changes one real byte and name in each
+runtime input and requires a different fingerprint. The compiling overlay
+mutants are reproducible with:
+
+```
+python3 internal/native/testdata/run-stage1-profile-mutants.py --work <scratch directory>
+```
+
+Apple profiles will be regenerated by the user with the same script and checks;
+this Linux unit does not access Kirk's Mac.

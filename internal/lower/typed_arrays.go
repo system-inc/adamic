@@ -185,6 +185,10 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		method := callee.Name().Text()
 		args := call.Arguments.Nodes
 		switch method {
+		case "sort":
+			if len(args) != 0 {
+				return nil, true, l.notYet(node, "typed array sort with a comparator")
+			}
 		case "fill":
 			if len(args) < 1 || len(args) > 3 {
 				return nil, true, l.notYet(node, "typed array fill argument count")
@@ -228,6 +232,8 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			lowered = append(lowered, value)
 		}
 		switch method {
+		case "sort":
+			return ir.TypedArraySort{Array: array}, true, nil
 		case "fill":
 			return ir.TypedArrayFill{Array: array, Arguments: lowered}, true, nil
 		case "set":

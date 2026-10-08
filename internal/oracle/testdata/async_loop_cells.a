@@ -1,0 +1,42 @@
+function printReaders(readers: (() => number)[]): void {
+    for (const read of readers) console.log(`${read()}`);
+}
+async function run(): Promise<void> {
+    const readers: (() => number)[] = [];
+    for (let i = 0; i < 3; i++) {
+        readers.push(() => i);
+        await Promise.resolve();
+    }
+    printReaders(readers);
+    let escaped = () => -1;
+    for (let i = 0; i < 3; i++) {
+        let held = i;
+        escaped = () => held;
+        held += 10;
+        await Promise.resolve();
+        console.log(`${escaped()}`);
+    }
+    console.log(`${escaped()}`);
+    const throwing: (() => number)[] = [];
+    try {
+        for (let i = 0; i < 3; i++) {
+            throwing.push(() => i);
+            await Promise.resolve();
+            if (i === 1) throw new Error(`iteration${i}`);
+        }
+    } catch (error) {
+        if (error instanceof Error) console.log(error.message);
+    }
+    printReaders(throwing);
+}
+await run();
+async function escapedReader(): Promise<() => number> {
+    let read = () => -1;
+    for (let i = 0; i < 3; i++) {
+        read = () => i;
+        await Promise.resolve();
+    }
+    return read;
+}
+const read = await escapedReader();
+console.log(`${read()}`);

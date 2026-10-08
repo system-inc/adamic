@@ -37,6 +37,21 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/environment_coverage_returned_values.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_collections.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_initializer_throw.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_bounded_call.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callback_exits.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_alias_join.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_boundary64.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callback_result.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callbacks_extra.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_captured_parameter.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_closure_self.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_local_containers.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_primitives.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_region_values.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_values_exits.a", true, false},
 	{"internal/oracle/testdata/release_fma.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},
@@ -105,11 +120,18 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
-	{"internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a", false, false},
+	{"internal/oracle/testdata/async_loop_body_capture.a", true, false},
+	{"internal/oracle/testdata/async_loop_cells.a", true, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", false, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a", false, false},
 	{"internal/oracle/testdata/async_promise_expression.a", true, false},
 	{"internal/oracle/testdata/async_frame_capture_safe.a", true, false},
+	{"internal/oracle/testdata/async_for_of_body.a", true, false},
+	{"internal/oracle/testdata/async_for_of_capture.a", true, false},
+	{"internal/oracle/testdata/async_for_of_return.a", true, false},
+	{"internal/oracle/testdata/async_switch_body.a", true, false},
+	{"internal/oracle/testdata/async_for_of_mutation.a", true, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_for_of_string.a", false, false},
 	{"internal/oracle/testdata/async_plain.a", true, false},
 	{"internal/oracle/testdata/async_coverage_unions.a", true, false},
 	{"internal/oracle/testdata/async_coverage_reject_empty.a", true, false},
@@ -136,6 +158,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_mutation.a", true, false},
 	{"internal/oracle/testdata/async_catch_return.a", true, false},
 	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_binding.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_after_await.a", true, false},
+	{"internal/oracle/testdata/async_top_loop.a", true, false},
 
 	{"internal/oracle/testdata/graph_regions_weak_mixed.a", true, false},
 	{"internal/oracle/testdata/graph_regions_structural_literal.a", true, false},
@@ -563,6 +588,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// A move handed to a call whose later argument throws (reuse.go, handOver).
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// Fresh values handed to a call whose later argument throws.
+	{"internal/oracle/testdata/reuse_handover_fresh.a", true, false},
+	// Reuse across every string and object slab size.
+	{"internal/oracle/testdata/slab_sizes.a", true, false},
 	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
 	{"internal/oracle/testdata/aside_throw.a", true, false},
 	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
@@ -769,7 +798,8 @@ func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	// What ships: adamic build's options (ThinLTO), as TestReleaseBuildConfigurationAgrees holds.
+	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
 		t.Fatal(err)
 	}
 	return execute(t, binary)

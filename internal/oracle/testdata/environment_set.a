@@ -1,0 +1,8 @@
+function fill(values: Set<() => string>, start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ values.add(read);
+}
+const values = new Set<() => string>();
+fill(values, 3);
+for (const read of values) { console.log(read()); }

@@ -1,0 +1,598 @@
+ok  	github.com/system-inc/adamic/stage1/cohere/css	706.506s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	75.105s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	21.914s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	39.243s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	40.037s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	48.159s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	843.248s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1182.477s
+--- FAIL: TestMarkdownUnicodeWidths (5.28s)
+    width_test.go:78: original dependencies exit 1 stderr node:internal/modules/esm/resolve:271
+            throw new ERR_MODULE_NOT_FOUND(
+                  ^
+        
+        Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/adamic-markdown-width/node_modules/emoji-regex/index.js' imported from /workspace/adamic/stage1/cohere/markdownblocks/testdata/width_library.mjs
+            at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+            at moduleResolve (node:internal/modules/esm/resolve:865:10)
+            at defaultResolve (node:internal/modules/esm/resolve:992:11)
+            at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+            at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+            at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+            at #resolve (node:internal/modules/esm/loader:683:17)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+            at node:internal/modules/esm/loader:632:32
+            at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+          code: 'ERR_MODULE_NOT_FOUND',
+          url: 'file:///tmp/adamic-markdown-width/node_modules/emoji-regex/index.js'
+        }
+        
+        Node.js v24.19.0
+panic: test timed out after 30m0s
+	running tests:
+		TestMarkdownCodeBlockLayout (5m27s)
+		TestMarkdownHTMLBlockLayout (5m28s)
+		TestMarkdownHTMLBlockLayout/HTML_root_trim (40s)
+		TestMarkdownQuoteLayout (5m28s)
+		TestMarkdownStructureLayout (5m28s)
+		TestMarkdownStructureLayout/heading_depth (40s)
+		TestWholeDocumentOraclePreflight (5m28s)
+
+goroutine 380 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 5 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x88572ce2b48, 0x88572cedb68)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xb381d4, 0x1c}, {0xb5b644, 0x39}, 0x88572b86540, {0x1accf38, 0x14, 0x14}, {0xc2a9ab17ae6023c1, 0x1a31873f332, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x88572c277c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMain(0x88572c277c0)
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:50 +0x65
+main.main()
+	_testmain.go:86 +0xa5
+
+goroutine 417 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696600, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x88599391020?, 0x88598f3a200?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x88599391020, {0x88598f3a200, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x885776c7968, {0x88598f3a200?, 0x0?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x885998f2810, {0x1a34e00, 0x885776c7968})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x885998f2810}, {0x1a34e00, 0x885776c7968}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x885776c7968?, {0x1a34f20?, 0x885998f2810?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x885776c7968, {0x1a34f20, 0x885998f2810})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x885998f2810}, {0x1a34e80, 0x885776c7968}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 388
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 434 [select]:
+os/exec.(*Cmd).watchCtx(0x88579b4bd40, 0x8859b6cf110)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:808 +0xb0
+created by os/exec.(*Cmd).Start in goroutine 388
+	/workspace/adamic-tools/go/src/os/exec/exec.go:794 +0x8f3
+
+goroutine 379 [select]:
+os/exec.(*Cmd).watchCtx(0x88577721040, 0x8859d84e540)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:808 +0xb0
+created by os/exec.(*Cmd).Start in goroutine 60
+	/workspace/adamic-tools/go/src/os/exec/exec.go:794 +0x8f3
+
+goroutine 60 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x10, 0x88572fab230, 0x4, 0x8859d808240, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x88572fab25e?, 0x88572fab388?, 0x559d0b?, 0x18?, 0x19e7498?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x88579935200)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x7f44068db108?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x88577721040)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x88577721040)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.execute(0x88572ce2248, {0x0, 0x0, 0x8859cced100?}, {0xb19de4, 0x4}, {0x8857d798050, 0x5, 0x5})
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:168 +0x22c
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestWholeDocumentOraclePreflight(0x88572ce2248)
+	/workspace/adamic/stage1/cohere/markdownblocks/audit_test.go:299 +0x2518
+testing.tRunner(0x88572ce2248, 0x1a42ff0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 414 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696800, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x88599390e40?, 0x8859a9d6c00?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x88599390e40, {0x8859a9d6c00, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x885776c7910, {0x8859a9d6c00?, 0x88577a33d38?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x885998f2750, {0x1a34e00, 0x885776c7910})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x885998f2750}, {0x1a34e00, 0x885776c7910}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x885776c7910?, {0x1a34f20?, 0x885998f2750?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x885776c7910, {0x1a34f20, 0x885998f2750})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x885998f2750}, {0x1a34e80, 0x885776c7910}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x88593d9e930?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 407
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 415 [select]:
+os/exec.(*Cmd).watchCtx(0x88579b4bba0, 0x8859b6cf030)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:808 +0xb0
+created by os/exec.(*Cmd).Start in goroutine 407
+	/workspace/adamic-tools/go/src/os/exec/exec.go:794 +0x8f3
+
+goroutine 224 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x88572ce3208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestFrontMatterStage(0x88572ce3208)
+	/workspace/adamic/stage1/cohere/markdownblocks/frontmatter_test.go:17 +0x2a
+testing.tRunner(0x88572ce3208, 0x1a42f58)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 225 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x88572ce3448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestParserRepresentationProbes(0x88572ce3448)
+	/workspace/adamic/stage1/cohere/markdownblocks/gaps_test.go:15 +0x2a
+testing.tRunner(0x88572ce3448, 0x1a42fe8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 258 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x88572ce3688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownListLayout(0x88572ce3688)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:18 +0x18
+testing.tRunner(0x88572ce3688, 0x1a42f80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 259 [chan send]:
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout(0x88572ce38c8, {0xb1c67f, 0x6})
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:265 +0x65
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownQuoteLayout(0x88572ce38c8)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:24 +0x2e
+testing.tRunner(0x88572ce38c8, 0x1a42f90)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 260 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x88572ce3b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownTableLayout(0x88572ce3b08)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:28 +0x18
+testing.tRunner(0x88572ce3b08, 0x1a42fb0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 261 [chan send]:
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout(0x88572ce3d48, {0xb19e3c, 0x4})
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:265 +0x65
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownCodeBlockLayout(0x88572ce3d48)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:34 +0x2e
+testing.tRunner(0x88572ce3d48, 0x1a42f68)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 262 [chan receive]:
+testing.(*T).Run(0x8857eb48008, {0xb24b57?, 0x7?}, 0x88572c2c0b0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout(0x8857eb48008, {0xb19e40, 0x4})
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:346 +0xea6
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownHTMLBlockLayout(0x8857eb48008)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:39 +0x2e
+testing.tRunner(0x8857eb48008, 0x1a42f70)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 263 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x8857eb48248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownWhitespaceLayout(0x8857eb48248)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:66 +0x18
+testing.tRunner(0x8857eb48248, 0x1a42fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 264 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x8857eb48488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownLeafComposition(0x8857eb48488)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:71 +0x18
+testing.tRunner(0x8857eb48488, 0x1a42f78)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 265 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x8857eb486c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownRootLayout(0x8857eb486c8)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:76 +0x18
+testing.tRunner(0x8857eb486c8, 0x1a42f98)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 266 [chan receive]:
+testing.(*T).Run(0x8857eb48908, {0xb237bd?, 0x5d?}, 0x88579566210)
+	/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout(0x8857eb48908, {0xb204d6, 0x9})
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:346 +0xea6
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownStructureLayout(0x8857eb48908)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:82 +0x2e
+testing.tRunner(0x8857eb48908, 0x1a42fa8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 161 [chan receive, 5 minutes]:
+testing.(*testState).waitParallel(0x88572c74640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x88577c92008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMarkdownParserPrefixes(0x88577c92008)
+	/workspace/adamic/stage1/cohere/markdownblocks/prefix_test.go:16 +0x2a
+testing.tRunner(0x88577c92008, 0x1a42f88)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 416 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696400, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x88599390f60?, 0x885b2b5bf13?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x88599390f60, {0x885b2b5bf13, 0x1300ed, 0x1300ed})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x885776c7950, {0x885b2b5bf13?, 0x0?, 0x200000?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x885998f27e0, {0x1a34e00, 0x885776c7950})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x885998f27e0}, {0x1a34e00, 0x885776c7950}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x885776c7950?, {0x1a34f20?, 0x885998f27e0?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x885776c7950, {0x1a34f20, 0x885998f27e0})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x885998f27e0}, {0x1a34e80, 0x885776c7950}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 388
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 378 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696000, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x8859019da40?, 0x8859906b600?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x8859019da40, {0x8859906b600, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x88573119240, {0x8859906b600?, 0x88572bded38?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x88598edb740, {0x1a34e00, 0x88573119240})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x88598edb740}, {0x1a34e00, 0x88573119240}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x88573119240?, {0x1a34f20?, 0x88598edb740?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x88573119240, {0x1a34f20, 0x88598edb740})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x88598edb740}, {0x1a34e80, 0x88573119240}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x88575aab880?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 60
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 407 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x11, 0x885943674c8, 0x4, 0x8859acb1c20, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x885943674f6?, 0x88594367620?, 0x559d0b?, 0x18?, 0x19e7498?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x8857a27a3c0)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x7f44068dd4e8?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x88579b4bba0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x88579b4bba0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.execute(0x8857eb48b48, {0x88594367930, 0x1, 0x88579b20588?}, {0x8858e15c690, 0x4e}, {0x88594367cb0, 0x1, 0x1})
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:168 +0x22c
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.nativeMutant(0x8857eb48b48, 0x885779ea370, {0x88594367cb0, 0x1, 0x1})
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:227 +0x6a5
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout.func2(0x8857eb48b48)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:384 +0xb0d
+testing.tRunner(0x8857eb48b48, 0x88579566210)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 266
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 413 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696e00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x88599390d80?, 0x885b275cd3a?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x88599390d80, {0x885b275cd3a, 0x12f2c6, 0x12f2c6})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x885776c78f8, {0x885b275cd3a?, 0x8857352fd38?, 0x200000?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x885998f2720, {0x1a34e00, 0x885776c78f8})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x885998f2720}, {0x1a34e00, 0x885776c78f8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x885776c78f8?, {0x1a34f20?, 0x885998f2720?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x885776c78f8, {0x1a34f20, 0x885998f2720})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x885998f2720}, {0x1a34e80, 0x885776c78f8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x88572ba64d0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 407
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 388 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x12, 0x885995314c8, 0x4, 0x8859acb1cb0, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x885995314f6?, 0x88599531620?, 0x559d0b?, 0x18?, 0x19e7498?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x8857a27a480)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x7f44068dd4e8?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x88579b4bd40)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x88579b4bd40)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.execute(0x88577c92488, {0x88599531930, 0x1, 0x88578737088?}, {0x88598e5ea00, 0x4f}, {0x88599531cb0, 0x1, 0x1})
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:168 +0x22c
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.nativeMutant(0x88577c92488, 0x8857845a2c0, {0x88599531cb0, 0x1, 0x1})
+	/workspace/adamic/stage1/cohere/markdownblocks/support_test.go:227 +0x6a5
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.testBlockLayout.func2(0x88577c92488)
+	/workspace/adamic/stage1/cohere/markdownblocks/lists_test.go:384 +0xb0d
+testing.tRunner(0x88577c92488, 0x88572c2c0b0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 262
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 377 [IO wait]:
+internal/poll.runtime_pollWait(0x7f4406696c00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x8859019d980?, 0x885a1608b27?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x8859019d980, {0x885a1608b27, 0x254d9, 0x254d9})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x88573119220, {0x885a1608b27?, 0x8857352d538?, 0x40000?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x88598edb710, {0x1a34e00, 0x88573119220})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1a34f20, 0x88598edb710}, {0x1a34e00, 0x88573119220}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x88573119220?, {0x1a34f20?, 0x88598edb710?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x88573119220, {0x1a34f20, 0x88598edb710})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a34f20, 0x88598edb710}, {0x1a34e80, 0x88573119220}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x88578f80a10?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 60
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1800.204s
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width	[no test files]
+ok  	github.com/system-inc/adamic/stage1/cohere/markdowninline	665.328s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	11.731s
+ok  	github.com/system-inc/adamic/stage1/cohere/parse	28.227s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	36.456s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	35.595s
+panic: test timed out after 30m0s
+	running tests:
+		TestVolumeAgreementAndMutants (10m21s)
+
+goroutine 66 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 10 minutes]:
+testing.(*T).Run(0x80f43844908, {0x6f3114?, 0x80f4384faa0?}, 0xc9b918)
+	/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+testing.runTests.func1(0x80f43844908)
+	/workspace/adamic-tools/go/src/testing/testing.go:2742 +0x37
+testing.tRunner(0x80f43844908, 0x80f4384fbc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+testing.runTests({0x6f21fb, 0x1c}, {0x707d35, 0x34}, 0x80f4374e4e0, {0xcebae8, 0xa, 0xa}, {0xc2a9abcb9cda79c7, 0x1a318742c9f, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x80f437e52c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+main.main()
+	_testmain.go:64 +0x9b
+
+goroutine 36 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xa, 0x80f4392ccc0, 0x4, 0x80f4381a120, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x80f4392ccee?, 0x80f4392ce18?, 0x54f04b?, 0x80f43a523c0?, 0x43?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x80f43846540)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x57?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x80f4381e1a0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x80f4381e1a0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).run(0x80f43c164b0, {0x80f438d8000, 0xf}, 0x80f4381e1a0)
+	/workspace/adamic/stage1/cohere/typeaware/typeaware_test.go:56 +0x365
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).must(0x80f43c164b0, {0x80f438d8000, 0xf}, 0x80f4381e1a0)
+	/workspace/adamic/stage1/cohere/typeaware/typeaware_test.go:70 +0x8a
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).compare(0x80f43c164b0, {0x6e5b14, 0x8}, {0x80f439040a0, 0x4a}, {0x80f43a523c0, 0x43}, {0x80f43a538b0, 0x44}, {0x80f43a53810, ...})
+	/workspace/adamic/stage1/cohere/typeaware/typeaware_test.go:137 +0x26b
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestVolumeAgreementAndMutants(0x80f4398d208)
+	/workspace/adamic/stage1/cohere/typeaware/volume_test.go:215 +0x18da
+testing.tRunner(0x80f4398d208, 0xc9b918)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 23 [chan receive, 14 minutes]:
+testing.(*T).Parallel(0x80f4398c008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestSixPinnedFlags(0x80f4398c008)
+	/workspace/adamic/stage1/cohere/typeaware/suite_test.go:401 +0x2a
+testing.tRunner(0x80f4398c008, 0xc9b900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 35 [chan receive, 10 minutes]:
+testing.(*T).Parallel(0x80f4398cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestPinnedTypeFlags(0x80f4398cfc8?)
+	/workspace/adamic/stage1/cohere/typeaware/typeaware_test.go:417 +0x13
+testing.tRunner(0x80f4398cfc8, 0xc9b8f0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	1800.109s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	35.264s
+ok  	github.com/system-inc/adamic/stage1/profiles	0.003s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	385.898s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	71.267s
+FAIL

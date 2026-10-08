@@ -1,0 +1,35 @@
+==106368== Callgrind, a call-graph generating cache profiler
+==106368== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==106368== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==106368== Command: /workspace/scratch/release-pgo/thin/parse --manifest /workspace/scratch/release-pgo/held-out.txt --count
+==106368== 
+--106368-- warning: L3 cache found, using its data for the LL simulation.
+--106368-- warning: specified LL cache: line_size 64  assoc 1  total_size 335,544,320
+--106368-- warning: simulated LL cache: line_size 64  assoc 1  total_size 268,435,456
+==106368== For interactive control, run 'callgrind_control -h'.
+==106368== brk segment overflow in thread #1: can't grow to 0x4855000
+==106368== (see section Limitations in user manual)
+==106368== NOTE: further instances of this message will not be shown
+==106368== 
+==106368== Events    : Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim
+==106368== Collected : 3749459421 1039090996 432832887 83848900 10597578 3621744 13335 57521 1445893 671866818 22943596 9430962 1835731
+==106368== 
+==106368== I   refs:      3,749,459,421
+==106368== I1  misses:       83,848,900
+==106368== LLi misses:           13,335
+==106368== I1  miss rate:          2.24%
+==106368== LLi miss rate:          0.00%
+==106368== 
+==106368== D   refs:      1,471,923,883  (1,039,090,996 rd + 432,832,887 wr)
+==106368== D1  misses:       14,219,322  (   10,597,578 rd +   3,621,744 wr)
+==106368== LLd misses:        1,503,414  (       57,521 rd +   1,445,893 wr)
+==106368== D1  miss rate:           1.0% (          1.0%   +         0.8%  )
+==106368== LLd miss rate:           0.1% (          0.0%   +         0.3%  )
+==106368== 
+==106368== LL refs:          98,068,222  (   94,446,478 rd +   3,621,744 wr)
+==106368== LL misses:         1,516,749  (       70,856 rd +   1,445,893 wr)
+==106368== LL miss rate:            0.0% (          0.0%   +         0.3%  )
+==106368== 
+==106368== Branches:        681,297,780  (  671,866,818 cond +   9,430,962 ind)
+==106368== Mispredicts:      24,779,327  (   22,943,596 cond +   1,835,731 ind)
+==106368== Mispred rate:            3.6% (          3.4%     +        19.5%   )

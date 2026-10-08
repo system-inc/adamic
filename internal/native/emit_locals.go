@@ -7,18 +7,14 @@ import (
 	"regexp"
 )
 
-// localName is a local's C name: its index, which is unique, and its name as written, for reading.
+// localName uses the owning declaration and the local's spelling.
 func (e *emitter) localName(local int) string {
-	prefix := "adamic_local"
-	if e.program.Locals[local].Global {
-		prefix = "adamic_global"
-	}
-	return fmt.Sprintf("%s_%d_%s", prefix, local, cIdentifier.ReplaceAllString(e.program.Locals[local].Name, ""))
+	return e.namedLocal(local)
 }
 
 // readyName is the flag that says a global's declaration has run.
-func readyName(local int) string {
-	return fmt.Sprintf("adamic_ready_%d", local)
+func (e *emitter) readyName(local int) string {
+	return e.localName(local) + "_ready"
 }
 
 var cIdentifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
@@ -72,7 +68,7 @@ func (e *emitter) store(local int, value string, owned bool) {
 // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	ready := readyName(local)
+	ready := e.readyName(local)
 	if cell := e.cellReference(local); cell != "" {
 		ready = cell + "->ready"
 	}
@@ -133,7 +129,11 @@ func (e *emitter) read(read ir.Read) string {
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
-	if _, ok := e.asyncSlots[local]; ok {
+	if position, ok := e.asyncSlots[local]; ok {
+		if declared.IterationCell && !declared.Preallocated {
+			e.replaceIterationCell(local, position, value, owned)
+			return
+		}
 		e.store(local, value, owned)
 		e.line("%s->ready = true;", e.cellReference(local))
 		return
@@ -203,6 +203,9 @@ func (e *emitter) cellSlot(local int) string {
 // cellReference is the cell a captured local lives in, from the current function, or "".
 func (e *emitter) cellReference(local int) string {
 	if position, ok := e.asyncSlots[local]; ok {
+		if e.program.Locals[local].IterationCell {
+			return fmt.Sprintf("((adamic_cell *)frame->cells[%d].value.reference)", position)
+		}
 		return fmt.Sprintf("(&frame->cells[%d])", position)
 	}
 	declared := e.program.Locals[local]
@@ -220,20 +223,51 @@ func (e *emitter) cellReference(local int) string {
 }
 
 // allocateEnvironment emits the one IR frame site; slot names borrow its storage.
-func (e *emitter) allocateEnvironment(cells []int) {
+func (e *emitter) allocateEnvironment(site *ir.Statement) {
+	cells := (*site).(ir.AllocateEnvironment).Cells
 	if len(cells) == 0 {
 		return
 	}
 	environment := e.temporary()
-	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
-	graph := false
-	for _, local := range cells {
-		graph = graph || e.program.Locals[local].GraphCell
+	switch e.regions.environments[site] {
+	case environmentStack:
+		// A fixed C aggregate owns both the header and its complete slot vector.
+		// The pointer keeps one slot representation across all placements.
+		storage := e.temporary()
+		e.line("struct { adamic_environment record; adamic_cell cells[%d]; } %s;", len(cells), storage)
+		e.line("adamic_environment *%s = &%s.record;", environment, storage)
+		e.line("adamic_environment_init(%s, %s.cells, %d);", environment, storage, len(cells))
+		e.regions.cleanups[environment] = "adamic_environment_end(" + environment + ");"
+		e.hold(environment)
+	case environmentRegion:
+		region := e.temporary()
+		e.line("adamic_region %s = ADAMIC_REGION;", region)
+		e.line("adamic_environment *%s = adamic_environment_new_in(&%s, %d);", environment, region, len(cells))
+		e.regions.cleanups[region] = "adamic_region_end(&" + region + ");"
+		e.hold(region)
+	default:
+		e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+		graph := false
+		for _, local := range cells {
+			graph = graph || e.program.Locals[local].GraphCell
+		}
+		e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
+		e.hold(environment)
 	}
-	e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
-	e.hold(environment)
 	for position, local := range cells {
 		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
 		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
 	}
+}
+
+// The frame owns the current binding; escaped closures own older bindings independently.
+func (e *emitter) replaceIterationCell(local, position int, value string, owned bool) {
+	declared := e.program.Locals[local]
+	if declared.Type.IsReference() && !owned {
+		value = retained(value)
+	}
+	fresh := e.temporary()
+	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", fresh, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	e.line("adamic_release(frame->cells[%d].value.reference);", position)
+	e.line("frame->cells[%d].value.reference = %s;", position, fresh)
 }

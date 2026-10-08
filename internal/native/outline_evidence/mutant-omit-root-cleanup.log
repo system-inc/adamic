@@ -1,0 +1,20 @@
+=== RUN   TestInitializerChunksKeepStorageAndOrder
+=== PAUSE TestInitializerChunksKeepStorageAndOrder
+=== CONT  TestInitializerChunksKeepStorageAndOrder
+    outline_test.go:64: /tmp/adamic-gate/TestInitializerChunksKeepStorageAndOrder3884319259/001/chunks: exit status 1
+        
+        =================================================================
+        ==422678==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 66 byte(s) in 1 object(s) allocated from:
+            #0 0x556288035244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5562880ba4ef in adamic_allocate /home/agent/.cache/adamic/runtime/.build-390618397/heap.c:196:10
+            #2 0x55628807973d in adamic_unit_adamic_initialize_chunk__b2f47077b1260d1021097acb2f69aacf /adamic-units/helpers_00.c:141:82
+            #3 0x5562880a8305 in main /adamic-units/main.c:22:2
+            #4 0x7f18fb105ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: 66 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestInitializerChunksKeepStorageAndOrder (14.39s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	14.421s
+FAIL

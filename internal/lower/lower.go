@@ -54,7 +54,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	for _, module := range modules {
-		body, err := lowering.statements(module.Statements.Nodes)
+		body, err := lowering.moduleStatements(module)
 		if err != nil {
 			return nil, err
 		}
@@ -86,9 +86,10 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
-	program *load.Program
-	checker *checker.Checker
-	result  *ir.Program
+	program          *load.Program
+	checker          *checker.Checker
+	result           *ir.Program
+	sourceIdentities map[*ast.Node]ir.SourceIdentity
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool

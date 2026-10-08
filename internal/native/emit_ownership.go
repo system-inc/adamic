@@ -12,6 +12,10 @@ import (
 func (e *emitter) releaseScopes(depth int) {
 	for scope := len(e.scopes) - 1; scope >= depth; scope-- {
 		for index := len(e.scopes[scope]) - 1; index >= 0; index-- {
+			if cleanup := e.regions.cleanups[e.scopes[scope][index]]; cleanup != "" {
+				e.line("%s", cleanup)
+				continue
+			}
 			if e.mostlyNull[e.scopes[scope][index]] {
 				// Held only on the rare path (a fallback's owner): NULL, the common case, needs no call.
 				e.line("if (%s != NULL) {", e.scopes[scope][index])
