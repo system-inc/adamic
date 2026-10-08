@@ -1,0 +1,4 @@
+// Exact Go React base names. Aliases and case variants do not count.
+export function isComponentBaseName(name: string): boolean {
+    return name === 'Component' || name === 'PureComponent';
+}

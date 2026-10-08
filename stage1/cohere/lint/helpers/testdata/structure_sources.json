@@ -49,21 +49,20 @@
       "symbol": "cohere/internal/lint/rules/structure.parameterTypeNode",
       "file": "stage1/cohere/lint/helpers/from_wave1_11/structure_parameter_type_node.a",
       "branch": "codex/lint-helpers-from-codex/lint-wave1-11"
-    }
-  ],
-  "selection": "FileContextFor retained from codex/lint-helpers-01; slot03 duplicate withdrawn by TRIAGE.md d7ab0bc4.",
-  "stopped": [
+    },
     {
       "symbol": "cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
       "file": "stage1/cohere/lint/helpers/slot04_wave20/has_jsx_or_react_hook_calls.a",
-      "branch": "codex/lint-helpers-04",
-      "dependency": "cohere/internal/lint/ecmascript/react.IsHookCall (not landed)"
+      "branch": "codex/lint-helpers-04"
     },
     {
       "symbol": "cohere/internal/lint/rules/structure.searchForJsxOrHook",
       "file": "stage1/cohere/lint/helpers/slot04_wave20/search_for_jsx_or_hook.a",
-      "branch": "codex/lint-helpers-04",
-      "dependency": "cohere/internal/lint/ecmascript/react.IsHookCall (not landed)"
+      "branch": "codex/lint-helpers-04"
     }
-  ]
+  ],
+  "selection": "FileContextFor retained from codex/lint-helpers-01; slot03 duplicate withdrawn by TRIAGE.md d7ab0bc4.",
+  "dependencies": {
+    "cohere/internal/lint/ecmascript/react.IsHookCall": "origin/lint-helpers/react 52f5534e5133d572b481669347e3b56d106c360c"
+  }
 }

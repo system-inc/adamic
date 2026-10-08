@@ -113,7 +113,7 @@ func observations(t *testing.T, directory, path string) []struct {
 	}
 }
 
-func TestDescentGoNodeNativeJavaScript(t *testing.T) {
+func TestSearchGoNodeNativeJavaScript(t *testing.T) {
 	goOracle := oracle(t)
 	built := build(t, ".")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
@@ -130,7 +130,7 @@ func TestDescentGoNodeNativeJavaScript(t *testing.T) {
 			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, adapted), want)
 			compare(t, run(t, "", built.native, adapted), want)
 			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, built.script, adapted), want)
-			t.Logf("Go, source Node, sanitized native, emitted JavaScript match %d descent AST observations", bytes.Count(want, []byte("\n")))
+			t.Logf("Go, source Node, sanitized native, emitted JavaScript match %d structure search AST observations", bytes.Count(want, []byte("\n")))
 		})
 	}
 }
@@ -140,7 +140,7 @@ func TestCompilingMutants(t *testing.T) {
 	want := run(t, "", goOracle, path)
 	adapted := filepath.Join(t.TempDir(), "cases.json")
 	write(t, adapted, run(t, "", goOracle, "--cases", path))
-	mutations := []struct{ file, old, new string }{{"descends_for_jsx_search.a", "if(!present)", "if(false)"}}
+	mutations := []struct{ file, old, new string }{{"has_jsx_or_react_hook_calls.a", "return searchForJsxOrHook(id,0,nodeAt,isHookCall);", "return false;"}, {"search_for_jsx_or_hook.a", "depth>20", "depth>=20"}, {"descends_for_jsx_search.a", "if(!present)", "if(false)"}}
 
 	for _, m := range mutations {
 		t.Run(m.file+m.old, func(t *testing.T) {
@@ -149,7 +149,7 @@ func TestCompilingMutants(t *testing.T) {
 			if err := os.Mkdir(directory, 0755); err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{"main.a", "descends_for_jsx_search.a"} {
+			for _, name := range []string{"main.a", "has_jsx_or_react_hook_calls.a", "search_for_jsx_or_hook.a", "descends_for_jsx_search.a"} {
 				data, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
@@ -167,6 +167,23 @@ func TestCompilingMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			write(t, filepath.Join(root, "options_json.ts"), options)
+			reactDir := filepath.Join(root, "react")
+			if err := os.Mkdir(reactDir, 0755); err != nil {
+				t.Fatal(err)
+			}
+			entries, err := os.ReadDir("../react")
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, entry := range entries {
+				if strings.HasSuffix(entry.Name(), ".a") {
+					data, err := os.ReadFile(filepath.Join("../react", entry.Name()))
+					if err != nil {
+						t.Fatal(err)
+					}
+					write(t, filepath.Join(reactDir, entry.Name()), data)
+				}
+			}
 			for _, observation := range observations(t, directory, adapted) {
 				if bytes.Equal(observation.output, want) {
 					t.Fatalf("%s compiling mutant survived", observation.name)
@@ -202,7 +219,7 @@ func missingConsumers(data []byte) ([]string, error) {
 	missing := []string{}
 	for _, row := range d.Remaining {
 		for _, h := range row.Helpers {
-			if strings.HasSuffix(h, "structure.descendsForJsxSearch") {
+			if strings.HasSuffix(h, "structure.descendsForJsxSearch") || strings.HasSuffix(h, "structure.HasJsxOrReactHookCalls") || strings.HasSuffix(h, "structure.searchForJsxOrHook") {
 				if !present[row.Rule] {
 					missing = append(missing, row.Rule)
 				}

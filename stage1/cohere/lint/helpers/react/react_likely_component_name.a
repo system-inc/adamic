@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import { reactUnicodeUpperRanges } from './react_unicode_upper_ranges.a';
+// Go's unicode.IsUpper tests category Lu on the first decoded rune only.
+export function reactLikelyComponentName(name: string): boolean {
+    if (name === '') { return false; }
+    const point = name.codePointAt(0) ?? panic('component name rune missing');
+    let low = 0;
+    let high = reactUnicodeUpperRanges.length - 1;
+    while (low <= high) {
+        const middle = Math.floor((low + high) / 2);
+        const range = reactUnicodeUpperRanges[middle] ?? panic('uppercase range missing');
+        const first = range[0] ?? panic('uppercase range start missing');
+        const last = range[1] ?? panic('uppercase range end missing');
+        const stride = range[2] ?? panic('uppercase range stride missing');
+        if (point < first) { high = middle - 1; }
+        else if (point > last) { low = middle + 1; }
+        else { return (point - first) % stride === 0; }
+    }
+    return false;
+}

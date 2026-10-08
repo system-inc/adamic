@@ -7,6 +7,8 @@ import (
 	"sync"
 )
 
+func AdamicSearch(node *ast.Node, depth int) bool { return searchForJsxOrHook(node, depth) }
+
 func AdamicDescends(node *ast.Node) bool { return descendsForJsxSearch(node) }
 
 var adamicLock sync.Mutex
