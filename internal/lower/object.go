@@ -280,7 +280,13 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// [] is never[] to the checker; what it will hold is the type it's written into, as in
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
-		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+		if contextual != nil {
+			if base := l.readonlyArrayView(contextual); base != nil {
+				contextual = base
+			}
+		}
+		if contextual != nil && l.checker.IsArrayType(contextual) {
 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
 			}
@@ -289,6 +295,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	if target := l.weakTarget(arrayType); target != nil {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
+	}
+	if base := l.readonlyArrayView(arrayType); base != nil {
+		arrayType = base
 	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")

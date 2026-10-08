@@ -50,3 +50,19 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-coun
 A snapshot change requires review of its exact reason and independent Node
 output. `ADAMIC_STEP20_RECORD` writes observations to an external file; ordinary
 runs never silently refresh expected outcomes.
+
+The first implementation accepts the four inherited readonly-array fixtures.
+`array_view_variance.a` is an authored counterexample: a readonly container still
+exposes mutable element fields, and widening their writable type must be Refused.
+The three intrinsic-write fixtures now require the ruled refusal reason.
+
+Run the four implementation mutants in an isolated scratch directory:
+
+```sh
+python3 stage3/fixtures/iteration/check_array_view_mutants.py /tmp/step20-mutants
+```
+
+The live-snapshot mutant must disagree with Node in both backends. The strong
+Weak-slot mutant must fail under ASan. The override and mutable-element mutants
+must violate their specific refusal contracts. A compiler build failure is not
+an accepted mutant kill.

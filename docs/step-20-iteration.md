@@ -310,3 +310,110 @@ with balanced allocations/frees. It also reconciles the inherited area-tip fixtu
 registry: `logical_and_reference_maybe.a` moves with its init registration and
 `taste/17_binder_flow.a` is omitted because that fixture is registered as not
 lowering. No count values for pre-existing counted fixtures change.
+
+## First implementation: inherited readonly arrays
+
+The first piece implements the most common unsupported concrete shape:
+`NodeArray<T>` and compatible interfaces inheriting the library ReadonlyArray.
+It reuses the existing array IR and both backends. The value keeps its original
+array storage and identity. The numeric index must be readonly, mutator members
+must be absent, and inherited canonical array members must remain library members.
+Interface bases are instantiated through the checker, including generic and
+multi-level inheritance. Structural records are stopped before a native array
+cast. Metadata is not projected away; unsupported metadata reads stop with NotYet.
+
+Element compatibility, contextual Weak storage, mutable-element variance and
+ownership-cycle analysis follow the inherited element type while retaining
+additional fields in their checks. The whole-program scan adds the approved
+`adamic/intrinsic-iterator` refusal for writes on supported built-ins and their
+prototypes, including Symbol.iterator aliases. This changes an implementation
+boundary under the ruling, without introducing another language decision.
+
+### Root retirement observations
+
+All 117 candidate sites were replayed before and after, using the original census
+entry, source and no-output guards. The official replay selects the smallest
+attempted unit containing the site. **116 base signatures reproduced; 110 old
+`for...of over an object` signatures disappear after the change.** At 109 sites
+there is no replacement diagnostic at that exact location. At `binder.ts:2061:33`,
+the union of two NodeArray element types now stops with an explicit array-element
+representation gap. It is not a fully supported union loop.
+
+Six JSDocArray sites retain the original diagnostic; their interface inherits
+mutable Array and is outside this readonly-array piece. At
+`transformers/es2015.ts:3572:32`, the smallest-unit base replay does not reproduce
+the census signature: earlier casts and a binary-expression boundary obscure it.
+That site is excluded from retirement totals. The full census found it from its
+other enclosing recovery context. No root is credited merely because a replay
+failed to reproduce on the base.
+
+These are selected-unit diagnostic observations. They do not establish that entire
+source functions compile, that the whole tsc entry compiles, or that historical
+hidden bytes became emitted code. Other body boundaries remain in the recorded
+findings. The unchanged 324 checker diagnostics still reject the complete entry.
+
+[The replay archive](step-20-iteration/array-view-replays.json.gz) contains every
+before/after unit and finding, source hashes, and losslessly deduplicated declaration
+snapshots. [audit_retirements.py](step-20-iteration/audit_retirements.py) verifies
+coverage, base reproduction, exact retirement classification, selected units,
+measurement labels and snapshot hashes. Two official single-root records match
+batch replay in both phases, including a repeated request after another unit.
+A stale scratch expression overlay was discovered during preparation; all its
+after results were discarded before the corrected replay. Only the corrected
+results are archived.
+
+### Verification and mutants
+
+The final snapshot has 17 fixtures: six accepted, five NotYet and six Refused.
+All source programs run on Node. The six accepted fixtures pass the JavaScript
+backend, native ASan/UBSan, optimized native builds and leak checks. Thirteen
+intrinsic-write cases and the mutable-element counterexample pass their explicit
+refusal contracts. The scoped iterator, closure-cycle and mutable-container
+regressions pass. Counts adds only the four newly accepted fixture rows, each with
+balanced allocations/frees; no existing row changes.
+
+Commands run, each with output redirected to its own log:
+
+```sh
+ADAMIC_STEP20_RECORD=/tmp/scout-first-current-outcomes.json go test ./internal/oracle -run '^TestStep20IterationOutcomes$' -count=1 -timeout 30m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/stage3/fixtures/iteration/|^TestStep20IntrinsicIteratorWrites$|^TestStep20ArrayViewVariance$|^TestStep20IterationOutcomes$' -count=1 -timeout 30m -v
+go test ./internal/lower -run '^TestIterator|^TestLiteralMethod|^TestGenericIterator|^TestCensusRestMutableElements$|^TestNested.*Cycle|^TestInheritanceCycleFinderIncludesInheritedFields$' -count=1 -timeout 30m -v
+python3 stage3/fixtures/iteration/check_array_view_mutants.py /tmp/scout-delivery-mutants
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+python3 docs/step-20-iteration/audit_retirements.py docs/step-20-iteration/array-view-replays.json.gz
+```
+
+| Mutant | Specific catcher |
+| --- | --- |
+| Snapshot inherited-array RHS | Native and JavaScript stdout disagree with source Node under live mutation |
+| Store a strong pointer in contextual Weak element storage | ASan SEGV in adamic_retain; generated C compiles |
+| Bypass intrinsic-iterator refusal | Alias fixture returns the wrong diagnostic instead of the ruled Refused contract |
+| Omit inherited-array container normalization in variance analysis | Mutable-element counterexample lowers when it must be Refused |
+| Increment fresh root count | Root deduplication assertion |
+| Increment fresh unit count | Unit deduplication assertion |
+| Invent fresh witness | Witness-selection assertion |
+| Omit a resolved census source file | Source-coverage assertion |
+| Increment historical hidden bytes | Historical byte-credit assertion |
+| Increment historical root count | Historical root-deduplication assertion |
+| Invent historical witness | Witness-provenance assertion |
+| Omit historical boundary | Exact boundary-extraction assertion |
+| Record wrong fixture NotYet reason | Exact outcome comparison |
+| Omit a replay root | Replay-coverage assertion |
+| Flip retirement classification | Exact retirement-classification assertion |
+| Invent replay witness | Exact replay-witness assertion |
+| Alter shared declaration snapshot | Declaration SHA-256 assertion |
+
+All 17 mutants fail through their intended catchers. The refusal mutants prove
+those contracts are enforced; they do not claim that bypassing one check would
+make the unsupported program compile. Full transcripts and mutant patches are in
+[evidence](step-20-iteration/evidence/). No whole package or full gate was run.
+
+### Remaining implementation scope
+
+This piece does not implement general structural protocol dispatch, generator
+frames or yield*, additional IteratorClose paths, object bindings, mutable branded
+arrays, the NodeArray union-element gap, builtin iterator prototype/identity work,
+or iterator helpers. Their approved contract is above; the remaining work is
+implementation and verification. Concrete Map/Set iterator and string fixtures
+already compile on the base and remain accepted. The original tests and refusal
+snapshots remain explicit acceptance targets for the remaining shapes.

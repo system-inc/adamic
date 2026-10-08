@@ -19,7 +19,7 @@ type step20Outcome struct {
 }
 
 func init() {
-	for _, file := range []string{"collections.a", "strings.a"} {
+	for _, file := range []string{"collections.a", "strings.a", "object_iteration.a", "array_view_stress.a", "test262_array_views.a", "array_view_weak.a"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool

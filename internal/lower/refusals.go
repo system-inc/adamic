@@ -87,6 +87,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = l.predicateRefusal(node)
 			return found != nil
 		}
+		if err := l.intrinsicIteratorWrite(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true
