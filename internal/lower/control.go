@@ -101,6 +101,9 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if (value.Type() == ir.Object || value.Type() == ir.Closure) && l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+		return ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: value}}, nil
+	}
 	return truthy(value), nil
 }
 

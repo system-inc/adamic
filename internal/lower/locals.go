@@ -206,7 +206,8 @@ func (l *lowering) touch(local int) {
 // checked reports whether touching a local must be checked against the temporal dead zone: a
 // global reached from a function or a cyclic module body may precede its declaration.
 func (l *lowering) checked(local int) bool {
-	return l.result.Locals[local].Global && (l.function != nil || l.cyclicModules) || l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured
+	declared := l.result.Locals[local]
+	return (declared.Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && declared.Preallocated && declared.Captured)
 }
 
 func (l *lowering) constant(value string) int {

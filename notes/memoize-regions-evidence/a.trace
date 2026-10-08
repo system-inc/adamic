@@ -1,0 +1,4 @@
+cycle reach: cell callback -- slot contents --> (() => number) | undefined
+  (() => number) | undefined -- union or intersection member --> () => number
+  () => number -- closure capture at /tmp/memoize-regions/internal/oracle/testdata/memoize_regions/a.a:3:12 --> cell callback
+  cell callback -- same captured cell --> cell callback

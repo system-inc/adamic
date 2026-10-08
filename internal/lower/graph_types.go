@@ -371,7 +371,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}

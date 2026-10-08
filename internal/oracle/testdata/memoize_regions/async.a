@@ -1,0 +1,8 @@
+async function tie(callback: (n: number) => string): Promise<(n: number) => string> {
+    const result = (n: number): string => n === 0 ? 'done' : callback(n - 1);
+    callback = result;
+    await Promise.resolve();
+    return result;
+}
+const get = await tie((n) => `${n}`);
+console.log(get(3));

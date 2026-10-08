@@ -1,0 +1,32 @@
+[
+  {
+    "name": "a",
+    "exit": 0,
+    "stdout": "42 42 1\n",
+    "stderr": ""
+  },
+  {
+    "name": "b",
+    "exit": 0,
+    "stdout": "42 42 1\n",
+    "stderr": ""
+  },
+  {
+    "name": "host14",
+    "exit": 0,
+    "stdout": "cleared\ntrue\ntrue 1\n",
+    "stderr": ""
+  },
+  {
+    "name": "self",
+    "exit": 0,
+    "stdout": "cycle:ready\nfreed\n",
+    "stderr": ""
+  },
+  {
+    "name": "async",
+    "exit": 0,
+    "stdout": "done\n",
+    "stderr": ""
+  }
+]

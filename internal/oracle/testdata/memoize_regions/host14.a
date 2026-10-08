@@ -1,0 +1,21 @@
+// Host fixture 14's cache survives a later change to the callback's context.
+// The callback is honestly optional, as in the accepted TypeScript adaptation.
+function memoize<T>(callback: (() => T) | undefined): () => T {
+    let value: T;
+    return () => {
+        if (callback) {
+            value = callback();
+            callback = undefined;
+            if (callback) { console.log('callable after clear'); }
+            else { console.log('cleared'); }
+        }
+        return value;
+    };
+}
+let directory = ['host', 'directory'].join('/');
+let calls = 0;
+const getCurrentDirectory = memoize(() => { calls += 1; return directory; });
+const previous = directory;
+console.log(`${getCurrentDirectory() === previous}`);
+directory = `${directory}/child`;
+console.log(`${getCurrentDirectory() === previous} ${calls}`);

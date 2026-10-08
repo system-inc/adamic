@@ -4,7 +4,6 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
-	"runtime"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"

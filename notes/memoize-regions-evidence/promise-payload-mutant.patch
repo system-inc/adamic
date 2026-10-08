@@ -1,0 +1,11 @@
+--- a/internal/lower/graph_types.go
++++ b/internal/lower/graph_types.go
+@@ -371,7 +371,7 @@
+ 				}
+ 			}
+ 		}
+-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
++	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+ 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
+ 			links = append(links, cycleNode{proven: argument})
+ 		}

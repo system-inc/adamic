@@ -5,7 +5,6 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"strings"
 	"testing"
 )

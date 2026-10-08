@@ -2,7 +2,6 @@ package oracle
 
 import (
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 
