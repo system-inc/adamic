@@ -6,6 +6,17 @@ if (cp.execFileSync('git', ['-C', pin, 'rev-parse', 'HEAD'], {encoding:'utf8'}).
 const lane = path.dirname(__dirname);
 const pairs = JSON.parse(fs.readFileSync(path.join(lane,'unknown-callable-pairs-ranked.json')));
 const recipes = new Map([
+ [336, [null, ["@Type", "@Type"], "Ternary", "7"]],
+ [471, [null, ["@Program"], "DiagnosticCollection", "@DiagnosticCollection"]],
+ [510, [null, ["1"], "Node", "@Node"]],
+ [528, [null, ["@Expression", "@Identifier", "PrivateIdentifierKind.Field", "undefined"], "Expression", "@Expression"]],
+ [531, [null, ["@Expression"], "Expression", "@Expression"]],
+ [534, [null, ["\"ok\""], "boolean", "true"]],
+ [537, ["", [], "void", ""]],
+ [540, ["", ["\"ok\""], "void", ""]],
+ [576, ["", [], "void", ""]],
+ [585, [null, ["@Expression", "@Expression", "[]"], "CallExpression", "@CallExpression"]],
+ [591, [null, ["undefined", "undefined", "\"ok\"", "undefined", "undefined", "[]", "undefined", "undefined"], "MethodDeclaration", "@MethodDeclaration"]],
  [411, [null, ["true"], "GenericType", "@GenericType"]],
  [432, [null, ["undefined","@Block"], "CatchClause", "@CatchClause"]],
  [441, [null, ["@Expression", '"ok"', "@Expression"], "CallExpression", "@CallExpression"]],
@@ -54,13 +65,13 @@ const files = new Map();
 function source(file) {if(!files.has(file)) files.set(file,ts.createSourceFile(file,fs.readFileSync(path.join(pin,file),'utf8'),ts.ScriptTarget.Latest,true));return files.get(file);}
 const originalProgram=ts.createProgram([path.join(pin,'src/compiler/types.ts')],{noResolve:true});const originalChecker=originalProgram.getTypeChecker();const originalTypes=originalProgram.getSourceFile(path.join(pin,'src/compiler/types.ts'));
 const kindValues=new Map();function originalKinds(n){if(ts.isInterfaceDeclaration(n)){const k=n.members.find(m=>m.name?.getText(originalTypes)==='kind');if(k){const value=originalChecker.getTypeAtLocation(k.type).value;if(typeof value==='number')kindValues.set(n.name.text,value);}}ts.forEachChild(n,originalKinds);}originalKinds(originalTypes);
-const nodes=new Map();function collect(n){if(ts.isInterfaceDeclaration(n)||ts.isTypeAliasDeclaration(n))nodes.set(n.name.text,[...(nodes.get(n.name.text)||[]),n]);ts.forEachChild(n,collect);}collect(source('src/compiler/types.ts'));collect(source('src/compiler/scanner.ts'));collect(source('src/compiler/sys.ts'));collect(source('src/compiler/watchUtilities.ts'));collect(source('src/compiler/checker.ts'));
+const nodes=new Map();function collect(n){if(ts.isInterfaceDeclaration(n)||ts.isTypeAliasDeclaration(n)||ts.isEnumDeclaration(n))nodes.set(n.name.text,[...(nodes.get(n.name.text)||[]),n]);ts.forEachChild(n,collect);}collect(source('src/compiler/types.ts'));collect(source('src/compiler/scanner.ts'));collect(source('src/compiler/sys.ts'));collect(source('src/compiler/watchUtilities.ts'));collect(source('src/compiler/checker.ts'));collect(source('src/compiler/factory/emitHelpers.ts'));collect(source('src/compiler/factory/baseNodeFactory.ts'));collect(source('src/compiler/moduleNameResolver.ts'));collect(source('src/compiler/programDiagnostics.ts'));
 function declaration(type,field,seen=new Set()){if(seen.has(type))return;seen.add(type);const list=nodes.get(type)||[];for(const n of list){const own=n.members?.find(m=>m.name?.getText(n.getSourceFile())===field);if(own)return own;}for(const n of list)for(const c of n.heritageClauses||[])for(const b of c.types){const found=declaration(b.expression.getText(n.getSourceFile()),field,seen);if(found)return found;}}
-function signature(decl){return ts.isPropertySignature(decl)?decl.type:decl;}
+function signature(decl){if(!ts.isPropertySignature(decl))return decl;let type=decl.type;if(ts.isTypeReferenceNode(type)&&ts.isIdentifier(type.typeName)){const alias=nodes.get(type.typeName.text)?.find(n=>ts.isTypeAliasDeclaration(n));if(alias)type=alias.type;}return type;}
 const rows=[];
 for(const [rank,recipe] of recipes){
  const pair=pairs.find(p=>p.rank===rank);if(rank%3)throw Error('wrong share');
- const decl=declaration(pair.type,pair.field);if(!decl||!(ts.isMethodSignature(decl)||ts.isPropertySignature(decl)&&ts.isFunctionTypeNode(decl.type))||signature(decl).typeParameters?.length||signature(decl).parameters.some(p=>p.dotDotDotToken))throw Error('unsupported original declaration '+rank);
+ const decl=declaration(pair.type,pair.field);if(!decl||!(ts.isMethodSignature(decl)||ts.isPropertySignature(decl)&&ts.isFunctionTypeNode(signature(decl)))||signature(decl).typeParameters?.length||signature(decl).parameters.some(p=>p.dotDotDotToken))throw Error('unsupported original declaration '+rank);
  const sf=source(pair.witness.file);let read;function visit(n){if(ts.isPropertyAccessExpression(n)&&n.name.text===pair.field){const lc=sf.getLineAndCharacterOfPosition(n.getStart(sf));if(lc.line+1===pair.witness.line&&lc.character+1===pair.witness.column)read=n;}ts.forEachChild(n,visit);}visit(sf);if(!read){let binding=false;function findBinding(n){if(ts.isBindingElement(n)&&n.propertyName?.getText(sf)===pair.field){const lc=sf.getLineAndCharacterOfPosition(n.getStart(sf));if(lc.line+1===pair.witness.line&&lc.character+1===pair.witness.column)binding=true;}ts.forEachChild(n,findBinding);}findBinding(sf);if(binding){console.log('Excluded original binding rank '+rank);continue;}throw Error('original read unavailable '+rank);}
  const receiver=read.expression.getText(sf);if(!/^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(receiver.replace(/\(\)$/, '')))throw Error('nonlocal receiver '+rank+': '+receiver);
  let [carriers,args,result,returned]=recipe;
@@ -72,14 +83,15 @@ for(const [rank,recipe] of recipes){
     const original=nodes.get(name)[0],literal=original.members.find(m=>m.name?.getText(original.getSourceFile())==='literal');scan(literal);definitions.set(name,'interface LiteralTypeNode {'+literal.getText(original.getSourceFile())+'readonly value:number;readonly kind:'+kindValues.get(name)+';}');return;
    }
    const original=nodes.get(name)?.[0];
-   if(original&&ts.isTypeAliasDeclaration(original)&&ts.isUnionTypeNode(original.type)){scan(original.type);definitions.set(name,original.getText(original.getSourceFile()).replace(/^export\s+/,''));return;}
+   if(name==='PrivateIdentifierKind'&&original&&ts.isEnumDeclaration(original)){definitions.set(name,original.getText(original.getSourceFile()).replace(/^export\s+/,''));return;}
+   if(original&&ts.isTypeAliasDeclaration(original)&&(ts.isUnionTypeNode(original.type)||ts.isFunctionTypeNode(original.type))){scan(original.type);definitions.set(name,original.getText(original.getSourceFile()).replace(/^export\s+/,''));return;}
    if(original&&ts.isTypeAliasDeclaration(original)&&ts.isTypeReferenceNode(original.type)&&ts.isIdentifier(original.type.typeName)&&!original.type.typeArguments?.length){scan(original.type);definitions.set(name,original.getText(original.getSourceFile()).replace(/^export\s+/,''));return;}
-   if(['EmitHint','SyntaxKind','NodeFlags','TokenFlags','LazyNodeCheckFlags'].includes(name)){definitions.set(name,'type '+name+'=number;');return;}
+   if(['EmitHint','SyntaxKind','NodeFlags','TokenFlags','LazyNodeCheckFlags','Ternary'].includes(name)){definitions.set(name,'type '+name+'=number;');return;}
    const generics=original?.typeParameters?.length?'<' + original.typeParameters.map(p=>p.name.text).join(',')+'>':'';
    definitions.set(name,'interface '+name+generics+' {readonly value:number;'+(kindValues.has(name)?'readonly kind:'+kindValues.get(name)+';':'')+'}');
   }
   function scan(n){if(ts.isTypeReferenceNode(n)&&ts.isIdentifier(n.typeName))type(n.typeName.text);ts.forEachChild(n,scan);}
-  scan(signature(decl));type(result);
+  scan(decl);scan(signature(decl));type(result);
   carriers=[...definitions.values()].join('\n');
   const object=name=>'{value:7'+(kindValues.has(name)?',kind:'+kindValues.get(name):'')+(name==='LiteralTypeNode'?',literal:{value:7}':'')+'}';
   args=args.map(a=>a.startsWith('@')?object(a.slice(1)):a);if(returned.startsWith('@'))returned=object(returned.slice(1));
@@ -88,7 +100,7 @@ for(const [rank,recipe] of recipes){
  for(const alias of ["PropertyName","MemberName"])if(carriers.includes("type "+alias+" =")){const original=nodes.get(alias)[0];carriers=carriers.replace(new RegExp("type "+alias+" =[^;]+;"),original.getText(original.getSourceFile()).replace(/^export\s+/,""));}
  const params=signature(decl).parameters.map(p=>p.getText(decl.getSourceFile())).join(', ');
  const expression=read.getText(sf)+'('+args.join(',')+')';
- let use;if(result==='void') use=expression+';console.log("done");';else if(result.includes('ProjectReference[]'))use='const result='+expression+';console.log(`${result===undefined?"missing":result.length}`);';else if(/^(boolean|string|TokenFlags)/.test(result))use='console.log(`${'+expression+'}`);';else use='console.log(`${'+expression+'.value}`);';
+ let use;if(result==='void') use=expression+';console.log("done");';else if(result.includes('ProjectReference[]'))use='const result='+expression+';console.log(`${result===undefined?"missing":result.length}`);';else if(/^(boolean|string|TokenFlags|Ternary)/.test(result))use='console.log(`${'+expression+'}`);';else use='console.log(`${'+expression+'.value}`);';
  const parts=receiver.replace(/\(\)$/, '').split('.');let bound=receiver.endsWith('()')?'()=>value as Target':'value as Target';for(const key of parts.slice(1).reverse())bound='{'+key+':'+bound+'}';
  const header='// Original declaration and member read; adjacent carriers and producer bodies reduced.\n'+carriers+'\ninterface Base {readonly '+pair.field+':unknown;}\ninterface Target {'+decl.getText(decl.getSourceFile())+'}\nfunction probe(value:Base):void {const '+parts[0]+'='+bound+';'+use+'}\n';
  const body=result==='void'?'{}':'('+returned+')';
@@ -101,7 +113,7 @@ for(const [rank,recipe] of recipes){
  host.getSourceFile=(file,...args)=>file===virtual?ts.createSourceFile(file,content,ts.ScriptTarget.Latest,true):getSource.call(host,file,...args);
  const program=ts.createProgram([virtual],options,host),checker=program.getTypeChecker(),fixture=program.getSourceFile(virtual);let target;
  function findTarget(n){if((ts.isMethodSignature(n)||ts.isPropertySignature(n))&&n.parent.name?.text==='Target'&&n.name.getText(fixture)===pair.field)target=n;ts.forEachChild(n,findTarget);}findTarget(fixture);
- const expectedOverrides={"432":"(variableDeclaration: string | VariableDeclaration | BindingName | undefined, block: Block) => CatchClause","447":"(assertsModifier: AssertsKeyword | undefined, parameterName: string | Identifier | ThisTypeNode, type: TypeNode | undefined) => TypePredicateNode","582":"(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration","102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
+ const expectedOverrides={"510":"(kind: number) => Node","591":"(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => MethodDeclaration","432":"(variableDeclaration: string | VariableDeclaration | BindingName | undefined, block: Block) => CatchClause","447":"(assertsModifier: AssertsKeyword | undefined, parameterName: string | Identifier | ThisTypeNode, type: TypeNode | undefined) => TypePredicateNode","582":"(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration","102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
  const expected=expectedOverrides[rank]||checker.typeToString(checker.getTypeAtLocation(target),target,ts.TypeFormatFlags.NoTruncation);
  rows.push({...pair,directory,expected,read:read.getText(sf),declaration:decl.getText(declarationSource),declarationFile:declarationSource.fileName,declarationSha256:hash(declarationSource.fileName),fileSha256:hash(pair.witness.file),utf16Start:read.getStart(sf),utf16End:read.end,arity:signature(decl).parameters.length,mutantArity:signature(decl).parameters.length===0?1:0,stdout:result==='void'?'done\n':result.includes('ProjectReference[]')?'1\n':result==='boolean'?'true\n':/^string/.test(result)?'ok\n':'7\n',carriers});
 }

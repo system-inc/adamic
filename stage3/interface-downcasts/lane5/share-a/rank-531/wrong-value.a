@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly createImportStarHelper:unknown;}
+interface Target {createImportStarHelper(expression: Expression): Expression;}
+function probe(value:Base):void {const emitHelpers=()=>value as Target;console.log(`${emitHelpers().createImportStarHelper({value:7}).value}`);}
+probe({createImportStarHelper:7});

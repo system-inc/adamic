@@ -258,6 +258,165 @@
         "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
       ],
       "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8"
+    },
+    {
+      "receiver_type_id": 13377,
+      "type": "SyntacticTypeNodeBuilderResolver",
+      "field": "markNodeReuse",
+      "declared_types": [
+        "<T extends Node>(context: SyntacticTypeNodeBuilderContext, range: T, location: Node | undefined) => T"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "line": 196,
+        "column": 49
+      },
+      "rank": 195,
+      "certified": false,
+      "directory": "gap-195",
+      "read": "resolver.markNodeReuse",
+      "declarations": [
+        "markNodeReuse<T extends Node>(context: SyntacticTypeNodeBuilderContext, range: T, location: Node | undefined): T;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 5801,
+      "utf16End": 5823,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createImmediatelyInvokedArrowFunction",
+      "declared_types": [
+        "{ (statements: readonly Statement[]): ImmediatelyInvokedArrowFunction; (statements: readonly Statement[], param: ParameterDeclaration, paramValue: Expression): ImmediatelyInvokedArrowFunction; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 977,
+        "column": 26
+      },
+      "rank": 438,
+      "certified": false,
+      "directory": "gap-438",
+      "read": "factory.createImmediatelyInvokedArrowFunction",
+      "declarations": [
+        "createImmediatelyInvokedArrowFunction(statements: readonly Statement[]): ImmediatelyInvokedArrowFunction;",
+        "createImmediatelyInvokedArrowFunction(statements: readonly Statement[], param: ParameterDeclaration, paramValue: Expression): ImmediatelyInvokedArrowFunction;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 38551,
+      "utf16End": 38596,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "copyCustomPrologue",
+      "declared_types": [
+        "{ (source: readonly Statement[], target: Statement[], statementOffset: number, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined, filter?: ((node: Statement) => boolean) | undefined): number; (source: readonly Statement[], target: Statement[], statementOffset: number | undefined, visitor?: ((node..."
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2564,
+        "column": 31
+      },
+      "rank": 579,
+      "certified": false,
+      "directory": "gap-579",
+      "read": "factory.copyCustomPrologue",
+      "declarations": [
+        "copyCustomPrologue(source: readonly Statement[], target: Statement[], statementOffset: number, visitor?: (node: Node) => VisitResult<Node | undefined>, filter?: (node: Statement) => boolean): number;",
+        "copyCustomPrologue(source: readonly Statement[], target: Statement[], statementOffset: number | undefined, visitor?: (node: Node) => VisitResult<Node | undefined>, filter?: (node: Statement) => boolean): number | undefined;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 113108,
+      "utf16End": 113134,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 6948,
+      "type": "ObjectAllocator",
+      "field": "getIdentifierConstructor",
+      "declared_types": [
+        "() => new (kind: SyntaxKind.Identifier, pos: number, end: number) => Identifier"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 707,
+        "column": 13
+      },
+      "rank": 459,
+      "certified": false,
+      "directory": "gap-459",
+      "read": "objectAllocator.getIdentifierConstructor",
+      "declarations": [
+        "getIdentifierConstructor(): new (kind: SyntaxKind.Identifier, pos: number, end: number) => Identifier;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/utilities.ts",
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "declarationSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 32404,
+      "utf16End": 32444,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower reading Leaf yet"
+    },
+    {
+      "receiver_type_id": 6948,
+      "type": "ObjectAllocator",
+      "field": "getTokenConstructor",
+      "declared_types": [
+        "() => new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 708,
+        "column": 13
+      },
+      "rank": 462,
+      "certified": false,
+      "directory": "gap-462",
+      "read": "objectAllocator.getTokenConstructor",
+      "declarations": [
+        "getTokenConstructor(): new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind>;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/utilities.ts",
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "declarationSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 32461,
+      "utf16End": 32496,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower reading Leaf yet"
     }
   ]
 }

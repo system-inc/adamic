@@ -1,8 +1,8 @@
-Built: 43 callable pair certificates / 201 reads / 129 .a fixtures, plus documented code frontiers.
-Commits: a3dd5fd9 and a6277811 already pushed; this checkpoint adds 13 pairs on codex/views-callables-a.
-Checks: source Node, native release/ASan/UBSan, JavaScript and leak controls; original declarations and count rows checked. Global counts remains outside-share red.
-Mutants: 86 cumulative executable arity mutants, with 26 new instances caught by pinned exit/message assertions.
-Uncovered: ranked pending queue retained; Set dependency 058635b9 listed without merging it; no compiler/runtime code changed.
+Built: 54 callable pair certificates / 237 reads / 162 .a fixtures; this continuation adds 24 / 79.
+Commits: a3dd5fd9, a6277811 and c07e0670 pushed; checkpoint four follows on codex/views-callables-a.
+Checks: Node truth, native release/ASan/UBSan, JavaScript, finishing leak checks, original declarations and append-only counts. Global counts remains outside-share red.
+Mutants: 108 cumulative executable arity mutants caught by pinned exit/message assertions, plus source-verifier mutants.
+Uncovered: 712 pairs / 1179 reads pending; 68 pairs / 1143 reads need code, including 34 Set dependencies on 058635b9.
 
 Certified ranks: 102, 120, 276, 291, 435, 450, 453, 456, 465, 357, 363, 444, 429, 285, 306, 333, 354, 360, 366, 369, 372, 375, 396, 399, 402, 426, 477, 486, 489, 513.
 The ledger assigns 897 remaining pairs / 2742 candidate reads before exclusions.
@@ -155,3 +155,59 @@ no blocker is inferred from the reduced generator not handling their receivers.
 Checkpoint three final oracle PASS 23.974s; share counts update PASS 17.684s; source verification PASS. The ledger retains 728 pending pairs / 1239 reads and 63 code-needed pairs / 1119 reads, including Set dependencies.
 
 Required global counts update exits 1 in 46.039s on outside-share fixtures. The restored count/frontier check and vet pass. An additional source-verifier mutant renames the original intrinsic rest parameter at rank 15: verifier exits 1 naming intrinsic declaration changed 15; restoring the source returns green. No invalid-C probe is counted as a mutant.
+
+Checkpoint four certifies ranks 336, 471, 510, 528, 531, 534, 537, 540,
+576, 585 and 591: 11 pairs / 36 reads. This continuation adds 24 pairs /
+79 reads in two checkpoints of 13 and 11. Lane totals become 210 / 2818 pairs
+and 2936 / 11063 candidate reads. Counts append 33 rows, leaving all previous
+129 share rows unchanged. Original TypeComparer callable alias and the complete
+PrivateIdentifierKind enum are retained and independently checked against the
+source pin. Adjacent Ternary and SyntaxKind use number representations;
+certification of their full enum value domains is not claimed.
+
+Five further Node-valid code controls cover 24 reads: generic markNodeReuse
+(rank 195), overloaded createImmediatelyInvokedArrowFunction (438), overloaded
+copyCustomPrologue (579), and constructor-returning getIdentifierConstructor
+(459) / getTokenConstructor (462). The first three refuse the original member
+contract. The constructor controls stop on the producer's first-class Leaf class
+value before reaching a member guard; no member-specific runtime conclusion is
+claimed. Their exact stop and required representation change are listed.
+An initial bare-method read in these controls was a harness error; restoring the
+original call context exposes the producer frontier. No invalid C counts as a
+mutant. Factory methods whose output syntax contains bind or conditional types
+are ordinary callable reads here; the skipped bind/condition families concern
+receiver/callable binding and conditional read contracts, not those factory names.
+
+Checkpoint four commands (output redirected directly to logs):
+
+```sh
+node stage3/interface-downcasts/lane5/share-a/prepare.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch4-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/prepare-extra-frontiers.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-extra-frontiers-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/verify.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch4-verify.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewCallableShareACounts$' -count=1 -timeout 10m -args -update-counts > /tmp/lane5-a-batch4-counts.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewCallableShareAFrontiers$|^TestCheckedViewCallableShareACounts$|^TestCheckedViewCallableShareA$/^rank-(336|471|510|528|531|534|537|540|576|585|591)$' -count=1 -v -timeout 10m > /tmp/lane5-a-batch4-final.log 2>&1
+```
+
+The ordinary batch passes 16.330s after correcting diagnostic pins and using
+original PrivateIdentifierKind.Field rather than a plain string argument. These
+harness corrections are not counted as code frontiers or mutants.
+
+Checkpoint four final targeted oracle, all share counts and all 13 generic/
+overload/constructor frontiers PASS 39.690s. Share counts update PASS 19.606s.
+Source verification and vet pass. Required global counts update exits 1 in
+55.727s on outside-share fixtures; no compiler/runtime source was changed.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts > /tmp/lane5-a-batch4-counts-global.log 2>&1
+go vet ./internal/oracle > /tmp/lane5-a-batch4-vet.log 2>&1
+```
+
+Two additional independently executed source mutants change TypeComparer's
+parameter name at rank 336 and PrivateIdentifierKind.Field from f to x at rank
+528. The verifier exits 1 naming the altered original alias and enum respectively;
+restoring each fixture returns green. Together with rank 15's rest-parameter
+mutant this proves the newly extended declaration checks can fail. All 22 new
+runtime arity mutant instances remain distinct from these source-verifier checks.
+The raw evidence is in logs/lane5-a-batch4-final.log and the three source-mutant
+logs. All writes are fixtures, oracle tests, counts or reports. This is still a
+partial share delivery, with 712 untested pairs retained in ranked order.

@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+type SyntaxKind=number;
+interface Node {readonly value:number;}
+interface Base {readonly createBaseTokenNode:unknown;}
+interface Target {createBaseTokenNode(kind: SyntaxKind): Node;}
+function probe(value:Base):void {const baseFactory=value as Target;console.log(`${baseFactory.createBaseTokenNode(1).value}`);}
+probe({createBaseTokenNode:(kind: SyntaxKind):Node=>({value:7})});

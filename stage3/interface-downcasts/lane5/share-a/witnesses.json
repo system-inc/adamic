@@ -3,6 +3,358 @@
   "basis": "original member declarations/read spans; reduced adjacent carriers and implementations; candidate counts",
   "members": [
     {
+      "receiver_type_id": 10917,
+      "type": "InferenceContext",
+      "field": "compareTypes",
+      "declared_types": [
+        "TypeComparer"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 26264,
+        "column": 148
+      },
+      "rank": 336,
+      "certified": false,
+      "directory": "rank-336",
+      "expected": "TypeComparer",
+      "read": "context.compareTypes",
+      "declaration": "compareTypes: TypeComparer;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 1559806,
+      "utf16End": 1559826,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Type {readonly value:number;}\ntype Ternary=number;\ntype TypeComparer = (s: Type, t: Type, reportErrors?: boolean) => Ternary;"
+    },
+    {
+      "receiver_type_id": 10094,
+      "type": "ProgramDiagnostics",
+      "field": "getCombinedDiagnostics",
+      "declared_types": [
+        "(program: Program) => DiagnosticCollection"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 2819,
+        "column": 42
+      },
+      "rank": 471,
+      "certified": false,
+      "directory": "rank-471",
+      "expected": "(program: Program) => DiagnosticCollection",
+      "read": "programDiagnostics.getCombinedDiagnostics",
+      "declaration": "getCombinedDiagnostics(program: Program): DiagnosticCollection;",
+      "declarationFile": "src/compiler/programDiagnostics.ts",
+      "declarationSha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "utf16Start": 137427,
+      "utf16End": 137468,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Program {readonly value:number;}\ninterface DiagnosticCollection {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11740,
+      "type": "BaseNodeFactory",
+      "field": "createBaseTokenNode",
+      "declared_types": [
+        "(kind: SyntaxKind) => Node"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1437,
+        "column": 16
+      },
+      "rank": 510,
+      "certified": false,
+      "directory": "rank-510",
+      "expected": "(kind: number) => Node",
+      "read": "baseFactory.createBaseTokenNode",
+      "declaration": "createBaseTokenNode(kind: SyntaxKind): Node;",
+      "declarationFile": "src/compiler/factory/baseNodeFactory.ts",
+      "declarationSha256": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "utf16Start": 52818,
+      "utf16End": 52849,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "type SyntaxKind=number;\ninterface Node {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 12054,
+      "type": "EmitHelperFactory",
+      "field": "createClassPrivateFieldGetHelper",
+      "declared_types": [
+        "(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined) => Expression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1120,
+        "column": 24
+      },
+      "rank": 528,
+      "certified": false,
+      "directory": "rank-528",
+      "expected": "(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined) => Expression",
+      "read": "emitHelpers().createClassPrivateFieldGetHelper",
+      "declaration": "createClassPrivateFieldGetHelper(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;",
+      "declarationFile": "src/compiler/factory/emitHelpers.ts",
+      "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "utf16Start": 45029,
+      "utf16End": 45075,
+      "arity": 4,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Expression {readonly value:number;}\ninterface Identifier {readonly value:number;readonly kind:80;}\nconst enum PrivateIdentifierKind {\r\n    Field = \"f\",\r\n    Method = \"m\",\r\n    Accessor = \"a\",\r\n}"
+    },
+    {
+      "receiver_type_id": 12054,
+      "type": "EmitHelperFactory",
+      "field": "createImportStarHelper",
+      "declared_types": [
+        "(expression: Expression) => Expression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1368,
+        "column": 27
+      },
+      "rank": 531,
+      "certified": false,
+      "directory": "rank-531",
+      "expected": "(expression: Expression) => Expression",
+      "read": "emitHelpers().createImportStarHelper",
+      "declaration": "createImportStarHelper(expression: Expression): Expression;",
+      "declarationFile": "src/compiler/factory/emitHelpers.ts",
+      "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "fileSha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36",
+      "utf16Start": 61515,
+      "utf16End": 61551,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Expression {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11678,
+      "type": "EmitHost",
+      "field": "isEmitBlocked",
+      "declared_types": [
+        "(emitFileName: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 811,
+        "column": 13
+      },
+      "rank": 534,
+      "certified": false,
+      "directory": "rank-534",
+      "expected": "(emitFileName: string) => boolean",
+      "read": "host.isEmitBlocked",
+      "declaration": "isEmitBlocked(emitFileName: string): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+      "utf16Start": 28552,
+      "utf16End": 28570,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 10351,
+      "type": "EmitTextWriter",
+      "field": "decreaseIndent",
+      "declared_types": [
+        "() => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6477,
+        "column": 13
+      },
+      "rank": 537,
+      "certified": false,
+      "directory": "rank-537",
+      "expected": "() => void",
+      "read": "writer.decreaseIndent",
+      "declaration": "decreaseIndent(): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 251859,
+      "utf16End": 251880,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "done\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 10351,
+      "type": "EmitTextWriter",
+      "field": "writeKeyword",
+      "declared_types": [
+        "(text: string) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 793,
+        "column": 9
+      },
+      "rank": 540,
+      "certified": false,
+      "directory": "rank-540",
+      "expected": "(text: string) => void",
+      "read": "stringWriter.writeKeyword",
+      "declaration": "writeKeyword(text: string): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 20930,
+      "utf16End": 20955,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 10037,
+      "type": "ModuleResolutionCache",
+      "field": "clearAllExceptPackageJsonInfoCache",
+      "declared_types": [
+        "() => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 711,
+        "column": 9
+      },
+      "rank": 576,
+      "certified": false,
+      "directory": "rank-576",
+      "expected": "() => void",
+      "read": "moduleResolutionCache.clearAllExceptPackageJsonInfoCache",
+      "declaration": "clearAllExceptPackageJsonInfoCache(): void;",
+      "declarationFile": "src/compiler/moduleNameResolver.ts",
+      "declarationSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "utf16Start": 30735,
+      "utf16End": 30791,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "done\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createFunctionBindCall",
+      "declared_types": [
+        "(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]) => CallExpression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1414,
+        "column": 32
+      },
+      "rank": 585,
+      "certified": false,
+      "directory": "rank-585",
+      "expected": "(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]) => CallExpression",
+      "read": "factory.createFunctionBindCall",
+      "declaration": "createFunctionBindCall(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]): CallExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "utf16Start": 60284,
+      "utf16End": 60314,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Expression {readonly value:number;}\ninterface CallExpression {readonly value:number;readonly kind:214;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createMethodDeclaration",
+      "declared_types": [
+        "(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | und..."
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7798,
+        "column": 22
+      },
+      "rank": 591,
+      "certified": false,
+      "directory": "rank-591",
+      "expected": "(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => MethodDeclaration",
+      "read": "factory.createMethodDeclaration",
+      "declaration": "createMethodDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): MethodDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "utf16Start": 384659,
+      "utf16End": 384690,
+      "arity": 8,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface Decorator {readonly value:number;readonly kind:171;}\ntype ModifierLike = Modifier | Decorator;\ninterface AsteriskToken {readonly value:number;}\ninterface Identifier {readonly value:number;readonly kind:80;}\ninterface StringLiteral {readonly value:number;readonly kind:11;}\ninterface NoSubstitutionTemplateLiteral {readonly value:number;readonly kind:15;}\ninterface NumericLiteral {readonly value:number;readonly kind:9;}\ninterface ComputedPropertyName {readonly value:number;readonly kind:168;}\ninterface PrivateIdentifier {readonly value:number;readonly kind:81;}\ninterface BigIntLiteral {readonly value:number;readonly kind:10;}\ntype PropertyName =\r\n    | Identifier\r\n    | StringLiteral\r\n    | NoSubstitutionTemplateLiteral\r\n    | NumericLiteral\r\n    | ComputedPropertyName\r\n    | PrivateIdentifier\r\n    | BigIntLiteral;\ninterface QuestionToken {readonly value:number;}\ninterface TypeParameterDeclaration {readonly value:number;readonly kind:169;}\ninterface ParameterDeclaration {readonly value:number;readonly kind:170;}\ninterface TypeNode {readonly value:number;}\ninterface Block {readonly value:number;readonly kind:242;}\ninterface MethodDeclaration {readonly value:number;readonly kind:175;}"
+    },
+    {
       "receiver_type_id": 67516,
       "type": "IterationTypesResolver",
       "field": "getGlobalGeneratorType",

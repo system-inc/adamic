@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly clearAllExceptPackageJsonInfoCache:unknown;}
+interface Target {clearAllExceptPackageJsonInfoCache(): void;}
+function probe(value:Base):void {const moduleResolutionCache=value as Target;moduleResolutionCache.clearAllExceptPackageJsonInfoCache();console.log("done");}
+probe({clearAllExceptPackageJsonInfoCache:7});

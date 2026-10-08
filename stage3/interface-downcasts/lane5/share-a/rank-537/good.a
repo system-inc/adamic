@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly decreaseIndent:unknown;}
+interface Target {decreaseIndent(): void;}
+function probe(value:Base):void {const writer=value as Target;writer.decreaseIndent();console.log("done");}
+probe({decreaseIndent:():void=>{}});

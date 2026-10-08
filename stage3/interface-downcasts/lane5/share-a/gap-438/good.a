@@ -1,0 +1,10 @@
+// Original member and read; reduced adjacent carriers and producer.
+interface Statement {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface Expression {readonly value:number;}
+interface ImmediatelyInvokedArrowFunction {readonly value:number;}
+interface Base {readonly createImmediatelyInvokedArrowFunction:unknown;}
+interface Target {createImmediatelyInvokedArrowFunction(statements: readonly Statement[]): ImmediatelyInvokedArrowFunction;
+createImmediatelyInvokedArrowFunction(statements: readonly Statement[], param: ParameterDeclaration, paramValue: Expression): ImmediatelyInvokedArrowFunction;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createImmediatelyInvokedArrowFunction([]).value}`);}
+probe({createImmediatelyInvokedArrowFunction:(statements:readonly Statement[]):ImmediatelyInvokedArrowFunction=>({value:7})});

@@ -1,0 +1,7 @@
+// Original member and read; reduced adjacent carriers and producer.
+interface Node {readonly value:number;}
+interface SyntacticTypeNodeBuilderContext {readonly value:number;}
+interface Base {readonly markNodeReuse:unknown;}
+interface Target {markNodeReuse<T extends Node>(context: SyntacticTypeNodeBuilderContext, range: T, location: Node | undefined): T;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.markNodeReuse({value:7},{value:7},undefined).value}`);}
+probe({markNodeReuse:(context:SyntacticTypeNodeBuilderContext,range:Node,location:Node|undefined):Node=>range});

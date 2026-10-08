@@ -1,0 +1,8 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Type {readonly value:number;}
+type Ternary=number;
+type TypeComparer = (s: Type, t: Type, reportErrors?: boolean) => Ternary;
+interface Base {readonly compareTypes:unknown;}
+interface Target {compareTypes: TypeComparer;}
+function probe(value:Base):void {const context=value as Target;console.log(`${context.compareTypes({value:7},{value:7})}`);}
+probe({compareTypes:(s: Type, t: Type, reportErrors?: boolean):Ternary=>(7)});

@@ -1,0 +1,12 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface Identifier {readonly value:number;readonly kind:80;}
+const enum PrivateIdentifierKind {
+    Field = "f",
+    Method = "m",
+    Accessor = "a",
+}
+interface Base {readonly createClassPrivateFieldGetHelper:unknown;}
+interface Target {createClassPrivateFieldGetHelper(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;}
+function probe(value:Base):void {const emitHelpers=()=>value as Target;console.log(`${emitHelpers().createClassPrivateFieldGetHelper({value:7},{value:7,kind:80},PrivateIdentifierKind.Field,undefined).value}`);}
+probe({createClassPrivateFieldGetHelper:():Expression=>({value:7})});

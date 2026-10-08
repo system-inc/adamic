@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Program {readonly value:number;}
+interface DiagnosticCollection {readonly value:number;}
+interface Base {readonly getCombinedDiagnostics:unknown;}
+interface Target {getCombinedDiagnostics(program: Program): DiagnosticCollection;}
+function probe(value:Base):void {const programDiagnostics=value as Target;console.log(`${programDiagnostics.getCombinedDiagnostics({value:7}).value}`);}
+probe({getCombinedDiagnostics:(program: Program):DiagnosticCollection=>({value:7})});

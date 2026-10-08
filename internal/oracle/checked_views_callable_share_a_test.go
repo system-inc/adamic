@@ -159,6 +159,7 @@ func TestCheckedViewCallableShareAFrontiers(t *testing.T) {
 			Directory string `json:"directory"`
 			Field     string `json:"field"`
 			Stdout    string `json:"stdout"`
+			Stop      string `json:"stop"`
 		} `json:"members"`
 	}
 	if err := json.Unmarshal(data, &evidence); err != nil {
@@ -180,6 +181,9 @@ func TestCheckedViewCallableShareAFrontiers(t *testing.T) {
 			}
 			t.Logf("rank %d original read refusal: %v", member.Rank, err)
 			expected := "Adamic 0.1 refuses checked view read of field " + member.Field + " with unsupported callable contract; prove or implement the callable contract before reading this field"
+			if member.Stop != "" {
+				expected = member.Stop
+			}
 			if !strings.HasSuffix(err.Error(), expected) {
 				t.Fatalf("refusal does not name original member: %v", err)
 			}

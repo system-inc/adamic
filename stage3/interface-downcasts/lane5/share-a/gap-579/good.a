@@ -1,0 +1,9 @@
+// Original member and read; reduced adjacent carriers and producer.
+interface Statement {readonly value:number;}
+interface Node {readonly value:number;}
+type VisitResult<T>=T|readonly Node[];
+interface Base {readonly copyCustomPrologue:unknown;}
+interface Target {copyCustomPrologue(source: readonly Statement[], target: Statement[], statementOffset: number, visitor?: (node: Node) => VisitResult<Node | undefined>, filter?: (node: Statement) => boolean): number;
+copyCustomPrologue(source: readonly Statement[], target: Statement[], statementOffset: number | undefined, visitor?: (node: Node) => VisitResult<Node | undefined>, filter?: (node: Statement) => boolean): number | undefined;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.copyCustomPrologue([],[],0)}`);}
+probe({copyCustomPrologue:(source:readonly Statement[],target:Statement[],statementOffset:number):number=>7});

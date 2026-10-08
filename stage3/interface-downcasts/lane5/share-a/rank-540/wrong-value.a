@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly writeKeyword:unknown;}
+interface Target {writeKeyword(text: string): void;}
+function probe(value:Base):void {const stringWriter=value as Target;stringWriter.writeKeyword("ok");console.log("done");}
+probe({writeKeyword:7});

@@ -1,0 +1,8 @@
+// Original member and read; reduced adjacent carriers and producer.
+enum SyntaxKind {Identifier=80}
+interface Identifier {readonly value:number;}
+class Leaf {readonly value:number=7;constructor(kind:SyntaxKind.Identifier,pos:number,end:number){}}
+interface Base {readonly getIdentifierConstructor:unknown;}
+interface Target {getIdentifierConstructor(): new (kind: SyntaxKind.Identifier, pos: number, end: number) => Identifier;}
+function probe(value:Base):void {const objectAllocator=value as Target;const member=objectAllocator.getIdentifierConstructor();console.log("done");}
+probe({getIdentifierConstructor:()=>Leaf});

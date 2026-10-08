@@ -1,0 +1,8 @@
+// Original member and read; reduced adjacent carriers and producer.
+enum SyntaxKind {Identifier=80}
+interface Token<T> {readonly value:number;}
+class Leaf {readonly value:number=7;constructor(kind:SyntaxKind,pos:number,end:number){}}
+interface Base {readonly getTokenConstructor:unknown;}
+interface Target {getTokenConstructor(): new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind>;}
+function probe(value:Base):void {const objectAllocator=value as Target;const member=objectAllocator.getTokenConstructor();console.log("done");}
+probe({getTokenConstructor:()=>Leaf});

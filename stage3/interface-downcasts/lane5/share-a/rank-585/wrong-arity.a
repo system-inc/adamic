@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface CallExpression {readonly value:number;readonly kind:214;}
+interface Base {readonly createFunctionBindCall:unknown;}
+interface Target {createFunctionBindCall(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]): CallExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFunctionBindCall({value:7},{value:7},[]).value}`);}
+probe({createFunctionBindCall:():CallExpression=>({value:7,kind:214})});

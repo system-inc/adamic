@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly isEmitBlocked:unknown;}
+interface Target {isEmitBlocked(emitFileName: string): boolean;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.isEmitBlocked("ok")}`);}
+probe({isEmitBlocked:(emitFileName: string):boolean=>(true)});

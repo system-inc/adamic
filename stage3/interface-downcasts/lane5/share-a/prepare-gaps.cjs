@@ -25,5 +25,5 @@ for(const rank of [3,9,12,24,174,186,189,195]){
  fs.writeFileSync(path.join(__dirname,directory,'good.a'),'// Original overloaded/generic declarations and read; adjacent carriers reduced.\n'+carriers+'interface Base {readonly '+pair.field+':unknown;}\ninterface Target {'+decl+'}\nfunction probe(value:Base):void {const '+receiver+'=value as Target;console.log(`${'+read.getText(sf)+'('+arg+').value}`);}\nprobe({'+pair.field+':'+producer+'});\n');
  rows.push({...pair,directory,read:read.getText(sf),declarations:declarations.map(n=>n.getText(original)),sourceSha:'050880ce59e30b356b686bd3144efe24f875ebc8',declarationFile:originalFile,fileSha256:crypto.createHash('sha256').update(Buffer.from(sf.text)).digest('hex'),declarationSha256:crypto.createHash('sha256').update(Buffer.from(text)).digest('hex'),utf16Start:read.getStart(sf),utf16End:read.end,stdout:'7\n'});
 }
-const existing=JSON.parse(fs.readFileSync(path.join(__dirname,'gaps.json')));rows.push(...existing.members.filter(m=>m.rank===165));
+const existing=JSON.parse(fs.readFileSync(path.join(__dirname,'gaps.json')));rows.push(...existing.members.filter(m=>![3,9,12,24,174,186,189].includes(m.rank)));
 fs.writeFileSync(path.join(__dirname,'gaps.json'),JSON.stringify({members:rows},null,2)+'\n');console.log('Prepared '+rows.length+' original overload/generic frontier controls.');

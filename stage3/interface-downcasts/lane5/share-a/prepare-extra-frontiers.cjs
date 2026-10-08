@@ -1,0 +1,22 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto');const pin=process.argv[2],ts=require(process.argv[3]);
+const pairs=JSON.parse(fs.readFileSync(path.join(__dirname,'../unknown-callable-pairs-ranked.json')));
+const old=JSON.parse(fs.readFileSync(path.join(__dirname,'gaps.json'))),rows=old.members.filter(m=>![195,438,459,462,579].includes(m.rank));
+const recipes=new Map([
+ [195,['src/compiler/types.ts','SyntacticTypeNodeBuilderResolver','interface Node {readonly value:number;}\ninterface SyntacticTypeNodeBuilderContext {readonly value:number;}','{value:7},{value:7},undefined','(context:SyntacticTypeNodeBuilderContext,range:Node,location:Node|undefined):Node=>range','value','7\n']],
+ [438,['src/compiler/types.ts','NodeFactory','interface Statement {readonly value:number;}\ninterface ParameterDeclaration {readonly value:number;}\ninterface Expression {readonly value:number;}\ninterface ImmediatelyInvokedArrowFunction {readonly value:number;}','[]','(statements:readonly Statement[]):ImmediatelyInvokedArrowFunction=>({value:7})','value','7\n']],
+ [579,['src/compiler/types.ts','NodeFactory','interface Statement {readonly value:number;}\ninterface Node {readonly value:number;}\ntype VisitResult<T>=T|readonly Node[];','[],[],0','(source:readonly Statement[],target:Statement[],statementOffset:number):number=>7','number','7\n']],
+ [459,['src/compiler/utilities.ts','ObjectAllocator','enum SyntaxKind {Identifier=80}\ninterface Identifier {readonly value:number;}\nclass Leaf {readonly value:number=7;constructor(kind:SyntaxKind.Identifier,pos:number,end:number){}}','','()=>Leaf','read','done\n']],
+ [462,['src/compiler/utilities.ts','ObjectAllocator','enum SyntaxKind {Identifier=80}\ninterface Token<T> {readonly value:number;}\nclass Leaf {readonly value:number=7;constructor(kind:SyntaxKind,pos:number,end:number){}}','','()=>Leaf','read','done\n']],
+]);
+for(const [rank,[file,type,carriers,args,producer,result,stdout]] of recipes){
+ const pair=pairs.find(p=>p.rank===rank),original=ts.createSourceFile(file,fs.readFileSync(path.join(pin,file),'utf8'),ts.ScriptTarget.Latest,true),declarations=[];
+ function decls(n){if(ts.isInterfaceDeclaration(n)&&n.name.text===type)for(const m of n.members)if(m.name?.getText(original)===pair.field)declarations.push(m.getText(original));ts.forEachChild(n,decls);}decls(original);if(!declarations.length)throw Error('missing declaration '+rank);
+ const sf=ts.createSourceFile(pair.witness.file,fs.readFileSync(path.join(pin,pair.witness.file),'utf8'),ts.ScriptTarget.Latest,true);let read;
+ function visit(n){if(ts.isPropertyAccessExpression(n)&&n.name.text===pair.field){const lc=sf.getLineAndCharacterOfPosition(n.getStart(sf));if(lc.line+1===pair.witness.line&&lc.character+1===pair.witness.column)read=n;}ts.forEachChild(n,visit);}visit(sf);if(!read)throw Error('missing original read '+rank);
+ const receiver=read.expression.getText(sf);if(!/^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(receiver))throw Error('nonlocal receiver '+rank);
+ const parts=receiver.split('.');let bound='value as Target';for(const k of parts.slice(1).reverse())bound='{'+k+':'+bound+'}';
+ const expression=read.getText(sf),use=result==='read'?'const member='+expression+'();console.log("done");':'console.log(`${'+expression+'('+args+')'+(result==='value'?'.value':'')+'}`);';
+ const directory='gap-'+rank;fs.mkdirSync(path.join(__dirname,directory),{recursive:true});fs.writeFileSync(path.join(__dirname,directory,'good.a'),'// Original member and read; reduced adjacent carriers and producer.\n'+carriers+'\ninterface Base {readonly '+pair.field+':unknown;}\ninterface Target {'+declarations.join('\n')+'}\nfunction probe(value:Base):void {const '+parts[0]+'='+bound+';'+use+'}\nprobe({'+pair.field+':'+producer+'});\n');
+ const hash=f=>crypto.createHash('sha256').update(fs.readFileSync(path.join(pin,f))).digest('hex');rows.push({...pair,directory,read:expression,declarations,sourceSha:'050880ce59e30b356b686bd3144efe24f875ebc8',declarationFile:file,fileSha256:hash(pair.witness.file),declarationSha256:hash(file),utf16Start:read.getStart(sf),utf16End:read.end,stdout,...([459,462].includes(rank)?{stop:"stage 0 can't lower reading Leaf yet"}:{})});
+}
+fs.writeFileSync(path.join(__dirname,'gaps.json'),JSON.stringify({members:rows},null,2)+'\n');console.log('Prepared '+recipes.size+' further original generic/overload/constructor controls.');

@@ -1,0 +1,60 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface AbstractKeyword {readonly value:number;}
+interface AccessorKeyword {readonly value:number;}
+interface AsyncKeyword {readonly value:number;}
+interface ConstKeyword {readonly value:number;}
+interface DeclareKeyword {readonly value:number;}
+interface DefaultKeyword {readonly value:number;}
+interface ExportKeyword {readonly value:number;}
+interface InKeyword {readonly value:number;}
+interface PrivateKeyword {readonly value:number;}
+interface ProtectedKeyword {readonly value:number;}
+interface PublicKeyword {readonly value:number;}
+interface OutKeyword {readonly value:number;}
+interface OverrideKeyword {readonly value:number;}
+interface ReadonlyKeyword {readonly value:number;}
+interface StaticKeyword {readonly value:number;}
+type Modifier =
+    | AbstractKeyword
+    | AccessorKeyword
+    | AsyncKeyword
+    | ConstKeyword
+    | DeclareKeyword
+    | DefaultKeyword
+    | ExportKeyword
+    | InKeyword
+    | PrivateKeyword
+    | ProtectedKeyword
+    | PublicKeyword
+    | OutKeyword
+    | OverrideKeyword
+    | ReadonlyKeyword
+    | StaticKeyword;
+interface Decorator {readonly value:number;readonly kind:171;}
+type ModifierLike = Modifier | Decorator;
+interface AsteriskToken {readonly value:number;}
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+interface NoSubstitutionTemplateLiteral {readonly value:number;readonly kind:15;}
+interface NumericLiteral {readonly value:number;readonly kind:9;}
+interface ComputedPropertyName {readonly value:number;readonly kind:168;}
+interface PrivateIdentifier {readonly value:number;readonly kind:81;}
+interface BigIntLiteral {readonly value:number;readonly kind:10;}
+type PropertyName =
+    | Identifier
+    | StringLiteral
+    | NoSubstitutionTemplateLiteral
+    | NumericLiteral
+    | ComputedPropertyName
+    | PrivateIdentifier
+    | BigIntLiteral;
+interface QuestionToken {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface Block {readonly value:number;readonly kind:242;}
+interface MethodDeclaration {readonly value:number;readonly kind:175;}
+interface Base {readonly createMethodDeclaration:unknown;}
+interface Target {createMethodDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): MethodDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createMethodDeclaration(undefined,undefined,"ok",undefined,undefined,[],undefined,undefined).value}`);}
+probe({createMethodDeclaration:(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined):MethodDeclaration=>({value:7,kind:175})});
