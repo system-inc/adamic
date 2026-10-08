@@ -1,3 +1,23 @@
+Built: original IncrementalBuildInfoEmitSignature[] | undefined forEach pair 97931, one candidate read; total 6 pairs / 9 reads.
+Commits: pair follows rest patch 3dd953f7; no production hook changes needed.
+Checks: five original declaration Node/JS/release/sanitized witnesses PASS 2.607s, finishing cases leak checked; 57 owned counts refreshed PASS 32.143s.
+Mutants: changing the selected tuple alternative arity accepts the malformed tuple and fails the named-refusal oracle (FAIL 0.259s).
+Remaining: four primary optional pairs / six reads and two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOriginalSignatureForEach -count=1 -v
+(/tmp/views-tuples-signature-foreach-final.log);
+ADAMIC_TUPLE_SIGNATURE_FOREACH_MUTANT=skip on
+TestCheckedViewTupleOriginalSignatureForEachMutant
+(/tmp/views-tuples-signature-foreach-mutant.log);
+TestCheckedViewTupleOriginalCounts -count=1 -args -update-counts
+(/tmp/views-tuples-signature-foreach-counts.log). The receiver uses the
+unmodified imported alias including its required any-valued numeric brand,
+and nullable receiver syntax preserves callback suppression when absent.
+The mutation finishes with object/done and exit zero instead of named refusal.
+This is candidate-pair certification, not a new exact reaching-view census.
+
+---
+
 Built: trailing rest tuple object/Map views through the single certificate and producer path.
 Commits: rest admission is separate from optional admission cf1765d1 and foundation 8b37f903.
 Checks: eight Node/backend witnesses include release, sanitized and finishing leak checks; scoped counts PASS 37.966s; lane 2/lane 4 regressions PASS 32.443s.
