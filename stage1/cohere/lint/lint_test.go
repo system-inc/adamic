@@ -62,6 +62,19 @@ type execution struct {
 	duration time.Duration
 }
 
+// moduleDownload is the one line the go command writes to stderr on a clean build: fetching a module the
+// cache doesn't hold yet, as on a fresh box when cohere's pin adds one. Any other stderr still fails.
+var moduleDownload = regexp.MustCompile(`(?m)^go: downloading \S+ \S+\n`)
+
+// commandDiagnostics is the stderr that fails a command: all of it, less the go command's module
+// downloads.
+func commandDiagnostics(name string, stderr []byte) []byte {
+	if name == "go" {
+		return moduleDownload.ReplaceAll(stderr, nil)
+	}
+	return stderr
+}
+
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
@@ -80,7 +93,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	started := time.Now()
 	err = command.Run()
 	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())

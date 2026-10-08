@@ -1,0 +1,403 @@
+{
+  "variants": {
+    "before": {
+      "base": "13f1680026835bc8b71d5a8e790c0038d0deb3e6",
+      "samples_seconds": [
+        {
+          "corpus": 0.002656,
+          "go-list-build": 4.469817,
+          "go-list-run": 3.199171,
+          "go-doc-build": 0.336688,
+          "go-doc-run": 0.207278,
+          "lower": 17.785012,
+          "sanitized-build": 42.297518,
+          "sanitized-run": 1.560648,
+          "source-node": 0.474878,
+          "backend-node": 0.562327,
+          "leaks": 1.419904,
+          "doc-node": 0.53247,
+          "library-node": 3.650375,
+          "release-build": 12.493196,
+          "release-run": 0.216825,
+          "total": 89.251763
+        },
+        {
+          "corpus": 0.002204,
+          "go-list-build": 0.326347,
+          "go-list-run": 4.059179,
+          "go-doc-build": 0.207531,
+          "go-doc-run": 0.16473,
+          "lower": 16.034587,
+          "sanitized-build": 32.221941,
+          "sanitized-run": 1.271311,
+          "source-node": 0.455755,
+          "backend-node": 0.379029,
+          "leaks": 1.404302,
+          "doc-node": 0.481554,
+          "library-node": 4.345727,
+          "release-build": 7.548116,
+          "release-run": 0.176053,
+          "total": 69.126276
+        },
+        {
+          "corpus": 0.013843,
+          "go-list-build": 0.335225,
+          "go-list-run": 3.293904,
+          "go-doc-build": 0.189438,
+          "go-doc-run": 0.173939,
+          "lower": 17.380354,
+          "sanitized-build": 32.53228,
+          "sanitized-run": 1.307631,
+          "source-node": 0.585457,
+          "backend-node": 0.885238,
+          "leaks": 1.451927,
+          "doc-node": 0.472372,
+          "library-node": 4.270457,
+          "release-build": 8.056868,
+          "release-run": 0.179946,
+          "total": 71.205687
+        }
+      ],
+      "median_seconds": {
+        "corpus": 0.002656,
+        "go-list-build": 0.335225,
+        "go-list-run": 3.293904,
+        "go-doc-build": 0.207531,
+        "go-doc-run": 0.173939,
+        "lower": 17.380354,
+        "sanitized-build": 32.53228,
+        "sanitized-run": 1.307631,
+        "source-node": 0.474878,
+        "backend-node": 0.562327,
+        "leaks": 1.419904,
+        "doc-node": 0.481554,
+        "library-node": 4.270457,
+        "release-build": 8.056868,
+        "release-run": 0.179946,
+        "total": 71.205687
+      }
+    },
+    "split": {
+      "base": "13f1680026835bc8b71d5a8e790c0038d0deb3e6",
+      "samples_seconds": [
+        {
+          "corpus": 0.002204,
+          "go-list-build": 0.299174,
+          "go-list-run": 3.322214,
+          "go-doc-build": 0.330758,
+          "go-doc-run": 0.178479,
+          "lower": 20.208139,
+          "sanitized-build": 31.051389,
+          "sanitized-run": 1.288547,
+          "source-node": 0.605733,
+          "backend-node": 0.469853,
+          "leaks": 1.580483,
+          "doc-node": 0.457731,
+          "library-node": 3.56901,
+          "release-build": 7.193442,
+          "release-run": 0.174112,
+          "total": 70.791866
+        },
+        {
+          "corpus": 0.002253,
+          "go-list-build": 0.94612,
+          "go-list-run": 7.147095,
+          "go-doc-build": 0.477327,
+          "go-doc-run": 0.215536,
+          "lower": 19.994896,
+          "sanitized-build": 44.159023,
+          "sanitized-run": 2.737684,
+          "source-node": 0.590821,
+          "backend-node": 0.505709,
+          "leaks": 1.722211,
+          "doc-node": 0.466231,
+          "library-node": 4.372805,
+          "release-build": 6.96767,
+          "release-run": 0.182776,
+          "total": 90.562734
+        },
+        {
+          "corpus": 0.002104,
+          "go-list-build": 0.30844,
+          "go-list-run": 3.241724,
+          "go-doc-build": 0.203952,
+          "go-doc-run": 0.153752,
+          "lower": 15.310758,
+          "sanitized-build": 32.597826,
+          "sanitized-run": 1.316409,
+          "source-node": 0.495724,
+          "backend-node": 0.372061,
+          "leaks": 1.374988,
+          "doc-node": 0.414855,
+          "library-node": 3.711107,
+          "release-build": 6.180577,
+          "release-run": 0.180453,
+          "total": 65.908137
+        }
+      ],
+      "median_seconds": {
+        "corpus": 0.002204,
+        "go-list-build": 0.30844,
+        "go-list-run": 3.322214,
+        "go-doc-build": 0.330758,
+        "go-doc-run": 0.178479,
+        "lower": 19.994896,
+        "sanitized-build": 32.597826,
+        "sanitized-run": 1.316409,
+        "source-node": 0.590821,
+        "backend-node": 0.469853,
+        "leaks": 1.580483,
+        "doc-node": 0.457731,
+        "library-node": 3.711107,
+        "release-build": 6.96767,
+        "release-run": 0.180453,
+        "total": 70.791866
+      }
+    },
+    "concurrent": {
+      "base": "69c73b375aae3e8132536fdd165654981b1980a5",
+      "samples_seconds": [
+        {
+          "corpus": 0.002924,
+          "go-doc-build": 0.40546,
+          "go-list-build": 0.574303,
+          "library-node": 4.899444,
+          "go-list-run": 5.750807,
+          "lower": 17.630847,
+          "c-emission": 0.09571,
+          "go-doc-run": 0.39277,
+          "backend-node": 0.984162,
+          "doc-node": 1.148982,
+          "source-node": 1.416398,
+          "release-build": 9.371329,
+          "release-run": 0.227177,
+          "sanitized-build": 38.79503,
+          "sanitized-run": 1.608253,
+          "leaks": 1.393894,
+          "total": 59.544964
+        },
+        {
+          "corpus": 0.00223,
+          "go-doc-build": 0.318443,
+          "go-list-build": 0.564193,
+          "library-node": 5.000736,
+          "go-list-run": 5.564085,
+          "lower": 17.980412,
+          "c-emission": 0.091736,
+          "go-doc-run": 0.369219,
+          "doc-node": 1.100926,
+          "backend-node": 1.402201,
+          "source-node": 1.455265,
+          "release-build": 8.079209,
+          "release-run": 0.182367,
+          "sanitized-build": 29.649152,
+          "sanitized-run": 1.19199,
+          "leaks": 1.351091,
+          "total": 50.293726
+        },
+        {
+          "corpus": 0.002423,
+          "go-doc-build": 0.421456,
+          "go-list-build": 0.616033,
+          "library-node": 4.861281,
+          "go-list-run": 5.46265,
+          "lower": 18.599728,
+          "c-emission": 0.123945,
+          "go-doc-run": 1.048355,
+          "source-node": 2.877341,
+          "doc-node": 3.127113,
+          "backend-node": 3.1302,
+          "release-build": 16.755045,
+          "release-run": 0.39277,
+          "sanitized-build": 38.804795,
+          "sanitized-run": 1.545257,
+          "leaks": 1.810446,
+          "total": 60.908576
+        }
+      ],
+      "median_seconds": {
+        "corpus": 0.002423,
+        "go-doc-build": 0.40546,
+        "go-list-build": 0.574303,
+        "library-node": 4.899444,
+        "go-list-run": 5.564085,
+        "lower": 17.980412,
+        "c-emission": 0.09571,
+        "go-doc-run": 0.39277,
+        "backend-node": 1.402201,
+        "doc-node": 1.148982,
+        "source-node": 1.455265,
+        "release-build": 9.371329,
+        "release-run": 0.227177,
+        "sanitized-build": 38.79503,
+        "sanitized-run": 1.545257,
+        "leaks": 1.393894,
+        "total": 59.544964
+      },
+      "command_metrics": [
+        {
+          "name": "concurrent-1",
+          "wall_seconds": 101.7977342559999,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 4351430656,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.09 1.28 1.06 1/137 4699"
+        },
+        {
+          "name": "concurrent-2",
+          "wall_seconds": 85.5973136990001,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 4326510592,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.32 1.36 1.11 1/137 4964"
+        },
+        {
+          "name": "concurrent-3",
+          "wall_seconds": 111.04509883499986,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 4093644800,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.41 1.49 1.19 1/138 5223"
+        }
+      ]
+    },
+    "combined": {
+      "base": "69c73b375aae3e8132536fdd165654981b1980a5",
+      "samples_seconds": [
+        {
+          "corpus": 0.002134,
+          "go-list-build": 0.898732,
+          "go-doc-build": 0.937501,
+          "library-node": 10.299919,
+          "go-list-run": 10.377252,
+          "lower": 22.51652,
+          "c-emission": 0.094292,
+          "source-node": 1.212265,
+          "go-doc-run": 1.265923,
+          "backend-node": 2.147709,
+          "doc-node": 2.147721,
+          "release-build": 8.84797,
+          "release-run": 0.182114,
+          "sanitized-build": 32.327657,
+          "sanitized-run": 1.309117,
+          "leaks": 1.378898,
+          "total": 57.651491
+        },
+        {
+          "corpus": 0.002977,
+          "go-doc-build": 0.384883,
+          "go-list-build": 0.59639,
+          "library-node": 4.990901,
+          "go-list-run": 5.715422,
+          "lower": 17.875668,
+          "c-emission": 0.146101,
+          "go-doc-run": 0.675347,
+          "backend-node": 2.880702,
+          "source-node": 3.221857,
+          "doc-node": 3.383854,
+          "release-build": 9.601403,
+          "release-run": 0.206038,
+          "sanitized-build": 32.540976,
+          "sanitized-run": 1.221302,
+          "leaks": 1.429552,
+          "total": 53.253349
+        },
+        {
+          "corpus": 0.001811,
+          "go-doc-build": 0.431418,
+          "go-list-build": 0.683401,
+          "library-node": 5.346565,
+          "go-list-run": 5.861727,
+          "lower": 19.240093,
+          "c-emission": 0.120098,
+          "go-doc-run": 0.827938,
+          "backend-node": 1.86131,
+          "doc-node": 2.377179,
+          "source-node": 2.514819,
+          "release-build": 8.720127,
+          "release-run": 0.284462,
+          "sanitized-build": 34.029071,
+          "sanitized-run": 1.296066,
+          "leaks": 1.569449,
+          "total": 56.275725
+        }
+      ],
+      "median_seconds": {
+        "corpus": 0.002134,
+        "go-list-build": 0.683401,
+        "go-doc-build": 0.431418,
+        "library-node": 5.346565,
+        "go-list-run": 5.861727,
+        "lower": 19.240093,
+        "c-emission": 0.120098,
+        "source-node": 2.514819,
+        "go-doc-run": 0.827938,
+        "backend-node": 2.147709,
+        "doc-node": 2.377179,
+        "release-build": 8.84797,
+        "release-run": 0.206038,
+        "sanitized-build": 32.540976,
+        "sanitized-run": 1.296066,
+        "leaks": 1.429552,
+        "total": 56.275725
+      },
+      "command_metrics": [
+        {
+          "name": "combined-1",
+          "wall_seconds": 95.39001249099988,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 3832016896,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.64 1.65 1.28 1/138 5560"
+        },
+        {
+          "name": "combined-2",
+          "wall_seconds": 93.45973996800012,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 3820916736,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.97 1.86 1.39 1/136 5876"
+        },
+        {
+          "name": "combined-3",
+          "wall_seconds": 96.277540456,
+          "exit": 0,
+          "sampled_cgroup_peak_bytes": 4139442176,
+          "cgroup_memory_peak_bytes": 5231226880,
+          "load": "1.70 1.87 1.45 1/136 6214"
+        }
+      ]
+    }
+  },
+  "full_package": {
+    "name": "full",
+    "wall_seconds": 821.837727786,
+    "exit": 0,
+    "sampled_cgroup_peak_bytes": 8043773952,
+    "cgroup_memory_peak_bytes": 8050589696,
+    "load": "2.44 2.44 2.35 1/141 9813"
+  },
+  "proofs": {
+    "comparison": {
+      "test": "TestMarkdownWhitespaceLayout",
+      "message": "Go document layout first byte difference at 0 (lengths 199383/199383)",
+      "before_exit": 1,
+      "after_exit": 1,
+      "identical": true
+    },
+    "worker": {
+      "test": "TestMarkdownWhitespaceLayout",
+      "message": "Go layout: exit status 1\ngo: reading overlay: open /tmp/markdown-fixture-deliberately-missing-overlay.json: no such file or directory",
+      "before_exit": 1,
+      "after_exit": 1,
+      "identical": true
+    }
+  },
+  "retained_catches": {
+    "output": 62,
+    "diagnostic": 3,
+    "go_oracle_controls": 3,
+    "total": 68
+  },
+  "canary": "TestMarkdownListLayout/unordered_marker"
+}
