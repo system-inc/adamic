@@ -1,4 +1,4 @@
-// a-check: refused a namespace
+// a-check: checked NotYet: a namespace member other than a function, type, initialized binding or nested namespace yet
 // Reduced from TypeScript 6.0.3, Debug.DebugTypeMapper.
 namespace Debug {
     export class DebugTypeMapper { kind = 0; }

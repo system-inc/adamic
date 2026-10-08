@@ -1,3 +1,3 @@
-// a-check: refused the non-null assertion !
+// a-check: checked
 const values = { Script_Extensions: undefined! as Set<string> };
 console.log("ok");

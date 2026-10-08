@@ -502,5 +502,432 @@
     "header": "// a-check: type error TS2322",
     "body_sha256": "64b854c90960b6617f2cc5b9d38a82c13a09a2e19ee237dbfd16f4afd7d00098",
     "reason": "stage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:11:36: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:19:39: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:9:11: error TS2322: Type 'string' is not assignable to type 'number'.\n"
+  },
+  "stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.nextTick yet",
+    "body_sha256": "11c8170f28104712f3bb9140699ec9f7d53717e2a7c8f81386f3abbf89a12815",
+    "reason": "adamic: /workspace/adamic/stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a:9:14: stage 0 can't lower node:process.Process.nextTick yet\n"
+  },
+  "stage3/adapt/71-writable-views/language-questions/generic-storage.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "dde98ac47231c7eebe63a5f69af0d7665fe712c628fd71022706d802633e4e0f",
+    "reason": ""
+  },
+  "stage3/adapt/76-truthful-casts/same-map-proposal.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused overload 1 of sameMap result (T | U)[] cannot be served by implementation result readonly (T | U)[] | undefined",
+    "body_sha256": "445f02195187ee666ca8a9183656a9da8429b33286461f68f8377b076824f92a",
+    "reason": "adamic: /workspace/adamic/stage3/adapt/76-truthful-casts/same-map-proposal.a:4:1: Adamic 0.1 refuses overload 1 of sameMap result (T | U)[] cannot be served by implementation result readonly (T | U)[] | undefined; make the implementation result covariant with every overload result\n"
+  },
+  "stage3/drivers/parser/evidence/front23/call-graph/depth-12-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "6db8c73455274bb093971c936268fe15288bdc2e0724094f20812375ff936c8a",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front23/call-graph/depth-12-edges-2.a:15:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "e5d10040102d9b6ba0d06ee304123e60fd86d0d7190dfb43042fb36561a69dbc",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a:19:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front23/call-graph/depth-20-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "0afdd86a60aef5f5969e2d4eb4488d419351cb727364bb971d352cdf54494ffa",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front23/call-graph/depth-20-edges-2.a:23:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front23/call-graph/depth-24-edges-1.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "4d5e8a13f142f7ac50a5ed40cd8a1e9521db883105374859728d2eb5d177ec47",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front23/call-graph/depth-24-edges-1.a:27:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front23/call-graph/depth-24-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "1c62c4489853b447f34d5ab34c8da34d7fc23822dfc95a863a233e643e72e818",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front23/call-graph/depth-24-edges-2.a:27:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front24/call-graph/depth-12-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "6db8c73455274bb093971c936268fe15288bdc2e0724094f20812375ff936c8a",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front24/call-graph/depth-12-edges-2.a:15:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front24/call-graph/depth-16-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "e5d10040102d9b6ba0d06ee304123e60fd86d0d7190dfb43042fb36561a69dbc",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front24/call-graph/depth-16-edges-2.a:19:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front24/call-graph/depth-20-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "0afdd86a60aef5f5969e2d4eb4488d419351cb727364bb971d352cdf54494ffa",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front24/call-graph/depth-20-edges-2.a:23:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front24/call-graph/depth-24-edges-1.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "4d5e8a13f142f7ac50a5ed40cd8a1e9521db883105374859728d2eb5d177ec47",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front24/call-graph/depth-24-edges-1.a:27:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/evidence/front24/call-graph/depth-24-edges-2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "1c62c4489853b447f34d5ab34c8da34d7fc23822dfc95a863a233e643e72e818",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/front24/call-graph/depth-24-edges-2.a:27:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/native-arguments-length-value.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "d347196663778446e1a3dd105082ea69dd115efaef74b3fd7d8e2e24cc5c6b8c",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-arguments-length.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "a63dc5f8ab697585356b4a6f84e30d64372755ae420c8d83720817538a5308f0",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-array-is-array-predicate.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "0b1539d2518af3bb36855d196dcef9fbd564c4407276dd969df47d89528abc34",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-callable-namespace.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module yet",
+    "body_sha256": "1b26fd0bbea9573d7067875e0cd911e5805616f36702e99246266208f19136c8",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-callable-namespace.a:5:5: stage 0 can't lower a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module yet\n"
+  },
+  "stage3/drivers/parser/native-debug-namespace.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a mutable namespace export; use a module or export functions around private state yet",
+    "body_sha256": "b06019190171e380bd55fb515a421b93019e2385adc24049c4200e5dd38f1023",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-debug-namespace.a:4:5: stage 0 can't lower a mutable namespace export; use a module or export functions around private state yet\n"
+  },
+  "stage3/drivers/parser/native-function-any-view-called-only.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read",
+    "body_sha256": "f79dd671d82c1448681e83108454685bd71cd94b531c41d43dd67e221ea703d1",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-function-any-view-called-only.a:6:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+  },
+  "stage3/drivers/parser/native-function-any-view.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read",
+    "body_sha256": "5c4ce0ad775d00f162131a963dd10f7632cb0844078ef32c76012730f4f8fdff",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-function-any-view.a:5:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+  },
+  "stage3/drivers/parser/native-has-own-property.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: hasOwnProperty on a union of differently held members (mixed value descriptors are not represented) yet",
+    "body_sha256": "9047a1b9b5f435e75068d1cdcaa282d0c6bf2673136fd07ec5f8dd78771b2033",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-has-own-property.a:5:12: stage 0 can't lower hasOwnProperty on a union of differently held members (mixed value descriptors are not represented) yet\n"
+  },
+  "stage3/drivers/parser/native-map-before-namespace.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "3ef95aef79c5c2ff7468d0bca9ea33f943a9f3a7bfdbf73b030416ed84423fe7",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a:5:45: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/native-namespace-call-graph.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+    "body_sha256": "e1d1ad79925b4d65cde44deac3c9c5495922e22ba69752dce42ebcafbe8900e9",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-call-graph.a:29:1: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+  },
+  "stage3/drivers/parser/native-namespace-class.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a namespace member other than a function, type, initialized binding or nested namespace yet",
+    "body_sha256": "a388d41c24771df985bbdf9717ddba85c7486ba71f7c26455ee1b393fe039918",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-class.a:4:5: stage 0 can't lower a namespace member other than a function, type, initialized binding or nested namespace yet\n"
+  },
+  "stage3/drivers/parser/native-node-fs-import.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: reading fs yet",
+    "body_sha256": "60724d586b7dc1bd9d39da9c57bede196bb65e377800c73b927427bd45390da0",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-node-fs-import.a:4:23: stage 0 can't lower reading fs yet\n"
+  },
+  "stage3/drivers/parser/native-nonnull.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "7ed6d40c6f1454e7c425888e965cd8e71438b0310712c2ffa159e58786c02ea8",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-predicate-callback.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "f17fd196cbbfa8575413caf123689dd2f814996ef322e18ba74714c2ac36448e",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-predicate-function-view.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "8b5245bf716d9c95aeae9ef47e9161f5723322ade5fc2e1f30044fa17b14a8a8",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-predicate-overload-result.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "f5042cd1b4d908970fe13125451147d7f0651f05a832786cbbba8e60545fcab4",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-predicate-overload.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "407197dafe5f03eda67f12c687ea789932edd7706cc5dcac630e933c98785ab8",
+    "reason": ""
+  },
+  "stage3/drivers/parser/native-process-next-tick-read.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.nextTick yet",
+    "body_sha256": "5b79397b8e503fd5e16ae1cefa54a7d6476f0ad6d051ab61cdecefa7874d1ad6",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:7:52: stage 0 can't lower node:process.Process.nextTick yet\n"
+  },
+  "stage3/drivers/parser/native-same-map-side-effect.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "3e978feb7e3de3c5d004188a4630e7e46f7f76a50a5eea47288fb6536fd3658d",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/parser/native-same-map-side-effect.a:10:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/parser/native-some-predicate-overload.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "a18b877e7eff838f0f938ebf3ab78a6546bc017ecd779f71a5469c1f05fc2b5a",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/02-namespace.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "fa404c10c639239d728174f3fb53ce6822af5c03a7f8dcc90091c2a4fef54f4c",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/05-comma.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "b5f96039949bd4f8ae4d39c1c359de3c400c0612bdbe9219edd99cdc58916a22",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/06-shebang.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "befb2aff09367bff346852e78aea55a246b60374d5b24d78224131c047dad5d8",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/07-initializer.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "0a80478e8e378bd4aeefb82191bed0955c178b4e3b6cdc234962c2ff655e9e6f",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/08-codepoint.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "07fe3481e22acab6b7641d13b686f6a16c632846a4822ca295170bca1b234014",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/10-property.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "68a49fc6585cbcea9487eba7205c5161238949f92d4200c0606d2c128a2902d4",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/15-condition.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "4ef768c1f7b677ac67259b8d12fa33ba13a2e1bc0339d8b31efe0e9a5228c022",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/02-namespace.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "fa404c10c639239d728174f3fb53ce6822af5c03a7f8dcc90091c2a4fef54f4c",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/05-comma.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "b5f96039949bd4f8ae4d39c1c359de3c400c0612bdbe9219edd99cdc58916a22",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/06-shebang.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "befb2aff09367bff346852e78aea55a246b60374d5b24d78224131c047dad5d8",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/07-initializer.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "0a80478e8e378bd4aeefb82191bed0955c178b4e3b6cdc234962c2ff655e9e6f",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/08-codepoint.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "07fe3481e22acab6b7641d13b686f6a16c632846a4822ca295170bca1b234014",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/10-property.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "68a49fc6585cbcea9487eba7205c5161238949f92d4200c0606d2c128a2902d4",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/combined-records-library/witnesses/15-condition.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "4ef768c1f7b677ac67259b8d12fa33ba13a2e1bc0339d8b31efe0e9a5228c022",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/02-namespace.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "fa404c10c639239d728174f3fb53ce6822af5c03a7f8dcc90091c2a4fef54f4c",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/05-comma.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "b5f96039949bd4f8ae4d39c1c359de3c400c0612bdbe9219edd99cdc58916a22",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/06-shebang.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "befb2aff09367bff346852e78aea55a246b60374d5b24d78224131c047dad5d8",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/07-initializer.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "0a80478e8e378bd4aeefb82191bed0955c178b4e3b6cdc234962c2ff655e9e6f",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/08-codepoint.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "07fe3481e22acab6b7641d13b686f6a16c632846a4822ca295170bca1b234014",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/10-property.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "68a49fc6585cbcea9487eba7205c5161238949f92d4200c0606d2c128a2902d4",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3-records/witnesses/15-condition.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "4ef768c1f7b677ac67259b8d12fa33ba13a2e1bc0339d8b31efe0e9a5228c022",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/02-namespace.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "fa404c10c639239d728174f3fb53ce6822af5c03a7f8dcc90091c2a4fef54f4c",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/05-comma.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "b5f96039949bd4f8ae4d39c1c359de3c400c0612bdbe9219edd99cdc58916a22",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/06-shebang.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "befb2aff09367bff346852e78aea55a246b60374d5b24d78224131c047dad5d8",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/07-initializer.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "0a80478e8e378bd4aeefb82191bed0955c178b4e3b6cdc234962c2ff655e9e6f",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/08-codepoint.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "07fe3481e22acab6b7641d13b686f6a16c632846a4822ca295170bca1b234014",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/10-property.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "68a49fc6585cbcea9487eba7205c5161238949f92d4200c0606d2c128a2902d4",
+    "reason": ""
+  },
+  "stage3/drivers/scanner/evidence/native3/witnesses/15-condition.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "4ef768c1f7b677ac67259b8d12fa33ba13a2e1bc0339d8b31efe0e9a5228c022",
+    "reason": ""
   }
 }

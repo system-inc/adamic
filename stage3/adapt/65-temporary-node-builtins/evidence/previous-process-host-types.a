@@ -1,4 +1,4 @@
-// a-check: type error TS2591
+// a-check: checked NotYet: node:process.Process.nextTick yet
 // From TypeScript 6.0.3, src/compiler/core.ts:2588-2595
 // Type-only import activates library's pinned Node loader in this isolated probe.
 import type {} from "node:process";

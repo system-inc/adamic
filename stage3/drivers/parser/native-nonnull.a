@@ -1,4 +1,4 @@
-// a-check: refused the non-null assertion !
+// a-check: checked
 // From TypeScript 6.0.3, src/compiler/core.ts:36
 // Permanent adaptation 30's checked indexed read, reduced to the refused form.
 const array: readonly number[] = [1];

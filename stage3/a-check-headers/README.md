@@ -18,7 +18,7 @@ header predicate; the ordinary scan separately invokes the real compiler on
 all 137 files. [batch4-header-mutants.json](batch4-header-mutants.json) records
 both mutants. Headers are restored after every experiment.
 
-Batch 5 checks all 529 added or modified programs in place, including 501 new
+The initial batch 5 scan checks 529 added or modified programs in place, including 501 new
 files and 39 staged driver paths. All pass: 465 checked (including 114 NotYet),
 43 refused, and 21 checker errors. Only 72 headers changed: 37 refusal reasons,
 15 checker codes, and 20 accepted/NotYet expectations.
@@ -27,3 +27,12 @@ reasons. The unchanged pinned Gate.aCheck rejects all 72 wrong expectations and
 all 52 removed error headers against captured real diagnostics: 124 catches.
 The separate ordinary scan invokes the real compiler on every original path.
 [batch5-header-mutants.json](batch5-header-mutants.json) records that proof.
+
+The final landing scan also includes 137 batch 4 programs new relative to main.
+All 666 paths pass in place: 546 checked (including 143 NotYet), 76 refused,
+and 44 checker errors. There are 638 new files relative to main and 501 relative
+to the area base; all 39 changed driver paths are included. Another 61 stale
+headers are refreshed without changing program bodies, for 133 header changes
+in this unit. Wrong expectations are caught for all 133; removing all 56
+current error headers is caught too: 189 catches using the unchanged predicate.
+The manifests above now record the final combined scan and header proof.

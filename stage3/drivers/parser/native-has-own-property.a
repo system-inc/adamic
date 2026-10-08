@@ -1,4 +1,4 @@
-// a-check: refused a method read as a value (hasOwnProperty would lose its object, and this with it)
+// a-check: checked NotYet: hasOwnProperty on a union of differently held members (mixed value descriptors are not represented) yet
 // From TypeScript 6.0.3, src/compiler/core.ts:1256,1266-1268
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function hasProperty(map: object, key: string): boolean {
