@@ -1,0 +1,90 @@
+{
+  "sha": "74cf77dfed15ee50b4acf97f8ae8fb6bb4ae4c4b",
+  "base": "f4efdd2369311d1420aa53fdf5c1a55bdda811d4",
+  "tools_sha": "7a6b1f5fd959894b8229cabe53fb978fb7536372",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "changed_files": [
+    "internal/native/native.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/native"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "f0bf0fc8060813bf66d0a605777fafc5886bc1d6",
+  "smoke_fixtures": [
+    "internal/oracle/testdata/array_from_length.a",
+    "internal/oracle/testdata/bitwise.a",
+    "internal/oracle/testdata/borrow_chain_reassigned.a",
+    "internal/oracle/testdata/call_targets_sort.a",
+    "internal/oracle/testdata/casts.a",
+    "internal/oracle/testdata/class_oct6_parameters.a",
+    "internal/oracle/testdata/classes.a",
+    "internal/oracle/testdata/closures_throw_uncaught.a",
+    "internal/oracle/testdata/devirtualize_abstract.a",
+    "internal/oracle/testdata/enums_names.a",
+    "internal/oracle/testdata/exceptions_empty.a",
+    "internal/oracle/testdata/finally_leaves.a",
+    "internal/oracle/testdata/fresh_calls.a",
+    "internal/oracle/testdata/generic_method_return.a",
+    "internal/oracle/testdata/inherited_static_field_read.a",
+    "internal/oracle/testdata/json_stringify_numbers.a",
+    "internal/oracle/testdata/library_object_freeze_write.a",
+    "internal/oracle/testdata/lint_runtime_search_calls.a",
+    "internal/oracle/testdata/map_zero_keys.a",
+    "internal/oracle/testdata/maybe_boolean_panic.a",
+    "internal/oracle/testdata/narrowed_writes.a",
+    "internal/oracle/testdata/nbody_runtime_fields.a",
+    "internal/oracle/testdata/normalize_form.a",
+    "internal/oracle/testdata/number_parsing.a",
+    "internal/oracle/testdata/optional_numbers.a",
+    "internal/oracle/testdata/override_same_representation.a",
+    "internal/oracle/testdata/panic.a",
+    "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "internal/oracle/testdata/regions_constructor_capture.a",
+    "internal/oracle/testdata/reuse_global_sibling.a",
+    "internal/oracle/testdata/route_targets_accessor.a",
+    "internal/oracle/testdata/search_halves.a",
+    "internal/oracle/testdata/set_foreach_fnexpr.a",
+    "internal/oracle/testdata/spread_calls.a",
+    "internal/oracle/testdata/stack_forever.a",
+    "internal/oracle/testdata/string_too_long.a",
+    "internal/oracle/testdata/throw_in_writes.a",
+    "internal/oracle/testdata/timsort.a",
+    "internal/oracle/testdata/typeof_string_literal.a",
+    "internal/oracle/testdata/undefined_elements.a",
+    "internal/oracle/testdata/utf8_view_fails.a",
+    "internal/oracle/testdata/weak_narrowed.a",
+    "internal/oracle/testdata/writes.a",
+    "internal/oracle/testdata/devirtualize_modules/main.a",
+    "internal/oracle/testdata/modules/main.a"
+  ],
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/native": 74
+  },
+  "wall_seconds": 223.4,
+  "steps_seconds": {
+    "vet": 147.8,
+    "build": 152.6,
+    "smoke": 155.6,
+    "tests": 220.3,
+    "census": 0.6
+  },
+  "pass": 211,
+  "fail": 0,
+  "skip": 3,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "finished": true
+}
