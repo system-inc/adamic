@@ -192,6 +192,7 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.nullableReferenceObservation(node); err != nil {
+		return nil, err
 	}
 	if err := l.typedArrayExpression(node); err != nil {
 		return nil, err
