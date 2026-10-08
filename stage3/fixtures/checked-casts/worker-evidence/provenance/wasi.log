@@ -1,0 +1,125 @@
+=== RUN   TestArrayHolesWASI
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_scanner_probe.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: 4
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/array-holes-boundaries/library_array_holes_length.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: 4
+        4:true:true
+        true:7:true:9
+        4294967295
+        42:true
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/array-holes-boundaries/library_array_holes_range.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: length:0
+        length:0
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        length:4294967295
+        range:RangeError:Invalid array length
+        ordinary:false
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_references.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: 6:true:value2:true:value5
+        value-1:value50:value99
+        true:value10
+        true:true:10
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_callbacks.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: visits:
+        map:5:0:||||
+        join:||||
+        filter:
+        some:false:every:true
+        reduce:0
+        search:-1:-1:true
+        visits:0:10;
+        map:5:1:0:10||||
+        join:10||||
+        filter:10
+        some:true:every:true
+        reduce:10
+        search:-1:-1:true
+        visits:2:12;
+        map:5:1:||2:12||
+        join:||12||
+        filter:12
+        some:true:every:true
+        reduce:12
+        search:-1:-1:true
+        visits:4:14;
+        map:5:1:||||4:14
+        join:||||14
+        filter:14
+        some:true:every:true
+        reduce:14
+        search:-1:-1:true
+        partial:1:undefined;2:20;4:40;:1:true
+        partial map:|-1|20||40
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_resize.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: before:5:word0||word2||word4
+        shrink:3:word0||word2:true:property1
+        grow:6:word0||word2|||
+        empty:0:true:property1
+        restore:|||
+        RangeError:Invalid array length:4
+        dense:1|2|3||
+        dense:1
+        mutated map:4:10|||
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_toString.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: ,,,,
+        10,,,,
+        ,11,,13,
+        ,,12,,
+        ,,,,14
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_keys.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: ,,,,
+        10,,,,
+        ,11,,13,
+        ,,12,,
+        ,,,,14
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_catch.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: RangeError:Invalid array length:updated-1
+        RangeError:updated-1:3
+        temporary2:2
+        returned:RangeError:Invalid array length
+        resized:RangeError:4
+=== RUN   TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_objects.a
+    array_holes_test.go:121: gate cache node miss
+    array_holes_test.go:126: Node and WASI stdout: true:entry3:true
+        |1:entry3|
+        1:true
+        true:1:true:|false||true
+        |no||yes
+--- PASS: TestArrayHolesWASI (10.67s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_scanner_probe.a (8.38s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/array-holes-boundaries/library_array_holes_length.a (0.24s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/array-holes-boundaries/library_array_holes_range.a (0.23s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_references.a (0.25s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_callbacks.a (0.30s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_resize.a (0.27s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_toString.a (0.24s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_keys.a (0.25s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_catch.a (0.25s)
+    --- PASS: TestArrayHolesWASI/internal/oracle/testdata/library_array_holes_objects.a (0.25s)
+=== RUN   TestArrayHolesWASIRunnerMutants
+    array_holes_test.go:143: gate cache node hit
+=== RUN   TestArrayHolesWASIRunnerMutants/control
+=== RUN   TestArrayHolesWASIRunnerMutants/stdout
+=== RUN   TestArrayHolesWASIRunnerMutants/exit
+--- PASS: TestArrayHolesWASIRunnerMutants (0.35s)
+    --- PASS: TestArrayHolesWASIRunnerMutants/control (0.11s)
+    --- PASS: TestArrayHolesWASIRunnerMutants/stdout (0.12s)
+    --- PASS: TestArrayHolesWASIRunnerMutants/exit (0.11s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.067s

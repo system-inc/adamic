@@ -22,9 +22,8 @@ function run(command, name, environment = {}) {
 function same(actual, expected) {
  return actual.exit === expected.exit && actual.stdout === expected.stdout && actual.stderr === expected.stderr;
 }
-function contract(row, result) {
- return result.exit === row.runtime_exit && result.stdout === row.runtime_stdout && (row.failing ? result.stderr.startsWith('adamic: panic: cast failed:') : result.stderr === '');
-}
+const {contract} = require('./runtime-contract.cjs');
+const emittedChecks = require('./observer-checks.cjs');
 const results = [];
 for (const row of fixtures) {
  const sourcePath = path.join(directory, row.file), text = fs.readFileSync(sourcePath, 'utf8');
@@ -48,28 +47,19 @@ for (const row of fixtures) {
   result.contract = contract(row, result.native) && contract(row, result.javascript) ? 'passed' : 'mismatch';
   // Keep all measured failures visible; verify.cjs still enforces the original goldens.
   if (row.failing && result.contract === 'passed') {
-   // Mutate the real emitted JavaScript, replacing only cast failure calls by void 0.
-   const file = ts.createSourceFile(jsPath, js.stdout, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
-   const edits = [];
-   function visit(n) {
-    if (ts.isCallExpression(n)) {
-     const name = n.expression.getText(file);
-     let castMessage = false;
-     function message(part) { if (ts.isStringLiteral(part) && part.text.startsWith('cast failed:')) castMessage = true; ts.forEachChild(part, message); }
-     for (const argument of n.arguments) message(argument);
-     if (castMessage && ['adamicCast', 'adamicCheckedViewCast', 'panic'].includes(name)) edits.push({start: n.getStart(file), end: n.end, value: name === 'panic' ? 'void 0' : n.arguments[0].getText(file)});
-    }
-    ts.forEachChild(n, visit);
-   }
-   visit(file);
-   if (!edits.length) throw Error(`missing emitted check mutant: ${row.file}`);
-   let mutant = js.stdout;
-   for (const edit of edits.sort((a,b) => b.start - a.start)) mutant = mutant.slice(0, edit.start) + edit.value + mutant.slice(edit.end);
+   const removed = emittedChecks.remove(js.stdout);
+   emittedChecks.requireComplete(removed.code);
+   const retained = emittedChecks.remove(js.stdout, 0);
+   let incompleteRejected = false, diagnostic;
+   try { emittedChecks.requireComplete(retained.code); } catch (error) { incompleteRejected = true; diagnostic = error.message; }
+   if (!incompleteRejected || emittedChecks.checks(retained.code).length !== 1) throw Error(`observer accepted a retained check: ${row.file}`);
+   result.mutants.push({name: 'leave one real emitted check in place', caught_by: 'observer full-set removal audit', remaining_checks: 1, diagnostic});
+   const mutant = removed.code;
    const mutantPath = path.join(scratch, row.file + '.skip-check.mjs');
    fs.writeFileSync(mutantPath, mutant);
    const actual = run([process.execPath, mutantPath], row.file + '.skip-check');
    if (contract(row, actual)) throw Error(`missing-check mutant survived: ${row.file}`);
-   result.mutants.push({name: 'remove real emitted cast-point check', caught_by: 'exit, stdout and cast-point diagnostic contract', observation: actual});
+   result.mutants.push({name: 'remove full emitted cast/view check set', removed_checks: removed.removed, caught_by: 'exit, stdout and cast-point diagnostic contract', observation: actual});
   }
  }
  if (row.failing) {

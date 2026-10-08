@@ -1,0 +1,33 @@
+=== RUN   TestScannerCastCounts
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+--- PASS: TestScannerCastCounts (0.90s)
+PASS
+gate cache: native hits=26 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.911s

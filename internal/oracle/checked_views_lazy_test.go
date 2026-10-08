@@ -45,10 +45,10 @@ func TestCheckedViewLazyHelperMutant(t *testing.T) {
 			if err == nil {
 				// Fixed callable shapes now stop at the runtime read; unsupported
 				// shapes still use the named compile-time refusal below.
-				expected := "adamic: panic: cast failed: field read failed: value.opaque is not initialized; expected (value: number) => number, found missing\n"
+				expected := "adamic: panic: field read failed: value.opaque is not initialized; expected (value: number) => number, found missing\n"
 				sanitized, _ := nativelyUncached(t, program)
 				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+					if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(expected, got.stderr, program) {
 						t.Fatalf("got %#v want %q", got, expected)
 					}
 				}

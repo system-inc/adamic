@@ -9,12 +9,12 @@ func TestCheckedViewCallables(t *testing.T) {
 			t.Parallel()
 			program, path := interfaceFixture(t, "lane2/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
-			if difference := disagreement(want, onNode(t, path)); difference != "" {
+			if difference := viewReadDisagreement(want, onNode(t, path), program); difference != "" {
 				t.Fatal("Node: " + difference)
 			}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
@@ -30,9 +30,9 @@ func TestCheckedViewOpaqueSignature(t *testing.T) {
 		t.Fatalf("Node %#v", truth)
 	}
 	sanitized, _ := nativelyUncached(t, program)
-	expected := "adamic: panic: cast failed: field read failed: (node as Runner).run expected (value: number) => number, found function with incompatible result representation\n"
+	expected := "adamic: panic: field read failed: (node as Runner).run expected (value: number) => number, found function with incompatible result representation\n"
 	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+		if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(expected, got.stderr, program) {
 			t.Fatalf("got %#v want %q", got, expected)
 		}
 	}
@@ -42,12 +42,12 @@ func TestCheckedViewGenericArrayCast(t *testing.T) {
 	t.Parallel()
 	program, path := interfaceFixture(t, "lane2/native-generic-array-cast")
 	want := run{stdout: []byte("1\n")}
-	if difference := disagreement(want, onNode(t, path)); difference != "" {
+	if difference := viewReadDisagreement(want, onNode(t, path), program); difference != "" {
 		t.Fatal(difference)
 	}
 	actual, _ := nativelyUncached(t, program)
 	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Fatalf("%s; got %#v", difference, got)
 		}
 	}
@@ -56,12 +56,12 @@ func TestCheckedViewGenericArrayCast(t *testing.T) {
 func TestCheckedViewSameMap(t *testing.T) {
 	program, path := interfaceFixture(t, "lane2/same-map")
 	want := run{stdout: []byte("true:1:20:3:true\n")}
-	if difference := disagreement(want, onNode(t, path)); difference != "" {
+	if difference := viewReadDisagreement(want, onNode(t, path), program); difference != "" {
 		t.Fatal(difference)
 	}
 	actual, _ := nativelyUncached(t, program)
 	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Fatalf("%s; got %#v", difference, got)
 		}
 	}
@@ -72,12 +72,12 @@ func TestCheckedViewParserReturns(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane2/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
-			if difference := disagreement(want, onNode(t, path)); difference != "" {
+			if difference := viewReadDisagreement(want, onNode(t, path), program); difference != "" {
 				t.Fatal(difference)
 			}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}

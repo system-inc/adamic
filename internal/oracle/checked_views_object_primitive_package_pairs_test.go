@@ -77,13 +77,13 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				nested := "member.version"
 				good := "false\nfalse\nabsent\n"
 				nestedSource := "false\n"
-				nestedMessage := "cast failed: field read failed: member.version is not a string; expected string, found boolean"
+				nestedMessage := "field read failed: member.version is not a string; expected string, found boolean"
 				if pair.Field == "resolvedEntrypoints" {
 					declared = "false | string[] | undefined"
 					nested = "member[0]"
 					good = "false\nstring\nabsent\n"
 					nestedSource = "boolean\n"
-					nestedMessage = "cast failed: element read failed: member[0] expected string, found boolean"
+					nestedMessage = "element read failed: member[0] expected string, found boolean"
 				}
 				if mode == "good" {
 					source = good
@@ -120,7 +120,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				}
 				want := run{stdout: []byte(source)}
 				if mode == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: info." + pair.Field + " matches no member of " + declared + "; expected " + declared + ", found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: info." + pair.Field + " matches no member of " + declared + "; expected " + declared + ", found boolean\n")}
 				}
 				if mode == "nested" {
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: " + nestedMessage + "\n")}
@@ -128,7 +128,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				objectPrimitiveOriginalCount(t, program, name)
 				sanitized, binary := nativelyUncached(t, program)
 				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("original contract: %s; stderr %q", diff, got.stderr)
 					}
 				}
@@ -140,7 +140,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				}
 				caught := func(label string) {
 					for index, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-						if got.exitCode != 0 || disagreement(want, got) == "" {
+						if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 							t.Fatalf("%s must execute and fail only the pin, backend %d: %#v", label, index, got)
 						}
 						t.Logf("%s caught backend %d: exit %d stdout %q", label, index, got.exitCode, got.stdout)

@@ -1,0 +1,5 @@
+caught drop one cast
+caught move tagged example into other with consistent counts
+caught native field-read stop without cast site
+caught javascript field-read stop without cast site
+{"ledger_casts":3957,"node_goldens":20,"runtime_passed":20,"runtime_blocked":0,"observed_mutant_controls":40}

@@ -13,14 +13,14 @@ func TestCheckedViewDictionaryLookupBatch(t *testing.T) {
 	for _, c := range []struct{ name, output, failure string }{
 		{"map-string-good", "name\n", ""},
 		{"map-string-missing", "undefined\n", ""},
-		{"map-string-wrong", "42\n", "adamic: panic: cast failed: field read failed: view['item']; expected string | undefined, found number\n"},
+		{"map-string-wrong", "42\n", "adamic: panic: field read failed: view['item']; expected string | undefined, found number\n"},
 		{"map-generic-good", "name\n", ""},
 		{"map-generic-missing", "undefined\n", ""},
-		{"map-generic-wrong", "42\n", "adamic: panic: cast failed: field read failed: table['item']; expected string | undefined, found number\n"},
+		{"map-generic-wrong", "42\n", "adamic: panic: field read failed: table['item']; expected string | undefined, found number\n"},
 		{"package-paths-good", "name\n", ""},
 		{"package-paths-missing", "missing\n", ""},
-		{"package-paths-wrong", "number\n", "adamic: panic: cast failed: field read failed: view['imports']; expected MapLike<string> | undefined, found number\n"},
-		{"package-paths-nested-wrong", "42\n", "adamic: panic: cast failed: field read failed: table['item']; expected string | undefined, found number\n"},
+		{"package-paths-wrong", "number\n", "adamic: panic: field read failed: view['imports']; expected MapLike<string> | undefined, found number\n"},
+		{"package-paths-nested-wrong", "42\n", "adamic: panic: field read failed: table['item']; expected string | undefined, found number\n"},
 	} {
 		for _, producer := range []bool{false, true} {
 			c := c
@@ -50,7 +50,7 @@ func TestCheckedViewDictionaryLookupBatch(t *testing.T) {
 						if d := disagreement(truth, got); d != "" {
 							t.Fatal(d)
 						}
-					} else if got.exitCode != 70 || string(got.stderr) != c.failure {
+					} else if got.exitCode != 70 || viewReadDiagnosticMismatch(c.failure, got.stderr, program) {
 						t.Fatalf("lookup contract: %#v; want %q", got, c.failure)
 					}
 				}
@@ -77,7 +77,7 @@ func TestCheckedViewDictionaryLookupOriginMutant(t *testing.T) {
 	}
 	got := execute(t, binary)
 	want := "adamic: panic: record operation failed: source storage does not match the declared element representation\n"
-	if got.exitCode != 70 || string(got.stderr) != want {
+	if got.exitCode != 70 || viewReadDiagnosticMismatch(want, got.stderr, program) {
 		t.Fatalf("native mutant must lose the named field refusal: %#v", got)
 	}
 	t.Logf("origin mutant caught by named control: native loses field contract and reaches ordinary storage refusal")

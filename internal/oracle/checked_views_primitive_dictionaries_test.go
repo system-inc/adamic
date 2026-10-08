@@ -65,16 +65,16 @@ func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
 				want := truth
 				if strings.HasPrefix(variant, "wrong") {
 					found := map[string]string{"wrong": "function", "wrong-array": "array", "wrong-object": "object"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value[key]; expected " + declared + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value[key]; expected " + declared + ", found " + found + "\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %#v", diff, got)
 					}
 				}
 				if want.exitCode == 0 {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatal(diff)
 					}
 					if report := leaks(t, program, binary); report != "" {
@@ -107,16 +107,16 @@ func TestCheckedViewPrimitiveDictionarySelector(t *testing.T) {
 			}
 			want := truth
 			if variant == "wrong" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value[key]; expected string | number | boolean | null | undefined, found function\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value[key]; expected string | number | boolean | null | undefined, found function\n")}
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatalf("%s: %#v", diff, got)
 				}
 			}
 			if variant != "wrong" {
 				got, binary := nativelyUncached(t, program)
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatal(diff)
 				}
 				if report := leaks(t, program, binary); report != "" {

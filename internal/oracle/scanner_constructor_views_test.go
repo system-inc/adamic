@@ -81,14 +81,14 @@ func TestScannerStringConstructorProducerMutant(t *testing.T) {
 	if changed != 1 {
 		t.Fatalf("want one substituted host producer, got %d", changed)
 	}
-	expected := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n")}
-	if got := onJavaScriptBackend(t, program); disagreement(expected, got) != "" {
+	expected := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n")}
+	if got := onJavaScriptBackend(t, program); viewReadDisagreement(expected, got, program) != "" {
 		t.Fatalf("imposter must match pinned stop: %#v", got)
 	}
 	t.Logf("producer liar pin: %q", expected.stderr)
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{sanitized, releasedUncached(t, program)} {
-		if diff := disagreement(expected, got); diff != "" {
+		if diff := viewReadDisagreement(expected, got, program); diff != "" {
 			t.Fatalf("liar: %s: %#v", diff, got)
 		}
 	}
@@ -105,7 +105,7 @@ func TestScannerStringConstructorProducerMutant(t *testing.T) {
 		if got.exitCode != 0 || string(got.stdout) != "liar\n1\n" {
 			t.Fatalf("%s unchecked producer must execute successfully: %#v", backend, got)
 		}
-		if disagreement(expected, got) == "" {
+		if viewReadDisagreement(expected, got, program) == "" {
 			t.Fatal("producer-check omission survived")
 		}
 		t.Logf("%s omission caught: exit=%d stdout=%q", backend, got.exitCode, got.stdout)

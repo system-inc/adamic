@@ -65,19 +65,19 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 				want := run{stdout: []byte(text)}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " matches no member of string | number | undefined; expected string | number | undefined, found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of string | number | undefined; expected string | number | undefined, found " + found + "\n")}
 				}
 				if variant == "missing" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " is not initialized; expected string | number | undefined, found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected string | number | undefined, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: stdout %q stderr %q", diff, got.stdout, got.stderr)
 					}
 				}
 				if want.exitCode == 0 {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %s", diff, got.stderr)
 					}
 					if report := leaks(t, program, binary); report != "" {
@@ -204,19 +204,19 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					if group.name == "graph-circular" && variant == "wrong" {
 						found = "number"
 					}
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
 				}
 				if (group.name == "literal-union" || group.name == "bundle-pending" || group.name == "package-peer" || group.name == "reusable-file" || group.name == "builder-signature" || group.name == "graph-circular" || group.name == "watch-version") && variant == "missing" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: stdout %q stderr %q", diff, got.stdout, got.stderr)
 					}
 				}
 				if want.exitCode == 0 {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %s", diff, got.stderr)
 					}
 					if report := leaks(t, program, binary); report != "" {
@@ -308,12 +308,12 @@ func TestPrimitiveOrdinaryBinding(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if diff := disagreement(want, got); diff != "" {
+		if diff := viewReadDisagreement(want, got, program); diff != "" {
 			t.Fatalf("%s: %s", diff, got.stderr)
 		}
 	}
 	got, binary := nativelyUncached(t, program)
-	if diff := disagreement(want, got); diff != "" {
+	if diff := viewReadDisagreement(want, got, program); diff != "" {
 		t.Fatalf("%s: %s", diff, got.stderr)
 	}
 	if report := leaks(t, program, binary); report != "" {
@@ -361,12 +361,12 @@ func TestPrimitiveOrdinaryProperty(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if diff := disagreement(want, got); diff != "" {
+		if diff := viewReadDisagreement(want, got, program); diff != "" {
 			t.Fatalf("%s: %s", diff, got.stderr)
 		}
 	}
 	got, binary := nativelyUncached(t, program)
-	if diff := disagreement(want, got); diff != "" {
+	if diff := viewReadDisagreement(want, got, program); diff != "" {
 		t.Fatalf("%s: %s", diff, got.stderr)
 	}
 	if report := leaks(t, program, binary); report != "" {

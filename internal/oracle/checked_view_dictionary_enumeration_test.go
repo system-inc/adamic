@@ -31,8 +31,8 @@ func TestCheckedViewDictionaryKeys(t *testing.T) {
 				sanitized, binary := nativelyUncached(t, program)
 				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if name == "read-wrong" {
-						diagnostic := "adamic: panic: cast failed: field read failed: view.table['z']; expected string | undefined, found number\n"
-						if got.exitCode != 70 || string(got.stderr) != diagnostic || string(got.stdout) != "2\n10\nz\na\n" {
+						diagnostic := "adamic: panic: field read failed: view.table['z']; expected string | undefined, found number\n"
+						if got.exitCode != 70 || viewReadDiagnosticMismatch(diagnostic, got.stderr, program) || string(got.stdout) != "2\n10\nz\na\n" {
 							t.Fatalf("lazy enumeration/lookup: %#v", got)
 						}
 					} else if d := disagreement(truth, got); d != "" {
@@ -132,17 +132,17 @@ func TestCheckedViewDictionaryValuesEntries(t *testing.T) {
 								if kind == "number" {
 									expected, found = "number", "string"
 								}
-								diagnostic := "adamic: panic: cast failed: field read failed: Object." + method + "(view.table)[key]; expected " + expected + ", found " + found + "\n"
+								diagnostic := "adamic: panic: field read failed: Object." + method + "(view.table)[key]; expected " + expected + ", found " + found + "\n"
 								prefix := ""
 								if kind == "object" {
-									diagnostic = "adamic: panic: cast failed: field read failed: value.name is not a string; expected string, found number\n"
+									diagnostic = "adamic: panic: field read failed: value.name is not a string; expected string, found number\n"
 									prefix = "1\n"
 								}
 								if kind == "array" {
-									diagnostic = "adamic: panic: cast failed: element read failed: value[0] expected string, found number\n"
+									diagnostic = "adamic: panic: element read failed: value[0] expected string, found number\n"
 									prefix = "1\n"
 								}
-								if got.exitCode != 70 || string(got.stderr) != diagnostic || string(got.stdout) != prefix {
+								if got.exitCode != 70 || viewReadDiagnosticMismatch(diagnostic, got.stderr, program) || string(got.stdout) != prefix {
 									t.Fatalf("named enumeration refusal: %#v, want %q stdout %q", got, diagnostic, prefix)
 								}
 							} else if d := disagreement(truth, got); d != "" {
@@ -173,17 +173,17 @@ func TestCheckedViewDictionaryEnumerationMutants(t *testing.T) {
 			if truth.exitCode != 0 {
 				t.Fatalf("Node: %#v", truth)
 			}
-			want := "adamic: panic: cast failed: field read failed: Object.values(view.table)[key]; expected string, found number\n"
+			want := "adamic: panic: field read failed: Object.values(view.table)[key]; expected string, found number\n"
 			prefix := ""
 			if mutant.name == "accept-wrong-shape" {
-				want = "adamic: panic: cast failed: field read failed: Object.values(view.table)[key]; expected Entry, found array\n"
+				want = "adamic: panic: field read failed: Object.values(view.table)[key]; expected Entry, found array\n"
 			}
 			if mutant.name == "drop-transitive-check" {
-				want = "adamic: panic: cast failed: field read failed: value.name is not a string; expected string, found number\n"
+				want = "adamic: panic: field read failed: value.name is not a string; expected string, found number\n"
 				prefix = "1\n"
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if got.exitCode != 70 || string(got.stderr) != want || string(got.stdout) != prefix {
+				if got.exitCode != 70 || viewReadDiagnosticMismatch(want, got.stderr, program) || string(got.stdout) != prefix {
 					t.Fatalf("pinned control: %#v; want %q", got, want)
 				}
 			}

@@ -91,16 +91,16 @@ func TestCheckedViewTupleOriginalRootIndex(t *testing.T) {
 			}
 			want := run{stdout: []byte(sample.stdout)}
 			if sample.required {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: element read failed: values[0] expected IncrementalBuildInfoRoot, found undefined\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: element read failed: values[0] expected IncrementalBuildInfoRoot, found undefined\n")}
 			}
-			if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
+			if difference := viewReadDisagreement(want, onJavaScriptBackend(t, program), program); difference != "" {
 				t.Error("JavaScript: " + difference)
 			}
 			actual, binary := nativelyUncached(t, program)
-			if difference := disagreement(want, actual); difference != "" {
+			if difference := viewReadDisagreement(want, actual, program); difference != "" {
 				t.Errorf("sanitized: %s; %#v", difference, actual)
 			}
-			if difference := disagreement(want, releasedUncached(t, program)); difference != "" {
+			if difference := viewReadDisagreement(want, releasedUncached(t, program), program); difference != "" {
 				t.Error("release: " + difference)
 			}
 			if !sample.required && !t.Failed() {

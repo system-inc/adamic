@@ -9,12 +9,12 @@ func TestCheckedViewNodeArrayRecords(t *testing.T) {
 		{"node-array-lazy", "2:3\nfirst\n", ""},
 		{"node-array-properties-copy", "3:12\n", ""},
 		{"node-array-own-mutation", "4:11:true\n", ""},
-		{"node-array-missing-own", "", "cast failed: field read failed: block(raw).statements.pos is not initialized; expected number, found missing"},
-		{"node-array-wrong-own", "", "cast failed: field read failed: block(raw).statements.pos is not a number; expected number, found string"},
-		{"node-array-wrong-reference", "", "cast failed: element read failed: statements[0] expected Statement, found string"},
-		{"node-array-wrong-element", "", "cast failed: element read failed: statements[0] expected Statement, found number"},
-		{"node-array-wrong-field", "", "cast failed: field read failed: statement.text is not a string; expected string, found number"},
-		{"node-array-wrong-array", "", "cast failed: field read failed: block(raw).statements is not a NodeArray<Statement>; expected NodeArray<Statement>, found object"},
+		{"node-array-missing-own", "", "field read failed: block(raw).statements.pos is not initialized; expected number, found missing"},
+		{"node-array-wrong-own", "", "field read failed: block(raw).statements.pos is not a number; expected number, found string"},
+		{"node-array-wrong-reference", "", "element read failed: statements[0] expected Statement, found string"},
+		{"node-array-wrong-element", "", "element read failed: statements[0] expected Statement, found number"},
+		{"node-array-wrong-field", "", "field read failed: statement.text is not a string; expected string, found number"},
+		{"node-array-wrong-array", "", "field read failed: block(raw).statements is not a NodeArray<Statement>; expected NodeArray<Statement>, found object"},
 		{"node-array-write-literal", "", "field write failed: property 'pos' on array at node-array-write-literal.a:11 has no compatible declared slot"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -25,7 +25,7 @@ func TestCheckedViewNodeArrayRecords(t *testing.T) {
 			// language's additional contract, pinned below for both backends.
 			source := onNode(t, path)
 			if probe.diagnostic == "" {
-				if difference := disagreement(want, source); difference != "" {
+				if difference := viewReadDisagreement(want, source, program); difference != "" {
 					t.Fatal("Node: " + difference)
 				}
 			} else {
@@ -46,7 +46,7 @@ func TestCheckedViewNodeArrayRecords(t *testing.T) {
 			}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}

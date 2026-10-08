@@ -69,17 +69,17 @@ func TestCheckedViewOriginalUnionTargets(t *testing.T) {
 						if group.name == "class" {
 							element = "ClassElement"
 						}
-						pin := "adamic: panic: cast failed: field read failed: viewed." + group.field + " is not a NodeArray<" + element + ">; expected NodeArray<" + element + ">, found number\n"
-						if string(got.stderr) != pin {
+						pin := "adamic: panic: field read failed: viewed." + group.field + " is not a NodeArray<" + element + ">; expected NodeArray<" + element + ">, found number\n"
+						if viewReadDiagnosticMismatch(pin, got.stderr, program) {
 							t.Fatalf("refusal drift: %q", got.stderr)
 						}
-					} else if diff := disagreement(want, got); diff != "" {
+					} else if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %#v", diff, got)
 					}
 				}
 				if want.exitCode == 0 {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %#v", diff, got)
 					}
 					if report := leaks(t, program, binary); report != "" {
@@ -128,13 +128,13 @@ func TestCheckedViewOriginalUnionTargetTags(t *testing.T) {
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: this Base is not a " + group.target + "\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: stdout %q stderr %q", diff, got.stdout, got.stderr)
 					}
 				}
 				if tag != "80" {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s: %s", diff, got.stderr)
 					}
 					if report := leaks(t, program, binary); report != "" {

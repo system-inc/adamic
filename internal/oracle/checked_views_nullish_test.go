@@ -105,8 +105,8 @@ func TestCheckedViewNullishCallableSignatureMutant(t *testing.T) {
 	}
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
-		expected := "adamic: panic: cast failed: field read failed: node.value expected () => string, found function with incompatible result representation\n"
-		if got.exitCode != 70 || string(got.stdout) != "function:false:false\nordinary\n" || string(got.stderr) != expected {
+		expected := "adamic: panic: field read failed: node.value expected () => string, found function with incompatible result representation\n"
+		if got.exitCode != 70 || string(got.stdout) != "function:false:false\nordinary\n" || viewReadDiagnosticMismatch(expected, got.stderr, program) {
 			t.Fatalf("nullable signature: %#v want %q", got, expected)
 		}
 	}

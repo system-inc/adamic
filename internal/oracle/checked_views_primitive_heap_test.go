@@ -29,7 +29,7 @@ func TestCheckedViewPrimitiveHeap(t *testing.T) {
 		} {
 			want := run{stdout: []byte(sample.text + "\n")}
 			if sample.found != "" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value matches no member of string | number | false | undefined; expected string | number | false | undefined, found " + sample.found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of string | number | false | undefined; expected string | number | false | undefined, found " + sample.found + "\n")}
 			}
 			var got run
 			if sanitized && sample.found != "" {

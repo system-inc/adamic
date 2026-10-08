@@ -33,7 +33,7 @@ func TestCheckedViewIntersectionConjunction(t *testing.T) {
 				source.stdout = []byte("name:bad\n")
 			}
 			if variant == "wrong" || variant == "nested" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value does not satisfy every member; expected Named & Counted, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value does not satisfy every member; expected Named & Counted, found object\n")}
 			}
 			if difference := disagreement(source, onNode(t, path)); difference != "" {
 				t.Fatal("source Node: " + difference)
@@ -121,19 +121,19 @@ int main(int argc,char **argv) {
 func TestCheckedViewIntersectionSource(t *testing.T) {
 	for _, probe := range []struct{ name, node, diagnostic string }{
 		{"emit-good", "1:42:p\n", ""}, {"emit-absent", "1:42:none\n", ""},
-		{"emit-wrong", "true:42:p\n", "cast failed: field read failed: node.emitNode.flags is not a number; expected number, found boolean"},
-		{"emit-nested", "1:true:p\n", "cast failed: field read failed: node.emitNode.autoGenerate.id is not a number; expected number, found boolean"},
-		{"emit-root-wrong", "true\n", "cast failed: field read failed: generated.emitNode.flags is not a number; expected number, found boolean"},
-		{"emit-root-nested", "true\n", "cast failed: field read failed: generated.emitNode.autoGenerate.id is not a number; expected number, found boolean"},
+		{"emit-wrong", "true:42:p\n", "field read failed: node.emitNode.flags is not a number; expected number, found boolean"},
+		{"emit-nested", "1:true:p\n", "field read failed: node.emitNode.autoGenerate.id is not a number; expected number, found boolean"},
+		{"emit-root-wrong", "true\n", "field read failed: generated.emitNode.flags is not a number; expected number, found boolean"},
+		{"emit-root-nested", "true\n", "field read failed: generated.emitNode.autoGenerate.id is not a number; expected number, found boolean"},
 		{"brand-good", "name:42\n", ""},
-		{"brand-wrong", "true:42\n", "cast failed: field read failed: view.value.text is not a string; expected string, found boolean"},
+		{"brand-wrong", "true:42\n", "field read failed: view.value.text is not a string; expected string, found boolean"},
 		{"duplicate-good", "name:42:1\n", ""},
 		{"duplicate-absent", "name:42:0\n", ""},
-		{"duplicate-wrong", "name:true:1\n", "cast failed: field read failed: view.value.child.count is not a number; expected number, found boolean"},
-		{"duplicate-literal", "name:42:2\n", "cast failed: field read failed: view.value.maybe expected 1 | undefined, found number 2"},
+		{"duplicate-wrong", "name:true:1\n", "field read failed: view.value.child.count is not a number; expected number, found boolean"},
+		{"duplicate-literal", "name:42:2\n", "field read failed: view.value.maybe expected 1 | undefined, found number 2"},
 		{"good", "name:42\n", ""}, {"absent", "name:42\n", ""},
-		{"wrong", "name:true\n", "cast failed: field read failed: view.value.child.count is not a number; expected number, found boolean"},
-		{"nested", "name:bad\n", "cast failed: field read failed: view.value.child.count is not a number; expected number, found string"},
+		{"wrong", "name:true\n", "field read failed: view.value.child.count is not a number; expected number, found boolean"},
+		{"nested", "name:bad\n", "field read failed: view.value.child.count is not a number; expected number, found string"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane7/"+probe.name)
@@ -155,7 +155,7 @@ func TestCheckedViewIntersectionSource(t *testing.T) {
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}
@@ -222,9 +222,9 @@ func TestCheckedViewIntersectionRootConjunctionProbe(t *testing.T) {
 	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
 		t.Fatal(difference)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value.child.count is not a number; expected number, found boolean\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value.child.count is not a number; expected number, found boolean\n")}
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Errorf("%s; got %#v", difference, got)
 		}
 	}
@@ -235,7 +235,7 @@ func TestCheckedViewIntersectionCompoundDemand(t *testing.T) {
 	program, path := interfaceFixture(t, "lane7/compound-unread")
 	want := run{stdout: []byte("ok\n")}
 	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Fatal(difference)
 		}
 	}
@@ -258,21 +258,21 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 	program, path := interfaceFixture(t, "lane7/recursive-unread")
 	want := run{stdout: []byte("ok\n")}
 	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Fatal(difference)
 		}
 	}
 	for _, test := range []struct{ name, diagnostic string }{
 		{"recursive-good", ""}, {"recursive-absent", ""}, {"recursive-optional-absent", ""}, {"recursive-null-root-absent", ""},
-		{"recursive-null-root-wrong", "cast failed: field read failed: view.value.next.count is not a number; expected number, found boolean"},
-		{"recursive-optional-root", "cast failed: field read failed: view.value.next.count is not a number; expected number, found boolean"}, {"recursive-literal-good", ""},
-		{"recursive-literal-wrong", "cast failed: field read failed: view.value.next.mode expected \"a\\0b\" | \"c\", found string a"},
-		{"recursive-number-literal", "cast failed: field read failed: view.value.next.code expected 1 | undefined, found number 2"},
-		{"recursive-boolean-literal", "cast failed: field read failed: view.value.next.enabled expected true | undefined, found boolean false"},
-		{"recursive-read", "cast failed: field read failed: view.value.next.count is not a number; expected number, found boolean"},
-		{"recursive-deep-wrong", "cast failed: field read failed: view.value.next.next.next.count is not a number; expected number, found boolean"},
-		{"recursive-missing", "cast failed: field read failed: view.value.next.count is not initialized; expected number, found missing"},
-		{"recursive-object-wrong", "cast failed: field read failed: view.value.next is not a Link | undefined; expected Link | undefined, found boolean"},
+		{"recursive-null-root-wrong", "field read failed: view.value.next.count is not a number; expected number, found boolean"},
+		{"recursive-optional-root", "field read failed: view.value.next.count is not a number; expected number, found boolean"}, {"recursive-literal-good", ""},
+		{"recursive-literal-wrong", "field read failed: view.value.next.mode expected \"a\\0b\" | \"c\", found string a"},
+		{"recursive-number-literal", "field read failed: view.value.next.code expected 1 | undefined, found number 2"},
+		{"recursive-boolean-literal", "field read failed: view.value.next.enabled expected true | undefined, found boolean false"},
+		{"recursive-read", "field read failed: view.value.next.count is not a number; expected number, found boolean"},
+		{"recursive-deep-wrong", "field read failed: view.value.next.next.next.count is not a number; expected number, found boolean"},
+		{"recursive-missing", "field read failed: view.value.next.count is not initialized; expected number, found missing"},
+		{"recursive-object-wrong", "field read failed: view.value.next is not a Link | undefined; expected Link | undefined, found boolean"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane7/"+test.name)
@@ -293,7 +293,7 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}
@@ -305,10 +305,10 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
 	for _, test := range []struct{ name, diagnostic string }{
 		{"leading-access-identifier", ""}, {"leading-access-element", ""}, {"leading-access-property", ""},
-		{"leading-access-wrong", "cast failed: field read failed: node.expression.argumentExpression.text is not a string; expected string, found boolean"},
-		{"leading-access-unknown-tag", "cast failed: field read failed: node.expression.kind expected SyntaxKind, found number 999"},
-		{"leading-access-missing", "cast failed: field read failed: node.expression.escapedText is not initialized; expected string, found missing"},
-		{"compound-read", "cast failed: field read failed: view.value.common is not a number; expected number, found boolean"},
+		{"leading-access-wrong", "field read failed: node.expression.argumentExpression.text is not a string; expected string, found boolean"},
+		{"leading-access-unknown-tag", "field read failed: node.expression.kind expected SyntaxKind, found number 999"},
+		{"leading-access-missing", "field read failed: node.expression.escapedText is not initialized; expected string, found missing"},
+		{"compound-read", "field read failed: view.value.common is not a number; expected number, found boolean"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane7/"+test.name)
@@ -329,7 +329,7 @@ func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}

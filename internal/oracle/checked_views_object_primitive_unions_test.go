@@ -21,22 +21,22 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 	for _, sample := range []struct{ name, source, output, message string }{
 		{"optional-absent", "absent\n", "absent\n", ""},
 		{"optional-receiver", "ok\nabsent\n", "ok\nabsent\n", ""},
-		{"required-missing", "absent\n", "", "cast failed: field read failed: value.value is not initialized; expected true | Node | undefined, found missing"},
+		{"required-missing", "absent\n", "", "field read failed: value.value is not initialized; expected true | Node | undefined, found missing"},
 		{"comment-good", "plain\nnested:7\nabsent\ngenerated\ngenerated:8\n", "plain\nnested:7\nabsent\ngenerated\ngenerated:8\n", ""},
-		{"comment-flags-wrong", "nested:false\n", "", "cast failed: field read failed: first.flags is not a number; expected number, found boolean"},
-		{"comment-boolean", "wrong\n", "", "cast failed: field read failed: value.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean"},
+		{"comment-flags-wrong", "nested:false\n", "", "field read failed: first.flags is not a number; expected number, found boolean"},
+		{"comment-boolean", "wrong\n", "", "field read failed: value.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean"},
 		{"literal-good", "text\n42\ntrue:123\n43\nfalse:456\n", "text\n42\ntrue:123\n43\nfalse:456\n", ""},
-		{"literal-boolean", "wrong\n", "", "cast failed: field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean"},
-		{"literal-negative-wrong", "42:123\n", "", "cast failed: field read failed: member.negative is not a boolean; expected boolean, found number"},
-		{"literal-text-wrong", "false:123\n", "", "cast failed: field read failed: member.base10Value is not a string; expected string, found number"},
-		{"node-indicator-false", "false\n", "", "cast failed: field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean"},
-		{"diagnostic-boolean", "undefined\n", "", "cast failed: field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found boolean"},
-		{"diagnostic-code-wrong", "false\n", "", "cast failed: field read failed: member.code is not a number; expected number, found boolean"},
-		{"node-indicator-flags-wrong", "false\n", "", "cast failed: field read failed: member.flags is not a number; expected number, found boolean"},
+		{"literal-boolean", "wrong\n", "", "field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean"},
+		{"literal-negative-wrong", "42:123\n", "", "field read failed: member.negative is not a boolean; expected boolean, found number"},
+		{"literal-text-wrong", "false:123\n", "", "field read failed: member.base10Value is not a string; expected string, found number"},
+		{"node-indicator-false", "false\n", "", "field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean"},
+		{"diagnostic-boolean", "undefined\n", "", "field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found boolean"},
+		{"diagnostic-code-wrong", "false\n", "", "field read failed: member.code is not a number; expected number, found boolean"},
+		{"node-indicator-flags-wrong", "false\n", "", "field read failed: member.flags is not a number; expected number, found boolean"},
 		{"diagnostic-good", "plain\nnested\n", "plain\nnested\n", ""},
-		{"diagnostic-wrong", "42\n", "", "cast failed: field read failed: member.messageText is not a string; expected string, found number"},
+		{"diagnostic-wrong", "42\n", "", "field read failed: member.messageText is not a string; expected string, found number"},
 		{"node-indicator-good", "true\nIdentifier\nabsent\n", "true\nIdentifier\nabsent\n", ""},
-		{"node-indicator-wrong", "42\n", "", "cast failed: field read failed: member.kind is not a string; expected string, found number"},
+		{"node-indicator-wrong", "42\n", "", "field read failed: member.kind is not a string; expected string, found number"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
 			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a"))
@@ -61,7 +61,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 			}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatalf("%s: %#v", diff, got)
 				}
 			}
@@ -76,7 +76,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					t.Fatalf("want one optional policy rollback, got %d", changed)
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 70 || disagreement(want, got) == "" {
+					if got.exitCode != 70 || viewReadDisagreement(want, got, program) == "" {
 						t.Fatalf("optional policy rollback must fail the Node pin in valid code: %#v", got)
 					}
 					t.Logf("optional policy rollback caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -97,7 +97,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					original := *child
 					child.Of, child.Allowed = ir.Boolean, nil
 					for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-						if got.exitCode != 0 || disagreement(want, got) == "" {
+						if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 							t.Fatalf("outer wrong-member mutant must run and fail pin: %#v", got)
 						}
 						t.Logf("outer wrong-member acceptance caught (%s): exit %d stdout %q", sample.name, got.exitCode, got.stdout)
@@ -124,7 +124,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					t.Fatalf("want one member acceptance mutation, got %d", changed)
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 0 || disagreement(want, got) == "" {
+					if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 						t.Fatalf("wrong-member mutant did not run and fail the refusal pin: %#v", got)
 					}
 					t.Logf("wrong-member acceptance caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -154,7 +154,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					t.Fatalf("want one wrong-shape mutation, got %d", changed)
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 0 || disagreement(want, got) == "" {
+					if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 						t.Fatalf("wrong-shape acceptance must run valid release code and fail the pin: %#v", got)
 					}
 					t.Logf("wrong-shape acceptance caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -184,7 +184,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 					if got.exitCode != 0 {
 						t.Fatalf("mutant must run valid release code: %#v", got)
 					}
-					if disagreement(want, got) == "" {
+					if viewReadDisagreement(want, got, program) == "" {
 						t.Fatal("dropped nested check survived")
 					}
 					t.Logf("read check removal caught (%s): exit %d stdout %q", sample.name, got.exitCode, got.stdout)
@@ -279,33 +279,33 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	}
 	for _, sample := range []struct{ name, source, output, message, root, nested string }{
 		{"conditional-good", "false\n2\nabsent\n", "false\n2\nabsent\n", "", "ConditionalType", ""},
-		{"conditional-true", "true\n", "", "cast failed: field read failed: type.resolvedConstraintOfDistributive matches no member of false | Type | undefined; expected false | Type | undefined, found boolean", "ConditionalType", ""},
-		{"conditional-flags-wrong", "false\n", "", "cast failed: field read failed: member.flags is not a TypeFlags; expected TypeFlags, found boolean", "ConditionalType", "member.flags"},
+		{"conditional-true", "true\n", "", "field read failed: type.resolvedConstraintOfDistributive matches no member of false | Type | undefined; expected false | Type | undefined, found boolean", "ConditionalType", ""},
+		{"conditional-flags-wrong", "false\n", "", "field read failed: member.flags is not a TypeFlags; expected TypeFlags, found boolean", "ConditionalType", "member.flags"},
 		{"location-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticWithLocation", ""},
-		{"location-boolean", "wrong\n", "", "cast failed: field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithLocation", ""},
-		{"location-code-wrong", "chain:false\n", "", "cast failed: field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithLocation", "member.code"},
+		{"location-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithLocation", ""},
+		{"location-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithLocation", "member.code"},
 		{"detached-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticWithDetachedLocation", ""},
-		{"detached-boolean", "wrong\n", "", "cast failed: field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithDetachedLocation", ""},
-		{"detached-code-wrong", "chain:false\n", "", "cast failed: field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithDetachedLocation", "member.code"},
+		{"detached-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithDetachedLocation", ""},
+		{"detached-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithDetachedLocation", "member.code"},
 		{"related-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticRelatedInformation", ""},
-		{"related-boolean", "wrong\n", "", "cast failed: field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticRelatedInformation", ""},
-		{"related-code-wrong", "chain:false\n", "", "cast failed: field read failed: member.code is not a number; expected number, found boolean", "DiagnosticRelatedInformation", "member.code"},
+		{"related-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticRelatedInformation", ""},
+		{"related-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticRelatedInformation", "member.code"},
 		{"generated-good", "plain\nnested\nabsent\nundefined\nabsent\n", "plain\nnested\nabsent\nundefined\nabsent\n", "", "AutoGenerateInfo", ""},
-		{"generated-boolean", "wrong\n", "", "cast failed: field read failed: info.prefix matches no member of string | GeneratedNamePart | undefined; expected string | GeneratedNamePart | undefined, found boolean", "AutoGenerateInfo", ""},
-		{"generated-prefix-wrong", "false\n", "", "cast failed: field read failed: member.prefix matches no member of string | undefined; expected string | undefined, found boolean", "AutoGenerateInfo", "member.prefix"},
+		{"generated-boolean", "wrong\n", "", "field read failed: info.prefix matches no member of string | GeneratedNamePart | undefined; expected string | GeneratedNamePart | undefined, found boolean", "AutoGenerateInfo", ""},
+		{"generated-prefix-wrong", "false\n", "", "field read failed: member.prefix matches no member of string | undefined; expected string | undefined, found boolean", "AutoGenerateInfo", "member.prefix"},
 		{"literal-good", "plain\n42\ntrue:123\n", "plain\n42\ntrue:123\n", "", "LiteralType", ""},
-		{"literal-boolean", "wrong\n", "", "cast failed: field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean", "LiteralType", ""},
-		{"literal-negative-wrong", "42:123\n", "", "cast failed: field read failed: member.negative is not a boolean; expected boolean, found number", "LiteralType", "member.negative"},
-		{"literal-text-wrong", "false:123\n", "", "cast failed: field read failed: member.base10Value is not a string; expected string, found number", "LiteralType", ""},
+		{"literal-boolean", "wrong\n", "", "field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean", "LiteralType", ""},
+		{"literal-negative-wrong", "42:123\n", "", "field read failed: member.negative is not a boolean; expected boolean, found number", "LiteralType", "member.negative"},
+		{"literal-text-wrong", "false:123\n", "", "field read failed: member.base10Value is not a string; expected string, found number", "LiteralType", ""},
 		{"source-file-helpers-good", "true\ntrue\n", "true\ntrue\n", "", "SourceFile", ""},
-		{"source-file-helpers-false", "false\n", "", "cast failed: field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
-		{"source-file-uninitialized", "null\n", "", "cast failed: field read failed: file.externalModuleIndicator is not initialized; expected true | Node | undefined, found uninitialized", "SourceFile", ""},
+		{"source-file-helpers-false", "false\n", "", "field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
+		{"source-file-uninitialized", "null\n", "", "field read failed: file.externalModuleIndicator is not initialized; expected true | Node | undefined, found uninitialized", "SourceFile", ""},
 		{"source-file-good", "true\n80\nabsent\nabsent\n", "true\n80\nabsent\nabsent\n", "", "SourceFile", ""},
-		{"source-file-false", "false\n", "", "cast failed: field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
-		{"source-file-kind-wrong", "false\n", "", "cast failed: field read failed: member.kind is not a SyntaxKind; expected SyntaxKind, found boolean", "SourceFile", "member.kind"},
+		{"source-file-false", "false\n", "", "field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
+		{"source-file-kind-wrong", "false\n", "", "field read failed: member.kind is not a SyntaxKind; expected SyntaxKind, found boolean", "SourceFile", "member.kind"},
 		{"diagnostic-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "Diagnostic", ""},
-		{"diagnostic-boolean", "wrong\n", "", "cast failed: field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "Diagnostic", ""},
-		{"diagnostic-code-wrong", "chain:false\n", "", "cast failed: field read failed: member.code is not a number; expected number, found boolean", "Diagnostic", "member.code"},
+		{"diagnostic-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "Diagnostic", ""},
+		{"diagnostic-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "Diagnostic", "member.code"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
 			file, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + sample.name + ".a"))
@@ -359,13 +359,13 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatalf("original contract: %s: %#v", diff, got)
 				}
 			}
 			caught := func(label string) {
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 0 || disagreement(want, got) == "" {
+					if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 						t.Fatalf("%s must run and fail only the named refusal pin: %#v", label, got)
 					}
 					t.Logf("%s caught: exit %d stdout %q", label, got.exitCode, got.stdout)
@@ -402,7 +402,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 					t.Fatal("expected original optional field metadata")
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if got.exitCode != 70 || disagreement(want, got) == "" || !strings.Contains(string(got.stderr), "file.externalModuleIndicator") {
+					if got.exitCode != 70 || viewReadDisagreement(want, got, program) == "" || !strings.Contains(string(got.stderr), "file.externalModuleIndicator") {
 						t.Fatalf("reject-allowed-absence mutant did not fail positive pin: %#v", got)
 					}
 					t.Logf("reject allowed absence caught: exit %d stdout %q", got.exitCode, got.stdout)

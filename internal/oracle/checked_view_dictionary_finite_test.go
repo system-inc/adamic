@@ -38,11 +38,11 @@ func TestCheckedViewDictionaryFiniteKeys(t *testing.T) {
 						continue
 					}
 					found := map[string]string{"wrong": "number", "missing": "undefined", "wrong-array": "array"}[name]
-					want := "adamic: panic: cast failed: field read failed: view[key]; expected " + shape.declared + ", found " + found + "\n"
+					want := "adamic: panic: field read failed: view[key]; expected " + shape.declared + ", found " + found + "\n"
 					if name == "nested-wrong" {
-						want = "adamic: panic: cast failed: field read failed: " + shape.leaf + " is not a number; expected number, found string\n"
+						want = "adamic: panic: field read failed: " + shape.leaf + " is not a number; expected number, found string\n"
 					}
-					if got.exitCode != 70 || string(got.stderr) != want {
+					if got.exitCode != 70 || viewReadDiagnosticMismatch(want, got.stderr, program) {
 						t.Fatalf("finite-key check: %#v; want %q", got, want)
 					}
 				}
@@ -150,7 +150,7 @@ func TestCheckedViewDictionaryOptionalRequiredField(t *testing.T) {
 					if d := disagreement(truth, got); d != "" {
 						t.Fatal(d)
 					}
-				} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: cast failed: field read failed: view?.paths; expected MapLike<string[]>, found undefined\n" {
+				} else if got.exitCode != 70 || viewReadDiagnosticMismatch("adamic: panic: field read failed: view?.paths; expected MapLike<string[]>, found undefined\n", got.stderr, program) {
 					t.Fatalf("optional receiver must preserve required field contract: %#v", got)
 				}
 			}
@@ -179,7 +179,7 @@ func TestCheckedViewDictionaryEnumMap(t *testing.T) {
 						if d := disagreement(truth, got); d != "" {
 							t.Fatal(d)
 						}
-					} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: cast failed: field read failed: view.table['item']; expected WatchDirectoryFlags | undefined, found string\n" {
+					} else if got.exitCode != 70 || viewReadDiagnosticMismatch("adamic: panic: field read failed: view.table['item']; expected WatchDirectoryFlags | undefined, found string\n", got.stderr, program) {
 						t.Fatalf("enum dictionary check: %#v", got)
 					}
 				}

@@ -35,17 +35,17 @@ func TestCheckedViewDictionaryOptionalContainers(t *testing.T) {
 						}
 						continue
 					}
-					want := "adamic: panic: cast failed: field read failed: view?." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found number\n"
+					want := "adamic: panic: field read failed: view?." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found number\n"
 					if !shape.required {
-						want = "adamic: panic: cast failed: field read failed: view?." + shape.field + " matches no member of " + shape.declared + "; expected " + shape.declared + ", found number\n"
+						want = "adamic: panic: field read failed: view?." + shape.field + " matches no member of " + shape.declared + "; expected " + shape.declared + ", found number\n"
 					}
 					if name == "missing" {
-						want = "adamic: panic: cast failed: field read failed: view?." + shape.field + " is not initialized; expected " + shape.declared + ", found missing\n"
+						want = "adamic: panic: field read failed: view?." + shape.field + " is not initialized; expected " + shape.declared + ", found missing\n"
 					}
 					if name == "undefined" {
-						want = "adamic: panic: cast failed: field read failed: view?." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found nullish\n"
+						want = "adamic: panic: field read failed: view?." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found nullish\n"
 					}
-					if got.exitCode != 70 || string(got.stderr) != want {
+					if got.exitCode != 70 || viewReadDiagnosticMismatch(want, got.stderr, program) {
 						t.Fatalf("optional receiver check: %#v; want %q", got, want)
 					}
 				}

@@ -1,6 +1,7 @@
 // Independent ledger coverage, fixture provenance, golden receipts and negative controls.
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process'), crypto = require('node:crypto');
 const here = __dirname;
+const {contract} = require('./runtime-contract.cjs');
 const load = name => JSON.parse(fs.readFileSync(path.join(here, name)));
 const classifications = load('classification.json'), fixtures = load('fixtures.json'), observations = load('observations.json');
 function assert(ok, message) {if (!ok) throw Error(message);}
@@ -27,7 +28,7 @@ for (const fixture of fixtures) {
  if (observed.contract === 'passed') {
   for (const backend of ['native','javascript']) {
    const run = observed[backend];
-   assert(run.exit === fixture.runtime_exit && run.stdout === fixture.runtime_stdout && (fixture.failing ? run.stderr.startsWith('adamic: panic: cast failed:') : run.stderr === ''), `${backend} runtime contract`);
+   assert(contract(fixture, run), `${backend} runtime contract: ${fixture.file}`);
   }
  } else {
   assert(observed.contract === 'blocked' && observed.compiler_exit === 1 && observed.diagnostic.includes('adamic/no-unchecked-cast') && text.startsWith('// a-check: refused adamic/no-unchecked-cast\n'), 'exact compiler blocker and header');
@@ -39,6 +40,14 @@ const wrongClass = structuredClone(classifications);
 wrongClass.rows.find(r => r.id === fixtures[0].site).category = 'other';
 wrongClass.counts.tagged--; wrongClass.counts.other++;
 killed('move tagged example into other with consistent counts', wrongClass);
+const viewFixture = fixtures.find(row => row.category === 'untagged' && row.failing);
+for (const backend of ['native', 'javascript']) {
+ const receipt = observations.results.find(row => row.file === viewFixture.file)[backend];
+ const missingSite = {...receipt, stderr: receipt.stderr.replaceAll(viewFixture.file + ':', '<cast-site-removed>:')};
+ assert(receipt.stderr !== missingSite.stderr, 'missing cast-site mutant seam');
+ assert(!contract(viewFixture, missingSite), `${backend} missing cast-site mutant survived`);
+ console.log(`caught ${backend} field-read stop without cast site`);
+}
 const blocked = observations.results.filter(r => r.contract === 'blocked').map(r => r.file);
 console.log(JSON.stringify({ledger_casts: classifications.rows.length, node_goldens: fixtures.length, runtime_passed: fixtures.length - blocked.length, runtime_blocked: blocked.length, observed_mutant_controls: observations.results.reduce((n,r) => n+r.mutants.length,0)}));
 if (process.argv.includes('--require-runtime')) assert(blocked.length === 0, `checked-cast feature missing for ${blocked.join(', ')}`);

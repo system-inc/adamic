@@ -86,16 +86,16 @@ func TestCheckedViewBrandArrayOriginalPair(t *testing.T) {
 			want := run{stdout: []byte(text)}
 			if variant == "wrong" || variant == "null" {
 				found := map[string]string{"wrong": "number", "null": "nullish"}[variant]
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: element read failed: values[index] expected __String, found " + found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: element read failed: values[index] expected __String, found " + found + "\n")}
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatalf("%s; got %#v", diff, got)
 				}
 			}
 			if want.exitCode == 0 {
 				got, binary := nativelyUncached(t, program)
-				if diff := disagreement(want, got); diff != "" {
+				if diff := viewReadDisagreement(want, got, program); diff != "" {
 					t.Fatal(diff)
 				}
 				if report := leaks(t, program, binary); report != "" {

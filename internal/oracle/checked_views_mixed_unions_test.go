@@ -23,13 +23,13 @@ func TestCheckedViewLane4HelperReads(t *testing.T) {
 			want := sourceWant
 			if fixture == "helper-wrong" {
 				sourceWant.stdout = []byte("true\n42\n")
-				want = run{stdout: []byte("true\n"), exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.unsupported is not a boolean; expected boolean, found number\n")}
+				want = run{stdout: []byte("true\n"), exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported is not a boolean; expected boolean, found number\n")}
 			}
 			if difference := disagreement(sourceWant, onNode(t, path)); difference != "" {
 				t.Fatal("source Node: " + difference)
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
@@ -42,7 +42,7 @@ func TestCheckedViewLane4HelperReads(t *testing.T) {
 					if got.exitCode != 0 {
 						t.Fatalf("mutant must run valid release code, got %#v", got)
 					}
-					if disagreement(want, got) == "" {
+					if viewReadDisagreement(want, got, program) == "" {
 						t.Fatal("unchecked helper mutant escaped pinned read refusal")
 					}
 					t.Logf("unchecked helper mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -79,11 +79,11 @@ func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
 			}
 			want := sourceWant
 			if probe.name == "wrong-boolean" {
-				want = run{stdout: []byte("ordinary\n"), exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.unsupported matches no member of string | number; expected string | number, found boolean\n")}
+				want = run{stdout: []byte("ordinary\n"), exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported matches no member of string | number; expected string | number, found boolean\n")}
 			}
 			actual, binary := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s: stdout %q stderr %q", difference, got.stdout, got.stderr)
 				}
 			}
@@ -100,7 +100,7 @@ func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
 				if difference := disagreement(sourceWant, got); difference != "" {
 					t.Fatalf("mutant must execute the wrong source value: %s, stderr %q", difference, got.stderr)
 				}
-				if disagreement(want, got) == "" {
+				if viewReadDisagreement(want, got, program) == "" {
 					t.Fatal("primitive helper mutant escaped the refusal pin")
 				}
 				t.Logf("primitive helper member-check mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -193,7 +193,7 @@ func TestCheckedViewMixedSelection(t *testing.T) {
 			if difference := disagreement(run{stdout: []byte(sample.nodeWrong)}, onNode(t, path)); difference != "" {
 				t.Fatal("wrong source Node: " + difference)
 			}
-			want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n")}
+			want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n")}
 			for _, got := range []run{execute(t, binary, sample.name, "wrong"), executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, sanitized, sample.name, "wrong"), mixedSelectionJavaScript(t, sample.name, "wrong")} {
 				if difference := disagreement(want, got); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
@@ -301,23 +301,23 @@ func TestCheckedViewBrandString(t *testing.T) {
 			want := sourceWant
 			if strings.HasSuffix(fixture, "wrong") {
 				sourceWant.stdout = []byte("42\n")
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.unsupported is not a __String; expected __String, found number\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported is not a __String; expected __String, found number\n")}
 			}
 			if fixture == "literal-wrong" {
 				sourceWant.stdout = []byte("different\n")
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.unsupported expected __String, found string different\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported expected __String, found string different\n")}
 			}
 			if difference := disagreement(sourceWant, onNode(t, path)); difference != "" {
 				t.Fatal("source Node: " + difference)
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
 			if strings.HasSuffix(fixture, "good") {
 				got, _ := nativelyUncached(t, program)
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatal(difference)
 				}
 			} else {
@@ -330,7 +330,7 @@ func TestCheckedViewBrandString(t *testing.T) {
 					if got.exitCode != 0 {
 						t.Fatalf("mutant must execute valid release code: %#v", got)
 					}
-					if disagreement(want, got) == "" {
+					if viewReadDisagreement(want, got, program) == "" {
 						t.Fatal("brand read mutant escaped refusal")
 					}
 					t.Logf("brand read mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -355,19 +355,19 @@ func TestCheckedViewCompleteBrand(t *testing.T) {
 			want := run{stdout: []byte(text + "\n")}
 			if variant == "wrong" || variant == "null" || variant == "object" {
 				found := map[string]string{"wrong": "number", "null": "null", "object": "object"}[variant]
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value." + field + " is not a __String; expected __String, found " + found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + field + " is not a __String; expected __String, found " + found + "\n")}
 			}
 			if variant == "missing" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value." + field + " is not initialized; expected __String, found missing\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + field + " is not initialized; expected __String, found missing\n")}
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
 			if want.exitCode == 0 {
 				got, _ := nativelyUncached(t, program)
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatal(difference)
 				}
 			}
@@ -381,7 +381,7 @@ func TestCheckedViewCompleteBrand(t *testing.T) {
 					if got.exitCode != 0 {
 						t.Fatalf("read-removal mutant must run valid release code: %#v", got)
 					}
-					if disagreement(want, got) == "" {
+					if viewReadDisagreement(want, got, program) == "" {
 						t.Fatal("brand read bypass escaped refusal pin")
 					}
 					t.Logf("member-check removal caught: exit %d stdout %q", got.exitCode, got.stdout)
@@ -397,7 +397,7 @@ func TestCheckedViewCompleteBrand(t *testing.T) {
 					if got.exitCode != 0 {
 						t.Fatalf("first-member mutant must execute valid release code: %#v", got)
 					}
-					if disagreement(want, got) == "" {
+					if viewReadDisagreement(want, got, program) == "" {
 						t.Fatal("untested first-member substitution escaped Node control")
 					}
 					t.Logf("first-member substitution caught: exit %d stdout %q", got.exitCode, got.stdout)

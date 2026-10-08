@@ -36,9 +36,9 @@ func TestCheckedViewTupleOriginalModuleSpecifiers(t *testing.T) {
 		{"module-specifiers-absent", "absent\n", "", ""},
 		{"module-specifiers-undefined", "absent\n", "", ""},
 		{"module-specifiers-present", "specifier9\n", "", ""},
-		{"module-specifiers-wrong-kind", "boolean\n", "", "cast failed: field read failed: entry[1] is not a readonly string[] | undefined; expected readonly string[] | undefined, found boolean"},
-		{"module-specifiers-wrong-element", "false\n", "", "cast failed: element read failed: entry[1][element] expected string, found boolean"},
-		{"module-specifiers-wrong-arity", "absent\n", "", "cast failed: field read failed: viewed.value is not a OriginalModuleSpecifierTuple; expected OriginalModuleSpecifierTuple, found array"},
+		{"module-specifiers-wrong-kind", "boolean\n", "", "field read failed: entry[1] is not a readonly string[] | undefined; expected readonly string[] | undefined, found boolean"},
+		{"module-specifiers-wrong-element", "false\n", "", "element read failed: entry[1][element] expected string, found boolean"},
+		{"module-specifiers-wrong-arity", "absent\n", "", "field read failed: viewed.value is not a OriginalModuleSpecifierTuple; expected OriginalModuleSpecifierTuple, found array"},
 	})
 }
 
@@ -71,7 +71,7 @@ func TestCheckedViewTupleOriginalModuleKind(t *testing.T) {
 		{"module-kind-absent", "undefined\n", "", ""},
 		{"module-kind-undefined", "undefined\n", "", ""},
 		{"module-kind-present", "relative\n", "", ""},
-		{"module-kind-wrong-literal", "wrong\n", "", "cast failed: field read failed: entry[0] expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found string wrong"},
-		{"module-kind-wrong-kind", "false\n", "", "cast failed: field read failed: entry[0] is not a \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined; expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found boolean"},
+		{"module-kind-wrong-literal", "wrong\n", "", "field read failed: entry[0] expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found string wrong"},
+		{"module-kind-wrong-kind", "false\n", "", "field read failed: entry[0] is not a \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined; expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found boolean"},
 	})
 }

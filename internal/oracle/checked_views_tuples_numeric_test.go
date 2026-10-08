@@ -46,14 +46,14 @@ func verifyOriginalTupleCases(t *testing.T, cases []originalTupleCase) {
 				want = run{exitCode: 70, stdout: []byte(test.prefix), stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
 			}
 			js := onJavaScriptBackend(t, program)
-			if difference := disagreement(want, js); difference != "" {
+			if difference := viewReadDisagreement(want, js, program); difference != "" {
 				t.Fatalf("JavaScript: %s; stdout %q stderr %q exit %d", difference, js.stdout, js.stderr, js.exitCode)
 			}
 			actual, binary := nativelyUncached(t, program)
-			if difference := disagreement(want, actual); difference != "" {
+			if difference := viewReadDisagreement(want, actual, program); difference != "" {
 				t.Fatalf("sanitized: %s; got %#v", difference, actual)
 			}
-			if difference := disagreement(want, releasedUncached(t, program)); difference != "" {
+			if difference := viewReadDisagreement(want, releasedUncached(t, program), program); difference != "" {
 				t.Fatal("release: " + difference)
 			}
 			if want.exitCode == 0 {
@@ -68,10 +68,10 @@ func verifyOriginalTupleCases(t *testing.T, cases []originalTupleCase) {
 func TestCheckedViewTupleOriginalReferencedMap(t *testing.T) {
 	verifyOriginalTupleCases(t, []originalTupleCase{
 		{"references-good", "7\n9\n", "", ""},
-		{"references-key-wrong", "false\n9\n", "", "cast failed: field read failed: entry[0] is not a IncrementalBuildInfoFileId; expected IncrementalBuildInfoFileId, found boolean"},
-		{"references-value-wrong", "7\nfalse\n", "7\n", "cast failed: field read failed: entry[1] is not a IncrementalBuildInfoFileIdListId; expected IncrementalBuildInfoFileIdListId, found boolean"},
-		{"references-length-wrong", "7\n9\n", "", "cast failed: field read failed: references[element] is not a [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId]; expected [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], found array"},
-		{"references-record-wrong", "7\n9\n", "", "cast failed: field read failed: references[element] is not a [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId]; expected [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], found object"},
+		{"references-key-wrong", "false\n9\n", "", "field read failed: entry[0] is not a IncrementalBuildInfoFileId; expected IncrementalBuildInfoFileId, found boolean"},
+		{"references-value-wrong", "7\nfalse\n", "7\n", "field read failed: entry[1] is not a IncrementalBuildInfoFileIdListId; expected IncrementalBuildInfoFileIdListId, found boolean"},
+		{"references-length-wrong", "7\n9\n", "", "field read failed: references[element] is not a [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId]; expected [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], found array"},
+		{"references-record-wrong", "7\n9\n", "", "field read failed: references[element] is not a [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId]; expected [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId], found object"},
 	})
 }
 
@@ -80,7 +80,7 @@ func TestCheckedViewTupleOriginalSignaturePositions(t *testing.T) {
 		{"signature-position-good", "7\nstring\n", "", ""},
 		{"signature-position-empty", "7\nobject\n", "", ""},
 		{"signature-position-single", "7\nobject\n", "", ""},
-		{"signature-position-id-wrong", "false\nstring\n", "", "cast failed: field read failed: value[0] is not a IncrementalBuildInfoFileId; expected IncrementalBuildInfoFileId, found boolean"},
-		{"signature-position-value-wrong", "7\nboolean\n", "7\n", "cast failed: field read failed: value[1] matches no member of [] | EmitSignature; expected [] | EmitSignature, found boolean"},
+		{"signature-position-id-wrong", "false\nstring\n", "", "field read failed: value[0] is not a IncrementalBuildInfoFileId; expected IncrementalBuildInfoFileId, found boolean"},
+		{"signature-position-value-wrong", "7\nboolean\n", "7\n", "field read failed: value[1] matches no member of [] | EmitSignature; expected [] | EmitSignature, found boolean"},
 	})
 }

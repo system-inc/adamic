@@ -122,14 +122,14 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 				want := run{stdout: []byte(source)}
 				switch mode {
 				case "wrong":
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: node.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean\n")}
 				case "nested":
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: first.flags is not a NodeFlags; expected NodeFlags, found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: first.flags is not a NodeFlags; expected NodeFlags, found boolean\n")}
 				}
 				objectPrimitiveOriginalCount(t, program, name)
 				sanitized, binary := nativelyUncached(t, program)
 				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("original contract: %s; stderr %q", diff, got.stderr)
 					}
 				}
@@ -141,7 +141,7 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 				}
 				caught := func(label string) {
 					for index, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-						if got.exitCode != 0 || disagreement(want, got) == "" {
+						if got.exitCode != 0 || viewReadDisagreement(want, got, program) == "" {
 							t.Fatalf("%s must execute and fail the refusal pin, backend %d: %#v", label, index, got)
 						}
 						t.Logf("%s caught backend %d: exit %d stdout %q", label, index, got.exitCode, got.stdout)

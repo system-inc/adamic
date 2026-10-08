@@ -159,19 +159,19 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "number", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
 				}
 				if variant == "missing" && !pair.optional {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + expression + " is not initialized; expected __String, found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not initialized; expected __String, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatalf("%s; got %#v", diff, got)
 					}
 				}
 				if want.exitCode == 0 {
 					got, binary := nativelyUncached(t, program)
-					if diff := disagreement(want, got); diff != "" {
+					if diff := viewReadDisagreement(want, got, program); diff != "" {
 						t.Fatal(diff)
 					}
 					if report := leaks(t, program, binary); report != "" {

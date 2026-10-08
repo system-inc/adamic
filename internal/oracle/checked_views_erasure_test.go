@@ -11,15 +11,15 @@ func TestCheckedViewShapeErasure(t *testing.T) {
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"proven", "hello\n", ""},
 		{"proven-property", "hello\n", ""},
-		{"nonconforming-property", "true\n", "cast failed: field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
-		{"nonconforming", "true\n", "cast failed: field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
-		{"uninitialized", "", "cast failed: field read failed: (held as Identifier).ready is not initialized; expected boolean, found uninitialized"},
+		{"nonconforming-property", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
+		{"nonconforming", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
+		{"uninitialized", "", "field read failed: (held as Identifier).ready is not initialized; expected boolean, found uninitialized"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane3/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {
-				if difference := disagreement(want, onNode(t, path)); difference != "" {
+				if difference := viewReadDisagreement(want, onNode(t, path), program); difference != "" {
 					t.Fatal("Node: " + difference)
 				}
 			} else {
@@ -28,7 +28,7 @@ func TestCheckedViewShapeErasure(t *testing.T) {
 			}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
@@ -36,7 +36,7 @@ func TestCheckedViewShapeErasure(t *testing.T) {
 				eraseShapeChecksMutant(program)
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					t.Logf("mutant exit=%d stdout=%q", got.exitCode, got.stdout)
-					if disagreement(want, got) == "" || got.exitCode != 0 {
+					if viewReadDisagreement(want, got, program) == "" || got.exitCode != 0 {
 						t.Fatalf("unsafe erasure mutant was not caught by a successful wrong execution: %#v", got)
 					}
 				}

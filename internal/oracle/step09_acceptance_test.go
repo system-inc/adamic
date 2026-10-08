@@ -187,11 +187,14 @@ func TestStep09AcceptanceViews(t *testing.T) {
 			expected := truth
 			if fixture.Failing {
 				message := map[string]string{
-					"03_": "cast failed: field read failed: result.info is not a number; expected number, found string",
-					"04_": "cast failed: field read failed: result.value is not a string; expected string, found number",
-					"07_": "cast failed: element read failed: result[0] expected number, found string",
-					"08_": "cast failed: field read failed: result.text is not a string; expected string, found number",
+					"03_": "field read failed: result.info is not a number; expected number, found string",
+					"04_": "field read failed: result.value is not a string; expected string, found number",
+					"07_": "element read failed: result[0] expected number, found string",
+					"08_": "field read failed: result.text is not a string; expected string, found number",
 				}[prefix]
+				cast := map[string]string{"03_": "6:20", "04_": "6:20", "07_": "3:46", "08_": "5:69"}[prefix]
+				label := map[string]string{"03_": "result.info", "04_": "result.value", "07_": "result[0]", "08_": "result.text"}[prefix]
+				message = strings.Replace(message, label, label+" (view cast at "+fixture.File+":"+cast+")", 1)
 				expected = run{exitCode: 70, stdout: []byte(fixture.RuntimeOutput), stderr: []byte("adamic: panic: " + message + "\n")}
 			}
 			sanitized, binary := nativelyUncached(t, program)
@@ -268,7 +271,7 @@ func TestStep09PrimitiveArraySourceWriteLiar(t *testing.T) {
 	if changed != 1 {
 		t.Fatalf("want one incoming primitive lie, got %d", changed)
 	}
-	expected := run{exitCode: 70, stdout: []byte("before\nview\nelement=12\n"), stderr: []byte("adamic: panic: cast failed: field read failed: <array write> matches no member of string | number; expected string | number, found boolean\n")}
+	expected := run{exitCode: 70, stdout: []byte("before\nview\nelement=12\n"), stderr: []byte("adamic: panic: field read failed: <array write> matches no member of string | number; expected string | number, found boolean\n")}
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if diff := disagreement(expected, got); diff != "" {
@@ -341,7 +344,7 @@ func TestStep09NullableArrayReceiver(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	expected := run{exitCode: 70, stdout: []byte("before\nview\n"), stderr: []byte("adamic: panic: cast failed: element read failed: result[0] expected number, found undefined\n")}
+	expected := run{exitCode: 70, stdout: []byte("before\nview\n"), stderr: []byte("adamic: panic: element read failed: result[0] (view cast at nullable-array.a:1:105) expected number, found undefined\n")}
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if diff := disagreement(expected, got); diff != "" {
@@ -371,7 +374,7 @@ func TestStep09ScalarIndexRootLiar(t *testing.T) {
 	if changed != 1 {
 		t.Fatalf("want one array root lie, got %d", changed)
 	}
-	expected := run{exitCode: 70, stdout: []byte("before\n"), stderr: []byte("adamic: panic: cast failed: field read failed: args[0] matches no member of number | Expression | undefined; expected number | Expression | undefined, found unsupported representation\n")}
+	expected := run{exitCode: 70, stdout: []byte("before\n"), stderr: []byte("adamic: panic: field read failed: args[0] (view cast at 10_generator_label.a:6:20) matches no member of number | Expression | undefined; expected number | Expression | undefined, found unsupported representation\n")}
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if diff := disagreement(expected, got); diff != "" {

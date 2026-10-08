@@ -99,10 +99,10 @@ func TestCheckedViewIntersectionOriginalIdentifier(t *testing.T) {
 				if variant == "null" {
 					expression = "carrier.child.escapedText"
 				}
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + expression + " is not a __String; expected __String, found " + found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not a __String; expected __String, found " + found + "\n")}
 			}
 			if variant == "missing" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: carrier.child.escapedText is not initialized; expected __String, found missing\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: carrier.child.escapedText is not initialized; expected __String, found missing\n")}
 			}
 			actual, binary := nativelyUncached(t, program)
 			if want.exitCode == 0 {
@@ -111,7 +111,7 @@ func TestCheckedViewIntersectionOriginalIdentifier(t *testing.T) {
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}

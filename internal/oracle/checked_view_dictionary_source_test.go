@@ -13,12 +13,12 @@ import (
 func TestCheckedViewDictionarySource(t *testing.T) {
 	for _, test := range []struct{ name, truth, stderr string }{
 		{"options-good", "42\nundefined\n", ""},
-		{"options-read-wrong", "object\n", "adamic: panic: cast failed: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n"},
-		{"array-read-wrong", "object\n", "adamic: panic: cast failed: field read failed: view.symbols['item']; expected Entry | undefined, found array\n"},
-		{"options-wrong", "[object Object]\nundefined\n", "adamic: panic: cast failed: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n"},
+		{"options-read-wrong", "object\n", "adamic: panic: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n"},
+		{"array-read-wrong", "object\n", "adamic: panic: field read failed: view.symbols['item']; expected Entry | undefined, found array\n"},
+		{"options-wrong", "[object Object]\nundefined\n", "adamic: panic: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n"},
 		{"nested-good", "name\n", ""},
-		{"nested-wrong", "42\n", "adamic: panic: cast failed: field read failed: entry.name is not a string; expected string, found number\n"},
-		{"array-wrong", "undefined\n", "adamic: panic: cast failed: field read failed: view.symbols['item']; expected Entry | undefined, found array\n"},
+		{"nested-wrong", "42\n", "adamic: panic: field read failed: entry.name is not a string; expected string, found number\n"},
+		{"array-wrong", "undefined\n", "adamic: panic: field read failed: view.symbols['item']; expected Entry | undefined, found array\n"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "dictionaries/components/"+test.name)
@@ -32,7 +32,7 @@ func TestCheckedViewDictionarySource(t *testing.T) {
 					if difference := disagreement(truth, got); difference != "" {
 						t.Fatal(difference)
 					}
-				} else if got.exitCode != 70 || string(got.stderr) != test.stderr {
+				} else if got.exitCode != 70 || viewReadDiagnosticMismatch(test.stderr, got.stderr, program) {
 					t.Fatalf("want pinned exit 70: %#v", got)
 				}
 			}

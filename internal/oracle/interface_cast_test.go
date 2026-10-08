@@ -45,7 +45,7 @@ func TestInterfaceCastOracle(t *testing.T) {
 			}
 			sanitized, binary := natively(t, program)
 			for backend, result := range map[string]run{"JavaScript": js, "native sanitized": sanitized, "native release": released(t, program)} {
-				if difference := disagreement(want, result); difference != "" {
+				if difference := viewReadDisagreement(want, result, program); difference != "" {
 					t.Fatalf("%s: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
 				}
 			}
@@ -72,10 +72,10 @@ func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
 	actual, _ := nativelyUncached(t, program)
 	for _, result := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, result); difference != "" {
+		if difference := viewReadDisagreement(want, result, program); difference != "" {
 			t.Fatalf("malformed view read: %s; got %#v", difference, result)
 		}
 	}
@@ -130,7 +130,7 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 			if strings.Contains(string(result.stderr), "Sanitizer") {
 				t.Fatalf("semantic comparison must catch mutant, got %s", result.stderr)
 			}
-			if difference := disagreement(want, result); difference == "" {
+			if difference := viewReadDisagreement(want, result, program); difference == "" {
 				t.Fatal("mutant survived")
 			} else {
 				t.Logf("caught %s: %s; expected exit %d stdout %q, mutant exit %d stdout %q stderr %q", name, difference, want.exitCode, want.stdout, result.exitCode, result.stdout, result.stderr)
@@ -163,7 +163,7 @@ func TestInterfaceCastImportedConstruction(t *testing.T) {
 	want := onNode(t, filepath.Join(directory, "main.a"))
 	actual, _ := nativelyUncached(t, program)
 	for _, got := range []run{actual, onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := viewReadDisagreement(want, got, program); difference != "" {
 			t.Fatal(difference)
 		}
 	}
@@ -204,7 +204,7 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 			}
 			sanitized, binary := natively(t, program)
 			for backend, result := range map[string]run{"native": sanitized, "JavaScript": onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, result); difference != "" {
+				if difference := viewReadDisagreement(want, result, program); difference != "" {
 					t.Fatalf("%s: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
 				}
 			}
@@ -231,7 +231,7 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 				if difference := disagreement(truth, mutant); difference != "" {
 					t.Fatalf("omitting scalar tag must emit valid source behavior: %s", difference)
 				}
-				if difference := disagreement(want, mutant); difference == "" {
+				if difference := viewReadDisagreement(want, mutant, program); difference == "" {
 					t.Fatal("scalar tag omission mutant survived")
 				} else {
 					t.Logf("caught skip %s tag: %s; checked exit %d, mutant exit %d stdout %q", test.domain, difference, want.exitCode, mutant.exitCode, mutant.stdout)

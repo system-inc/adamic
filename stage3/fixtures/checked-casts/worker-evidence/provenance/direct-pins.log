@@ -1,0 +1,516 @@
+=== RUN   TestCheckedViewDictionaryContainerBatch
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-good
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-wrong
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-missing
+    checked_view_dictionary_container_test.go:60: gate cache node miss
+    checked_view_dictionary_container_test.go:67: gate cache node miss
+--- PASS: TestCheckedViewDictionaryContainerBatch (40.86s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-good (2.50s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-wrong (1.67s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-missing (1.99s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-good (1.85s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-wrong (1.85s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-missing (2.53s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-good (3.01s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-wrong (4.07s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-missing (2.30s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-good (2.24s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-wrong (2.37s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-missing (2.00s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-good (1.56s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-wrong (1.58s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-missing (1.26s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-good (1.56s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-wrong (1.67s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-missing (0.96s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-good (0.61s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-wrong (0.70s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-missing (0.66s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-good (0.67s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-wrong (0.66s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-missing (0.60s)
+=== RUN   TestCheckedViewDictionaryContainerMutant
+    checked_view_dictionary_container_test.go:123: gate cache node miss
+    checked_view_dictionary_container_test.go:127: container bypass caught by pinned wrong-value control: exit=0 stdout="object\n"
+    checked_view_dictionary_container_test.go:127: container bypass caught by pinned wrong-value control: exit=0 stdout="number\n"
+--- PASS: TestCheckedViewDictionaryContainerMutant (0.14s)
+=== RUN   TestCheckedViewDictionaryEnumerationMutants
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/skip-element-check
+    checked_view_dictionary_enumeration_test.go:172: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:185: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:208: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches skip-element-check: exit=0 stdout="1\n"
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches skip-element-check: exit=0 stdout="1\n"
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/accept-wrong-shape
+    checked_view_dictionary_enumeration_test.go:172: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:185: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:208: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches accept-wrong-shape: exit=0 stdout="1\n"
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches accept-wrong-shape: exit=0 stdout="1\n"
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/drop-transitive-check
+    checked_view_dictionary_enumeration_test.go:172: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:185: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:208: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches drop-transitive-check: exit=0 stdout="1\n42\n"
+    checked_view_dictionary_enumeration_test.go:212: pinned enumeration control catches drop-transitive-check: exit=0 stdout="1\n42\n"
+--- PASS: TestCheckedViewDictionaryEnumerationMutants (1.68s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/skip-element-check (0.53s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/accept-wrong-shape (0.56s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/drop-transitive-check (0.59s)
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck/values
+    checked_view_dictionary_enumeration_test.go:249: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:254: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck/entries
+    checked_view_dictionary_enumeration_test.go:249: gate cache node miss
+    checked_view_dictionary_enumeration_test.go:254: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewDictionaryEnumerationRecheck (1.30s)
+    --- PASS: TestCheckedViewDictionaryEnumerationRecheck/values (0.64s)
+    --- PASS: TestCheckedViewDictionaryEnumerationRecheck/entries (0.66s)
+=== RUN   TestCheckedViewDictionaryOptionalShortCircuitMutant
+    checked_view_dictionary_finite_test.go:97: gate cache node miss
+    checked_view_dictionary_finite_test.go:126: gate cache node miss
+    checked_view_dictionary_finite_test.go:130: Node absent-receiver control catches forced read: exit=70 stderr="adamic: panic: field read failed: view?.paths (view cast at optional-paths-receiver-missing.a:9:48); expected MapLike<string[]> | undefined, found undefined\n"
+    checked_view_dictionary_finite_test.go:130: Node absent-receiver control catches forced read: exit=70 stderr="adamic: panic: field read failed: view?.paths (view cast at optional-paths-receiver-missing.a:9:48); expected MapLike<string[]> | undefined, found undefined\n"
+--- PASS: TestCheckedViewDictionaryOptionalShortCircuitMutant (0.41s)
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/good
+    checked_view_dictionary_finite_test.go:138: gate cache node miss
+    checked_view_dictionary_finite_test.go:148: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/missing
+    checked_view_dictionary_finite_test.go:138: gate cache node miss
+    checked_view_dictionary_finite_test.go:148: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/receiver-missing
+    checked_view_dictionary_finite_test.go:138: gate cache node miss
+    checked_view_dictionary_finite_test.go:148: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/undefined
+    checked_view_dictionary_finite_test.go:138: gate cache node miss
+    checked_view_dictionary_finite_test.go:148: gate cache node miss
+--- PASS: TestCheckedViewDictionaryOptionalRequiredField (4.77s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/good (1.26s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/missing (1.80s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/receiver-missing (1.09s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/undefined (0.62s)
+=== RUN   TestCheckedViewDictionaryLookupBatch
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-good
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-missing
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-nested-wrong
+    checked_view_dictionary_lookup_test.go:43: gate cache node miss
+    checked_view_dictionary_lookup_test.go:48: gate cache node miss
+--- PASS: TestCheckedViewDictionaryLookupBatch (19.22s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-good (0.69s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-good (0.79s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-missing (0.93s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-missing (1.79s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-wrong (1.09s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-wrong (0.65s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-good (0.66s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-good (0.61s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-missing (0.89s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-missing (1.39s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-wrong (0.81s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-wrong (0.67s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-good (0.65s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-good (0.95s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-missing (1.26s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-missing (0.75s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-wrong (0.79s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-wrong (0.73s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong (1.57s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-nested-wrong (1.55s)
+=== RUN   TestCheckedViewDictionaryLookupOriginMutant
+    checked_view_dictionary_lookup_test.go:83: origin mutant caught by named control: native loses field contract and reaches ordinary storage refusal
+    checked_view_dictionary_lookup_test.go:88: gate cache node miss
+    checked_view_dictionary_lookup_test.go:92: origin mutant caught by named control: JavaScript exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryLookupOriginMutant (0.16s)
+=== RUN   TestCheckedViewDictionaryOptionalContainers
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-good
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-undefined
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-good
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-wrong
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-undefined
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-undefined
+    checked_view_dictionary_optional_test.go:24: gate cache node miss
+    checked_view_dictionary_optional_test.go:31: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewDictionaryOptionalContainers (21.52s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-good (0.63s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong (1.18s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-missing (1.23s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing (2.61s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-undefined (2.74s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-good (3.46s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-wrong (0.70s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-missing (0.70s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing (0.84s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-undefined (1.75s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good (1.94s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong (0.92s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing (0.66s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing (0.78s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-undefined (1.37s)
+=== RUN   TestCheckedViewDictionaryOptionalAbsenceMutant
+    checked_view_dictionary_optional_test.go:88: gate cache node miss
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+--- PASS: TestCheckedViewDictionaryOptionalAbsenceMutant (0.16s)
+=== RUN   TestCheckedViewDictionaryOptionalPaths
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-once
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing
+    checked_view_dictionary_propagation_test.go:190: gate cache node hit
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-good
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-missing
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths (view cast at optional-paths-container-wrong.a:9:48); expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths (view cast at optional-paths-container-wrong.a:9:48); expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths (view cast at optional-paths-container-wrong.a:9:48); expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item'] (view cast at optional-paths-wrong.a:9:48); expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item'] (view cast at optional-paths-wrong.a:9:48); expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item'] (view cast at optional-paths-wrong.a:9:48); expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] (view cast at optional-paths-element-wrong.a:9:48) expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] (view cast at optional-paths-element-wrong.a:9:48) expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] (view cast at optional-paths-element-wrong.a:9:48) expected string, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing
+    checked_view_dictionary_propagation_test.go:190: gate cache node miss
+    checked_view_dictionary_propagation_test.go:195: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewDictionaryOptionalPaths (6.00s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-once (0.63s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing (0.54s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-good (0.69s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-missing (1.46s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong (0.60s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong (0.73s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong (0.65s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing (0.68s)
+=== RUN   TestCheckedViewCallableArrays
+=== RUN   TestCheckedViewCallableArrays/call-expression/good
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/call-expression/wrong-value
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/call-expression/wrong-arity
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/call-expression/wrong-result
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/call-expression/wrong-element
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/call-expression/undefined-array
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/inline-expressions/good
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/inline-expressions/wrong-value
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/inline-expressions/wrong-arity
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/inline-expressions/wrong-result
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+=== RUN   TestCheckedViewCallableArrays/inline-expressions/wrong-element
+    checked_views_callable_arrays_test.go:20: gate cache node miss
+    checked_views_callable_arrays_test.go:43: gate cache node miss
+--- PASS: TestCheckedViewCallableArrays (10.97s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/good (0.60s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/wrong-value (1.53s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/wrong-arity (1.30s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/wrong-result (0.71s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/wrong-element (0.78s)
+    --- PASS: TestCheckedViewCallableArrays/call-expression/undefined-array (0.54s)
+    --- PASS: TestCheckedViewCallableArrays/inline-expressions/good (0.67s)
+    --- PASS: TestCheckedViewCallableArrays/inline-expressions/wrong-value (1.28s)
+    --- PASS: TestCheckedViewCallableArrays/inline-expressions/wrong-arity (1.97s)
+    --- PASS: TestCheckedViewCallableArrays/inline-expressions/wrong-result (0.87s)
+    --- PASS: TestCheckedViewCallableArrays/inline-expressions/wrong-element (0.73s)
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/optional-error
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/optional-error-fields
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewLazyUnread (3.25s)
+    --- PASS: TestCheckedViewLazyUnread/unread (0.56s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (0.57s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (0.59s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error (0.78s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error-fields (0.74s)
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+    checked_views_lazy_test.go:50: gate cache node miss
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+    checked_views_lazy_test.go:50: gate cache node miss
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+    checked_views_lazy_test.go:50: gate cache node miss
+=== RUN   TestCheckedViewLazyHelperMutant/field
+    checked_views_lazy_test.go:50: gate cache node miss
+--- PASS: TestCheckedViewLazyHelperMutant (2.12s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.49s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.53s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.57s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.53s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:68: gate cache node miss
+    checked_views_lazy_test.go:73: gate cache node miss
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name (view cast at missing-name-mutant.a:8:55) is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name (view cast at missing-name-mutant.a:8:55) is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name (view cast at missing-name-mutant.a:8:55) is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (0.39s)
+=== RUN   TestCheckedViewLazyOptionalCodeMutants
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/number
+    checked_views_lazy_test.go:86: gate cache node miss
+    checked_views_lazy_test.go:95: gate cache node miss
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code (view cast at optional-code-number-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code (view cast at optional-code-number-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code (view cast at optional-code-number-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found number
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/null
+    checked_views_lazy_test.go:86: gate cache node miss
+    checked_views_lazy_test.go:95: gate cache node miss
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code (view cast at optional-code-null-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code (view cast at optional-code-null-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code (view cast at optional-code-null-mutant.a:4:15) matches no member of string | undefined; expected string | undefined, found null
+--- PASS: TestCheckedViewLazyOptionalCodeMutants (0.80s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/number (0.40s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/null (0.40s)
+PASS
+gate cache: native hits=0 misses=49
+gate cache: node hits=1 misses=201
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	113.843s

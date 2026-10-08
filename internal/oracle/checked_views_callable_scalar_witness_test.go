@@ -47,11 +47,11 @@ func TestCheckedViewCallableScalarWitnesses(t *testing.T) {
 					if name == "wrong-result" {
 						found = "function with incompatible result representation"
 					}
-					expected := "adamic: panic: cast failed: field read failed: " + family.field + " expected " + family.expected + ", found " + found + "\n"
+					expected := "adamic: panic: field read failed: " + family.field + " expected " + family.expected + ", found " + found + "\n"
 					if name == "wrong-value" && index < 2 {
-						expected = "adamic: panic: cast failed: field read failed: " + family.field + " is not a " + family.expected + "; expected " + family.expected + ", found number\n"
+						expected = "adamic: panic: field read failed: " + family.field + " is not a " + family.expected + "; expected " + family.expected + ", found number\n"
 					}
-					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+					if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(expected, got.stderr, program) {
 						t.Fatalf("backend %d: %#v want %q", index, got, expected)
 					}
 				}

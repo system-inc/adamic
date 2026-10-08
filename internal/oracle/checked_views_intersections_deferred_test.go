@@ -47,7 +47,7 @@ func TestCheckedViewIntersectionDeferredMember(t *testing.T) {
 			}
 			want := truth
 			if sample.expression != "" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + sample.expression + " matches no member of Left | Right; expected Left | Right, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + sample.expression + " matches no member of Left | Right; expected Left | Right, found object\n")}
 			}
 			actual, binary := nativelyUncached(t, program)
 			if want.exitCode == 0 {
@@ -56,7 +56,7 @@ func TestCheckedViewIntersectionDeferredMember(t *testing.T) {
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}

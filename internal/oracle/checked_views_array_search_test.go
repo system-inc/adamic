@@ -12,8 +12,8 @@ func TestCheckedViewArraySearch(t *testing.T) {
 		{"native-array-search-evaluation", "1:2:9\n", ""},
 		{"native-array-search-boolean", "1:true\n", ""},
 		{"native-array-reference-write", "", "element write failed: <array write> expected { value: number; secret: number; }, found { value: number; }"},
-		{"native-array-search-bad", "", "cast failed: element read failed: items(raw).values[element] expected number, found string"},
-		{"native-array-search-literal", "", "cast failed: field read failed: items(raw).values[element] expected \"ok\", found string bad"},
+		{"native-array-search-bad", "", "element read failed: items(raw).values[element] expected number, found string"},
+		{"native-array-search-literal", "", "field read failed: items(raw).values[element] expected \"ok\", found string bad"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -21,7 +21,7 @@ func TestCheckedViewArraySearch(t *testing.T) {
 			want := run{stdout: []byte(probe.stdout)}
 			source := onNode(t, path)
 			if probe.diagnostic == "" {
-				if difference := disagreement(want, source); difference != "" {
+				if difference := viewReadDisagreement(want, source, program); difference != "" {
 					t.Fatal("Node: " + difference)
 				}
 			} else {
@@ -33,7 +33,7 @@ func TestCheckedViewArraySearch(t *testing.T) {
 			}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}

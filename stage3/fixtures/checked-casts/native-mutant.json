@@ -21,16 +21,16 @@
     "-fsanitize=address,undefined",
     "-fno-sanitize-recover=all",
     "-I",
-    "/home/agent/.cache/adamic/runtime/5e2744e1412ef8b76fe44db28ae0b6a05786ed70ee8559eee1d676c7a7750085",
-    "/tmp/step09-delivery-observed/02_name_subunion_fails.a.skip-check.c",
+    "/home/agent/.cache/adamic/runtime/a60887337c583020fccd9134dbe01b582680e4716bf4c78e2d095ffd101ae9bb",
+    "/tmp/step09-provenance-final-observe/02_name_subunion_fails.a.skip-check.c",
     "-Xlinker",
     "--whole-archive",
-    "/home/agent/.cache/adamic/runtime/5e2744e1412ef8b76fe44db28ae0b6a05786ed70ee8559eee1d676c7a7750085/runtime.a",
+    "/home/agent/.cache/adamic/runtime/a60887337c583020fccd9134dbe01b582680e4716bf4c78e2d095ffd101ae9bb/runtime.a",
     "-Xlinker",
     "--no-whole-archive",
     "-lm",
     "-o",
-    "/tmp/step09-delivery-observed/02_name_subunion_fails.a.skip-check.native"
+    "/tmp/step09-provenance-final-observe/02_name_subunion_fails.a.skip-check.native"
   ],
   "build_exit": 0,
   "actual": {

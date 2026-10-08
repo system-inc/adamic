@@ -9,18 +9,18 @@ func TestCheckedViewRankedArrayUnionContracts(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, diagnostic string }{
 		{"ranked3-pattern", "1:1\n", ""},
-		{"ranked3-pattern-wrong-array", "undefined\n", "cast failed: field read failed: pattern(raw).elements is not a NodeArray<BindingElement> | NodeArray<ArrayBindingElement>; expected NodeArray<BindingElement> | NodeArray<ArrayBindingElement>, found number"},
+		{"ranked3-pattern-wrong-array", "undefined\n", "field read failed: pattern(raw).elements is not a NodeArray<BindingElement> | NodeArray<ArrayBindingElement>; expected NodeArray<BindingElement> | NodeArray<ArrayBindingElement>, found number"},
 		{"ranked3-types", "1:1\n", ""},
-		{"ranked3-types-wrong-array", "undefined\n", "cast failed: field read failed: types(raw).types is not a Type[]; expected Type[], found number"},
+		{"ranked3-types-wrong-array", "undefined\n", "field read failed: types(raw).types is not a Type[]; expected Type[], found number"},
 		{"ranked3-signature", "1:1\n", ""},
-		{"ranked3-signature-wrong-array", "undefined\n", "cast failed: field read failed: signature(raw).parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number"},
+		{"ranked3-signature-wrong-array", "undefined\n", "field read failed: signature(raw).parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number"},
 		{"ranked3-class", "1:1\n", ""},
-		{"ranked3-class-wrong-array", "undefined\n", "cast failed: field read failed: classNode(raw).members is not a NodeArray<ClassElement>; expected NodeArray<ClassElement>, found number"},
+		{"ranked3-class-wrong-array", "undefined\n", "field read failed: classNode(raw).members is not a NodeArray<ClassElement>; expected NodeArray<ClassElement>, found number"},
 		{"ranked3-reference", "1:1\n", ""},
-		{"ranked3-reference-wrong-array", "undefined\n", "cast failed: field read failed: reference(raw).typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number"},
+		{"ranked3-reference-wrong-array", "undefined\n", "field read failed: reference(raw).typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number"},
 		{"ranked3-pattern-lazy", "2:1\n", ""},
-		{"ranked3-pattern-wrong-element", "undefined\n", "cast failed: element read failed: values[0] expected ArrayBindingElement, found number"},
-		{"ranked3-pattern-wrong-tag", "1\n", "cast failed: field read failed: values[0].kind expected \"binding\" | \"omitted\", found string other"},
+		{"ranked3-pattern-wrong-element", "undefined\n", "element read failed: values[0] expected ArrayBindingElement, found number"},
+		{"ranked3-pattern-wrong-tag", "1\n", "field read failed: values[0].kind expected \"binding\" | \"omitted\", found string other"},
 		{"ranked3-mutable-array-unread", "pattern\n", ""},
 		{"ranked3-reference-absent", "absent\n", ""},
 	} {
@@ -29,7 +29,7 @@ func TestCheckedViewRankedArrayUnionContracts(t *testing.T) {
 			program, path := interfaceFixture(t, "lane2/"+probe.name)
 			truth := onNode(t, path)
 			want := run{stdout: []byte(probe.node)}
-			if difference := disagreement(want, truth); difference != "" {
+			if difference := viewReadDisagreement(want, truth, program); difference != "" {
 				t.Fatal("Node: " + difference)
 			}
 			if probe.diagnostic != "" {
@@ -37,7 +37,7 @@ func TestCheckedViewRankedArrayUnionContracts(t *testing.T) {
 			}
 			actual, binary := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; stderr %q; stdout %q; exit %d", difference, got.stderr, got.stdout, got.exitCode)
 				}
 			}

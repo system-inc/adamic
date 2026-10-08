@@ -64,11 +64,11 @@ func TestCheckedViewCallableAggregateWitnesses(t *testing.T) {
 					if variant == "wrong-payload" {
 						field, expected, found = family.payload, "number", "string"
 					}
-					message := "adamic: panic: cast failed: field read failed: " + field + " expected " + expected + ", found " + found + "\n"
+					message := "adamic: panic: field read failed: " + field + " expected " + expected + ", found " + found + "\n"
 					if variant == "wrong-payload" || index < 2 && variant == "wrong-value" {
-						message = "adamic: panic: cast failed: field read failed: " + field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n"
+						message = "adamic: panic: field read failed: " + field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n"
 					}
-					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+					if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(message, got.stderr, program) {
 						t.Fatalf("backend%d %#v want %q", index, got, message)
 					}
 				}
@@ -96,8 +96,8 @@ func TestCheckedViewCallableAggregateParameterReads(t *testing.T) {
 			}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
-				message := "adamic: panic: cast failed: field read failed: " + probe.field + " is not a " + probe.expected + "; expected " + probe.expected + ", found " + probe.found + "\n"
-				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+				message := "adamic: panic: field read failed: " + probe.field + " is not a " + probe.expected + "; expected " + probe.expected + ", found " + probe.found + "\n"
+				if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(message, got.stderr, program) {
 					t.Fatalf("parameter read %#v want %q", got, message)
 				}
 			}

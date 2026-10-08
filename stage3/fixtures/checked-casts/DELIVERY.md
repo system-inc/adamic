@@ -1,3 +1,5 @@
+Current correction: see [PROVENANCE.md](PROVENANCE.md) for separate read-stop diagnostics, cast-site provenance, the authorized verifier update and complete observer controls. Earlier delivery below is historical.
+
 Built: step 09's 18 formerly blocked runtime contracts now pass, with all 20 acceptance fixtures held to Node and both backends.
 Commits: tagged group ce60a068; scalar mechanism 675951e7 and evidence 26556166; remaining view/generic/index mechanism 1af953e6; final evidence is the delivery branch tip.
 Commands and outputs: unchanged strict verifier PASS, 20 Node goldens and runtime contracts PASS, 30 observer controls and 40 header mutants caught; focused oracles/adapters/vet/counts PASS.

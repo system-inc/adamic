@@ -87,7 +87,7 @@ func TestCheckedViewIntersectionOriginalHeritageUnion(t *testing.T) {
 					if difference := disagreement(run{stdout: []byte("true\n")}, got); difference != "" {
 						t.Error(difference)
 					}
-				} else if difference := disagreement(run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: tag.class.pos is not a number; expected number, found string\n")}, got); difference != "" {
+				} else if difference := disagreement(run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: tag.class.pos is not a number; expected number, found string\n")}, got); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
 				}
 			}

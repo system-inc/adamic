@@ -8,7 +8,7 @@ scratch = Path(sys.argv[1]); scratch.mkdir(parents=True, exist_ok=True)
 original = root / 'internal/javascript/view_arrays.go'
 source = original.read_text()
 mutants = [
- ('array-index-root', 'if (!Array.isArray(array)) panic("cast failed: element read failed:', 'if (false && !Array.isArray(array)) panic("cast failed: element read failed:', 'TestStep09NullableArrayReceiver', 'receiver check:'),
+ ('array-index-root', 'if (!Array.isArray(array)) panic("element read failed:', 'if (false && !Array.isArray(array)) panic("element read failed:', 'TestStep09NullableArrayReceiver', 'receiver check:'),
  ('scalar-index-root', 'if (!Array.isArray(a)) panic(%s); return a[i];', 'if (false && !Array.isArray(a)) panic(%s); return a[i];', 'TestStep09ScalarIndexRootLiar', 'snapshot receiver check:'),
 ]
 for name, before, after, test, failure in mutants:

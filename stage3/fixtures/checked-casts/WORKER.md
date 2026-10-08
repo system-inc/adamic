@@ -1,3 +1,5 @@
+Current correction: see [PROVENANCE.md](PROVENANCE.md) for separate read-stop diagnostics, cast-site provenance, the authorized verifier update and complete observer controls. Earlier delivery below is historical.
+
 Current delivery: **all 18 formerly blocked contracts pass; all 20 acceptance fixtures pass** on committed compiler 1af953e6. The unchanged strict verifier is green. Error stays pinned to library #ddwcejg. See [DELIVERY.md](DELIVERY.md) for every contract, command, mutant and limitation.
 
 The following sections retain earlier measurements as historical milestones.

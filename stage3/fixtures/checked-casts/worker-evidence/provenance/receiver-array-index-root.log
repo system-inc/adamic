@@ -1,0 +1,11 @@
+=== RUN   TestStep09NullableArrayReceiver
+    step09_acceptance_test.go:339: gate cache node miss
+    step09_acceptance_test.go:349: gate cache node miss
+    step09_acceptance_test.go:351: receiver check: stderr differs: exit=70 stdout="before\nview\n" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'length')\n"
+--- FAIL: TestStep09NullableArrayReceiver (0.49s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.494s
+FAIL

@@ -17,14 +17,14 @@ func TestCheckedViewArrayReferenceWrites(t *testing.T) {
 		{"reference-array-mutable-incoming", "written\n", "element write failed: <array write> expected { value: number; text: string; }, found { value: 2; text: string; }"},
 		{"reference-array-uncertified", "written\n", "element write failed: <array write> expected object, found uncertified source element contract"},
 		{"reference-array-source-alias", "written:1\n", "field write failed: property 'value' on record { kind: \"entry\"; value: 7; text: string; } at reference-array-source-alias.a:11 has no compatible declared slot"},
-		{"reference-array-uninitialized", "written\n", "cast failed: field read failed: <array write>.value is not initialized; expected number, found uninitialized"},
+		{"reference-array-uninitialized", "written\n", "field read failed: <array write>.value is not initialized; expected number, found uninitialized"},
 		{"reference-array-evaluation", "3:item2\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			program, path := interfaceFixture(t, "lane2/"+probe.name)
 			want := run{stdout: []byte(probe.node)}
-			if got := onNode(t, path); disagreement(want, got) != "" {
+			if got := onNode(t, path); viewReadDisagreement(want, got, program) != "" {
 				t.Fatalf("Node control: %#v", got)
 			}
 			if probe.diagnostic != "" {
@@ -32,7 +32,7 @@ func TestCheckedViewArrayReferenceWrites(t *testing.T) {
 			}
 			actual, binary := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := viewReadDisagreement(want, got, program); difference != "" {
 					t.Fatalf("%s; stderr %q; stdout %q; exit %d", difference, got.stderr, got.stdout, got.exitCode)
 				}
 			}

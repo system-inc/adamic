@@ -34,11 +34,11 @@ func TestScannerCastDiagnostic(t *testing.T) {
 			}
 			expected := truth
 			if name == "wrong" {
-				expected = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.elidedInCompatabilityPyramid matches no member of boolean | undefined; expected boolean | undefined, found number\n")}
+				expected = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.elidedInCompatabilityPyramid matches no member of boolean | undefined; expected boolean | undefined, found number\n")}
 			}
 			sanitized, binary := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(expected, got); difference != "" {
+				if difference := viewReadDisagreement(expected, got, program); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
@@ -76,7 +76,7 @@ func TestScannerCastDiagnosticMutant(t *testing.T) {
 		if got.exitCode != 0 {
 			t.Fatalf("%s mutant must execute unchecked read: %#v", backend, got)
 		}
-		if difference := disagreement(expected, got); difference == "" {
+		if difference := viewReadDisagreement(expected, got, program); difference == "" {
 			t.Fatal("field-check omission survived")
 		}
 		t.Logf("%s omission caught by exit/message pin: exit=%d stdout=%q", backend, got.exitCode, got.stdout)

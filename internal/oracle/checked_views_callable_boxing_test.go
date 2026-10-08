@@ -42,8 +42,8 @@ func TestCheckedViewCallableBoxingRefusals(t *testing.T) {
 			}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
-				expected := "adamic: panic: cast failed: field read failed: viewed.run expected " + probe.expected + ", found " + probe.found + "\n"
-				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+				expected := "adamic: panic: field read failed: viewed.run expected " + probe.expected + ", found " + probe.found + "\n"
+				if got.exitCode != 70 || len(got.stdout) != 0 || viewReadDiagnosticMismatch(expected, got.stderr, program) {
 					t.Fatalf("refusal %#v want %q", got, expected)
 				}
 			}
