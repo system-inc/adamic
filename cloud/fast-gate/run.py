@@ -1318,7 +1318,7 @@ class Gate:
 
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
-            if getattr(self, "stopped", None) or (self.failure is not None and not self.arguments.full and not self.complete):
+            if getattr(self, "stopped", None) or getattr(self, "cancelled", False) or (self.failure is not None and not self.arguments.full and not self.complete):
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
             variables = dict(os.environ, **gateEnvironment)
@@ -1361,10 +1361,15 @@ class Gate:
                 self.killSessions()
                 return
             if self.arguments.full:
-                # Landings pause on this line now; the rest of the run goes on for triage only.
+                # A whole gate fails fast and frees its box (Kirk, Oct 8: "all tests should fail fast and loud and
+                # immediately give feedback and cancel themselves to free for next run"): the first failure is
+                # published, the run is cancelled, and its record says so. Triage is the pool's job, where units run
+                # in parallel and every red comes back at once.
                 with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
                     handle.write(detail + "\n")
-                self.status("red: %s first failure at %s after %.1f s (still running for triage)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                self.status("red: %s first failure at %s after %.1f s (cancelled after first failure)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                self.cancelled = True
+                self.killSessions()
                 return
             if self.complete:
                 # Nothing is stopped: every test and fixture still runs, and the verdict names them all.
@@ -1464,6 +1469,7 @@ class Gate:
             "failure": self.failure,
             "planned_stages": self.planned,
             "stages_exit": self.exits,
+            "cancelled_after_first_failure": bool(getattr(self, "cancelled", False)),
             "finished": True,
         })
         if getattr(self, "stopped", None):
@@ -1501,7 +1507,8 @@ class Gate:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:
             crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
-            self.status("red: %s %s gate, first failure at %s%s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
+            cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
+            self.status("red: %s %s gate, first failure at %s%s after %.1f s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], cancelled, steps, self.counts["fail"], self.counts["pass"]))
         if getattr(self, "stopped", None) and self.failure is not None:
             with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
                 handle.write("stopped: " + self.stopped["reason"] + "\n")

@@ -83,7 +83,7 @@ class FailClosed(unittest.TestCase):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
 
-    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None):
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, failing=None):
         out = tempfile.mkdtemp(dir=self.directory)
         arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
                               branch="", branch_source="", session="", session_source="", weights=None)
@@ -103,6 +103,7 @@ class FailClosed(unittest.TestCase):
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
+                mock.patch.object(run.Gate, failing, lambda gate, *arguments: gate.fail(failing, "planted failure")) if failing else mock.patch.object(run, "longTestSeconds", run.longTestSeconds), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
                 mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
             gate = run.Gate(arguments)
@@ -148,6 +149,20 @@ class FailClosed(unittest.TestCase):
                     self.assertTrue(status.startswith("red:"), status)
                     self.assertIsNotNone(gate.failure)
                     self.assertNotEqual(result["stages_exit"].get(broken), 0)
+
+    def test_a_whole_gate_cancels_itself_at_its_first_failure(self):
+        # Kirk, Oct 8: fail fast and loud, and free the box. The record is red and says it was cancelled.
+        gate, status, result = self.gate(full=True, failing="vet")
+        self.assertTrue(status.startswith("red:"), status)
+        self.assertIn("first failure at vet", status)
+        self.assertIn("cancelled after first failure", status)
+        self.assertTrue(result["cancelled_after_first_failure"])
+        self.assertTrue(result["finished"])
+        # Nothing after the failure ran: the census never reported.
+        self.assertNotEqual(result["stages_exit"].get("census"), 0)
+        # A fast gate is not a whole gate: it is never marked cancelled.
+        gate, status, result = self.gate(full=False, failing="vet")
+        self.assertNotIn("cancelled", status)
 
     def test_a_stage_that_reports_nothing_is_red(self):
         for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
