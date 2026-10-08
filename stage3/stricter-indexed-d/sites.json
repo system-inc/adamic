@@ -1,0 +1,67 @@
+[
+  {
+    "id": "D107",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2077,
+    "expression": "args[i]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "args[i]",
+    "receiver": "array of string",
+    "source": "const args: string[] = @VALUES@; const i = 0;\nconst value: string = args[i];\nconsole.log(`${value}`);\n",
+    "present": "[\"7\"]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D129",
+    "file": "src/compiler/program.ts",
+    "line": 4157,
+    "expression": "hasZeroOrOneAsteriskCharacter(subst)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "options.paths[key][i]",
+    "receiver": "record of string arrays",
+    "source": "const options: { readonly paths: { readonly [key: string]: string[] } } = { paths: @VALUES@ }; const key = \"entry\"; const i = 0;\nconst value: string = options.paths[key][i];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{ entry: [] }",
+    "blocked": true
+  },
+  {
+    "id": "D130",
+    "file": "src/compiler/program.ts",
+    "line": 4160,
+    "expression": "pathIsRelative(subst)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "options.paths[key][i]",
+    "receiver": "record of string arrays",
+    "source": "const options: { readonly paths: { readonly [key: string]: string[] } } = { paths: @VALUES@ }; const key = \"entry\"; const i = 0;\nconst value: string = options.paths[key][i];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{ entry: [] }",
+    "blocked": true
+  },
+  {
+    "id": "D131",
+    "file": "src/compiler/program.ts",
+    "line": 4160,
+    "expression": "pathIsAbsolute(subst)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "options.paths[key][i]",
+    "receiver": "record of string arrays",
+    "source": "const options: { readonly paths: { readonly [key: string]: string[] } } = { paths: @VALUES@ }; const key = \"entry\"; const i = 0;\nconst value: string = options.paths[key][i];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{ entry: [] }",
+    "blocked": true
+  },
+  {
+    "id": "D171",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2803,
+    "expression": "node.declarations",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "node.declarations[0]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly name: string }\nconst node: { readonly declarations: readonly Item[] } = { declarations: @VALUES@ };\nconst value: Item = node.declarations[0];\nconsole.log(value === undefined ? 'undefined' : `${value.name}`);\n",
+    "present": "[{ name: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
+  }
+]
