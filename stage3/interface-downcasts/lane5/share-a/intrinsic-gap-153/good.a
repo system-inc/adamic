@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Type {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Carrier<K,V> {get(key: K): V | undefined;}
+type Target=Carrier<string, Type>;
+function probe(value:Base):void {const cachedTypes=value as Target;cachedTypes.get("ok");console.log("done");}
+probe(new Map<string,Type>());

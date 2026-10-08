@@ -1,0 +1,43 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface AbstractKeyword {readonly value:number;}
+interface AccessorKeyword {readonly value:number;}
+interface AsyncKeyword {readonly value:number;}
+interface ConstKeyword {readonly value:number;}
+interface DeclareKeyword {readonly value:number;}
+interface DefaultKeyword {readonly value:number;}
+interface ExportKeyword {readonly value:number;}
+interface InKeyword {readonly value:number;}
+interface PrivateKeyword {readonly value:number;}
+interface ProtectedKeyword {readonly value:number;}
+interface PublicKeyword {readonly value:number;}
+interface OutKeyword {readonly value:number;}
+interface OverrideKeyword {readonly value:number;}
+interface ReadonlyKeyword {readonly value:number;}
+interface StaticKeyword {readonly value:number;}
+type Modifier =
+    | AbstractKeyword
+    | AccessorKeyword
+    | AsyncKeyword
+    | ConstKeyword
+    | DeclareKeyword
+    | DefaultKeyword
+    | ExportKeyword
+    | InKeyword
+    | PrivateKeyword
+    | ProtectedKeyword
+    | PublicKeyword
+    | OutKeyword
+    | OverrideKeyword
+    | ReadonlyKeyword
+    | StaticKeyword;
+interface Decorator {readonly value:number;readonly kind:171;}
+type ModifierLike = Modifier | Decorator;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface HeritageClause {readonly value:number;readonly kind:299;}
+interface ClassElement {readonly value:number;}
+interface ClassDeclaration {readonly value:number;readonly kind:264;}
+interface Base {readonly createClassDeclaration:unknown;}
+interface Target {createClassDeclaration(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]): ClassDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createClassDeclaration(undefined,"ok",undefined,undefined,[]).value}`);}
+probe({createClassDeclaration:():ClassDeclaration=>({value:7,kind:264})});

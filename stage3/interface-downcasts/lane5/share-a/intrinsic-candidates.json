@@ -1,0 +1,355 @@
+{
+  "members": [
+    {
+      "receiver_type_id": 73,
+      "type": "RegExp",
+      "field": "test",
+      "declared_types": [
+        "(string: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 45,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 1876,
+        "column": 12
+      },
+      "rank": 33,
+      "certified": false,
+      "directory": "intrinsic-gap-33",
+      "read": "fileNameLowerCaseRegExp.test",
+      "declarations": [
+        "test(string: string): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "utf16Start": 66272,
+      "utf16End": 66300,
+      "stdout": "done\n",
+      "runtimeMessage": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test is not initialized; expected (string: string) => boolean, found missing\n",
+      "stop": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test is not initialized; expected (string: string) => boolean, found missing; JavaScript finds the function but has unknown signature metadata.",
+      "neededChange": "Represent RegExp intrinsic methods through checked views in both backends, with immutable callable descriptors and safe receiver binding; valid inherited test must not be treated as a missing own field.",
+      "javascriptMessage": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test expected (string: string) => boolean, found function with unknown signature\n"
+    },
+    {
+      "receiver_type_id": 10096,
+      "type": "Map<string, boolean>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: boolean) => Map<string, boolean>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 23,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 1232,
+        "column": 9
+      },
+      "rank": 66,
+      "certified": false,
+      "directory": "intrinsic-gap-66",
+      "read": "usedLines.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 41573,
+      "utf16End": 41586,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 8212,
+      "type": "Map<string, number>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: number) => Map<string, number>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 18,
+      "witness": {
+        "file": "src/compiler/performance.ts",
+        "line": 77,
+        "column": 9
+      },
+      "rank": 93,
+      "certified": false,
+      "directory": "intrinsic-gap-93",
+      "read": "counts.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "utf16Start": 2080,
+      "utf16End": 2090,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 8811,
+      "type": "SymbolTable",
+      "field": "has",
+      "declared_types": [
+        "(key: __String) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 16,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2901,
+        "column": 62
+      },
+      "rank": 105,
+      "certified": false,
+      "directory": "intrinsic-gap-105",
+      "read": "mainModule.exports.has",
+      "declarations": [
+        "has(key: K): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 123409,
+      "utf16End": 123431,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 10563,
+      "type": "Map<string, Type>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: Type) => Map<string, Type>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2432,
+        "column": 18
+      },
+      "rank": 111,
+      "certified": false,
+      "directory": "intrinsic-gap-111",
+      "read": "cachedTypes.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 97025,
+      "utf16End": 97040,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 9196,
+      "type": "NodeArray<ParameterDeclaration>",
+      "field": "indexOf",
+      "declared_types": [
+        "(searchElement: ParameterDeclaration, fromIndex?: number | undefined) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1043,
+        "column": 23
+      },
+      "rank": 114,
+      "certified": false,
+      "directory": "intrinsic-gap-114",
+      "read": "param.parent.parameters.indexOf",
+      "declarations": [
+        "indexOf(searchElement: T, fromIndex?: number): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "utf16Start": 40666,
+      "utf16End": 40697,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 10563,
+      "type": "Map<string, Type>",
+      "field": "get",
+      "declared_types": [
+        "(key: string) => Type | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2428,
+        "column": 22
+      },
+      "rank": 153,
+      "certified": false,
+      "directory": "intrinsic-gap-153",
+      "read": "cachedTypes.get",
+      "declarations": [
+        "get(key: K): V | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 96897,
+      "utf16End": 96912,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "includes",
+      "declared_types": [
+        "(searchElement: string, fromIndex?: number | undefined) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3418,
+        "column": 9
+      },
+      "rank": 168,
+      "certified": false,
+      "directory": "intrinsic-gap-168",
+      "read": "resolutionStack.includes",
+      "declarations": [
+        "includes(searchElement: T, fromIndex?: number): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2016.array.include.d.ts",
+      "declarationSha256": "c91d6d83d8e051810bee33b99d990fc13a4398ddfef240f903c98efb454d5731",
+      "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "utf16Start": 140106,
+      "utf16End": 140130,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 14773,
+      "type": "Map<string, string>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: string) => Map<string, string>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1685,
+        "column": 88
+      },
+      "rank": 204,
+      "certified": false,
+      "directory": "intrinsic-gap-204",
+      "read": "remappedPaths.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "utf16Start": 74716,
+      "utf16End": 74733,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "pop",
+      "declared_types": [
+        "() => string | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/path.ts",
+        "line": 452,
+        "column": 48
+      },
+      "rank": 222,
+      "certified": false,
+      "directory": "intrinsic-gap-222",
+      "read": "rest.pop",
+      "declarations": [
+        "pop(): T | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc",
+      "utf16Start": 17686,
+      "utf16End": 17694,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    }
+  ]
+}

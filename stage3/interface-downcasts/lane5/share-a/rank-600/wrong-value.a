@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface ArrayLiteralExpression {readonly value:number;readonly kind:210;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateArrayLiteralExpression:unknown;}
+interface Target {updateArrayLiteralExpression(node: ArrayLiteralExpression, elements: readonly Expression[]): ArrayLiteralExpression;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateArrayLiteralExpression({value:7,kind:210},[]).value}`);}
+probe({updateArrayLiteralExpression:7});

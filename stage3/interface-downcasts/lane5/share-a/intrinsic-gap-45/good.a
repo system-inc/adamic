@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly fromCharCode:unknown;}
+interface Carrier {fromCharCode(...codes: number[]): string;}
+type Target=Carrier;
+function probe(value:Base):void {const String=value as Target;String.fromCharCode(65);console.log("done");}
+probe(String);

@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface SyntheticReferenceExpression {readonly value:number;readonly kind:358;}
+interface Base {readonly createSyntheticReferenceExpression:unknown;}
+interface Target {createSyntheticReferenceExpression(expression: Expression, thisArg: Expression): SyntheticReferenceExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createSyntheticReferenceExpression({value:7},{value:7}).value}`);}
+probe({createSyntheticReferenceExpression:(expression: Expression, thisArg: Expression):SyntheticReferenceExpression=>({value:7,kind:358})});

@@ -1,0 +1,11 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface SourceFile {readonly value:number;}
+interface Bundle {readonly value:number;}
+interface TransformationContext {readonly value:number;}
+type Transformer<T>=(node:T)=>T;
+type TransformerFactory<T>=(context:TransformationContext)=>Transformer<T>;
+interface Base {readonly push:unknown;}
+interface Carrier<T> {push(...items: T[]): number;}
+type Target=Carrier<TransformerFactory<SourceFile | Bundle>>;
+function probe(value:Base):void {const transformers=value as Target;transformers.push((context:TransformationContext):Transformer<SourceFile|Bundle>=>(node:SourceFile|Bundle):SourceFile|Bundle=>node);console.log("done");}
+probe([]);

@@ -6,6 +6,19 @@ if (cp.execFileSync('git', ['-C', pin, 'rev-parse', 'HEAD'], {encoding:'utf8'}).
 const lane = path.dirname(__dirname);
 const pairs = JSON.parse(fs.readFileSync(path.join(lane,'unknown-callable-pairs-ranked.json')));
 const recipes = new Map([
+ [411, [null, ["true"], "GenericType", "@GenericType"]],
+ [432, [null, ["undefined","@Block"], "CatchClause", "@CatchClause"]],
+ [441, [null, ["@Expression", '"ok"', "@Expression"], "CallExpression", "@CallExpression"]],
+ [447, [null, ["undefined", '"ok"', "undefined"], "TypePredicateNode", "@TypePredicateNode"]],
+ [582, [null, ["undefined",'"ok"',"undefined","undefined","[]"], "ClassDeclaration", "@ClassDeclaration"]],
+ [588, [null, ["@Expression","@Expression"], "BinaryExpression", "@BinaryExpression"]],
+ [594, [null, ["[]"], "ObjectBindingPattern", "@ObjectBindingPattern"]],
+ [597, [null, ["@Expression","@Expression"], "SyntheticReferenceExpression", "@SyntheticReferenceExpression"]],
+ [600, [null, ["@ArrayLiteralExpression","[]"], "ArrayLiteralExpression", "@ArrayLiteralExpression"]],
+ [603, [null, ["@ConditionalTypeNode","@TypeNode","@TypeNode","@TypeNode","@TypeNode"], "ConditionalTypeNode", "@ConditionalTypeNode"]],
+ [606, [null, ["@LabeledStatement","@Identifier","@Statement"], "LabeledStatement", "@LabeledStatement"]],
+ [609, [null, ["@NamedImports","[]"], "NamedImports", "@NamedImports"]],
+ [612, [null, ["@SpreadElement","@Expression"], "SpreadElement", "@SpreadElement"]],
  [102, [null, ['@LiteralExpression'], 'LiteralTypeNode', '@LiteralTypeNode']],
  [120, [null, ['undefined','undefined','[]','undefined','undefined','@Expression'], 'ArrowFunction', '@ArrowFunction']],
  [276, [null, ['@Declaration'], 'boolean', 'true']],
@@ -41,7 +54,7 @@ const files = new Map();
 function source(file) {if(!files.has(file)) files.set(file,ts.createSourceFile(file,fs.readFileSync(path.join(pin,file),'utf8'),ts.ScriptTarget.Latest,true));return files.get(file);}
 const originalProgram=ts.createProgram([path.join(pin,'src/compiler/types.ts')],{noResolve:true});const originalChecker=originalProgram.getTypeChecker();const originalTypes=originalProgram.getSourceFile(path.join(pin,'src/compiler/types.ts'));
 const kindValues=new Map();function originalKinds(n){if(ts.isInterfaceDeclaration(n)){const k=n.members.find(m=>m.name?.getText(originalTypes)==='kind');if(k){const value=originalChecker.getTypeAtLocation(k.type).value;if(typeof value==='number')kindValues.set(n.name.text,value);}}ts.forEachChild(n,originalKinds);}originalKinds(originalTypes);
-const nodes=new Map();function collect(n){if(ts.isInterfaceDeclaration(n)||ts.isTypeAliasDeclaration(n))nodes.set(n.name.text,[...(nodes.get(n.name.text)||[]),n]);ts.forEachChild(n,collect);}collect(source('src/compiler/types.ts'));collect(source('src/compiler/scanner.ts'));collect(source('src/compiler/sys.ts'));collect(source('src/compiler/watchUtilities.ts'));
+const nodes=new Map();function collect(n){if(ts.isInterfaceDeclaration(n)||ts.isTypeAliasDeclaration(n))nodes.set(n.name.text,[...(nodes.get(n.name.text)||[]),n]);ts.forEachChild(n,collect);}collect(source('src/compiler/types.ts'));collect(source('src/compiler/scanner.ts'));collect(source('src/compiler/sys.ts'));collect(source('src/compiler/watchUtilities.ts'));collect(source('src/compiler/checker.ts'));
 function declaration(type,field,seen=new Set()){if(seen.has(type))return;seen.add(type);const list=nodes.get(type)||[];for(const n of list){const own=n.members?.find(m=>m.name?.getText(n.getSourceFile())===field);if(own)return own;}for(const n of list)for(const c of n.heritageClauses||[])for(const b of c.types){const found=declaration(b.expression.getText(n.getSourceFile()),field,seen);if(found)return found;}}
 function signature(decl){return ts.isPropertySignature(decl)?decl.type:decl;}
 const rows=[];
@@ -88,7 +101,7 @@ for(const [rank,recipe] of recipes){
  host.getSourceFile=(file,...args)=>file===virtual?ts.createSourceFile(file,content,ts.ScriptTarget.Latest,true):getSource.call(host,file,...args);
  const program=ts.createProgram([virtual],options,host),checker=program.getTypeChecker(),fixture=program.getSourceFile(virtual);let target;
  function findTarget(n){if((ts.isMethodSignature(n)||ts.isPropertySignature(n))&&n.parent.name?.text==='Target'&&n.name.getText(fixture)===pair.field)target=n;ts.forEachChild(n,findTarget);}findTarget(fixture);
- const expectedOverrides={"102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
+ const expectedOverrides={"432":"(variableDeclaration: string | VariableDeclaration | BindingName | undefined, block: Block) => CatchClause","447":"(assertsModifier: AssertsKeyword | undefined, parameterName: string | Identifier | ThisTypeNode, type: TypeNode | undefined) => TypePredicateNode","582":"(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration","102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
  const expected=expectedOverrides[rank]||checker.typeToString(checker.getTypeAtLocation(target),target,ts.TypeFormatFlags.NoTruncation);
  rows.push({...pair,directory,expected,read:read.getText(sf),declaration:decl.getText(declarationSource),declarationFile:declarationSource.fileName,declarationSha256:hash(declarationSource.fileName),fileSha256:hash(pair.witness.file),utf16Start:read.getStart(sf),utf16End:read.end,arity:signature(decl).parameters.length,mutantArity:signature(decl).parameters.length===0?1:0,stdout:result==='void'?'done\n':result.includes('ProjectReference[]')?'1\n':result==='boolean'?'true\n':/^string/.test(result)?'ok\n':'7\n',carriers});
 }

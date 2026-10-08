@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly push:unknown;}
+interface Carrier<T> {push(...items: T[]): number;}
+type Target=Carrier<any>;
+function probe(value:Base):void {const result=value as Target;result.push(7);console.log("done");}
+probe([]);

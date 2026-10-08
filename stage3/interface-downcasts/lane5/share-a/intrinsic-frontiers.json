@@ -1,0 +1,380 @@
+{
+  "members": [
+    {
+      "receiver_type_id": 39011,
+      "type": "Expression[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Expression[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 85,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 212,
+        "column": 9
+      },
+      "rank": 15,
+      "certified": false,
+      "directory": "intrinsic-gap-15",
+      "read": "argumentsArray.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "utf16Start": 8162,
+      "utf16End": 8181,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 10400,
+      "type": "Diagnostic[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Diagnostic[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 55,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 703,
+        "column": 13
+      },
+      "rank": 27,
+      "certified": false,
+      "directory": "intrinsic-gap-27",
+      "read": "errors.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "utf16Start": 26317,
+      "utf16End": 26328,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 8242,
+      "type": "Type[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Type[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 49,
+      "witness": {
+        "file": "src/compiler/tracing.ts",
+        "line": 128,
+        "column": 13
+      },
+      "rank": 30,
+      "certified": false,
+      "directory": "intrinsic-gap-30",
+      "read": "typeCatalog.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+      "utf16Start": 4267,
+      "utf16End": 4283,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 7522,
+      "type": "StringConstructor",
+      "field": "fromCharCode",
+      "declared_types": [
+        "(...codes: number[]) => string"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 38,
+      "witness": {
+        "file": "src/compiler/scanner.ts",
+        "line": 1419,
+        "column": 16
+      },
+      "rank": 45,
+      "certified": false,
+      "directory": "intrinsic-gap-45",
+      "read": "String.fromCharCode",
+      "declarations": [
+        "fromCharCode(...codes: number[]): string;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "utf16Start": 86560,
+      "utf16End": 86579,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower String as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet",
+      "neededChange": "Represent the String constructor as a checked first-class value with static callable descriptors, or refuse its view transport before native emission."
+    },
+    {
+      "receiver_type_id": 76,
+      "type": "any[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: any[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 36,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 384,
+        "column": 17
+      },
+      "rank": 48,
+      "certified": false,
+      "directory": "intrinsic-gap-48",
+      "read": "result.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "utf16Start": 13143,
+      "utf16End": 13154,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 6830,
+      "type": "Declaration[] | undefined",
+      "field": "find",
+      "declared_types": [
+        "{ <S extends Declaration>(predicate: (value: Declaration, index: number, obj: Declaration[]) => value is S, thisArg?: any): S | undefined; (predicate: (value: Declaration, index: number, obj: Declaration[]) => unknown, thisArg?: any): Declaration | undefined; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 28,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 2149,
+        "column": 12
+      },
+      "rank": 57,
+      "certified": false,
+      "directory": "intrinsic-gap-57",
+      "read": "symbol.declarations?.find",
+      "declarations": [
+        "find<S extends T>(predicate: (value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined;",
+        "find(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.core.d.ts",
+      "declarationSha256": "efe985f761b0250f73d398ef89355f4423e7970ca9346026473244f58701508b",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 70845,
+      "utf16End": 70870,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "neededChange": "Sound demand-time overloaded predicate contract instantiation, accepting ambient predicate declarations without treating them as unproven implementations; preserve predicate/result correlation."
+    },
+    {
+      "receiver_type_id": 6457,
+      "type": "JSON",
+      "field": "stringify",
+      "declared_types": [
+        "{ (value: any, replacer?: ((this: any, key: string, value: any) => any) | undefined, space?: string | number | undefined): string; (value: any, replacer?: (string | number)[] | null | undefined, space?: string | ... 1 more ... | undefined): string; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 19,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 274,
+        "column": 173
+      },
+      "rank": 87,
+      "certified": false,
+      "directory": "intrinsic-gap-87",
+      "read": "JSON.stringify",
+      "declarations": [
+        "stringify(value: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string;",
+        "stringify(value: any, replacer?: (number | string)[] | null, space?: string | number): string;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "utf16Start": 9308,
+      "utf16End": 9322,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet",
+      "neededChange": "Represent the JSON namespace as a checked first-class value with static callable descriptors, or refuse its view transport before native emission."
+    },
+    {
+      "receiver_type_id": 91285,
+      "type": "TransformerFactory<SourceFile | Bundle>[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: TransformerFactory<SourceFile | Bundle>[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 16,
+      "witness": {
+        "file": "src/compiler/transformer.ts",
+        "line": 137,
+        "column": 5
+      },
+      "rank": 108,
+      "certified": false,
+      "directory": "intrinsic-gap-108",
+      "read": "transformers.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066",
+      "utf16Start": 4017,
+      "utf16End": 4034,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 34726,
+      "type": "VariableDeclaration[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: VariableDeclaration[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 13,
+      "witness": {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 310,
+        "column": 9
+      },
+      "rank": 138,
+      "certified": false,
+      "directory": "intrinsic-gap-138",
+      "read": "declarations.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+      "utf16Start": 13373,
+      "utf16End": 13390,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 1823,
+      "type": "readonly string[]",
+      "field": "map",
+      "declared_types": [
+        "<U>(callbackfn: (value: string, index: number, array: readonly string[]) => U, thisArg?: any) => U[]"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 12,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9663,
+        "column": 21
+      },
+      "rank": 150,
+      "certified": false,
+      "directory": "intrinsic-gap-150",
+      "read": "patterns.map",
+      "declarations": [
+        "map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 383155,
+      "utf16End": 383167,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Instantiate generic higher-order Array.map callable contracts soundly, including callback parameter/result variance and native receiver descriptors."
+    },
+    {
+      "receiver_type_id": 2406,
+      "type": "string[] | undefined",
+      "field": "push",
+      "declared_types": [
+        "(...items: string[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2213,
+        "column": 5
+      },
+      "rank": 198,
+      "certified": false,
+      "directory": "intrinsic-gap-198",
+      "read": "state.failedLookupLocations?.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "utf16Start": 109458,
+      "utf16End": 109491,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    }
+  ]
+}

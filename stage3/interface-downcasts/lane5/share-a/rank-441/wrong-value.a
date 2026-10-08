@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface CallExpression {readonly value:number;readonly kind:214;}
+interface Base {readonly createObjectDefinePropertyCall:unknown;}
+interface Target {createObjectDefinePropertyCall(target: Expression, propertyName: string | Expression, attributes: Expression): CallExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createObjectDefinePropertyCall({value:7},"ok",{value:7}).value}`);}
+probe({createObjectDefinePropertyCall:7});

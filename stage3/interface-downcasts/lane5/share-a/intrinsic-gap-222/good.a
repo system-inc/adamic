@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly pop:unknown;}
+interface Carrier<T> {pop(): T | undefined;}
+type Target=Carrier<string>;
+function probe(value:Base):void {const rest=value as Target;rest.pop();console.log("done");}
+probe(["ok"]);

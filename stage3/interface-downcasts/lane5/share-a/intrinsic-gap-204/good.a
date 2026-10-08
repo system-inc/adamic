@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly set:unknown;}
+interface Carrier<K,V> {set(key: K, value: V): this;}
+type Target=Carrier<string, string>;
+function probe(value:Base):void {const remappedPaths=value as Target;remappedPaths.set("ok","ok");console.log("done");}
+probe(new Map<string,string>());

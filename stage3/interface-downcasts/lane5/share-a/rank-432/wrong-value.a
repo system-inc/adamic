@@ -1,0 +1,13 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface ObjectBindingPattern {readonly value:number;readonly kind:207;}
+interface ArrayBindingPattern {readonly value:number;readonly kind:208;}
+type BindingPattern = ObjectBindingPattern | ArrayBindingPattern;
+type BindingName = Identifier | BindingPattern;
+interface VariableDeclaration {readonly value:number;readonly kind:261;}
+interface Block {readonly value:number;readonly kind:242;}
+interface CatchClause {readonly value:number;readonly kind:300;}
+interface Base {readonly createCatchClause:unknown;}
+interface Target {createCatchClause(variableDeclaration: string | BindingName | VariableDeclaration | undefined, block: Block): CatchClause;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createCatchClause(undefined,{value:7,kind:242}).value}`);}
+probe({createCatchClause:7});

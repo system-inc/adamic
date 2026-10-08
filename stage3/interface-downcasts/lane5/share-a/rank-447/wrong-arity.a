@@ -1,0 +1,10 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface AssertsKeyword {readonly value:number;}
+interface Identifier {readonly value:number;readonly kind:80;}
+interface ThisTypeNode {readonly value:number;readonly kind:198;}
+interface TypeNode {readonly value:number;}
+interface TypePredicateNode {readonly value:number;readonly kind:183;}
+interface Base {readonly createTypePredicateNode:unknown;}
+interface Target {createTypePredicateNode(assertsModifier: AssertsKeyword | undefined, parameterName: Identifier | ThisTypeNode | string, type: TypeNode | undefined): TypePredicateNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTypePredicateNode(undefined,"ok",undefined).value}`);}
+probe({createTypePredicateNode:():TypePredicateNode=>({value:7,kind:183})});

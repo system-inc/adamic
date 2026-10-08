@@ -1,0 +1,8 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Declaration {readonly value:number;}
+interface Base {readonly find:unknown;}
+interface Carrier<T> {find<S extends T>(predicate: (value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined;
+find(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined;}
+type Target=Carrier<Declaration>;
+function probe(value:Base):void {const symbol={declarations:value as Target};symbol.declarations?.find((value:Declaration):boolean=>true);console.log("done");}
+probe([{value:7}]);

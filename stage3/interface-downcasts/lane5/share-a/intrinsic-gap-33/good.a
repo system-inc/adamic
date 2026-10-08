@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly test:unknown;}
+interface Carrier {test(string: string): boolean;}
+type Target=Carrier;
+function probe(value:Base):void {const fileNameLowerCaseRegExp=value as Target;fileNameLowerCaseRegExp.test("ok");console.log("done");}
+probe(/ok/);

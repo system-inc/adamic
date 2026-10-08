@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly push:unknown;}
+interface Carrier<T> {push(...items: T[]): number;}
+type Target=Carrier<string>;
+function probe(value:Base):void {const state={failedLookupLocations:value as Target};state.failedLookupLocations?.push("ok");console.log("done");}
+probe([]);

@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 type callableShareAMember struct {
@@ -181,6 +182,96 @@ func TestCheckedViewCallableShareAFrontiers(t *testing.T) {
 			expected := "Adamic 0.1 refuses checked view read of field " + member.Field + " with unsupported callable contract; prove or implement the callable contract before reading this field"
 			if !strings.HasSuffix(err.Error(), expected) {
 				t.Fatalf("refusal does not name original member: %v", err)
+			}
+		})
+	}
+}
+
+// Discovery controls never certify a refused read or a Node-invalid fixture.
+func TestCheckedViewCallableShareAIntrinsicFrontiers(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-a/intrinsic-frontiers.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var evidence struct {
+		Members []struct {
+			Rank      int    `json:"rank"`
+			Directory string `json:"directory"`
+			Stdout    string `json:"stdout"`
+			Stop      string `json:"stop"`
+		} `json:"members"`
+	}
+	if err := json.Unmarshal(data, &evidence); err != nil {
+		t.Fatal(err)
+	}
+	for _, member := range evidence.Members {
+		t.Run(member.Directory, func(t *testing.T) {
+			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-a", member.Directory, "good.a")))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != member.Stdout {
+				t.Fatalf("source Node: %#v", truth)
+			}
+			_, err = lowered(t, path)
+			if err == nil {
+				t.Fatal("frontier lowered; needs complete certification")
+			}
+			t.Logf("rank %d original intrinsic refusal: %v", member.Rank, err)
+			if member.Stop == "" || !strings.HasSuffix(err.Error(), member.Stop) {
+				t.Fatalf("unrecorded or changed frontier: %v", err)
+			}
+		})
+	}
+}
+
+// These are code frontiers, not successful callable certificates or mutants.
+func TestCheckedViewCallableShareAIntrinsicControls(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-a/intrinsic-candidates.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var evidence struct {
+		Members []struct {
+			Rank              int    `json:"rank"`
+			Directory         string `json:"directory"`
+			Stdout            string `json:"stdout"`
+			NativeType        string `json:"nativeType"`
+			RuntimeMessage    string `json:"runtimeMessage"`
+			JavaScriptMessage string `json:"javascriptMessage"`
+		} `json:"members"`
+	}
+	if err := json.Unmarshal(data, &evidence); err != nil {
+		t.Fatal(err)
+	}
+	for _, member := range evidence.Members {
+		t.Run(member.Directory, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane5/share-a/"+member.Directory+"/good")
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != member.Stdout {
+				t.Fatalf("source Node: %#v", truth)
+			}
+			if member.NativeType != "" {
+				for _, sanitized := range []bool{false, true} {
+					err := native.Build(native.C(program), filepath.Join(t.TempDir(), "frontier"), native.Options{Sanitize: sanitized})
+					if err == nil || !strings.Contains(err.Error(), "incompatible pointer types passing '"+member.NativeType) || !strings.Contains(err.Error(), "to parameter of type 'adamic_object *'") {
+						t.Fatalf("changed code frontier: %v", err)
+					}
+					t.Logf("rank %d sanitizer=%v native receiver transport rejected by clang: %v", member.Rank, sanitized, err)
+				}
+				return
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			for i, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+				message := member.RuntimeMessage
+				if i == 2 {
+					message = member.JavaScriptMessage
+				}
+				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+					t.Fatalf("backend%d frontier: exit%d stdout %q stderr %q", i, got.exitCode, got.stdout, got.stderr)
+				}
+				t.Logf("rank %d backend%d valid receiver stops: %s", member.Rank, i, got.stderr)
 			}
 		})
 	}

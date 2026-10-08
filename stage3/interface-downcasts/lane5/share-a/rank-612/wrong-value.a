@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface SpreadElement {readonly value:number;readonly kind:231;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateSpreadElement:unknown;}
+interface Target {updateSpreadElement(node: SpreadElement, expression: Expression): SpreadElement;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateSpreadElement({value:7,kind:231},{value:7}).value}`);}
+probe({updateSpreadElement:7});

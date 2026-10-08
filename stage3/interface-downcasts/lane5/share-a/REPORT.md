@@ -1,8 +1,8 @@
-Built: 30 callable pair certificates, 158 candidate reads, 90 .a fixtures and eight code-frontier controls.
-Commits: based on 926a1d39d1a0d6b4cf49bbccf521a4cc02d10f56; checkpoint one a3dd5fd9ceab3ffc45b4d1b2b19c73f382cc3ac7; checkpoint two follows it on codex/views-callables-a.
-Checks: source Node, native release/ASan/UBSan, JavaScript, finishing leak checks, original declarations/read spans/aliases/discriminators and share counts pass; whole-table counts retains outside-share failures.
-Mutants: all 60 executable arity mutants are caught by pinned exit/message assertions; no compiler/runtime source is mutated.
-Uncovered: remaining assigned pairs are retained in queue.json; eight code-needed pairs are listed below; full tsc execution and exact reachability are unmeasured.
+Built: 43 callable pair certificates / 201 reads / 129 .a fixtures, plus documented code frontiers.
+Commits: a3dd5fd9 and a6277811 already pushed; this checkpoint adds 13 pairs on codex/views-callables-a.
+Checks: source Node, native release/ASan/UBSan, JavaScript and leak controls; original declarations and count rows checked. Global counts remains outside-share red.
+Mutants: 86 cumulative executable arity mutants, with 26 new instances caught by pinned exit/message assertions.
+Uncovered: ranked pending queue retained; Set dependency 058635b9 listed without merging it; no compiler/runtime code changed.
 
 Certified ranks: 102, 120, 276, 291, 435, 450, 453, 456, 465, 357, 363, 444, 429, 285, 306, 333, 354, 360, 366, 369, 372, 375, 396, 399, 402, 426, 477, 486, 489, 513.
 The ledger assigns 897 remaining pairs / 2742 candidate reads before exclusions.
@@ -115,3 +115,43 @@ certification is not claimed. No compiler or runtime code was edited.
 
 Second checkpoint whole-table counts exits 1 in 64.907s with the same outside-share failures. The append-only share updater is green; the full table is not certified.
 Cumulative fixtures, 60 executable arity mutants, eight frontier pins and all 90 count rows PASS 79.104s.
+
+Checkpoint three serves step 09. It certifies ranks 411, 432, 441, 447, 582,
+588, 594, 597, 600, 603, 606, 609 and 612: 13 pairs / 43 reads. Totals are
+43 pairs / 201 reads for this share and 199 / 2818 pairs, 2900 / 11063 reads
+for the lane. Each has three source fixtures and two executable arity mutants.
+
+The highest-read built-in receiver probes add 21 code-needed pairs / 530 reads:
+eleven pinned lowering refusals, nine pinned clang receiver pointer transport
+failures, and one valid RegExp control which stops at runtime. Native RegExp
+reports a missing field; JavaScript finds the function but lacks its signature
+metadata. These are observed frontiers, never positive certificates or mutants.
+No leak completion is claimed for a refusing control. All 34 previously excluded
+Set pairs / 91 reads now list codex/views-set-receiver at 058635b9 as required
+integration evidence, supplied by the user and not merged or locally retested.
+needs-code.json records each pair, original read, stop and needed change.
+
+Ordinary carriers preserve original Target signatures. Intrinsic probes retain
+original lib methods in a generic Carrier interface, with the same original
+read and an actual built-in producer. Initial unknown-to-Carrier casts were
+replaced by structural Base-to-Carrier views before recording evidence: the
+unknown cast refusal was a harness defect, not a member frontier. Generic/rest
+and overloaded declarations remain exact. The source verifier checks them.
+
+Commands and raw logs for checkpoint three:
+
+```sh
+node stage3/interface-downcasts/lane5/share-a/prepare.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch3-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/prepare-intrinsic-frontiers.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-intrinsic-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/verify.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch3-verify-final.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewCallableShareACounts$' -count=1 -timeout 10m -args -update-counts > /tmp/lane5-a-batch3-counts.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewCallableShareAIntrinsicControls$|^TestCheckedViewCallableShareAIntrinsicFrontiers$|^TestCheckedViewCallableShareA$/^rank-(411|432|441|447|582|588|594|597|600|603|606|609|612)$' -count=1 -v -timeout 10m > /tmp/lane5-a-batch3-final.log 2>&1
+```
+
+Existing 90 count rows are unchanged; the checkpoint appends 39 rows. No lane
+branch was merged. Nonlocal witnesses 123, 126, 147 and 171 remain pending;
+no blocker is inferred from the reduced generator not handling their receivers.
+
+Checkpoint three final oracle PASS 23.974s; share counts update PASS 17.684s; source verification PASS. The ledger retains 728 pending pairs / 1239 reads and 63 code-needed pairs / 1119 reads, including Set dependencies.
+
+Required global counts update exits 1 in 46.039s on outside-share fixtures. The restored count/frontier check and vet pass. An additional source-verifier mutant renames the original intrinsic rest parameter at rank 15: verifier exits 1 naming intrinsic declaration changed 15; restoring the source returns green. No invalid-C probe is counted as a mutant.

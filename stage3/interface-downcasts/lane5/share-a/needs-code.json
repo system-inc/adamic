@@ -99,6 +99,40 @@
       "neededChange": "Demand-time generic callable instantiation with sound parameter/result contracts; do not replace generic identity with a function tag."
     },
     {
+      "receiver_type_id": 39011,
+      "type": "Expression[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Expression[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 85,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 212,
+        "column": 9
+      },
+      "rank": 15,
+      "certified": false,
+      "directory": "intrinsic-gap-15",
+      "read": "argumentsArray.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "utf16Start": 8162,
+      "utf16End": 8181,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
       "receiver_type_id": 11739,
       "type": "NodeFactory",
       "field": "createUniqueName",
@@ -130,6 +164,660 @@
       "utf16End": 22772,
       "stdout": "7\n",
       "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance."
+    },
+    {
+      "receiver_type_id": 10400,
+      "type": "Diagnostic[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Diagnostic[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 55,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 703,
+        "column": 13
+      },
+      "rank": 27,
+      "certified": false,
+      "directory": "intrinsic-gap-27",
+      "read": "errors.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "utf16Start": 26317,
+      "utf16End": 26328,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 8242,
+      "type": "Type[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: Type[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 49,
+      "witness": {
+        "file": "src/compiler/tracing.ts",
+        "line": 128,
+        "column": 13
+      },
+      "rank": 30,
+      "certified": false,
+      "directory": "intrinsic-gap-30",
+      "read": "typeCatalog.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+      "utf16Start": 4267,
+      "utf16End": 4283,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 73,
+      "type": "RegExp",
+      "field": "test",
+      "declared_types": [
+        "(string: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 45,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 1876,
+        "column": 12
+      },
+      "rank": 33,
+      "certified": false,
+      "directory": "intrinsic-gap-33",
+      "read": "fileNameLowerCaseRegExp.test",
+      "declarations": [
+        "test(string: string): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "utf16Start": 66272,
+      "utf16End": 66300,
+      "stdout": "done\n",
+      "runtimeMessage": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test is not initialized; expected (string: string) => boolean, found missing\n",
+      "stop": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test is not initialized; expected (string: string) => boolean, found missing; JavaScript finds the function but has unknown signature metadata.",
+      "neededChange": "Represent RegExp intrinsic methods through checked views in both backends, with immutable callable descriptors and safe receiver binding; valid inherited test must not be treated as a missing own field.",
+      "javascriptMessage": "adamic: panic: field read failed: fileNameLowerCaseRegExp.test expected (string: string) => boolean, found function with unknown signature\n"
+    },
+    {
+      "receiver_type_id": 7522,
+      "type": "StringConstructor",
+      "field": "fromCharCode",
+      "declared_types": [
+        "(...codes: number[]) => string"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 38,
+      "witness": {
+        "file": "src/compiler/scanner.ts",
+        "line": 1419,
+        "column": 16
+      },
+      "rank": 45,
+      "certified": false,
+      "directory": "intrinsic-gap-45",
+      "read": "String.fromCharCode",
+      "declarations": [
+        "fromCharCode(...codes: number[]): string;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "utf16Start": 86560,
+      "utf16End": 86579,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower String as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet",
+      "neededChange": "Represent the String constructor as a checked first-class value with static callable descriptors, or refuse its view transport before native emission."
+    },
+    {
+      "receiver_type_id": 76,
+      "type": "any[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: any[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 36,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 384,
+        "column": 17
+      },
+      "rank": 48,
+      "certified": false,
+      "directory": "intrinsic-gap-48",
+      "read": "result.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "utf16Start": 13143,
+      "utf16End": 13154,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 6830,
+      "type": "Declaration[] | undefined",
+      "field": "find",
+      "declared_types": [
+        "{ <S extends Declaration>(predicate: (value: Declaration, index: number, obj: Declaration[]) => value is S, thisArg?: any): S | undefined; (predicate: (value: Declaration, index: number, obj: Declaration[]) => unknown, thisArg?: any): Declaration | undefined; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 28,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 2149,
+        "column": 12
+      },
+      "rank": 57,
+      "certified": false,
+      "directory": "intrinsic-gap-57",
+      "read": "symbol.declarations?.find",
+      "declarations": [
+        "find<S extends T>(predicate: (value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined;",
+        "find(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.core.d.ts",
+      "declarationSha256": "efe985f761b0250f73d398ef89355f4423e7970ca9346026473244f58701508b",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 70845,
+      "utf16End": 70870,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "neededChange": "Sound demand-time overloaded predicate contract instantiation, accepting ambient predicate declarations without treating them as unproven implementations; preserve predicate/result correlation."
+    },
+    {
+      "receiver_type_id": 10096,
+      "type": "Map<string, boolean>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: boolean) => Map<string, boolean>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 23,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 1232,
+        "column": 9
+      },
+      "rank": 66,
+      "certified": false,
+      "directory": "intrinsic-gap-66",
+      "read": "usedLines.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 41573,
+      "utf16End": 41586,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 6457,
+      "type": "JSON",
+      "field": "stringify",
+      "declared_types": [
+        "{ (value: any, replacer?: ((this: any, key: string, value: any) => any) | undefined, space?: string | number | undefined): string; (value: any, replacer?: (string | number)[] | null | undefined, space?: string | ... 1 more ... | undefined): string; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 19,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 274,
+        "column": 173
+      },
+      "rank": 87,
+      "certified": false,
+      "directory": "intrinsic-gap-87",
+      "read": "JSON.stringify",
+      "declarations": [
+        "stringify(value: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string;",
+        "stringify(value: any, replacer?: (number | string)[] | null, space?: string | number): string;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "utf16Start": 9308,
+      "utf16End": 9322,
+      "stdout": "done\n",
+      "stop": "stage 0 can't lower JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet",
+      "neededChange": "Represent the JSON namespace as a checked first-class value with static callable descriptors, or refuse its view transport before native emission."
+    },
+    {
+      "receiver_type_id": 10768,
+      "type": "Set<string>",
+      "field": "has",
+      "declared_types": [
+        "(value: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 19,
+      "witness": {
+        "file": "src/compiler/scanner.ts",
+        "line": 3507,
+        "column": 69
+      },
+      "rank": 90,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/scanner.ts:3507:69",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 8212,
+      "type": "Map<string, number>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: number) => Map<string, number>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 18,
+      "witness": {
+        "file": "src/compiler/performance.ts",
+        "line": 77,
+        "column": 9
+      },
+      "rank": 93,
+      "certified": false,
+      "directory": "intrinsic-gap-93",
+      "read": "counts.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "utf16Start": 2080,
+      "utf16End": 2090,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 8811,
+      "type": "SymbolTable",
+      "field": "has",
+      "declared_types": [
+        "(key: __String) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 16,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2901,
+        "column": 62
+      },
+      "rank": 105,
+      "certified": false,
+      "directory": "intrinsic-gap-105",
+      "read": "mainModule.exports.has",
+      "declarations": [
+        "has(key: K): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 123409,
+      "utf16End": 123431,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 91285,
+      "type": "TransformerFactory<SourceFile | Bundle>[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: TransformerFactory<SourceFile | Bundle>[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 16,
+      "witness": {
+        "file": "src/compiler/transformer.ts",
+        "line": 137,
+        "column": 5
+      },
+      "rank": 108,
+      "certified": false,
+      "directory": "intrinsic-gap-108",
+      "read": "transformers.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066",
+      "utf16Start": 4017,
+      "utf16End": 4034,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 10563,
+      "type": "Map<string, Type>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: Type) => Map<string, Type>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2432,
+        "column": 18
+      },
+      "rank": 111,
+      "certified": false,
+      "directory": "intrinsic-gap-111",
+      "read": "cachedTypes.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 97025,
+      "utf16End": 97040,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 9196,
+      "type": "NodeArray<ParameterDeclaration>",
+      "field": "indexOf",
+      "declared_types": [
+        "(searchElement: ParameterDeclaration, fromIndex?: number | undefined) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1043,
+        "column": 23
+      },
+      "rank": 114,
+      "certified": false,
+      "directory": "intrinsic-gap-114",
+      "read": "param.parent.parameters.indexOf",
+      "declarations": [
+        "indexOf(searchElement: T, fromIndex?: number): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "utf16Start": 40666,
+      "utf16End": 40697,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 34726,
+      "type": "VariableDeclaration[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: VariableDeclaration[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 13,
+      "witness": {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 310,
+        "column": 9
+      },
+      "rank": 138,
+      "certified": false,
+      "directory": "intrinsic-gap-138",
+      "read": "declarations.push",
+      "declarations": [
+        "push(...items: T[]): number;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+      "utf16Start": 13373,
+      "utf16End": 13390,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 1823,
+      "type": "readonly string[]",
+      "field": "map",
+      "declared_types": [
+        "<U>(callbackfn: (value: string, index: number, array: readonly string[]) => U, thisArg?: any) => U[]"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 12,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9663,
+        "column": 21
+      },
+      "rank": 150,
+      "certified": false,
+      "directory": "intrinsic-gap-150",
+      "read": "patterns.map",
+      "declarations": [
+        "map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 383155,
+      "utf16End": 383167,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Instantiate generic higher-order Array.map callable contracts soundly, including callback parameter/result variance and native receiver descriptors."
+    },
+    {
+      "receiver_type_id": 10563,
+      "type": "Map<string, Type>",
+      "field": "get",
+      "declared_types": [
+        "(key: string) => Type | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2428,
+        "column": 22
+      },
+      "rank": 153,
+      "certified": false,
+      "directory": "intrinsic-gap-153",
+      "read": "cachedTypes.get",
+      "declarations": [
+        "get(key: K): V | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 96897,
+      "utf16End": 96912,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 10108,
+      "type": "TransformationContext",
+      "field": "onEmitNode",
+      "declared_types": [
+        "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "column": 32
+      },
+      "rank": 165,
+      "certified": false,
+      "directory": "gap-165",
+      "expected": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
+      "read": "context.onEmitNode",
+      "declaration": "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "utf16Start": 6663,
+      "utf16End": 6681,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": "type EmitHint=number;\ninterface Node {readonly value:number;}",
+      "declarations": [
+        "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "neededChange": "Retain demand-time higher-order callable descriptors for malformed producers so arity and kind guards execute at the read without depending on compatible producer proof."
+    },
+    {
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "includes",
+      "declared_types": [
+        "(searchElement: string, fromIndex?: number | undefined) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3418,
+        "column": 9
+      },
+      "rank": 168,
+      "certified": false,
+      "directory": "intrinsic-gap-168",
+      "read": "resolutionStack.includes",
+      "declarations": [
+        "includes(searchElement: T, fromIndex?: number): boolean;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2016.array.include.d.ts",
+      "declarationSha256": "c91d6d83d8e051810bee33b99d990fc13a4398ddfef240f903c98efb454d5731",
+      "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "utf16Start": 140106,
+      "utf16End": 140130,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
     },
     {
       "receiver_type_id": 11739,
@@ -231,41 +919,1033 @@
       "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance."
     },
     {
-      "receiver_type_id": 10108,
-      "type": "TransformationContext",
-      "field": "onEmitNode",
+      "receiver_type_id": 2406,
+      "type": "string[] | undefined",
+      "field": "push",
       "declared_types": [
-        "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void"
+        "(...items: string[]) => number"
       ],
       "families": [
         "callable contracts"
       ],
-      "reads": 11,
+      "reads": 9,
       "witness": {
-        "file": "src/compiler/transformers/ts.ts",
-        "line": 253,
-        "column": 32
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2213,
+        "column": 5
       },
-      "rank": 165,
+      "rank": 198,
       "certified": false,
-      "directory": "gap-165",
-      "expected": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
-      "read": "context.onEmitNode",
-      "declaration": "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;",
-      "declarationFile": "src/compiler/types.ts",
-      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
-      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
-      "utf16Start": 6663,
-      "utf16End": 6681,
-      "arity": 3,
-      "mutantArity": 0,
-      "stdout": "done\n",
-      "carriers": "type EmitHint=number;\ninterface Node {readonly value:number;}",
+      "directory": "intrinsic-gap-198",
+      "read": "state.failedLookupLocations?.push",
       "declarations": [
-        "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
+        "push(...items: T[]): number;"
       ],
+      "containerName": "Carrier",
       "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
-      "neededChange": "Retain demand-time higher-order callable descriptors for malformed producers so arity and kind guards execute at the read without depending on compatible producer proof."
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "utf16Start": 109458,
+      "utf16End": 109491,
+      "stdout": "done\n",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport."
+    },
+    {
+      "receiver_type_id": 14773,
+      "type": "Map<string, string>",
+      "field": "set",
+      "declared_types": [
+        "(key: string, value: string) => Map<string, string>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1685,
+        "column": 88
+      },
+      "rank": 204,
+      "certified": false,
+      "directory": "intrinsic-gap-204",
+      "read": "remappedPaths.set",
+      "declarations": [
+        "set(key: K, value: V): this;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "utf16Start": 74716,
+      "utf16End": 74733,
+      "stdout": "done\n",
+      "nativeType": "adamic_map *",
+      "stop": "clang rejects passing 'adamic_map *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 59818,
+      "type": "Set<number>",
+      "field": "add",
+      "declared_types": [
+        "(value: number) => Set<number>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 5389,
+        "column": 13
+      },
+      "rank": 219,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/parser.ts:5389:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "pop",
+      "declared_types": [
+        "() => string | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/path.ts",
+        "line": 452,
+        "column": 48
+      },
+      "rank": 222,
+      "certified": false,
+      "directory": "intrinsic-gap-222",
+      "read": "rest.pop",
+      "declarations": [
+        "pop(): T | undefined;"
+      ],
+      "containerName": "Carrier",
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "fileSha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc",
+      "utf16Start": 17686,
+      "utf16End": 17694,
+      "stdout": "done\n",
+      "nativeType": "adamic_array *",
+      "stop": "clang rejects passing 'adamic_array *' to the structural checked-view carrier parameter 'adamic_object *'.",
+      "neededChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata."
+    },
+    {
+      "receiver_type_id": 59818,
+      "type": "Set<number>",
+      "field": "has",
+      "declared_types": [
+        "(value: number) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 9609,
+        "column": 21
+      },
+      "rank": 252,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/checker.ts:9609:21",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10750,
+      "type": "Set<Node>",
+      "field": "add",
+      "declared_types": [
+        "(value: Node) => Set<Node>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 49291,
+        "column": 9
+      },
+      "rank": 309,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/checker.ts:49291:9",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 46686,
+      "type": "Set<Path> | undefined",
+      "field": "has",
+      "declared_types": [
+        "(value: Path) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12271,
+        "column": 36
+      },
+      "rank": 381,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/utilities.ts:12271:36",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 98892,
+      "type": "Set<ResolutionWithFailedLookupLocations>",
+      "field": "clear",
+      "declared_types": [
+        "() => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 686,
+        "column": 9
+      },
+      "rank": 480,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/resolutionCache.ts:686:9",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 32148,
+      "type": "(Set<string> | undefined)[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: (Set<string> | undefined)[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/scanner.ts",
+        "line": 2645,
+        "column": 17
+      },
+      "rank": 507,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/scanner.ts:2645:17",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 98893,
+      "type": "Map<Path, Set<ResolutionWithFailedLookupLocations>>",
+      "field": "get",
+      "declared_types": [
+        "(key: Path) => Set<ResolutionWithFailedLookupLocations> | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1120,
+        "column": 31
+      },
+      "rank": 552,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/resolutionCache.ts:1120:31",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96903,
+      "type": "ReadonlySet<Path> | undefined",
+      "field": "forEach",
+      "declared_types": [
+        "(callbackfn: (value: Path, value2: Path, set: ReadonlySet<Path>) => void, thisArg?: any) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 149,
+        "column": 21
+      },
+      "rank": 630,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:149:21",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10750,
+      "type": "Set<Node>",
+      "field": "has",
+      "declared_types": [
+        "(value: Node) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 49309,
+        "column": 67
+      },
+      "rank": 636,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/checker.ts:49309:67",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10080,
+      "type": "Set<__String>",
+      "field": "forEach",
+      "declared_types": [
+        "(callbackfn: (value: __String, value2: __String, set: Set<__String>) => void, thisArg?: any) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 5239,
+        "column": 13
+      },
+      "rank": 639,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/checker.ts:5239:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96902,
+      "type": "ReadonlySet<Path>",
+      "field": "forEach",
+      "declared_types": [
+        "(callbackfn: (value: Path, value2: Path, set: ReadonlySet<Path>) => void, thisArg?: any) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 139,
+        "column": 21
+      },
+      "rank": 1044,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:139:21",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 46685,
+      "type": "Set<Path>",
+      "field": "clear",
+      "declared_types": [
+        "() => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1862,
+        "column": 13
+      },
+      "rank": 1074,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builder.ts:1862:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 98892,
+      "type": "Set<ResolutionWithFailedLookupLocations>",
+      "field": "delete",
+      "declared_types": [
+        "(value: ResolutionWithFailedLookupLocations) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1395,
+        "column": 13
+      },
+      "rank": 1077,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/resolutionCache.ts:1395:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10769,
+      "type": "Set<string> | undefined",
+      "field": "delete",
+      "declared_types": [
+        "(value: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 683,
+        "column": 27
+      },
+      "rank": 1080,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/sys.ts:683:27",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 32148,
+      "type": "(Set<string> | undefined)[]",
+      "field": "some",
+      "declared_types": [
+        "(predicate: (value: Set<string> | undefined, index: number, array: (Set<string> | undefined)[]) => unknown, thisArg?: any) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/scanner.ts",
+        "line": 3007,
+        "column": 71
+      },
+      "rank": 1245,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/scanner.ts:3007:71",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96952,
+      "type": "Map<K, Set<V>>",
+      "field": "delete",
+      "declared_types": [
+        "(key: K) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 185,
+        "column": 17
+      },
+      "rank": 1497,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:185:17",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96944,
+      "type": "Map<K, Set<V>>",
+      "field": "set",
+      "declared_types": [
+        "(key: K, value: Set<V>) => Map<K, Set<V>>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 175,
+        "column": 13
+      },
+      "rank": 1500,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:175:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96905,
+      "type": "Map<Path, ReadonlySet<Path>>",
+      "field": "set",
+      "declared_types": [
+        "(key: Path, value: ReadonlySet<Path>) => Map<Path, ReadonlySet<Path>>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 147,
+        "column": 21
+      },
+      "rank": 1581,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:147:21",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 98893,
+      "type": "Map<Path, Set<ResolutionWithFailedLookupLocations>>",
+      "field": "delete",
+      "declared_types": [
+        "(key: Path) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1391,
+        "column": 71
+      },
+      "rank": 1587,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/resolutionCache.ts:1391:71",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 43118,
+      "type": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined",
+      "field": "forEach",
+      "declared_types": [
+        "((callbackfn: (value: U, key: K, map: ReadonlyMap<K, U>) => void, thisArg?: any) => void) | ((callbackfn: (value: K, value2: K, set: ReadonlySet<K>) => void, thisArg?: any) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8257,
+        "column": 5
+      },
+      "rank": 2220,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/utilities.ts:8257:5",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 96903,
+      "type": "ReadonlySet<Path> | undefined",
+      "field": "has",
+      "declared_types": [
+        "(value: Path) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 156,
+        "column": 30
+      },
+      "rank": 2235,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builderState.ts:156:30",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 7197,
+      "type": "Set<FlowNode>",
+      "field": "add",
+      "declared_types": [
+        "(value: FlowNode) => Set<FlowNode>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 1012,
+        "column": 13
+      },
+      "rank": 2316,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/debug.ts:1012:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 82814,
+      "type": "Set<FunctionDeclaration>",
+      "field": "add",
+      "declared_types": [
+        "(value: FunctionDeclaration) => Set<FunctionDeclaration>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/utilities.ts",
+        "line": 333,
+        "column": 9
+      },
+      "rank": 2319,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/transformers/utilities.ts:333:9",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 43332,
+      "type": "Set<K>",
+      "field": "has",
+      "declared_types": [
+        "(value: K) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8317,
+        "column": 9
+      },
+      "rank": 2322,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/utilities.ts:8317:9",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 86995,
+      "type": "Set<ParameterDeclaration>",
+      "field": "add",
+      "declared_types": [
+        "(value: ParameterDeclaration) => Set<ParameterDeclaration>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 978,
+        "column": 17
+      },
+      "rank": 2325,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/transformers/es2018.ts:978:17",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 46686,
+      "type": "Set<Path> | undefined",
+      "field": "forEach",
+      "declared_types": [
+        "(callbackfn: (value: Path, value2: Path, set: Set<Path>) => void, thisArg?: any) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 355,
+        "column": 9
+      },
+      "rank": 2328,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/builder.ts:355:9",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 99226,
+      "type": "Set<ResolutionWithFailedLookupLocations> | undefined",
+      "field": "delete",
+      "declared_types": [
+        "(value: ResolutionWithFailedLookupLocations) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1391,
+        "column": 17
+      },
+      "rank": 2331,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/resolutionCache.ts:1391:17",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 101609,
+      "type": "Set<ResolvedConfigFilePath>",
+      "field": "has",
+      "declared_types": [
+        "(value: ResolvedConfigFilePath) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 694,
+        "column": 22
+      },
+      "rank": 2334,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/tsbuildPublic.ts:694:22",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 46690,
+      "type": "Set<ResolvedProjectReference> | undefined",
+      "field": "has",
+      "declared_types": [
+        "(value: ResolvedProjectReference) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12283,
+        "column": 33
+      },
+      "rank": 2337,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/utilities.ts:12283:33",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 94464,
+      "type": "Set<T>",
+      "field": "add",
+      "declared_types": [
+        "(value: T) => Set<T>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 426,
+        "column": 13
+      },
+      "rank": 2340,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/watchUtilities.ts:426:13",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 949,
+      "type": "Set<T>",
+      "field": "has",
+      "declared_types": [
+        "(value: T) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 530,
+        "column": 10
+      },
+      "rank": 2343,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/core.ts:530:10",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10080,
+      "type": "Set<__String>",
+      "field": "delete",
+      "declared_types": [
+        "(value: __String) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 327,
+        "column": 17
+      },
+      "rank": 2346,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/transformers/es2017.ts:327:17",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
+    },
+    {
+      "receiver_type_id": 10768,
+      "type": "Set<string>",
+      "field": "delete",
+      "declared_types": [
+        "(value: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 23459,
+        "column": 21
+      },
+      "rank": 2349,
+      "certified": false,
+      "status": "needs-code",
+      "read": "src/compiler/checker.ts:23459:21",
+      "stop": "Native Set receiver checked-view frontier documented in lane 5; dependency fixed on a separate lane branch, not merged here.",
+      "neededChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "dependency": {
+        "branch": "codex/views-set-receiver",
+        "sha": "058635b9"
+      },
+      "evidence": "User-provided fix sha; not locally retested on this branch."
     }
   ]
 }

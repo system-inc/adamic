@@ -1,0 +1,8 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Symbol {readonly value:number;}
+type __String=string;
+interface Base {readonly has:unknown;}
+interface Carrier<K,V> {has(key: K): boolean;}
+type Target=Carrier<__String, Symbol>;
+function probe(value:Base):void {const mainModule={exports:value as Target};mainModule.exports.has("ok");console.log("done");}
+probe(new Map<__String,Symbol>());

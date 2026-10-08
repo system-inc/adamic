@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly set:unknown;}
+interface Carrier<K,V> {set(key: K, value: V): this;}
+type Target=Carrier<string, boolean>;
+function probe(value:Base):void {const usedLines=value as Target;usedLines.set("ok",true);console.log("done");}
+probe(new Map<string,boolean>());

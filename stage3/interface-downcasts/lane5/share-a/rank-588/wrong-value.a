@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface BinaryExpression {readonly value:number;readonly kind:227;}
+interface Base {readonly createLessThan:unknown;}
+interface Target {createLessThan(left: Expression, right: Expression): BinaryExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createLessThan({value:7},{value:7}).value}`);}
+probe({createLessThan:7});

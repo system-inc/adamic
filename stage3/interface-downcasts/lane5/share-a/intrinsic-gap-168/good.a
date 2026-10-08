@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly includes:unknown;}
+interface Carrier<T> {includes(searchElement: T, fromIndex?: number): boolean;}
+type Target=Carrier<string>;
+function probe(value:Base):void {const resolutionStack=value as Target;resolutionStack.includes("ok");console.log("done");}
+probe(["ok"]);

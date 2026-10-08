@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface ParameterDeclaration {readonly value:number;}
+interface Base {readonly indexOf:unknown;}
+interface Carrier<T> {indexOf(searchElement: T, fromIndex?: number): number;}
+type Target=Carrier<ParameterDeclaration>;
+function probe(value:Base):void {const param={parent:{parameters:value as Target}};param.parent.parameters.indexOf({value:7});console.log("done");}
+probe([]);

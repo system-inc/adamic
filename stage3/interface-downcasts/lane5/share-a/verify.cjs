@@ -30,3 +30,17 @@ for(const member of gaps.members){
  if(!read||declarations.length!==member.declarations.length||declarations.some((d,i)=>normalized(d)!==normalized(member.declarations[i])))throw Error('frontier declarations changed '+member.rank);
 }
 console.log('Verified '+gaps.members.length+' original overloaded/generic frontier fixtures.');
+
+for(const ledger of ['intrinsic-frontiers.json','intrinsic-candidates.json']){
+ const evidence=JSON.parse(fs.readFileSync(path.join(__dirname,ledger)));
+ for(const member of evidence.members){
+  if(member.rank%3)throw Error('wrong intrinsic share');
+  for(const [file,hash] of [[member.witness.file,member.fileSha256],[member.declarationFile,member.declarationSha256]])if(crypto.createHash('sha256').update(fs.readFileSync(path.join(pin,file))).digest('hex')!==hash)throw Error('intrinsic source drift '+file);
+  const text=fs.readFileSync(path.join(pin,member.witness.file),'utf8');if(text.slice(member.utf16Start,member.utf16End)!==member.read)throw Error('intrinsic read drift');
+  const originalDeclaration=normalized(fs.readFileSync(path.join(pin,member.declarationFile),'utf8'));for(const decl of member.declarations)if(!originalDeclaration.includes(normalized(decl)))throw Error('intrinsic declaration not in original '+member.rank);
+  const sf=ts.createSourceFile('good.a',fs.readFileSync(path.join(__dirname,member.directory,'good.a'),'utf8'),ts.ScriptTarget.Latest,true);const declarations=[];let read=false;
+  function visit(n){if((ts.isMethodSignature(n)||ts.isPropertySignature(n))&&n.parent.name?.text===member.containerName&&n.name?.getText(sf)===member.field)declarations.push(n.getText(sf));if(ts.isPropertyAccessExpression(n)&&normalized(n.getText(sf))===normalized(member.read))read=true;ts.forEachChild(n,visit);}visit(sf);
+  if(!read||declarations.length!==member.declarations.length||declarations.some((d,i)=>normalized(d)!==normalized(member.declarations[i])))throw Error('intrinsic declaration changed '+member.rank);
+ }
+ console.log('Verified '+evidence.members.length+' intrinsic frontier source controls in '+ledger+'.');
+}

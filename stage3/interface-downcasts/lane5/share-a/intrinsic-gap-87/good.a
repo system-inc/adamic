@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly stringify:unknown;}
+interface Carrier {stringify(value: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string;
+stringify(value: any, replacer?: (number | string)[] | null, space?: string | number): string;}
+type Target=Carrier;
+function probe(value:Base):void {const JSON=value as Target;JSON.stringify({value:7});console.log("done");}
+probe(JSON);
