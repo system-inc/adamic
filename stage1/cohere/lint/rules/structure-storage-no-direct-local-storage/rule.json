@@ -1,0 +1,13 @@
+{
+  "name": "structure/storage-no-direct-local-storage",
+  "kinds": [
+    "Identifier"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureStorageNoDirectLocalStorage",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestStorageNoDirectLocalStorage"
+}
