@@ -1,0 +1,19 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_checked.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_checked.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_checked.a
+    oracle_test.go:729: gate cache node miss
+    oracle_test.go:729: gate cache node miss
+    oracle_test.go:576: gate cache native miss
+    oracle_test.go:569: gate cache native miss
+    oracle_test.go:745: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_checked.a (0.77s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.803s
+FAIL
