@@ -50,8 +50,8 @@ export class Rule {
     entries: Deprecation[] = defaultEntries;
     constructor(context: RuleContext) { this.context = context; }
     prepare(root: number): void {
-        // No annotation can exist without its marker, including in comments.
-        if(!this.context.source.includes('@jsx')) { return; }
+        // A comment annotation cannot exist unless its shape also occurs in the source.
+        if(annotation(this.context.source) === '') { return; }
         let pragma = 'React';
         for(const comment of fileComments(this.context, this.context.node(root))) {
             let text = comment.text.slice(2);
