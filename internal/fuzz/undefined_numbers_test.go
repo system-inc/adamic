@@ -24,7 +24,8 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 	sources := map[string]bool{}
 	directory := t.TempDir()
 	for seed := uint64(1); seed <= 40; seed++ {
-		source := Generate(seed).Source()
+		// Moves and parallel programs are refused by design some of the time; every program here must lower.
+		source := GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 		for _, line := range strings.Split(source, "\n") {
 			if !strings.HasPrefix(line, "console.log(`maybeValue") {
 				continue

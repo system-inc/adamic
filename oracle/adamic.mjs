@@ -135,3 +135,8 @@ export function fileStatus(path) {
 export function programArguments() {
 	return process.argv.slice(2);
 }
+
+// The sequential witness: only item and index, in input order, stopping at the first throw.
+export function parallelMap(items, work) {
+	return items.map((item, index) => work(item, index));
+}

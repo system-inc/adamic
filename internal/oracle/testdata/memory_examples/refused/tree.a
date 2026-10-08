@@ -1,0 +1,26 @@
+interface Tree {
+	readonly value: number;
+	parent: Tree | undefined;
+	readonly children: readonly Tree[];
+}
+function leaf(value: number): Tree {
+	return { value, parent: undefined, children: [] };
+}
+function branch(value: number, children: readonly Tree[]): Tree {
+	const root: Tree = { value, parent: undefined, children };
+	for (const child of children) child.parent = root;
+	return root;
+}
+function up(node: Tree): number {
+	const parent = node.parent;
+	return node.value + (parent === undefined ? 0 : up(parent));
+}
+function run(): void {
+	const root = branch(1, [branch(2, [leaf(3)]), leaf(4)]);
+	const first = root.children[0];
+	if (first !== undefined) {
+		const last = first.children[0];
+		if (last !== undefined) console.log(`${up(last)}`);
+	}
+}
+run();

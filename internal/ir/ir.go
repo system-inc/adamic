@@ -10,6 +10,9 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Generated  []*GeneratedType
+	AsyncEntry int // one-based ordinary function for module suspension, zero when synchronous
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -86,7 +89,9 @@ type Function struct {
 	Parameters []int
 
 	// Returns is the result's type, or 0 for void.
-	Returns Type
+	Returns      Type
+	Async        bool
+	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
 
@@ -94,6 +99,11 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -143,6 +153,14 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
+	Uint16Array
+
+	Promise
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -175,7 +193,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray() || t == Promise
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -191,6 +209,12 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -597,6 +621,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct is a sibling code target plus one, sharing Closure as its environment.
+		Direct    int
 		Closure   Expression
 		Arguments []Expression
 		Returns   Type
@@ -745,6 +771,19 @@ type (
 		Separator Expression
 		Element   Type
 		Depth     int
+	}
+
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -1011,10 +1050,15 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
@@ -1068,6 +1112,7 @@ type (
 	// included.
 	Loop struct {
 		Condition  Expression
+		Test       []Statement // normalization before every loop condition
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool
@@ -1142,23 +1187,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {
@@ -1168,3 +1214,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

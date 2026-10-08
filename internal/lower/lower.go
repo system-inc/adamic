@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"path/filepath"
@@ -73,6 +74,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	}
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
+	}
+	if err := flow.NormalizeAsync(lowering.result); err != nil {
+		return nil, &NotYet{Where: lowering.program.Where(entry.AsNode()), What: err.Error()}
 	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err

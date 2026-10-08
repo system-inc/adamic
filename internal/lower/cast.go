@@ -14,6 +14,9 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
+	if !l.sameKeeping(l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node), map[[2]*checker.Type]bool{}) {
+		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
+	}
 	proof, err := l.castProof(node)
 	if err != nil {
 		return nil, err

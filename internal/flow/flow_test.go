@@ -42,12 +42,35 @@ func programs(t *testing.T) []string {
 	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
-	// and operator shapes here, and the oracle still runs the full sweep.
+	// and operator shapes here, and the oracle still runs the full sweep. The large typed-array
+	// sieve prints a 100,001-element buffer at every traced point and exceeds that limit;
+	// typed_arrays_primes.a traces the same sieve through limit 100, and the oracle runs both.
 	// normalize_coverage_long.a observes every point of million-unit normalized strings.
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		// These oracle fixtures assert NotYet and have no IR to build a graph from.
+		// Keep the list explicit so a new lowering failure is still a test failure here.
+		switch filepath.Base(path) {
+		case "coverage_error_call.a",
+			"coverage_error_construct.a",
+			"coverage_error_mutated.a",
+			"coverage_error_optional.a",
+			"coverage_error_view_return.a",
+			"coverage_regexp_call.a",
+			"coverage_regexp_literal.a",
+			"coverage_regexp_new.a",
+			"coverage_regexp_view.a",
+			"coverage_view_array.a",
+			"coverage_view_boolean.a",
+			"coverage_view_closure.a",
+			"coverage_view_number.a",
+			"coverage_view_string.a",
+			"error_spread.a",
+			"error_spread_view.a":
+			return true
+		}
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -83,6 +106,7 @@ func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
 	var functions int
 	for _, path := range programs(t) {
 		program := lowered(t, path)
+
 		for function := -1; function < len(program.Functions); function++ {
 			name := "main"
 			if function >= 0 {

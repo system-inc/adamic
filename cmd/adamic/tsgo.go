@@ -14,7 +14,7 @@ func build(path, output string, arguments []string) int {
 }
 
 func buildWithExports(path, output string, arguments []string, entryFunctions bool) int {
-	options := native.Options{}
+	options := native.Options{Release: true}
 	archive := ""
 	reactor := false
 	abiPath := ""
