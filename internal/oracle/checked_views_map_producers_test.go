@@ -147,3 +147,69 @@ func TestCheckedViewMapUndefinedStorageMutant(t *testing.T) {
 	}
 	t.Logf("present object producer refused before undefined conversion; Node control=%q", truth.stdout)
 }
+
+func TestCheckedViewMapNestedPayloadMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-convert-nested-array")
+	truth := onNode(t, path)
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "item" {
+			literal, ok := declaration.Value.(ir.ArrayLiteral)
+			if !ok {
+				t.Fatal("array producer changed")
+			}
+			literal.Element = ir.String
+			constant := len(program.Strings)
+			program.Strings = append(program.Strings, "wrong")
+			for index := range literal.Elements {
+				literal.Elements[index] = ir.StringConstant{Index: constant}
+			}
+			declaration.Value = literal
+			program.Main[index] = declaration
+			changed = true
+			break
+		}
+	}
+	if !changed {
+		t.Fatal("array payload mutant missed")
+	}
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "values[element]") {
+			t.Fatalf("nested helper trusted wrong element: %#v", got)
+		}
+	}
+	t.Logf("Node=%q; wrong string payload stops at helper values[element]", truth.stdout)
+}
+
+func TestCheckedViewMapKeyMetadataMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-convert-key")
+	truth := onNode(t, path)
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "source" {
+			creation, ok := declaration.Value.(ir.MapNew)
+			if !ok {
+				t.Fatal("Map producer changed")
+			}
+			creation.Key = ir.Boolean
+			for index := range creation.Entries {
+				creation.Entries[index][0] = ir.BooleanConstant{Value: index != 0}
+			}
+			declaration.Value = creation
+			program.Main[index] = declaration
+			changed = true
+			break
+		}
+	}
+	if !changed {
+		t.Fatal("key storage mutation missed")
+	}
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map key lookup storage cannot be converted; expected boolean, found number | undefined") {
+			t.Fatalf("wrong physical key producer ran on: %#v", got)
+		}
+	}
+	t.Logf("Boolean storage with a Number producer certificate stops before lookup; Node=%q", truth.stdout)
+}

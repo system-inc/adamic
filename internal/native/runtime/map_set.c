@@ -90,6 +90,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		return (adamic_value){.reference = result};
 	}
 	if (!reference && (part == 1 || set ? key_type : value_type) == 9) {adamic_object_field_types(result)[1] = 9;}
+	if (!set) { key = adamic_map_read_key(iterator->map, key, (unsigned char)key_type); }
 	if (set) { value = key; value_type = key_type; }
 	else if (part != 1) { value = adamic_map_read_value(iterator->map, value, (unsigned char)value_type); }
 	if (part == 3) {

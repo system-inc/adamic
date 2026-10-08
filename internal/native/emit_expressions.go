@@ -506,7 +506,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
-		e.line("%s->value_type = %d;", created, expression.Value)
+		e.line("%s->key_type = %d; %s->value_type = %d;", created, expression.Key, created, expression.Value)
 		e.line("%s->key_contract = %d; %s->value_contract = %d; %s->contract_name = %s;", created, expression.KeyContract, created, expression.ValueContract, created, cString(func() string {
 			if expression.ContractName == "" {
 				return "uncertified Map"
@@ -524,7 +524,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		}
 		return created
 	case ir.MapKeys:
-		return e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_keys_as(%s, %d)", e.value(expression.Map), expression.Key), expression.GraphTypes)
 	case ir.MapValues:
 		return e.graphArray(fmt.Sprintf("adamic_map_values_as(%s, %d)", e.value(expression.Map), expression.Value), expression.GraphTypes)
 	case ir.MapClear:
@@ -567,7 +567,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapHas:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
-		return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_map_get(%s, %s) != NULL)", object, borrowed(expression.KeyType, key)))
+		return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_map_get_as(%s, %s, %d) != NULL)", object, borrowed(expression.KeyType, key), expression.KeyType))
 	case ir.MapDelete:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)

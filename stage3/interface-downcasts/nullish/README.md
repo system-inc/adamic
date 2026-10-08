@@ -495,3 +495,36 @@ still has 2,018 pairs / 9,101 reads awaiting production reachability and lowerin
 these are unmeasured production rows, not a claim that every row still refuses.
 The overlapping intersection inventory is 15 pairs / 42 reads; fixture success
 cannot establish how many production rows in either inventory are discharged.
+
+## Nested numeric and numeric key conversions (October 8)
+
+Readonly nested arrays now admit number to number|undefined through the shared
+array extraction adapter. Helper indexing, iteration, join, map/filter/forEach,
+slice and includes match Node, also two levels deep. Array identity stays true
+and source writes remain observable. Incompatible element schemas and mutable
+array widening stop at node.value. An IR payload mutant keeps the numeric
+producer certificate but stores strings: both backends stop at the helper's
+values[element]. Disabling the native extraction guard runs on and kills that
+implementation mutant by behavior.
+
+Readonly Map keys admit number to number|undefined. Constructor-owned key storage
+stays numeric; get/has convert incoming queries and reject undefined as a miss.
+Key reads, values/entries iteration, snapshots, clone, callbacks and stored
+iterators preserve SameValueZero: undefined is separate from NaN and zero,
+-0 looks up zero, and an undefined key added to a cloned Map stays distinct from
+NaN. Snapshot arrays now record their actual converted storage. A control enables
+the shared array checking policy alongside numeric keys. A Boolean-storage IR
+mutant with a Number certificate stops at native lookup with exit 70, reporting
+expected boolean and found number|undefined. Removing query presence or key-read
+presence independently fails the Node comparison.
+
+Uncached Map|Nullish|NullableSelection regression passes in 155.765s. After final
+snapshot metadata, the Map oracle selection passes in 83.633s. The diagnostic-only
+follow-up and payload mutants pass in 16.080s. Scoped packages pass: IR 0.010s,
+lower 5.190s, native 41.234s, JavaScript 1.015s; vet passes. Gap probes pass in
+1.493s. Evidence and three behavioral mutants are in map-nested-key-*. Named
+remaining fixture gaps are nested boxed unions, nested packed booleans and boxed
+key domains, all stopping at node.value. Optional/rest tuples stay with lane 4c.
+Nominal witnesses are next. Production reachability remains unmeasured for the
+conservative 2,018 pairs / 9,101 reads; this group does not subtract fixture
+controls from those production totals or claim a full repository gate.

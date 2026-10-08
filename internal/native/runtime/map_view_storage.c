@@ -7,6 +7,13 @@ static bool map_read_reference(unsigned char type) {
  return type == 3 || type == 4 || type == 5 || type == 6 || type == 8 || type == 10 || type == 11;
 }
 
+static _Noreturn void map_storage_failure(const char *part, unsigned char wanted, unsigned char source) {
+ static const char *const names[] = {"uncertified", "number", "boolean", "string", "object", "array", "Map", "number | undefined", "function", "boolean | undefined", "boxed union", "Weak"};
+ char message[256];
+ int length = snprintf(message, sizeof message, "field read failed: Map %s storage cannot be converted; expected %s, found %s", part, wanted < 12 ? names[wanted] : "unknown", source < 12 ? names[source] : "unknown");
+ adamic_panic(message, (size_t)length);
+}
+
 // References are returned owned, including freshly boxed scalar reads.
 adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, unsigned char wanted) {
  unsigned char source = map->value_type;
@@ -26,14 +33,12 @@ adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, un
  }
  if (wanted == 7 && source == 1) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){true, value.number})}; }
  if (wanted == 9 && source == 2) { return (adamic_value){.maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, value.boolean})}; }
- static const char *const names[] = {"uncertified", "number", "boolean", "string", "object", "array", "Map", "number | undefined", "function", "boolean | undefined", "boxed union", "Weak"};
- char message[256];
- int length = snprintf(message, sizeof message, "field read failed: Map value storage cannot be converted; expected %s, found %s", wanted < 12 ? names[wanted] : "unknown", source < 12 ? names[source] : "unknown");
- adamic_panic(message, (size_t)length);
+ map_storage_failure("value", wanted, source);
 }
 
 adamic_array *adamic_map_values_as(const adamic_map *map, unsigned char wanted) {
  adamic_array *values = adamic_array_new(map->count, map_read_reference(wanted));
+ adamic_array_view_storage(values, wanted);
  for (size_t index = 0; index < map->used; index++) {
   if (!map->entries[index].deleted) {
    adamic_array_push(values, adamic_map_read_value(map, map->entries[index].value, wanted));
@@ -44,11 +49,12 @@ adamic_array *adamic_map_values_as(const adamic_map *map, unsigned char wanted) 
 
 adamic_array *adamic_map_entries_as(const adamic_map *map, const adamic_shape *shape, unsigned char key, unsigned char wanted) {
  adamic_array *entries = adamic_array_new(map->count, true);
+ adamic_array_view_storage(entries, 4);
  for (size_t index = 0; index < map->used; index++) {
   const adamic_map_entry *entry = &map->entries[index];
   if (entry->deleted) { continue; }
   adamic_object *pair = adamic_object_new(shape);
-  pair->slots[0] = entry->key;
+  pair->slots[0] = adamic_map_read_key(map, entry->key, key);
   if (map->reference_keys) { adamic_retain(entry->key.reference); }
   pair->slots[1] = adamic_map_read_value(map, entry->value, wanted);
   adamic_object_field_types(pair)[0] = key;
@@ -57,4 +63,34 @@ adamic_array *adamic_map_entries_as(const adamic_map *map, const adamic_shape *s
   adamic_array_push(entries, (adamic_value){.reference = pair});
  }
  return entries;
+}
+
+// Numeric key widening preserves SameValueZero and the original hash domain.
+// Other keys keep their storage and borrowed ownership.
+adamic_value adamic_map_read_key(const adamic_map *map, adamic_value key, unsigned char wanted) {
+ if (map->key_type == 0 || map->key_type == wanted) { return key; }
+ if (map->key_type == 1 && wanted == 7) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){true, key.number})}; }
+ map_storage_failure("key", wanted, map->key_type);
+}
+
+adamic_value *adamic_map_get_as(const adamic_map *map, adamic_value key, unsigned char supplied) {
+ if (map->key_type == 0 || map->key_type == supplied) { return adamic_map_get(map, key); }
+ if (map->key_type == 1 && supplied == 7) {
+  adamic_maybe_number query = adamic_maybe_number_unpack(key.number);
+  if (!query.present) { return NULL; }
+  return adamic_map_get(map, (adamic_value){.number = query.number});
+ }
+ map_storage_failure("key lookup", map->key_type, supplied);
+}
+
+adamic_array *adamic_map_keys_as(const adamic_map *map, unsigned char wanted) {
+ adamic_array *keys = adamic_array_new(map->count, map->reference_keys);
+ adamic_array_view_storage(keys, wanted);
+ for (size_t index = 0; index < map->used; index++) {
+  if (map->entries[index].deleted) { continue; }
+  adamic_value key = adamic_map_read_key(map, map->entries[index].key, wanted);
+  if (map->reference_keys) { key.reference = adamic_retain(key.reference); }
+  adamic_array_push(keys, key);
+ }
+ return keys;
 }

@@ -48,6 +48,7 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	if visit.Set {
 		first = key
 	} else {
+		e.line("%s = adamic_map_read_key(%s,%s,%d);", key, collection, key, visit.Key)
 		e.line("%s = adamic_map_read_value(%s,%s,%d);", value, collection, value, visit.Value)
 	}
 	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}}, 3)", callback, callback, first, key, collection)

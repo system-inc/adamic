@@ -11,6 +11,9 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('key-presence', runtime, 'if (!query.present) { return NULL; }', 'if (false && !query.present) { return NULL; }', 'entry-convert-key'),
+ ('key-read-presence', runtime, '(adamic_maybe_number){true, key.number}', '(adamic_maybe_number){false, key.number}', 'entry-convert-key'),
+ ('nested-read-guard', 'internal/native/runtime/view_arrays.c', 'if (actual != wanted &&', 'if (false && actual != wanted &&', '^TestCheckedViewMapNestedPayloadMutant$'),
  ('optional-reference-admission', 'internal/ir/view_maps.go', 'return allowsNullish(to, ViewUndefined) && accepts(payload, to)', 'return accepts(payload, to)', 'entry-convert-optional-object-schema'),
  ('number-box', runtime, 'adamic_box_number(value.number)', 'NULL', 'entry-convert-number-null'),
  ('boolean-box', runtime, 'value.boolean ? &adamic_box_true : &adamic_box_false', 'value.boolean ? &adamic_box_false : &adamic_box_true', 'entry-convert-boolean-null'),
@@ -32,6 +35,8 @@ for name, relative, before, after, fixture in cases:
  if original.count(before) != 1:
   raise RuntimeError(f'{name}: mutation anchor is not unique')
  pattern = '^TestCheckedViewMapUndefinedStorageMutant$' if fixture is None else '^TestCheckedViewMapCertificates$/^' + fixture + '$'
+ if fixture is not None and fixture.startswith('^'):
+  pattern = fixture
  log_path = log_root / (name + '.log')
  try:
   path.write_text(original.replace(before, after, 1))

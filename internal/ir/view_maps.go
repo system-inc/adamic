@@ -198,7 +198,10 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 					return false
 				}
 			}
-			return sameStorage(source.Element, target.Element) && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
+			// The shared array reader converts number to packed number|undefined
+			// at each extraction. Other nested storage still lacks that adapter.
+			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber
+			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
 			if id == to {
@@ -209,7 +212,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	}
 	for _, pair := range program.MapCertificates {
 		key, value := pair[0], pair[1]
-		if sameStorage(key, c.Key) && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
+		if (sameStorage(key, c.Key) || c.MapReadonly && program.ViewContracts[key-1].Of == Number && program.ViewContracts[c.Key-1].Of == MaybeNumber) && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
 			pairs = append(pairs, pair)
 		}
 	}
