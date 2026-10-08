@@ -8,6 +8,8 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"info-canonical-name", "getCanonicalFileName", "abc/3\n", "", "0", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"performance-duration", "getDuration", "3\n", "0\n3\n", "0", "", "", "bad\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members"},
 		{"reflect-set", "createReflectSetCall", "10\n", "6\n10\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"try-statement", "createTryStatement", "6\n", "1\n6\n", "0", "tryBlock.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"element-access-update", "updateElementAccessExpression", "6\n", "", "0", "node.value", "1\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

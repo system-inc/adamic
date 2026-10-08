@@ -1,0 +1,69 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 288,
+      "type": "NodeFactory",
+      "field": "createClassExpression",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 83,
+        "column": 25
+      },
+      "read": "factory.createClassExpression",
+      "readKind": "property",
+      "call": "factory.createClassExpression(\r\n            node.modifiers?.filter(modifier => !isExportModifier(modifier) && !isDefaultModifier(modifier)),\r\n            node.name,\r\n            node.typeParameters,\r\n            node.heritageClauses,\r\n            node.members,\r\n        )",
+      "utf16Start": 2604,
+      "utf16End": 2633,
+      "fileSha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+      "declaration": "createClassExpression(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]): ClassExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9003
+    },
+    {
+      "rank": 290,
+      "type": "NodeFactory",
+      "field": "createFunctionDeclaration",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7749,
+        "column": 22
+      },
+      "read": "factory.createFunctionDeclaration",
+      "readKind": "property",
+      "call": "factory.createFunctionDeclaration(modifiers, asteriskToken, name, typeParameters, parameters, type, body)",
+      "utf16Start": 382018,
+      "utf16End": 382051,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createFunctionDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9071
+    },
+    {
+      "rank": 304,
+      "type": "NodeFactory",
+      "field": "updateFunctionExpression",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1102,
+        "column": 16
+      },
+      "read": "context.factory.updateFunctionExpression",
+      "readKind": "property",
+      "call": "context.factory.updateFunctionExpression(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifier),\r\n            tokenVisitor ? nodeVisitor(node.asteriskToken, tokenVisitor, isAsteriskToken) : node.asteriskToken,\r\n            nodeVisitor(node.name, visitor, isIdentifier),\r\n            nodesVisitor(node.typeParameters, visitor, isTypeParameterDeclaration),\r\n            visitParameterList(node.parameters, visitor, context, nodesVisitor),\r\n            nodeVisitor(node.type, visitor, isTypeNode),\r\n            visitFunctionBody(node.body, visitor, context, nodeVisitor),\r\n        )",
+      "utf16Start": 52676,
+      "utf16End": 52716,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateFunctionExpression(node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block): FunctionExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8966
+    }
+  ]
+}

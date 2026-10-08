@@ -21,6 +21,7 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [278, {directory:'info-canonical-name', aliases:['GetCanonicalFileName'], aliasFile:'src/compiler/core.ts', carriers:[]}],
  [249, {directory:'tagged-template-update', aliases:['TemplateLiteral'], carriers:['TemplateExpression','NoSubstitutionTemplateLiteral']}],
  [241, {directory:'import-specifier', aliases:['ModuleExportName'], carriers:['Identifier','StringLiteral']}],
  [217, {directory:'canonical-file-name', aliases:['GetCanonicalFileName'], aliasFile:'src/compiler/core.ts', carriers:[]}],

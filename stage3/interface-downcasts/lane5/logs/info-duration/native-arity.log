@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.05s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/info-canonical-name/wrong-arity (0.48s)
+        checked_views_callable_later_ranked_test.go:140: gate cache node miss
+        checked_views_callable_later_ranked_test.go:160: gate cache node miss
+        checked_views_callable_later_ranked_test.go:180: backend0 exit 0 stdout "9\n" stderr "" want "getCanonicalFileName" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/performance-duration/wrong-arity (0.54s)
+        checked_views_callable_later_ranked_test.go:140: gate cache node miss
+        checked_views_callable_later_ranked_test.go:160: gate cache node miss
+        checked_views_callable_later_ranked_test.go:180: backend0 exit 0 stdout "9\n" stderr "" want "getDuration" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.058s
+FAIL

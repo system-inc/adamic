@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly getDuration:unknown;}
+interface Target {getDuration(measureName: string): number;}
+function probe(value:Base):void {const performance=value as Target;console.log(`${performance.getDuration("")}`);console.log(`${performance.getDuration("abc")}`);}
+probe({getDuration:(measureName:string):number=>measureName.length});

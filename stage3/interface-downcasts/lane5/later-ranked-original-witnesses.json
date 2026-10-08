@@ -2878,6 +2878,51 @@
       "declarationFile": "src/compiler/sys.ts",
       "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
       "declarationLine": 1414
+    },
+    {
+      "rank": 278,
+      "type": "Info",
+      "field": "getCanonicalFileName",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 466,
+        "column": 98
+      },
+      "read": "info.getCanonicalFileName",
+      "readKind": "property",
+      "call": "toPath(modulePath.path, host.getCurrentDirectory(), info.getCanonicalFileName)",
+      "utf16Start": 19194,
+      "utf16End": 19219,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declaration": "readonly getCanonicalFileName: GetCanonicalFileName;",
+      "declarationFile": "src/compiler/moduleSpecifiers.ts",
+      "declarationSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declarationLine": 563,
+      "declarationKind": "property-function"
+    },
+    {
+      "rank": 325,
+      "type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/performance\")",
+      "field": "getDuration",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1192,
+        "column": 52
+      },
+      "read": "performance.getDuration",
+      "readKind": "property",
+      "call": "performance.getDuration(\"Program\")",
+      "utf16Start": 48755,
+      "utf16End": 48778,
+      "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+      "declaration": "getDuration(measureName: string): number;",
+      "declarationFile": "src/compiler/performance.ts",
+      "declarationSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "declarationLine": 125,
+      "declarationHeader": "export function getDuration(measureName: string): number",
+      "declarationKind": "exported-function"
     }
   ]
 }

@@ -3222,6 +3222,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "info-duration",
+      "pairs": 2,
+      "candidateReads": 12,
+      "members": [
+        {
+          "receiver_type_id": 67014,
+          "type": "Info",
+          "field": "getCanonicalFileName",
+          "declared_types": [
+            "GetCanonicalFileName"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/moduleSpecifiers.ts",
+            "line": 466,
+            "column": 98
+          },
+          "rank": 278,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 102670,
+          "type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/performance\")",
+          "field": "getDuration",
+          "declared_types": [
+            "(measureName: string) => number"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/executeCommandLine.ts",
+            "line": 1192,
+            "column": 52
+          },
+          "rank": 325,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type GetCanonicalFileName = (fileName: string) => string;
+interface Base {readonly getCanonicalFileName:unknown;}
+interface Target {readonly getCanonicalFileName: GetCanonicalFileName;}
+function probe(value:Base):void {const info=value as Target;function toPath(path:string,currentDirectory:string,getCanonicalFileName:GetCanonicalFileName):string{return getCanonicalFileName(path);}console.log(toPath("abc","root",info.getCanonicalFileName));}
+probe({getCanonicalFileName:(fileName:string):string=>fileName+"/3"});
