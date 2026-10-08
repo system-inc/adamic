@@ -272,24 +272,66 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
 	}
-	if !l.checker.IsArrayType(arrayType) {
-		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
-	}
-	element := l.checker.GetElementTypeOfArrayType(arrayType)
-	valueType, isKnown := l.kept(element)
-	if concrete := l.concrete(element); !isKnown && concrete.Flags()&checker.TypeFlagsIntersection != 0 {
-		// A scalar brand changes the static contract, not the value's storage. Never infer
-		// storage from an object-only intersection or an unresolved generic parameter.
-		for _, member := range concrete.Types() {
-			if member.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 {
-				valueType, isKnown = l.kept(member)
-				break
+	var kept func(*checker.Type) (ir.Type, bool)
+	kept = func(element *checker.Type) (ir.Type, bool) {
+		if stored, known := l.kept(element); known {
+			return stored, true
+		}
+		concrete := l.concrete(element)
+		if concrete.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNonPrimitive) != 0 {
+			// undefined is the null union reference. The non-primitive object type excludes null;
+			// its strong references retain their runtime kinds, including arrays and functions.
+			return ir.Union, true
+		}
+		if concrete.Flags()&checker.TypeFlagsIntersection != 0 {
+			// A scalar brand changes the static contract, not the value's storage.
+			objects := true
+			for _, member := range concrete.Types() {
+				if member.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 {
+					return l.kept(member)
+				}
+				stored, known := l.kept(member)
+				objects = objects && known && stored == ir.Object
+			}
+			if objects {
+				// Field representations can still be unsupported; the intersection's holder
+				// remains a plain object, with no change to a field's storage contract.
+				return ir.Object, true
 			}
 		}
+		if concrete.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, member := range concrete.Types() {
+				if _, known := kept(member); !known || l.includesNull(member) {
+					return 0, false
+				}
+			}
+			return ir.Union, true
+		}
+		return 0, false
 	}
-	if !isKnown || (slotless(valueType) && valueType != ir.MaybeBoolean) {
-		// Optional booleans have a tagged byte; boxed heterogeneous elements still need a storage rule.
-		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
+	members := []*checker.Type{arrayType}
+	if arrayType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = arrayType.Types()
+	}
+	var valueType ir.Type
+	for _, member := range members {
+		if !l.checker.IsArrayType(member) {
+			return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
+		}
+		element := l.checker.GetElementTypeOfArrayType(member)
+		stored, known := kept(element)
+		if !known {
+			return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
+		}
+		if valueType != 0 && valueType != stored {
+			// Strong references share a slot and keep the runtime kind needed for union reads.
+			// Primitive slots and weak handles cannot be reinterpreted or boxed in place.
+			if !valueType.IsReference() || !stored.IsReference() || valueType == ir.Weak || stored == ir.Weak {
+				return 0, l.notYet(node, "arrays with incompatible element storage in "+l.checker.TypeToString(arrayType))
+			}
+			stored = ir.Union
+		}
+		valueType = stored
 	}
 	return valueType, nil
 }
