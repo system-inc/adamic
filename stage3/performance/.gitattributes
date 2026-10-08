@@ -1,0 +1,4 @@
+# Preserve upstream CRLF configurations and raw tool log whitespace.
+evidence/results/configs/** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evidence/**/*.log -whitespace
+evidence/*.log -whitespace
