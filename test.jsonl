@@ -35,3 +35,10 @@
 {"Time":"2026-10-08T01:22:14.645313878Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename"}
 {"Time":"2026-10-08T01:22:14.645323583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Output":"=== RUN   TestDotARename\n","OutputType":"frame"}
 {"Time":"2026-10-08T01:22:41.786114157Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Output":"    harness_test.go:64: Go, Node, emitted JavaScript, native identical: 653 bytes\n"}
+{"Time":"2026-10-08T01:23:06.514640491Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Output":"    harness_test.go:82: Go, Node, emitted JavaScript, native identical: 653 bytes\n"}
+{"Time":"2026-10-08T01:23:06.514691758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Output":"    harness_test.go:86: rename only: .ts and .a identical on all three runtimes against Go (653 bytes)\n"}
+{"Time":"2026-10-08T01:23:06.522812868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Output":"--- PASS: TestDotARename (51.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:23:06.523205Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDotARename","Elapsed":51.88}
+{"Time":"2026-10-08T01:23:06.523217499Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization"}
+{"Time":"2026-10-08T01:23:06.523221895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization","Output":"=== RUN   TestCompleteSuggestionSerialization\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:23:36.281000729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization","Output":"    harness_test.go:114: Go, Node, emitted JavaScript, native identical: 742 bytes\n"}
