@@ -81,7 +81,6 @@ func TestRuntimeConstructorFailureMutants(t *testing.T) {
 	for _, row := range []struct{ name, pattern, flags, old, new string }{
 		{"Node syntax mislabeled Error", "[", "u", `memcpy((char *)name->bytes,"SyntaxError",11);`, `memcpy((char *)name->bytes,"OtherError!",11);`},
 		{"V8 refusal made catchable", "[\\q{a}]", "iv", `if(result.status!=1){`, `if(result.status!=1&&result.status!=3){`},
-		{"missing feature made catchable", "a{18446744073709551616}", "", `if(result.status!=1){`, `if(result.status!=1&&result.status!=4){`},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			if bytes.Count(runtime, []byte(row.old)) != 1 {

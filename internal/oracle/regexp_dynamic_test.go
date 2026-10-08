@@ -34,7 +34,7 @@ func TestDynamicRegExpRuntimeRefusals(t *testing.T) {
 		t.Fatalf("Node changed its divergences: %+v", node)
 	}
 	var expected strings.Builder
-	for _, row := range [][2]string{{`[\q{a}]`, "iv"}, {`(?i:a)[b]`, "v"}, {`[\q{ab|a|}]`, "v"}, {`a{9223372036854775808,9223372036854775807}`, ""}} {
+	for _, row := range [][2]string{{`[\q{a}]`, "iv"}, {`(?i:a)[b]`, "v"}, {`[\q{ab|a|}]`, "v"}} {
 		p, err := reference.Compile(row[0], row[1])
 		if err == nil {
 			err = p.NativeCompatibility()
@@ -45,15 +45,6 @@ func TestDynamicRegExpRuntimeRefusals(t *testing.T) {
 		}
 		expected.WriteString("SyntaxError: " + err.Error() + "\n")
 	}
-	wide, err := reference.Compile("a{18446744073709551616}", "")
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = wide.NativeDeclarations("wide")
-	if err == nil {
-		t.Fatal("expected counter-width refusal")
-	}
-	expected.WriteString("Error: " + err.Error() + "\n")
 	actual, _ := natively(t, program)
 	firstReason := strings.TrimPrefix(strings.Split(expected.String(), "\n")[0], "SyntaxError: ")
 	if actual.exitCode != 70 || len(actual.stdout) != 0 || !bytes.Contains(actual.stderr, []byte("for /[\\q{a}]/iv: ")) || !bytes.Contains(actual.stderr, []byte(firstReason)) {

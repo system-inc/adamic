@@ -222,7 +222,6 @@ func TestRuntimeConstructorFailureSplit(t *testing.T) {
 		{"(?i:a)[b]", "v", "scoped i modifier"},
 		{"[\\q{ab|a|}]", "v", "mixed-length"},
 		{"a{9223372036854775808,9223372036854775807}", "", "clamps quantifier bounds"},
-		{"a{18446744073709551616}", "", "quantifier bounds above uint64"},
 	}
 	for _, row := range cases {
 		t.Run(row.pattern+row.flags, func(t *testing.T) {

@@ -75,7 +75,7 @@ func Compile(pattern, flags string) (*Program, error) {
 
 // CompileWithProperties supplies the Unicode data seam used by UCD tables.
 func CompileWithProperties(pattern, flags string, properties PropertyProvider) (*Program, error) {
-	tree, err := Parse(pattern, flags)
+	tree, err := parsePattern(pattern, flags, true)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
 
 // CompileUTF16WithProperties combines exact pattern strings and the UCD seam.
 func CompileUTF16WithProperties(pattern []uint16, flags string, properties PropertyProvider) (*Program, error) {
-	tree, err := ParseUTF16(pattern, flags)
+	tree, err := parsePattern(patternFromUTF16(pattern), flags, true)
 	if err != nil {
 		return nil, err
 	}
