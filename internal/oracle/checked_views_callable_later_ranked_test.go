@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"logical-and", "createLogicalAnd", "7\n", "", "0", "left.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"named-exports", "createNamedExports", "0\n", "1\n", "0", "element.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"token-text", "getTokenText", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"token-value", "getTokenValue", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"writer-line", "writeLine", "3\n", "3\n3\n3\n7\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
 		{"watcher-close", "close", "3\n", "", "1", "", "", "", "good,wrong-value,wrong-arity"},
 		{"source-file-path", "getSourceFileByPath", "3\n", "0\n", "0", "sourceFile.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
@@ -164,6 +168,7 @@ func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
 
 func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 	for _, witness := range []struct{ directory, output, refusal string }{
+		{"arrow-function", "3\n", "unsupported untagged object union contract"},
 		{"literal-type", "3\n", "unsupported untagged object union contract"},
 		{"environment-variable", "abc\n", "unbound-method"},
 	} {

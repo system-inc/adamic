@@ -1222,6 +1222,93 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "logical-named-string-scanner",
+      "pairs": 4,
+      "candidateReads": 60,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createLogicalAnd",
+          "declared_types": [
+            "(left: Expression, right: Expression) => BinaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/transformers/typeSerializer.ts",
+            "line": 559,
+            "column": 16
+          },
+          "rank": 115,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createNamedExports",
+          "declared_types": [
+            "(elements: readonly ExportSpecifier[]) => NamedExports"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 184,
+            "column": 91
+          },
+          "rank": 116,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "getTokenText",
+          "declared_types": [
+            "() => string"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 2675,
+            "column": 24
+          },
+          "rank": 117,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "getTokenValue",
+          "declared_types": [
+            "() => string"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 10575,
+            "column": 101
+          },
+          "rank": 118,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
