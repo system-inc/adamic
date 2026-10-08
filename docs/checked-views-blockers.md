@@ -312,3 +312,19 @@ native and JavaScript TestViewCallableBoxingUnknownProducer tests and
 TestCheckedViewCallableRetainsNeverWiderHelper remain required boundary checks.
 See stage3/interface-downcasts/integration/CONTINUED-REPORT.md for the final
 merge ledger and validation results.
+
+
+## Tuple continuation dependency, October 8, 2026
+
+The attempted tuple merge 5c54e8c6583462ae061557d5fc4618deaf4b67ee was
+aborted after nine paths were individually reconciled. Nullish Map storage
+fixtures restored for measurement all refuse at Map admission; optional/rest
+Map tuple reads retain the unsupported Map key/value certificate contract
+refusal. They depend on the deferred owner storage/provenance changes above.
+A narrow supported-tuple routing retry also found a JavaScript/Node disagreement:
+original emit-tuple-good and emit-helper-good exit 70 with "a union value does
+not match its narrowed type" in JavaScript while the source Node controls succeed.
+Existing storage and callable refusals were kept. Exact logs and the attempted
+patch are in stage3/interface-downcasts/integration/logs/continued; the complete
+ledger and command outcomes are in CONTINUED-REPORT.md. The tuple item remains
+out of the branch; latest green compiler merge is 03aea1cbede84da46e84c78d599f287bc8585c1b.

@@ -1,8 +1,8 @@
-Continued checked-views integration from d718a9ffa0432245b69a3545c3ca080db865e0bb.
-Commits: merge ledger below; only codex/views-integration is eligible for pushes.
-Validation: scoped backend tests pass; 152 new original-array probes and measured counts pass in 361.786s; requested checked-view/fixture oracle filter passes.
-Mutants: ten array guard mutants and three callable boundary mutants were executed and caught in an isolated checkout, with all source mutations restored.
-Limits: latest owner integration is unresolved; additional optional suites and the global count refresh reproduce existing starting-commit failures.
+Continued checked-views integration: arrays/parser, mixed unions through 37763565, object/primitive unions, intersections and newest callables merged; existing optional, untagged and dictionaries retained.
+Commits: start d718a9ffa0432245b69a3545c3ca080db865e0bb; latest green compiler merge 03aea1cbede84da46e84c78d599f287bc8585c1b; full merge ledger below; only codex/views-integration pushed.
+Validation: scoped lower/native/JavaScript tests and the requested view/union/tuple/dictionary/callable/optional/array oracle filter passed after every landed merge; latest oracle 939.959s.
+Mutants: executable array, callable boundary, primitive, object/primitive and intersection mutants were run and restored; redundant binding-hook survivor and partial callable payload mutant result are explicitly recorded below.
+Limits: owner and tuple attempts left out; tuple retry has Map certificate failures and a JavaScript/Node disagreement; 41 global counts, fourteen optional and two lower refusal failures reproduce the starting commit.
 
 ## Merge ledger
 
@@ -16,9 +16,9 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | 93a086abbfbaa3d36ccb9bbe2516733452d2b521 | Required tests pass; same 41 inherited counts failures |
 | Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | No conflicts; retain unread storage admission and named tuple-member refusal | b8b419d2b2e6f6a3bf62e02c749a6cd9f8465437 | Required tests pass; counts retain 41 baseline failures |
 | Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Five hunks: both binding hooks, both plan reports, all count rows, superseded gap lists and both blocker histories | 167e5fdb779e8c6a64558a3c96b768b7067e776b | Required filter passes; corrected JSDoc runtime probes pass; redundant hook mutant survives |
-| Callables | 433e1ec09fdba7c83fe2a3d5153cf28962a23022 | One counts hunk: all allocation rows before retained predicate table; update five closed union gap expectations | This merge | Required filter passes; partial payload mutant runner result recorded |
-| Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Pending | Pending | Pending |
-| Dictionaries | deec3c933543c7b5e7ba0d9db0964265d03c494c | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
+| Callables | 433e1ec09fdba7c83fe2a3d5153cf28962a23022 | One counts hunk: all allocation rows before retained predicate table; update five closed union gap expectations | 03aea1cbede84da46e84c78d599f287bc8585c1b | Required filter passes; partial payload mutant runner result recorded |
+| Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Nine paths individually reconciled, then aborted; preserve physical Map storage, callback refusals and Node agreement | 03aea1cbede84da46e84c78d599f287bc8585c1b | Nullish/optional/rest Map dependencies; emit-tuple-good and emit-helper-good disagree with Node in JavaScript |
+| Dictionaries | deec3c933543c7b5e7ba0d9db0964265d03c494c | Freshly fetched newest tip is already an ancestor | 03aea1cbede84da46e84c78d599f287bc8585c1b | None introduced |
 
 ## Owner boundary
 
@@ -241,3 +241,74 @@ destructuring refusals remain. This test update changes no compiler guard and
 adds no whole-original receiver certification credit to reduced carriers.
 
 Corrected callable filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	939.959s
+
+## Tuple attempt left out
+
+Fetched 5c54e8c6583462ae061557d5fc4618deaf4b67ee; nine conflicted paths
+were inspected and reconciled individually. The attempt was aborted after the
+remaining failures below. No tuple source or altered admission guard is landed.
+The complete staged attempt is retained as logs/continued/tuples-attempt.patch.gz
+for review; this is evidence of an unsuccessful attempt, not a certified patch.
+
+- Plan: append both independent reports.
+- ir/view_maps.go: retain globalOf physical-storage veto while keeping incoming
+  nullish, union, tuple and callable descriptor comparisons; restore their local
+  comparison helper definitions without restoring broad owner storage admission.
+- javascript.go: retain tuple representation field routing and existing
+  object/array untagged union selection.
+- lower/object.go: route tuple reads through tuple-position metadata while
+  retaining numeric/out-of-range fallback.
+- lower/view_contracts.go, two hunks: retain untagged array element contracts,
+  publish existing contracts before read support checks, and add tuple-union
+  exclusions where object-field joining would erase position obligations.
+- lower/view_lazy.go: retain certified untagged callable handling, intersection
+  handling, the existing callable exemption and scoped unknown-field fallback;
+  append supported tuple-position handling.
+- lower/view_maps_tuples.go, modify/delete: inspect its seven functions and retain
+  the tuple constructor, selected-read and optional/rest entry descriptors with
+  complete proof helpers; current Map producer admission remains conservative.
+- Map oracle: retain incoming nullish/recursive/nominal storage assertions.
+- Count helpers: retain all array/intersection helpers and append tuple counts.
+
+The first scoped backend/IR run passed: lower 8.675s, native 33.406s,
+JavaScript 3.805s, IR 0.058s. Complete declarations were prepared from official
+upstream with tuples/prepare.cjs and prepare_optional_tuple.cjs. The first tuple
+original run failed in 47.726s: existing object/primitive tuple-member refusal
+intercepted incoming tuple adapters, and inherited owner tests referred to twelve
+missing nullish Map fixtures deleted by the earlier owner rollback.
+
+A narrow follow-up admitted only supported tuple-scalar and tuple alternatives
+through that earlier tuple-member refusal. The twelve missing fixtures were
+restored from the incoming Adamic lane solely to measure the dependency. The
+storage test then failed all twelve at Map admission, including:
+entry-number-null.a:6:10: stage 0 can't lower a Map of number | null yet;
+entry-mixed-both.a:7:10: stage 0 can't lower a Map of string | number | null | undefined yet.
+Current Map physical storage/provenance and callback guards were retained.
+
+The correctly configured follow-up ran:
+
+```sh
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/checked-views-tuple-decls go test ./internal/oracle -run '^TestCheckedViewTupleOptionalContract$|^TestCheckedViewTupleRestContract$|^TestCheckedViewTupleOriginalOutSignature$' -count=1 -v -timeout 10m
+```
+
+It failed in 18.122s. Optional direct tuple reads and rest direct tuple reads pass,
+including the wrong-tail runtime refusal. optional-map-absent,
+optional-map-undefined, optional-map-present, rest-map-zero, rest-map-one,
+rest-map-many and rest-map-wrong-contract refuse field values with unsupported
+Map key/value certificate contract. Original emit-tuple-good and emit-helper-good
+compile after the narrow routing fix but JavaScript exits 70 with:
+`adamic: panic: a union value does not match its narrowed type`.
+The independent source Node controls succeed; wrong-position/helper wrong
+fixtures also disagree in their refusal diagnostics. Restoring broad owner
+adapters would require resolving the same deferred callable/ownership boundary.
+Neither removing the storage proof nor accepting the JavaScript disagreement
+preserves the required behavior, so the item is left out.
+
+The required full filtered oracle was started on the initial tuple attempt and
+cancelled after the reproducible dependency and Node failures; its incomplete
+log is retained and is not claimed green. Tuple-specific opt-in source mutants
+were not run or credited on this unlanded attempt. The last landed compiler
+state remains 03aea1cbede84da46e84c78d599f287bc8585c1b with its completed green
+939.959s filtered oracle. No test repeat is needed for this documentation-only
+checkpoint. After another fetch, dictionary deec3c933543c7b5e7ba0d9db0964265d03c494c
+is still the newest tip and an ancestor, so no dictionary merge is necessary.
