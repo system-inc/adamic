@@ -1,0 +1,36 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-v",
+    "-json",
+    "-timeout=90m"
+  ],
+  "profile": "/workspace/scratch/compiler-area-gate-profile.84z57f43",
+  "nproc": "5",
+  "quota": "400000 100000",
+  "load_before": [
+    9.037109375,
+    2.298828125,
+    0.7646484375
+  ],
+  "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+    "ADAMIC_LINT_BENCH": "1",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-gate-profile.84z57f43",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-gate-profile.84z57f43"
+  },
+  "exit": 1,
+  "wall_seconds": 5547.525872096012,
+  "load_after": [
+    1.2041015625,
+    1.3955078125,
+    2.38623046875
+  ],
+  "source_unchanged": true,
+  "clean_after": true
+}

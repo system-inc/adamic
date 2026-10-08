@@ -1,0 +1,38 @@
+import os,json,subprocess,tempfile,time,threading,hashlib
+from pathlib import Path
+os.chdir('/workspace/scratch/compiler-agree-shards')
+os.environ.update(ADAMIC_TYPESCRIPT_SOURCE='/workspace/scratch/typescript-6.0.3',ADAMIC_LINT_BENCH='1',GOPROXY='https://proxy.golang.org|direct',WASI_SYSROOT='/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot')
+source=Path('stage1/cohere/lint/lint_test.go').resolve(); original=source.read_text()
+def run(label,args):
+ assert not subprocess.check_output(['git','-C',os.environ['ADAMIC_TYPESCRIPT_SOURCE'],'status','--porcelain','--ignored'])
+ profile=tempfile.mkdtemp(prefix='compiler-area-'+label+'-profile.',dir='/workspace/scratch')
+ env=os.environ.copy();env.update(ADAMIC_LINT_PROFILE_DIR=profile,ADAMIC_LINT_PROFILE_SNAPSHOTS=profile)
+ cmd=['go','test',*args,'./stage1/cohere/lint','-count=1','-v','-json','-timeout=90m']
+ report={'command':cmd,'profile':profile,'nproc':subprocess.check_output(['nproc'],text=True).strip(),'quota':Path('/sys/fs/cgroup/cpu.max').read_text().strip(),'load_before':os.getloadavg(),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'inputs':{k:env[k] for k in ['ADAMIC_TYPESCRIPT_SOURCE','ADAMIC_LINT_BENCH','WASI_SYSROOT','ADAMIC_LINT_PROFILE_DIR','ADAMIC_LINT_PROFILE_SNAPSHOTS']}}
+ Path('/tmp/compiler-area-'+label+'-start.json').write_text(json.dumps(report,indent=2));samples=[];done=threading.Event();start=time.monotonic()
+ def sample():
+  while not done.is_set():
+   samples.append({'seconds':time.monotonic()-start,'load':os.getloadavg()});done.wait(15)
+ thread=threading.Thread(target=sample);thread.start()
+ with open('/tmp/compiler-area-'+label+'.jsonl','wb') as out:r=subprocess.run(cmd,env=env,stdout=out,stderr=subprocess.STDOUT)
+ wall=time.monotonic()-start;done.set();thread.join()
+ report.update(exit=r.returncode,wall_seconds=wall,load_after=os.getloadavg(),source_unchanged=source.read_text()==original,clean_after=not subprocess.check_output(['git','-C',env['ADAMIC_TYPESCRIPT_SOURCE'],'status','--porcelain','--ignored']))
+ Path('/tmp/compiler-area-'+label+'-wall.json').write_text(json.dumps(report,indent=2));Path('/tmp/compiler-area-'+label+'-load.json').write_text(json.dumps(samples));print(label,json.dumps(report),flush=True)
+ return r.returncode
+run('gate',[])
+anchor="  process.stdout.write(Buffer.from(merged, 'latin1'));";assert original.count(anchor)==1
+changes={'byte':"""  const bytes = Buffer.from(merged, 'latin1');
+  if (configuration.Command !== 'node' && shardIndex === 0) {
+    const offset = bytes.indexOf(10) + 1;
+    if (offset < 1 || offset >= bytes.length) throw new Error('missing payload');
+    bytes[offset] ^= 1;
+  }
+  process.stdout.write(bytes);""",'drop':"""  let output = merged;
+  if (configuration.Command === 'node' && shardIndex === 0) {
+    const next = output.indexOf('\\ncase ', 1);
+    output = next < 0 ? '' : output.slice(next + 1);
+  }
+  process.stdout.write(Buffer.from(output, 'latin1'));"""}
+for label,replacement in changes.items():
+ scratch=Path(tempfile.mkdtemp(prefix='compiler-area-'+label+'.',dir='/workspace/scratch'));mutated=scratch/'lint_test.go';mutated.write_text(original.replace(anchor,replacement));overlay=scratch/'overlay.json';overlay.write_text(json.dumps({'Replace':{str(source):str(mutated)}}));rc=run(label,['-overlay='+str(overlay),'-run','^TestCompilerAndStage1Agree$'])
+ log=Path('/tmp/compiler-area-'+label+'.jsonl').read_text();assert rc!=0 and '/src/compiler/checker.ts:' in log and ('sanitized native:' in log if label=='byte' else 'missing from every shard' in log),log[-3000:]

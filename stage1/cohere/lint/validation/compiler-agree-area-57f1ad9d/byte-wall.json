@@ -1,0 +1,39 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay=/workspace/scratch/compiler-area-byte.oopoia_z/overlay.json",
+    "-run",
+    "^TestCompilerAndStage1Agree$",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-v",
+    "-json",
+    "-timeout=90m"
+  ],
+  "profile": "/workspace/scratch/compiler-area-byte-profile.kriydd3g",
+  "nproc": "5",
+  "quota": "400000 100000",
+  "load_before": [
+    2.40234375,
+    1.66015625,
+    2.08984375
+  ],
+  "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+    "ADAMIC_LINT_BENCH": "1",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-byte-profile.kriydd3g",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-byte-profile.kriydd3g"
+  },
+  "exit": 1,
+  "wall_seconds": 151.88900591401034,
+  "load_after": [
+    1.556640625,
+    1.66259765625,
+    2.02978515625
+  ],
+  "source_unchanged": true,
+  "clean_after": true
+}

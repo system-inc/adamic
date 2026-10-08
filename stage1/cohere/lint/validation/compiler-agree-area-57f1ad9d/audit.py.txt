@@ -1,0 +1,8 @@
+import subprocess,re,json
+from pathlib import Path
+p='stage1/cohere/lint/lint_test.go';area=subprocess.check_output(['git','show','57f1ad9d:'+p],text=True);merged=Path(p).read_text()
+start=area.index('func TestCompilerAndStage1Agree(');end=area.index('func mutant(',start)
+ms=merged.index('func TestCompilerAndStage1Agree(');me=merged.index('func mutant(',ms)
+assert area[:start].replace('\t"sort"\n','')==merged[:ms].replace('\t"sort"\n','')
+assert area[end:]==merged[me:]
+print(json.dumps({'merge':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parents':subprocess.check_output(['git','show','--format=%P','--no-patch','HEAD'],text=True).strip().split(),'conflicts':[],'retained_area_code':'byte-identical outside compiler comparison plus added sort import','area':'57f1ad9d6ab3d23974cfc29b6043fdedc84bcbe9'},indent=2))

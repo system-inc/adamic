@@ -1,0 +1,582 @@
+{
+  "gate": {
+    "wall": {
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=90m"
+      ],
+      "profile": "/workspace/scratch/compiler-area-gate-profile.84z57f43",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load_before": [
+        9.037109375,
+        2.298828125,
+        0.7646484375
+      ],
+      "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+      "inputs": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+        "ADAMIC_LINT_BENCH": "1",
+        "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+        "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-gate-profile.84z57f43",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-gate-profile.84z57f43"
+      },
+      "exit": 1,
+      "wall_seconds": 5547.525872096012,
+      "load_after": [
+        1.2041015625,
+        1.3955078125,
+        2.38623046875
+      ],
+      "source_unchanged": true,
+      "clean_after": true
+    },
+    "top_level": {
+      "pass": 23,
+      "skip": 1
+    },
+    "including_subtests": {
+      "pass": 99,
+      "skip": 1
+    },
+    "skips": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "package": [
+      {
+        "Time": "2026-10-08T09:45:24.232768528Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5401.151
+      }
+    ],
+    "shards": [
+      [
+        "Node",
+        "0",
+        "5",
+        "33860.92925"
+      ],
+      [
+        "Node",
+        "1",
+        "5",
+        "21438.664716"
+      ],
+      [
+        "Node",
+        "2",
+        "5",
+        "16064.274077"
+      ],
+      [
+        "Node",
+        "3",
+        "5",
+        "21637.138029"
+      ],
+      [
+        "Node",
+        "4",
+        "5",
+        "22173.089869"
+      ],
+      [
+        "emitted JavaScript",
+        "0",
+        "5",
+        "59854.253716"
+      ],
+      [
+        "emitted JavaScript",
+        "1",
+        "5",
+        "41095.102888"
+      ],
+      [
+        "emitted JavaScript",
+        "2",
+        "5",
+        "31626.100498"
+      ],
+      [
+        "emitted JavaScript",
+        "3",
+        "5",
+        "34986.192386"
+      ],
+      [
+        "emitted JavaScript",
+        "4",
+        "5",
+        "37307.228292"
+      ],
+      [
+        "sanitized native",
+        "0",
+        "5",
+        "487250.11035"
+      ],
+      [
+        "sanitized native",
+        "1",
+        "5",
+        "249117.45296"
+      ],
+      [
+        "sanitized native",
+        "2",
+        "5",
+        "164355.58724"
+      ],
+      [
+        "sanitized native",
+        "3",
+        "5",
+        "273583.626141"
+      ],
+      [
+        "sanitized native",
+        "4",
+        "5",
+        "236636.803762"
+      ]
+    ],
+    "mutant_messages": [],
+    "skip_reasons": {
+      "TestCheckerBridgeRefusalPending": [
+        "checker_pending_test.go:49: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+      ]
+    }
+  },
+  "byte": {
+    "wall": {
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/compiler-area-byte.oopoia_z/overlay.json",
+        "-run",
+        "^TestCompilerAndStage1Agree$",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=90m"
+      ],
+      "profile": "/workspace/scratch/compiler-area-byte-profile.kriydd3g",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load_before": [
+        2.40234375,
+        1.66015625,
+        2.08984375
+      ],
+      "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+      "inputs": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+        "ADAMIC_LINT_BENCH": "1",
+        "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+        "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-byte-profile.kriydd3g",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-byte-profile.kriydd3g"
+      },
+      "exit": 1,
+      "wall_seconds": 151.88900591401034,
+      "load_after": [
+        1.556640625,
+        1.66259765625,
+        2.02978515625
+      ],
+      "source_unchanged": true,
+      "clean_after": true
+    },
+    "top_level": {
+      "fail": 1
+    },
+    "including_subtests": {
+      "fail": 1
+    },
+    "skips": [],
+    "package": [
+      {
+        "Time": "2026-10-08T11:05:42.250842616Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 125.092
+      }
+    ],
+    "shards": [
+      [
+        "Node",
+        "0",
+        "5",
+        "46765.45655"
+      ],
+      [
+        "Node",
+        "1",
+        "5",
+        "31345.443529"
+      ],
+      [
+        "Node",
+        "2",
+        "5",
+        "31484.110852"
+      ],
+      [
+        "Node",
+        "3",
+        "5",
+        "30535.346004"
+      ],
+      [
+        "Node",
+        "4",
+        "5",
+        "31929.79279"
+      ]
+    ],
+    "mutant_messages": [
+      "lint_test.go:503: Node: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: line 3180: port \"rkipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\", Go \"skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\""
+    ]
+  },
+  "drop": {
+    "wall": {
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/compiler-area-drop.bbeb3gb1/overlay.json",
+        "-run",
+        "^TestCompilerAndStage1Agree$",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=90m"
+      ],
+      "profile": "/workspace/scratch/compiler-area-drop-profile.hknsct75",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load_before": [
+        1.51171875,
+        1.6513671875,
+        2.02392578125
+      ],
+      "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+      "inputs": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+        "ADAMIC_LINT_BENCH": "1",
+        "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+        "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-drop-profile.hknsct75",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-drop-profile.hknsct75"
+      },
+      "exit": 1,
+      "wall_seconds": 122.8757988849975,
+      "load_after": [
+        1.44677734375,
+        1.5908203125,
+        1.9560546875
+      ],
+      "source_unchanged": true,
+      "clean_after": true
+    },
+    "top_level": {
+      "fail": 1
+    },
+    "including_subtests": {
+      "fail": 1
+    },
+    "skips": [],
+    "package": [
+      {
+        "Time": "2026-10-08T11:07:46.021455407Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 100.06
+      }
+    ],
+    "shards": [],
+    "mutant_messages": [
+      "lint_test.go:492: Node: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: missing from every shard"
+    ]
+  },
+  "retry": {
+    "wall": {
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=180m"
+      ],
+      "profile": "/workspace/scratch/compiler-area-retry-profile.2onnr8ux",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load_before": [
+        0.873046875,
+        1.9052734375,
+        2.4765625
+      ],
+      "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+      "inputs": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+        "ADAMIC_LINT_BENCH": "1",
+        "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+        "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-retry-profile.2onnr8ux",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-retry-profile.2onnr8ux"
+      },
+      "exit": 0,
+      "wall_seconds": 3764.7883919690066,
+      "load_after": [
+        2.40234375,
+        1.66015625,
+        2.08984375
+      ],
+      "source_unchanged": true,
+      "clean_after": true
+    },
+    "top_level": {
+      "pass": 34,
+      "skip": 1
+    },
+    "including_subtests": {
+      "pass": 113,
+      "skip": 1
+    },
+    "skips": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "package": [
+      {
+        "Time": "2026-10-08T11:03:08.406961174Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 3751.486
+      }
+    ],
+    "shards": [
+      [
+        "Node",
+        "0",
+        "5",
+        "32698.448767"
+      ],
+      [
+        "Node",
+        "1",
+        "5",
+        "22389.753838"
+      ],
+      [
+        "Node",
+        "2",
+        "5",
+        "23698.256749"
+      ],
+      [
+        "Node",
+        "3",
+        "5",
+        "23230.481637"
+      ],
+      [
+        "Node",
+        "4",
+        "5",
+        "23622.42146"
+      ],
+      [
+        "emitted JavaScript",
+        "0",
+        "5",
+        "97257.279028"
+      ],
+      [
+        "emitted JavaScript",
+        "1",
+        "5",
+        "36540.185907"
+      ],
+      [
+        "emitted JavaScript",
+        "2",
+        "5",
+        "72863.980725"
+      ],
+      [
+        "emitted JavaScript",
+        "3",
+        "5",
+        "80194.710889"
+      ],
+      [
+        "emitted JavaScript",
+        "4",
+        "5",
+        "43426.604129"
+      ],
+      [
+        "sanitized native",
+        "0",
+        "5",
+        "436008.342921"
+      ],
+      [
+        "sanitized native",
+        "1",
+        "5",
+        "225947.134004"
+      ],
+      [
+        "sanitized native",
+        "2",
+        "5",
+        "262146.032351"
+      ],
+      [
+        "sanitized native",
+        "3",
+        "5",
+        "228660.675838"
+      ],
+      [
+        "sanitized native",
+        "4",
+        "5",
+        "258459.117321"
+      ]
+    ],
+    "mutant_messages": [],
+    "skip_reasons": {
+      "TestCheckerBridgeRefusalPending": [
+        "checker_pending_test.go:49: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+      ]
+    }
+  },
+  "byte-native": {
+    "wall": {
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/compiler-area-byte.jcil0qhx/overlay.json",
+        "-run",
+        "^TestCompilerAndStage1Agree$",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=90m"
+      ],
+      "profile": "/workspace/scratch/compiler-area-byte-profile.ii6fxi0a",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load_before": [
+        1.26806640625,
+        1.40576171875,
+        2.3837890625
+      ],
+      "source_sha256": "ce83b45a0b5425d50eddb81e6d87e41d12a05d55fc1f2d2148a26188b503f874",
+      "inputs": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+        "ADAMIC_LINT_BENCH": "1",
+        "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+        "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/compiler-area-byte-profile.ii6fxi0a",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/compiler-area-byte-profile.ii6fxi0a"
+      },
+      "exit": 1,
+      "wall_seconds": 879.8943605690001,
+      "load_after": [
+        1.03515625,
+        1.9873046875,
+        2.51220703125
+      ],
+      "source_unchanged": true,
+      "clean_after": true
+    },
+    "top_level": {
+      "fail": 1
+    },
+    "including_subtests": {
+      "fail": 1
+    },
+    "skips": [],
+    "package": [
+      {
+        "Time": "2026-10-08T10:00:08.724703076Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 819.61
+      }
+    ],
+    "shards": [
+      [
+        "Node",
+        "0",
+        "5",
+        "67769.600105"
+      ],
+      [
+        "Node",
+        "1",
+        "5",
+        "49595.342967"
+      ],
+      [
+        "Node",
+        "2",
+        "5",
+        "46306.154146"
+      ],
+      [
+        "Node",
+        "3",
+        "5",
+        "44514.670694"
+      ],
+      [
+        "Node",
+        "4",
+        "5",
+        "48889.118029"
+      ],
+      [
+        "emitted JavaScript",
+        "0",
+        "5",
+        "71124.361699"
+      ],
+      [
+        "emitted JavaScript",
+        "1",
+        "5",
+        "51343.666581"
+      ],
+      [
+        "emitted JavaScript",
+        "2",
+        "5",
+        "43387.524134"
+      ],
+      [
+        "emitted JavaScript",
+        "3",
+        "5",
+        "46329.465013"
+      ],
+      [
+        "emitted JavaScript",
+        "4",
+        "5",
+        "34730.139483"
+      ]
+    ],
+    "mutant_messages": []
+  }
+}

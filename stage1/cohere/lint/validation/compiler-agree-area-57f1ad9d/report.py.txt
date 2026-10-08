@@ -1,0 +1,37 @@
+import json,gzip,shutil,re,collections,datetime,statistics
+from pathlib import Path
+root=Path('/workspace/scratch/compiler-agree-shards');dest=root/'stage1/cohere/lint/validation/compiler-agree-area-57f1ad9d';dest.mkdir(parents=True,exist_ok=True)
+def events(label):
+ result=[]
+ for line in Path('/tmp/compiler-area-'+label+'.jsonl').read_text().splitlines():
+  try:result.append(json.loads(line))
+  except ValueError:pass
+ return result
+results={}
+for label in ('gate','byte','drop','retry','byte-native'):
+ ev=events(label);wall=json.loads(Path('/tmp/compiler-area-'+label+'-wall.json').read_text());term=[e for e in ev if e.get('Test') and e['Action'] in ('pass','fail','skip')];top=[e for e in term if '/' not in e['Test']];output=''.join(e.get('Output','') for e in ev)
+ result={'wall':wall,'top_level':dict(collections.Counter(e['Action'] for e in top)),'including_subtests':dict(collections.Counter(e['Action'] for e in term)),'skips':[e['Test'] for e in term if e['Action']=='skip'],'package':[e for e in ev if not e.get('Test') and e['Action'] in ('pass','fail')],'shards':re.findall(r'(Node|emitted JavaScript|sanitized native) shard (\d+)/(\d+): ([0-9.]+) ms',output),'mutant_messages':[e.get('Output','').strip() for e in ev if '/src/compiler/checker.ts:' in e.get('Output','') and ('Node:' in e['Output'] or 'sanitized native:' in e['Output'] or 'missing from every shard' in e['Output'])]}
+ results[label]=result
+ with gzip.open(dest/(label+'.jsonl.gz'),'wb') as f:f.write(Path('/tmp/compiler-area-'+label+'.jsonl').read_bytes())
+ with gzip.open(dest/(label+'.txt.gz'),'wt') as f:f.write(output)
+ for suffix in ('wall','load','start'):shutil.copyfile('/tmp/compiler-area-'+label+'-'+suffix+'.json',dest/(label+'-'+suffix+'.json'))
+ if label in ('byte','drop'):(dest/(label+'-failure.txt')).write_text('\n'.join(result['mutant_messages'])+'\n')
+ else:
+  running={};active=collections.defaultdict(float);goreported={}
+  for e in ev:
+   test=e.get('Test');a=e['Action']
+   if not test or '/' in test:continue
+   ts=datetime.datetime.fromisoformat(e['Time'].replace('Z','+00:00')).timestamp()
+   if a in ('run','cont'):running[test]=ts
+   elif a in ('pause','pass','fail','skip'):
+    if test in running:active[test]+=ts-running.pop(test)
+    if a in ('pass','fail','skip'):goreported[test]=e.get('Elapsed',0)
+  lines=['| Test | Active wall seconds | Go elapsed seconds | Result |','| --- | ---: | ---: | --- |'];status={e['Test']:e['Action'] for e in top}
+  for test,seconds in sorted(active.items(),key=lambda item:-item[1]):lines.append(f'| {test} | {seconds:.3f} | {goreported.get(test,0):.3f} | {status.get(test)} |')
+  (dest/(label+'-tests.md')).write_text('\n'.join(lines)+'\n')
+ for test in result['skips']:
+  result.setdefault('skip_reasons',{})[test]=[e['Output'].strip() for e in ev if e.get('Test')==test and e['Action']=='output' and 'awaits ' in e.get('Output','')]
+(dest/'measurements.json').write_text(json.dumps(results,indent=2))
+for name in ('audit.json','setup.txt','run.py','audit.py','report.py','retry.py','node-proofs.py'):
+ shutil.copyfile('/tmp/compiler-area-'+name,dest/(name if not name.endswith('.py') else name+'.txt'))
+print(json.dumps(results,indent=2))
