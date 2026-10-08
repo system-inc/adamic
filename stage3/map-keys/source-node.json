@@ -1,0 +1,38 @@
+[
+  {
+    "fixture": "stage3/map-keys/branded_map.a",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "fixture": "stage3/map-keys/branded_set.a",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "fixture": "stage3/map-keys/iterator_pairs.a",
+    "exit": 0,
+    "stdout": "next:0\nnext:1\nnext:2\nnext:3\n2:built-2:built-1\n0:built-2\n1:built-1\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "stage3/map-keys/maplike.a",
+    "exit": 0,
+    "stdout": "-1\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "stage3/map-keys/mixed_map.a",
+    "exit": 0,
+    "stdout": "2:number:string\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "stage3/map-keys/nullish_set.a",
+    "exit": 0,
+    "stdout": "2:true:true\n",
+    "stderr": ""
+  }
+]

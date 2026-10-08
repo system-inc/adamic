@@ -1,0 +1,30 @@
+=== RUN   TestScoutMapLookupMutants
+=== RUN   TestScoutMapLookupMutants/scout_map_objects.a
+=== PAUSE TestScoutMapLookupMutants/scout_map_objects.a
+=== RUN   TestScoutMapLookupMutants/scout_map_numbers.a
+=== PAUSE TestScoutMapLookupMutants/scout_map_numbers.a
+=== RUN   TestScoutMapLookupMutants/scout_map_references.a
+=== PAUSE TestScoutMapLookupMutants/scout_map_references.a
+=== CONT  TestScoutMapLookupMutants/scout_map_objects.a
+=== CONT  TestScoutMapLookupMutants/scout_map_references.a
+=== CONT  TestScoutMapLookupMutants/scout_map_numbers.a
+    map_keys_scout_test.go:52: gate cache node miss
+=== NAME  TestScoutMapLookupMutants/scout_map_references.a
+    map_keys_scout_test.go:52: gate cache node miss
+=== NAME  TestScoutMapLookupMutants/scout_map_objects.a
+    map_keys_scout_test.go:52: gate cache node miss
+=== NAME  TestScoutMapLookupMutants/scout_map_references.a
+    map_keys_scout_test.go:55: lost lookup: clean exit 0, no sanitizer or leak finding, caught by Node stdout
+=== NAME  TestScoutMapLookupMutants/scout_map_numbers.a
+    map_keys_scout_test.go:55: lost lookup: clean exit 0, no sanitizer or leak finding, caught by Node stdout
+=== NAME  TestScoutMapLookupMutants/scout_map_objects.a
+    map_keys_scout_test.go:55: lost lookup: clean exit 0, no sanitizer or leak finding, caught by Node stdout
+--- PASS: TestScoutMapLookupMutants (0.00s)
+    --- PASS: TestScoutMapLookupMutants/scout_map_references.a (0.36s)
+    --- PASS: TestScoutMapLookupMutants/scout_map_numbers.a (0.38s)
+    --- PASS: TestScoutMapLookupMutants/scout_map_objects.a (0.38s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.390s

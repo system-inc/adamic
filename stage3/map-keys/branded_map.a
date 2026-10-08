@@ -1,0 +1,7 @@
+// Reduced from core.ts mapEntries and the Path-key uses in resolutionCache.ts.
+type Path = string & { readonly __pathBrand: unknown };
+function contains(path: Path): boolean {
+    const map = new Map<Path, number>();
+    map.set(path, 1);
+    return map.has(path);
+}

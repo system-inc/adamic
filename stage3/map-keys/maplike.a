@@ -1,0 +1,6 @@
+// Reduced from corePublic.ts:13 and core.ts:1287.
+interface MapLike<T> { [index: string]: T; }
+function lookup(values: MapLike<number>, key: string): number {
+    return values[key] ?? -1;
+}
+console.log(`${lookup({ a: 1 }, 'missing')}`);

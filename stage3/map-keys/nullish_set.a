@@ -1,0 +1,3 @@
+// Set deduplication shape, expanded to expose the two nullish identities.
+const set = new Set<null | undefined>([null, undefined]);
+console.log(`${set.size}:${set.has(null)}:${set.has(undefined)}`);

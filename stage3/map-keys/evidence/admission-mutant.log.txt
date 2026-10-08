@@ -1,0 +1,8 @@
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/mixed_map
+    map_keys_scout_test.go:32: want "a Map whose keys aren't" with refused=false, got <nil>
+--- FAIL: TestScoutMapKeyOutcomes (0.09s)
+    --- FAIL: TestScoutMapKeyOutcomes/mixed_map (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.110s
+FAIL

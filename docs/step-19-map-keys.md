@@ -177,3 +177,36 @@ Mutable key and value widening, unsafe callable variance, unrelated assertions, 
 10. MapLike integer-key enumeration, inherited names, __proto__, own presence, deletion, static/dynamic aliases, freeze and checked named-slot conversions must not be replaced by Map behavior. Keep this dependency explicit at the #whkxbc7 map-pair stop.
 
 Acceptance requires original-source Node observations, both generated backends, native ASan/UBSan and leaks, recorded counts, and semantic mutants that emit valid code. A refusal mutant must be caught by a refused program becoming accepted, not by a C compile error. Historical hidden-byte credit is not a retirement claim: replay the exact original reason before and after the change, report any newly exposed blocker, and distinguish a diagnostic retired from a complete tsc root compiling.
+
+## Reduced acceptance fixtures and baseline outcomes
+
+The following source reductions retain the collection operation and key shape; Node edge cases expand the inputs rather than claim tsc actually inserts NaN or -0 at these sites. They are executable acceptance criteria, not a survey of runtime hot paths.
+
+| Fixture | tsc reduction anchor | Base outcome |
+|---|---|---|
+| `internal/oracle/testdata/scout_map_objects.a` | core.ts:605 mapEntries, monomorphic compiler-node-shaped keys | Pass: distinct equal-field objects, alias lookup, overwrite position, delete/reinsert and Set identity |
+| `internal/oracle/testdata/scout_map_numbers.a` | core.ts Map construction/update and Set deduplication shapes | Pass: NaN, -0 normalization, insertion order, delete/reinsert; edge inputs added explicitly |
+| `internal/oracle/testdata/scout_map_references.a` | core.ts mapEntries instantiated for reference keys | Pass: arrays, Maps and distinct closures from one function body keep identity |
+| `stage3/map-keys/branded_map.a` | Path-key Map uses in resolutionCache.ts and core.ts:605 | NotYet: `a value of type Path`, at the parameter before collection operations |
+| `stage3/map-keys/branded_set.a` | builder.ts Set<Path> | NotYet: `a value of type Path`, at the parameter |
+| `stage3/map-keys/mixed_map.a` | core.ts mapEntries instantiated with mixed K2 | NotYet: `a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions` |
+| `stage3/map-keys/nullish_set.a` | Set deduplication, expanded to null/undefined | NotYet: `a Set of null \| undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)` |
+| `stage3/map-keys/maplike.a` | corePublic.ts:13, core.ts:1287 | Refused: `an index signature`; this implementation disagrees with the documented NotYet ruling, and is unchanged here |
+| `stage3/map-keys/iterator_pairs.a` | commandLineParser.ts:141 readonly mapped pairs | NotYet: `new Map from something that isn't [key, value] pairs`; explicit iterator replaces the separate generator dependency |
+
+`TestScoutMapKeyOutcomes` pins the six gap reductions, including diagnostic class. The source loader first proves they typecheck under Adamic's fixed options. The iterator reduction declares next, return and throw: omitting return or throw would trigger the existing optional-field compatibility refusal before reaching the pair-constructor gap. The original `core.ts:332` helper is a generator; `a generator function` and `yield (generators)` remain separate shared refusal dependencies, not key-table lessons. No generator frame or cancellation decision is implemented.
+
+`source-node.json` records original-source Node exit/stdout/stderr for all six gap reductions. Brand parameter-only probes have no call and empty output: that preserves the unproven construction boundary rather than smuggling a cast into an acceptance test. The mixed and nullish programs print `2:number:string` and `2:true:true`; the record's missing read prints `-1`. The pair source prints four next calls, then two entries in first-insertion order, with the repeated key overwritten by its last value.
+
+Scoped verification commands, after sourcing `/workspace/adamic-tools/env.sh`:
+
+```sh
+go test ./internal/lower -run '^TestScoutMapKeyOutcomes$' -count=1 -v > /tmp/scout-map-keys-outcomes.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_map_.*[.]a$' -count=1 -timeout 30m -v > /tmp/scout-map-keys-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutMapLookupMutants$' -count=1 -timeout 30m -v > /tmp/scout-map-keys-mutants.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout-map-keys-counts.log 2>&1
+```
+
+The gap run passed all six cases. The three new oracle programs passed source Node, generated JavaScript, sanitized native, release native and successful-program leak checks, with zero oracle cache hits. Three lost-lookup mutants replace emitted map_get calls with a valid helper returning absence. Each compiled under the normal warning policy, ran with exit 0 and empty stderr under ASan/UBSan and leak detection, and was killed only by source-Node stdout disagreement. A separate compiler mutant added ir.Union to keyable: the mixed_map outcome test failed with `got <nil>`, before code emission. The compiler source was restored. These mutants prove lookup comparison and that admission boundary; no claim is made that they independently prove every individual hash, ownership or order invariant.
+
+The first counts refresh failed only because host fixtures required the missing pinned `@types/node` package. `npm ci --prefix stage3/api` installed the locked dependencies; the successful retry is recorded with the fixture evidence. No whole package test or full gate was run.

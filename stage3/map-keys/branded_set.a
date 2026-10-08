@@ -1,0 +1,7 @@
+// Reduced from builder.ts Set<Path>; parameter retains the unproven construction boundary.
+type Path = string & { readonly __pathBrand: unknown };
+function contains(path: Path): boolean {
+    const set = new Set<Path>();
+    set.add(path);
+    return set.has(path);
+}

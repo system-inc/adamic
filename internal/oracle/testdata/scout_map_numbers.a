@@ -1,0 +1,11 @@
+// core.ts mapEntries key shape and Set deduplication, expanded at SameValueZero boundaries.
+const map = new Map<number, string>([[NaN, `nan-${1}`], [-0, `zero-${1}`], [1, 'one']]);
+map.set(0 / 0, `nan-${2}`);
+map.set(0, `zero-${2}`);
+console.log(`${map.size}:${map.get(NaN)}:${map.get(-0)}`);
+for (const key of map.keys()) { console.log(`${key}:${1 / key}`); }
+const set = new Set<number>([NaN, 0 / 0, -0, 0, 1]);
+console.log(`${set.size}:${set.has(NaN)}:${set.has(-0)}`);
+map.delete(NaN);
+map.set(NaN, 'reinsert');
+for (const [key, value] of map) { console.log(`${key}:${value}`); }

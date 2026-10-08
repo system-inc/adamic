@@ -1,0 +1,5 @@
+// Reduced from core.ts mapEntries with K2 instantiated to a mixed key domain.
+const map = new Map<string | number, string>();
+map.set(1, 'number');
+map.set('1', 'string');
+console.log(`${map.size}:${map.get(1)}:${map.get('1')}`);

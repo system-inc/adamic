@@ -1,0 +1,18 @@
+// core.ts:605 mapEntries, instantiated with compiler-node-shaped identity keys.
+interface Key { readonly id: number; }
+function mapEntries(source: ReadonlyMap<Key, string>): Map<Key, string> {
+    const result = new Map<Key, string>();
+    source.forEach((value, key) => { result.set(key, `${value}-copy`); });
+    return result;
+}
+const first: Key = { id: 1 };
+const equalFields: Key = { id: 1 };
+const source = new Map<Key, string>([[first, `built-${1}`], [equalFields, `built-${2}`]]);
+source.set(first, 'overwrite');
+const copy = mapEntries(source);
+console.log(`${copy.size}:${copy.get(first)}:${copy.get(equalFields)}:${copy.has({ id: 1 })}`);
+source.delete(first);
+source.set(first, 'reinsert');
+for (const [key, value] of source) { console.log(`${key === first}:${value}`); }
+const set = new Set<Key>([first, equalFields, first]);
+console.log(`${set.size}:${set.has(first)}:${set.has({ id: 1 })}`);

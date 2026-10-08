@@ -1,0 +1,21 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a (11.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a (11.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a (11.95s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.983s

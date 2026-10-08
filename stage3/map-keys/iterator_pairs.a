@@ -1,0 +1,29 @@
+// commandLineParser.ts:141's readonly mapped-pair constructor, reduced to an explicit iterator.
+// core.ts:332's original mapIterator is a generator and remains a separate refusal.
+function pairs() {
+    return {
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                next(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    const current = index;
+                    index++;
+                    console.log(`next:${current}`);
+                    return { value: [`${current % 2}`, `built-${current}`], done: current >= 3 };
+                },
+                throw(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    return { value: ['', ''], done: true };
+                },
+                return(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    console.log('close');
+                    return { value: ['', ''], done: true };
+                },
+            };
+        },
+    };
+}
+const map = new Map(pairs());
+console.log(`${map.size}:${map.get('0')}:${map.get('1')}`);
+for (const [key, value] of map) {
+    console.log(`${key}:${value}`);
+}

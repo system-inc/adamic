@@ -1,0 +1,14 @@
+// core.ts mapEntries instantiated with reference keys; equal contents are not equal identity.
+const first: number[] = [1];
+const second: number[] = [1];
+const arrays = new Map<number[], number>([[first, 10], [second, 20]]);
+console.log(`${arrays.size}:${arrays.get(first)}:${arrays.has([1])}`);
+const collection = new Map<string, number>();
+const other = new Map<string, number>();
+const maps = new Set<Map<string, number>>([collection, other, collection]);
+console.log(`${maps.size}:${maps.has(collection)}:${maps.has(new Map<string, number>())}`);
+function make(value: number): () => number { return () => value; }
+const left = make(1);
+const right = make(1);
+const functions = new Map<() => number, string>([[left, 'left'], [right, 'right']]);
+console.log(`${functions.size}:${functions.get(left)}:${functions.get(right)}:${functions.has(make(1))}`);
