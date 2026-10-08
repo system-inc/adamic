@@ -24,7 +24,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
@@ -110,6 +109,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		if err := l.namespaceRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindNonNullExpression && !l.uninitializedStorage(node) {

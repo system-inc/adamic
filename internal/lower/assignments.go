@@ -29,7 +29,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if target.Kind == ast.KindPropertyAccessExpression {
+	if target.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(target) {
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
 		}
@@ -50,7 +50,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateIndex(node, target, operator, binary.Right)
 	}
 	local, isLocal := l.local(target)
-	if !ast.IsIdentifier(target) || !isLocal {
+	if (!ast.IsIdentifier(target) && !l.namespaceMember(target)) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
 	if l.result.Locals[local].NestedFunction != 0 {
@@ -80,7 +80,18 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+	statements := l.namespaceReadyStatements(target, false)
+	if !isCompound && target.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(target) {
+		// A simple property assignment evaluates its RHS before PutValue discovers
+		// an undefined receiver. Earlier containers in a nested chain are reads.
+		statements = l.namespaceReadyStatements(target.Expression(), false)
+		temporary := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex})
+		statements = append(statements, ir.Declare{Local: temporary, Value: value})
+		statements = append(statements, l.namespaceReadyStatements(target, true)...)
+		value = ir.Read{Local: temporary, Of: value.Type()}
+	}
+	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type
@@ -174,7 +185,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		value, err := l.expression(operand)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if operand.Kind == ast.KindPropertyAccessExpression {
+	if operand.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(operand) {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {
 			step = ast.KindMinusToken
@@ -182,7 +193,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateProperty(node, operand, step, nil)
 	}
 	local, isLocal := l.local(operand)
-	if !ast.IsIdentifier(operand) || !isLocal {
+	if (!ast.IsIdentifier(operand) && !l.namespaceMember(operand)) || !isLocal {
 		return nil, l.notYet(operand, "incrementing "+describe(operand))
 	}
 	step := ir.Add
@@ -190,5 +201,5 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		step = ir.Subtract
 	}
 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
+	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
 }

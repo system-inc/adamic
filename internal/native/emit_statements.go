@@ -94,7 +94,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized && (!local.NamespaceState || statement.Value != nil))
 			if local.Uninitialized {
 				e.line("%s_declared = true;", readyName(statement.Local))
 			}
@@ -147,6 +147,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
 			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		}
+		if e.program.Locals[statement.Local].NamespaceState {
+			e.line("%s = true;", readyName(statement.Local))
 		}
 		e.end()
 	case ir.Evaluate:

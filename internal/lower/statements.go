@@ -28,6 +28,8 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 // statement lowers one statement to none, one or several.
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
+	case ast.KindModuleDeclaration:
+		return l.namespaceBody(node)
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
@@ -209,6 +211,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{returned}, nil
 	}
 	expression = ast.SkipParentheses(expression)
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
+	}
 	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		return l.returnAssignment(expression)
 	}

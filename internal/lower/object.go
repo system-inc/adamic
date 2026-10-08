@@ -1382,6 +1382,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
+	// never has no inhabitant to store. Empty maps can still be observed through
+	// size or a readonly wider view; an unused object slot supplies storage only.
+	if arguments[0].Flags()&checker.TypeFlagsNever != 0 {
+		key, keyKnown = ir.Object, true
+	}
+	if arguments[1].Flags()&checker.TypeFlagsNever != 0 {
+		value, valueKnown = ir.Object, true
+	}
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
