@@ -22,6 +22,7 @@ func InsertedChecks(program *Program) []InsertedCheck {
 		{"catch value is not Error: ", "catch-error"},
 		{"JSON.stringify result is undefined: ", "json-stringify-defined"},
 		{"optional property write is undefined: ", "optional-write"},
+		{"optional contract produced undefined at ", "optional-write"},
 	}
 	var visit func(reflect.Value)
 	visit = func(value reflect.Value) {

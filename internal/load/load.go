@@ -37,12 +37,13 @@ type Program struct {
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
-	compiler       *compiler.Program
-	projectOptions bool
-	optionSites    []OptionSite
-	fs             *sourceFS
-	sparseOnce     sync.Once
-	sparseArrays   bool
+	compiler           *compiler.Program
+	projectOptions     bool
+	optionSites        []OptionSite
+	optionDispositions []OptionDisposition
+	fs                 *sourceFS
+	sparseOnce         sync.Once
+	sparseArrays       bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
@@ -52,7 +53,10 @@ type Program struct {
 type CheckError struct {
 	Diagnostics []string
 	// OptionSites remain errors until lowering can insert their runtime checks.
-	OptionSites []OptionSite
+	OptionSites          []OptionSite
+	ScheduledOptionSites []OptionSite
+	OptionDispositions   []OptionDisposition
+	OrdinaryDiagnostics  []string
 }
 
 func (e *CheckError) Error() string {
@@ -244,26 +248,20 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 	}
+	ordinaryDiagnostics := append([]string(nil), diagnostics...)
+	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
-			continue
+		row := loaded.scheduleOptionSite(site)
+		loaded.optionDispositions = append(loaded.optionDispositions, row)
+		if row.State == OptionRemainingError {
+			diagnostics = append(diagnostics, site.Message)
+		} else {
+			scheduled = append(scheduled, site)
 		}
-		if len(site.Options) == 1 && site.Options[0] == "useUnknownInCatchVariables" {
-			// Catch-derived values stay tagged and lower checks each typed use.
-			continue
-		}
-		// Every successfully lowered project indexed read requiring presence is
-		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
-		// before emission. For a joint optional/index site the recorded ancestor
-		// also forces the read guard through its permissive contextual type.
-		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes") {
-			continue
-		}
-		diagnostics = append(diagnostics, site.Message)
 	}
 	if len(diagnostics) > 0 {
 		sort.Strings(diagnostics)
-		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites, ScheduledOptionSites: scheduled, OptionDispositions: loaded.optionDispositions, OrdinaryDiagnostics: ordinaryDiagnostics}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.

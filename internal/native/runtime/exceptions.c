@@ -22,8 +22,11 @@ adamic_object *adamic_error_new(adamic_string *message) {
 	return error;
 }
 
+// The filesystem producer owns its distinct Error shape with a code field.
+extern bool adamic_fs_file_is_error(const adamic_object *value);
+
 bool adamic_is_error(const adamic_heap *value) {
-	return value != NULL && value->kind == adamic_kind_object && ((const adamic_object *)value)->shape == &error_shape;
+	return value != NULL && value->kind == adamic_kind_object && (((const adamic_object *)value)->shape == &error_shape || adamic_fs_file_is_error((const adamic_object *)value));
 }
 
 _Noreturn void adamic_uncaught(void) {
