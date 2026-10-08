@@ -47,21 +47,29 @@ uint64_t adamic_map_number_hash(double number) {
 
 static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL};
+static const adamic_field_kind iterator_kinds[] = {adamic_field_reference};
+static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, iterator_kinds};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
-static const adamic_shape state_shape = {5, state_names, state_references, NULL};
+static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean};
+static const adamic_shape state_shape = {5, state_names, state_references, NULL, state_kinds};
 static const char *const result_names[] = {"done", "value"};
 static const bool result_reference[] = {false, true};
 static const bool result_scalar[] = {false, false};
-static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL}, {2, result_names, result_reference, NULL}};
+static const adamic_field_kind result_kinds[][2] = {{adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}};
+static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0]}, {2, result_names, result_scalar, NULL, result_kinds[1]}, {2, result_names, result_reference, NULL, result_kinds[2]}};
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[][2] = {{false, false}, {false, true}, {true, false}, {true, true}};
-static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL}, {2, pair_names, pair_references[1], NULL}, {2, pair_names, pair_references[2], NULL}, {2, pair_names, pair_references[3], NULL}};
+static const adamic_field_kind pair_kinds[][2] = {{adamic_field_number, adamic_field_number}, {adamic_field_number, adamic_field_boolean}, {adamic_field_number, adamic_field_reference}, {adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}, {adamic_field_reference, adamic_field_number}, {adamic_field_reference, adamic_field_boolean}, {adamic_field_reference, adamic_field_reference}};
+static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, pair_kinds[0]}, {2, pair_names, pair_references[0], NULL, pair_kinds[1]}, {2, pair_names, pair_references[1], NULL, pair_kinds[2]}, {2, pair_names, pair_references[0], NULL, pair_kinds[3]}, {2, pair_names, pair_references[0], NULL, pair_kinds[4]}, {2, pair_names, pair_references[1], NULL, pair_kinds[5]}, {2, pair_names, pair_references[2], NULL, pair_kinds[6]}, {2, pair_names, pair_references[2], NULL, pair_kinds[7]}, {2, pair_names, pair_references[3], NULL, pair_kinds[8]}};
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {
 	return type != 1 && type != 2 && type != 7;
+}
+
+static adamic_field_kind collection_kind(int type) {
+	return collection_reference(type) ? adamic_field_reference : type == 2 ? adamic_field_boolean : adamic_field_number;
 }
 
 static adamic_value collection_next(adamic_closure *self, adamic_value *arguments) {
@@ -73,7 +81,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	int value_type = (int)state->slots[3].number;
 	bool set = state->slots[4].boolean;
 	bool reference = part == 3 || collection_reference(part == 1 || set ? key_type : value_type);
-	adamic_object *result = adamic_object_new(&result_shapes[reference ? 1 : 0]);
+	adamic_object *result = adamic_object_new(&result_shapes[part == 3 ? adamic_field_reference : collection_kind(part == 1 || set ? key_type : value_type)]);
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
 	result->slots[0].boolean = !present;
@@ -85,7 +93,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	}
 	if (set) { value = key; value_type = key_type; }
 	if (part == 3) {
-		int shape = (collection_reference(key_type) ? 2 : 0) + (collection_reference(value_type) ? 1 : 0);
+		int shape = collection_kind(key_type) * 3 + collection_kind(value_type);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
 		pair->slots[0] = key;
 		pair->slots[1] = value;

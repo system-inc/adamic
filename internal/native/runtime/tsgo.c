@@ -93,7 +93,8 @@ adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const 
  checked(status, &error);
  static const char *const names[] = {"nodeKind", "symbolName", "type"};
  static const bool references[] = {false, true, true};
- static const adamic_shape shape = {3, names, references, NULL};
+ static const adamic_field_kind kinds[] = {adamic_field_number, adamic_field_reference, adamic_field_reference};
+ static const adamic_shape shape = {3, names, references, NULL, kinds};
  adamic_object *answer = adamic_object_new_in(region, &shape);
  answer->slots[0].number = (double)result.kind;
  answer->slots[1].reference = adamic_decode_utf8((const unsigned char *)result.symbol.data, result.symbol.length);

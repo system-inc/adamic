@@ -160,7 +160,14 @@ func cProgram(program *ir.Program, handler int) string {
 		builder.WriteString("\n")
 	}
 	emitter.classDeclarations(&builder)
-	builder.WriteString(bodies.String())
+	// Validate every emitted layout, including public class shapes that need no allocation.
+	checks := strings.Builder{}
+	checks.WriteString("#ifdef ADAMIC_COUNT\n")
+	for index := 0; index < len(emitter.shapes); index++ {
+		fmt.Fprintf(&checks, "\tadamic_shape_check(&adamic_shape_%d);\n", index)
+	}
+	checks.WriteString("#endif\n")
+	builder.WriteString(strings.Replace(bodies.String(), "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n"+checks.String(), 1))
 	return builder.String()
 }
 

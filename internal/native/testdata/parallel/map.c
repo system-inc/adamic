@@ -31,7 +31,8 @@ static void first_string_reads(adamic_string *text) {
 }
 static const char *const names[] = {"value", "children"};
 static const bool fields[] = {false, true};
-static const adamic_shape shape = {2, names, fields, NULL};
+static const adamic_field_kind shape_kinds_0[] = {adamic_field_number, adamic_field_reference};
+static const adamic_shape shape = {2, names, fields, NULL, shape_kinds_0};
 static adamic_string ascii = ADAMIC_STRING("ASCII");
 
 static adamic_value inner(adamic_closure *self, adamic_value *arguments) {

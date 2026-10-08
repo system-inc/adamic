@@ -63,6 +63,7 @@ static inline void *allocate_in(adamic_region *region, size_t size) {
 
 // Keep allocation in each entry point: an out-of-line helper adds a call per object.
 static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
+	adamic_shape_check(shape);
 	if (region == NULL) {
 		return adamic_object_new(shape);
 	}
