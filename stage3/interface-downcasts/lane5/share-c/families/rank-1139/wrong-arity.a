@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+enum EmitHint {SourceFile=0,Expression=1,IdentifierName=2,MappedTypeParameter=3,Unspecified=4,EmbeddedStatement=5,JsxAttributeValue=6,ImportTypeNodeAttributes=7}
+interface Node {readonly value:number;}
+interface Base {readonly substituteNode:unknown;}
+interface Target {substituteNode(hint: EmitHint, node: Node): Node;}
+function probe(value:Base):void {const transform=value as Target;const witnessResult=transform.substituteNode(0,{value:3});console.log("completed");}
+probe({substituteNode:(): Node=>({value:3})});

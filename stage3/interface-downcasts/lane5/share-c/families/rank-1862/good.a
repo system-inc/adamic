@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type ResolutionMode = ModuleKind.ESNext | ModuleKind.CommonJS | undefined;
+enum ModuleKind {None=0,CommonJS=1,AMD=2,UMD=3,System=4,ES2015=5,ES2020=6,ES2022=7,ESNext=99,Node16=100,Node18=101,Node20=102,NodeNext=199,Preserve=200}
+interface ResolvedProjectReference {readonly value:number;}
+interface T {readonly value:number;}
+interface Base {readonly getFromNonRelativeNameCache:unknown;}
+interface Target {getFromNonRelativeNameCache(nonRelativeName: string, mode: ResolutionMode, directoryName: string, redirectedReference: ResolvedProjectReference | undefined): T | undefined;}
+function probe(value:Base):void {const moduleResolutionCache=value as Target;const witnessResult=moduleResolutionCache.getFromNonRelativeNameCache("abc",99,"abc",{value:3});console.log("completed");}
+probe({getFromNonRelativeNameCache:(nonRelativeName: string,mode: ResolutionMode,directoryName: string,redirectedReference: ResolvedProjectReference | undefined):T | undefined=>({value:3})});
