@@ -13,8 +13,8 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Lazy admission owner | d5b3c4a9bde6ee28fe38568ef4b720aa9c2b68e3 | Aborted before resolving 18 paths; Map adapter restoration must preserve boxed dispatch and ownership | d718a9ffa0432245b69a3545c3ca080db865e0bb | Not runtime-tested; unresolved merge boundary |
 | Arrays and parser | a3b0e3570fdf83fa3071b7f34ff9780d5334d5f7 | Plan: retain existing duplicate sections, whitespace and both final reports; counts: retain every distinct row and reject differing values for one fixture | e636841dd3d2996e471d97dd23712e7dbaa6aaeb | Required filter passes; inherited failures below |
 | Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | 6d9811a91da9346217f45c0c5223df9d194363eb | Stale compile-only helper expectation fixed; inherited failures unchanged |
-| Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | This merge | Required tests pass; same 41 inherited counts failures |
-| Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | Pending | Pending | Pending |
+| Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | 93a086abbfbaa3d36ccb9bbe2516733452d2b521 | Required tests pass; same 41 inherited counts failures |
+| Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | No conflicts; retain unread storage admission and named tuple-member refusal | This merge | Required tests pass; counts retain 41 baseline failures |
 | Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Pending | Pending | Pending |
 | Callables | 0040752305d151dff23d234213edc47aaddbd305 | Pending | Pending | Pending |
 | Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Pending | Pending | Pending |
@@ -157,3 +157,18 @@ heterogeneous literals retain exact producer NotYet diagnostics at line 5:46.
 The corrected six-case test passes in 3.130s. No compiler guard was changed.
 
 Fresh newer mixed filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	600.969s
+
+## Object and primitive unions
+
+8abb52a1 merged without conflicts. Unread tuple union storage remains admitted,
+but demanded tuple members retain their named obligation. No callback guard
+changed. Backend checks pass: lower 7.057s, native 8.669s, JavaScript 1.522s.
+All complete original object/primitive probes pass in 244.963s, including comment
+and package resolver fields, exact outer/nested refusals, successful-run leaks,
+measured batch counts and executing member/nested/outer bypass mutants.
+The isolated graph-size and message-size mutants execute and are caught by
+AddressSanitizer heap-buffer-overflow; the tuple-member guard mutant is caught
+by the exact named tuple union refusal. Every source mutation is restored.
+
+Object/primitive filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	742.346s
+Counts refresh: identical 41 baseline fixtures, 63.565s; new focused rows pass.

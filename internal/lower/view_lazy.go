@@ -55,6 +55,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
 	}
+	if l.objectPrimitiveTupleMember(target) {
+		return "tuple union member"
+	}
 	if l.viewMutableArrayUnion(target) {
 		return "mutable array union"
 	}
