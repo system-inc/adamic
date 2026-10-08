@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewMapCertificates
+=== RUN   TestCheckedViewMapCertificates/optional-array-schema
+    checked_views_map_certificates_test.go:34: map certificate mutant ran on: oracle.run{stdout:[]uint8{0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewMapCertificates (0.45s)
+    --- FAIL: TestCheckedViewMapCertificates/optional-array-schema (0.45s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.463s
+FAIL

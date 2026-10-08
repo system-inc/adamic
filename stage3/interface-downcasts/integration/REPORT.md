@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-181 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+188 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -620,3 +620,50 @@ full IR 19.061s, uncached filtered oracle 210.849s; vet exit 0.
 Original declaration controls enabled. All 52 new backend IR mutation executions
 logged their caught behavior; all nine source mutations caught independently.
 Sole array-callback baseline exclusion unchanged, no new failure remaining.
+
+
+Priority owner structural and array Maps, 99089aa11253bd879e9b5ecad8a65c870eee8fc7
+
+One conflict hunk in internal/ir/views.go: keep callable DiscardResult and add
+ArrayReadonly; neither certificate substitutes for the other. Structural/array
+Map producer descriptors remain source-owned. Readonly covariance, writable
+invariance, physical storage equality, every NodeArray own-field schema and
+undefined entry restrictions stay enforced. Nested phantom entries are refused
+recursively, including below object fields and array elements. Nullable, mixed,
+callable and tuple entries retain named demanded read refusals and unread twins.
+
+Overlap preflight passed 41.819s: Map schemas and payload propagation, nullable
+selection, NodeArray records, stored callable markers and CompleteBrand.
+Structural-schema-unused-payload and array-schema-unused-payload stop at the
+Map field even without reading entries, so descendant checks cannot conceal a
+missing constructor certificate. Native positives retain leak checks.
+
+Production inventory remains 2,018 pairs / 9,101 reads unverified by whole-tsc
+lowering and reaching-view proof; no fixture success subtracts those sites.
+Optional-boolean hold remains active until explicitly lifted by the user.
+
+Six implementation mutations executed independently and restored:
+structural-kind-only, array-kind-only, skip-own-fields, skip-readonly-source and
+skip-undefined-source each let its wrong-schema root-only witness print object
+at exit 0 instead of the named Map field refusal. skip-nested-brands admitted
+both nested-array-brand-read and nested-object-brand-read, violating the named
+compile refusal. These are semantic runtime/admission failures, not build errors
+or crashes. The first five run all compiled backend calls in the oracle; the
+logged failing observation is the first native mode. No extra backend count is
+claimed. Evidence: owner-reference-mutants/ logs. Six new defects, total 187.
+
+
+The first owner-reference oracle gate failed only map_foreach_arrays.a in both
+backends: exit 70, array write expected array, found uncertified source element
+contract. Producer Map schemas had interned ViewArray descriptors without any
+admitted view. HasArrayViews now requires ViewOrigins before enabling the existing
+program-wide checked-array policy. Actual viewed arrays retain all checks.
+The regression and Map/NodeArray/optional-array controls pass 39.354s. Removing
+this origin requirement restores the valid-code runtime failure in both backends;
+the Node agreement oracle catches it. This seventh new defect brings the total
+to 188. The original failed gate is preserved; no new test exclusion was added.
+
+Final restored owner-reference gates: lower 11.207s, native 20.568s, JavaScript
+2.218s; full IR 16.792s; uncached filtered Node oracle 213.260s; vet exit 0.
+Original-declaration controls enabled. Existing array-callback proof exclusion
+unchanged; no new failure remains.

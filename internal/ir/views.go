@@ -24,23 +24,24 @@ type ViewContract struct {
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string
 
-	NominalBases []string
-	Nominal      string
-	Undefined    bool
-	Null         bool
-	Kind         ViewKind
-	Name         string
-	Of           Type
-	Allowed      []ViewLiteral
-	Fields       []ViewFieldContract
-	Members      []ViewContractID
-	Key          ViewContractID
-	MapReadonly  bool
-	Element      ViewContractID
-	Tuple        []ViewContractID
-	Functions    []int
-	Parameters   []ViewContractID
-	Result       ViewContractID
+	NominalBases  []string
+	Nominal       string
+	Undefined     bool
+	Null          bool
+	Kind          ViewKind
+	Name          string
+	Of            Type
+	Allowed       []ViewLiteral
+	Fields        []ViewFieldContract
+	Members       []ViewContractID
+	Key           ViewContractID
+	MapReadonly   bool
+	ArrayReadonly bool
+	Element       ViewContractID
+	Tuple         []ViewContractID
+	Functions     []int
+	Parameters    []ViewContractID
+	Result        ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool
 }
