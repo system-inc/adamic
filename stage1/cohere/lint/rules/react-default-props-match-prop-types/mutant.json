@@ -1,0 +1,5 @@
+{
+  "name": "required_defaults_allowed",
+  "from": "this.context.settings.read('allowrequireddefaults','false')==='true'",
+  "to": "true"
+}
