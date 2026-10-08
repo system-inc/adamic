@@ -1,0 +1,12 @@
+dropped residue row exit 1  Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step09/public-any/audit.py", line 14, in <module>
+    assert len(l['rows'])==len(expected)==20 and actual==expected,'dropped or changed residue row'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: dropped or changed residue row
+
+missing project capture exit 1  Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step09/public-any/aggregate.py", line 15, in <module>
+    assert len(records)==301 and len({r['project'] for r in records})==301
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+

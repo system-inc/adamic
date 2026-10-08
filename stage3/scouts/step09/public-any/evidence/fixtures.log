@@ -1,0 +1,4 @@
+01_primitive_config.a Node PASS; mutant caught; stage0 Checker
+02_unvalidated_list.a Node PASS; mutant caught; stage0 Refused
+03_timer_roundtrip.a Node PASS; mutant caught; stage0 Checker
+PASS: three Node fixtures, three executable source mutants

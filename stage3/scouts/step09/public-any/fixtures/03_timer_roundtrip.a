@@ -1,0 +1,35 @@
+// Census reason: public host timer handle erased to any
+// From TypeScript 6.0.3, src/compiler/tsbuildPublic.ts:2060
+interface BuilderProgram {}
+interface SolutionBuilderState<T> { hostWithWatch: { setTimeout?: (callback: (...args: any[]) => void, time: number, ...args: any[]) => any; clearTimeout?: (handle: any) => void; }; timerToBuildInvalidatedProject: any; }
+function buildNextInvalidatedProject(..._args: any[]): void {}
+function scheduleBuildInvalidatedProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, time: number, changeDetected: boolean) {
+    const { hostWithWatch } = state;
+    if (!hostWithWatch.setTimeout || !hostWithWatch.clearTimeout) {
+        return;
+    }
+    if (state.timerToBuildInvalidatedProject) {
+        hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject);
+    }
+    state.timerToBuildInvalidatedProject = hostWithWatch.setTimeout(buildNextInvalidatedProject, time, "timerToBuildInvalidatedProject", state, changeDetected);
+}
+for (const kind of ["number", "node"]) {
+    let previous: any = undefined;
+    const host = {
+        setTimeout(callback: (...args: any[]) => void, time: number, ...args: any[]): any {
+            console.log(`callback ${typeof callback} args ${typeof args[0]} ${typeof args[1]} ${typeof args[2]}`);
+            previous = kind === "number" ? 7 : setTimeout(callback, time, ...args);
+            if (kind === "node") previous.unref();
+            return previous;
+        },
+        clearTimeout(handle: any): void {
+            console.log(`cancel-same ${handle === previous}`);
+            if (kind === "node") clearTimeout(handle);
+        },
+    };
+    const state: SolutionBuilderState<BuilderProgram> = { hostWithWatch: host, timerToBuildInvalidatedProject: undefined };
+    scheduleBuildInvalidatedProject(state, 60000, false);
+    console.log(`handle ${typeof state.timerToBuildInvalidatedProject}`);
+    scheduleBuildInvalidatedProject(state, 60000, true);
+    host.clearTimeout(state.timerToBuildInvalidatedProject);
+}

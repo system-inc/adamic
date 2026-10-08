@@ -1,0 +1,183 @@
+{
+  "scope": "focused actual Node API calls, not acceptance coverage",
+  "readers": [
+    {
+      "text": "7",
+      "readJson": {
+        "type": "number",
+        "value": 7
+      },
+      "readJsonOrUndefined": {
+        "type": "number"
+      },
+      "convertToObject": {
+        "type": "number",
+        "value": 7
+      },
+      "errors": []
+    },
+    {
+      "text": "0",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "number"
+      },
+      "convertToObject": {
+        "type": "number",
+        "value": 0
+      },
+      "errors": []
+    },
+    {
+      "text": "true",
+      "readJson": {
+        "type": "boolean",
+        "value": true
+      },
+      "readJsonOrUndefined": {
+        "type": "boolean"
+      },
+      "convertToObject": {
+        "type": "boolean",
+        "value": true
+      },
+      "errors": []
+    },
+    {
+      "text": "false",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "boolean"
+      },
+      "convertToObject": {
+        "type": "boolean",
+        "value": false
+      },
+      "errors": []
+    },
+    {
+      "text": "null",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "object"
+      },
+      "convertToObject": {
+        "type": "object",
+        "value": null
+      },
+      "errors": []
+    },
+    {
+      "text": "\"text\"",
+      "readJson": {
+        "type": "string",
+        "value": "text"
+      },
+      "readJsonOrUndefined": {
+        "type": "string"
+      },
+      "convertToObject": {
+        "type": "string",
+        "value": "text"
+      },
+      "errors": []
+    },
+    {
+      "text": "\"\"",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "string"
+      },
+      "convertToObject": {
+        "type": "string",
+        "value": ""
+      },
+      "errors": []
+    },
+    {
+      "text": "[1]",
+      "readJson": {
+        "type": "object",
+        "value": [
+          1
+        ]
+      },
+      "readJsonOrUndefined": {
+        "type": "object"
+      },
+      "convertToObject": {
+        "type": "object",
+        "value": [
+          1
+        ]
+      },
+      "errors": []
+    },
+    {
+      "text": "{}",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "object"
+      },
+      "convertToObject": {
+        "type": "object",
+        "value": {}
+      },
+      "errors": []
+    },
+    {
+      "text": "bad",
+      "readJson": {
+        "type": "object",
+        "value": {}
+      },
+      "readJsonOrUndefined": {
+        "type": "undefined"
+      },
+      "convertToObject": {
+        "type": "object",
+        "value": {}
+      },
+      "errors": [
+        1136
+      ]
+    }
+  ],
+  "nodeTimer": {
+    "type": "object",
+    "constructor": "Timeout",
+    "cancellation": "same handle passed to ts.sys.clearTimeout"
+  },
+  "allocator": {
+    "provider": "NodeObject",
+    "parentType": "undefined",
+    "ownFields": [
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "kind",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "transformFlags"
+    ],
+    "hasEscapedText": false
+  }
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "file": "01_primitive_config.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2472"
+    ],
+    "reason": "public convertToObject any return",
+    "node": {
+      "stdout": "number 7 0\nobject null 0\nobject [1,true] 0\nobject {\"x\":2} 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a:3:84: error TS2307: Cannot find module 'public-any-ts' or its corresponding type declarations.\nexit status 1\n"
+    },
+    "mutant": {
+      "change": "/*returnValue*/ true -> /*returnValue*/ false",
+      "node_exit": 0,
+      "caught_by": "exact stdout against unchanged Node fixture",
+      "stdout": "number 7 0\nobject null 0\nundefined undefined 0\nundefined undefined 0\n"
+    }
+  },
+  {
+    "file": "02_unvalidated_list.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2611"
+    ],
+    "reason": "public raw config accepted before validation",
+    "node": {
+      "stdout": "true\ntrue\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a:9:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n"
+    },
+    "mutant": {
+      "change": "return isArray(value); -> return false;",
+      "node_exit": 0,
+      "caught_by": "exact stdout against unchanged Node fixture",
+      "stdout": "false\nfalse\nfalse\n"
+    }
+  },
+  {
+    "file": "03_timer_roundtrip.a",
+    "tsc": [
+      "src/compiler/tsbuildPublic.ts:2060"
+    ],
+    "reason": "public host timer handle erased to any",
+    "node": {
+      "stdout": "callback function args string object boolean\nhandle number\ncancel-same true\ncallback function args string object boolean\ncancel-same true\ncallback function args string object boolean\nhandle object\ncancel-same true\ncallback function args string object boolean\ncancel-same true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:21:48: error TS2304: Cannot find name 'setTimeout'.\nstage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:27:34: error TS2304: Cannot find name 'clearTimeout'.\nexit status 1\n"
+    },
+    "mutant": {
+      "change": "hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject); -> hostWithWatch.clearTimeout(undefined);",
+      "node_exit": 0,
+      "caught_by": "exact stdout against unchanged Node fixture",
+      "stdout": "callback function args string object boolean\nhandle number\ncancel-same false\ncallback function args string object boolean\ncancel-same true\ncallback function args string object boolean\nhandle object\ncancel-same false\ncallback function args string object boolean\ncancel-same true\n"
+    }
+  }
+]

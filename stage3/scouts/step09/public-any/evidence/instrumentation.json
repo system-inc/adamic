@@ -1,0 +1,35 @@
+{
+  "bundle": "/tmp/step09-public-any-tree/built/local/_tsc.js",
+  "before_sha256": "b417a99c04e260697084064c2b7d74b7de4955d3506a17733bf9415fa9beef05",
+  "after_sha256": "b6400eb4a4b0f5a4e5f0a352c57f8d3bfdc26f1adb38b0e9c489f8ff73fb23fc",
+  "hits": {
+    "timer.setTimeout": 5,
+    "readJsonOrUndefined": 1,
+    "readJson": 1,
+    "tryParseJson": 1,
+    "Type": 1,
+    "Node": 1,
+    "Token": 1,
+    "Identifier": 1,
+    "allocator.getNodeConstructor": 1,
+    "parseConfigFileTextToJson": 1,
+    "convertToObject": 1,
+    "isCompilerOptionsValue": 1,
+    "parseJsonConfigFileContentWorker": 1,
+    "canJsonReportNoInputFiles": 1,
+    "parseOwnConfigOfJson": 1,
+    "convertCompileOnSaveOptionFromJson": 1,
+    "convertCompilerOptionsFromJsonWorker": 1,
+    "convertTypeAcquisitionFromJsonWorker": 1,
+    "convertWatchOptionsFromJsonWorker": 1,
+    "convertOptionsFromJson": 1,
+    "timer.clearTimeout": 3
+  },
+  "absent": [
+    "parseJsonConfigFileContent",
+    "convertCompilerOptionsFromJson",
+    "convertTypeAcquisitionFromJson",
+    "readConfigFile"
+  ],
+  "edits": 62
+}

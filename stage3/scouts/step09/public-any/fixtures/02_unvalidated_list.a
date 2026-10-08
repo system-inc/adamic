@@ -1,0 +1,25 @@
+// Census reason: public raw config accepted before validation
+// From TypeScript 6.0.3, src/compiler/commandLineParser.ts:2611
+type CompilerOptionsValue = unknown;
+interface CommandLineOption { type: string; element?: CommandLineOption; disallowNullOrUndefined?: boolean; }
+function isArray(value: unknown): boolean { return Array.isArray(value); }
+function isString(value: unknown): boolean { return typeof value === "string"; }
+function isNullOrUndefined(value: unknown): boolean { return value === null || value === undefined; }
+function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {
+    if (option) {
+        if (isNullOrUndefined(value)) return !option.disallowNullOrUndefined; // All options are undefinable/nullable
+        if (option.type === "list") {
+            return isArray(value);
+        }
+        if (option.type === "listOrElement") {
+            return isArray(value) || isCompilerOptionsValue(option.element, value);
+        }
+        const expectedType = isString(option.type) ? option.type : "string";
+        return typeof value === expectedType;
+    }
+    return false;
+}
+const listOption: CommandLineOption = { type: "list" };
+console.log(`${isCompilerOptionsValue(listOption, ["node"])}`);
+console.log(`${isCompilerOptionsValue(listOption, [{}])}`);
+console.log(`${isCompilerOptionsValue(listOption, 7)}`);

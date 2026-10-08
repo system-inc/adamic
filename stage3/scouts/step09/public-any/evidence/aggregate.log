@@ -1,0 +1,9 @@
+PASS: all 301 projects have instrumentation captures and unchanged CLI goldens
+allocator.getNodeConstructor 301 {'return': 7280}
+canJsonReportNoInputFiles 301 {'arg0': 301, 'return': 301}
+header.Identifier 301 {'complete': 13473252}
+header.Node 301 {'complete': 18204760}
+header.Token 301 {'complete': 6459591}
+header.Type 301 {'complete': 87197}
+isCompilerOptionsValue 301 {'arg0': 2608, 'arg1': 2608, 'return': 2608}
+parseJsonConfigFileContentWorker 301 {'arg0': 301, 'arg1': 301, 'arg2': 301, 'arg3': 301, 'arg4': 301, 'arg5': 301, 'arg6': 301, 'arg7': 301, 'arg8': 301, 'arg9': 301, 'return': 301}
