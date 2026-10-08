@@ -86,3 +86,24 @@ func dictionaryEnumerationOrigins(program *ir.Program) []ir.Expression {
 	origins := append([]ir.Expression(nil), program.ViewOrigins...)
 	return append(origins, program.DictionaryEntryOrigins...)
 }
+
+func dictionaryEntryReadUnproven(program *ir.Program, graph *allocationFlowGraph, receiver ir.Expression) bool {
+	if len(program.DictionaryEntryOrigins) == 0 {
+		return false
+	}
+	reached := graph.ReachingAllocations(receiver)
+	for _, origin := range program.DictionaryEntryOrigins {
+		produced := graph.ReachingAllocations(origin)
+		if reached.Unknown || produced.Unknown {
+			return true
+		}
+		for _, site := range reached.Sites {
+			for _, source := range produced.Sites {
+				if site == source {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}

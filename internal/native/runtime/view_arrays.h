@@ -1,8 +1,8 @@
 #ifndef ADAMIC_VIEW_ARRAYS_H
 #define ADAMIC_VIEW_ARRAYS_H
 
-// Internal extraction selector for nullable class references; not an IR type.
-enum { adamic_view_array_nominal_union = 16 };
+// Internal extraction selectors for checked reference families; not IR types.
+enum { adamic_view_array_nominal_union = 16, adamic_view_array_tuple_union = 17 };
 
 // Physical storage lives in the shared adamic_array.element_kind byte.
 struct adamic_array;

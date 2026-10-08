@@ -61,6 +61,7 @@ func interfaceCastCounts(t *testing.T) []string {
 	rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a"), false, nil, false, false))
 	rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a"), false, nil, false, false))
 	rows = append(rows, viewCallableCounts(t)...)
+	rows = append(rows, tupleOriginalCounts(t)...)
 	rows = append(rows, viewRankedArrayCounts(t)...)
 	return append(rows, viewIntersectionDeferredCounts(t)...)
 }

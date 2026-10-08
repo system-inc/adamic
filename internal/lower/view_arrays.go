@@ -65,6 +65,7 @@ func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.Arra
 		read.ViewTypeID = int(l.concrete(element).Id())
 		read.UndefinedAllowed = l.includesUndefined(element)
 		read.ViewAllowed = l.viewContractLiterals(element)
+		read.TupleUnion = l.tupleScalarUnionType(element)
 	}
 	return read
 }
@@ -72,12 +73,16 @@ func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.Arra
 func markProgramViewArrayRead(program *ir.Program, read ir.ArrayIndex) ir.ArrayIndex {
 	if !ir.HasArrayViews(program) {
 		read.View = ""
+		read.TupleUnion = false
 		read.ViewAllowed = nil
 		return read
 	}
 	read.ViewContract = program.ViewContractTypes[read.ViewTypeID]
 	if nominal := program.NominalReadContracts[read.ViewTypeID]; nominal != 0 {
 		read.ViewContract = nominal
+	}
+	if read.TupleUnion {
+		_, read.TupleUnion = ir.TupleViewMembers(program, read.ViewContract)
 	}
 	return read
 }
@@ -90,7 +95,7 @@ func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
-	return ir.ArrayViewRead{UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(l.concrete(element).Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
+	return ir.ArrayViewRead{TupleUnion: l.tupleScalarUnionType(element), UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(l.concrete(element).Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
 }
 
 // Fail closed for consumers whose element extraction/conversion is not wired.
@@ -110,6 +115,10 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 		if part.Kind == ast.KindCallExpression {
 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
 			if callee.Kind == ast.KindPropertyAccessExpression && l.viewArrayBase(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != nil {
+				if callee.Name().Text() != "forEach" && l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+					found = l.notYet(part, "tuple union array consumer requiring a certified ownership transfer")
+					return true
+				}
 				switch callee.Name().Text() {
 				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push", "indexOf", "includes", "lastIndexOf":
 				case "join":
@@ -120,6 +129,11 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 				default:
 					found = l.notYet(part, "checked array view consumer ."+callee.Name().Text()+" requiring element conversion")
 				}
+			}
+		}
+		if part.Kind == ast.KindForOfStatement {
+			if element := l.viewArrayElementType(l.checker.GetTypeAtLocation(part.AsForInOrOfStatement().Expression)); l.tupleScalarUnionType(element) {
+				found = l.notYet(part, "tuple union array iteration requiring a certified ownership transfer")
 			}
 		}
 		if part.Kind == ast.KindSpreadElement && l.checker.IsArrayType(l.checker.GetTypeAtLocation(part.AsSpreadElement().Expression)) {
@@ -136,7 +150,7 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 
 func markProgramViewArrayUse(program *ir.Program, read ir.ArrayViewRead) ir.ArrayViewRead {
 	mapped := markProgramViewArrayRead(program, read.Index())
-	read.View, read.ViewAllowed, read.ViewContract = mapped.View, mapped.ViewAllowed, mapped.ViewContract
+	read.View, read.ViewAllowed, read.ViewContract, read.TupleUnion = mapped.View, mapped.ViewAllowed, mapped.ViewContract, mapped.TupleUnion
 	return read
 }
 

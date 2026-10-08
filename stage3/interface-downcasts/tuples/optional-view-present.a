@@ -1,0 +1,5 @@
+type Pair=readonly [number,(string|undefined)?];
+interface Base {readonly kind:string;}
+interface Target extends Base {readonly value:Pair;}
+const pair:Pair=[7,'sig'+String(9)]; const raw={kind:'probe',value:pair}; const base:Base=raw; const target=base as Target;
+const selected=target.value; console.log(String(selected[0])); console.log(typeof selected[1]);

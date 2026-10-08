@@ -84,6 +84,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		return "collection"
 	case checker.IsTupleType(target):
+		if supportedTupleArity(target) {
+			return ""
+		}
 		return "tuple"
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.checker.IsArrayType(target):
 		return "dictionary"
@@ -231,6 +234,12 @@ func (l *lowering) checkLazyViewReads() error {
 			contract = selectedContract
 		}
 		family := operationFamily
+		// Dictionary entries carrying checked array children still lack the
+		// tuple consumer ownership proof. General tuple certificates do not
+		// discharge this producer-specific boundary.
+		if field == "[element]" && contract != 0 && program.ViewContracts[contract-1].FixedTuple && dictionaryEntryReadUnproven(program, graph, receiver) {
+			family = "tuple"
+		}
 		if contract != 0 {
 			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
 				family = unsupported
@@ -239,7 +248,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
 			reaches := graph.ReachingAllocations(receiver)
 			if untrackedScope || unknown || reaches.Unknown {
 				family = unsupportedFields[field]

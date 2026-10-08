@@ -433,3 +433,55 @@ Boxed callable dispatch remains intact. All 47 callback refusal sites are pinned
 The new entry-nominal-array.a had two non-null assertions. Both are rewritten using an explicit undefined guard on the first element, preserving stdout. Its own count row is measured. Scoped IR/lower/native/JavaScript checks pass in 0.019/7.741/79.260/1.155s; filtered owner, dictionary and readiness oracle controls and mutants pass in 456.330s. The rewritten fixture and restored callback controls pass in 3.710s.
 
 The global counts refresh initially reports 41 failures: 40 inherited failures, the inherited nominal-subclass-slot failure is resolved, and user_iterators.a gains a clang distinct-pointer comparison failure. Casting the optional nominal receiver to const void * preserves exactly the null sentinel comparison and fixes that compilation failure. The source Node agreement control passes after the fix. Final count refresh and compiler verification will run on the tuple combination. No full package or full gate was run; evidence is under logs/continued/views-owner-*.log.gz.
+
+
+## October 8 priority owner, tuple and dictionary integration
+
+Dictionary 48d166cf7ba1954de46ca2a4b30d72f6872153a9 was re-fetched and is already merged at 5ab46e9fc7281824b10136995dc6e10819793177. Owner 0f55d66409d9f06e65d628f3c4d02b26a327bc99 is merged at 2f7429ed199ddfa82d19ce6da34d2effc2b55078. Tuple 0804dec54050b5ac5a360b1f16cee66aa28eb352 is the second parent of this final merge. This batch receives one push, only to codex/views-integration.
+
+The tuple merge has 27 individually resolved hunks in 13 files. No bulk strategy or whole-file selection was used. Decisions and proving fixtures follow.
+
+| Path and hunk | Functional decision and evidence |
+| --- | --- |
+| plan 1 | Keep dictionary groups 9 through 11 and the tuple handoff appendices. |
+| ir.go 1 | Keep Narrow.Tuple plus Undefined and its diagnostic; root-index-tuple.a and entry-convert-nan-undefined.a. |
+| view_maps.go 1 | Keep optional-source presence containment; optional nominal producer/schema controls. |
+| view_maps.go 2 | Use FixedTuple arity/rest domains while retaining recursive physical storage checks; optional-map-present.a and rest-map-wrong-contract.a. |
+| javascript.go 1 | Combine nominal receiver checks with tuple field representation; emit-tuple-good.a and nominal widening read mutants. |
+| javascript.go 2 | Keep undefined-only storage proof ahead of tuple narrowing; Map undefined storage mutants. |
+| JS view_arrays.go 1 | Keep owner Map, packed-boolean and primitive union cases; permit arrays as objects only under a tuple witness. |
+| JS view_arrays.go 2 | Gate primitive extraction on both primitive membership and absence of TupleUnion; keep nominal reads and add tuple selection. root-index-tuple.a and root-index-scalar.a. |
+| JS view_arrays.go 3 | Keep tuple and nominal consumer guards as separate branches; signature-foreach-tuple.a and nominal array read mutants. |
+| lower object.go 1 | Keep owner primitive/nominal array certificates and add only supported tuple-scalar union admission. |
+| lower object.go 2 | Propagate checked tuple read errors; watch-event-narrowed-missing.a. |
+| lower view_arrays.go 1 | Keep nominal contract override and validate TupleUnion separately. |
+| lower view_arrays.go 2 | Keep concrete type identity and add TupleUnion metadata. |
+| lower view_maps.go 1 | Keep owner phantom, nominal, nullable tuple and callable descriptor dispatch; do not discard source descriptor proofs. |
+| view_maps_tuples.go 1 | Generalize the single constructor with recursive child builders, retaining Map descriptor and callable-descendant vetoes. |
+| view_maps_tuples.go 2 | Accept only required-prefix, optional and terminal-rest arity plans; module-specifiers-wrong-arity.a. |
+| view_maps_tuples.go 3 | Recognize explicit tuple identity, including empty tuples; tuple layout probes. |
+| view_maps_tuples.go 4 | Keep checked child fields and encode optional/rest domains; rest-view-wrong-tail.a and optional absent mutant. |
+| view_maps_tuples.go 5 | Keep per-position witnesses and add safe missing numeric/reference reads; watch-event-narrowed-missing.a and rest-view-zero.a. |
+| native emit_slots.go 1 | Exclude tuple plans while retaining primitive membership gating, including typeof; root-index-tuple.a. |
+| native view_arrays.go 1 | Exclude tuple plans while retaining primitive membership gating at evaluation. |
+| native view_arrays.go 2 | Keep private read owners and producer scans; route tuple plans through owned normalization first. |
+| native view_arrays.go 3 | Keep owner argument and tuple callback transfer/release; transfer-store.a and transfer-throw.a, leak and double-release mutants. |
+| Map oracle 1 | Keep owner approved-brand controls; retain the tuple-entry incompatible-storage refusal in its own test. tuple-entry-read.a refuses at node.value; tuple-entry-unread.a agrees with Node. |
+| Map oracle 2 | Keep owner union storage and all six Map conversion controls. Four formerly unsupported owner-storage forms now agree with Node through complete certificates; optional-object, optional-array, nested-array and key gap fixtures. |
+| Map oracle 3 | Require Node agreement and leak checks for certified optional/rest tuple storage; both legacy gap fixtures. |
+| Map oracle 4 | Keep nominal method/recursive gaps, required brand refusals and JSON array controls. |
+| counts 1 | Keep both measured dictionary/owner rows and tuple rows; refresh only owned measurements. |
+
+The automatic tuple admission exposed the dictionary lane's six array-entry consumers. General tuple certificates do not discharge their producer-specific ownership boundary. Keep a scoped tuple-demand refusal using the existing allocation flow and DictionaryEntryOrigins. Its mutant now uses an otherwise supported tuple descriptor: removing derived roots admits the demand, so the actual boundary is proven able to fail. An independent tuple allocation stays admitted. Scalar enumeration keys remain unaffected. All six entries-{fixed,producer}-array-{good,wrong,empty}.a controls retain their named [element] unsupported tuple refusals.
+
+Tuple normalization uses the owner's array reader signature with a NULL private owner because normalization itself owns its output. A new private tuple extraction selector admits primitive or object storage solely for the subsequent tuple union witness. The existing primitive selector is unchanged; ordinary records still fail tuple shape selection. The explicit shape-removal mutant admits an ordinary record and fails the native oracle.
+
+Three incoming assertion-bearing fixtures are rewritten without !: rest-map-zero.a, rest-map-one.a and rest-map-many.a. Each checks undefined explicitly and throws an Error before using a missing tuple; expected stdout is unchanged. Together with entry-nominal-array.a in the owner merge, these are the four named rewrites in this batch. TypeScript AST audit reports zero assertion-bearing .a files under interface-downcasts. The preceding 436-file TypeScript migration is retained.
+
+Final scoped compiler checks pass: IR 0.011s, lower 5.215s, native 37.571s, JavaScript 1.452s. Final dictionary boundary checks pass in 0.008s; eager-key mutants pass in 0.268s. The complete original-declaration tuple corpus, 47 exact callback refusal pins, nominal guard mutants, dictionary values/entries, array reference writes and wider-helper never refusal pass in 177.293s. Array/union regression functions and dictionary enumeration mutants pass in 54.775s. All 68 registered dictionary controls agree across Node/native/release/JavaScript in 16.443s. Owned 153 count rows pass and refresh in 130.498s. Full original declarations remain pinned to upstream 050880ce59e30b356b686bd3144efe24f875ebc8, including the unreduced private module worker declaration.
+
+All twelve incoming tuple mutation modes were rerun and killed by their recorded actual oracle. Presence and scalar selection, optional/rest absence, erased rest schemas, callback/module arity, narrowing and source certificate mutations fail semantic pins. Skipped transfer release leaks 24 bytes; double release triggers AddressSanitizer use-after-free. The additional tuple shape mutation fails by admitting an ordinary record. Exact environments and results are in logs/continued/views-tuples-current-mutants.json. Nine dictionary mutants, the derived-origin mutant and the owner's key snapshot ownership mutant are recorded above; none is credited for a compiler failure.
+
+Final required global counts refresh finishes in 81.795s with 39 inherited failures and no additions relative to the 41-failure starting set. nominal-subclass-slot.a and graph_regions_entries.a no longer fail. The optional nominal pointer cast also resolves the transient user_iterators.a clang failure. The global table cannot be fully regenerated while those unrelated failures remain; owned rows are independently measured and committed. An intentionally filtered count comparison also failed its whole-table comparison after its user_iterators fixture passed; it is not credited as a counts gate pass.
+
+Earlier tuple attempts caught a runtime reader argument mismatch, primitive interception of a valid tuple, stale owner-storage expectations, dictionary boundary bypass and unsupported literal throws. They were corrected before final green checks. An accidentally broad ordinary-oracle selector was promptly cancelled; its incomplete log is not credited. No whole package or complete repository gate passed or was claimed. Incoming review/*.patch files preserve their historical patch-context whitespace; owned edits pass diff checking. Broader validation remains with the shared fast gate.

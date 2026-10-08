@@ -9,7 +9,7 @@ import (
 // A lookup's slot distinguishes a missing element or entry from a present null reference. Keep
 // that presence until typeof has classified it, while sharing the ordinary value read's lookup.
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
-	if _, primitive := ir.PrimitiveViewMembers(e.program, expression.ViewContract); primitive && expression.Element == ir.Union && expression.View != "" {
+	if _, primitive := ir.PrimitiveViewMembers(e.program, expression.ViewContract); primitive && !expression.TupleUnion && expression.Element == ir.Union && expression.View != "" {
 		value := e.emitPrimitiveArrayIndex(expression)
 		snapshot := e.temporary()
 		e.line("adamic_value %s = {.reference = %s};", snapshot, value)

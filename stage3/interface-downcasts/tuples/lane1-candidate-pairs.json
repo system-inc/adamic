@@ -1,0 +1,89 @@
+{
+  "classification": "candidate counts, no reaching-view certificate; optional receiver syntax filter",
+  "source": "nullish/read-pairs.json.gz",
+  "pairs": [
+    {
+      "receiver_type_id": 95604,
+      "type": "[fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined] | [fileName: string]",
+      "field": "1",
+      "declared_types": [
+        "string | FileWatcherEventKind | Date | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 815,
+        "column": 131
+      }
+    },
+    {
+      "receiver_type_id": 68230,
+      "type": "readonly [kind?: \"paths\" | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile | undefined, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]",
+      "field": "1",
+      "declared_types": [
+        "readonly string[] | SourceFile | \"paths\" | ModuleSpecifierCache | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | readonly ModulePath[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 332,
+        "column": 12
+      }
+    },
+    {
+      "receiver_type_id": 95604,
+      "type": "[fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined] | [fileName: string]",
+      "field": "0",
+      "declared_types": [
+        "string | FileWatcherEventKind | Date | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 815,
+        "column": 120
+      }
+    },
+    {
+      "receiver_type_id": 68230,
+      "type": "readonly [kind?: \"paths\" | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile | undefined, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]",
+      "field": "0",
+      "declared_types": [
+        "readonly string[] | SourceFile | \"paths\" | ModuleSpecifierCache | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | readonly ModulePath[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 332,
+        "column": 33
+      }
+    }
+  ],
+  "pairs_count": 4,
+  "reads_count": 6,
+  "rest_production_pairs_found": 0,
+  "handoff_fixture_forms": [
+    "readonly [number,string?]",
+    "readonly [number,...string[]]"
+  ]
+}

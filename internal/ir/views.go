@@ -56,6 +56,11 @@ type ViewContract struct {
 	MapReadonly   bool
 	ArrayReadonly bool
 	Element       ViewContractID
+	TupleUnion    bool // Disjoint tuple arity alternatives, carried only by tuple plans.
+	FixedTuple    bool
+	TupleVariable bool // Only tuple plans may carry an arity interval.
+	TupleMinimum  int
+	TupleRest     ViewContractID
 	Tuple         []ViewContractID
 	Functions     []int
 	// ProducerCertified requires immutable code identity in Functions, even when empty.
