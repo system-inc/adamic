@@ -1,0 +1,58 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './slot02_ast.a';
+
+export const Named = 1;
+export const Quoted = 2;
+export const Templated = 4;
+export const Numeric = 8;
+export const Private = 16;
+export const Computed = 32;
+export const Static = 63;
+export const Textual = 3;
+
+export interface PropertyNameResult {
+    readonly name: string;
+    readonly named: boolean;
+}
+
+// Mirrors Go property.Name. Identifier text and numeric normalization belong to
+// the parser adapter. Parentheses are skipped only inside a computed key.
+export function propertyName(nodes: readonly HelperNode[], key: number, accept: number): PropertyNameResult {
+    let current = key;
+    let remaining = nodes.length;
+    while (current !== -1) {
+        if (remaining <= 0) { panic('invalid helper AST: computed cycle'); }
+        remaining--;
+        const node = nodes[current] ?? panic('invalid helper AST: missing key');
+        let flag = 0;
+        switch (node.kind) {
+            case 'Identifier': flag = Named; break;
+            case 'PrivateIdentifier': flag = Private; break;
+            case 'StringLiteral': flag = Quoted; break;
+            case 'NoSubstitutionTemplateLiteral': flag = Templated; break;
+            case 'NumericLiteral': flag = Numeric; break;
+            case 'ComputedPropertyName': {
+                if ((accept & Computed) === 0) { return { name: '', named: false }; }
+                current = node.expression;
+                while (current !== -1) {
+                    if (remaining <= 0) { panic('invalid helper AST: parentheses cycle'); }
+                    const inner = nodes[current] ?? panic('invalid helper AST: missing expression');
+                    if (inner.kind === 'ParenthesizedExpression') {
+                        remaining--;
+                        current = inner.expression;
+                    } else {
+                        if (inner.kind === 'Identifier' || inner.kind === 'PrivateIdentifier') {
+                            return { name: '', named: false };
+                        }
+                        break;
+                    }
+                }
+                continue;
+            }
+            default: return { name: '', named: false };
+        }
+        if ((accept & flag) !== 0) { return { name: node.text, named: true }; }
+        return { name: '', named: false };
+    }
+    return { name: '', named: false };
+}

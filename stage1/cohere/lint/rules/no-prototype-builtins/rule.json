@@ -1,0 +1,13 @@
+{
+  "name": "no-prototype-builtins",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "oracle": "oracleNoPrototypeBuiltins",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoPrototypeBuiltins",
+  "factory": "create",
+  "class": "Rule"
+}

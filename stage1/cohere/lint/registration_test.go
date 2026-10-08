@@ -35,6 +35,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestOwnedWitnesses(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -71,6 +72,7 @@ func TestOwnedWitnesses(t *testing.T) {
 }
 
 func TestRegistrationMutant(t *testing.T) {
+	t.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
@@ -91,6 +93,7 @@ func TestRegistrationMutant(t *testing.T) {
 }
 
 func TestFactoryHooks(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
 	data, err := os.ReadFile(module)
@@ -242,6 +245,7 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));
@@ -301,6 +305,7 @@ console.log(written('copied'));
 }
 
 func TestDecodedOptionsAndMutant(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)

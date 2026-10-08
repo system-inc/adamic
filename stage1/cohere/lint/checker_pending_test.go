@@ -16,6 +16,7 @@ import (
 )
 
 func TestCheckerNoProgramCoverage(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -41,6 +42,7 @@ func TestCheckerNoProgramCoverage(t *testing.T) {
 }
 
 func TestCheckerBridgeRefusalPending(t *testing.T) {
+	t.Parallel()
 	declarations, err := os.ReadFile(filepath.Join(repository, "internal/load/prelude.d.ts"))
 	if err != nil {
 		t.Fatal(err)
@@ -114,6 +116,7 @@ func TestCheckerBridgeRefusalPending(t *testing.T) {
 // Replay is checked against live bridge facts. When the result API is present,
 // native Adamic also produces and verifies this exact transcript.
 func TestCheckerReplayEntryControl(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -246,6 +249,7 @@ func TestCheckerReplayEntryControl(t *testing.T) {
 }
 
 func TestCheckerHashes(t *testing.T) {
+	t.Parallel()
 	module, err := filepath.Abs("checker_hash.a")
 	if err != nil {
 		t.Fatal(err)

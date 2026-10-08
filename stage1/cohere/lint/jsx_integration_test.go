@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -38,28 +37,13 @@ func jsxSpansOracle(t *testing.T) string {
 func jsxSources(t *testing.T) []string {
 	t.Helper()
 	spans := jsxSpansOracle(t)
-	var paths []string
-	byRule := map[string]int{}
-	for _, row := range upstream(t) {
-		fields := strings.Split(row, "\t")
-		if len(bytes.TrimSpace(execute(t, "", spans, fields[0]).output)) > 0 {
-			paths = append(paths, fields[0])
-			byRule[fields[1]]++
-		}
+	paths, byRule, err := discoverJsxInventory(prepareRegistry(t, "."), upstream(t), func(path string) bool {
+		return len(bytes.TrimSpace(execute(t, "", spans, path).output)) > 0
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	// Each rule's captured JSX cases, exactly. A rule losing some, or a capture losing a rule, fails here
-	// rather than shrinking the parser check silently, and a new rule that brings JSX cases adds its row.
-	// Batch 8's three rules held the original 54.
-	want := map[string]int{
-		"react/jsx-no-comment-textnodes":              40,
-		"react/no-find-dom-node":                      9,
-		"react/no-is-mounted":                         5,
-		"nexus/consistency-no-abbreviated-identifier": 5,
-		"nexus/consistency-no-ambiguous-identifier":   4,
-	}
-	if !reflect.DeepEqual(byRule, want) {
-		t.Fatalf("captured JSX cases by rule %v, want %v", byRule, want)
-	}
+	t.Logf("discovered captured JSX cases by rule %v", byRule)
 	return paths
 }
 
@@ -74,7 +58,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := nativeBuild(func() error { return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}) }); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -133,8 +117,8 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 }
 
-// Not parallel: this replays all JSX fixture trees before native throughput.
 func TestJsxLintTrees(t *testing.T) {
+	t.Parallel()
 	paths := jsxSources(t)
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))

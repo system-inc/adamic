@@ -1,0 +1,12 @@
+pass=114 fail=0 skip=1
+skip=TestCheckerBridgeRefusalPending (awaits codex/tsgo-errors-as-values)
+wall_seconds=1813.257
+exit=0
+nproc/load-before/load-after:
+5
+1.29 3.97 2.89 1/141 10422
+1.89 2.18 2.42 1/139 71834
+TypeScript=050880ce59e30b356b686bd3144efe24f875ebc8 (clean checkout)
+WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot
+ADAMIC_LINT_BENCH=1
+Both profile variables=/tmp/adamic-gate/no-unused-labels-profile.SoMKP5
