@@ -100,8 +100,8 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 // Keep constructor-cache assignment inside the branch that initializes it. The
-// existing general assignment lowering supplies checks and ownership; only global
-// bindings can be reached from this generated helper without a capture environment.
+// existing general assignment lowering supplies checks and ownership. Global
+// bindings use a direct helper; closed lexical initializers capture one cache cell.
 func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindBinaryExpression {
@@ -126,11 +126,11 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 	case ast.KindEqualsToken:
 		target := ast.SkipParentheses(binary.Left)
 		if !ast.IsIdentifier(target) {
-			return nil, l.notYet(node, "a constructor-cache assignment to a nonglobal binding")
+			return nil, l.notYet(node, "a constructor-cache assignment without a known identifier binding")
 		}
 		local, known := l.local(target)
-		if !known || !l.result.Locals[local].Global {
-			return nil, l.notYet(node, "a constructor-cache assignment to a nonglobal binding")
+		if !known {
+			return nil, l.notYet(node, "a constructor-cache assignment without a known identifier binding")
 		}
 		statements, err := l.assignment(node)
 		if err != nil {
@@ -141,6 +141,34 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 		}
 		b := l.libraryArrayBuilder(nil)
 		b.body = statements
+		if !l.result.Locals[local].Global {
+			// This helper captures exactly the cache cell. Require a closed initializer,
+			// so no other caller local can be read from the generated closure.
+			if len(statements) != 1 {
+				return nil, l.notYet(node, "a lexical constructor-cache initializer with additional statements")
+			}
+			assignment, plain := statements[0].(ir.Assign)
+			if !plain || assignment.Local != local {
+				return nil, l.notYet(node, "a lexical constructor-cache initializer without a plain assignment")
+			}
+			closed := false
+			switch value := assignment.Value.(type) {
+			case ir.Read:
+				closed = l.result.Locals[value.Local].Global
+			case ir.Call:
+				initializer := l.result.Functions[value.Function]
+				closed = len(value.Arguments) == 0 && !initializer.Closure && len(initializer.Environment) == 0
+			}
+			if !closed {
+				return nil, l.notYet(node, "a lexical constructor-cache initializer needing additional captures")
+			}
+			l.result.Locals[local].Captured = true
+			b.finish("class_constructor_cache", b.read(local))
+			function := &l.result.Functions[b.function]
+			function.Closure = true
+			function.Environment = []int{local}
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: b.function}, Returns: ir.Object}, nil
+		}
 		return b.finish("class_constructor_cache", b.read(local)), nil
 	default:
 		return l.expression(node)
