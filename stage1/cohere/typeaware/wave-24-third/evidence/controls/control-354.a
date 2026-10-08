@@ -1,2 +1,0 @@
-function f(undefined) { new Promise((resolve, reject) => reject(undefined)); }
-export {};

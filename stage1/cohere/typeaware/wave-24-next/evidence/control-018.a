@@ -1,2 +1,0 @@
-declare function run():void;console.log('start');try{run();}catch{process.exit(1);}
-export {};

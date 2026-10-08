@@ -1,2 +1,0 @@
-declare const p:Promise<number>;export async function f(){return Math.random()?await p:await 1;}
-export {};

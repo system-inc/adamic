@@ -1,2 +1,0 @@
-declare const target:string;function loader(){import(target);}declare function block():void;function main(){block();console.log('x');process.exit(1);}main();
-export {};

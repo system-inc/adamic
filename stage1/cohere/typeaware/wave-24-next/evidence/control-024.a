@@ -1,2 +1,0 @@
-async function help(){console.log('help');}async function f(){await help();process.exit(0);}f();
-export {};

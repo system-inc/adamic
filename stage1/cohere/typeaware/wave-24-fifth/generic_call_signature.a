@@ -1,8 +1,0 @@
-import {Frames,header} from '../frames.ts';
-import {types} from '../facts.ts';
-import type {Types} from '../types.ts';
-import type {Node,Nodes} from './nodes.a';
-export class GenericCallSignature {
- readonly present:boolean;readonly parameters:readonly number[];readonly rest:boolean;readonly declared:readonly number[];readonly resolved:readonly number[];readonly graph:Types;
- constructor(nodes:Nodes,node:Node){const frames=new Frames(nodes.ask(node,'generic-call-signature'));header(frames,'generic-call-signature');this.present=frames.yes();this.parameters=this.present?frames.ids():[];this.rest=this.present?frames.yes():false;this.declared=this.present?frames.ids():[];this.resolved=this.present?frames.ids():[];const name='generic-call-signature';this.graph=types('1\n1'+`${name.length}\n${name}`+frames.text.slice(frames.cursor),name);}
-}

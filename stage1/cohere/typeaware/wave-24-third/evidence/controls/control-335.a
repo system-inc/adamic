@@ -1,2 +1,0 @@
-new Promise(function(resolve, reject) { return function(reject) { reject(5) } })
-export {};

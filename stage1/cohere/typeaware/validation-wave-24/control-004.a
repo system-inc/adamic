@@ -1,2 +1,0 @@
-export class Foo { f(): Foo {if(Math.random())return new Foo();return this;} g(): Foo & {} {return this;} }
-export {};

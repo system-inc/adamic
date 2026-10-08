@@ -1,2 +1,0 @@
-export class Foo { f(): Foo | undefined { if(Math.random()) return; return this; } g(): Foo {const self=this;return self;} }
-export {};

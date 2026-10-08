@@ -1,8 +1,0 @@
-import {panic,programArguments,readTextFile} from 'adamic';
-import {Parser} from '../../../typescript/parser/parser.ts';
-import {countTree} from '../../../typescript/parser/nodes.ts';
-const args=programArguments();
-const source=readTextFile(args[0]??panic('missing fixture'));
-if(source.kind==='Error'){panic(source.message);}
-const parser=new Parser(source.text,'input.tsx');
-console.log(`${countTree(parser.nodes,parser.file())}`);

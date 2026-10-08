@@ -1,2 +1,0 @@
-function outer(arguments) { function inner() { arguments; } }
-export {};

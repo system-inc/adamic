@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage1/cohere/typeaware/wave-24-fifth/timing.py", line 19, in <module>
-    assert run.returncode==0 and not stem.with_suffix('.stderr').read_bytes()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError

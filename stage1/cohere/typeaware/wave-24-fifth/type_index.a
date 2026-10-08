@@ -1,4 +1,0 @@
-import {types} from '../facts.ts';
-import type {Types} from '../types.ts';
-import type {Node,Nodes} from './nodes.a';
-export function typeIndex(nodes:Nodes,node:Node,identity:number,stringIndex=false):Types{return types(nodes.ask(node,`type-index\n${identity}\n${stringIndex?'string':'number'}`),'type-index');}

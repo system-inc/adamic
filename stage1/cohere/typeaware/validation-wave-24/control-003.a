@@ -1,2 +1,0 @@
-export class Base{};export class Derived extends Base { f():Base{return this;} }
-export {};

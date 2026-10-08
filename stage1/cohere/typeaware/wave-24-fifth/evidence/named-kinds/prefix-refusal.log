@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage1/cohere/typeaware/wave-24-fourth/validate-listeners.py", line 64, in <module>
-    main()
-  File "/workspace/adamic/stage1/cohere/typeaware/wave-24-fourth/validate-listeners.py", line 28, in main
-    assert got == truth, 'named listener drift'
-           ^^^^^^^^^^^^
-AssertionError: named listener drift

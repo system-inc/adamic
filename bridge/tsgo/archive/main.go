@@ -117,7 +117,7 @@ func tsgo_go_inspect(handle C.tsgo_handle, file C.tsgo_view, start, end C.uint64
 	if program == nil {
 		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
 	}
-	answer, err := program.InspectWave24(text(file), uint64(start), uint64(end), text(kind), text(question))
+	answer, err := program.Inspect(text(file), uint64(start), uint64(end), text(kind), text(question))
 	if err != nil {
 		return failed(error, C.TSGO_CHECKER, err)
 	}

@@ -1,2 +1,0 @@
-function f(Promise) { return Promise.reject('x'); }
-export {};

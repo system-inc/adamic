@@ -1,2 +1,0 @@
-declare let error:Error;Promise.reject(error || 5);
-export {};

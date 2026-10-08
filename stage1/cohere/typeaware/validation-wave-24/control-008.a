@@ -1,2 +1,0 @@
-declare const p:Promise<number>;export async function handled(){try{return p;}catch{ return 0; }}
-export {};

@@ -1,0 +1,16 @@
+{
+  "area": "c4bdc23fa86d55cf7e579989201c11258f4d3a62",
+  "additional_registered_rules": [
+    "symbol-description",
+    "valid-typeof"
+  ],
+  "non_rule_files_changed": [
+    "bridge/tsgo/checker/facts.go",
+    "bridge/tsgo/checker/program.go",
+    "bridge/tsgo/checker/symbol_identity.go",
+    "bridge/tsgo/checker/symbol_provenance.go"
+  ],
+  "other_paths_unchanged": true,
+  "normal_cli_build_exit": 0,
+  "legacy_rules_registered_as_additions": []
+}

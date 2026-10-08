@@ -1,2 +1,0 @@
-export const Named=class Bar {f():Bar{return this;}};export class Foo{get f():Foo{return this;} g():Foo{()=>{return this;};return this;}}
-export {};

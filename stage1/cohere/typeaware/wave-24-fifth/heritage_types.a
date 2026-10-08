@@ -1,4 +1,0 @@
-import type {Node,Nodes} from './nodes.a';
-import {types} from '../facts.ts';
-import type {Types} from '../types.ts';
-export function heritageTypes(nodes:Nodes,node:Node):Types{return types(nodes.ask(node,'heritage-types'),'heritage-types');}

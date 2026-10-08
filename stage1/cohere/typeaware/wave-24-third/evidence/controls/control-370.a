@@ -1,9 +1,0 @@
-
-          new Promise((resolve, reject) => {
-            fs.readFile('foo.txt', (err, file) => {
-              if (err) reject('File not found')
-              else resolve(file)
-            })
-          })
-        
-export {};

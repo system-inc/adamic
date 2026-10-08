@@ -1,0 +1,12 @@
+{"Time":"2026-10-08T10:15:33.510336941Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-08T10:15:33.594655863Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree"}
+{"Time":"2026-10-08T10:15:33.594779214Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"=== RUN   TestCompilerAndStage1Agree\n","OutputType":"frame"}
+{"Time":"2026-10-08T10:15:33.607131977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:466: compiler and stage1: 872 files\n"}
+{"Time":"2026-10-08T10:16:29.595004807Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:467: checker compilation phases: load=207.278899ms lower=3.19256168s C=575.666237ms JavaScript=27.577001ms\n"}
+{"Time":"2026-10-08T10:19:32.656360515Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:467: checker native build: 48.724503163s\n"}
+{"Time":"2026-10-08T10:26:59.055026665Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:467: Go, Node, emitted JavaScript, native identical: 30163777 bytes\n"}
+{"Time":"2026-10-08T10:26:59.065153204Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"--- PASS: TestCompilerAndStage1Agree (685.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T10:26:59.065183879Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Elapsed":685.47}
+{"Time":"2026-10-08T10:26:59.065213663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-08T10:26:59.088284869Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t685.578s\n"}
+{"Time":"2026-10-08T10:26:59.08833294Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":685.578}

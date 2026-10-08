@@ -1,2 +1,0 @@
-function foo() { var String; new RegExp(String.raw`a`); }
-export {};

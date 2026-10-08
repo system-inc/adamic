@@ -59,17 +59,6 @@ int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t
  * base-shapes/call-parameters LF type-ID; property-shape/property-info LF type-ID
  * LF property-name. These return types, signatures, binder tables, declaration
  * shapes or declaration origins, never a lint decision. See facts.md for fields.
- * Coverage facts: binding-declarations, alias-declarations, symbol-identities,
- * node-symbol-details, declaration-details, annotation-shape, symbol-shape,
- * annotated-return-shape, container-bases; resolved-name LF name,
- * contextual-argument LF argument-index; identical-types LF source-ID LF
- * target-ID; literal-value/type-metadata/type-properties/function-signatures/
- * type-symbol-details/reference-shape LF type-ID; property-declarations LF
- * type-ID LF name; property-exists LF type-ID LF property-symbol-ID.
- * Type and symbol IDs have separate namespaces. Symbol IDs are also opaque,
- * borrowed identities valid only in the program that issued them; release
- * invalidates them. Display names must not be used to recover internal property
- * keys: property-exists accepts the property symbol ID issued by type-properties.
  * Unsupported questions and malformed/inexact targets are refused.
  * Facts contain no Go pointers. Type IDs are opaque, program-scoped, borrowed
  * identities, usable for equality and name queries while that program is live. Release

@@ -1,2 +1,0 @@
-declare const p:Promise<number>;const key='catch';p[key](err=>{});p['catch'](err=>{});p[`catch`](err=>{});let widened='catch';p[widened](err=>{});
-export {};

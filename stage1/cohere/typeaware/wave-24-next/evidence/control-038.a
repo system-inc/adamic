@@ -1,2 +1,0 @@
-declare function register(callback:()=>void):void;register(()=>{console.log('x');process.exit(1);});
-export {};

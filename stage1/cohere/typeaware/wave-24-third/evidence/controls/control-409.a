@@ -1,2 +1,0 @@
-declare const error: Error | undefined; Promise.reject(error!);
-export {};

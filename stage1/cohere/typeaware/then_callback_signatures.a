@@ -1,7 +1,0 @@
-import type { Rules } from './rules.ts';
-import { Frames, header } from './frames.ts';
-export function thenCallbackSignatures(rules: Rules, index: number, type: number): readonly number[] {
-    const frames = new Frames(rules.ask(index, `then-callback-signatures\n${type}`));
-    header(frames, 'then-callback-signatures');
-    const counts = frames.ids(); frames.end(); return counts;
-}

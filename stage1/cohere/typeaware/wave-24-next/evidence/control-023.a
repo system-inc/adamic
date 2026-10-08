@@ -1,2 +1,0 @@
-function deep(){console.log('help');}function help(){deep();}help();process.exit(0);
-export {};

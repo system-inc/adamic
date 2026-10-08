@@ -1,2 +1,0 @@
-class C { #reject; foo() { Promise.#reject(5); } }
-export {};

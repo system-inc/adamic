@@ -1,2 +1,0 @@
-function f(){console.log('x');process.exit(1);return;process.exit(2);}f();
-export {};

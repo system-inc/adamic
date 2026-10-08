@@ -62,3 +62,10 @@ func (p *Program) symbolProvenance(out *fields, c *checker.Checker, node *ast.No
 	p.writeProvenance(out, symbol)
 	return nil
 }
+
+func (p *Program) inspectProvenance(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
+	if err := p.symbolProvenance(out, c, node, question); err != nil {
+		return "", err
+	}
+	return out.String(), nil
+}

@@ -1,2 +1,0 @@
-export class Foo {f():Foo|string{if(Math.random())return this;const value:Foo|string=Math.random()?new Foo():'x';return value;}g():Foo|string{if(Math.random())return this;const value:number|string=Math.random()?1:'x';return value;}}
-export {};

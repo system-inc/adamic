@@ -1,2 +1,0 @@
-function g(Promise) { return new Promise((resolve, reject) => { reject('x'); }); }
-export {};

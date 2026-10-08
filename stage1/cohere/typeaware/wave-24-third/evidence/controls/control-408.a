@@ -1,2 +1,0 @@
-declare const error: Error; Promise.reject(error satisfies Error);
-export {};

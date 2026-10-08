@@ -13,8 +13,8 @@ export class Diagnostic {
     sortKey = '';
     readonly repairs: Repair[] = [];
     readonly suggestions: Suggestion[] = [];
-    constructor(rule: string, id: string, message: string, start: number, end: number, namespace = '@typescript-eslint/') {
-        this.rule = `${namespace}${rule}`;
+    constructor(rule: string, id: string, message: string, start: number, end: number) {
+        this.rule = `@typescript-eslint/${rule}`;
         this.id = id;
         this.message = message;
         this.start = start;

@@ -1,5 +1,0 @@
-const totallyValidatesEmails = new RegExp("\\S+@(\\S+\\.)+\\S+")
-            if (typeof totallyValidatesEmails === 'object') {
-                runSomethingThatExists(Regexp('stuff'))
-            }
-export {};

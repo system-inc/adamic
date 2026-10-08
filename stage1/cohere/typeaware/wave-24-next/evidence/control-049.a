@@ -1,2 +1,0 @@
-declare const work:Promise<number>;let timeout=new Promise((_r,reject)=>{setTimeout(reject,100);});Promise.race([work,timeout]);
-export {};

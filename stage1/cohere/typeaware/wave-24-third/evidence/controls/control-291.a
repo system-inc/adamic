@@ -1,2 +1,0 @@
-(async function(){for await (value of new RegExp('something being searched')) { console.log(value) }})()
-export {};

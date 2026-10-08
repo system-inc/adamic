@@ -1,2 +1,0 @@
-declare const p:Promise<number>;export async function f(){try{return await p;}catch{return p;}finally{}}
-export {};

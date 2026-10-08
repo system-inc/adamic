@@ -1,6 +1,0 @@
-import {kinds as symbolKinds} from './symbol_description.a';
-import {kinds as typeofKinds} from './valid_typeof.a';
-import {kinds as awaitKinds} from './require_await.a';
-console.log('symbol-description\t'+symbolKinds.slice().sort((a,b)=>a<b?-1:a>b?1:0).join(','));
-console.log('valid-typeof\t'+typeofKinds.slice().sort((a,b)=>a<b?-1:a>b?1:0).join(','));
-console.log('require-await\t'+awaitKinds.slice().sort((a,b)=>a<b?-1:a>b?1:0).join(','));

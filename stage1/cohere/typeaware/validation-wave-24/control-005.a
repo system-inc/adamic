@@ -1,2 +1,0 @@
-export class Foo { f(): (Foo|undefined)|null {return this;} g(this:Foo):Foo{return this;} static h():Foo{return (this);} }
-export {};

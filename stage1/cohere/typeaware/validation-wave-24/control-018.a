@@ -1,2 +1,0 @@
-declare const p:Promise<number>;p.catch(Math.random()?err=>{}:(err:any)=>{});p.catch((null,err=>{}));p.catch((err=>{}) as (e:any)=>void);
-export {};
