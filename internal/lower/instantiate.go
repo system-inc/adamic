@@ -1,7 +1,8 @@
 package lower
 
 import (
-	_ "unsafe"
+	"reflect"
+	"unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -13,8 +14,9 @@ import (
 // checker's own package, as the shim's generated code does for what it exports. They belong in
 // cohere's shim (extra-shim.json); until they're there, this is where they are.
 
-// typeMapper is the checker's TypeMapper, held only by pointer here.
-type typeMapper struct{}
+// typeMapper belongs to the checker. Its identity must survive lowering snapshots;
+// an opaque empty struct would look like lowering-owned state to a typed copier.
+type typeMapper = checker.TypeMapper
 
 //go:linkname newTypeMapper github.com/microsoft/TypeScript/tsc/internal/checker.newTypeMapper
 func newTypeMapper(sources []*checker.Type, targets []*checker.Type) *typeMapper
@@ -62,4 +64,18 @@ func (l *lowering) classNodeFor(proven *checker.Type) *ast.Node {
 		return symbol.Declarations[0]
 	}
 	return nil
+}
+
+// resolvedTypeMapper reads the checker-owned mapper by field name, without
+// duplicating the checker's private Signature layout. The shim exposes the type
+// but not this field; a changed shim shape must refuse instead of guessing.
+func resolvedTypeMapper(signature *checker.Signature) *checker.TypeMapper {
+	if signature == nil {
+		return nil
+	}
+	field := reflect.ValueOf(signature).Elem().FieldByName("mapper")
+	if !field.IsValid() || field.Kind() != reflect.Pointer || field.Type() != reflect.TypeOf((*checker.TypeMapper)(nil)) || field.IsNil() {
+		return nil
+	}
+	return (*checker.TypeMapper)(unsafe.Pointer(field.UnsafePointer()))
 }

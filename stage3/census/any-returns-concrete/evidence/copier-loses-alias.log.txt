@@ -1,0 +1,21 @@
+=== RUN   TestCheckerMapperAliasKeepsIdentity
+--- FAIL: TestCheckerMapperAliasKeepsIdentity (0.00s)
+panic: state copy: foreign or unrecognized pointer *typeMapper requires an explicit copier [recovered, repanicked]
+
+goroutine 7 [running]:
+testing.tRunner.func1.2({0x74fe50, 0x3a91a0418a60})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x74fe50?, 0x3a91a0418a60?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/stage3/census/latent/statecopy.(*generator).copy(0x3a91a056dcf0, {0x777630?, 0x3a91a04027c8}, {0x5ae6c9, 0x10})
+	/workspace/adamic/stage3/census/latent/statecopy/main.go:67 +0xb74
+github.com/system-inc/adamic/stage3/census/latent/statecopy.TestCheckerMapperAliasKeepsIdentity(0x3a91a054e248)
+	/workspace/adamic/stage3/census/latent/statecopy/checker_alias_test.go:27 +0x293
+testing.tRunner(0x3a91a054e248, 0x7787e8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/stage3/census/latent/statecopy	0.004s
+FAIL

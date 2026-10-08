@@ -1,0 +1,6 @@
+=== RUN   TestGenericMapperKeepsCheckerIdentity
+    any_returns_test.go:86: generic mapper must retain the checker type identity; an opaque local struct is unsafe to snapshot
+--- FAIL: TestGenericMapperKeepsCheckerIdentity (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.007s
+FAIL
