@@ -1,0 +1,239 @@
+=== RUN   TestStrongAstParentGap
+--- PASS: TestStrongAstParentGap (1.28s)
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.68s)
+=== RUN   TestTypeImportCycleGap
+--- PASS: TestTypeImportCycleGap (0.46s)
+=== RUN   TestClassMethodInterfaceGap
+    gaps_test.go:108: Node prints 1; Adamic reports: /workspace/parser-recovery-land/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet
+--- PASS: TestClassMethodInterfaceGap (0.60s)
+=== RUN   TestOptionalFunctionValueGap
+--- PASS: TestOptionalFunctionValueGap (1.10s)
+=== RUN   TestConditionalEmptyArrayGap
+--- PASS: TestConditionalEmptyArrayGap (1.02s)
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (32.83s)
+=== RUN   TestJsxMutants
+=== RUN   TestJsxMutants/text_payload
+=== PAUSE TestJsxMutants/text_payload
+=== RUN   TestJsxMutants/whitespace_flag
+=== PAUSE TestJsxMutants/whitespace_flag
+=== RUN   TestJsxMutants/namespace_kind
+=== PAUSE TestJsxMutants/namespace_kind
+=== RUN   TestJsxMutants/self_closing_kind
+=== PAUSE TestJsxMutants/self_closing_kind
+=== RUN   TestJsxMutants/type_argument_comma
+=== PAUSE TestJsxMutants/type_argument_comma
+=== RUN   TestJsxMutants/attribute_list
+=== PAUSE TestJsxMutants/attribute_list
+=== RUN   TestJsxMutants/expression_kind
+=== PAUSE TestJsxMutants/expression_kind
+=== RUN   TestJsxMutants/child_order
+=== PAUSE TestJsxMutants/child_order
+=== RUN   TestJsxMutants/text_start
+=== PAUSE TestJsxMutants/text_start
+=== CONT  TestJsxMutants/text_payload
+=== CONT  TestJsxMutants/attribute_list
+=== CONT  TestJsxMutants/self_closing_kind
+=== CONT  TestJsxMutants/type_argument_comma
+=== CONT  TestJsxMutants/child_order
+=== NAME  TestJsxMutants/self_closing_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+=== CONT  TestJsxMutants/text_start
+=== NAME  TestJsxMutants/text_payload
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== CONT  TestJsxMutants/expression_kind
+=== NAME  TestJsxMutants/attribute_list
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/namespace_kind
+=== NAME  TestJsxMutants/type_argument_comma
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+=== CONT  TestJsxMutants/whitespace_flag
+=== NAME  TestJsxMutants/text_start
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== NAME  TestJsxMutants/child_order
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+=== NAME  TestJsxMutants/expression_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+=== NAME  TestJsxMutants/whitespace_flag
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+=== NAME  TestJsxMutants/namespace_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+--- PASS: TestJsxMutants (27.35s)
+    --- PASS: TestJsxMutants/self_closing_kind (27.53s)
+    --- PASS: TestJsxMutants/text_payload (30.89s)
+    --- PASS: TestJsxMutants/attribute_list (34.19s)
+    --- PASS: TestJsxMutants/type_argument_comma (52.28s)
+    --- PASS: TestJsxMutants/text_start (35.26s)
+    --- PASS: TestJsxMutants/child_order (63.80s)
+    --- PASS: TestJsxMutants/expression_kind (54.31s)
+    --- PASS: TestJsxMutants/whitespace_flag (42.67s)
+    --- PASS: TestJsxMutants/namespace_kind (63.37s)
+=== RUN   TestJsxMemberNameRejection
+    jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/adamic-gate/TestJsxMemberNameRejection3456500087/001/dashed-member.tsx
+    jsx_rejection_test.go:72: Node compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+    jsx_rejection_test.go:72: native compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+--- PASS: TestJsxMemberNameRejection (43.14s)
+=== RUN   TestJsxNameBoundaryRejections
+    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped tag: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped namespace: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped attribute: Go diagnoses; Node/native refuse identically
+=== RUN   TestJsxNameBoundaryRejections/private_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+=== RUN   TestJsxNameBoundaryRejections/escaped_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+--- PASS: TestJsxNameBoundaryRejections (51.99s)
+    --- PASS: TestJsxNameBoundaryRejections/private_name_accepted (13.86s)
+    --- PASS: TestJsxNameBoundaryRejections/escaped_name_accepted (20.77s)
+=== RUN   TestJsxScannerMutants
+=== RUN   TestJsxScannerMutants/raw_attribute_value
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+=== RUN   TestJsxScannerMutants/JSX_name_payload
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+--- PASS: TestJsxScannerMutants (68.09s)
+    --- PASS: TestJsxScannerMutants/raw_attribute_value (20.40s)
+    --- PASS: TestJsxScannerMutants/JSX_name_payload (17.47s)
+=== RUN   TestJsxNode
+    jsx_test.go:88: all 13 Go JSX AST kinds covered
+    jsx_test.go:93: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNode (1.78s)
+=== RUN   TestJsxNative
+    jsx_test.go:108: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes
+    jsx_test.go:108: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNative (33.17s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:212: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:221: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:221: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:231: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:231: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:242: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:242: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (80.54s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:295: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (66.29s)
+=== RUN   TestPerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestPerformance (0.00s)
+=== RUN   TestWholePerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestWholePerformance (0.00s)
+=== RUN   TestNodeCountCheckCatchesMutant
+    performance_test.go:182: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+    performance_test.go:182: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+--- PASS: TestNodeCountCheckCatchesMutant (43.31s)
+=== RUN   TestEveryTypeNodeKindAgrees
+    type_kinds_test.go:45: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes
+--- PASS: TestEveryTypeNodeKindAgrees (14.87s)
+=== RUN   TestWholeGeneratedAgrees
+    whole_generated_test.go:71: 68 generated whole files, 93323 identical bytes
+--- PASS: TestWholeGeneratedAgrees (18.74s)
+=== RUN   TestObsoleteImportAttributesAgrees
+    whole_generated_test.go:90: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes
+--- PASS: TestObsoleteImportAttributesAgrees (21.51s)
+=== RUN   TestWholeMutants
+=== RUN   TestWholeMutants/for-of_becomes_for-in
+    whole_mutants_test.go:38: Node caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+=== RUN   TestWholeMutants/type-only_import_phase_lost
+    whole_mutants_test.go:38: Node caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+    whole_mutants_test.go:38: native caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+=== RUN   TestWholeMutants/keyof_becomes_readonly
+    whole_mutants_test.go:38: Node caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+--- PASS: TestWholeMutants (102.50s)
+    --- PASS: TestWholeMutants/for-of_becomes_for-in (20.68s)
+    --- PASS: TestWholeMutants/type-only_import_phase_lost (23.72s)
+    --- PASS: TestWholeMutants/keyof_becomes_readonly (31.29s)
+=== RUN   TestWholeCountCheckCatchesMutant
+    whole_mutants_test.go:65: Node: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+    whole_mutants_test.go:65: native: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+--- PASS: TestWholeCountCheckCatchesMutant (38.37s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (81.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	828.479s
