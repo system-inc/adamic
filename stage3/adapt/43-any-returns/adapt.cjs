@@ -25,4 +25,4 @@ for (const [file, text] of texts) {
     if (source.parseDiagnostics.length) throw Error('invalid adaptation: ' + file);
 }
 for (const [file, text] of texts) if (text !== fs.readFileSync(file, 'utf8')) fs.writeFileSync(file, text);
-console.log(JSON.stringify({adapted: 6, declined: ['convertToObject', 'tryParseJson']}));
+console.log(JSON.stringify({adapted: 5, declined: ['convertToObject', 'tryParseJson']}));
