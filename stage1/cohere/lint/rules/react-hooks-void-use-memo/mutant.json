@@ -1,0 +1,5 @@
+{
+  "name": "memo_return_detection_inverted",
+  "from": "if(!this.nonVoid(callback))",
+  "to": "if(this.nonVoid(callback))"
+}
