@@ -1382,6 +1382,27 @@ The new oracle is TestCheckedViewRankedArrayUnionContracts, with Node controls,
 both backends and exact kind/tag failure pins. The separate
 TestCheckedViewMutableArrayUnionRefusal pins the unsupported read diagnostic.
 
+### Lane 2 mutable, recursive and nullable ranked arrays
+
+The fourth ranked group (CaseBlock.clauses, ParsedCommandLine.fileNames,
+DiagnosticMessageChain.next, FlowLabel.antecedent, CommaListExpression.elements)
+needed no new hook. It merged views-integration for lane 1's nullish member
+reads and changed three shared places:
+
+- `arrayLiteralElement` in `internal/lower/graph_flow.go`, called from
+  `graphFlows` for array literals, joins the element types of a union slot's
+  array members instead of asking a union for type arguments, which panicked.
+- Native `adoptGraphObject` sizes graph adoption with `adamic_object_size`, so
+  the per-slot contract IDs are copied into graph storage.
+- Native checked view writes name object, array and Map types as the
+  JavaScript backend does.
+
+An array written into a slot made holding undefined, and pushes of records
+outside the flat scalar subset, remain named exit-70 refusals. Fixtures are
+`lane2/ranked4-*.a`, held by TestCheckedViewRanked4ArrayContracts; the report is
+`lane2/RANKED4_ARRAYS_REPORT.md`.
+
+
 
 ## Lane 5 source hooks on ba59427 (October 8)
 

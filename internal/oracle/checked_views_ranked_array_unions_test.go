@@ -17,7 +17,7 @@ func TestCheckedViewRankedArrayUnionContracts(t *testing.T) {
 		{"ranked3-class", "1:1\n", ""},
 		{"ranked3-class-wrong-array", "undefined\n", "field read failed: classNode(raw).members is not a NodeArray<ClassElement>; expected NodeArray<ClassElement>, found number"},
 		{"ranked3-reference", "1:1\n", ""},
-		{"ranked3-reference-wrong-array", "undefined\n", "field read failed: reference(raw).typeArguments is not a NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number"},
+		{"ranked3-reference-wrong-array", "undefined\n", "field read failed: reference(raw).typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number"},
 		{"ranked3-pattern-lazy", "2:1\n", ""},
 		{"ranked3-pattern-wrong-element", "undefined\n", "element read failed: values[0] expected ArrayBindingElement, found number"},
 		{"ranked3-pattern-wrong-tag", "1\n", "field read failed: values[0].kind expected \"binding\" | \"omitted\", found string other"},
@@ -63,7 +63,7 @@ func TestCheckedViewMutableArrayUnionRefusal(t *testing.T) {
 	if err == nil {
 		t.Fatal("mutable array union read was admitted")
 	}
-	if got := err.Error(); got != path + ":23:18: Adamic 0.1 refuses checked view read of field elements with unsupported mutable array union contract; prove or implement the mutable array union contract before reading this field" {
+	if got := err.Error(); got != path+":23:18: Adamic 0.1 refuses checked view read of field elements with unsupported mutable array union contract; prove or implement the mutable array union contract before reading this field" {
 		t.Fatalf("refusal: %s", got)
 	}
 }

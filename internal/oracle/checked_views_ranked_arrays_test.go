@@ -14,7 +14,7 @@ func TestCheckedViewRankedArrayContracts(t *testing.T) {
 		{"ranked-union-lazy", "2\n1\n", ""},
 		{"ranked-union-wrong-array", "undefined\n", "field read failed: union(raw).types is not a Type[]; expected Type[], found number"},
 		{"ranked-intersection-wrong-field", "wrong\n", "field read failed: first.id is not a number; expected number, found string"},
-		{"ranked-signature-wrong-array", "undefined\n", "field read failed: signature(raw).typeParameters is not a readonly TypeParameter[] | undefined; expected readonly TypeParameter[] | undefined, found number"},
+		{"ranked-signature-wrong-array", "undefined\n", "field read failed: signature(raw).typeParameters matches no member of readonly TypeParameter[] | undefined; expected readonly TypeParameter[] | undefined, found number"},
 		{"ranked-signature-wrong-element", "undefined\n", "element read failed: parameters[0] expected Symbol, found number"},
 		{"ranked-source-wrong-array", "undefined\n", "field read failed: source(raw).statements is not a NodeArray<Statement>; expected NodeArray<Statement>, found object"},
 	} {
