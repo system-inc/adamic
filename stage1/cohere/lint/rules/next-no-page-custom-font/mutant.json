@@ -1,0 +1,5 @@
+{
+  "name": "no-page-custom-font-gate-inverted",
+  "from": "if (!href.startsWith('https://fonts.googleapis.com/css'))",
+  "to": "if (href.startsWith('https://fonts.googleapis.com/css'))"
+}
