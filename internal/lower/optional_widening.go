@@ -184,13 +184,13 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 }
 
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
-	found := l.optionalAtSite(node)
-	if found == nil {
+	widening := l.optionalAtSite(node)
+	if widening == nil {
 		return nil
 	}
 	return &Refused{Where: l.program.Where(node),
-		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+		What: "optional property " + widening.property + " in " + l.checker.TypeToString(widening.target) + " absent from structural source " + l.checker.TypeToString(widening.source) + ", which can hide fields",
+		Fix:  "declare " + widening.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
 }
 
 // Resolve the import binding rather than trusting the callee's spelling.
