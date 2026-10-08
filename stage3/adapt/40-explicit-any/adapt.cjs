@@ -1,4 +1,4 @@
-// Only reviewed declaration owners are changed. Statements and trivia stay intact.
+// Reviewed owner types and redundant Error assertions are changed.
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
@@ -60,3 +60,5 @@ require('./classes.cjs').applyEnums(path.resolve(process.argv[2]), 'diagnostic')
 require('./classes.cjs').applyDiagnosticReference(path.resolve(process.argv[2]));
 require('./classes.cjs').applyDiagnosticDeclarations(path.resolve(process.argv[2]));
 require('./classes.cjs').applyEnums(path.resolve(process.argv[2]), 'filesystem');
+
+require('./error-host.cjs').apply(path.resolve(process.argv[2]));

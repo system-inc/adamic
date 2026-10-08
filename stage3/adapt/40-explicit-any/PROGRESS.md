@@ -210,3 +210,13 @@ all compiler callers are checked by the stock compiler. This follows the
 host-blockers a85a9cb1 proof and removes one more any token. Combined with the
 filesystem entry classification, 70 of 210 are removed and 140 remain. The function is @internal and contributes no public API line.
 Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
+
+## Error host members, October 7
+
+Sites 66, 67, 126 and 127 are complete under Standard runtime feature probes.
+The existing Node ErrorConstructor declarations type both captureStackTrace
+accesses and both stackTraceLimit accesses directly. All four assertion
+receivers and their parentheses are removed; no contract or API sanction is
+added. Combined progress is 74 removed and 136 remaining.
+[ERROR-HOST.md](ERROR-HOST.md) records clean build artifacts, wrong-member
+mutants, the exact scanner reference without temporary 80, and gate results.
