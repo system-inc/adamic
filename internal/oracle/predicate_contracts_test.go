@@ -73,14 +73,18 @@ func TestPredicateOpenContractsStayRefused(t *testing.T) {
 		"extra refinement": `type A={readonly kind:'a'};type B={readonly kind:'b'};type Refined=A & {readonly label:string};function guard(n:A|B):n is Refined{return true;}`,
 	} {
 		t.Run(name, func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), "contract.ts")
+			extension := ".a"
+			if name == "bodyless" {
+				extension = ".ts"
+			}
+			path := filepath.Join(t.TempDir(), "contract"+extension)
 			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
 			_, err := lowered(t, path)
 			var refusal *lower.Refused
 			if !errors.As(err, &refusal) {
-				t.Fatalf("uncheckable .ts contract must stay refused: %v", err)
+				t.Fatalf("unproven .a contract must stay refused: %v", err)
 			}
 		})
 	}

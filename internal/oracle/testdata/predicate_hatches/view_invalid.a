@@ -1,0 +1,13 @@
+interface Node { readonly kind: number }
+interface Expression extends Node { readonly label: string }
+const accepted: boolean = true;
+function opaque(kind: number): boolean { return accepted; }
+function isExpression(node: Node): node is Expression { return opaque(node.kind); }
+function cast(node: Node, test: (node: Node) => node is Expression): Expression {
+    if (test(node)) { return node; }
+    throw new Error('not an expression');
+}
+const original = { kind: 1, label: 42 };
+const node: Node | undefined = original;
+console.log(cast(node!, isExpression).kind === 1 ? '1' : 'other');
+console.log(cast(node!, isExpression).label);

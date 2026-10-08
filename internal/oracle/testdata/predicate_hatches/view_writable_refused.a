@@ -1,0 +1,7 @@
+interface Node { readonly kind: number; payload: { readonly value: number } }
+interface Expression extends Node { readonly payload: { readonly value: number; readonly label: string } }
+const accepted: boolean = true;
+function opaque(kind: number): boolean { return accepted; }
+function isExpression(node: Node): node is Expression { return opaque(node.kind); }
+const node: Node = { kind: 1, payload: { value: 1 } };
+if (isExpression(node)) { console.log(node.payload.label); }
