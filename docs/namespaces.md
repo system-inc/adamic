@@ -8,7 +8,8 @@ can be called, detached and compared by identity. Names can coexist with an
 interface or type alias of the same spelling. Type-only namespaces erase.
 
 The namespace object's identity, reflection, escape and mutation are outside
-this subset. Reopening, function/class/enum merging, mutable exports, ambient
+this subset. A function merge admits the restricted qualified uses below.
+Reopening, class/enum merging, mutable exports, ambient
 namespaces, `var`, uninitialized state and executable namespace bodies are
 `NotYet`, with an alternative using a file module or private state behind fixed
 exported functions. A namespace function using `this` is refused: qualified and
@@ -125,3 +126,26 @@ refusals remain in force; class/namespace merging remains NotYet.
 The parser's DebugTypeMapper declaration probe and an executed two-instance
 fixture match Node in both backends. Removing the actual constructor registration
 must trigger the existing readiness check. See [the parser-stop report](../stage3/namespace-parser-stops/REPORT.md).
+
+## Qualified callable namespaces (October 8)
+
+A function and one namespace declaration in the same scope may merge. Direct
+calls, fixed qualified properties, typeof and strict identity comparisons with
+other fixed namespace functions lower. The callable value uses the existing
+canonical closure identity; its attached exports retain their checker bindings.
+Functions whose receivers are unused can be called qualified or detached with
+the same behavior. Namespace-owned this and explicit receiver parameters retain
+their named refusals.
+
+This subset emits no callable property container. Passing, returning or storing
+the merged callable, reflection, computed properties, export replacement and
+function-intrinsic collisions remain NotYet. In particular name, length,
+prototype, caller, arguments, call, apply, bind and toString are not represented
+as attached exports. Reopened namespaces and class merges still remain NotYet.
+Initialization preflight is unchanged on this base.
+
+The unchanged Debug.log parser probe and executed callable/attached function
+fixture match Node in native and JavaScript. Redirecting attached calls to the
+root function is caught by Node stdout. [The report](../stage3/namespace-parser-stops/REPORT.md)
+records all three units and their retained limits; the whole Debug body is not
+claimed to lower.
