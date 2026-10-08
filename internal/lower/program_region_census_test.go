@@ -155,9 +155,10 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 	// Resolve instantiated container schemas at actual source declaration/allocation
 	// sites as well as through fields. Private/local types need not be exported.
 	wanted := map[string]bool{}
+	resolvedContainers := map[string]*checker.Type{}
 	for _, row := range records[1:] {
 		if strings.HasPrefix(row[0], "K") {
-			wanted[strings.ReplaceAll(row[1], "&#124;", "|")] = true
+			wanted[programCensusTypeLabel(strings.ReplaceAll(row[1], "&#124;", "|"))] = true
 		}
 	}
 	for _, file := range sourceProgram.GetSourceFiles() {
@@ -172,12 +173,13 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 				if node.Name() != nil && ast.IsIdentifier(node.Name()) {
 					proven = typeChecker.GetTypeAtLocation(node.Name())
 				}
-			} else if node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression {
+			} else if ast.IsTypeNode(node) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression {
 				proven = typeChecker.GetTypeAtLocation(node)
 			}
 			if proven != nil {
 				label := typeChecker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
-				if wanted[label] {
+				if wanted[programCensusTypeLabel(label)] {
+					resolvedContainers[programCensusTypeLabel(label)] = proven
 					finder.use(proven, node)
 				}
 			}
@@ -196,15 +198,18 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 	}
 	sort.Slice(candidates, func(i, j int) bool { return candidates[i].Id() < candidates[j].Id() })
 	for _, proven := range candidates {
-		labels[format(proven)] = proven
+		labels[programCensusTypeLabel(format(proven))] = proven
 		expanded := typeChecker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation|checker.TypeFormatFlagsInTypeAlias, nil)
-		labels[expanded] = proven
+		labels[programCensusTypeLabel(expanded)] = proven
+	}
+	for label, proven := range resolvedContainers {
+		labels[label] = proven
 	}
 	var output bytes.Buffer
 	writer := csv.NewWriter(&output)
 	writer.Write([]string{"record_id", "declared_type", "in_region_or_counted", "why", "slot_type"})
 	seen := map[string]bool{}
-	in, unresolved := 0, 0
+	in, unresolved, waiting := 0, 0, 0
 	for i, row := range records[1:] {
 		if seen[row[0]] {
 			t.Fatalf("duplicate %s", row[0])
@@ -219,7 +224,20 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 			slotType = format(inputs[i].slot)
 		} else {
 			declared = strings.ReplaceAll(row[1], "&#124;", "|")
-			candidate = labels[declared]
+			candidate = labels[programCensusTypeLabel(declared)]
+			// Census K131 alpha-renames PrivateEnvironment's TEntry while
+			// substituting it through LexicalEnvironment<TPrivateEntry>. Both
+			// identities have the same concrete Node key and unknown value;
+			// use that checker schema without inventing a concrete value type.
+			if candidate == nil && regexp.MustCompile(`^Map<Node, T[A-Za-z0-9_]+>$`).MatchString(declared) {
+				for _, actual := range resolvedContainers {
+					arguments := typeChecker.GetTypeArguments(actual)
+					if analysis.isLibraryType(actual, "Map") && len(arguments) == 2 && format(arguments[0]) == "Node" && arguments[1].Flags()&checker.TypeFlagsTypeParameter != 0 {
+						candidate = actual
+						break
+					}
+				}
+			}
 			if candidate == nil {
 				unresolved++
 				why = "no concrete identity in declaration-only graph; keep counted pending lowered generic/capture/container identity"
@@ -228,7 +246,18 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 		membership := "counted"
 		if candidate != nil {
 			switch {
+			case finder.programContainer(candidate):
+				why = programContainerRule + "; no selected element/key/value; stays counted"
+				if finder.template(candidate) {
+					why += "; waiting for concrete allocation-site type"
+				}
+				if finder.programContainerMember(candidate, selected) {
+					membership = "in region"
+					in++
+					why = programContainerRule + "; selected element/key/value; region member"
+				}
 			case finder.template(candidate):
+				waiting++
 				why = "uninstantiated generic/any declaration; keep counted pending concrete allocation-site type"
 			case finder.programScalarStorage(candidate):
 				why = "scalar scratch storage; no owned graph elements"
@@ -238,9 +267,21 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 				why = "owning-field SCC selected by programRegionSelection; declaration audit has no lowered capture cells"
 			}
 		}
+		if expected, reviewed := programCompilerContainerReading[row[0]]; reviewed {
+			if candidate == nil {
+				t.Fatalf("reviewed container %s still unresolved", row[0])
+			}
+			if membership != expected {
+				why += "; differs from compiler reading (" + expected + "); provisional structural SCC selection"
+				t.Logf("compiler reading differs: %s got %s want %s (%s)", row[0], membership, expected, declared)
+			}
+		}
 		if err := writer.Write([]string{row[0], declared, membership, why, slotType}); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if waiting != 77 {
+		t.Fatalf("uninstantiated declarations waiting: %d, want 77", waiting)
 	}
 	writer.Flush()
 	if err := writer.Error(); err != nil {
@@ -263,7 +304,7 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 			t.Fatal("membership changed; regenerate with -update-program-membership and review")
 		}
 	}
-	t.Logf("1685 records: in region %d counted %d unresolved container identities %d; source files %d", in, 1685-in, unresolved, len(roots))
+	t.Logf("1685 records: in region %d counted %d unresolved container identities %d; source files %d; uninstantiated declarations waiting %d", in, 1685-in, unresolved, len(roots), waiting)
 	// Independent anchors make missing/changed input records visible.
 	required := []string{"D11", "D633", "D634", "D708", "D938", "K15", "K69"}
 	sort.Strings(required)
@@ -272,4 +313,87 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 			t.Fatalf("required census record missing: %s", id)
 		}
 	}
+}
+
+// Compiler's reading is an independent comparison, never a membership override.
+var programCompilerContainerReading = map[string]string{
+	"K24": "in region", "K67": "in region", "K85": "in region", "K86": "in region", "K118": "in region",
+	"K109": "in region", "K116": "in region", "K117": "in region", "K130": "in region", "K131": "in region",
+	"K60": "counted", "K144": "counted", "K90": "counted", "K91": "counted",
+}
+
+// Checker output orders union constituents and spells readonly arrays differently
+// from the stock census. Canonicalize display only; retain checker identities for
+// selection, and do not synthesize missing types or substitute record-specific flags.
+func programCensusTypeLabel(label string) string {
+	label = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(label), "readonly "))
+	if strings.HasSuffix(label, "[]") {
+		return "(" + programCensusTypeLabel(strings.TrimSuffix(label, "[]")) + ")[]"
+	}
+	if strings.HasPrefix(label, "(") && strings.HasSuffix(label, ")") {
+		label = label[1 : len(label)-1]
+	}
+	depth, start := 0, 0
+	parts := []string{}
+	for i, r := range label {
+		switch r {
+		case '(', '[', '{', '<':
+			depth++
+		case ')', ']', '}', '>':
+			if depth > 0 {
+				depth--
+			}
+		case '|':
+			if depth == 0 {
+				parts = append(parts, programCensusTypeLabel(label[start:i]))
+				start = i + 1
+			}
+		}
+	}
+	if len(parts) != 0 {
+		parts = append(parts, programCensusTypeLabel(label[start:]))
+		sort.Strings(parts)
+		return strings.Join(parts, "|")
+	}
+	// Normalize unions within generic arguments too (e.g. SourceFile | Bundle).
+	for start := 0; start < len(label); start++ {
+		if label[start] != '<' {
+			continue
+		}
+		depth, end := 1, start+1
+		for ; end < len(label) && depth != 0; end++ {
+			if label[end] == '<' {
+				depth++
+			}
+			if label[end] == '>' {
+				depth--
+			}
+		}
+		if depth != 0 {
+			break
+		}
+		inside := label[start+1 : end-1]
+		// Normalize each argument; commas in nested generics must stay nested.
+		args, begin, nesting := []string{}, 0, 0
+		for i, r := range inside {
+			switch r {
+			case '<', '(', '[', '{':
+				nesting++
+			case '>', ')', ']', '}':
+				if nesting > 0 {
+					nesting--
+				}
+			case ',':
+				if nesting == 0 {
+					args = append(args, programCensusTypeLabel(inside[begin:i]))
+					begin = i + 1
+				}
+			}
+		}
+		args = append(args, programCensusTypeLabel(inside[begin:]))
+		replacement := "<" + strings.Join(args, ",") + ">"
+		label = label[:start] + replacement + label[end:]
+		start += len(replacement) - 1
+	}
+	return strings.Join(strings.Fields(label), "")
 }

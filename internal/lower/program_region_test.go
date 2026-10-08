@@ -109,3 +109,61 @@ console.log('end');`
 		t.Fatalf("task boundary: %v", err)
 	}
 }
+
+// The containers below have no back edge from Node to the container. They are
+// selected by compiler's element/key/value rule, rather than container SCCs.
+func TestProgramRegionConcreteContainers(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "main.a")
+	source := `interface Node { children: Node[]; id: number; }
+function wrap<T>(item:T):T[] { return [item]; }
+function run():void {
+ const node:Node = {children:[],id:1};
+ const values = new Map<string,Node>(); values.set('node',node);
+ const keys = new Map<Node,string>(); keys.set(node,'node');
+ const nodes = new Set<Node>(); nodes.add(node);
+ const scalar = new Map<string,number>(); scalar.set('one',1);
+ const array = wrap<Node>(node);
+ const tuple:[Node,number] = [node,1];
+ console.log('containers');
+} run();`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := LowerWithOptions(context.Background(), loaded, Options{ProgramRegion: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	memberMaps, countedMaps, memberSets, genericArrays, memberTuples := 0, 0, 0, 0, 0
+	for _, function := range program.Functions {
+		walk(function.Body, func(expression any) bool {
+			switch expression := expression.(type) {
+			case ir.ObjectLiteral:
+				if expression.Tuple && expression.ProgramRegion {
+					memberTuples++
+				}
+			case ir.MapNew:
+				if expression.ProgramRegion {
+					memberMaps++
+				} else {
+					countedMaps++
+				}
+			case ir.SetNew:
+				if expression.ProgramRegion {
+					memberSets++
+				}
+			case ir.ArrayLiteral:
+				if expression.ProgramRegion && len(expression.Elements) == 1 {
+					genericArrays++
+				}
+			}
+			return true
+		})
+	}
+	if memberMaps != 2 || countedMaps != 1 || memberSets != 1 || genericArrays != 1 || memberTuples != 1 {
+		t.Fatalf("containers after monomorphization: member Maps=%d counted Maps=%d member Sets=%d generic Node arrays=%d member tuples=%d", memberMaps, countedMaps, memberSets, genericArrays, memberTuples)
+	}
+}

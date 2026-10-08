@@ -95,21 +95,21 @@ For an additional fresh stock-tsc observation, the saved [API profiler](cycles-d
 
 ### Program-region prototype: flag off versus flag on
 
-The same release/count harness was rerun today for the six mirrors and million-node graph. The Program-region column uses actual allocation-site flags and marked headers, not a graph-region anchor. Load before: `2.98 1.78 0.92 2/193 32749`; after: `2.90 1.78 0.92 2/197 33162`. All three wall/RSS samples and build flags are in [program-measure.log.gz](cycles-decision/program-measure.log.gz); allocations, ordinary frees and graph counts are also in [program-measurements.csv](cycles-decision/program-measurements.csv).
+The same release/count harness was rerun today after applying compiler's container rule for the six mirrors and million-node graph. The Program-region column uses actual allocation-site flags and marked headers, not a graph-region anchor. Load before: `1.14 0.57 0.28 3/254 45470`; after: `1.13 0.57 0.28 3/257 45997`. All three wall/RSS samples and build flags are in [program-measure.log.gz](cycles-decision/program-measure.log.gz); allocations, ordinary frees and graph counts are also in [program-measurements.csv](cycles-decision/program-measurements.csv).
 
 Each tuple below is **retains / releases / peak values / in-regions**, followed by **best seconds / that run's RSS KiB**. In-regions counts members freed at teardown; it is distinct from the number of union-find regions in the earlier table.
 
 | Workload | Flag off: graph/weak | Program-region column: flag on |
 |---|---|---|
-| cycles_weak_parent.a | 3004 / 3006 / 3004 / 0; 0.001199046 / 896 | 3004 / 7007 / 3004 / 2002; 0.001385833 / 1024 |
-| cycles_graph_parent.a | 1003 / 4005 / 3003 / 0; 0.001302779 / 1024 | 4004 / 7006 / 3003 / 2002; 0.001329981 / 1024 |
-| cycles_graph_relations.a | 3003 / 7007 / 4004 / 0; 0.001421337 / 1024 | 8003 / 10006 / 4004 / 2000; 0.001335579 / 1024 |
-| cycles_graph_symbols.a | 2006 / 4009 / 2004 / 0; 0.001231544 / 896 | 4008 / 6010 / 2004 / 1002; 0.001370221 / 896 |
-| cycles_weak_relations.a | 4004 / 6007 / 6004 / 0; 0.001672831 / 1152 | 4004 / 6007 / 6004 / 0; 0.001765730 / 1152 |
-| cycles_weak_symbols.a | 3008 / 3010 / 2005 / 0; 0.001338985 / 896 | 3008 / 3010 / 2005 / 0; 0.001375939 / 896 |
-| million.a | 950001 / 1950004 / 1000003 / 0; 0.065397590 / 78976 | 2949999 / 2050002 / 1000003 / 1000000; 0.053168672 / 78976 |
+| cycles_weak_parent.a | 3004 / 3006 / 3004 / 0; 0.001597189 / 896 | 3004 / 7007 / 3004 / 2002; 0.001319686 / 1024 |
+| cycles_graph_parent.a | 1003 / 4005 / 3003 / 0; 0.001605481 / 1024 | 4004 / 7006 / 3003 / 2002; 0.001389319 / 1024 |
+| cycles_graph_relations.a | 3003 / 7007 / 4004 / 0; 0.001547274 / 1024 | 8003 / 12009 / 4004 / 2002; 0.001444482 / 1024 |
+| cycles_graph_symbols.a | 2006 / 4009 / 2004 / 0; 0.001411993 / 896 | 4008 / 6012 / 2004 / 1003; 0.001358453 / 896 |
+| cycles_weak_relations.a | 4004 / 6007 / 6004 / 0; 0.001819946 / 1152 | 4004 / 6007 / 6004 / 0; 0.001763421 / 1152 |
+| cycles_weak_symbols.a | 3008 / 3010 / 2005 / 0; 0.001177654 / 896 | 3008 / 3010 / 2005 / 0; 0.001531641 / 896 |
+| million.a | 950001 / 1950004 / 1000003 / 0; 0.069877767 / 78976 | 2949999 / 2050002 / 1000003 / 1000000; 0.053577652 / 78976 |
 
-Flag off preserves all existing counts. Flag on eliminates union-find merges on these selected member graphs; counted/graph singleton containers remain when their type is outside the SCC. The weak-symbol and weak-relation mirrors select no members: explicit Weak cuts their recursive field graphs, so their counts stay identical. The parent tree still has a recursive owning child graph and enters the Program region even with explicit weak parents.
+Flag off preserves all existing counts. Flag on eliminates union-find merges on these selected member graphs; connecting arrays and Maps now join by their selected element/key/value type, including containers outside the SCC itself. Relation roots/cache storage and the symbol table therefore become Program members; in-regions changes from 2,000 to 2,002 and from 1,002 to 1,003 respectively. Non-graph contents stay counted. The weak-symbol and weak-relation mirrors select no members: explicit Weak cuts their recursive field graphs, so their counts stay identical. The parent tree still has a recursive owning child graph and enters the Program region even with explicit weak parents.
 
 Retain/release instrumentation counts calls **before** the header fast path. Member calls do not mutate a reference count. Graph stores previously omitted calls after merging, whereas Program stores and teardown enumerate plain member edges; the larger call totals are not additional member reference-count updates. Peak values stay unchanged in these workloads. The million fixture accounts for all 1,000,000 members in-regions plus three ordinary frees, with zero merges. Its deliberately disconnected 49,999 nodes still remain until teardown, as in the graph baseline; their 3,199,936 payload bytes are the existing graph reachability witness, not a new Program tracing measurement. Program membership adds a two-word storage prefix per member, without union-find records. Millisecond mirrors remain dominated by startup noise; these measurements do not establish a general throughput result.
 
@@ -117,7 +117,21 @@ Retain/release instrumentation counts calls **before** the header fast path. Mem
 
 ### Reproducible membership audit for compiler review
 
-[TestProgramRegionCensusMembership](../internal/lower/program_region_census_test.go) runs the **same** provisional `programRegionSelection` and SCC selector as lowering against the original pinned TypeScript declaration graph. It verifies source `050880ce` and inventory `fcb7451a`, resolves exact census property sites and available concrete container identities, and generates [membership.csv](cycles-decision/membership.csv). All **1,685** unique record IDs are present: **1,594 in region, 91 counted**. Of the counted records, **14 container identities are unresolved** and carry that reason explicitly; they need compiler review against lowered generic/container identities. Scalar storage, unresolved templates and nonrecursive types remain counted.
+[TestProgramRegionCensusMembership](../internal/lower/program_region_census_test.go) runs the **same** provisional `programRegionSelection` and SCC selector as lowering against the original pinned TypeScript declaration graph. It verifies source `050880ce` and inventory `fcb7451a`, resolves exact census property sites and available concrete container identities, and generates [membership.csv](cycles-decision/membership.csv). All **1,685** unique record IDs are present: **1,599 in region, 86 counted**, with **zero unresolved container identities** after compiler's follow-up rule. The **77 uninstantiated generic declarations remain counted and waiting for concrete allocation-site types**. The test pins that count. Scalar storage and nonselected element/key/value types stay counted.
+
+Compiler's approved container rule, applied to lowered allocation-site types after monomorphization, is: **“A container (array, Map, Set, or tuple) is a member when its element type, or its Map key or value type, is in the selected component. Otherwise it stays counted.”** Container admission now uses this rule rather than structural container views. The CSV names it in `why`. Concrete Node Map keys are strong owners under step 19; an unknown generic value does not erase a selected concrete key. The lower test exercises Node arrays instantiated through a generic function, both Map directions, Set elements, tuples and counted scalar Maps.
+
+All 14 formerly unresolved records now have checker-backed schemas. Union/readonly spellings are canonicalized for lookup; K131's `TPrivateEntry` is the alpha-renamed unknown value of the same `PrivateEnvironment` Map schema with a concrete Node key. No concrete generic value or record-specific membership override is invented.
+
+| Formerly unresolved records | Generated result | Compiler comparison |
+|---|---|---|
+| K24, K67, K85, K86, K109, K116, K117, K118, K130, K131 | in region | agrees |
+| K90, K91 | counted | agrees |
+| K60 (`ProjectReference[]`), K144 (`IncrementalBuildInfoFilePendingEmit[]`) | in region | **differs: compiler expects counted** |
+
+The two differences originate in the existing provisional structural SCC's over-approximation of their element types. The container rule observes those selected elements; it does not silently override the result with compiler's expected labels. Over-inclusion retains storage until teardown. Both differences appear in the CSV `why` column and census test output for compiler's landing review. The rule also leaves seven previously selected container records counted (K3, K13, K20, K40, K55, K88, K147), because their element/key/value types are not selected. Compiler owns the landing changes to set flags where allocations are built and index candidates by shape; those changes are left untouched here.
+
+`TestProgramRegionMapperStorage` observes the actual input/output addresses of a reusable mapper. With the flag off, the dead unique counted Node array reuses its storage; with the flag on, the member input stays intact and the mapper allocates fresh counted string-array storage. Both match the unchanged Node oracle under ASan/UBSan and pass leak accounting. Its mutant admits the member into the in-place branch and is caught by the independent address invariant (`Program member array storage was reused`, exit 70), under ASan/UBSan. It does not rely on a predicted allocation count or on an ASan error occurring for otherwise valid addresses. The mapper fixture is also registered in the normal oracle and count ledger.
 
 `declared_type` is the allocation-holder type for declaration records and the container type for container records. `slot_type` preserves the field's type separately: membership belongs to the holder allocation, not necessarily the referenced value. The declaration audit has no lowered capture cells and cannot certify original tsc lowering. Actual executable fixtures exercise allocation flags, structural views and counted scalar storage; this inventory exposes the provisional result for review rather than asserting a native whole-tsc run.
 
@@ -160,7 +174,7 @@ The fetched slice's recorded source blockers remain evidence boundaries, not fre
 
 The e4113bfd evidence changes the default for the **CLI core graph** toward one Program owner: the observed graph largely survives the whole check and dies together at release. Dynamic union-find machinery is useful for unknown/dynamic topology, but within a single established Program lifetime it can pay merge and metadata costs without enabling earlier freeing. A blanket all-allocation Program arena is not recommended: the 3,690.78 MiB sampled cumulative allocation includes large transient populations, whereas the observed rooted heap is 422.20 MiB. Neither number predicts native bytes. Reference counts at **region escape boundaries** preserve owner lifetime; they cannot independently reclaim an interior object from an arena.
 
-The ruling settles inferred membership, plain interior backlinks, counted relation scratch, Program-owned emit metadata, task isolation and the one-shot CLI boundary. Remaining policy questions require a further ruling: the owner/promotion contract for API escapes and independently retired watch/service Programs; whether different Programs may ever share members; and boundaries for any independently ended file/check/emit arena. Measurement cannot choose those ownership contracts. Compiler review must resolve the provisional pass's structural views, capture environments and unresolved generic/container identities before merging.
+The ruling settles inferred membership, plain interior backlinks, counted relation scratch, Program-owned emit metadata, task isolation and the one-shot CLI boundary. Remaining policy questions require a further ruling: the owner/promotion contract for API escapes and independently retired watch/service Programs; whether different Programs may ever share members; and boundaries for any independently ended file/check/emit arena. Measurement cannot choose those ownership contracts. Compiler owns the landing pass and must resolve the two structural SCC over-inclusions and concrete generic allocation identities. Capture environments remain provisional.
 
 ## Reproduction and validation
 
@@ -183,10 +197,12 @@ Prototype reproduction (the census audit requires a pristine checkout of TypeScr
 ADAMIC_PROGRAM_CENSUS_ROOT=/path/to/pinned/typescript go test ./internal/lower -run '^TestProgramRegionCensusMembership$' -count=1 -args -update-program-membership
 ADAMIC_PROGRAM_CENSUS_ROOT=/path/to/pinned/typescript go test ./internal/lower -run '^TestProgramRegionCensusMembership$' -count=1
 go test ./internal/native -run '^TestProgramRegion' -count=1
-go test ./internal/oracle -run '^(TestProgramRegionFixtures|TestProgramRegionInferenceMutants)$' -v -count=1
+go test ./internal/oracle -run '^(TestProgramRegionFixtures|TestProgramRegionInferenceMutants|TestProgramRegionMapperStorage)$' -v -count=1
 ADAMIC_CYCLES_MEASURE=1 ADAMIC_CYCLES_PROGRAM_COMPARE=1 go test ./internal/oracle -run '^TestCyclesDecisionMeasurements$' -v -count=1
 ```
 
 The prototype fixture, both inference mutants, census reproducibility and count regeneration passed. Saved prototype logs preserve the results. The default count ledger changes only by the new ownership fixture.
 
 The full lower package passed. The full native package's only failure was the missing mutable-storage audit entry for the new registry; [the suite log](cycles-decision/program-unit-suite.log.gz) records that failure. After documenting its CLI/thread/lifetime contract, the storage scanner/audit and Program runtime tests [passed on rerun](cycles-decision/program-audit.log.gz). [Expanded oracle evidence](cycles-decision/program-expanded.log.gz) includes the additional capture/class/flow/throw fixtures and both inference mutants; [count regeneration](cycles-decision/program-counts.log.gz) passed. The complete repository gate was not run.
+
+Follow-up validation after compiler approval of `ff91354d`: the full lower package, the concrete-container test, reproducible census check, Program fixtures and both inference mutants, mapper storage invariant and its reuse mutant, normal mapper oracle and count regeneration passed. [Registered mapper oracle](cycles-decision/container-registered.log.gz), [census comparison](cycles-decision/container-census.log.gz), [oracle and mutants](cycles-decision/container-oracle.log.gz), [lower tests](cycles-decision/container-lower.log.gz) and [count regeneration](cycles-decision/container-counts.log.gz) preserve the outcomes. Section 3's release/count table is refreshed for this container rule, with all three samples in the linked Program measurement log.
