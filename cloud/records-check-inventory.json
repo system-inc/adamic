@@ -1,0 +1,542 @@
+[
+  {
+    "package": "stage1/cohere/css",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/css/GAPS.md",
+      "stage1/cohere/css/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/css/GAPS.md stage1/cohere/css/gaps_test.go; go test ./stage1/cohere/css -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/css/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/css",
+    "test": "TestClosedParserRegexGap",
+    "records": [
+      "stage1/cohere/css/GAPS.md",
+      "stage1/cohere/css/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/css/GAPS.md stage1/cohere/css/gaps_test.go; go test ./stage1/cohere/css -run ^TestClosedParserRegexGap$ -count=1",
+    "source": "stage1/cohere/css/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/cssstrings",
+    "test": "TestMultiPushGap",
+    "records": [
+      "stage1/cohere/cssstrings/GAPS.md",
+      "stage1/cohere/cssstrings/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/cssstrings/GAPS.md stage1/cohere/cssstrings/gaps_test.go; go test ./stage1/cohere/cssstrings -run ^TestMultiPushGap$ -count=1",
+    "source": "stage1/cohere/cssstrings/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/estree",
+    "test": "TestPostfixValueGap",
+    "records": [
+      "stage1/cohere/estree/GAPS.md",
+      "stage1/cohere/estree/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/estree/GAPS.md stage1/cohere/estree/gaps_test.go; go test ./stage1/cohere/estree -run ^TestPostfixValueGap$ -count=1",
+    "source": "stage1/cohere/estree/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/estree",
+    "test": "TestMethodReplacementGap",
+    "records": [
+      "stage1/cohere/estree/GAPS.md",
+      "stage1/cohere/estree/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/estree/GAPS.md stage1/cohere/estree/gaps_test.go; go test ./stage1/cohere/estree -run ^TestMethodReplacementGap$ -count=1",
+    "source": "stage1/cohere/estree/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/estree",
+    "test": "TestRawInputGap",
+    "records": [
+      "stage1/cohere/estree/GAPS.md",
+      "stage1/cohere/estree/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/estree/GAPS.md stage1/cohere/estree/gaps_test.go; go test ./stage1/cohere/estree -run ^TestRawInputGap$ -count=1",
+    "source": "stage1/cohere/estree/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/estree",
+    "test": "TestParserRecoveryGap",
+    "records": [
+      "stage1/cohere/estree/GAPS.md",
+      "stage1/cohere/estree/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/estree/GAPS.md stage1/cohere/estree/gaps_test.go; go test ./stage1/cohere/estree -run ^TestParserRecoveryGap$ -count=1",
+    "source": "stage1/cohere/estree/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/estree",
+    "test": "TestInterfaceDefaultGap",
+    "records": [
+      "stage1/cohere/estree/GAPS.md",
+      "stage1/cohere/estree/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/estree/GAPS.md stage1/cohere/estree/gaps_test.go; go test ./stage1/cohere/estree -run ^TestInterfaceDefaultGap$ -count=1",
+    "source": "stage1/cohere/estree/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/gitignore",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/gitignore/GAPS.md",
+      "stage1/cohere/gitignore/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/gitignore/GAPS.md stage1/cohere/gitignore/gaps_test.go; go test ./stage1/cohere/gitignore -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/gitignore/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/graphql",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/graphql/GAPS.md",
+      "stage1/cohere/graphql/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/graphql/GAPS.md stage1/cohere/graphql/gaps_test.go; go test ./stage1/cohere/graphql -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/graphql/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/graphql/printer",
+    "test": "TestPrinterConstructorGap",
+    "records": [
+      "stage1/cohere/graphql/printer/GAPS.md",
+      "stage1/cohere/graphql/printer/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/graphql/printer/GAPS.md stage1/cohere/graphql/printer/gaps_test.go; go test ./stage1/cohere/graphql/printer -run ^TestPrinterConstructorGap$ -count=1",
+    "source": "stage1/cohere/graphql/printer/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/graphql/printer",
+    "test": "TestPrinterWhitespaceGap",
+    "records": [
+      "stage1/cohere/graphql/printer/GAPS.md",
+      "stage1/cohere/graphql/printer/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/graphql/printer/GAPS.md stage1/cohere/graphql/printer/gaps_test.go; go test ./stage1/cohere/graphql/printer -run ^TestPrinterWhitespaceGap$ -count=1",
+    "source": "stage1/cohere/graphql/printer/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestDocumentedStageZeroGaps",
+    "records": [
+      "stage1/cohere/json/GAPS.md",
+      "stage1/cohere/json/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/json/GAPS.md stage1/cohere/json/gaps_test.go; go test ./stage1/cohere/json -run ^TestDocumentedStageZeroGaps$ -count=1",
+    "source": "stage1/cohere/json/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/lint",
+    "test": "TestNestedConstructorGap",
+    "records": [
+      "stage1/cohere/lint/GAPS.md",
+      "stage1/cohere/lint/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/lint/GAPS.md stage1/cohere/lint/gaps_test.go; go test ./stage1/cohere/lint -run ^TestNestedConstructorGap$ -count=1",
+    "source": "stage1/cohere/lint/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/lint",
+    "test": "TestOptionAndComparatorGaps",
+    "records": [
+      "stage1/cohere/lint/GAPS.md",
+      "stage1/cohere/lint/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/lint/GAPS.md stage1/cohere/lint/gaps_test.go; go test ./stage1/cohere/lint -run ^TestOptionAndComparatorGaps$ -count=1",
+    "source": "stage1/cohere/lint/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes",
+    "records": [
+      "stage1/cohere/markdownblocks/GAPS.md",
+      "stage1/cohere/markdownblocks/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/markdownblocks/GAPS.md stage1/cohere/markdownblocks/gaps_test.go; go test ./stage1/cohere/markdownblocks -run ^TestParserRepresentationProbes$ -count=1",
+    "source": "stage1/cohere/markdownblocks/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/markdownblocks",
+    "test": "TestMdastIdentifierWitnesses",
+    "records": [
+      "stage1/cohere/markdownblocks/gaps/identifier_case_go.txt",
+      "stage1/cohere/markdownblocks/gaps/identifier_case_fork.txt",
+      "stage1/cohere/markdownblocks/GAPS.md"
+    ],
+    "refresh": "ADAMIC_MDAST_WRITE_WITNESSES=1 go test ./stage1/cohere/markdownblocks -run ^TestMdastIdentifierWitnesses$ -count=1",
+    "source": "stage1/cohere/markdownblocks/mdast_gap_test.go"
+  },
+  {
+    "package": "stage1/cohere/markdownblocks",
+    "test": "TestOptionalStringInitializationWitness",
+    "records": [
+      "stage1/cohere/markdownblocks/GAPS.md",
+      "stage1/cohere/markdownblocks/optional_gap_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/markdownblocks/GAPS.md stage1/cohere/markdownblocks/optional_gap_test.go; go test ./stage1/cohere/markdownblocks -run ^TestOptionalStringInitializationWitness$ -count=1",
+    "source": "stage1/cohere/markdownblocks/optional_gap_test.go"
+  },
+  {
+    "package": "stage1/cohere/markdowninline",
+    "test": "TestDelimiterExpressionMatchesNode",
+    "records": [
+      "stage1/cohere/markdowninline/GAPS.md",
+      "stage1/cohere/markdowninline/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/markdowninline/GAPS.md stage1/cohere/markdowninline/gaps_test.go; go test ./stage1/cohere/markdowninline -run ^TestDelimiterExpressionMatchesNode$ -count=1",
+    "source": "stage1/cohere/markdowninline/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/mediaquery",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/mediaquery/GAPS.md",
+      "stage1/cohere/mediaquery/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/mediaquery/GAPS.md stage1/cohere/mediaquery/gaps_test.go; go test ./stage1/cohere/mediaquery -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/mediaquery/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/selector/GAPS.md",
+      "stage1/cohere/selector/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/selector/GAPS.md stage1/cohere/selector/gaps_test.go; go test ./stage1/cohere/selector -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/selector/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/static_single_assignment",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/static_single_assignment/GAPS.md",
+      "stage1/cohere/static_single_assignment/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/static_single_assignment/GAPS.md stage1/cohere/static_single_assignment/gaps_test.go; go test ./stage1/cohere/static_single_assignment -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/static_single_assignment/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/suppression",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/suppression/GAPS.md",
+      "stage1/cohere/suppression/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/suppression/GAPS.md stage1/cohere/suppression/gaps_test.go; go test ./stage1/cohere/suppression -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/suppression/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestClassInterfaceMethodGap",
+    "records": [
+      "stage1/cohere/tsprinter/GAPS.md",
+      "stage1/cohere/tsprinter/class_interface_gap_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/GAPS.md stage1/cohere/tsprinter/class_interface_gap_test.go; go test ./stage1/cohere/tsprinter -run ^TestClassInterfaceMethodGap$ -count=1",
+    "source": "stage1/cohere/tsprinter/class_interface_gap_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestOptionalBooleanFunctionGap",
+    "records": [
+      "stage1/cohere/tsprinter/GAPS.md",
+      "stage1/cohere/tsprinter/class_interface_gap_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/GAPS.md stage1/cohere/tsprinter/class_interface_gap_test.go; go test ./stage1/cohere/tsprinter -run ^TestOptionalBooleanFunctionGap$ -count=1",
+    "source": "stage1/cohere/tsprinter/class_interface_gap_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestCompilerGaps",
+    "records": [
+      "stage1/cohere/tsprinter/GAPS.md",
+      "stage1/cohere/tsprinter/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/GAPS.md stage1/cohere/tsprinter/gaps_test.go; go test ./stage1/cohere/tsprinter -run ^TestCompilerGaps$ -count=1",
+    "source": "stage1/cohere/tsprinter/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestNumberConstructor",
+    "records": [
+      "stage1/cohere/tsprinter/GAPS.md",
+      "stage1/cohere/tsprinter/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/GAPS.md stage1/cohere/tsprinter/gaps_test.go; go test ./stage1/cohere/tsprinter -run ^TestNumberConstructor$ -count=1",
+    "source": "stage1/cohere/tsprinter/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "records": [
+      "stage1/cohere/values/GAPS.md",
+      "stage1/cohere/values/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/values/GAPS.md stage1/cohere/values/gaps_test.go; go test ./stage1/cohere/values -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ -count=1",
+    "source": "stage1/cohere/values/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/yaml",
+    "test": "TestLexerGaps",
+    "records": [
+      "stage1/cohere/yaml/GAPS.md",
+      "stage1/cohere/yaml/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/yaml/GAPS.md stage1/cohere/yaml/gaps_test.go; go test ./stage1/cohere/yaml -run ^TestLexerGaps$ -count=1",
+    "source": "stage1/cohere/yaml/gaps_test.go"
+  },
+  {
+    "package": "stage1/cohere/yaml",
+    "test": "TestStructuralPositionRefusal",
+    "records": [
+      "stage1/cohere/yaml/GAPS.md",
+      "stage1/cohere/yaml/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/yaml/GAPS.md stage1/cohere/yaml/gaps_test.go; go test ./stage1/cohere/yaml -run ^TestStructuralPositionRefusal$ -count=1",
+    "source": "stage1/cohere/yaml/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/parser",
+    "test": "TestStrongAstParentGap",
+    "records": [
+      "stage1/typescript/parser/GAPS.md",
+      "stage1/typescript/parser/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/parser/GAPS.md stage1/typescript/parser/gaps_test.go; go test ./stage1/typescript/parser -run ^TestStrongAstParentGap$ -count=1",
+    "source": "stage1/typescript/parser/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/parser",
+    "test": "TestPushSpreadGap",
+    "records": [
+      "stage1/typescript/parser/GAPS.md",
+      "stage1/typescript/parser/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/parser/GAPS.md stage1/typescript/parser/gaps_test.go; go test ./stage1/typescript/parser -run ^TestPushSpreadGap$ -count=1",
+    "source": "stage1/typescript/parser/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/parser",
+    "test": "TestClassMethodInterfaceGap",
+    "records": [
+      "stage1/typescript/parser/GAPS.md",
+      "stage1/typescript/parser/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/parser/GAPS.md stage1/typescript/parser/gaps_test.go; go test ./stage1/typescript/parser -run ^TestClassMethodInterfaceGap$ -count=1",
+    "source": "stage1/typescript/parser/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/parser",
+    "test": "TestOptionalFunctionValueGap",
+    "records": [
+      "stage1/typescript/parser/GAPS.md",
+      "stage1/typescript/parser/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/parser/GAPS.md stage1/typescript/parser/gaps_test.go; go test ./stage1/typescript/parser -run ^TestOptionalFunctionValueGap$ -count=1",
+    "source": "stage1/typescript/parser/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/parser",
+    "test": "TestConditionalEmptyArrayGap",
+    "records": [
+      "stage1/typescript/parser/GAPS.md",
+      "stage1/typescript/parser/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/parser/GAPS.md stage1/typescript/parser/gaps_test.go; go test ./stage1/typescript/parser -run ^TestConditionalEmptyArrayGap$ -count=1",
+    "source": "stage1/typescript/parser/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/scanner",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "records": [
+      "stage1/typescript/scanner/GAPS.md",
+      "stage1/typescript/scanner/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/scanner/GAPS.md stage1/typescript/scanner/gaps_test.go; go test ./stage1/typescript/scanner -run ^TestGapStandsWhereGapsMdSays$ -count=1",
+    "source": "stage1/typescript/scanner/gaps_test.go"
+  },
+  {
+    "package": "stage1/typescript/scanner",
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "records": [
+      "stage1/typescript/scanner/GAPS.md",
+      "stage1/typescript/scanner/gaps_test.go"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/typescript/scanner/GAPS.md stage1/typescript/scanner/gaps_test.go; go test ./stage1/typescript/scanner -run ^TestBigintGapStandsWhereGapsMdSays$ -count=1",
+    "source": "stage1/typescript/scanner/gaps_test.go"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCountsAreRecorded",
+    "records": [
+      "internal/oracle/counts.md"
+    ],
+    "refresh": "go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -args -update-counts",
+    "source": "internal/oracle/counts_test.go"
+  },
+  {
+    "package": "stage3/fixtures",
+    "test": "TestFixtures",
+    "records": [
+      "stage3/fixtures/*/status.json",
+      "stage3/fixtures/moved-results.txt"
+    ],
+    "refresh": "go test ./stage3/fixtures -run ^TestFixtures$ -count=1 -args -update",
+    "source": "stage3/fixtures/fixtures_test.go"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestOptionalWideningRefused",
+    "records": [
+      "internal/lower/testdata/optional_widening/*.refused"
+    ],
+    "refresh": "${EDITOR:-vi} internal/lower/testdata/optional_widening/*.refused; go test ./internal/lower -run ^TestOptionalWideningRefused$ -count=1",
+    "source": "internal/lower/optional_widening_test.go"
+  },
+  {
+    "package": "stage1/cohere/lint/regex",
+    "test": "TestInventoryMatchesPinnedSource",
+    "records": [
+      "stage1/cohere/lint/regex/sites.json"
+    ],
+    "refresh": "cd cohere && go run ../stage1/cohere/lint/regex/testdata/inventory.go internal/lint/rules > ../stage1/cohere/lint/regex/sites.json",
+    "source": "stage1/cohere/lint/regex/regex_test.go"
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestUpstreamNumericSeparatorGap",
+    "records": [
+      "stage1/cohere/json/GAPS.md",
+      "stage1/cohere/json/known-upstream-differences.txt",
+      "stage1/cohere/json/testdata/corpus.pin"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/json/GAPS.md stage1/cohere/json/known-upstream-differences.txt stage1/cohere/json/testdata/corpus.pin; go test ./stage1/cohere/json -run ^TestUpstreamNumericSeparatorGap$ -count=1",
+    "source": "stage1/cohere/json/audit_test.go"
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestUpstreamRepositoryCorpusParity",
+    "records": [
+      "stage1/cohere/json/GAPS.md",
+      "stage1/cohere/json/known-upstream-differences.txt",
+      "stage1/cohere/json/testdata/corpus.pin"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/json/GAPS.md stage1/cohere/json/known-upstream-differences.txt stage1/cohere/json/testdata/corpus.pin; go test ./stage1/cohere/json -run ^TestUpstreamRepositoryCorpusParity$ -count=1",
+    "source": "stage1/cohere/json/audit_test.go"
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestPortMatchesGoCohere",
+    "records": [
+      "stage1/cohere/json/testdata/corpus.pin"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/json/testdata/corpus.pin; go test ./stage1/cohere/json -run ^TestPortMatchesGoCohere$ -count=1",
+    "source": "stage1/cohere/json/port_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestStatementUpstreamDifferences",
+    "records": [
+      "stage1/cohere/tsprinter/testdata/statement-upstream-differences.json"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/testdata/statement-upstream-differences.json; go test ./stage1/cohere/tsprinter -run ^TestStatementUpstreamDifferences$ -count=1",
+    "source": "stage1/cohere/tsprinter/upstream_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestTSCCorpusUpstreamDifferences",
+    "records": [
+      "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json; go test ./stage1/cohere/tsprinter -run ^TestTSCCorpusUpstreamDifferences$ -count=1",
+    "source": "stage1/cohere/tsprinter/upstream_protocol_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestExpressionsAgainstGoAndPrettier",
+    "records": [
+      "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json; go test ./stage1/cohere/tsprinter -run ^TestExpressionsAgainstGoAndPrettier$ -count=1",
+    "source": "stage1/cohere/tsprinter/expressions_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestStatementsAgainstGoAndPrettier",
+    "records": [
+      "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json; go test ./stage1/cohere/tsprinter -run ^TestStatementsAgainstGoAndPrettier$ -count=1",
+    "source": "stage1/cohere/tsprinter/statements_test.go"
+  },
+  {
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestTSCCorpusAgreement",
+    "records": [
+      "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json; go test ./stage1/cohere/tsprinter -run ^TestTSCCorpusAgreement$ -count=1",
+    "source": "stage1/cohere/tsprinter/tsc_corpus_test.go"
+  },
+  {
+    "package": "stage1/cohere/graphql/printer",
+    "test": "TestPrinterUpstreamPreflight",
+    "records": [
+      "stage1/cohere/graphql/printer/GAPS.md"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/graphql/printer/GAPS.md stage1/cohere/graphql/printer/printer_test.go; go test ./stage1/cohere/graphql/printer -run ^TestPrinterUpstreamPreflight$ -count=1",
+    "source": "stage1/cohere/graphql/printer/printer_test.go"
+  },
+  {
+    "package": "stage1/cohere/markdownblocks",
+    "test": "TestWholeDocumentOraclePreflight",
+    "records": [
+      "stage1/cohere/markdownblocks/GAPS.md"
+    ],
+    "refresh": "${EDITOR:-vi} stage1/cohere/markdownblocks/GAPS.md stage1/cohere/markdownblocks/audit_test.go; go test ./stage1/cohere/markdownblocks -run ^TestWholeDocumentOraclePreflight$ -count=1",
+    "source": "stage1/cohere/markdownblocks/audit_test.go"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestOriginalCycleLedger",
+    "records": [
+      "stage3/fixtures/cycles/trace.json.gz",
+      "stage3/fixtures/cycles/ledger.json",
+      "stage3/fixtures/cycles/order.json"
+    ],
+    "source": "internal/lower/import_cycle_ledger_test.go",
+    "refresh": "ADAMIC_CYCLE_LEDGER_ROOT=<pristine TypeScript 050880ce with generated diagnostics> ADAMIC_CYCLE_LEDGER_OUTPUT=<scratch file> go test ./internal/lower -run ^TestOriginalCycleLedger$ -count=1"
+  },
+  {
+    "package": "cmd/adamic-test262",
+    "test": "TestClassifyCorpus",
+    "records": [
+      "cmd/adamic-test262/testdata/corpus/*.want"
+    ],
+    "source": "cmd/adamic-test262/corpus_test.go",
+    "refresh": "${EDITOR:-vi} cmd/adamic-test262/testdata/corpus/*.want; go test ./cmd/adamic-test262 -run ^TestClassifyCorpus$ -count=1"
+  },
+  {
+    "package": "cmd/adamic-test262",
+    "test": "TestVerdictCorpus",
+    "records": [
+      "cmd/adamic-test262/testdata/verdicts/*.json"
+    ],
+    "source": "cmd/adamic-test262/corpus_test.go",
+    "refresh": "${EDITOR:-vi} cmd/adamic-test262/testdata/verdicts/*.json; go test ./cmd/adamic-test262 -run ^TestVerdictCorpus$ -count=1"
+  },
+  {
+    "package": "stage1/cohere/lint/helpers/comments",
+    "test": "TestJsxParserGapIsExplicit",
+    "records": [
+      "stage1/cohere/lint/helpers/comments/testdata/parser-gaps.json"
+    ],
+    "source": "stage1/cohere/lint/helpers/comments/comments_test.go",
+    "refresh": "${EDITOR:-vi} stage1/cohere/lint/helpers/comments/testdata/parser-gaps.json; go test ./stage1/cohere/lint/helpers/comments -run ^TestJsxParserGapIsExplicit$ -count=1"
+  }
+]
