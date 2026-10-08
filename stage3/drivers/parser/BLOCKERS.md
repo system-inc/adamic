@@ -1,3 +1,51 @@
+# Area-stack 2c7d9fd2: eight focused probes green, real build checker-red
+
+Fresh compiler scratch is 2c7d9fd22bdd5f2d2d9cda0a892b7ec734c3d758.
+area/library 33982530 (descendant of requested e40216f2) conflicts in 45 paths,
+including lowering, loading and runtime; paths recorded and merge aborted.
+No compiler merge is pushed. SameMap stays unchanged; 65 and 76 are applied.
+The source is the preceding fully validated current-main 89ac4a8c lane tree,
+with erased 65 reapplied, then gathered afresh and byte-audited.
+
+Both split modes stop at debug.ts:113:19 TS2339: captureStackTrace missing on
+ErrorConstructor (second use 114:19). No parser C, clang measurements, binary,
+native dump or native corpus comparison. Attempts take 0.6205s unsplit and
+0.7696s split before clang. Repeat also fails before clang, not a warm build.
+
+| Earlier blocker | Measured result on this scratch |
+|---|---|
+| core.ts:11:52 enum initialization | Still refuses at exactly 11:52 after replacing Debug.fail with a throwing body in a discovery copy. Both enum minimal programs still refuse. |
+| Namespace this/returned method | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Class inside namespace | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Function merged with namespace | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Predicate overload and callback result | Still pass natively with matching output and byte mutants. |
+| Predicate callback parameter | Still refuses at native-predicate-callback-parameter.a:2:90. |
+| arguments.length and function-value forwarding | Both still pass with Node output and byte mutants; forwarding prints 1. |
+| Non-null checked read | Regressed versus prior scratch: now refuses ! at native-nonnull.a:5:16. |
+| Runtime namespace initialization and mutable export | Still refuse in their separate focused probes; three declaration successes do not clear these. |
+
+Eight of 21 focused probes match Node stdout, stderr and exit, and all eight
+one-byte output mutants are caught. Three newly green namespace probes only
+print declaration-loaded messages; method invocation and class instantiation
+semantics are not proved by them. No accepted build has mismatched output.
+MapLike, generic array/brand views, empty generic fallback and both casts still
+refuse; exact diagnostics and prior/current status are in
+[front34 comparison](evidence/front34/comparison.json).
+
+New slice: 27 declaration files, 1993 code declarations, 41857 copied lines,
+2082 byte-audited spans, 79 ordered modules. Full/slice extended Node dumps match:
+36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Node-end and both JSDoc mutants are caught on both trees. 65 erases identically;
+76's contract checks and 32 local lane tests pass. Full upstream oracle was not
+rerun: no new adapter edit. Recovery manifest is not rerun; native build is red.
+Exact merge paths, compiler logs, split attempts, Node/probe outputs and the
+single throwing placeholder: [front34 evidence](evidence/front34/README.md).
+
+Earlier units below are historical, not this scratch's pass claims.
+
+---
+
 # Land-area-next 28285421: fresh scratch, native red
 
 records-maplike-library 2648ad33 conflicts in 44 paths, including lowering,
