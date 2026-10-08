@@ -20,14 +20,28 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 			continue
 		}
 		locals := function.Parameters
+		offset := 0
+		masks := function.CallableMasks
+		result := viewCallableProducerResult(function.Returns)
 		if !function.Closure {
 			locals = locals[1:]
+			offset = 1
+			masks = nil
+			if property.ViewContract != 0 {
+				callable := e.program.ViewContracts[property.ViewContract-1]
+				if callable.Result != 0 && e.program.ViewContracts[callable.Result-1].Of == ir.Union && !function.Returns.IsReference() {
+					result = 0
+				}
+			}
 		}
 		parameters := make([]ir.Type, len(locals))
 		for i, local := range locals {
 			parameters[i] = e.program.Locals[local].Type
+			if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i+offset] == 0 {
+				parameters[i] = 0
+			}
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)))
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, result, function.Name, masks)))
 	}
 	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : value)"
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional) + ")(" + value + ")"

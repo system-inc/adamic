@@ -35,8 +35,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 		if !known || of == 0 {
 			return 0, l.notYet(node, "checked callable signature representation "+l.checker.TypeToString(child))
 		}
+		payloadType := l.recordViewCallablePayloadType(node, child)
 		childID := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewScalar, Of: of, Name: l.checker.TypeToString(child), RepresentationMask: l.viewCallableRepresentationMask(child)})
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewScalar, Of: of, Name: l.checker.TypeToString(child), RepresentationMask: l.viewCallableRepresentationMask(child), PayloadTypeID: payloadType})
 		return childID, nil
 	}
 	if err := l.completeViewCallableShapeContract(node, target, id, build); err != nil {

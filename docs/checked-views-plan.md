@@ -1267,8 +1267,8 @@ results also need field-demand propagation before their shapes can be admitted.
 
 Lane 5 owns new native/view_callables_boxing.go and lower/view_callables_boxing.go,
 plus oracle/checked_views_callable_boxing_test.go and lane5/boxing fixtures.
-Minimal shared hooks: censusCallableSlotless admits Union's single reference word;
-native/emit_functions.go routes closure invocation through the named boxed adapter.
+Minimal shared hook: native/emit_functions.go routes closure invocation through
+the named boxed adapter. The existing callable slot guard already admits Union.
 The adapter selects actual producer code, converts borrowed parameters, releases
 new parameter boxes on normal and exceptional returns, and converts owned results.
 No closure calling convention or callable identity is replaced. Read certification
@@ -1294,3 +1294,26 @@ positive in its existing lane-owned test; counts adds the boxing directory.
 JavaScript adds view_callables_boxing.go and a named call-dispatch hook in
 javascript.go. It shares native unknown-producer refusal when union conversion
 would require metadata; JavaScript otherwise preserves its normal values.
+
+## Lane 5 aggregate callable demand (October 8)
+
+New lower/view_callables_aggregate.go owns deferred payload schema collection and
+registration. Minimal shared hooks: lower.go stores checker payload references;
+view_callables_read.go records payload type IDs while comparing representations;
+functions.go records producer payload types; view_lazy.go completes aggregate
+schemas before demand and follows aggregate call results. interface_cast.go's
+schema visitor follows signature payloads, parameters and results. collections.go
+fills callable and type metadata on destructured reads. ir.ViewContract adds
+Payload/PayloadTypeID metadata. Payload schemas are descriptors and are built
+only when a checked callable can demand them, never as signature proof at cast.
+
+The named concrete-read predicate in view_lazy.go keeps a checked scalar or
+completed callable read from being poisoned by an unrelated wider producer member
+with the same name. Direct unsupported descriptors and unsupported receivers
+still refuse. Unknown nominal/dictionary producer parameters have no certificate.
+
+Class method certificates keep boxed result/parameter variance unsupported until
+their thunk invocation uses an adapter. Native view_callables_methods.go and
+JavaScript view_callables_signature.go preserve the same read refusal. Aggregate
+return demand reads evaluation operands via ir.ClosureOperands, and result targets
+remain resolved by the shared graph and ir.Program.ClosureTargets.

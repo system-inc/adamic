@@ -49,6 +49,133 @@
           "certification_basis": "reduced original member fixtures; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "aggregate-witnesses",
+      "pairs": 6,
+      "candidateReads": 326,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createExpressionStatement",
+          "declared_types": [
+            "(expression: Expression) => ExpressionStatement"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 114,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 314,
+            "column": 21
+          },
+          "rank": 7,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 12312,
+          "type": "DiagnosticCollection",
+          "field": "add",
+          "declared_types": [
+            "(diagnostic: Diagnostic) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 59,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 6709,
+            "column": 13
+          },
+          "rank": 22,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createVoidZero",
+          "declared_types": [
+            "() => VoidExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 46,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 430,
+            "column": 57
+          },
+          "rank": 31,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createThis",
+          "declared_types": [
+            "() => ThisExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 42,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 430,
+            "column": 34
+          },
+          "rank": 36,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "requestEmitHelper",
+          "declared_types": [
+            "(helper: EmitHelper) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 33,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 209,
+            "column": 9
+          },
+          "rank": 51,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10401,
+          "type": "EmitResolver",
+          "field": "hasNodeCheckFlag",
+          "declared_types": [
+            "(node: Node, flags: LazyNodeCheckFlags) => boolean"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 32,
+          "witness": {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 1756,
+            "column": 25
+          },
+          "rank": 52,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

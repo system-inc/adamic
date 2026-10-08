@@ -21,6 +21,9 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		parameters := make([]ir.Type, len(function.Parameters))
 		for i, local := range function.Parameters {
 			parameters[i] = e.program.Locals[local].Type
+			if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i] == 0 {
+				parameters[i] = 0
+			}
 		}
 		signature := e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)
 		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(index), recorded, signature)
