@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const ts=require(process.env.STAGE3_TYPESCRIPT||'typescript');assert.equal(ts.version,'6.0.3');
+const adamic=path.resolve(process.argv[2]),root=path.resolve(__dirname,'../../../..'),scratch=fs.mkdtempSync(path.join(os.tmpdir(),'step24-region-fixtures-'));
+const loader=path.join(root,'oracle/node.mjs');
+const entries=[
+ {name:'parsed',stdout:'1:answer:true\n',from:'node.parent = file;',to:'node.parent = undefined;',mutant:'drop parsed parent edge'},
+ {name:'synthetic',stdout:'generated:true:false:true\n',from:'synthesized: true',to:'synthesized: false',mutant:'erase synthetic provenance flag'},
+ {name:'detached',stdout:'false:false:old-file:retained-child\n',from:'keeper.nodes.pop();',to:'keeper.nodes.slice();',mutant:'leave detached child in source-file children'},
+];
+function run(command,args){const r=cp.spawnSync(command,args,{encoding:'utf8',timeout:120000});if(r.error)throw r.error;return {status:r.status,signal:r.signal,stdout:r.stdout,stderr:r.stderr};}
+function node(file){return run(process.execPath,['--disable-warning=ExperimentalWarning',loader,file]);}
+function typecheck(text,label){const file=path.join(scratch,label+'.ts');fs.writeFileSync(file,text);const prelude=path.join(root,'internal/load/prelude.d.ts');const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,verbatimModuleSyntax:true,erasableSyntaxOnly:true,lib:['lib.es2024.d.ts'],types:[],noEmit:true,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,moduleDetection:ts.ModuleDetectionKind.Force};const program=ts.createProgram([file,prelude],options);const diagnostics=ts.getPreEmitDiagnostics(program);assert.equal(diagnostics.length,0,diagnostics.map(d=>ts.flattenDiagnosticMessageText(d.messageText,' ')).join('\n'));}
+const results=[],start=Date.now();
+for(const e of entries){const file=path.join(__dirname,'fixtures',e.name+'.a'),source=fs.readFileSync(file,'utf8');typecheck(source,e.name);const expected={status:0,signal:null,stdout:e.stdout,stderr:''};assert.deepEqual(node(file),expected);
+ assert.equal(source.split(e.from).length,2);const mutant=source.replace(e.from,e.to);typecheck(mutant,e.name+'-mutant');const mutantFile=path.join(scratch,e.name+'-mutant.a');fs.writeFileSync(mutantFile,mutant);const mutantNode=node(mutantFile);assert.equal(mutantNode.status,0);assert.notEqual(mutantNode.stdout,e.stdout);
+ const row={fixture:e.name,sourceNode:expected,mutant:e.mutant,mutantSourceNode:mutantNode};
+ for(const mode of ['native','javascript']){const output=path.join(scratch,e.name+(mode==='native'?'.native':'.mjs'));const build=mode==='native'?run(adamic,['build',file,'-o',output,'--sanitize','--count']):run(adamic,['js',file]);assert.equal(build.status,0,build.stderr);if(mode==='javascript')fs.writeFileSync(output,build.stdout);const observed=mode==='native'?run(output,[]):node(output);assert.equal(observed.status,0,observed.stderr);assert.equal(observed.stdout,e.stdout);if(mode==='javascript')assert.equal(observed.stderr,'');assert(!/ERROR:|runtime error:|LeakSanitizer/.test(observed.stderr));
+ const mutationOutput=path.join(scratch,e.name+'-mutant'+(mode==='native'?'.native':'.mjs'));const mutationBuild=mode==='native'?run(adamic,['build',mutantFile,'-o',mutationOutput,'--sanitize']):run(adamic,['js',mutantFile]);assert.equal(mutationBuild.status,0,mutationBuild.stderr);if(mode==='javascript')fs.writeFileSync(mutationOutput,mutationBuild.stdout);const changed=mode==='native'?run(mutationOutput,[]):node(mutationOutput);assert.equal(changed.status,0,changed.stderr);assert.notEqual(changed.stdout,e.stdout);row[mode]={observation:observed,mutantObservation:changed,caughtBy:'stdout comparison with unchanged source Node'};
+ }results.push(row);console.log(e.name+': Node/native/backend PASS; mutant KILLED by stdout on all three');
+}
+fs.writeFileSync(path.join(__dirname,'fixture-observations.json'),JSON.stringify({base:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),node:process.version,typescript:ts.version,wallSeconds:(Date.now()-start)/1000,results},null,2)+'\n');
+fs.writeFileSync(path.join(__dirname,'counts.md'),['# Focused fixture counts','','Local registry inside the authorized scout territory. These are ownership mirrors using today\'s explicit Weak, not Program allocator tests.','', '| Fixture | Node/native/backend | Mutants killed | Native counters |','|---|---|---:|---|',...results.map(r=>`| ${r.fixture}.a | pass | 1 | ${r.native.observation.stderr.trim()} |`),''].join('\n'));
+console.log('Three fixtures pass; 3/3 semantic mutants killed.');

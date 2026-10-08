@@ -1,0 +1,16 @@
+import { panic, type Weak } from 'adamic';
+// Rooted parsed-tree mirror. Weak is today's executable backlink mechanism;
+// this is not an implementation of the ruled Program-region allocator.
+interface ParseNode { readonly text: string; parent: Weak<SourceFile>; }
+interface SourceFile { readonly name: string; readonly nodes: readonly ParseNode[]; }
+interface Program { readonly sourceFiles: readonly SourceFile[]; }
+function parseFile(name: string, text: string): SourceFile {
+    const node: ParseNode = { text: text.repeat(1), parent: undefined };
+    const file: SourceFile = { name: name.repeat(1), nodes: [node] };
+    node.parent = file;
+    return file;
+}
+const program: Program = { sourceFiles: [parseFile('input.a', 'answer')] };
+const file = program.sourceFiles[0] ?? panic('missing file');
+const node = file.nodes[0] ?? panic('missing node');
+console.log(`${program.sourceFiles.length}:${node.text}:${node.parent === file}`);

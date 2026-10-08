@@ -1,0 +1,11 @@
+import type { Weak } from 'adamic';
+// Factory-created node with a parent keeper, outside SourceFile child storage.
+interface FactoryNode { readonly text: string; readonly synthesized: boolean; parent: Weak<SourceFile>; }
+interface SourceFile { readonly name: string; readonly nodes: readonly FactoryNode[]; }
+function createIdentifier(text: string): FactoryNode {
+    return { text: text.repeat(1), synthesized: true, parent: undefined };
+}
+const keeper: SourceFile = { name: 'synthetic-owner'.repeat(1), nodes: [] };
+const made = createIdentifier('generated');
+made.parent = keeper;
+console.log(`${made.text}:${made.synthesized}:${keeper.nodes.includes(made)}:${made.parent === keeper}`);
