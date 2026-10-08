@@ -1,8 +1,13 @@
 #include "adamic.h"
 #include "view_callables.h"
+#include "view_set_intrinsics.h"
 #include <string.h>
 
 adamic_closure *adamic_view_callable_typed(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected, bool absent, bool optional) {
+    if (object != NULL && object->heap.kind == adamic_kind_map) {
+        *method = adamic_view_set_method((const adamic_map *)object, name, expression, expected);
+        return NULL;
+    }
     if (object != NULL) {
         adamic_value *own = adamic_object_optional_field(object, name, cache);
         if (own == NULL && object->shape->methods != NULL) {

@@ -1,0 +1,10 @@
+interface Base { readonly add: unknown; }
+interface Target { add(value: string): this; has(value: string): boolean; readonly size: number; }
+function probe(value: Base): void {
+    const viewed = value as Target;
+    const key = "key".repeat(2);
+    const result = viewed.add(key);
+    console.log(`${result === viewed}/${result.has(key)}/${viewed.size}`);
+    console.log(`${viewed.add(key).size}`);
+}
+probe(new Set<string>());
