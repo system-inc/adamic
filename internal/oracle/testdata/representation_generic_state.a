@@ -1,0 +1,13 @@
+interface SolutionBuilderState<T> {
+    readonly value: T;
+    readonly label: string;
+}
+function passState<T>(state: SolutionBuilderState<T>): SolutionBuilderState<T> {
+    const held = state;
+    return held;
+}
+const numeric: SolutionBuilderState<number> = { value: 17, label: 'number' };
+const textual: SolutionBuilderState<string> = { value: 'value'.repeat(2), label: 'string' };
+console.log(`${passState(numeric) === numeric}`);
+console.log(`${passState(textual) === textual}`);
+console.log(`${numeric.value} ${textual.value}`);
