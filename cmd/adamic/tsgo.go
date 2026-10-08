@@ -11,6 +11,7 @@ import (
 func build(path, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
+	explain := false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -24,6 +25,8 @@ func build(path, output string, arguments []string) int {
 			options.Count = true
 		case "--sanitize":
 			options.Sanitize = true
+		case "--explain-checks":
+			explain = true
 		case "--tsgo":
 			index++
 			if index >= len(arguments) || archive != "" {
@@ -55,6 +58,9 @@ func build(path, output string, arguments []string) int {
 	}
 	if program == nil {
 		return code
+	}
+	if explain {
+		explainNonNullChecks(os.Stderr, program)
 	}
 	var err error
 	if native.UsesTSGo(program) {
