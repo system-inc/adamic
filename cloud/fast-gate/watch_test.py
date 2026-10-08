@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void'):
+    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -40,7 +40,7 @@ class Watcher:
         self.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in self.tips))
         (self.state / 'seen').write_text(''.join(f'{b} {sha}\n' for b, sha in self.tips))
         (self.state / 'queue').write_text(''.join(f'S 900 {b} {sha}\n' for b, sha in self.tips))
-        (self.state / 'slots').write_text(''.join(f'box{i % 2} S\n' for i in range(max(count, 1))))
+        (self.state / 'slots').write_text(slots if slots is not None else ''.join(f'box{i % 2} S\n' for i in range(max(count, 1))))
         self.script(self.bin / 'git', '''case "$*" in
 *rev-parse*) cat "$TEST_ROOT/head" ;;
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
@@ -137,8 +137,8 @@ fi
         p = self.root / name
         return p.read_text() if p.exists() else ''
 
-    def wait(self, predicate):
-        deadline = time.monotonic() + 8
+    def wait(self, predicate, seconds=8):
+        deadline = time.monotonic() + seconds
         while time.monotonic() < deadline:
             if predicate():
                 return
@@ -484,6 +484,30 @@ class WatchTests(unittest.TestCase):
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
+    def test_a_realistic_queue_fills_and_refills_every_slot_in_seconds(self):
+        # @system_adamic, Oct 8: a watcher change is tested against a realistic queue before it deploys.
+        # 150 tips, a run of discards, sixteen slots on four boxes, and every gate finishing at once: each
+        # fill and each reap-and-refill must take seconds, not the minutes a per-pick ranking took.
+        slots = ''.join(f'box{b} B\nbox{b} S\nbox{b} S\nbox{b} S\n' for b in range(4))
+        w = Watcher(150, mode='hold', slots=slots)
+        self.addCleanup(w.close)
+        discards = ''.join('S 800 codex/stale%d %040x\n' % (i, i + 1) for i in range(40))
+        (w.state / 'queue').write_text(discards + (w.state / 'queue').read_text())
+        workers = lambda: [x for x in w.read('starts').splitlines() if x.startswith('codex/test')]
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'), seconds=60)
+        started = time.monotonic()
+        # Twelve small slots; the area slots stay for big tips until a small one has waited two minutes.
+        w.wait(lambda: len(workers()) == 12, seconds=60)
+        fill = time.monotonic() - started
+        started = time.monotonic()
+        w.put('mode', 'pass')
+        w.wait(lambda: len(workers()) >= 24, seconds=60)
+        refill = time.monotonic() - started
+        print('fill %.1f s, reap and refill %.1f s' % (fill, refill))
+        self.assertLess(fill, 8, 'twelve slots took %.1f s to fill' % fill)
+        self.assertLess(refill, 8, 'twelve finished gates took %.1f s to reap and refill' % refill)
+
     def test_discards_leave_the_queue_in_one_pass_before_ranking(self):
         w = self.start(0)
         live = ('codex/live', '7' * 40)
@@ -514,11 +538,12 @@ class WatchTests(unittest.TestCase):
         w.put('task-aaaaaaa', 'Branches: codex/step-a*\n')
         w.put('task-bbbbbbb', 'Branches: codex/step-b*\n')
         (w.state / 'slots').write_text('')
+        # Ranking reads front once per pass, so it is in place before any pass could rank these tips.
+        (w.state / 'front').write_text('# ruled to land first\ncloud/land-gate-speed*\n')
+        (w.state / 'skip-globs').write_text('codex/views-* until compiler/area-views-next lands\n')
         w.put('initial', 'pass')
         w.wait(lambda: 'done canary:' in w.read('output'))
         w.wait(lambda: (w.state / 'step-globs').exists() and 'codex/step-b*' in (w.state / 'step-globs').read_text())
-        (w.state / 'front').write_text('# ruled to land first\ncloud/land-gate-speed*\n')
-        (w.state / 'skip-globs').write_text('codex/views-* until compiler/area-views-next lands\n')
         tips = [('codex/step-b-x', '1' * 40), ('cloud/land-gate-speed', '2' * 40), ('codex/views-a', '3' * 40)]
         (w.state / 'seen').write_text(''.join('%s %s\n' % t for t in tips))
         w.put('tips', ''.join('%s\trefs/heads/%s\n' % (sha, b) for b, sha in tips))

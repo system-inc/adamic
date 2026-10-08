@@ -337,27 +337,128 @@ pruneQueue() {
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
 # landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed.
 stepPosition() {
-  local branch=$1 position glob
-  while read -r glob _; do
-    [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && { echo 0; return; }
-  done < <(cat "${state}/front" 2>/dev/null)
-  while read -r position glob; do
-    [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && { echo "${position}"; return; }
-  done < "${state}/step-globs.poll"
+  local branch=$1 glob index
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    [[ ${branch} == ${glob} ]] && { echo 0; return; }
+  done
+  for index in ${stepGlobList[@]+"${!stepGlobList[@]}"}; do
+    [[ ${branch} == ${stepGlobList[index]} ]] && { echo "${stepPositions[index]}"; return; }
+  done
   echo 99
 }
+# Ranking reads its globs once per scheduling pass (loadRanking), so ranking a tip forks nothing. At 150
+# queued, a fork-per-tip ranking took about 24 s for every pick (Oct 8 19:15Z, measured by the realistic
+# queue test), and a reap waited behind each one.
+loadRanking() {
+  local glob position
+  reservationList=() frontList=() stepGlobList=() stepPositions=() priorityList=()
+  while read -r glob; do [ -n "${glob}" ] && reservationList+=("${glob}"); done <<< "$(reservationGlobs)"
+  if [ -f "${state}/front" ]; then
+    while read -r glob _; do [ -n "${glob}" ] && [[ ${glob} != \#* ]] && frontList+=("${glob}"); done < "${state}/front"
+  fi
+  while read -r position glob; do
+    [ -n "${glob}" ] && { stepPositions+=("${position}"); stepGlobList+=("${glob}"); }
+  done < "${state}/step-globs.poll"
+  if [ -f "${state}/priority" ]; then
+    while read -r glob; do [ -n "${glob}" ] && priorityList+=("${glob}"); done < "${state}/priority"
+  fi
+  # Every tip matching no reservation glob has the same usable slots: one probe stands for all of them.
+  unreservedProbe=loom/unreserved-probe
+  matchesReservation "${unreservedProbe}" && unreservedProbe=""
+  return 0
+}
+matchesReservation() {
+  local glob
+  for glob in ${reservationList[@]+"${reservationList[@]}"}; do
+    [[ $1 == ${glob} ]] && return 0
+  done
+  return 1
+}
+# The static part of each queued tip's rank, once per pass: position * 100 + rank, the time it was queued,
+# its class, branch and sha, and whether it matches a reservation. Sorted as the picks read it: lowest
+# first, newest first among equals.
+rankQueue() {
+  local class queued branch sha rank position reserved name
+  while read -r class queued branch sha; do
+    reserved=no
+    if matchesReservation "${branch}"; then reserved=yes rank=0
+    elif [[ ${branch} == cloud/land-* ]]; then rank=1
+    elif [[ ${branch} == area/* ]]; then rank=2
+    elif [[ ${branch} == devtools/* ]]; then rank=3
+    else rank=4; fi
+    if [ "${rank}" -gt 2 ]; then
+      for name in ${priorityList[@]+"${priorityList[@]}"}; do [ "${name}" = "${branch}" ] && rank=2; done
+    fi
+    if [ "${rank}" = 0 ]; then position=0; else position=$(stepPosition "${branch}"); fi
+    echo "$(( position * 100 + rank )) ${queued} ${class} ${branch} ${sha} ${reserved}"
+  done < "${state}/queue" | sort -k1,1n -k2,2nr > "${state}/queue.ranked"
+}
+# The box a big tip may borrow a small slot on: the first box among these slots' with a free small slot and
+# fewer big gates running than its limit.
+borrowableBox() {
+  local eligible=$1 b limit
+  echo "${eligible}" | awk '$2 == "S" {print $1}' | while read -r b; do
+    limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
+    [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
+  done | head -1
+}
+# One pick from the ranked list: the tip with the lowest position * 100 + rank + extra that a free slot can
+# take now, as "score queued branch sha class slot box". Extra (a borrowed slot, 10) never crosses a
+# position (100 apart), so the walk stops at the first position past the best found.
+pickNext() {
+  local key queued class branch sha reserved eligible classes borrowable own slot extra box score
+  local position best="" bestScore=0 bestPosition=0 generalEligible="" generalClasses="" generalBorrowable=""
+  if [ -n "${unreservedProbe}" ]; then
+    generalEligible=$(usableSlots "${unreservedProbe}")
+    generalClasses=" $(echo "${generalEligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')"
+    generalBorrowable=$(borrowableBox "${generalEligible}")
+  fi
+  while read -r key queued class branch sha reserved; do
+    position=$(( key / 100 ))
+    [ -n "${best}" ] && [ "${position}" -gt "${bestPosition}" ] && break
+    if [ "${reserved}" = no ] && [ -n "${unreservedProbe}" ]; then
+      eligible=${generalEligible} classes=${generalClasses} borrowable=${generalBorrowable}
+    else
+      eligible=$(usableSlots "${branch}")
+      if [ "${reserved}" = yes ]; then
+        own=$(reservedBoxes "${branch}" "${class}")
+        [ -n "${own}" ] && eligible=$(echo "${eligible}" | grep -xF "$(echo "${own}" | sed "s/\$/ ${class}/")")
+      fi
+      classes=" $(echo "${eligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')"
+      borrowable=$(borrowableBox "${eligible}")
+    fi
+    slot=${class} extra=0
+    if [[ ${classes} != *" ${class} "* ]]; then
+      # A landing candidate (Kirk's five, Oct 8) borrows ahead of small worker tips; any other big tip after them.
+      if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10; [[ ${branch} == cloud/land-* ]] && extra=0
+      elif [ "${class}" = S ] && [[ ${classes} == *" B "* ]] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
+      else continue; fi
+    fi
+    [ "${reserved}" = yes ] && extra=0
+    score=$(( key + extra ))
+    [ -n "${best}" ] && [ "${score}" -ge "${bestScore}" ] && continue
+    if [ "${slot}" = "${class}" ] || [ "${slot}" = B ]; then
+      box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
+    else box=${borrowable}; fi
+    best="${score} ${queued} ${branch} ${sha} ${class} ${slot} ${box}" bestScore=${score} bestPosition=${position}
+    # The list is in key order, newest first among equals: with nothing added, nothing after can beat it.
+    [ "${extra}" = 0 ] && break
+  done < "${state}/queue.ranked"
+  echo "${best}"
+}
 usableSlots() {
-  local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation
+  local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation held=" "
+  # Boxes a running reservation holds, found once rather than once per free slot.
+  for reservation in "${state}"/reserved-running/*; do
+    [ -f "${reservation}" ] && held="${held}$(cat "${reservation}") "
+  done
+  while read -r runningBranch runningSha runningSlot runningBox rest; do
+    [ -n "${runningBranch}" ] || continue
+    slotReserved "${runningBranch}" "${runningBox:-threadripper}" "${runningSlot}" && held="${held}${runningBox:-threadripper} "
+  done < "${state}/running.tmp"
   while read -r box slot; do
     blocked=no
-    for reservation in "${state}"/reserved-running/*; do
-      [ -f "${reservation}" ] || continue
-      [ "$(cat "${reservation}")" = "${box}" ] && blocked=yes
-    done
-    while read -r runningBranch runningSha runningSlot runningBox rest; do
-      [ "${runningBox:-threadripper}" = "${box}" ] || continue
-      slotReserved "${runningBranch}" "${box}" "${runningSlot}" && blocked=yes
-    done < "${state}/running.tmp"
+    [[ ${held} == *" ${box} "* ]] && blocked=yes
     # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there. The
     # deploy canary is exempt: nothing dispatches until it has a verdict, so a canary kept off the only
     # free box (the draining one) froze everything, the reserved tip included (Oct 8 17:30Z, 67 queued).
@@ -392,7 +493,7 @@ usableSlots() {
 drainingBoxes() {
   local class queued branch sha
   while read -r class queued branch sha; do
-    reservedBranch "${branch}" && reservedBoxes "${branch}" "${class}"
+    matchesReservation "${branch}" && reservedBoxes "${branch}" "${class}"
   done < "${state}/queue" | sort -u
 }
 # The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
@@ -562,6 +663,7 @@ while true; do
   clearStaleSlotLock
   if mkdir "${state}/slot-table.lock" 2>/dev/null; then
   slotTableOwned=yes
+  loadRanking
   echo "$$ $(/bin/date -u +%s)" > "${state}/slot-table.lock/holder"
   # A deploy barrier persists until this tools version gets a real main verdict.
   # A running probe is never duplicated, including across watcher restarts.
@@ -586,6 +688,7 @@ while true; do
     fi
   fi
   pruneQueue
+  rankQueue
   while [ "${canaryRequired}" = 0 ] && [ ! -f "${state}/storm" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
     # Free slots per box and class: the table's count less the gates running there (an entry from
@@ -606,39 +709,12 @@ while true; do
     # running). The area slot has its own CPUs (cloud/fast-gate.sh's taskset), so it never runs beside a
     # big gate on the same CPUs.
     pollTime=$(date -u +%s)
-    next=$(while read -r class queued branch sha; do
-      eligible=$(usableSlots "${branch}")
-      if reservedBranch "${branch}"; then
-        own=$(reservedBoxes "${branch}" "${class}")
-        [ -n "${own}" ] && eligible=$(echo "${eligible}" | grep -xF "$(echo "${own}" | sed "s/\$/ ${class}/")")
-      fi
-      classes=$(echo "${eligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')
-      borrowable=$(echo "${eligible}" | awk '$2 == "S" {print $1}' | while read -r b; do
-        limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
-        [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
-      done | head -1)
-      slot=${class} extra=0
-      if [[ " ${classes}" != *" ${class} "* ]]; then
-        # A landing candidate (Kirk's five, Oct 8) borrows ahead of small worker tips; any other big tip after them.
-        if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10; [[ ${branch} == cloud/land-* ]] && extra=0
-        elif [ "${class}" = S ] && [[ " ${classes}" == *" B "* ]] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
-        else continue; fi
-      fi
-      if reservedBranch "${branch}"; then rank=0; extra=0
-      elif [[ ${branch} == cloud/land-* ]]; then rank=1
-      elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=2
-      elif [[ ${branch} == devtools/* ]]; then rank=3
-      else rank=4; fi
-      if [ "${slot}" = "${class}" ] || [ "${slot}" = B ]; then
-        box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
-      else box=${borrowable}; fi
-      position=$(stepPosition "${branch}")
-      [ "${rank}" = 0 ] && position=0
-      echo "$(( position * 100 + rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"
-    done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
+    next=$(pickNext)
     [ -n "${next}" ] || break
     read -r _ queued branch sha class slot box <<< "${next}"
     grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
+    awk -v q="${queued}" -v b="${branch}" -v s="${sha}" '!($2 == q && $4 == b && $5 == s)' "${state}/queue.ranked" > "${state}/queue.ranked.tmp"
+    mv "${state}/queue.ranked.tmp" "${state}/queue.ranked"
     grep -qx "${sha}" "${state}/gated" && continue
     # The skip file ("branch sha" per line) takes a tip out by hand: a stale landing candidate, say.
     grep -qxF "${branch} ${sha}" "${state}/skip" 2>/dev/null && { echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue; }
