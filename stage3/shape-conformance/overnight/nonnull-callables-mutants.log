@@ -1,0 +1,3 @@
+drop-nonnull-callable-reference: valid built mutant; independent aliasIdentity assertion catches it
+nonnull-trusts-wrong-payload: valid built mutant; independent wrongIdentity assertion catches it
+nonnull-erases-host-boundaries: valid built mutant; independent hostIdentity assertion catches it

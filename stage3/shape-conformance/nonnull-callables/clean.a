@@ -1,0 +1,28 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';readonly ready?:unknown;}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function aliasIdentity(value:Base):Ready {return value as Ready;}
+function directIdentity(value:Base):Ready {return value as Ready;}
+function passedIdentity(value:Base):Ready {return value as Ready;}
+function joinedOne(value:Base):Ready {return value as Ready;}
+function joinedTwo(value:Base):Ready {return value as Ready;}
+function wrongIdentity(value:Base):Ready {return value as Ready;}
+function hostIdentity(value:Base):Ready {return value as Ready;}
+function nullableIdentity(value:Base):Ready {return value as Ready;}
+function escapedIdentity(value:Base):Ready {return value as Ready;}
+function apply(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}
+function exercise(flag:boolean):Ready[] {
+ const raw={kind:'ok' as const,ready:true};
+ const alias=(aliasIdentity!);const a=alias(raw);
+ const b=(directIdentity!)(raw);
+ const c=apply(passedIdentity!,raw);
+ const joined=flag?joinedOne!:joinedTwo!;const d=joined(raw);
+ const wrong=(wrongIdentity!);const wrongRaw={kind:'ok' as const,ready:0};const e=wrong(wrongRaw);
+ const fromHost=(hostIdentity!);const f=fromHost(JSON.parse('{"kind":"ok","ready":true}') as Base);
+ const nullable=flag?nullableIdentity!:undefined;const g=nullable?nullable(raw):raw;
+ const opaque={call(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}};
+ const h=opaque.call(escapedIdentity!,raw);const i=nullableResultRead(flag);
+ return [a,b,c,d,e,f,g,h,i];
+}
+function nullableResultRead(flag:boolean):Ready {const raw={kind:'ok' as const,ready:true};const nullable=flag?nullableIdentity!:undefined;const node=nullable?nullable(raw):raw;return node as Ready;}

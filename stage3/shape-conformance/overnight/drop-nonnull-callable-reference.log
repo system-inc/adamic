@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-nonnull-mutants-8oegtdr3/drop-nonnull-callable-reference/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/nonnull-callables/controls.py", line 13, in <module>
+    if owner in ['aliasIdentity','directIdentity','passedIdentity','joinedOne','joinedTwo','nullableIdentity']:assert row['outcome']=='conforms and ready (free)',(owner,row)
+                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('aliasIdentity', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 257, 'end': 271, 'kind': 'tagged', 'text': 'value as Ready', 'adapted': {'start': 257, 'end': 271, 'owner': 'aliasIdentity'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['function value may receive untracked callback arguments at /tmp/shape-nonnull-callables-controls/src/compiler/main.a:17:15'], 'allocation_sites': [-1], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

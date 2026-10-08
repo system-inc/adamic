@@ -1,0 +1,305 @@
+{
+  "status": "PASS",
+  "node": [
+    [
+      "boolean",
+      "boolean",
+      "boolean",
+      "boolean",
+      "number",
+      "boolean",
+      "boolean",
+      "boolean",
+      "boolean"
+    ],
+    [
+      "boolean",
+      "boolean",
+      "boolean",
+      "boolean",
+      "number",
+      "boolean",
+      "boolean",
+      "boolean",
+      "boolean"
+    ]
+  ],
+  "controls": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 257,
+      "end": 271,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 257,
+        "end": 271,
+        "owner": "aliasIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 324,
+      "end": 338,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 324,
+        "end": 338,
+        "owner": "directIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 391,
+      "end": 405,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 391,
+        "end": 405,
+        "owner": "passedIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 453,
+      "end": 467,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 453,
+        "end": 467,
+        "owner": "joinedOne"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 515,
+      "end": 529,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 515,
+        "end": 529,
+        "owner": "joinedTwo"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 581,
+      "end": 595,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 581,
+        "end": 595,
+        "owner": "wrongIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -2
+      ],
+      "fields": [
+        {
+          "name": "ready",
+          "reason": "declared field type requires a value guard",
+          "declared": "number",
+          "expected": "boolean"
+        }
+      ],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 646,
+      "end": 660,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 646,
+        "end": 660,
+        "owner": "hostIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque host result requires runtime semantic metadata at /tmp/shape-nonnull-callables-controls/src/compiler/main.a:22:50"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 715,
+      "end": 729,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 715,
+        "end": 729,
+        "owner": "nullableIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -4,
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 783,
+      "end": 797,
+      "kind": "tagged",
+      "text": "value as Ready",
+      "adapted": {
+        "start": 783,
+        "end": 797,
+        "owner": "escapedIdentity"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "method/closure dispatch not certified at /tmp/shape-nonnull-callables-controls/src/compiler/main.a:25:10",
+        "function value may receive untracked callback arguments at /tmp/shape-nonnull-callables-controls/src/compiler/main.a:25:22"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1827,
+      "end": 1840,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1827,
+        "end": 1840,
+        "owner": "nullableResultRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "no tracked producer"
+      ],
+      "allocation_sites": [
+        -4,
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ]
+}

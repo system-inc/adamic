@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-nonnull-mutants-8oegtdr3/nonnull-erases-host-boundaries/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/nonnull-callables/controls.py", line 15, in <module>
+    elif owner=='hostIdentity':assert row['outcome']=='unknown' and row['reason']=='host metadata',(owner,row)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('hostIdentity', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 646, 'end': 660, 'kind': 'tagged', 'text': 'value as Ready', 'adapted': {'start': 646, 'end': 660, 'owner': 'hostIdentity'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['callback target identity is unknown', 'opaque call may mutate projected fields', 'local or result has no tracked producer', 'no reaching allocation established', 'no tracked producer'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

@@ -1,0 +1,110 @@
+=== RUN   TestShapeErasureFixtures
+=== RUN   TestShapeErasureFixtures/proven
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-property
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-callback
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-generic
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-callback-join
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/nonconforming-callback-join
+    shape_conformance_test.go:43: remaining casts=2 checked reads=2
+=== RUN   TestShapeErasureFixtures/nonconforming-generic
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming-property
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming-callback
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/uninitialized
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/host
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+--- PASS: TestShapeErasureFixtures (0.37s)
+    --- PASS: TestShapeErasureFixtures/proven (0.04s)
+    --- PASS: TestShapeErasureFixtures/proven-property (0.03s)
+    --- PASS: TestShapeErasureFixtures/proven-callback (0.03s)
+    --- PASS: TestShapeErasureFixtures/proven-generic (0.03s)
+    --- PASS: TestShapeErasureFixtures/proven-callback-join (0.03s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-callback-join (0.03s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-generic (0.03s)
+    --- PASS: TestShapeErasureFixtures/nonconforming (0.03s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-property (0.03s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-callback (0.03s)
+    --- PASS: TestShapeErasureFixtures/uninitialized (0.03s)
+    --- PASS: TestShapeErasureFixtures/host (0.03s)
+=== RUN   TestShapeCertificatesSeparateNumberAndBoolean
+--- PASS: TestShapeCertificatesSeparateNumberAndBoolean (0.03s)
+=== RUN   TestShapeDynamicArrayFrontier
+=== RUN   TestShapeDynamicArrayFrontier/proven-dynamic
+    shape_dynamic_erasure_test.go:40: index reaching={Sites:[-1] Unknown:false Reasons:[]}
+    shape_dynamic_erasure_test.go:33: cast reaching={Sites:[-1] Unknown:true Reasons:[local 2 has a producer without a value]}
+    shape_dynamic_erasure_test.go:51: checked reads=1
+=== RUN   TestShapeDynamicArrayFrontier/nonconforming-dynamic
+    shape_dynamic_erasure_test.go:40: index reaching={Sites:[-2 -1] Unknown:false Reasons:[]}
+    shape_dynamic_erasure_test.go:33: cast reaching={Sites:[-2 -1] Unknown:true Reasons:[local 3 has a producer without a value]}
+    shape_dynamic_erasure_test.go:51: checked reads=1
+--- PASS: TestShapeDynamicArrayFrontier (0.06s)
+    --- PASS: TestShapeDynamicArrayFrontier/proven-dynamic (0.03s)
+    --- PASS: TestShapeDynamicArrayFrontier/nonconforming-dynamic (0.03s)
+=== RUN   TestShapeDynamicKeys
+=== RUN   TestShapeDynamicKeys/finite
+=== RUN   TestShapeDynamicKeys/open
+=== RUN   TestShapeDynamicKeys/unbounded
+=== RUN   TestShapeDynamicKeys/absent
+=== RUN   TestShapeDynamicKeys/mutation
+=== RUN   TestShapeDynamicKeys/store
+=== RUN   TestShapeDynamicKeys/array
+=== RUN   TestShapeDynamicKeys/array-mutation
+=== RUN   TestShapeDynamicKeys/production-array
+=== RUN   TestShapeDynamicKeys/opaque-store
+=== RUN   TestShapeDynamicKeys/depth
+=== RUN   TestShapeDynamicKeys/spread
+--- PASS: TestShapeDynamicKeys (0.00s)
+    --- PASS: TestShapeDynamicKeys/finite (0.00s)
+    --- PASS: TestShapeDynamicKeys/open (0.00s)
+    --- PASS: TestShapeDynamicKeys/unbounded (0.00s)
+    --- PASS: TestShapeDynamicKeys/absent (0.00s)
+    --- PASS: TestShapeDynamicKeys/mutation (0.00s)
+    --- PASS: TestShapeDynamicKeys/store (0.00s)
+    --- PASS: TestShapeDynamicKeys/array (0.00s)
+    --- PASS: TestShapeDynamicKeys/array-mutation (0.00s)
+    --- PASS: TestShapeDynamicKeys/production-array (0.00s)
+    --- PASS: TestShapeDynamicKeys/opaque-store (0.00s)
+    --- PASS: TestShapeDynamicKeys/depth (0.00s)
+    --- PASS: TestShapeDynamicKeys/spread (0.00s)
+=== RUN   TestShapeFlowJoinsArgumentsAssignmentsAndReturns
+--- PASS: TestShapeFlowJoinsArgumentsAssignmentsAndReturns (0.00s)
+=== RUN   TestShapeFlowUnknownRetainsKnownAllocations
+--- PASS: TestShapeFlowUnknownRetainsKnownAllocations (0.00s)
+=== RUN   TestShapeFlowEmptyCycleIsUnknown
+--- PASS: TestShapeFlowEmptyCycleIsUnknown (0.00s)
+=== RUN   TestShapeFlowOmittedAndCallbackArgumentsAreUnknown
+--- PASS: TestShapeFlowOmittedAndCallbackArgumentsAreUnknown (0.00s)
+=== RUN   TestShapeProjectionJoinsInitialAndStoredValues
+--- PASS: TestShapeProjectionJoinsInitialAndStoredValues (0.00s)
+=== RUN   TestShapeProjectionCyclesAndMissingFieldsStayUnknown
+--- PASS: TestShapeProjectionCyclesAndMissingFieldsStayUnknown (0.00s)
+=== RUN   TestShapeProjectionConstantElements
+--- PASS: TestShapeProjectionConstantElements (0.00s)
+=== RUN   TestShapeCallbackAliasesParametersAndJoins
+--- PASS: TestShapeCallbackAliasesParametersAndJoins (0.00s)
+=== RUN   TestShapeCallbackEscapesOmissionsAndReturnedFactories
+--- PASS: TestShapeCallbackEscapesOmissionsAndReturnedFactories (0.00s)
+=== RUN   TestShapeMissingValueProducers
+=== RUN   TestShapeMissingValueProducers/local
+=== RUN   TestShapeMissingValueProducers/result
+--- PASS: TestShapeMissingValueProducers (0.00s)
+    --- PASS: TestShapeMissingValueProducers/local (0.00s)
+    --- PASS: TestShapeMissingValueProducers/result (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.473s
+=== RUN   TestClosureTargetsBoundOnlyProvenValues
+=== PAUSE TestClosureTargetsBoundOnlyProvenValues
+=== CONT  TestClosureTargetsBoundOnlyProvenValues
+--- PASS: TestClosureTargetsBoundOnlyProvenValues (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.012s

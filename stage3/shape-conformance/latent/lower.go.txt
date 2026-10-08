@@ -948,6 +948,8 @@ func (m *latentShapeMeter) closedCallbackReference(node *ast.Node) bool {
             transparent = parent.AsParenthesizedExpression().Expression == node
         case ast.KindAsExpression:
             transparent = parent.AsAsExpression().Expression == node
+        case ast.KindNonNullExpression:
+            transparent = parent.AsNonNullExpression().Expression == node
         case ast.KindConditionalExpression:
             conditional := parent.AsConditionalExpression()
             transparent = conditional.WhenTrue == node || conditional.WhenFalse == node

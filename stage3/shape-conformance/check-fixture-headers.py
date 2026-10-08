@@ -38,7 +38,7 @@ class Harness:
         self.failure = detail
 
 paths = sorted(str(p.relative_to(root)) for p in (root / 'stage3/shape-conformance').rglob('*.a'))
-assert len(paths) == 19, paths
+assert len(paths) == 20, paths
 normal = Harness('normal')
 gate.Gate.aCheck(normal, paths)
 assert normal.exits['a-check'] == 0, normal.failure
