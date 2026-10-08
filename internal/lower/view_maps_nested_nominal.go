@@ -46,6 +46,19 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 	if !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) {
 		return 0
 	}
+	present := l.checker.GetNonNullableType(target)
+	if present != target {
+		of, known := l.representation(target)
+		if !known {
+			return 0
+		}
+		child := l.mapNestedNominalEntrySlot(node, present)
+		if child == 0 {
+			return 0
+		}
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNullable, Of: of, Element: child, Null: l.includesNull(target), Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target)})
+		return ir.ViewContractID(len(l.result.ViewContracts))
+	}
 	if l.viewArrayBase(target) != nil {
 		return l.mapNominalArrayEntrySlot(node, target)
 	}

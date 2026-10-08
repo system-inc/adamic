@@ -11,6 +11,8 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('aggregate-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalAggregateMutants$'),
+ ('aggregate-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewNullableNominalAggregateMutants$'),
  ('mutable-nominal-native-write', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMutableNominalWriteMutant$'),
  ('mutable-nominal-javascript-write', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewMutableNominalWriteMutant$'),
  ('mutable-nominal-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMutableNominalFieldMutant$'),

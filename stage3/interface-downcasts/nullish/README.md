@@ -810,3 +810,33 @@ TestCheckedViewMutableNominal`) passed in 188.573 seconds. Touched-package check
 (`View|Map|Contract|Callable|Tuple`, inherited Phantom exclusion) passed: IR 0.014s,
 lower 5.371s, native 36.508s, JavaScript 0.999s. Scoped vet passed. The complete
 repository gate was not run for this group.
+
+### Nullable nominal aggregates, October 8
+
+Finite private nominal aggregate descriptors now have nullish wrappers for
+`Entry | null`, `Entry | undefined`, and `Entry | null | undefined`, preserving
+the physical representation. Controls cover immutable structural entries and
+nominal array entries, present members and stored missing values. Producers
+traverse present aggregates and skip only the declared sentinel alternatives.
+Existing class identity checks remain independent at escaped field/element reads.
+
+Five producer-only payload mutants test nested structural lookalikes in all
+three variants and the excluded nullish sentinel in each single-sentinel variant.
+The two backend producer guard bypasses fail behaviorally across these fixtures.
+The opposite-null mutant uses the ordinary boxed null IR; JSON's special null IR
+would instead have supplied a native undefined pointer and is not evidence for
+this check. Evidence is under `evidence/map-nominal-aggregate-*` and
+`evidence/map-aggregate-nominal-*`.
+
+Optional aggregate fields, nullable class source-slot widening, boxed class/null
+array elements and recursive nominal aggregates remain outside this group.
+Boxed/packed array JSON extraction retains its named consumer refusal. Callable
+conventions stay with lane 5 and required primitive brand refusals stay unchanged.
+Exact production reaching-view discharge remains unmeasured.
+
+Nullable aggregate validation: the scoped uncached oracle (`Map|Nullish|
+NullableSelection|TestCheckedViewArrayJSONStorageRefusal|TestCheckedViewNominalArray|
+TestCheckedViewMutableNominal|TestCheckedViewNullableNominalAggregate`) passed in
+183.157 seconds. Touched-package checks (`View|Map|Contract|Callable|Tuple`, inherited
+Phantom exclusion) passed: IR 0.017s, lower 5.474s, native 36.916s, JavaScript 1.033s.
+Scoped vet passed. The complete repository gate was not run for this group.

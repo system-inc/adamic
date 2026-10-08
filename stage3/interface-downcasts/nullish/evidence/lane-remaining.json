@@ -58,6 +58,11 @@
       "family": "nominal class beneath mutable structural entries",
       "scope": "finite nonoptional structural paths; checked class-valued source-slot writes; field result identity rechecked independently after alias corruption; storage and mutable compatibility remain invariant",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nullable finite nominal aggregate entries",
+      "scope": "immutable structural object or array entries unioned with null, undefined, or both; producer traversal skips only declared sentinels; nested class identity remains checked independently",
+      "production_reaching_view_counts": "unmeasured"
     }
   ]
 }

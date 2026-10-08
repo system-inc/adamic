@@ -29,9 +29,9 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 	}
 	stored := e.temporary()
 	e.line("const void *%s = (const void *)%s;", stored, value)
-	accepted := []string{fmt.Sprintf("%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_object", stored, stored)}
+	accepted := []string{fmt.Sprintf("(%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_object)", stored, stored)}
 	if contract.Kind == ir.ViewArray {
-		accepted = []string{fmt.Sprintf("%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_array", stored, stored)}
+		accepted = []string{fmt.Sprintf("(%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_array)", stored, stored)}
 	}
 	if contract.NominalClass != 0 {
 		accepted = []string{fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", stored, contract.NominalClass)}

@@ -101,3 +101,58 @@ func mutableNominalFieldMutant(t *testing.T, write bool) {
 	}
 	t.Logf("Node=%q; forged alias store caught at next field read", truth.stdout)
 }
+
+func TestCheckedViewNullableNominalAggregateMutants(t *testing.T) {
+	for _, kind := range []string{"null", "undefined", "both"} {
+		sites := []string{"child"}
+		if kind != "both" {
+			sites = append(sites, "opposite")
+		}
+		for _, site := range sites {
+			t.Run(kind+"-"+site, func(t *testing.T) {
+				program, path := interfaceFixture(t, "nullish/maps/entry-nominal-aggregate-"+kind+"-producer")
+				truth := onNode(t, path)
+				fake := -1
+				for i, local := range program.Locals {
+					if local.Name == "fake" {
+						fake = i
+					}
+				}
+				if fake < 0 {
+					t.Fatal("missing fake")
+				}
+				changed := false
+				for i, statement := range program.Main {
+					declaration, ok := statement.(ir.Declare)
+					if !ok || program.Locals[declaration.Local].Name != "source" {
+						continue
+					}
+					creation, ok := declaration.Value.(ir.MapNew)
+					if !ok {
+						t.Fatal("missing Map")
+					}
+					if site == "child" {
+						creation.Entries[0][1] = ir.ObjectLiteral{Fields: []ir.Field{{Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}}}
+					} else if kind == "null" {
+						creation.Entries[1][1] = ir.Undefined{Of: ir.Union}
+					} else {
+						creation.Entries[1][1] = ir.Box{Value: ir.Null{}, NullReference: true}
+					}
+					declaration.Value = creation
+					program.Main[i] = declaration
+					changed = true
+				}
+				if !changed {
+					t.Fatal("mutation missed")
+				}
+				native, _ := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map nominal producer failed:") || !strings.Contains(string(got.stderr), "class identity") {
+						t.Fatalf("nullable aggregate ran on: %#v", got)
+					}
+				}
+				t.Logf("Node=%q; %s rejected for %s", truth.stdout, site, kind)
+			})
+		}
+	}
+}
