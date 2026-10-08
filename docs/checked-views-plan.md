@@ -1709,3 +1709,9 @@ indices still register statement cleanup. Existing non-tuple consumers retain
 and release as before. Required tuple/scalar, caught-throw and captured-store
 fixtures pass both backends and leaks; skip-release and double-release mutants
 are caught by the shared leak checker and AddressSanitizer respectively.
+
+Tuple arity foundation: FixedTuple plans may carry TupleVariable, TupleMinimum
+and TupleRest. Native and JavaScript predicates consume these only through
+the tuple contract path; Map schema matching preserves the complete domain.
+The producer ABI stays unchanged. Runtime and IR probes certify optional
+intervals and unbounded rest intervals; source admission is a separate patch.

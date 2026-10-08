@@ -47,6 +47,9 @@ type ViewContract struct {
 	ArrayReadonly bool
 	Element       ViewContractID
 	FixedTuple    bool
+	TupleVariable bool // Only tuple plans may carry an arity interval.
+	TupleMinimum  int
+	TupleRest     ViewContractID
 	Tuple         []ViewContractID
 	Functions     []int
 	Parameters    []ViewContractID

@@ -11,6 +11,10 @@ func (e *emitter) viewTuple(property ir.Property, value string) bool {
 		return false
 	}
 	e.declarations = append(e.declarations, "#include \"view_tuples.h\"")
-	e.line("adamic_view_tuple((const adamic_object *)%s, %d, %s, %s);", value, len(contract.Tuple), cString(contract.Name), cString(property.View))
+	if contract.TupleVariable {
+		e.line("adamic_view_tuple_range((const adamic_object *)%s, %d, %d, %t, %s, %s);", value, contract.TupleMinimum, len(contract.Tuple), contract.TupleRest != 0, cString(contract.Name), cString(property.View))
+	} else {
+		e.line("adamic_view_tuple((const adamic_object *)%s, %d, %s, %s);", value, len(contract.Tuple), cString(contract.Name), cString(property.View))
+	}
 	return true
 }

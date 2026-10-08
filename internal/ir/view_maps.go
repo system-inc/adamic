@@ -129,7 +129,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			if source.FixedTuple != target.FixedTuple {
 				return false
 			}
-			if len(source.Tuple) != len(target.Tuple) || source.ArrayReadonly && !target.ArrayReadonly {
+			if source.TupleVariable != target.TupleVariable || source.TupleVariable && source.TupleMinimum != target.TupleMinimum || (source.TupleRest == 0) != (target.TupleRest == 0) || len(source.Tuple) != len(target.Tuple) || source.ArrayReadonly && !target.ArrayReadonly {
 				return false
 			}
 			for index, element := range source.Tuple {

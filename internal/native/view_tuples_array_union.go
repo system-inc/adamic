@@ -21,7 +21,11 @@ func (e *emitter) viewTupleHeapUnion(id ir.ViewContractID, value, expression str
 		kind := "adamic_view_union_undefined"
 		if c.FixedTuple {
 			kind = "adamic_view_union_object"
-			cases = append(cases, fmt.Sprintf("case %d: return adamic_tuple_matches(value->payload.reference, %d);", childID, len(c.Tuple)))
+			if c.TupleVariable {
+				cases = append(cases, fmt.Sprintf("case %d: return adamic_tuple_matches_range(value->payload.reference, %d, %d, %t);", childID, c.TupleMinimum, len(c.Tuple), c.TupleRest != 0))
+			} else {
+				cases = append(cases, fmt.Sprintf("case %d: return adamic_tuple_matches(value->payload.reference, %d);", childID, len(c.Tuple)))
+			}
 		} else if c.Kind == ir.ViewScalar {
 			kind = map[ir.Type]string{ir.Number: "adamic_view_union_number", ir.String: "adamic_view_union_string", ir.Boolean: "adamic_view_union_boolean"}[c.Of]
 		}

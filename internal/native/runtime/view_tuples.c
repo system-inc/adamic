@@ -19,6 +19,15 @@ void adamic_view_tuple(const adamic_object *value, size_t length, const char *ex
  adamic_panic(message, (size_t)written);
 }
 
+// Variable tuple plans use actual arity in the existing immutable shape.
+bool adamic_tuple_matches_range(const adamic_object *value, size_t minimum, size_t maximum, bool rest) {
+ return value != NULL && value->tuple && value->shape->count >= minimum && (rest || value->shape->count <= maximum);
+}
+void adamic_view_tuple_range(const adamic_object *value, size_t minimum, size_t maximum, bool rest, const char *expected, const char *expression) {
+ if (adamic_tuple_matches_range(value, minimum, maximum, rest)) return;
+ adamic_view_tuple(value, SIZE_MAX, expected, expression);
+}
+
 // Normalize only the selected source-certified slot, retaining or boxing it.
 // The existing reader owns bounds, holes, storage and undefined checks.
 bool adamic_tuple_array_union_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, const char *expected, const char *expression, adamic_value *result) {

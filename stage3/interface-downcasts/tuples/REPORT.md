@@ -1,3 +1,20 @@
+Built: shared tuple arity metadata and validators, independently of optional/rest source admission.
+Commits: arity foundation follows the separately pushed forEach transfer patch.
+Checks: runtime release/sanitized/leak probe PASS 0.613s; JavaScript IR probe PASS 0.331s; original tuple and transfer regressions PASS 19.893s.
+Mutants: removing the range check accepts count zero and fails the named-refusal oracle (FAIL 0.162s).
+Remaining: optional/rest admission, five primary pairs / seven reads, and two overlapping lane 4b checks.
+
+Commands: go test ./internal/oracle ./internal/javascript -run
+'^(TestCheckedViewTupleArityRuntimeProbe|TestTupleArityIRPlanProbe)$' -count=1 -v
+(/tmp/views-tuples-arity-foundation-final.log). OriginalOutSignature,
+OriginalSignaturePositions and ForEachTransfer scoped oracle regression
+(/tmp/views-tuples-arity-foundation-regression.log). The runtime probe mutant
+uses ADAMIC_TUPLE_ARITY_PROBE_MUTANT=range and compiles successfully before
+its semantic mismatch (/tmp/views-tuples-arity-foundation-mutant.log).
+No new fixture rows or certified production pairs in this infrastructure patch.
+
+---
+
 Built: explicitly flagged tuple-union forEach ownership transfer; primary certification remains 5 pairs / 8 reads pending the final pair queue.
 Commits: transfer patch recorded in git history, independently of optional/rest admission.
 Checks: four ownership fixtures PASS 1.849s; lane 2/lane 4 array and union regressions PASS 25.236s; counts refreshed PASS 29.414s.

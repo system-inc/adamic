@@ -18,7 +18,15 @@ func (e *emitter) tupleArrayUnionCheck(id ir.ViewContractID, expression, value s
 		kind := "undefined"
 		if c.FixedTuple {
 			kind = "object"
-			cases = append(cases, fmt.Sprintf("case %d: return Array.isArray(snapshot.value) && snapshot.value.length === %d;", childID, len(c.Tuple)))
+			if c.TupleVariable {
+				upper := fmt.Sprintf("snapshot.value.length <= %d", len(c.Tuple))
+				if c.TupleRest != 0 {
+					upper = "true"
+				}
+				cases = append(cases, fmt.Sprintf("case %d: return Array.isArray(snapshot.value) && snapshot.value.length >= %d && %s;", childID, c.TupleMinimum, upper))
+			} else {
+				cases = append(cases, fmt.Sprintf("case %d: return Array.isArray(snapshot.value) && snapshot.value.length === %d;", childID, len(c.Tuple)))
+			}
 		} else if c.Kind == ir.ViewScalar {
 			kind = map[ir.Type]string{ir.Number: "number", ir.String: "string", ir.Boolean: "boolean"}[c.Of]
 		}
