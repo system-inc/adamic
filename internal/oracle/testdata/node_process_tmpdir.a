@@ -1,2 +1,0 @@
-import { tmpdir } from 'node:os';
-console.log(tmpdir());

@@ -1,8 +1,0 @@
-export {};
-interface CompilerOptions { target?: number; strict?: boolean }
-interface Base { readonly kind: 'box' | 'other' }
-interface Diagnostic extends Base { readonly kind: 'box'; readonly skippedOn?: keyof CompilerOptions | undefined }
-function helper(value: Diagnostic): void { console.log(String(value.skippedOn)); }
-const raw = {kind: 'box' as const, skippedOn: 'strict'};
-const base: Base = raw;
-helper(base as Diagnostic);

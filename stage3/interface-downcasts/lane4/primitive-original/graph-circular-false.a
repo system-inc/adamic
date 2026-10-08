@@ -1,8 +1,0 @@
-import type { FlowGraphNode } from 'original-tsc-private';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: FlowGraphNode; }
-function helper(value: FlowGraphNode): void { console.log(String(value.circular)); }
-const raw = {kind: 'box' as const, child: {circular: false}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

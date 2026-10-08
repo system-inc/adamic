@@ -1,9 +1,0 @@
-export {};
-type InternalSymbolName = '__call' | '__new';
-type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
-interface Base { readonly kind: 'box' | 'other' }
-interface Symbol extends Base { readonly kind: 'box'; readonly escapedName: __String }
-function helper(value: Symbol | undefined): void { if (value !== undefined) console.log(String(value.escapedName)); }
-const raw = {kind: 'box' as const};
-const base: Base = raw;
-helper(base as Symbol);

@@ -33,7 +33,6 @@ type Program struct {
 	filterFirst bool
 	prefix      []rune
 	anchored    bool
-	v8Refusal   error
 }
 
 type opcode uint8
@@ -128,7 +127,6 @@ func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error
 	p.firstASCII, p.filterFirst = p.nativeFirstASCII()
 	p.prefix = p.nativePrefix()
 	p.anchored = p.nativeAnchored()
-	p.v8Refusal = v8Divergence(tree, properties)
 	return p, nil
 }
 
@@ -331,18 +329,11 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		start = r.LastIndex
 	}
 	budget := executionBudget{limit: r.StepLimit}
-	// V8 first rewinds a lastIndex inside a pair, but its assertion-only
-	// paths can subsequently try the low-half position. ECMA-262 22.2.2.2
-	// and 22.2.7.2 describe a code-point Input list with no such position.
-	if unicodeMode(p.flags) && start > 0 && start < uint64(len(input)) && high(input[start-1]) && low(input[start]) {
-		start--
-	}
-	stickyEnd := start
-	if stateful && r.LastIndex == start+1 && start+1 < uint64(len(input)) && high(input[start]) && low(input[start+1]) {
-		stickyEnd++
-	}
 	for start <= uint64(len(input)) {
 		position := int(start)
+		if unicodeMode(p.flags) && position > 0 && position < len(input) && high(input[position-1]) && low(input[position]) {
+			position--
+		}
 		if p.anchored && position != 0 {
 			break
 		}
@@ -395,13 +386,14 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 			}
 			return match, nil
 		}
-		if p.anchored || p.flags.Sticky && start >= stickyEnd {
+		if p.anchored || p.flags.Sticky {
 			break
 		}
-		// Irregexp searches UTF-16 positions even under u/v. A consuming
-		// matcher rejects pair interiors; \B and negative lookaround can
-		// accept there. Match Node rather than AdvanceStringIndex's spec walk.
-		start = uint64(position + 1)
+		_, next, ok := readCharacter(input, position, 1, unicodeMode(p.flags))
+		if !ok {
+			break
+		}
+		start = uint64(next)
 	}
 	if stateful {
 		r.LastIndex = 0
@@ -586,9 +578,6 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
 func high(c uint16) bool { return c >= 0xd800 && c <= 0xdbff }
 func low(c uint16) bool  { return c >= 0xdc00 && c <= 0xdfff }
 func readCharacter(input []uint16, pos, dir int, unicode bool) (rune, int, bool) {
-	if unicode && pos > 0 && pos < len(input) && high(input[pos-1]) && low(input[pos]) {
-		return 0, pos, false
-	}
 	if dir > 0 {
 		if pos >= len(input) {
 			return 0, pos, false

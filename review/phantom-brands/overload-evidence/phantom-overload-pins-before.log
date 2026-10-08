@@ -1,7 +1,0 @@
---- FAIL: TestPhantomOverloadResultCastsAreErased (0.06s)
-    phantom_overload_results_test.go:41: /tmp/adamic-gate/TestPhantomOverloadResultCastsAreErased3099159277/001/main.a:2:1: stage 0 can't lower a function without a body yet
---- FAIL: TestPhantomOverloadLiteralResultRefused (0.06s)
-    phantom_overload_results_test.go:16: got /tmp/adamic-gate/TestPhantomOverloadLiteralResultRefused2946298459/001/main.a:1:1: stage 0 can't lower a function without a body yet, want named overload result refusal and fix
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.070s
-FAIL

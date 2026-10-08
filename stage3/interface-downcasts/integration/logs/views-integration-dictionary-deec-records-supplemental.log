@@ -1,8 +1,0 @@
---- FAIL: TestRecordRefusals (2.89s)
-    --- FAIL: TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));} (0.14s)
-        records_test.go:56: got /tmp/adamic-gate/TestRecordRefusalsfunction_show(rRecordstring,numbernull)v115560811/001/main.a:1:85: stage 0 can't lower JSON.stringify a union containing containers without runtime element metadata yet, want "value of type" (NotYet=true)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	5.923s
-ok  	github.com/system-inc/adamic/internal/native	58.029s
-ok  	github.com/system-inc/adamic/internal/oracle	15.168s
-FAIL

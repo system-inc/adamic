@@ -1,9 +1,0 @@
-=== RUN   TestCheckedViewScopedNeverWiderHelper
-    checked_views_union_targets_test.go:264: scope-guard bypass caught: unsupported viewed name ran on through wider helper
-    checked_views_union_targets_test.go:264: scope-guard bypass caught: unsupported viewed name ran on through wider helper
---- PASS: TestCheckedViewScopedNeverWiderHelper (2.02s)
-PASS
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-ok  	github.com/system-inc/adamic/internal/oracle	2.131s

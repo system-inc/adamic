@@ -1,4 +1,0 @@
-console.log(`${new RegExp('a{9223372036854775808,9223372036854775807}').test('a')}`);
-console.log(`${new RegExp('a{9223372036854775807,9223372036854775808}').test('a')}`);
-console.log(`${new RegExp('a{2147483648,2147483647}').test('a')}`);
-console.log(`${new RegExp('a{4294967296,2147483647}').test('a')}`);

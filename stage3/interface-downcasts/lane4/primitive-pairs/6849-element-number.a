@@ -1,8 +1,0 @@
-export {};
-interface Base { readonly kind: 'items' | 'other'; }
-interface Items extends Base { readonly kind: 'items'; readonly values: readonly (string | number)[]; }
-function read(values: readonly (string | number)[], index: number): string { return String(values[index]); }
-const raw = {kind: 'items' as const, values: ['word',42]};
-const base: Base = raw;
-const viewed = base as Items;
-console.log(read(viewed.values, 1));

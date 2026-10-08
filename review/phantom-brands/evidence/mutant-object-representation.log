@@ -1,7 +1,0 @@
---- FAIL: TestPhantomCastsAreErased (0.08s)
-    phantom_brands_test.go:71: casts must leave identical IR:
-        got []ir.Function{ir.Function{Name:"into", Parameters:[]int{0}, Returns:4, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:0, Of:3, Checked:false}}}, Closure:false, Environment:[]int(nil), MayThrow:false}, ir.Function{Name:"out", Parameters:[]int{1}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:1, Of:4, Checked:false}}}, Closure:false, Environment:[]int(nil), MayThrow:false}}
-        want []ir.Function{ir.Function{Name:"into", Parameters:[]int{0}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:0, Of:3, Checked:false}}}, Closure:false, Environment:[]int(nil), MayThrow:false}, ir.Function{Name:"out", Parameters:[]int{1}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:1, Of:3, Checked:false}}}, Closure:false, Environment:[]int(nil), MayThrow:false}}
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.086s
-FAIL

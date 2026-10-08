@@ -1,7 +1,0 @@
-let value: string | number = "text";
-function change(): void { value = 1; }
-change();
-if (typeof value !== "string") {
-    const impossible: never = value;
-    console.log("continued");
-}

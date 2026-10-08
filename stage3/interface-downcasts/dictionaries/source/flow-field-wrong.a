@@ -1,9 +1,0 @@
-interface Entry { readonly name: string; }
-interface Table { readonly [key: string]: Entry | undefined; }
-interface Base { readonly kind: 'Table'; }
-interface Holder extends Base { readonly symbols: Table; }
-function consume(holder:Holder):void {const entry=holder.symbols['item']; if(entry!==undefined) console.log(`${entry.name}`);}
-const payload={kind:'Table' as const,symbols:{item:{name:42}}};
-const base:Base=payload;
-const view=base as Holder;
-consume(view);

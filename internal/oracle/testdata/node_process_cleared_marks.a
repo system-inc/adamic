@@ -1,4 +1,0 @@
-import { performance } from 'node:perf_hooks';
-performance.mark('keep');
-performance.clearMarks();
-performance.measure('failure', 'keep');

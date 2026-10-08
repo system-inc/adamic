@@ -6,20 +6,13 @@ import (
 )
 
 func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
-	if search.ViewRead.View != "" {
-		return e.emitViewArraySearch(search)
-	}
 	array := e.value(search.Array)
 	value := e.value(search.Value)
 	from := "0.0"
 	if search.From != nil {
 		from = e.value(search.From)
 	}
-	function := "adamic_array_search_from"
-	if e.hasArrayHoles() {
-		function = "adamic_array_holes_search_from"
-	}
-	found := fmt.Sprintf("%s(%s, %s, %s, %t, %s, %t, %t)", function, array, borrowed(search.Element, value), equality(search.Element), search.Includes, from, search.From != nil, search.Last)
+	found := fmt.Sprintf("adamic_array_search_from(%s, %s, %s, %t, %s, %t, %t)", array, borrowed(search.Element, value), equality(search.Element), search.Includes, from, search.From != nil, search.Last)
 	if search.Includes {
 		return e.snapshot(ir.Boolean, found+" != -1")
 	}

@@ -1,5 +1,0 @@
-function checked(items: readonly string[]): readonly "ok"[] {
- return items as readonly "ok"[];
-}
-const values = checked(["bad"]);
-console.log(`${values}`);

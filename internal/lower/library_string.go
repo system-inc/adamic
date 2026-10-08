@@ -71,9 +71,6 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, member := value.(ir.PhantomMember); member {
-		return l.phantomSpelling(value), nil
-	}
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
@@ -84,7 +81,7 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	case ir.String:
 		return l.spelled(node, value), nil
 	case ir.Union:
-		if l.writable(l.checker.GetTypeAtLocation(node)) || l.primitiveDictionaryStringValue(value) {
+		if l.writable(l.checker.GetTypeAtLocation(node)) {
 			return ir.UnionToString{Value: value}, nil
 		}
 	}

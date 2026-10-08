@@ -1,8 +1,0 @@
---- FAIL: TestViewCallableShapeContract (0.15s)
-    --- FAIL: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.03s)
-        view_callables_contract_test.go:78: incomplete descriptor ir.ViewContract{Kind:0x5, Name:"Target", Of:8, Allowed:[]ir.ViewLiteral(nil), Fields:[]ir.ViewFieldContract(nil), Members:[]ir.ViewContractID(nil), Element:0, Tuple:[]ir.ViewContractID(nil), Functions:[]int(nil), Parameters:[]ir.ViewContractID(nil), Result:0} calls 2
-    --- FAIL: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.02s)
-        view_callables_contract_test.go:78: incomplete descriptor ir.ViewContract{Kind:0x5, Name:"Target", Of:8, Allowed:[]ir.ViewLiteral(nil), Fields:[]ir.ViewFieldContract(nil), Members:[]ir.ViewContractID(nil), Element:0, Tuple:[]ir.ViewContractID(nil), Functions:[]int(nil), Parameters:[]ir.ViewContractID(nil), Result:0} calls 1
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.156s
-FAIL

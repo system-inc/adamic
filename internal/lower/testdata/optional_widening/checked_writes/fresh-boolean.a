@@ -1,1 +1,0 @@
-({x:1} as {x:number;y?:boolean}).y=true; console.log('done');

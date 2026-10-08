@@ -1,8 +1,0 @@
-interface Step {
-	readonly name: string;
-	readonly seen: Set<Step>;
-}
-const seen = new Set<Step>();
-const start: Step = { name: 'start', seen };
-seen.add(start);
-

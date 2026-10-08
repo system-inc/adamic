@@ -1,2 +1,0 @@
-const f: (value:number) => string = (value:number|string):string => `${value}`;
-console.log(f(5));

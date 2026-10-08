@@ -1,8 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Expression {readonly value:number;}
-interface Statement {readonly value:number;}
-interface IfStatement {readonly value:number;}
-interface Base {readonly createIfStatement:unknown;}
-interface Target {createIfStatement(expression: Expression, thenStatement: Statement, elseStatement?: Statement): IfStatement;}
-function probe(value:Base):void {const factory=value as Target;const {createIfStatement: factoryCreateIfStatement}=factory;console.log(`${factoryCreateIfStatement({value:3},{value:4}).value}`);}
-probe({createIfStatement:(expression:Expression,thenStatement:Statement,elseStatement?:Statement):IfStatement=>({value:expression.value+thenStatement.value+(elseStatement?.value??0)})});

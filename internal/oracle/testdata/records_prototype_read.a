@@ -1,3 +1,0 @@
-const r: Record<string, number> = {};
-function read(key: string): void {console.log(String(r[key]));}
-read('toString');

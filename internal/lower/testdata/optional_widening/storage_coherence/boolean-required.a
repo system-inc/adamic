@@ -1,9 +1,0 @@
-const actual: { x: number; value: boolean | undefined } = { x: 1, value: false };
-const narrow: { x: number } = actual;
-const view: { x: number; value?: boolean | undefined } = narrow;
-const scalar = narrow as { x: number; value: boolean };
-console.log(`${scalar.value}`);
-view.value = true;
-console.log(`${scalar.value}`);
-actual.value = false;
-console.log(`${scalar.value}`);

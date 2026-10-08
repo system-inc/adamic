@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"path/filepath"
 	"sort"
 	"strings"
 	_ "unsafe"
@@ -409,17 +408,6 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
-	if symbol := l.checker.GetSymbolAtLocation(target); symbol != nil && symbol.Flags&ast.SymbolFlagsOptional != 0 && (l.result.OptionalViewFields[l.fieldName(target.Name())] || freshOptionalReceiver(target.AsPropertyAccessExpression().Expression) || l.neverOptionalReceiver(target.AsPropertyAccessExpression().Expression)) {
-		if l.result.CheckedFields == nil {
-			l.result.CheckedFields = map[string]bool{}
-		}
-		l.result.CheckedFields[l.fieldName(target.Name())] = true
-		l.optionalViewWriteField(l.fieldName(target.Name()))
-	}
-	uninitialized := l.uninitializedInitializer(valueNode)
-	if member := l.checker.GetSymbolAtLocation(target.Name()); uninitialized && member != nil && accessorSymbol(member) {
-		return nil, l.notYet(target, "deinitializing an accessor property")
-	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -433,47 +421,28 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	object = l.viewArrayOwnWriteReceiver(target, object)
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
 	}
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
+	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
-	value := uninitializedValue(of)
-	if !uninitialized {
-		value, err = l.expression(valueNode)
-		if err != nil {
-			return nil, err
-		}
-	}
-	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
-		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
-	}
-	writeContract := l.slotContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
-	rawValue := value
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
+	if call, handled := l.privateStaticStore(target, object, value); handled {
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
-	if l.result.OptionalViewFields[write.Name] {
-		if writeContract == 0 {
-			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")
-		}
-		write.Value, write.WriteContract = rawValue, writeContract
-		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(target))))
-		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
-	}
-	write = l.markViewArrayScalarSlotWrite(target, valueNode, write)
-	return []ir.Statement{write}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -485,7 +454,6 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	object = l.viewArrayOwnWriteReceiver(target, object)
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
@@ -511,7 +479,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := l.fieldName(target.Name())
-	current := l.readObjectField(target, ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
+	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}
@@ -519,17 +487,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	write := ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
-	if l.result.OptionalViewFields[name] {
-		write.WriteContract = l.slotContract(node, l.concrete(l.checker.GetTypeAtLocation(node)))
-		if write.WriteContract == 0 {
-			return nil, l.notYet(target, "a checked compound write without a reifiable source-slot type certificate")
-		}
-		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(field)))
-		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
-	}
-	write = l.markViewArrayScalarSlotWrite(node, node, write)
-	statements = append(statements, write)
+	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
 	if len(statements) == 1 {
 		return statements, nil
 	}
@@ -578,7 +536,7 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 	unset := map[string]bool{}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !(member.PostfixToken() != nil && member.PostfixToken().Kind == ast.KindExclamationToken) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			unset[member.Name().Text()] = true
 		}
 	}

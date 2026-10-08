@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Declaration {readonly value:number;}
-interface Identifier {readonly value:number;}
-interface Base {readonly getInternalName:unknown;}
-interface Target {getInternalName(node: Declaration, allowComments?: boolean, allowSourceMaps?: boolean): Identifier;}
-function probe(value:Base):void {const factory=value as Target;const node:Declaration={value:3};console.log(`${factory.getInternalName(node).value}`);}
-probe({getInternalName:(node:number,allowComments?:boolean,allowSourceMaps?:boolean):Identifier=>({value:3})});

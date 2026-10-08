@@ -1,6 +1,0 @@
-structural-kind-only: caught by ^TestCheckedViewMapCertificates$/^structural-schema-unused-payload$
-array-kind-only: caught by ^TestCheckedViewMapCertificates$/^array-schema-unused-payload$
-skip-own-fields: caught by ^TestCheckedViewMapCertificates$/^node-array-own-schema-unused-payload$
-skip-readonly-source: caught by ^TestCheckedViewMapCertificates$/^node-array-readonly-schema$
-skip-undefined-source: caught by ^TestCheckedViewMapCertificates$/^optional-array-schema$
-skip-nested-brands: caught by ^TestCheckedViewMapEntryFamilyBoundaries$/^nested.*-read$

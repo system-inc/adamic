@@ -1,9 +1,0 @@
-interface Base { readonly kind: 'items' | 'other'; }
-interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
-function items(node: Base): Items { return node as Items; }
-const raw = {kind: 'items' as const, values: [7, 8]};
-let calls = 0;
-function receiver(): Base { calls++; return raw; }
-function separator(): string { calls++; raw.values.push(9); return ':'; }
-console.log(items(receiver()).values.join(separator()));
-console.log(`${calls}`);

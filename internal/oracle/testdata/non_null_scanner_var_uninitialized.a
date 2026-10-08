@@ -1,7 +1,0 @@
-function createScanner(): void {
-    var tokenValue!: string;
-    const getTokenValue = (): string => tokenValue;
-    console.log('before');
-    console.log(`${getTokenValue() === undefined}`);
-}
-createScanner();

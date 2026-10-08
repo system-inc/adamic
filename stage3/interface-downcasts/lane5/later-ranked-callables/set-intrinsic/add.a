@@ -1,5 +1,0 @@
-// Original Set producer and add member read; adjacent containers reduced.
-interface Base {readonly add:unknown;}
-interface Target {add(value:string):this;readonly size:number;}
-function probe(value:Base):void {const links=value as Target;const link="x";console.log(`${links.add(link).size}`);}
-probe(new Set<string>());

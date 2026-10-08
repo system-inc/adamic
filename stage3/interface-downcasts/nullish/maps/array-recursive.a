@@ -1,7 +1,0 @@
-type Tree=readonly Tree[];
-interface Base {readonly kind:string}
-interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,Tree>|null}
-const tree:Tree=[];const map=new Map<string,Tree>();map.set('key',tree);
-const raw={kind:'box',value:map};const base:Base=raw;
-function read(node:Target):void{const map=node.value;if(map!==null){const tree=map.get('key');if(tree!==undefined){console.log(String(tree.length));}}}
-read(base as Target);

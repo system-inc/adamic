@@ -1,9 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Identifier {readonly kind:80;readonly value:number;}
-interface StringLiteral {readonly kind:11;readonly value:number;}
-type ModuleExportName = Identifier | StringLiteral;
-interface ExportSpecifier {readonly value:number;}
-interface Base {readonly createExportSpecifier:unknown;}
-interface Target {createExportSpecifier(isTypeOnly: boolean, propertyName: string | ModuleExportName | undefined, name: string | ModuleExportName): ExportSpecifier;}
-function probe(value:Base):void {const factory=value as Target;const isTypeOnly=false;const propertyName:ModuleExportName={kind:80,value:3};const name="name";console.log(`${factory.createExportSpecifier(isTypeOnly,propertyName,name).value}`);}
-probe({createExportSpecifier:(isTypeOnly:boolean,propertyName:string|ModuleExportName|undefined,name:string|ModuleExportName):ExportSpecifier=>({value:(isTypeOnly?1:0)+(propertyName===undefined?0:typeof propertyName==="string"?propertyName.length:propertyName.value)+(typeof name==="string"?name.length:name.value)})});

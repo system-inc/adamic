@@ -1,9 +1,0 @@
-interface Named { readonly text: string }
-interface Counted { readonly child: { readonly count: number } }
-type Branded = Named & Counted & { readonly __brand: void };
-interface Box { readonly value: object }
-interface Target extends Box { readonly value: Branded }
-const actual = { text: true, child: { count: 42 } };
-const box: Box = { value: actual };
-const view = box as Target;
-console.log(`${view.value.text}:${view.value.child.count}`);

@@ -1,8 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-type PrefixUnaryOperator=number;
-interface Expression {readonly value:number;}
-interface PrefixUnaryExpression {readonly value:number;}
-interface Base {readonly createPrefixUnaryExpression:unknown;}
-interface Target {createPrefixUnaryExpression(operator: PrefixUnaryOperator, operand: Expression): PrefixUnaryExpression;}
-function probe(value:Base):void {const factory=value as Target;const operator:PrefixUnaryOperator=40;const temp:Expression={value:3};console.log(`${factory.createPrefixUnaryExpression(operator,temp).value}`);}
-probe({createPrefixUnaryExpression:(operator:PrefixUnaryOperator,operand:Expression):number=>0});

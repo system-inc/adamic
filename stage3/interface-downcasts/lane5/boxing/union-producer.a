@@ -1,3 +1,0 @@
-const f = (value:number|string):number|string => value;
-console.log(`${f(5)}`);
-console.log(`${f("yes")}`);

@@ -1,7 +1,0 @@
-// Representative member-count fixture. Not the full compiler interfaces.
-interface Left { readonly text: string; readonly note?: string; }
-interface Right { readonly child: {readonly label: string}; readonly note?: string; }
-type Target = Left | Right;
-const raw = {kind:99, flavor:99, child:{label:true}};
-const value = raw as unknown as Right;
-console.log('99:' + value.child.label);
