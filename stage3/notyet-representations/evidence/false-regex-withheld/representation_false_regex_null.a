@@ -1,0 +1,14 @@
+function produce(regex: RegExp, text: string, enabled: boolean): false | RegExpExecArray | null {
+    if (!enabled) return false;
+    return regex.exec(text);
+}
+function probe(value: false | RegExpExecArray | null): void {
+    const truth = value ? true : false;
+    console.log(`${typeof value}:${value === false}:${value === null}:${value === undefined}:${truth}`);
+    console.log(typeof (value ?? false));
+    if (value !== false && value !== null) console.log(value[0] ?? 'missing capture');
+}
+const regex = /a/;
+probe(produce(regex, 'hit', false));
+probe(produce(regex, 'a', true));
+probe(produce(regex, 'zzz', true));

@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:384:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 16099,
+      "body_end": 16908,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformNamedEvaluationOfPropertyDeclaration",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:384:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:384:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:395:12",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:395:12: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:384:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:395:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:395:12: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 16699,
+      "end": 16905
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "162fa15d2a26fe9d92990c99960a8d95ef04cc0c7af4f7bd55a583e6259052e9"
+}

@@ -1,0 +1,2 @@
+replay load/register/lower: 2.143202855s
+reproduced NotYet: a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined at /tmp/notyet-representations-adapted/src/compiler/checker.ts:8614:44

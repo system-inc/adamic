@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12172:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 502344,
+      "body_end": 503769,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "forEachDynamicImportOrRequireCall",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12172:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12172:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12174:5",
+      "reason": "a value of type IncludeTypeSpaceImports",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12174:5: stage 0 can't lower a value of type IncludeTypeSpaceImports yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12172:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12172:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:12174:5: stage 0 can't lower a value of type IncludeTypeSpaceImports yet",
+      "start": 502344,
+      "end": 503769
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2748cb5cd1f088bbf2b538068da94ed89da1cec58ed70455764455e6138c8733"
+}

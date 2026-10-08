@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 24028,
+      "body_end": 28195,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getDeclarationName",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:14",
+      "reason": "a function returning __String | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:14: stage 0 can't lower a function returning __String | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:661:14: stage 0 can't lower a function returning __String | undefined yet",
+      "start": 24028,
+      "end": 28195
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "9e4702801caa7bac6abf537552afbf357fc614e0a6ff1cd8f37a0a287e22c941"
+}

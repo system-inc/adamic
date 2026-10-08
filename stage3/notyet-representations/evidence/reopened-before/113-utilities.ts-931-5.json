@@ -1,0 +1,121 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 30183,
+      "body_end": 30664,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "hasChangesInResolutions",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:939:15",
+      "reason": "a value of type V | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:939:15: stage 0 can't lower a value of type V | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:939:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:939:15: stage 0 can't lower a value of type V | undefined yet",
+      "start": 30292,
+      "end": 30342
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:940:15",
+      "reason": "a value of type NonNullable<K>",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:940:15: stage 0 can't lower a value of type NonNullable<K> yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:940:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:940:15: stage 0 can't lower a value of type NonNullable<K> yet",
+      "start": 30342,
+      "end": 30376
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:941:15",
+      "reason": "a value of type V | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:941:15: stage 0 can't lower a value of type V | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:941:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:941:15: stage 0 can't lower a value of type V | undefined yet",
+      "start": 30376,
+      "end": 30432
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:942:15",
+      "reason": "a value of type boolean | V | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:942:15: stage 0 can't lower a value of type boolean | V | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:942:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:942:15: stage 0 can't lower a value of type boolean | V | undefined yet",
+      "start": 30432,
+      "end": 30574
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:945:13",
+      "reason": "reading changed",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:945:13: stage 0 can't lower reading changed yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:930:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:945:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:945:13: stage 0 can't lower reading changed yet",
+      "start": 30574,
+      "end": 30635
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "b6cb1981442c1f59cfcf24c83bc5db03fe44433f5a40552880b6082070cad9d0"
+}

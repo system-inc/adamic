@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:573:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 24249,
+      "body_end": 24385,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getCachedParsedConfigFile",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:573:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:573:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:575:12",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:575:12: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:573:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:575:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:575:12: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+      "start": 24313,
+      "end": 24382
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "33cb6fc7161c777134e60b1b59d06ccc83e58813bc5841b01ff2f4f9ced5408e"
+}

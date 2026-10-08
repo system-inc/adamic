@@ -1,0 +1,103 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 140211,
+      "body_end": 142039,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isPropertyImmediatelyReferencedWithinDeclaration",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:2982:5",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 2
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:790:24",
+      "reason": "a function value returning union of differently held members",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:790:24: stage 0 can't lower a function value returning union of differently held members yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:790:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:790:24: stage 0 can't lower a function value returning union of differently held members yet",
+      "start": 30757,
+      "end": 30797
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:791:13",
+      "reason": "reading result",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:791:13: stage 0 can't lower reading result yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:791:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:791:13: stage 0 can't lower reading result yet",
+      "start": 30797,
+      "end": 30938
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3174:72",
+      "reason": "a function value returning union of differently held members",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3174:72: stage 0 can't lower a function value returning union of differently held members yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3174:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3174:72: stage 0 can't lower a function value returning union of differently held members yet",
+      "start": 140366,
+      "end": 141960
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3202:20",
+      "reason": "reading ancestorChangingReferenceScope",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3202:20: stage 0 can't lower reading ancestorChangingReferenceScope yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3202:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3202:20: stage 0 can't lower reading ancestorChangingReferenceScope yet",
+      "start": 141960,
+      "end": 142028
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "e2eb97aa878282396555d31ae6c7adc764387bfc8f3de13d1c13be950b66ec50"
+}

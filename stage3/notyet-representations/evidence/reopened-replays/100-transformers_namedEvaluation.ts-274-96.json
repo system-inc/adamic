@@ -1,0 +1,81 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 10617,
+      "body_end": 11550,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformNamedEvaluationOfShorthandAssignmentProperty",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:284:59",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:284:59: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:284:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:284:59: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 11056,
+      "end": 11255
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:286:115",
+      "reason": "reading assignedName",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:286:115: stage 0 can't lower reading assignedName yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:286:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:286:115: stage 0 can't lower reading assignedName yet",
+      "start": 11255,
+      "end": 11411
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:287:12",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:287:12: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:287:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:287:12: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 11411,
+      "end": 11547
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "7f2bbacf745296415ec3ee914079c38446190c026e790678d7b1196ffd321a60"
+}

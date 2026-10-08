@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 5912,
+      "body_end": 6006,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getOrCreateValueMapFromConfigFileMap",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:195:12",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:195:12: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:195:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:195:12: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 5699,
+      "end": 5739
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:199:77",
+      "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:199:77: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:198:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:199:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:199:77: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+      "start": 5914,
+      "end": 6003
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "8313852013767eae10060e38a53656db9734dfd062ec73f483aec573947ea192"
+}

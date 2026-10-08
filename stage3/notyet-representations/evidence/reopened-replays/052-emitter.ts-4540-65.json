@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 192894,
+      "body_end": 192995,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "emitNodeWithPrefix",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:100",
+      "reason": "a value of type T | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:100: stage 0 can't lower a value of type T | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4540:100: stage 0 can't lower a value of type T | undefined yet",
+      "start": 192894,
+      "end": 192995
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "dd00d81b058ae1bfe144f159aff007ccf310e3a6b7b0f4c538dadfa00510ece8"
+}

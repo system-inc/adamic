@@ -1,0 +1,201 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 31236,
+      "body_end": 32225,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getBuildOrderFor",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:723:11",
+      "reason": "a value of type \"\" | ResolvedConfigFileName | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:723:11: stage 0 can't lower a value of type \"\" | ResolvedConfigFileName | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:723:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:723:11: stage 0 can't lower a value of type \"\" | ResolvedConfigFileName | undefined yet",
+      "start": 31238,
+      "end": 31314
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:656:12",
+      "reason": "a field of type AnyBuildOrder | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:656:12: stage 0 can't lower a field of type AnyBuildOrder | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:656:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:656:12: stage 0 can't lower a field of type AnyBuildOrder | undefined yet",
+      "start": 28229,
+      "end": 28291
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:725:9",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:725:9: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:725:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:725:9: stage 0 can't lower a void call used as a value yet",
+      "start": 31369,
+      "end": 31449
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:726:9",
+      "reason": "reading resolvedProject",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:726:9: stage 0 can't lower reading resolvedProject yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:726:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:726:9: stage 0 can't lower reading resolvedProject yet",
+      "start": 31449,
+      "end": 31798
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:734:24",
+      "reason": "reading resolvedProject",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:734:24: stage 0 can't lower reading resolvedProject yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:734:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:734:24: stage 0 can't lower reading resolvedProject yet",
+      "start": 31798,
+      "end": 31920
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:735:40",
+      "reason": "reading buildOrder",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:735:40: stage 0 can't lower reading buildOrder yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:735:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:735:40: stage 0 can't lower reading buildOrder yet",
+      "start": 31920,
+      "end": 31974
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:736:37",
+      "reason": "reading resolvedProject",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:736:37: stage 0 can't lower reading resolvedProject yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:736:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:736:37: stage 0 can't lower reading resolvedProject yet",
+      "start": 31974,
+      "end": 32043
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:737:37",
+      "reason": "reading buildOrder",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:737:37: stage 0 can't lower reading buildOrder yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:737:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:737:37: stage 0 can't lower reading buildOrder yet",
+      "start": 32043,
+      "end": 32136
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:738:29",
+      "reason": "an array of ResolvedConfigFileName",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:738:29: stage 0 can't lower an array of ResolvedConfigFileName yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:722:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:738:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:738:29: stage 0 can't lower an array of ResolvedConfigFileName yet",
+      "start": 32136,
+      "end": 32222
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "fdcfb949385c662bc7a9dbd127af4b907df61d4650ef5e4dfa12604ec9498c0f"
+}

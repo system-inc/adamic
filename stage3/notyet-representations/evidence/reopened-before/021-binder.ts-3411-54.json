@@ -1,0 +1,163 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 168641,
+      "body_end": 170374,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindSpecialPropertyAssignment",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:60",
+      "reason": "a value of type BindableAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:60: stage 0 can't lower a value of type BindableAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:60: stage 0 can't lower a value of type BindableAccessExpression yet",
+      "start": 168643,
+      "end": 168893
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:14",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:14: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:14: stage 0 can't lower a void call used as a value yet",
+      "start": 168893,
+      "end": 168994
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3411:54",
+      "reason": "a value of type BindableAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3411:54: stage 0 can't lower a value of type BindableAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3411:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3411:54: stage 0 can't lower a value of type BindableAccessExpression yet",
+      "start": 168994,
+      "end": 169060
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3412:26",
+      "reason": "reading rootExpr",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3412:26: stage 0 can't lower reading rootExpr yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3412:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3412:26: stage 0 can't lower reading rootExpr yet",
+      "start": 169060,
+      "end": 169215
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10703:17",
+      "reason": "a function returning T | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10703:17: stage 0 can't lower a function returning T | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3416:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10703:17: stage 0 can't lower a function returning T | undefined yet",
+      "start": 169215,
+      "end": 169349
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 428658,
+      "end": 428741
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3418:26",
+      "reason": "a value of type BindableAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3418:26: stage 0 can't lower a value of type BindableAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3418:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3418:26: stage 0 can't lower a value of type BindableAccessExpression yet",
+      "start": 169387,
+      "end": 170367
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d8268a3ef322272761816454fbe5fbcaa3db1f501041e6f7fe07acd8a8472408"
+}

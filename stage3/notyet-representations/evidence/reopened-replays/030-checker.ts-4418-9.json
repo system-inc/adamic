@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4413:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 215357,
+      "body_end": 216472,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "markSymbolOfAliasDeclarationIfTypeOnly",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4413:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4419:9",
+      "reason": "a value of type __String | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4419:9: stage 0 can't lower a value of type __String | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4413:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4413:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4419:9: stage 0 can't lower a value of type __String | undefined yet",
+      "start": 215357,
+      "end": 216472
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "78210a01b7f0343f4ebc84f6564fa6dc576a75cf7e7170d2eee3a6b9b7e90e3e"
+}

@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25239:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 1507313,
+      "body_end": 1508537,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isDeeplyNestedType",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25239:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25245:30",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25245:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25239:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25245:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:25245:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 1507588,
+      "end": 1507704
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "dc10b69cd2b65f0d227add2d25f8589fa21c5eaceca51db20da61b15022ffb3a"
+}

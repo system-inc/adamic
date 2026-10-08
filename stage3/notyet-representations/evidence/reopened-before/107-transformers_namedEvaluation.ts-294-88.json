@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 11748,
+      "body_end": 12863,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformNamedEvaluationOfVariableDeclaration",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:88",
+      "reason": "a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+      "start": 11748,
+      "end": 12863
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "a80a55ab715ebaeef982ceb953ff8ff3e0c29d5569182070b0f06e17cd82b390"
+}

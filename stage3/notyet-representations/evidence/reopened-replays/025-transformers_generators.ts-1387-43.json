@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 56854,
+      "body_end": 57164,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformInitializedVariable",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:336:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:336:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1389:13",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1389:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1388:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1389:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 56856,
+      "end": 57157
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "64db86a6a16ee0d988495123ddba02d8d9cbc4d04edf501c96c89b068bcb56e8"
+}

@@ -1,0 +1,123 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 961545,
+      "body_end": 963039,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getReturnTypeFromAnnotation",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16519:17",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16519:17: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16519:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16519:17: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+      "start": 961905,
+      "end": 962124
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16524:41",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16524:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16524:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16524:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 962190,
+      "end": 962290
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16530:31",
+      "reason": "a BinaryExpression with a boolean and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16530:31: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16530:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16530:31: stage 0 can't lower a BinaryExpression with a boolean and a value yet",
+      "start": 962498,
+      "end": 962608
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16531:17",
+      "reason": "reading jsDocType",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16531:17: stage 0 can't lower reading jsDocType yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16531:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16531:17: stage 0 can't lower reading jsDocType yet",
+      "start": 962608,
+      "end": 962688
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:630:24",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:630:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:16512:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:630:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:630:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 16921,
+      "end": 16963
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "6842ee8e239808954844383f82b0d9a36d8c49776960887ea1ca5e6954b7334f"
+}

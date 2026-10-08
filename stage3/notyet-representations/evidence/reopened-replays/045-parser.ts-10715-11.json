@@ -1,0 +1,121 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/parser.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 535889,
+      "body_end": 538445,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "extractPragmas",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10715:11",
+      "reason": "a value of type false | RegExpExecArray | null",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10715:11: stage 0 can't lower a value of type false | RegExpExecArray | null yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10715:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10715:11: stage 0 can't lower a value of type false | RegExpExecArray | null yet",
+      "start": 535891,
+      "end": 536013
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10716:9",
+      "reason": "reading tripleSlash",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10716:9: stage 0 can't lower reading tripleSlash yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10716:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10716:9: stage 0 can't lower reading tripleSlash yet",
+      "start": 536013,
+      "end": 537712
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10753:11",
+      "reason": "a value of type false | RegExpExecArray | null",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10753:11: stage 0 can't lower a value of type false | RegExpExecArray | null yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10753:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10753:11: stage 0 can't lower a value of type false | RegExpExecArray | null yet",
+      "start": 537712,
+      "end": 537825
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10754:9",
+      "reason": "reading singleLine",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10754:9: stage 0 can't lower reading singleLine yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10754:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10754:9: stage 0 can't lower reading singleLine yet",
+      "start": 537825,
+      "end": 537946
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10761:16",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10761:16: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10714:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10761:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/parser.ts:10761:16: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 538221,
+      "end": 538435
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "a8f9c46a69b916f62140b215431b1dd137fabc348ca7b87b87b10b059a82ca42"
+}

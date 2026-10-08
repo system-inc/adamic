@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/core.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 13646,
+      "body_end": 14097,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "flatMap",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:403:19",
+      "reason": "a value of type U | readonly U[] | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:403:19: stage 0 can't lower a value of type U | readonly U[] | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:403:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:403:19: stage 0 can't lower a value of type U | readonly U[] | undefined yet",
+      "start": 13764,
+      "end": 13808
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:404:17",
+      "reason": "reading v",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:404:17: stage 0 can't lower reading v yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:399:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:404:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:404:17: stage 0 can't lower reading v yet",
+      "start": 13808,
+      "end": 14042
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "876b76927dee9104346eac8b8086261d35637cd4caee44de476b6e42b2c1a0bb"
+}

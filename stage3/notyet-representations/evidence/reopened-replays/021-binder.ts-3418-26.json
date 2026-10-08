@@ -1,0 +1,203 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 168641,
+      "body_end": 170374,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindSpecialPropertyAssignment",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:30",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:30: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3407:30: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 168643,
+      "end": 168893
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:52",
+      "reason": "reading parentSymbol",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:52: stage 0 can't lower reading parentSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3408:52: stage 0 can't lower reading parentSymbol yet",
+      "start": 168893,
+      "end": 168994
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3905:47",
+      "reason": "a value of type __String",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3905:47: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3412:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3905:47: stage 0 can't lower a value of type __String yet",
+      "start": 169060,
+      "end": 169215
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10704:9: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 428658,
+      "end": 428741
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3422:43",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3422:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3422:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3422:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 169523,
+      "end": 169800
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2428:84",
+      "reason": "a value of type __String",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2428:84: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3425:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2428:84: stage 0 can't lower a value of type __String yet",
+      "start": 169853,
+      "end": 169974
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3426:58",
+      "reason": "reading parentSymbol",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3426:58: stage 0 can't lower reading parentSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3426:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3426:58: stage 0 can't lower reading parentSymbol yet",
+      "start": 169974,
+      "end": 170170
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3427:61",
+      "reason": "reading sym",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3427:61: stage 0 can't lower reading sym yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3427:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3427:61: stage 0 can't lower reading sym yet",
+      "start": 170170,
+      "end": 170237
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1786:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3405:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1786:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet",
+      "start": 62468,
+      "end": 62595
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "c36e4f8d60d96b3aaf5ecdb2055ed897b583a4a5cf52fd08b1e15cc97cd8c357"
+}

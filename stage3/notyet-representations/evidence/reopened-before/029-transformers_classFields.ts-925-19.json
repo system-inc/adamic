@@ -1,0 +1,483 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 34993,
+      "body_end": 37863,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformAutoAccessor",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:916:30",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:916:30: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:916:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:916:30: stage 0 can't lower a void call used as a value yet",
+      "start": 34995,
+      "end": 35246
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:917:32",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:917:32: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:917:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:917:32: stage 0 can't lower a void call used as a value yet",
+      "start": 35246,
+      "end": 35303
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:924:13",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:924:13: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:924:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:924:13: stage 0 can't lower a void call used as a value yet",
+      "start": 35550,
+      "end": 36580
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5",
+      "reason": "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:941:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "start": 36580,
+      "end": 36666
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:942:80",
+      "reason": "reading modifiers",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:942:80: stage 0 can't lower reading modifiers yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:942:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:942:80: stage 0 can't lower reading modifiers yet",
+      "start": 36666,
+      "end": 36776
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:7425:43",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:7425:43: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:7425:27",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:7425:43: stage 0 can't lower a void call used as a value yet",
+      "start": 332472,
+      "end": 332528
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:943:25",
+      "reason": "reading backingField",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:943:25: stage 0 can't lower reading backingField yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:943:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:943:25: stage 0 can't lower reading backingField yet",
+      "start": 36776,
+      "end": 36822
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:93:5",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:93:5: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:93:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:93:5: stage 0 can't lower a void call used as a value yet",
+      "start": 3237,
+      "end": 3287
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:944:22",
+      "reason": "reading backingField",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:944:22: stage 0 can't lower reading backingField yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:944:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:944:22: stage 0 can't lower reading backingField yet",
+      "start": 36822,
+      "end": 36881
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:140:5",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:140:5: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:140:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:140:5: stage 0 can't lower a void call used as a value yet",
+      "start": 4539,
+      "end": 4594
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:945:27",
+      "reason": "reading backingField",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:945:27: stage 0 can't lower reading backingField yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:945:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:945:27: stage 0 can't lower reading backingField yet",
+      "start": 36881,
+      "end": 36939
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:947:26",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:947:26: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:947:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:947:26: stage 0 can't lower a void call used as a value yet",
+      "start": 36939,
+      "end": 37050
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:948:75",
+      "reason": "reading modifiers",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:948:75: stage 0 can't lower reading modifiers yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:948:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:948:75: stage 0 can't lower reading modifiers yet",
+      "start": 37050,
+      "end": 37159
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:949:25",
+      "reason": "reading getter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:949:25: stage 0 can't lower reading getter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:949:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:949:25: stage 0 can't lower reading getter yet",
+      "start": 37159,
+      "end": 37199
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:191:5",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:191:5: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:191:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/emitNode.ts:191:5: stage 0 can't lower a void call used as a value yet",
+      "start": 6076,
+      "end": 6129
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:950:25",
+      "reason": "reading getter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:950:25: stage 0 can't lower reading getter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:950:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:950:25: stage 0 can't lower reading getter yet",
+      "start": 37199,
+      "end": 37247
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:951:27",
+      "reason": "reading getter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:951:27: stage 0 can't lower reading getter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:951:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:951:27: stage 0 can't lower reading getter yet",
+      "start": 37247,
+      "end": 37299
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:954:33",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:954:33: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:954:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:954:33: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 37299,
+      "end": 37490
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:955:75",
+      "reason": "reading setterModifiers",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:955:75: stage 0 can't lower reading setterModifiers yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:955:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:955:75: stage 0 can't lower reading setterModifiers yet",
+      "start": 37490,
+      "end": 37605
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:956:25",
+      "reason": "reading setter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:956:25: stage 0 can't lower reading setter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:956:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:956:25: stage 0 can't lower reading setter yet",
+      "start": 37605,
+      "end": 37645
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:957:22",
+      "reason": "reading setter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:957:22: stage 0 can't lower reading setter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:957:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:957:22: stage 0 can't lower reading setter yet",
+      "start": 37645,
+      "end": 37698
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:958:27",
+      "reason": "reading setter",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:958:27: stage 0 can't lower reading setter yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:958:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:958:27: stage 0 can't lower reading setter yet",
+      "start": 37698,
+      "end": 37750
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:276:5",
+      "reason": "overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:276:5: Adamic 0.1 refuses overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:908:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:960:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:276:5: Adamic 0.1 refuses overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "start": 37750,
+      "end": 37856
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "ae2fe08eaf89dedf4b3d4a74a85488cc9c23ca886f7d008a1f5fa2ad1d55737d"
+}

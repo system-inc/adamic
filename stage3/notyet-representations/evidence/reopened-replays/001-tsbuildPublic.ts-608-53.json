@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 26269,
+      "body_end": 28143,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createBuildOrder",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:619:23",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:619:23: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:618:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:619:23: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 26636,
+      "end": 26780
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:622:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:622:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:608:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:622:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:622:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 26780,
+      "end": 28140
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "8cf03f0aea2c35f1a9afc96bcc6e463051806e6fc7d4e860cf5897030310b3bc"
+}

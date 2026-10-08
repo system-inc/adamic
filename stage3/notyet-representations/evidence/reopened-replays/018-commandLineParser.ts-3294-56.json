@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 135753,
+      "body_end": 135826,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "setOptionValue",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3260:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3260:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:56",
+      "reason": "a value of type CompilerOptionsValue",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:56: stage 0 can't lower a value of type CompilerOptionsValue yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3294:56: stage 0 can't lower a value of type CompilerOptionsValue yet",
+      "start": 135753,
+      "end": 135826
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "973fd33aead564b7542c941472c27306544616d2950cb1471e70d363417f7c72"
+}

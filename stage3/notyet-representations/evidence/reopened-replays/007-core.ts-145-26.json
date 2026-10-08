@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/core.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:145:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 4755,
+      "body_end": 4970,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "every",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/core.ts:145:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:145:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:148:27",
+      "reason": "an array of T",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:148:27: stage 0 can't lower an array of T yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:145:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:148:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:148:27: stage 0 can't lower an array of T yet",
+      "start": 4839,
+      "end": 4929
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "635525e151c410f38101a7cc2486ba66c17efdb364bfbc5455276c5d4dc82e38"
+}

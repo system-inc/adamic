@@ -1,0 +1,143 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 120274,
+      "body_end": 121506,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindJSDocImports",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2538:19",
+      "reason": "a value of type HasJSDoc | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2538:19: stage 0 can't lower a value of type HasJSDoc | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2538:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2538:19: stage 0 can't lower a value of type HasJSDoc | undefined yet",
+      "start": 120645,
+      "end": 120701
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2539:40",
+      "reason": "reading host",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2539:40: stage 0 can't lower reading host yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2539:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2539:40: stage 0 can't lower reading host yet",
+      "start": 120701,
+      "end": 120816
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2540:50",
+      "reason": "reading host",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2540:50: stage 0 can't lower reading host yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2540:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2540:50: stage 0 can't lower reading host yet",
+      "start": 120816,
+      "end": 120962
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2541:25",
+      "reason": "reading enclosingContainer",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2541:25: stage 0 can't lower reading enclosingContainer yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2541:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2541:25: stage 0 can't lower reading enclosingContainer yet",
+      "start": 120962,
+      "end": 121015
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2542:35",
+      "reason": "reading enclosingBlockScopeContainer",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2542:35: stage 0 can't lower reading enclosingBlockScopeContainer yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2542:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2542:35: stage 0 can't lower reading enclosingBlockScopeContainer yet",
+      "start": 121015,
+      "end": 121088
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2543:27",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2543:27: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2526:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2543:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:2543:27: stage 0 can't lower a void call used as a value yet",
+      "start": 121088,
+      "end": 121194
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "fe81ff080414a1e5587ece709cef105b7872ee19c7550a6d7baad68157032b3d"
+}

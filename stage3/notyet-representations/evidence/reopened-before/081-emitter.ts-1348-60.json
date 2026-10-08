@@ -1,0 +1,252 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 55362,
+      "body_end": 55664,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "writeList",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:13",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet",
+      "start": 199431,
+      "end": 199534
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:13",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet",
+      "start": 199628,
+      "end": 199818
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4693:30",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4693:30: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4693:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4693:30: stage 0 can't lower a void call used as a value yet",
+      "start": 199869,
+      "end": 199927
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:17",
+      "reason": "a BinaryExpression with a boolean and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet",
+      "start": 199927,
+      "end": 200113
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9: stage 0 can't lower a call through ?. (an optional call) yet",
+      "start": 200124,
+      "end": 200170
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:115",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:115: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:115: stage 0 can't lower a void call used as a value yet",
+      "start": 200196,
+      "end": 200637
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "panic",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4711:13",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "error",
+      "where": "",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4711:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "start": 200664,
+      "end": 200802
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9: stage 0 can't lower a call through ?. (an optional call) yet",
+      "start": 200813,
+      "end": 200858
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:17",
+      "reason": "a BinaryExpression with a boolean and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet",
+      "start": 200909,
+      "end": 201070
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4720:30",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4720:30: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4720:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4720:30: stage 0 can't lower a void call used as a value yet",
+      "start": 201070,
+      "end": 201128
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1348:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4664:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13: stage 0 can't lower a generic function as a value yet",
+      "start": 198395,
+      "end": 198686
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "126c56028975e116d7010cf78fe376223371e28730e08bc1a9a89734ebd0c787"
+}

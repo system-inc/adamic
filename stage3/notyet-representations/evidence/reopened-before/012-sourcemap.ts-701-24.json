@@ -1,0 +1,261 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 26830,
+      "body_end": 32045,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createDocumentPositionMapper",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:700:26",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:700:26: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:700:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:700:26: stage 0 can't lower a void call used as a value yet",
+      "start": 26832,
+      "end": 26885
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:701:24",
+      "reason": "a value of type string | null | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:701:24: stage 0 can't lower a value of type string | null | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:701:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:701:24: stage 0 can't lower a value of type string | null | undefined yet",
+      "start": 26885,
+      "end": 26998
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:702:75",
+      "reason": "reading mapDirectory",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:702:75: stage 0 can't lower reading mapDirectory yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:702:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:702:75: stage 0 can't lower reading mapDirectory yet",
+      "start": 26998,
+      "end": 27088
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:703:27",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:703:27: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:703:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:703:27: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 27088,
+      "end": 27166
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:704:97",
+      "reason": "reading sourceRoot",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:704:97: stage 0 can't lower reading sourceRoot yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:704:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:704:97: stage 0 can't lower reading sourceRoot yet",
+      "start": 27166,
+      "end": 27277
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:705:44",
+      "reason": "reading sourceFileAbsolutePaths",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:705:44: stage 0 can't lower reading sourceFileAbsolutePaths yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:705:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:705:44: stage 0 can't lower reading sourceFileAbsolutePaths yet",
+      "start": 27277,
+      "end": 27406
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:715:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:715:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:715:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:715:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 27722,
+      "end": 28718
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:737:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:737:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:737:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:737:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 28718,
+      "end": 29316
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:754:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:754:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:754:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:754:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 29316,
+      "end": 29979
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:768:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:768:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:768:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:768:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 29979,
+      "end": 30386
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:779:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:779:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:779:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:779:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 30386,
+      "end": 31281
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:800:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:800:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:699:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:800:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:800:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 31281,
+      "end": 32042
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2cf377585c1a66095dc3422dcb653ec510c7a432c7c88fe21a18e590f9d1ffba"
+}

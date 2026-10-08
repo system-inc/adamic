@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 23347,
+      "body_end": 23468,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "toPath",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:10",
+      "reason": "a function returning Path",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:10: stage 0 can't lower a function returning Path yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:555:10: stage 0 can't lower a function returning Path yet",
+      "start": 23347,
+      "end": 23468
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "9dbc5b22fe8cd259844aa633e180836de7ad7213b64bfcad304416f8c85de213"
+}

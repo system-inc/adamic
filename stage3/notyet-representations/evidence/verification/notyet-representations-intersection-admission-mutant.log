@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_intersection.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_intersection.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_intersection.a
+    oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/representation_object_intersection.a:6:7: stage 0 can't lower a value of type Refined yet
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_intersection.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL

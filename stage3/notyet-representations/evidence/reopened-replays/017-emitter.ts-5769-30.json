@@ -1,0 +1,183 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 247443,
+      "body_end": 249084,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "makeName",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5770:48",
+      "reason": "a field of type string | GeneratedNamePart | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5770:48: stage 0 can't lower a field of type string | GeneratedNamePart | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5770:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5770:48: stage 0 can't lower a field of type string | GeneratedNamePart | undefined yet",
+      "start": 247503,
+      "end": 247587
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5774:162",
+      "reason": "reading prefix",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5774:162: stage 0 can't lower reading prefix yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5774:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5774:162: stage 0 can't lower reading prefix yet",
+      "start": 247781,
+      "end": 247960
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:189:13",
+      "reason": "assigning an element of a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:189:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet",
+      "start": 5243,
+      "end": 5314
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:190:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:190:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 5314,
+      "end": 5356
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:298:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 11588,
+      "end": 11905
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5777:156",
+      "reason": "reading prefix",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5777:156: stage 0 can't lower reading prefix yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5777:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5777:156: stage 0 can't lower reading prefix yet",
+      "start": 248064,
+      "end": 248237
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5785:21",
+      "reason": "reading prefix",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5785:21: stage 0 can't lower reading prefix yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5779:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5785:21: stage 0 can't lower reading prefix yet",
+      "start": 248288,
+      "end": 248799
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5790:141",
+      "reason": "a value of type typeof import(\"/tmp/notyet-representations-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5790:141: Adamic 0.1 refuses a value of type typeof import(\"/tmp/notyet-representations-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5768:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5790:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5790:141: Adamic 0.1 refuses a value of type typeof import(\"/tmp/notyet-representations-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 248810,
+      "end": 249077
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "35e56724c6fcd7e0c883faa21720b52c4a39d603a69906f7bbdda5d8ba744437"
+}

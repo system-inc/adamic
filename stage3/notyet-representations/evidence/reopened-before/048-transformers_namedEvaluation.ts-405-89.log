@@ -1,0 +1,2 @@
+replay load/register/lower: 1.813676642s
+reproduced NotYet: a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression) at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:405:89

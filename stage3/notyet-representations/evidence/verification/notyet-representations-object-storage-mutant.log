@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_view.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_view.a
+    oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/representation_object_view.a:8:16: stage 0 can't lower a BinaryExpression with a value and a value yet
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/representation_object_view.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL

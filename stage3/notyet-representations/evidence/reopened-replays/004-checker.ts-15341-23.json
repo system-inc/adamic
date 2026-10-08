@@ -1,0 +1,143 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 892516,
+      "body_end": 894731,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getImmediateBaseConstraint",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15322:5",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 2
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15334:21",
+      "reason": "a value of type any",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15334:21: stage 0 can't lower a value of type any yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15334:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15334:21: stage 0 can't lower a value of type any yet",
+      "start": 892731,
+      "end": 892760
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15342:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet",
+      "start": 893467,
+      "end": 893750
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15349:68",
+      "reason": "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15349:68: Adamic 0.1 refuses an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15349:25",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15349:68: Adamic 0.1 refuses an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 893857,
+      "end": 893946
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15350:29",
+      "reason": "reading errorNode",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15350:29: stage 0 can't lower reading errorNode yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15350:25",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15350:29: stage 0 can't lower reading errorNode yet",
+      "start": 893946,
+      "end": 894487
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15357:21",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15357:21: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15357:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15357:21: stage 0 can't lower assigning to an Identifier yet",
+      "start": 894510,
+      "end": 894564
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15359:17",
+      "reason": "a BinaryExpression as a statement",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15359:17: stage 0 can't lower a BinaryExpression as a statement yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15329:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15359:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15359:17: stage 0 can't lower a BinaryExpression as a statement yet",
+      "start": 894583,
+      "end": 894658
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "ed034dc83da023e8d8bf5f8b512937ab188dd3b6fc7776c5a803e5279ae2ce27"
+}

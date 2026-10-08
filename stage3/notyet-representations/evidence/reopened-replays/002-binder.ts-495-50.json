@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 16978,
+      "body_end": 17074,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createFlowNode",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:50",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:50: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:495:50: stage 0 can't lower a value of type unknown yet",
+      "start": 16978,
+      "end": 17074
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "9536b0cbd45355e02632a41dee18148bddd695f13c64e7ba79051225fce38b40"
+}

@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 60727,
+      "body_end": 62073,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "watchFile",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:214",
+      "reason": "a value of type ResolvedConfigFileName | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:214: stage 0 can't lower a value of type ResolvedConfigFileName | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:1393:214: stage 0 can't lower a value of type ResolvedConfigFileName | undefined yet",
+      "start": 60727,
+      "end": 62073
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "7b333ae14e121f9fe759d83c763f14a6aadf3c73829337ac62e3190df96a3a33"
+}

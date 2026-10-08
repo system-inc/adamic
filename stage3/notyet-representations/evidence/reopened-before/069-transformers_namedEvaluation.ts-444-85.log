@@ -1,0 +1,2 @@
+replay load/register/lower: 1.925128109s
+reproduced NotYet: a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; } at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:444:85

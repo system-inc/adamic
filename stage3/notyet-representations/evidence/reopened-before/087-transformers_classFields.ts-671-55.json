@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 24859,
+      "body_end": 25364,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformPrivateIdentifierInInExpression",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:55",
+      "reason": "a value of type PrivateIdentifierInExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet",
+      "start": 24859,
+      "end": 25364
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "111496054a9f07f6079496c547802ac2362113f7d60746cccadc2039bc9d9bbe"
+}

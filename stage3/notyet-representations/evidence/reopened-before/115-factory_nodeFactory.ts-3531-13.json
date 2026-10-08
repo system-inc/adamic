@@ -1,0 +1,143 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 151487,
+      "body_end": 152504,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "checkTemplateLiteralLikeNode",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3531:13",
+      "reason": "a value of type string | object | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3531:13: stage 0 can't lower a value of type string | object | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3531:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3531:13: stage 0 can't lower a value of type string | object | undefined yet",
+      "start": 151600,
+      "end": 151816
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3533:13",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3533:13: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3533:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3533:13: stage 0 can't lower assigning to an Identifier yet",
+      "start": 151874,
+      "end": 151926
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3534:24",
+      "reason": "reading cooked",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3534:24: stage 0 can't lower reading cooked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3534:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3534:24: stage 0 can't lower reading cooked yet",
+      "start": 151926,
+      "end": 152044
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3539:17",
+      "reason": "reading cooked",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3539:17: stage 0 can't lower reading cooked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3539:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3539:17: stage 0 can't lower reading cooked yet",
+      "start": 152090,
+      "end": 152243
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3542:20",
+      "reason": "reading cooked",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3542:20: stage 0 can't lower reading cooked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3542:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3542:20: stage 0 can't lower reading cooked yet",
+      "start": 152243,
+      "end": 152271
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3544:18",
+      "reason": "reading cooked",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3544:18: stage 0 can't lower reading cooked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3527:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3544:14",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/nodeFactory.ts:3544:18: stage 0 can't lower reading cooked yet",
+      "start": 152296,
+      "end": 152475
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2114935ab3bb9b568efdd1653b6d04a64529706f653dd0108baa0b3db5896754"
+}

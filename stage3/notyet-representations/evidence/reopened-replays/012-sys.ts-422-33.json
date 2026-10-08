@@ -1,0 +1,103 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/sys.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 16047,
+      "body_end": 18142,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createDirectoryWatcher",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:382:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:382:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:419:25",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:419:25: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:419:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:419:25: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 16049,
+      "end": 18029
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:452:9",
+      "reason": "reading watcher",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:452:9: stage 0 can't lower reading watcher yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:452:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:452:9: stage 0 can't lower reading watcher yet",
+      "start": 18029,
+      "end": 18066
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:453:34",
+      "reason": "reading watcher",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:453:34: stage 0 can't lower reading watcher yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:453:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:453:34: stage 0 can't lower reading watcher yet",
+      "start": 18066,
+      "end": 18110
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:454:16",
+      "reason": "reading watcher",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:454:16: stage 0 can't lower reading watcher yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:418:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:454:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sys.ts:454:16: stage 0 can't lower reading watcher yet",
+      "start": 18110,
+      "end": 18135
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "7b53fae6d97036208656be720dd9f76291c24e8b5d5251582aaeba17f75ec395"
+}

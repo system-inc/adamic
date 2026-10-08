@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/builder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/builder.ts:2229:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 104776,
+      "body_end": 105210,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "toBuilderStateFileInfoForMultiEmit",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/builder.ts:2229:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/builder.ts:2229:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1769:26",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/builder.ts:2229:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/builder.ts:2230:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1769:26: stage 0 can't lower a value of type unknown yet",
+      "start": 104778,
+      "end": 105207
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "989c02472b899f275ee60ba610d112e4d5ba8b6358eea4bf2853a5d0fb46490b"
+}

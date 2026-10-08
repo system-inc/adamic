@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 192400,
+      "body_end": 192904,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getExportOfModule",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:48",
+      "reason": "a value of type __String",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:48: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4030:48: stage 0 can't lower a value of type __String yet",
+      "start": 192400,
+      "end": 192904
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "65d20390182b9102b83b07eaa841303fb0aaf05f634f492641c70e7b5af6fa87"
+}

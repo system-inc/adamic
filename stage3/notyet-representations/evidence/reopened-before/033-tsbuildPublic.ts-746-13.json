@@ -1,0 +1,161 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 32307,
+      "body_end": 33320,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "enableCache",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "SkippedDependency",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:778:1",
+      "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+      "text": "latent census: skipped checker-diagnosed dependency at /tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:778:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:743:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "latent census: skipped checker-diagnosed dependency at /tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:778:1",
+      "start": 32333,
+      "end": 32363
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:746:13",
+      "reason": "a value of type CompilerHost & ReadBuildProgramHost",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:746:13: stage 0 can't lower a value of type CompilerHost & ReadBuildProgramHost yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:746:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:746:13: stage 0 can't lower a value of type CompilerHost & ReadBuildProgramHost yet",
+      "start": 32370,
+      "end": 32415
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:749:35",
+      "reason": "reading compilerHost",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:749:35: stage 0 can't lower reading compilerHost yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:749:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:749:35: stage 0 can't lower reading compilerHost yet",
+      "start": 32481,
+      "end": 32544
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:760:9",
+      "reason": "reading host",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:760:9: stage 0 can't lower reading host yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:751:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:760:9: stage 0 can't lower reading host yet",
+      "start": 32544,
+      "end": 32957
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:764:31",
+      "reason": "reading readFileWithCache",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:764:31: stage 0 can't lower reading readFileWithCache yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:764:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:764:31: stage 0 can't lower reading readFileWithCache yet",
+      "start": 32957,
+      "end": 33007
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:765:5",
+      "reason": "replacing a represented method at runtime",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:765:5: stage 0 can't lower replacing a represented method at runtime yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:765:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:765:5: stage 0 can't lower replacing a represented method at runtime yet",
+      "start": 33007,
+      "end": 33066
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:768:9",
+      "reason": "reading originalReadFile",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:768:9: stage 0 can't lower reading originalReadFile yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:741:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:767:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/tsbuildPublic.ts:768:9: stage 0 can't lower reading originalReadFile yet",
+      "start": 33066,
+      "end": 33317
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "7b155ac702db50fb7db4b050560e5fe40363485c857165328b4931d9c704e632"
+}

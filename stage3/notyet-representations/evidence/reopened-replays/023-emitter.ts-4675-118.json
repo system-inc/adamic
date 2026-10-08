@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 198953,
+      "body_end": 199064,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "emitExpressionList",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:118",
+      "reason": "a value of type Children | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:118: stage 0 can't lower a value of type Children | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4675:118: stage 0 can't lower a value of type Children | undefined yet",
+      "start": 198953,
+      "end": 199064
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d5c2f4042cea9bc46cbd84ded1696020f11c98a441cb8be8bbdbc1b482844a71"
+}

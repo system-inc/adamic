@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:858:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 38947,
+      "body_end": 45495,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "resolveNamesWithLocalCache",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:579:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:579:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:858:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:861:9",
+      "reason": "a value of type SourceFile",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:861:9: stage 0 can't lower a value of type SourceFile yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:858:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:858:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:861:9: stage 0 can't lower a value of type SourceFile yet",
+      "start": 38947,
+      "end": 45495
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "177eb15e50f37440aac512941da6c88b8db27938c1431e8f9bf678c51d85fc6f"
+}

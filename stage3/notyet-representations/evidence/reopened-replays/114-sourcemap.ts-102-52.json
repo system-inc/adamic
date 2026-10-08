@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 3385,
+      "body_end": 3698,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "setSourceContent",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:36:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:36:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:52",
+      "reason": "a value of type string | null",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:52: stage 0 can't lower a value of type string | null yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/sourcemap.ts:102:52: stage 0 can't lower a value of type string | null yet",
+      "start": 3385,
+      "end": 3698
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "4a5005edcafadc07f45f664028602af00a8c57e08f72160bd4c6e72ba0ab7b08"
+}

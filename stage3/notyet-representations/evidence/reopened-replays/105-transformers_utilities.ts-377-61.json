@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 16325,
+      "body_end": 16490,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "multiMapSparseArrayAdd",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:61",
+      "reason": "a value of type V",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:61: stage 0 can't lower a value of type V yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:377:61: stage 0 can't lower a value of type V yet",
+      "start": 16325,
+      "end": 16490
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "5c39f86a52370215080c2a432cb3ce5a8bdbcf06800c47e6912986a267457b6c"
+}

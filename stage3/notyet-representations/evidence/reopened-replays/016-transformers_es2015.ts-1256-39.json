@@ -1,0 +1,372 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 51486,
+      "body_end": 54647,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformConstructorBody",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1",
+      "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1259:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+      "start": 51488,
+      "end": 51812
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1276:69",
+      "reason": "reading isDerivedClass",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1276:69: stage 0 can't lower reading isDerivedClass yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1276:27",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1276:69: stage 0 can't lower reading isDerivedClass yet",
+      "start": 52347,
+      "end": 52406
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1285:37",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1285:37: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1285:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1285:37: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 52647,
+      "end": 52951
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:987:34",
+      "reason": "slice with an index that isn't a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:987:34: stage 0 can't lower slice with an index that isn't a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:987:27",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:987:34: stage 0 can't lower slice with an index that isn't a number yet",
+      "start": 35474,
+      "end": 35505
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "panic",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:988:5",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "error",
+      "where": "",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:988:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "start": 35505,
+      "end": 35567
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "panic",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:989:5",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:989:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "start": 35567,
+      "end": 35633
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "panic",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:991:9",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:991:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "start": 35693,
+      "end": 35774
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5",
+      "reason": "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1290:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "start": 53109,
+      "end": 53226
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1292:32",
+      "reason": "reading isDerivedClass",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1292:32: stage 0 can't lower reading isDerivedClass yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1292:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1292:32: stage 0 can't lower reading isDerivedClass yet",
+      "start": 53226,
+      "end": 53336
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1298:13",
+      "reason": "reading mayReplaceThis",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1298:13: stage 0 can't lower reading mayReplaceThis yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1298:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1298:13: stage 0 can't lower reading mayReplaceThis yet",
+      "start": 53641,
+      "end": 53862
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1305:9",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1305:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1305:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1305:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 53862,
+      "end": 53941
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1307:13",
+      "reason": "reading mayReplaceThis",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1307:13: stage 0 can't lower reading mayReplaceThis yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1307:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1307:13: stage 0 can't lower reading mayReplaceThis yet",
+      "start": 53941,
+      "end": 54130
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1311:22",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1311:22: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1311:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1311:22: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 54130,
+      "end": 54509
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10655:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10655:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10655:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10655:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 426960,
+      "end": 426997
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10645:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10645:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10645:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:10645:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 426690,
+      "end": 426727
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1324:22",
+      "reason": "reading body",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1324:22: stage 0 can't lower reading body yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1324:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1324:22: stage 0 can't lower reading body yet",
+      "start": 54509,
+      "end": 54558
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1325:36",
+      "reason": "reading body",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1325:36: stage 0 can't lower reading body yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1256:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1325:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/es2015.ts:1325:36: stage 0 can't lower reading body yet",
+      "start": 54558,
+      "end": 54640
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "e6eb88d726310b4d80c7c0ba55fb728177618c2044dcd4ddd5593a4d3a59d45c"
+}

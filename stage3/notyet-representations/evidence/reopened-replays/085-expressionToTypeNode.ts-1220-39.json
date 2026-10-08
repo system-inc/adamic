@@ -1,0 +1,123 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 64828,
+      "body_end": 65389,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "typeFromPrimitiveLiteral",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:174:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:174:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1221:13",
+      "reason": "a value of type any",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1221:13: stage 0 can't lower a value of type any yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1221:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1221:13: stage 0 can't lower a value of type any yet",
+      "start": 64830,
+      "end": 64851
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1224:17",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1224:17: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1224:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1224:17: stage 0 can't lower assigning to an Identifier yet",
+      "start": 64993,
+      "end": 65084
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1226:13",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1226:13: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1226:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1226:13: stage 0 can't lower assigning to an Identifier yet",
+      "start": 65099,
+      "end": 65178
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1229:13",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1229:13: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1229:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1229:13: stage 0 can't lower assigning to an Identifier yet",
+      "start": 65205,
+      "end": 65268
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1231:53",
+      "reason": "reading result",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1231:53: stage 0 can't lower reading result yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1231:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1231:53: stage 0 can't lower reading result yet",
+      "start": 65279,
+      "end": 65382
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d9c0b4f6abece6d7c6c986cfe83cbd6112b672a89e657db6fcd47028be2f312c"
+}

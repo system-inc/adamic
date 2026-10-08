@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49428:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 2884240,
+      "body_end": 2885992,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getTypeFromJSDocVariadicType",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49428:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49436:17",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49436:17: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49428:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49436:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:49436:17: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+      "start": 2884679,
+      "end": 2885808
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "62d3165731baa3f8b79550a6121831009719cba1536fe64b0fb6ef662d6b42c3"
+}

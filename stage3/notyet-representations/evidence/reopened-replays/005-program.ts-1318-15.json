@@ -1,0 +1,103 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/program.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 53401,
+      "body_end": 54960,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "resolvedProjectReferenceUptoDate",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1228:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1228:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1288:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet",
+      "start": 53434,
+      "end": 53536
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1300:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162: stage 0 can't lower a generic function as a value yet",
+      "start": 53942,
+      "end": 54095
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54",
+      "reason": "an array of never",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54: stage 0 can't lower an array of never yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54: stage 0 can't lower an array of never yet",
+      "start": 54095,
+      "end": 54263
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17",
+      "reason": "a function returning U | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1306:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+      "start": 54263,
+      "end": 54698
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "b5020cba34bb593f239c5b31ae40348f756c114de13d31cba0ec365c8db84ed9"
+}

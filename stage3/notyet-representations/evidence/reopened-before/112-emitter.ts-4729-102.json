@@ -1,0 +1,403 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 201671,
+      "body_end": 207613,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "emitNodeListItems",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4734:86",
+      "reason": "an array of Child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4734:86: stage 0 can't lower an array of Child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4734:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4734:86: stage 0 can't lower an array of Child yet",
+      "start": 201910,
+      "end": 202024
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4735:13",
+      "reason": "reading leadingLineTerminatorCount",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4735:13: stage 0 can't lower reading leadingLineTerminatorCount yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4735:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4735:13: stage 0 can't lower reading leadingLineTerminatorCount yet",
+      "start": 202024,
+      "end": 202280
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:6375:12",
+      "reason": ".length on a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:6375:12: stage 0 can't lower .length on a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:6375:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:6375:12: stage 0 can't lower .length on a value yet",
+      "start": 274342,
+      "end": 274622
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4754:19",
+      "reason": "a value of type Child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4754:19: stage 0 can't lower a value of type Child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4754:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4754:19: stage 0 can't lower a value of type Child yet",
+      "start": 202664,
+      "end": 202713
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4769:21",
+      "reason": "a BinaryExpression with a number and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4769:21: stage 0 can't lower a BinaryExpression with a number and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4769:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4769:21: stage 0 can't lower a BinaryExpression with a number and a boolean yet",
+      "start": 203027,
+      "end": 203769
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4779:105",
+      "reason": "reading child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4779:105: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4779:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4779:105: stage 0 can't lower reading child yet",
+      "start": 203812,
+      "end": 204026
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4780:21",
+      "reason": "reading separatingLineTerminatorCount",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4780:21: stage 0 can't lower reading separatingLineTerminatorCount yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4780:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4780:21: stage 0 can't lower reading separatingLineTerminatorCount yet",
+      "start": 204026,
+      "end": 205145
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4803:54",
+      "reason": "reading child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4803:54: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4803:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4803:54: stage 0 can't lower reading child yet",
+      "start": 205245,
+      "end": 205307
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4804:48",
+      "reason": "reading commentRange",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4804:48: stage 0 can't lower reading commentRange yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4804:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4804:48: stage 0 can't lower reading commentRange yet",
+      "start": 205307,
+      "end": 205374
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4810:34",
+      "reason": "reading child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4810:34: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4810:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4810:34: stage 0 can't lower reading child yet",
+      "start": 205501,
+      "end": 205548
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4811:26",
+      "reason": "reading child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4811:26: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4811:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4811:26: stage 0 can't lower reading child yet",
+      "start": 205548,
+      "end": 205610
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4818:31",
+      "reason": "reading child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4818:31: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4818:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4818:31: stage 0 can't lower reading child yet",
+      "start": 205768,
+      "end": 205808
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4822:45",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4822:45: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4822:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4822:45: stage 0 can't lower a void call used as a value yet",
+      "start": 205819,
+      "end": 205951
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4823:61",
+      "reason": "reading emitFlags",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4823:61: stage 0 can't lower reading emitFlags yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4823:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4823:61: stage 0 can't lower reading emitFlags yet",
+      "start": 205951,
+      "end": 206055
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4824:35",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4824:35: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4824:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4824:35: stage 0 can't lower a BinaryExpression with a boolean and a number yet",
+      "start": 206055,
+      "end": 206192
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4825:13",
+      "reason": "reading emitTrailingComma",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4825:13: stage 0 can't lower reading emitTrailingComma yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4825:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4825:13: stage 0 can't lower reading emitTrailingComma yet",
+      "start": 206192,
+      "end": 206506
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4840:13",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4840:13: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4840:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4840:13: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+      "start": 206506,
+      "end": 207022
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4850:86",
+      "reason": "an array of Child",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4850:86: stage 0 can't lower an array of Child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4850:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4850:86: stage 0 can't lower an array of Child yet",
+      "start": 207158,
+      "end": 207372
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4851:13",
+      "reason": "reading closingLineTerminatorCount",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4851:13: stage 0 can't lower reading closingLineTerminatorCount yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4729:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4851:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4851:13: stage 0 can't lower reading closingLineTerminatorCount yet",
+      "start": 207372,
+      "end": 207606
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "76a6d34c20d920d7f144da22704c51e1ff66c2762c1a2a0a222b4c9f88d966c8"
+}

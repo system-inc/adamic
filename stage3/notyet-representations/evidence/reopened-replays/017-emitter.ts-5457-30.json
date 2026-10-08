@@ -1,0 +1,63 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5456:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 233064,
+      "body_end": 233870,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "generateName",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:1211:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5456:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5461:117",
+      "reason": "a field of type string | GeneratedNamePart | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5461:117: stage 0 can't lower a field of type string | GeneratedNamePart | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5456:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5461:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5461:117: stage 0 can't lower a field of type string | GeneratedNamePart | undefined yet",
+      "start": 233231,
+      "end": 233525
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5456:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5467:71",
+      "reason": "a BinaryExpression with a string and a string",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5467:71: stage 0 can't lower a BinaryExpression with a string and a string yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5456:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5467:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:5467:71: stage 0 can't lower a BinaryExpression with a string and a string yet",
+      "start": 233715,
+      "end": 233852
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "5257694e67a8e5f2410c7a78ff6fb655dca351996be5dfb0ca060962ce33696c"
+}

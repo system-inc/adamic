@@ -1,0 +1,103 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 172536,
+      "body_end": 174768,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindPotentiallyNewExpandoMemberToNamespace",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3477:42",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3477:42: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3476:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3477:42: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 172640,
+      "end": 172946
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3490:22",
+      "reason": "a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3490:22: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3489:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3490:22: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet",
+      "start": 173384,
+      "end": 174041
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3501:22",
+      "reason": "a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3501:22: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3500:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3501:22: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet",
+      "start": 174041,
+      "end": 174451
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3516:23",
+      "reason": "reading symbolTable",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3516:23: stage 0 can't lower reading symbolTable yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3516:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3516:23: stage 0 can't lower reading symbolTable yet",
+      "start": 174621,
+      "end": 174761
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "a158e49a42d07dce49efda0f4c0b6fe14965102d2bb4d1cf19d6df0241bacfad"
+}

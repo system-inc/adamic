@@ -1,0 +1,63 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/program.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2006:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 95885,
+      "body_end": 96188,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "forEachResolution",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1515:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1515:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2006:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2011:19",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2011:19: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2006:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2011:19",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2011:19: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 95906,
+      "end": 96021
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2006:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2012:14",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2012:14: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2006:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2012:14",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:2012:14: stage 0 can't lower a call through ?. (an optional call) yet",
+      "start": 96035,
+      "end": 96181
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "52b1254f4be4285db4204dbfc09ea4fd90d8b0d2626bd003d50e0c8fc9807fc8"
+}

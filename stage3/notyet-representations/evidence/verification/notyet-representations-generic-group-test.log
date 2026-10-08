@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestRepresentationGenericMultimapMissingAddsMutant
+    representation_generic_multimap_test.go:69: Node stdout caught absent number, string and boolean set entries
+--- PASS: TestRepresentationGenericMultimapMissingAddsMutant (0.30s)
+=== RUN   TestRepresentationGenericOptionalKeyPresenceMutant
+=== PAUSE TestRepresentationGenericOptionalKeyPresenceMutant
+=== RUN   TestRepresentationGenericWrappedAbsenceMutant
+    representation_generic_wrapped_value_test.go:69: Node stdout caught present scalar, reference and wrapped values becoming absent
+--- PASS: TestRepresentationGenericWrappedAbsenceMutant (0.24s)
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestRepresentationGenericOptionalKeyPresenceMutant
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_multimap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_multimap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_optional_key.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_optional_key.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_wrapped_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_wrapped_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_multimap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_optional_key.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_wrapped_value.a
+=== NAME  TestRepresentationGenericOptionalKeyPresenceMutant
+    representation_generic_optional_key_test.go:65: caught by Node stdout; zero, empty string, false and an object became missing keys
+--- PASS: TestRepresentationGenericOptionalKeyPresenceMutant (0.29s)
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_wrapped_value.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_optional_key.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/representation_generic_multimap.a (0.43s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.018s

@@ -1,0 +1,2 @@
+replay load/register/lower: 2.08504498s
+reproduced NotYet: a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:354:83

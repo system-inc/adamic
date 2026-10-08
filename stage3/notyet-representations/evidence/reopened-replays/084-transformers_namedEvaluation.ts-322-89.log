@@ -1,0 +1,2 @@
+replay load/register/lower: 1.908253396s
+replay signature did not reproduce: NotYet a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:322:89 (selected /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:322:1)

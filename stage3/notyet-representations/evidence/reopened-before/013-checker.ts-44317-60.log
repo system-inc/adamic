@@ -1,0 +1,2 @@
+replay load/register/lower: 2.030091573s
+reproduced NotYet: a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; } at /tmp/notyet-representations-adapted/src/compiler/checker.ts:44317:60

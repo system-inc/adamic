@@ -1,0 +1,42 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 5924,
+      "body_end": 6138,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "deleteFromMultimap",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:100:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:100:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:60",
+      "reason": "a value of type K",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:60: stage 0 can't lower a value of type K yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/builderState.ts:180:60: stage 0 can't lower a value of type K yet",
+      "start": 5924,
+      "end": 6138
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "5e099fd42c7c2dbf0f92b6ea958c789e2efedb0b0d150cc46ae61df2c2bade3c"
+}

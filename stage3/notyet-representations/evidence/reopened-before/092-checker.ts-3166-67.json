@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 140211,
+      "body_end": 142039,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isPropertyImmediatelyReferencedWithinDeclaration",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:2982:5",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 2
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:67",
+      "reason": "a value of type PropertyDeclaration | ParameterPropertyDeclaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:67: stage 0 can't lower a value of type PropertyDeclaration | ParameterPropertyDeclaration yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:9",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:3166:67: stage 0 can't lower a value of type PropertyDeclaration | ParameterPropertyDeclaration yet",
+      "start": 140211,
+      "end": 142039
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "e622f8c9535311c3a5a8b2ebc9a2799ab8ce6f01f5e4b0ccfa832f21be8813be"
+}

@@ -1,0 +1,22 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:14688:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 853504,
+      "body_end": 853841,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "replaceIndexedAccess",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "adaf65d4e0529136509e3af03b64418fd2df4cf5592194fa86eb74539082f2a3"
+}

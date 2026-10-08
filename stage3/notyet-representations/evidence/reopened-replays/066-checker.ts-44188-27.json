@@ -1,0 +1,243 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 2594504,
+      "body_end": 2596728,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "checkDecorators",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:3471:1",
+      "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:3471:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44166:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:3471:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+      "start": 2594506,
+      "end": 2594855
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:162:1",
+      "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:162:1: Adamic 0.1 refuses overload 1 of find result U | undefined cannot be served by implementation result T | undefined; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44170:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:162:1: Adamic 0.1 refuses overload 1 of find result U | undefined cannot be served by implementation result T | undefined; make the implementation result covariant with every overload result",
+      "start": 2594855,
+      "end": 2594924
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44171:14",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44171:14: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44171:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44171:14: stage 0 can't lower reading firstDecorator yet",
+      "start": 2594924,
+      "end": 2594988
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44176:38",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44176:38: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44176:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44176:38: stage 0 can't lower reading firstDecorator yet",
+      "start": 2595023,
+      "end": 2595108
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44178:42",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44178:42: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44178:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44178:42: stage 0 can't lower reading firstDecorator yet",
+      "start": 2595163,
+      "end": 2595249
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44182:38",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44182:38: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44182:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44182:38: stage 0 can't lower reading firstDecorator yet",
+      "start": 2595374,
+      "end": 2595479
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44185:46",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44185:46: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44185:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44185:46: stage 0 can't lower reading firstDecorator yet",
+      "start": 2595559,
+      "end": 2595659
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44190:50",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44190:50: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44190:25",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44190:50: stage 0 can't lower reading firstDecorator yet",
+      "start": 2595820,
+      "end": 2595924
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44196:46",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44196:46: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44196:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44196:46: stage 0 can't lower reading firstDecorator yet",
+      "start": 2596180,
+      "end": 2596280
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44199:46",
+      "reason": "reading firstDecorator",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44199:46: stage 0 can't lower reading firstDecorator yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44199:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44199:46: stage 0 can't lower reading firstDecorator yet",
+      "start": 2596357,
+      "end": 2596449
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44206:32",
+      "reason": "for...of over an object",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44206:32: stage 0 can't lower for...of over an object yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44163:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44206:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:44206:32: stage 0 can't lower for...of over an object yet",
+      "start": 2596558,
+      "end": 2596721
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "1211ccdb67d315165353c70ac46f6eb244e2def3a4090394471403313f598c6a"
+}

@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 56854,
+      "body_end": 57164,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformInitializedVariable",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:336:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:336:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:43",
+      "reason": "a value of type InitializedVariableDeclaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+      "start": 56854,
+      "end": 57164
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d8680738e9a9177cc5343c0d4192198f242ba4476fed6bd9c08af06f35e30fc1"
+}

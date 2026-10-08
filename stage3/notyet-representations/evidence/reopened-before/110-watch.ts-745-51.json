@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/watch.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 33774,
+      "body_end": 34248,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createWatchFactory",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:51",
+      "reason": "a value of type WatchFactoryHost & { trace?(s: string): void; }",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:51: stage 0 can't lower a value of type WatchFactoryHost & { trace?(s: string): void; } yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watch.ts:745:51: stage 0 can't lower a value of type WatchFactoryHost & { trace?(s: string): void; } yet",
+      "start": 33774,
+      "end": 34248
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "a57a84222eda0506cc762ec7dd6645e76a5f5e076e104db5a77cc3a2c8bf0342"
+}

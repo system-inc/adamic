@@ -1,0 +1,183 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 211566,
+      "body_end": 213436,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getSymbolFlags",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4352:37",
+      "reason": "a BinaryExpression with a boolean | undefined and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4352:37: stage 0 can't lower a BinaryExpression with a boolean | undefined and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4352:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4352:37: stage 0 can't lower a BinaryExpression with a boolean | undefined and a value yet",
+      "start": 211568,
+      "end": 211669
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4353:49",
+      "reason": "reading typeOnlyDeclaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4353:49: stage 0 can't lower reading typeOnlyDeclaration yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4353:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4353:49: stage 0 can't lower reading typeOnlyDeclaration yet",
+      "start": 211669,
+      "end": 211783
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4354:36",
+      "reason": "reading typeOnlyDeclaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4354:36: stage 0 can't lower reading typeOnlyDeclaration yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4354:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4354:36: stage 0 can't lower reading typeOnlyDeclaration yet",
+      "start": 211783,
+      "end": 212103
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4359:43",
+      "reason": "reading typeOnlyDeclarationIsExportStar",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4359:43: stage 0 can't lower reading typeOnlyDeclarationIsExportStar yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4359:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4359:43: stage 0 can't lower reading typeOnlyDeclarationIsExportStar yet",
+      "start": 212103,
+      "end": 212254
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4361:13",
+      "reason": "a value of type any",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4361:13: stage 0 can't lower a value of type any yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4361:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4361:13: stage 0 can't lower a value of type any yet",
+      "start": 212331,
+      "end": 212357
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4365:18",
+      "reason": "reading typeOnlyDeclarationIsExportStar",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4365:18: stage 0 can't lower reading typeOnlyDeclarationIsExportStar yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4364:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4365:18: stage 0 can't lower reading typeOnlyDeclarationIsExportStar yet",
+      "start": 212499,
+      "end": 212738
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4376:38",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4376:38: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4376:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4376:38: stage 0 can't lower a call through ?. (an optional call) yet",
+      "start": 212839,
+      "end": 213055
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4380:21",
+      "reason": "reading seenSymbols",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4380:21: stage 0 can't lower reading seenSymbols yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4351:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4380:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4380:21: stage 0 can't lower reading seenSymbols yet",
+      "start": 213108,
+      "end": 213314
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "b52837137803dd0e134c716d48befa5dbab22d1b29213e238a1c9678086b8755"
+}

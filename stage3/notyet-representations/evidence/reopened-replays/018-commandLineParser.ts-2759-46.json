@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 110381,
+      "body_end": 110635,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getNameOfCompilerOptionValue",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:46",
+      "reason": "a value of type CompilerOptionsValue",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:46: stage 0 can't lower a value of type CompilerOptionsValue yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:2759:46: stage 0 can't lower a value of type CompilerOptionsValue yet",
+      "start": 110381,
+      "end": 110635
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "93ccada8df6a491d7edc73bcf497cc9a7e96e9daf5291cee5f6c235060f6c924"
+}

@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/core.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 17731,
+      "body_end": 17837,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "tryAddToSet",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:45",
+      "reason": "a value of type T",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:45: stage 0 can't lower a value of type T yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:529:45: stage 0 can't lower a value of type T yet",
+      "start": 17731,
+      "end": 17837
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "ba67c58f4652f9bee097a923d363995c9731534328db428579ef63d92b0c3fde"
+}

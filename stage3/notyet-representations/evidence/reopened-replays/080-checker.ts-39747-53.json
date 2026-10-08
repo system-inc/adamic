@@ -1,0 +1,123 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 2352325,
+      "body_end": 2353897,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isReadonlyAssignmentDeclaration",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39747:53",
+      "reason": "a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39747:53: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39747:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39747:53: stage 0 can't lower a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> yet",
+      "start": 2352495,
+      "end": 2352565
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:11575:50",
+      "reason": "a value of type __String",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:11575:50: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39748:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:11575:50: stage 0 can't lower a value of type __String yet",
+      "start": 2352565,
+      "end": 2352653
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39749:13",
+      "reason": "reading valueType",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39749:13: stage 0 can't lower reading valueType yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39749:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39749:13: stage 0 can't lower reading valueType yet",
+      "start": 2352653,
+      "end": 2353786
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15893:44",
+      "reason": "a value of type __String",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15893:44: stage 0 can't lower a value of type __String yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39767:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:15893:44: stage 0 can't lower a value of type __String yet",
+      "start": 2353786,
+      "end": 2353864
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39768:17",
+      "reason": "reading setProp",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39768:17: stage 0 can't lower reading setProp yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39740:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39768:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:39768:17: stage 0 can't lower reading setProp yet",
+      "start": 2353864,
+      "end": 2353890
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "b059b32429fdb0b8d9950db345d642d8706b13448dc1ca19fbc1f5427b82de36"
+}

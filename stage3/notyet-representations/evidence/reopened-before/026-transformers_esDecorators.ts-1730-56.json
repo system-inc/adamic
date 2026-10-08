@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 88679,
+      "body_end": 89301,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "canIgnoreEmptyStringLiteralInAssignedName",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:56",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:56: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:56: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+      "start": 88679,
+      "end": 89301
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d3538b1a6c0f44172939f5eb55febd1cdb854a7591c97a77e0313dc278eee1e2"
+}

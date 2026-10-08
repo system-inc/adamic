@@ -1,0 +1,18 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/representation_false_regex_null_stale.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/representation_false_regex_null_stale.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/representation_false_regex_null_stale.a
+    oracle_test.go:752: stdout differs
+        backend: exit 0, stdout "object\n", stderr ""
+        native:  exit 0, stdout "undefined\n", stderr ""
+    oracle_test.go:756: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/representation_false_regex_null_stale.a (0.37s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.390s
+FAIL

@@ -1,0 +1,223 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/program.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 53401,
+      "body_end": 54960,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "resolvedProjectReferenceUptoDate",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1228:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1228:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1288:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:220:112: stage 0 can't lower a generic function as a value yet",
+      "start": 53434,
+      "end": 53536
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1290:19",
+      "reason": "a value of type ResolvedConfigFileName",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1290:19: stage 0 can't lower a value of type ResolvedConfigFileName yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1290:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1290:19: stage 0 can't lower a value of type ResolvedConfigFileName yet",
+      "start": 53536,
+      "end": 53604
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1291:63",
+      "reason": "reading refPath",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1291:63: stage 0 can't lower reading refPath yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1291:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1291:63: stage 0 can't lower reading refPath yet",
+      "start": 53604,
+      "end": 53677
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1294:18",
+      "reason": "reading newParsedCommandLine",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1294:18: stage 0 can't lower reading newParsedCommandLine yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1294:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1294:18: stage 0 can't lower reading newParsedCommandLine yet",
+      "start": 53677,
+      "end": 53777
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1297:67",
+      "reason": "reading newParsedCommandLine",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1297:67: stage 0 can't lower reading newParsedCommandLine yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1297:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1297:67: stage 0 can't lower reading newParsedCommandLine yet",
+      "start": 53777,
+      "end": 53942
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1300:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:814:162: stage 0 can't lower a generic function as a value yet",
+      "start": 53942,
+      "end": 54095
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54",
+      "reason": "an array of never",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54: stage 0 can't lower an array of never yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1303:54: stage 0 can't lower an array of never yet",
+      "start": 54095,
+      "end": 54263
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17",
+      "reason": "a function returning U | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1306:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+      "start": 54263,
+      "end": 54698
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1318:15",
+      "reason": "a value of type ResolvedConfigFileName",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1318:15: stage 0 can't lower a value of type ResolvedConfigFileName yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1318:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1318:15: stage 0 can't lower a value of type ResolvedConfigFileName yet",
+      "start": 54709,
+      "end": 54905
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1319:38",
+      "reason": "reading refPath",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1319:38: stage 0 can't lower reading refPath yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1285:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1319:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/program.ts:1319:38: stage 0 can't lower reading refPath yet",
+      "start": 54905,
+      "end": 54953
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "3f1fd132c6835767de6c7489a0562dad686a0cc972570b2a265c20d02ec20777"
+}

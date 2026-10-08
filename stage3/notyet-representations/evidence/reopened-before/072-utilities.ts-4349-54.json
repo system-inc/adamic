@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 169527,
+      "body_end": 170837,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "tryGetModuleSpecifierFromDeclaration",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:54",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:54: stage 0 can't lower a value of type JSDocImportTag | CanHaveModuleSpecifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:4349:54: stage 0 can't lower a value of type JSDocImportTag | CanHaveModuleSpecifier yet",
+      "start": 169527,
+      "end": 170837
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2d2a83ad2970e01f0b66c9db006db71b3cc9f7b726407f724cb713b267afb6e7"
+}

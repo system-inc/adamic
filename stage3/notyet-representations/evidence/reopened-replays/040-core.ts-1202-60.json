@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/core.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 42678,
+      "body_end": 43302,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "binarySearchKey",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:60",
+      "reason": "a value of type U",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:60: stage 0 can't lower a value of type U yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1202:60: stage 0 can't lower a value of type U yet",
+      "start": 42678,
+      "end": 43302
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2fc551bcab83021f8b0a46b298bad9978a3385dfa551bd1e3d30aaec0492fc8b"
+}

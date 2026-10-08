@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 172536,
+      "body_end": 174768,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindPotentiallyNewExpandoMemberToNamespace",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:57",
+      "reason": "a value of type CallExpression | BindableStaticAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:57: stage 0 can't lower a value of type CallExpression | BindableStaticAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3470:57: stage 0 can't lower a value of type CallExpression | BindableStaticAccessExpression yet",
+      "start": 172536,
+      "end": 174768
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "2fb26b2b826d2e80823ad34389a4e26bd5e3a0a07055b7e3d1c5d3f0d02a8fda"
+}

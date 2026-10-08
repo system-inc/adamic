@@ -1,0 +1,2 @@
+replay load/register/lower: 1.970073119s
+reproduced NotYet: a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; } at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:274:96

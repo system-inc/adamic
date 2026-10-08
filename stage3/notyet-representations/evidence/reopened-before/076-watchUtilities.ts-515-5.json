@@ -1,0 +1,101 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 21117,
+      "body_end": 22526,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "updateWatchingWildcardDirectories",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8248:1",
+      "reason": "overload 1 of mutateMap with additional implementation type parameters",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8248:1: stage 0 can't lower overload 1 of mutateMap with additional implementation type parameters yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:520:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8248:1: stage 0 can't lower overload 1 of mutateMap with additional implementation type parameters yet",
+      "start": 21151,
+      "end": 21693
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:534:47",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:534:47: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:534:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:534:47: stage 0 can't lower a generic function as a value yet",
+      "start": 21712,
+      "end": 21780
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:537:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:537:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:537:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:537:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 21787,
+      "end": 22073
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:545:5",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:545:5: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:514:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:545:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:545:5: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 22073,
+      "end": 22523
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "82a569f960de0237d1094a7f9e1567bdc0218a323b072e24b6246abef94fe12b"
+}

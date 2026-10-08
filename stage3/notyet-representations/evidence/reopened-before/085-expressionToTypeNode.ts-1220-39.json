@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 64828,
+      "body_end": 65389,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "typeFromPrimitiveLiteral",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:174:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:174:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:39",
+      "reason": "a value of type PrimitiveLiteral",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:39: stage 0 can't lower a value of type PrimitiveLiteral yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/expressionToTypeNode.ts:1220:39: stage 0 can't lower a value of type PrimitiveLiteral yet",
+      "start": 64828,
+      "end": 65389
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "fb3f56cd890e33ca531a86d38c215d3f3d57e50f01c26515377226ebf2466f3b"
+}

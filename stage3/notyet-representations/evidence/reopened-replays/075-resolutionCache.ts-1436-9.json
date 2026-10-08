@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1435:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 67522,
+      "body_end": 68127,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "removeResolutionsOfFileFromCache",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:579:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:579:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1435:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1443:18",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1443:18: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1435:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1443:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/resolutionCache.ts:1443:18: stage 0 can't lower a call through ?. (an optional call) yet",
+      "start": 67693,
+      "end": 68072
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "01cba695a453227b05948d578b4211b70446e2ccc720a00221e8bcf0edc6667c"
+}

@@ -1,0 +1,10 @@
+let current: false | RegExpExecArray | null = /a/.exec('a');
+function drop(): void { current = null; }
+function narrowed(): false | RegExpExecArray {
+    if (current !== null) {
+        drop();
+        return current;
+    }
+    return false;
+}
+console.log(typeof narrowed());

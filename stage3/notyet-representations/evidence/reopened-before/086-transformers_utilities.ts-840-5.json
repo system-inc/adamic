@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:839:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 34068,
+      "body_end": 34395,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "setPrivateIdentifier",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:839:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:839:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:842:5",
+      "reason": "a value of type TEntry",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:842:5: stage 0 can't lower a value of type TEntry yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:839:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:839:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/utilities.ts:842:5: stage 0 can't lower a value of type TEntry yet",
+      "start": 34068,
+      "end": 34395
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "e044f0ea52be299c172170cc3e38a966dc6bb381540eff84ebfd7ef9e09a9e3a"
+}

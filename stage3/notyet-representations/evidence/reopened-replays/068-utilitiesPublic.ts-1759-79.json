@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1757:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 70239,
+      "body_end": 70600,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isClassInstanceProperty",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1757:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1757:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1761:12",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1761:12: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1757:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1761:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1761:12: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+      "start": 70483,
+      "end": 70597
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "d80736c0922ede260c3f9aa260c5548b5e80ec9bcca9a993bb9a1654278ea5f4"
+}

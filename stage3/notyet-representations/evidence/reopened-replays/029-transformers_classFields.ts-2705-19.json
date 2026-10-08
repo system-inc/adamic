@@ -1,0 +1,143 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 125953,
+      "body_end": 127105,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getPropertyNameExpressionIfNeeded",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:123:5",
+      "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2706:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "start": 126084,
+      "end": 126167
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1431:1",
+      "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2707:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+      "start": 126167,
+      "end": 126249
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2708:60",
+      "reason": "reading innerExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2708:60: stage 0 can't lower reading innerExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2708:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2708:60: stage 0 can't lower reading innerExpression yet",
+      "start": 126249,
+      "end": 126327
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2709:84",
+      "reason": "reading innerExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2709:84: stage 0 can't lower reading innerExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2709:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2709:84: stage 0 can't lower reading innerExpression yet",
+      "start": 126327,
+      "end": 126476
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2710:18",
+      "reason": "reading alreadyTransformed",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2710:18: stage 0 can't lower reading alreadyTransformed yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2710:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2710:18: stage 0 can't lower reading alreadyTransformed yet",
+      "start": 126476,
+      "end": 126996
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2720:21",
+      "reason": "reading inlinable",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2720:21: stage 0 can't lower reading inlinable yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2703:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2720:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/classFields.ts:2720:21: stage 0 can't lower reading inlinable yet",
+      "start": 126996,
+      "end": 127087
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "98a8b527356dcf25363291aef41c45b917f018aae990108b637b6322f68bb624"
+}

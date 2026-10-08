@@ -1,0 +1,930 @@
+[
+  {
+    "reason": "a value of type SolutionBuilderState<T>",
+    "listed_root_sites": 22,
+    "example": "src/compiler/tsbuildPublic.ts:555:43",
+    "exit_code": 1,
+    "json": "001-tsbuildPublic.ts-555-43.json",
+    "log": "001-tsbuildPublic.ts-555-43.log"
+  },
+  {
+    "reason": "a value of type unknown",
+    "listed_root_sites": 20,
+    "example": "src/compiler/binder.ts:495:50",
+    "exit_code": 0,
+    "json": "002-binder.ts-495-50.json",
+    "log": "002-binder.ts-495-50.log"
+  },
+  {
+    "reason": "a value of type ResolvedConfigFilePath",
+    "listed_root_sites": 18,
+    "example": "src/compiler/tsbuildPublic.ts:198:123",
+    "exit_code": 0,
+    "json": "003-tsbuildPublic.ts-198-123.json",
+    "log": "003-tsbuildPublic.ts-198-123.log"
+  },
+  {
+    "reason": "a value of type object",
+    "listed_root_sites": 16,
+    "example": "src/compiler/checker.ts:15341:23",
+    "exit_code": 0,
+    "json": "004-checker.ts-15341-23.json",
+    "log": "004-checker.ts-15341-23.log"
+  },
+  {
+    "reason": "a value of type ResolvedConfigFileName",
+    "listed_root_sites": 12,
+    "example": "src/compiler/program.ts:1290:19",
+    "exit_code": 0,
+    "json": "005-program.ts-1290-19.json",
+    "log": "005-program.ts-1290-19.log"
+  },
+  {
+    "reason": "a value of type K",
+    "listed_root_sites": 8,
+    "example": "src/compiler/builderState.ts:171:55",
+    "exit_code": 0,
+    "json": "006-builderState.ts-171-55.json",
+    "log": "006-builderState.ts-171-55.log"
+  },
+  {
+    "reason": "a value of type readonly T[] | undefined",
+    "listed_root_sites": 8,
+    "example": "src/compiler/core.ts:22:27",
+    "exit_code": 1,
+    "json": "007-core.ts-22-27.json",
+    "log": "007-core.ts-22-27.log"
+  },
+  {
+    "reason": "a value of type BindableStaticNameExpression",
+    "listed_root_sites": 7,
+    "example": "src/compiler/binder.ts:3438:43",
+    "exit_code": 0,
+    "json": "008-binder.ts-3438-43.json",
+    "log": "008-binder.ts-3438-43.log"
+  },
+  {
+    "reason": "a value of type NonNullable<T>",
+    "listed_root_sites": 7,
+    "example": "src/compiler/core.ts:246:19",
+    "exit_code": 0,
+    "json": "009-core.ts-246-19.json",
+    "log": "009-core.ts-246-19.log"
+  },
+  {
+    "reason": "a value of type HasJSDoc | undefined",
+    "listed_root_sites": 6,
+    "example": "src/compiler/binder.ts:2538:19",
+    "exit_code": 0,
+    "json": "010-binder.ts-2538-19.json",
+    "log": "010-binder.ts-2538-19.log"
+  },
+  {
+    "reason": "a value of type readonly T[]",
+    "listed_root_sites": 6,
+    "example": "src/compiler/checker.ts:46982:109",
+    "exit_code": 1,
+    "json": "011-checker.ts-46982-109.json",
+    "log": "011-checker.ts-46982-109.log"
+  },
+  {
+    "reason": "a value of type string | null | undefined",
+    "listed_root_sites": 6,
+    "example": "src/compiler/sourcemap.ts:701:24",
+    "exit_code": 0,
+    "json": "012-sourcemap.ts-701-24.json",
+    "log": "012-sourcemap.ts-701-24.log"
+  },
+  {
+    "reason": "a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }",
+    "listed_root_sites": 5,
+    "example": "src/compiler/checker.ts:44317:60",
+    "exit_code": 0,
+    "json": "013-checker.ts-44317-60.json",
+    "log": "013-checker.ts-44317-60.log"
+  },
+  {
+    "reason": "a value of type HasJSDoc",
+    "listed_root_sites": 5,
+    "example": "src/compiler/checker.ts:16519:50",
+    "exit_code": 1,
+    "json": "014-checker.ts-16519-50.json",
+    "log": "014-checker.ts-16519-50.log"
+  },
+  {
+    "reason": "a value of type ((node: Node) => boolean) | undefined",
+    "listed_root_sites": 4,
+    "example": "src/compiler/utilitiesPublic.ts:827:58",
+    "exit_code": 1,
+    "json": "015-utilitiesPublic.ts-827-58.json",
+    "log": "015-utilitiesPublic.ts-827-58.log"
+  },
+  {
+    "reason": "a value of type (ConstructorDeclaration & { body: Block; }) | undefined",
+    "listed_root_sites": 4,
+    "example": "src/compiler/transformers/es2015.ts:1151:15",
+    "exit_code": 0,
+    "json": "016-transformers_es2015.ts-1151-15.json",
+    "log": "016-transformers_es2015.ts-1151-15.log"
+  },
+  {
+    "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+    "listed_root_sites": 4,
+    "example": "src/compiler/emitter.ts:5457:30",
+    "exit_code": 0,
+    "json": "017-emitter.ts-5457-30.json",
+    "log": "017-emitter.ts-5457-30.log"
+  },
+  {
+    "reason": "a value of type CompilerOptionsValue",
+    "listed_root_sites": 4,
+    "example": "src/compiler/commandLineParser.ts:2759:46",
+    "exit_code": 0,
+    "json": "018-commandLineParser.ts-2759-46.json",
+    "log": "018-commandLineParser.ts-2759-46.log"
+  },
+  {
+    "reason": "a value of type ImmediatelyInvokedArrowFunction",
+    "listed_root_sites": 4,
+    "example": "src/compiler/transformers/classFields.ts:1462:19",
+    "exit_code": 0,
+    "json": "019-transformers_classFields.ts-1462-19.json",
+    "log": "019-transformers_classFields.ts-1462-19.log"
+  },
+  {
+    "reason": "a value of type object | undefined",
+    "listed_root_sites": 4,
+    "example": "src/compiler/moduleNameResolver.ts:2256:54",
+    "exit_code": 1,
+    "json": "020-moduleNameResolver.ts-2256-54.json",
+    "log": "020-moduleNameResolver.ts-2256-54.log"
+  },
+  {
+    "reason": "a value of type BindableAccessExpression",
+    "listed_root_sites": 3,
+    "example": "src/compiler/binder.ts:3411:54",
+    "exit_code": 0,
+    "json": "021-binder.ts-3411-54.json",
+    "log": "021-binder.ts-3411-54.log"
+  },
+  {
+    "reason": "a value of type BindableObjectDefinePropertyCall",
+    "listed_root_sites": 3,
+    "example": "src/compiler/binder.ts:3201:45",
+    "exit_code": 0,
+    "json": "022-binder.ts-3201-45.json",
+    "log": "022-binder.ts-3201-45.log"
+  },
+  {
+    "reason": "a value of type Children | undefined",
+    "listed_root_sites": 3,
+    "example": "src/compiler/emitter.ts:4663:108",
+    "exit_code": 0,
+    "json": "023-emitter.ts-4663-108.json",
+    "log": "023-emitter.ts-4663-108.log"
+  },
+  {
+    "reason": "a value of type EndOfFileToken",
+    "listed_root_sites": 3,
+    "example": "src/compiler/factory/nodeFactory.ts:6043:9",
+    "exit_code": 0,
+    "json": "024-factory_nodeFactory.ts-6043-9.json",
+    "log": "024-factory_nodeFactory.ts-6043-9.log"
+  },
+  {
+    "reason": "a value of type InitializedVariableDeclaration",
+    "listed_root_sites": 3,
+    "example": "src/compiler/transformers/generators.ts:1387:43",
+    "exit_code": 0,
+    "json": "025-transformers_generators.ts-1387-43.json",
+    "log": "025-transformers_generators.ts-1387-43.log"
+  },
+  {
+    "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+    "listed_root_sites": 3,
+    "example": "src/compiler/transformers/esDecorators.ts:1730:56",
+    "exit_code": 0,
+    "json": "026-transformers_esDecorators.ts-1730-56.json",
+    "log": "026-transformers_esDecorators.ts-1730-56.log"
+  },
+  {
+    "reason": "a value of type X",
+    "listed_root_sites": 3,
+    "example": "src/compiler/watchUtilities.ts:750:9",
+    "exit_code": 0,
+    "json": "027-watchUtilities.ts-750-9.json",
+    "log": "027-watchUtilities.ts-750-9.log"
+  },
+  {
+    "reason": "a value of type false | TypeOnlyAliasDeclaration | undefined",
+    "listed_root_sites": 3,
+    "example": "src/compiler/checker.ts:4352:15",
+    "exit_code": 0,
+    "json": "028-checker.ts-4352-15.json",
+    "log": "028-checker.ts-4352-15.log"
+  },
+  {
+    "reason": "a value of type (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/transformers/classFields.ts:925:19",
+    "exit_code": 1,
+    "json": "029-transformers_classFields.ts-925-19.json",
+    "log": "029-transformers_classFields.ts-925-19.log"
+  },
+  {
+    "reason": "a value of type (ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }) | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/checker.ts:4034:19",
+    "exit_code": 1,
+    "json": "030-checker.ts-4034-19.json",
+    "log": "030-checker.ts-4034-19.log"
+  },
+  {
+    "reason": "a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/checker.ts:8614:44",
+    "exit_code": 0,
+    "json": "031-checker.ts-8614-44.json",
+    "log": "031-checker.ts-8614-44.log"
+  },
+  {
+    "reason": "a value of type AnonymousFunctionDefinition",
+    "listed_root_sites": 2,
+    "example": "src/compiler/transformers/classFields.ts:1471:50",
+    "exit_code": 0,
+    "json": "032-transformers_classFields.ts-1471-50.json",
+    "log": "032-transformers_classFields.ts-1471-50.log"
+  },
+  {
+    "reason": "a value of type CompilerHost & ReadBuildProgramHost",
+    "listed_root_sites": 2,
+    "example": "src/compiler/tsbuildPublic.ts:746:13",
+    "exit_code": 0,
+    "json": "033-tsbuildPublic.ts-746-13.json",
+    "log": "033-tsbuildPublic.ts-746-13.log"
+  },
+  {
+    "reason": "a value of type EmitNode & { autoGenerate: AutoGenerateInfo; }",
+    "listed_root_sites": 2,
+    "example": "src/compiler/transformers/module/module.ts:2383:53",
+    "exit_code": 1,
+    "json": "034-transformers_module_module.ts-2383-53.json",
+    "log": "034-transformers_module_module.ts-2383-53.log"
+  },
+  {
+    "reason": "a value of type ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; }",
+    "listed_root_sites": 2,
+    "example": "src/compiler/parser.ts:9537:23",
+    "exit_code": 0,
+    "json": "035-parser.ts-9537-23.json",
+    "log": "035-parser.ts-9537-23.log"
+  },
+  {
+    "reason": "a value of type K | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/core.ts:560:13",
+    "exit_code": 0,
+    "json": "036-core.ts-560-13.json",
+    "log": "036-core.ts-560-13.log"
+  },
+  {
+    "reason": "a value of type LeftHandSideExpression & Identifier",
+    "listed_root_sites": 2,
+    "example": "src/compiler/checker.ts:38034:27",
+    "exit_code": 0,
+    "json": "037-checker.ts-38034-27.json",
+    "log": "037-checker.ts-38034-27.log"
+  },
+  {
+    "reason": "a value of type ParameterPropertyDeclaration",
+    "listed_root_sites": 2,
+    "example": "src/compiler/checker.ts:2968:55",
+    "exit_code": 0,
+    "json": "038-checker.ts-2968-55.json",
+    "log": "038-checker.ts-2968-55.log"
+  },
+  {
+    "reason": "a value of type SourceFile",
+    "listed_root_sites": 2,
+    "example": "src/compiler/program.ts:1109:5",
+    "exit_code": 0,
+    "json": "039-program.ts-1109-5.json",
+    "log": "039-program.ts-1109-5.log"
+  },
+  {
+    "reason": "a value of type U",
+    "listed_root_sites": 2,
+    "example": "src/compiler/core.ts:579:23",
+    "exit_code": 0,
+    "json": "040-core.ts-579-23.json",
+    "log": "040-core.ts-579-23.log"
+  },
+  {
+    "reason": "a value of type U | readonly U[] | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/core.ts:403:19",
+    "exit_code": 0,
+    "json": "041-core.ts-403-19.json",
+    "log": "041-core.ts-403-19.log"
+  },
+  {
+    "reason": "a value of type U | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/core.ts:484:15",
+    "exit_code": 0,
+    "json": "042-core.ts-484-15.json",
+    "log": "042-core.ts-484-15.log"
+  },
+  {
+    "reason": "a value of type UnaryExpression & NumericLiteral",
+    "listed_root_sites": 2,
+    "example": "src/compiler/binder.ts:679:69",
+    "exit_code": 1,
+    "json": "043-binder.ts-679-69.json",
+    "log": "043-binder.ts-679-69.log"
+  },
+  {
+    "reason": "a value of type V | undefined",
+    "listed_root_sites": 2,
+    "example": "src/compiler/utilities.ts:939:15",
+    "exit_code": 0,
+    "json": "044-utilities.ts-939-15.json",
+    "log": "044-utilities.ts-939-15.log"
+  },
+  {
+    "reason": "a value of type false | RegExpExecArray | null",
+    "listed_root_sites": 2,
+    "example": "src/compiler/parser.ts:10715:11",
+    "exit_code": 0,
+    "json": "045-parser.ts-10715-11.json",
+    "log": "045-parser.ts-10715-11.log"
+  },
+  {
+    "reason": "a value of type \"\" | ResolvedConfigFileName | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/tsbuildPublic.ts:723:11",
+    "exit_code": 0,
+    "json": "046-tsbuildPublic.ts-723-11.json",
+    "log": "046-tsbuildPublic.ts-723-11.log"
+  },
+  {
+    "reason": "a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/moduleSpecifiers.ts:920:11",
+    "exit_code": 0,
+    "json": "047-moduleSpecifiers.ts-920-11.json",
+    "log": "047-moduleSpecifiers.ts-920-11.log"
+  },
+  {
+    "reason": "a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression)",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:405:89",
+    "exit_code": 0,
+    "json": "048-transformers_namedEvaluation.ts-405-89.json",
+    "log": "048-transformers_namedEvaluation.ts-405-89.log"
+  },
+  {
+    "reason": "a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/moduleSpecifiers.ts:880:11",
+    "exit_code": 0,
+    "json": "049-moduleSpecifiers.ts-880-11.json",
+    "log": "049-moduleSpecifiers.ts-880-11.log"
+  },
+  {
+    "reason": "a value of type (VariableDeclaration & { name: Identifier; }) | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/jsx.ts:110:13",
+    "exit_code": 0,
+    "json": "050-transformers_jsx.ts-110-13.json",
+    "log": "050-transformers_jsx.ts-110-13.log"
+  },
+  {
+    "reason": "a value of type (element: Node) => \"quit\" | boolean",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilitiesPublic.ts:788:54",
+    "exit_code": 1,
+    "json": "051-utilitiesPublic.ts-788-54.json",
+    "log": "051-utilitiesPublic.ts-788-54.log"
+  },
+  {
+    "reason": "a value of type (s: string) => void",
+    "listed_root_sites": 1,
+    "example": "src/compiler/emitter.ts:4540:65",
+    "exit_code": 1,
+    "json": "052-emitter.ts-4540-65.json",
+    "log": "052-emitter.ts-4540-65.log"
+  },
+  {
+    "reason": "a value of type (value: T) => void",
+    "listed_root_sites": 1,
+    "example": "src/compiler/binder.ts:1477:43",
+    "exit_code": 1,
+    "json": "053-binder.ts-1477-43.json",
+    "log": "053-binder.ts-1477-43.log"
+  },
+  {
+    "reason": "a value of type AccessExpression | RequireOrImportCall",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:3890:54",
+    "exit_code": 1,
+    "json": "054-utilities.ts-3890-54.json",
+    "log": "054-utilities.ts-3890-54.log"
+  },
+  {
+    "reason": "a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/factory/utilities.ts:362:107",
+    "exit_code": 0,
+    "json": "055-factory_utilities.ts-362-107.json",
+    "log": "055-factory_utilities.ts-362-107.log"
+  },
+  {
+    "reason": "a value of type AliasDeclarationNode",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:48394:31",
+    "exit_code": 0,
+    "json": "056-checker.ts-48394-31.json",
+    "log": "056-checker.ts-48394-31.log"
+  },
+  {
+    "reason": "a value of type ArrowFunction | BinaryExpression | BindingElement | Block | BreakStatement | CallSignatureDeclaration | ... 64 more ... | EndOfFileToken",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/declarations/diagnostics.ts:567:32",
+    "exit_code": 0,
+    "json": "057-transformers_declarations_diagnostics.ts-567-32.json",
+    "log": "057-transformers_declarations_diagnostics.ts-567-32.log"
+  },
+  {
+    "reason": "a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression",
+    "listed_root_sites": 1,
+    "example": "src/compiler/binder.ts:3267:41",
+    "exit_code": 0,
+    "json": "058-binder.ts-3267-41.json",
+    "log": "058-binder.ts-3267-41.log"
+  },
+  {
+    "reason": "a value of type BindableStaticAccessExpression",
+    "listed_root_sites": 1,
+    "example": "src/compiler/binder.ts:3384:46",
+    "exit_code": 0,
+    "json": "059-binder.ts-3384-46.json",
+    "log": "059-binder.ts-3384-46.log"
+  },
+  {
+    "reason": "a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:354:83",
+    "exit_code": 0,
+    "json": "060-transformers_namedEvaluation.ts-354-83.json",
+    "log": "060-transformers_namedEvaluation.ts-354-83.log"
+  },
+  {
+    "reason": "a value of type CallExpression | BindableStaticAccessExpression",
+    "listed_root_sites": 1,
+    "example": "src/compiler/binder.ts:3470:57",
+    "exit_code": 0,
+    "json": "061-binder.ts-3470-57.json",
+    "log": "061-binder.ts-3470-57.log"
+  },
+  {
+    "reason": "a value of type CanonicalKey",
+    "listed_root_sites": 1,
+    "example": "src/compiler/commandLineParser.ts:4140:25",
+    "exit_code": 1,
+    "json": "062-commandLineParser.ts-4140-25.json",
+    "log": "062-commandLineParser.ts-4140-25.log"
+  },
+  {
+    "reason": "a value of type Child",
+    "listed_root_sites": 1,
+    "example": "src/compiler/emitter.ts:4754:19",
+    "exit_code": 0,
+    "json": "063-emitter.ts-4754-19.json",
+    "log": "063-emitter.ts-4754-19.log"
+  },
+  {
+    "reason": "a value of type ClassElement | ParameterPropertyDeclaration",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:47278:9",
+    "exit_code": 0,
+    "json": "064-checker.ts-47278-9.json",
+    "log": "064-checker.ts-47278-9.log"
+  },
+  {
+    "reason": "a value of type ClassNamedEvaluationHelperBlock",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:203:11",
+    "exit_code": 1,
+    "json": "065-transformers_namedEvaluation.ts-203-11.json",
+    "log": "065-transformers_namedEvaluation.ts-203-11.log"
+  },
+  {
+    "reason": "a value of type ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:44188:27",
+    "exit_code": 1,
+    "json": "066-checker.ts-44188-27.json",
+    "log": "066-checker.ts-44188-27.log"
+  },
+  {
+    "reason": "a value of type CustomTransformerFactory | TransformerFactory<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformer.ts:209:70",
+    "exit_code": 1,
+    "json": "067-transformer.ts-209-70.json",
+    "log": "067-transformer.ts-209-70.log"
+  },
+  {
+    "reason": "a value of type EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilitiesPublic.ts:1759:79",
+    "exit_code": 1,
+    "json": "068-utilitiesPublic.ts-1759-79.json",
+    "log": "068-utilitiesPublic.ts-1759-79.log"
+  },
+  {
+    "reason": "a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:444:85",
+    "exit_code": 0,
+    "json": "069-transformers_namedEvaluation.ts-444-85.json",
+    "log": "069-transformers_namedEvaluation.ts-444-85.log"
+  },
+  {
+    "reason": "a value of type IncludeTypeSpaceImports",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:12174:5",
+    "exit_code": 0,
+    "json": "070-utilities.ts-12174-5.json",
+    "log": "070-utilities.ts-12174-5.log"
+  },
+  {
+    "reason": "a value of type IncrementalMultiFileEmitBuildInfoFileInfo",
+    "listed_root_sites": 1,
+    "example": "src/compiler/builder.ts:2229:52",
+    "exit_code": 0,
+    "json": "071-builder.ts-2229-52.json",
+    "log": "071-builder.ts-2229-52.log"
+  },
+  {
+    "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:4349:54",
+    "exit_code": 0,
+    "json": "072-utilities.ts-4349-54.json",
+    "log": "072-utilities.ts-4349-54.log"
+  },
+  {
+    "reason": "a value of type Map<K, Set<V>>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/builderState.ts:180:39",
+    "exit_code": 1,
+    "json": "073-builderState.ts-180-39.json",
+    "log": "073-builderState.ts-180-39.log"
+  },
+  {
+    "reason": "a value of type Map<Path, ModeAwareCache<T>> | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/program.ts:2007:9",
+    "exit_code": 1,
+    "json": "074-program.ts-2007-9.json",
+    "log": "074-program.ts-2007-9.log"
+  },
+  {
+    "reason": "a value of type Map<string, ModeAwareCache<T>>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/resolutionCache.ts:1436:9",
+    "exit_code": 1,
+    "json": "075-resolutionCache.ts-1436-9.json",
+    "log": "075-resolutionCache.ts-1436-9.log"
+  },
+  {
+    "reason": "a value of type Map<string, WildcardDirectoryWatcher<T>>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/watchUtilities.ts:515:5",
+    "exit_code": 1,
+    "json": "076-watchUtilities.ts-515-5.json",
+    "log": "076-watchUtilities.ts-515-5.log"
+  },
+  {
+    "reason": "a value of type Map<string, [K, V[]]>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:44581:31",
+    "exit_code": 1,
+    "json": "077-checker.ts-44581-31.json",
+    "log": "077-checker.ts-44581-31.log"
+  },
+  {
+    "reason": "a value of type MapLike<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/core.ts:1287:31",
+    "exit_code": 1,
+    "json": "078-core.ts-1287-31.json",
+    "log": "078-core.ts-1287-31.log"
+  },
+  {
+    "reason": "a value of type NamedDeclaration & { name: DeclarationName; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:11157:106",
+    "exit_code": 1,
+    "json": "079-checker.ts-11157-106.json",
+    "log": "079-checker.ts-11157-106.log"
+  },
+  {
+    "reason": "a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:39747:53",
+    "exit_code": 0,
+    "json": "080-checker.ts-39747-53.json",
+    "log": "080-checker.ts-39747-53.log"
+  },
+  {
+    "reason": "a value of type NodeArray<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/emitter.ts:1348:60",
+    "exit_code": 1,
+    "json": "081-emitter.ts-1348-60.json",
+    "log": "081-emitter.ts-1348-60.log"
+  },
+  {
+    "reason": "a value of type NonNullable<K>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:940:15",
+    "exit_code": 0,
+    "json": "082-utilities.ts-940-15.json",
+    "log": "082-utilities.ts-940-15.log"
+  },
+  {
+    "reason": "a value of type NonNullable<U>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/core.ts:2501:15",
+    "exit_code": 0,
+    "json": "083-core.ts-2501-15.json",
+    "log": "083-core.ts-2501-15.log"
+  },
+  {
+    "reason": "a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:322:89",
+    "exit_code": 0,
+    "json": "084-transformers_namedEvaluation.ts-322-89.json",
+    "log": "084-transformers_namedEvaluation.ts-322-89.log"
+  },
+  {
+    "reason": "a value of type PrimitiveLiteral",
+    "listed_root_sites": 1,
+    "example": "src/compiler/expressionToTypeNode.ts:1220:39",
+    "exit_code": 0,
+    "json": "085-expressionToTypeNode.ts-1220-39.json",
+    "log": "085-expressionToTypeNode.ts-1220-39.log"
+  },
+  {
+    "reason": "a value of type PrivateEnvironment<TData, TEntry>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/utilities.ts:840:5",
+    "exit_code": 1,
+    "json": "086-transformers_utilities.ts-840-5.json",
+    "log": "086-transformers_utilities.ts-840-5.log"
+  },
+  {
+    "reason": "a value of type PrivateIdentifierInExpression",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/classFields.ts:671:55",
+    "exit_code": 0,
+    "json": "087-transformers_classFields.ts-671-55.json",
+    "log": "087-transformers_classFields.ts-671-55.log"
+  },
+  {
+    "reason": "a value of type PropertyAccessExpression | LiteralLikeElementAccessExpression",
+    "listed_root_sites": 1,
+    "example": "src/compiler/binder.ts:3350:45",
+    "exit_code": 0,
+    "json": "088-binder.ts-3350-45.json",
+    "log": "088-binder.ts-3350-45.log"
+  },
+  {
+    "reason": "a value of type PropertyAccessExpression | SyntheticSuper",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/es2015.ts:4831:15",
+    "exit_code": 0,
+    "json": "089-transformers_es2015.ts-4831-15.json",
+    "log": "089-transformers_es2015.ts-4831-15.log"
+  },
+  {
+    "reason": "a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:256:87",
+    "exit_code": 0,
+    "json": "090-transformers_namedEvaluation.ts-256-87.json",
+    "log": "090-transformers_namedEvaluation.ts-256-87.log"
+  },
+  {
+    "reason": "a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:384:88",
+    "exit_code": 0,
+    "json": "091-transformers_namedEvaluation.ts-384-88.json",
+    "log": "091-transformers_namedEvaluation.ts-384-88.log"
+  },
+  {
+    "reason": "a value of type PropertyDeclaration | ParameterPropertyDeclaration",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:3166:67",
+    "exit_code": 0,
+    "json": "092-checker.ts-3166-67.json",
+    "log": "092-checker.ts-3166-67.log"
+  },
+  {
+    "reason": "a value of type ReplaceableIndexedAccessType",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:14688:55",
+    "exit_code": 0,
+    "json": "093-checker.ts-14688-55.json",
+    "log": "093-checker.ts-14688-55.log"
+  },
+  {
+    "reason": "a value of type RequireOrImportCall",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:3887:16",
+    "exit_code": 1,
+    "json": "094-utilities.ts-3887-16.json",
+    "log": "094-utilities.ts-3887-16.log"
+  },
+  {
+    "reason": "a value of type ResolvedConfigFileName | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/tsbuildPublic.ts:1393:214",
+    "exit_code": 0,
+    "json": "095-tsbuildPublic.ts-1393-214.json",
+    "log": "095-tsbuildPublic.ts-1393-214.log"
+  },
+  {
+    "reason": "a value of type ResolvedModuleWithFailedLookupLocations & ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "listed_root_sites": 1,
+    "example": "src/compiler/program.ts:1015:7",
+    "exit_code": 0,
+    "json": "096-program.ts-1015-7.json",
+    "log": "096-program.ts-1015-7.log"
+  },
+  {
+    "reason": "a value of type ResolvedType & InstantiationExpressionType",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:38227:31",
+    "exit_code": 1,
+    "json": "097-checker.ts-38227-31.json",
+    "log": "097-checker.ts-38227-31.log"
+  },
+  {
+    "reason": "a value of type Set<K>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:8316:30",
+    "exit_code": 1,
+    "json": "098-utilities.ts-8316-30.json",
+    "log": "098-utilities.ts-8316-30.log"
+  },
+  {
+    "reason": "a value of type Set<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/core.ts:529:32",
+    "exit_code": 1,
+    "json": "099-core.ts-529-32.json",
+    "log": "099-core.ts-529-32.log"
+  },
+  {
+    "reason": "a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:274:96",
+    "exit_code": 0,
+    "json": "100-transformers_namedEvaluation.ts-274-96.json",
+    "log": "100-transformers_namedEvaluation.ts-274-96.log"
+  },
+  {
+    "reason": "a value of type SortedArray<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/core.ts:769:5",
+    "exit_code": 1,
+    "json": "101-core.ts-769-5.json",
+    "log": "101-core.ts-769-5.log"
+  },
+  {
+    "reason": "a value of type Source",
+    "listed_root_sites": 1,
+    "example": "src/compiler/checker.ts:27040:71",
+    "exit_code": 0,
+    "json": "102-checker.ts-27040-71.json",
+    "log": "102-checker.ts-27040-71.log"
+  },
+  {
+    "reason": "a value of type SourceFileOrString",
+    "listed_root_sites": 1,
+    "example": "src/compiler/program.ts:2233:9",
+    "exit_code": 0,
+    "json": "103-program.ts-2233-9.json",
+    "log": "103-program.ts-2233-9.log"
+  },
+  {
+    "reason": "a value of type UnaryExpression & (BigIntLiteral | NumericLiteral)",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:12043:41",
+    "exit_code": 0,
+    "json": "104-utilities.ts-12043-41.json",
+    "log": "104-utilities.ts-12043-41.log"
+  },
+  {
+    "reason": "a value of type V",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/utilities.ts:377:61",
+    "exit_code": 0,
+    "json": "105-transformers_utilities.ts-377-61.json",
+    "log": "105-transformers_utilities.ts-377-61.log"
+  },
+  {
+    "reason": "a value of type VariableDeclaration & { name: Identifier; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/jsx.ts:115:16",
+    "exit_code": 0,
+    "json": "106-transformers_jsx.ts-115-16.json",
+    "log": "106-transformers_jsx.ts-115-16.log"
+  },
+  {
+    "reason": "a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/namedEvaluation.ts:294:88",
+    "exit_code": 0,
+    "json": "107-transformers_namedEvaluation.ts-294-88.json",
+    "log": "107-transformers_namedEvaluation.ts-294-88.log"
+  },
+  {
+    "reason": "a value of type VariableDeclarationList & { _usingBrand: void; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/transformers/esnext.ts:303:19",
+    "exit_code": 1,
+    "json": "108-transformers_esnext.ts-303-19.json",
+    "log": "108-transformers_esnext.ts-303-19.log"
+  },
+  {
+    "reason": "a value of type WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>",
+    "listed_root_sites": 1,
+    "example": "src/compiler/watchPublic.ts:420:62",
+    "exit_code": 1,
+    "json": "109-watchPublic.ts-420-62.json",
+    "log": "109-watchPublic.ts-420-62.log"
+  },
+  {
+    "reason": "a value of type WatchFactoryHost & { trace?(s: string): void; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/watch.ts:745:51",
+    "exit_code": 0,
+    "json": "110-watch.ts-745-51.json",
+    "log": "110-watch.ts-745-51.log"
+  },
+  {
+    "reason": "a value of type boolean | V | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:942:15",
+    "exit_code": 0,
+    "json": "111-utilities.ts-942-15.json",
+    "log": "111-utilities.ts-942-15.log"
+  },
+  {
+    "reason": "a value of type readonly Child[]",
+    "listed_root_sites": 1,
+    "example": "src/compiler/emitter.ts:4729:102",
+    "exit_code": 1,
+    "json": "112-emitter.ts-4729-102.json",
+    "log": "112-emitter.ts-4729-102.log"
+  },
+  {
+    "reason": "a value of type readonly K[]",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:931:5",
+    "exit_code": 1,
+    "json": "113-utilities.ts-931-5.json",
+    "log": "113-utilities.ts-931-5.log"
+  },
+  {
+    "reason": "a value of type string | null",
+    "listed_root_sites": 1,
+    "example": "src/compiler/sourcemap.ts:102:52",
+    "exit_code": 0,
+    "json": "114-sourcemap.ts-102-52.json",
+    "log": "114-sourcemap.ts-102-52.log"
+  },
+  {
+    "reason": "a value of type string | object | undefined",
+    "listed_root_sites": 1,
+    "example": "src/compiler/factory/nodeFactory.ts:3531:13",
+    "exit_code": 0,
+    "json": "115-factory_nodeFactory.ts-3531-13.json",
+    "log": "115-factory_nodeFactory.ts-3531-13.log"
+  },
+  {
+    "reason": "a value of type { forEach: (callbackfn: (value: T, key: K, map: Map<K, T>) => void, thisArg?: any) => void; clear: () => void; }",
+    "listed_root_sites": 1,
+    "example": "src/compiler/utilities.ts:8172:32",
+    "exit_code": 1,
+    "json": "116-utilities.ts-8172-32.json",
+    "log": "116-utilities.ts-8172-32.log"
+  }
+]

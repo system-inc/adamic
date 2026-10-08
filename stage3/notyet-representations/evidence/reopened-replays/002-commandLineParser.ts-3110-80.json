@@ -1,0 +1,263 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 126869,
+      "body_end": 130934,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getConfigFileSpecs",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3059:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3059:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3229:25",
+      "reason": "reading raw",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3229:25: stage 0 can't lower reading raw yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3229:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3229:25: stage 0 can't lower reading raw yet",
+      "start": 132901,
+      "end": 133549
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3110:80",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3110:80: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3110:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3110:80: stage 0 can't lower a value of type unknown yet",
+      "start": 126871,
+      "end": 127002
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1750:25",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1750:25: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3221:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:1750:25: stage 0 can't lower a value of type unknown yet",
+      "start": 132500,
+      "end": 132562
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3113:43",
+      "reason": "reading referencesOfRaw",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3113:43: stage 0 can't lower reading referencesOfRaw yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3113:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3113:43: stage 0 can't lower reading referencesOfRaw yet",
+      "start": 127096,
+      "end": 127230
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3114:44",
+      "reason": "reading raw",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3114:44: stage 0 can't lower reading raw yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3114:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3114:44: stage 0 can't lower reading raw yet",
+      "start": 127230,
+      "end": 127291
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3115:44",
+      "reason": "reading hasZeroOrNoReferences",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3115:44: stage 0 can't lower reading hasZeroOrNoReferences yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3115:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3115:44: stage 0 can't lower reading hasZeroOrNoReferences yet",
+      "start": 127291,
+      "end": 128112
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3138:17",
+      "reason": "a BinaryExpression with a string and a string",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3138:17: stage 0 can't lower a BinaryExpression with a string and a string yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3138:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3138:17: stage 0 can't lower a BinaryExpression with a string and a string yet",
+      "start": 128499,
+      "end": 128649
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3156:37",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3156:37: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3156:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3156:37: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 129522,
+      "end": 129763
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3164:37",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3164:37: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3164:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3164:37: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 129957,
+      "end": 130198
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:261:1",
+      "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3170:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+      "start": 130209,
+      "end": 130295
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3172:13",
+      "reason": "reading validatedFilesSpecBeforeSubstitution",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3172:13: stage 0 can't lower reading validatedFilesSpecBeforeSubstitution yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3171:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3172:13: stage 0 can't lower reading validatedFilesSpecBeforeSubstitution yet",
+      "start": 130295,
+      "end": 130517
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3180:13",
+      "reason": "reading validatedFilesSpec",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3180:13: stage 0 can't lower reading validatedFilesSpec yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3109:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3176:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/commandLineParser.ts:3180:13: stage 0 can't lower reading validatedFilesSpec yet",
+      "start": 130517,
+      "end": 130927
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "c56246370d1a015ffd6e591dd1942147357e71c26d7df33a4cea00c844618f81"
+}

@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 328008,
+      "body_end": 328107,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "addToSeen",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:44",
+      "reason": "a value of type K",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:44: stage 0 can't lower a value of type K yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/utilities.ts:8316:44: stage 0 can't lower a value of type K yet",
+      "start": 328008,
+      "end": 328107
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "3aec006342d2d36931e1fe62076978955afdd03715574b4095da9f8cab33921e"
+}

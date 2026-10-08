@@ -1,0 +1,2 @@
+replay load/register/lower: 1.985141453s
+reproduced NotYet: a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } at /tmp/notyet-representations-adapted/src/compiler/transformers/namedEvaluation.ts:384:88

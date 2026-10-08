@@ -1,0 +1,161 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 132727,
+      "body_end": 134703,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "loadModuleFromExports",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2620:10",
+      "reason": "a field of type object | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2620:10: stage 0 can't lower a field of type object | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2620:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2620:10: stage 0 can't lower a field of type object | undefined yet",
+      "start": 132729,
+      "end": 132818
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2625:13",
+      "reason": "a value of type any",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2625:13: stage 0 can't lower a value of type any yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2625:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2625:13: stage 0 can't lower a value of type any yet",
+      "start": 132848,
+      "end": 132873
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2626:20",
+      "reason": "a field of type object",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2626:20: stage 0 can't lower a field of type object yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2626:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2626:20: stage 0 can't lower a field of type object yet",
+      "start": 132873,
+      "end": 133451
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2632:13",
+      "reason": "reading mainExport",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2632:13: stage 0 can't lower reading mainExport yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2632:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2632:13: stage 0 can't lower reading mainExport yet",
+      "start": 133451,
+      "end": 133764
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2637:34",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2637:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2637:10",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2637:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 133781,
+      "end": 134471
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:118:79",
+      "reason": "a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[]",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:118:79: stage 0 can't lower a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[] yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2651:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:118:79: stage 0 can't lower a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[] yet",
+      "start": 134504,
+      "end": 134644
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:3414:28",
+      "reason": "a value of type T | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:3414:28: stage 0 can't lower a value of type T | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2619:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:2653:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleNameResolver.ts:3414:28: stage 0 can't lower a value of type T | undefined yet",
+      "start": 134651,
+      "end": 134700
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "6ab14eb0e0f18a183dbc31832b62613842bbbc04af4053cb651e306c7495fbfd"
+}

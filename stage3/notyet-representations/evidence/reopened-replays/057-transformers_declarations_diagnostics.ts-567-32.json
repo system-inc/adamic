@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:564:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 31085,
+      "body_end": 32151,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getHeritageClauseVisibilityError",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:238:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:238:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:564:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:582:44",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:582:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:564:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:579:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/declarations/diagnostics.ts:582:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 31970,
+      "end": 32144
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "fad91413c1fa4490953b9f0836d4dd6852de5d3474a64b56fe1ec8aefbb4362f"
+}

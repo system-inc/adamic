@@ -1,0 +1,63 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 88679,
+      "body_end": 89301,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "canIgnoreEmptyStringLiteralInAssignedName",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1",
+      "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1736:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+      "start": 88681,
+      "end": 89126
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1737:34",
+      "reason": "reading innerExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1737:34: stage 0 can't lower reading innerExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1730:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1737:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformers/esDecorators.ts:1737:34: stage 0 can't lower reading innerExpression yet",
+      "start": 89126,
+      "end": 89294
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "56e51bdf2e5ae665798ae7e9a1b2007fbd70909696d4b568d5af2594b95db12b"
+}

@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 167381,
+      "body_end": 168016,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindPrototypePropertyAssignment",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:46",
+      "reason": "a value of type BindableStaticAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:46: stage 0 can't lower a value of type BindableStaticAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3384:46: stage 0 can't lower a value of type BindableStaticAccessExpression yet",
+      "start": 167381,
+      "end": 168016
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "13946555f29ce2e3025d3ff22a850e4f79afe8450684e05d287090e0ad9e2f89"
+}

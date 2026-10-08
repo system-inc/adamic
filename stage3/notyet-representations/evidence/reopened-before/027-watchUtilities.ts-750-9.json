@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:746:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 31037,
+      "body_end": 31345,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createExcludeWatcherWithLogging",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:700:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:700:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:746:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:750:9",
+      "reason": "a value of type X",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:750:9: stage 0 can't lower a value of type X yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:746:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:746:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/watchUtilities.ts:750:9: stage 0 can't lower a value of type X yet",
+      "start": 31037,
+      "end": 31345
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "10c2d7668ba34f6255e486f5f72bb056262116d94f72d92a46469186424bc95c"
+}

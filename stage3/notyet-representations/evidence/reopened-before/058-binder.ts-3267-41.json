@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 160418,
+      "body_end": 164747,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindThisPropertyAssignment",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:41",
+      "reason": "a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:41: stage 0 can't lower a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3267:41: stage 0 can't lower a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression yet",
+      "start": 160418,
+      "end": 164747
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "0c5dfcfb0fb9e0d52d47052b1b764700ebb8ee1f402f5d323009caa4e1295181"
+}

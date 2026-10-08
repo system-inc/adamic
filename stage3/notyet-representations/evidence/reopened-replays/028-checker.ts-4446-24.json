@@ -1,0 +1,63 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4445:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 216631,
+      "body_end": 217224,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "markSymbolOfAliasDeclarationIfTypeOnlyWorker",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4445:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4446:24",
+      "reason": "a field of type false | TypeOnlyAliasDeclaration | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4446:24: stage 0 can't lower a field of type false | TypeOnlyAliasDeclaration | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4445:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4446:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4446:24: stage 0 can't lower a field of type false | TypeOnlyAliasDeclaration | undefined yet",
+      "start": 216633,
+      "end": 217156
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4445:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4451:18",
+      "reason": "a field of type false | TypeOnlyAliasDeclaration | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4451:18: stage 0 can't lower a field of type false | TypeOnlyAliasDeclaration | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4445:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4451:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:4451:18: stage 0 can't lower a field of type false | TypeOnlyAliasDeclaration | undefined yet",
+      "start": 217156,
+      "end": 217217
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "db6fc99307f9fa590fe78cf41c27721d1c406697ff851351514699fe9985b774"
+}

@@ -1,0 +1,341 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 41984,
+      "body_end": 44252,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "tryGetModuleNameFromAmbientModule",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:880:11",
+      "reason": "a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:880:11: stage 0 can't lower a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:880:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:880:11: stage 0 can't lower a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined yet",
+      "start": 41986,
+      "end": 42259
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:883:9",
+      "reason": "reading decl",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:883:9: stage 0 can't lower reading decl yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:883:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:883:9: stage 0 can't lower reading decl yet",
+      "start": 42259,
+      "end": 42315
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:498:34",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:498:34: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:498:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:498:34: stage 0 can't lower a NonNullExpression yet",
+      "start": 16864,
+      "end": 16913
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:499:17",
+      "reason": "reading mapped",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:499:17: stage 0 can't lower reading mapped yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/core.ts:499:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/core.ts:499:17: stage 0 can't lower reading mapped yet",
+      "start": 16913,
+      "end": 17007
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:898:14",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:898:14: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:898:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:898:14: stage 0 can't lower a void call used as a value yet",
+      "start": 42769,
+      "end": 42815
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:899:30",
+      "reason": "a void call used as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:899:30: stage 0 can't lower a void call used as a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:899:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:899:30: stage 0 can't lower a void call used as a value yet",
+      "start": 42815,
+      "end": 42865
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:901:15",
+      "reason": "reading topNamespace",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:901:15: stage 0 can't lower reading topNamespace yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:900:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:901:15: stage 0 can't lower reading topNamespace yet",
+      "start": 42865,
+      "end": 43130
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:906:34",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:906:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:906:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:906:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 43130,
+      "end": 43328
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:907:14",
+      "reason": "reading exportAssignment",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:907:14: stage 0 can't lower reading exportAssignment yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:907:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:907:14: stage 0 can't lower reading exportAssignment yet",
+      "start": 43328,
+      "end": 43368
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:908:30",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:908:30: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:908:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:908:30: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 43368,
+      "end": 43445
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:909:14",
+      "reason": "reading exportSymbol",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:909:14: stage 0 can't lower reading exportSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:909:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:909:14: stage 0 can't lower reading exportSymbol yet",
+      "start": 43445,
+      "end": 43481
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:910:38",
+      "reason": "reading exportSymbol",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:910:38: stage 0 can't lower reading exportSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:910:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:910:38: stage 0 can't lower reading exportSymbol yet",
+      "start": 43481,
+      "end": 43616
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:911:13",
+      "reason": "reading originalExportSymbol",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:911:13: stage 0 can't lower reading originalExportSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:911:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:911:13: stage 0 can't lower reading originalExportSymbol yet",
+      "start": 43616,
+      "end": 43699
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:913:9",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:913:9: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:913:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:913:9: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 43699,
+      "end": 44014
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:920:11",
+      "reason": "a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:920:11: stage 0 can't lower a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:920:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:920:11: stage 0 can't lower a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined yet",
+      "start": 44023,
+      "end": 44161
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:921:9",
+      "reason": "reading ambientModuleDeclare",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:921:9: stage 0 can't lower reading ambientModuleDeclare yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:879:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:921:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/moduleSpecifiers.ts:921:9: stage 0 can't lower reading ambientModuleDeclare yet",
+      "start": 44161,
+      "end": 44249
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "453e4d923368532f05a9184f3c4cb943f848af1506f11f39031ae528878647c5"
+}

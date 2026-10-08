@@ -1,0 +1,2 @@
+replay load/register/lower: 2.089922544s
+reproduced NotYet: a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...> at /tmp/notyet-representations-adapted/src/compiler/checker.ts:39747:53

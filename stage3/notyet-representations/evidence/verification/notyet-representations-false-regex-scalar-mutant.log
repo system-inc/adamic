@@ -1,0 +1,6 @@
+=== RUN   TestFalseNullDoesNotUseBooleanStorage
+    representation_false_regex_null_test.go:13: false/null cannot use scalar boolean storage, got <nil>
+--- FAIL: TestFalseNullDoesNotUseBooleanStorage (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
+FAIL

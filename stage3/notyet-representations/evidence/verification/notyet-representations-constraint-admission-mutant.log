@@ -1,0 +1,22 @@
+=== RUN   TestRepresentationScalarConstraint
+=== RUN   TestRepresentationScalarConstraint/boolean
+    representation_scalar_constraint_test.go:53: got (0, false), want (2, true)
+=== RUN   TestRepresentationScalarConstraint/number
+    representation_scalar_constraint_test.go:53: got (0, false), want (1, true)
+=== RUN   TestRepresentationScalarConstraint/string
+    representation_scalar_constraint_test.go:53: got (0, false), want (3, true)
+=== RUN   TestRepresentationScalarConstraint/unknown
+=== RUN   TestRepresentationScalarConstraint/object
+=== RUN   TestRepresentationScalarConstraint/string_|_number
+=== RUN   TestRepresentationScalarConstraint/{_readonly_length:_number_}
+--- FAIL: TestRepresentationScalarConstraint (0.21s)
+    --- FAIL: TestRepresentationScalarConstraint/boolean (0.03s)
+    --- FAIL: TestRepresentationScalarConstraint/number (0.03s)
+    --- FAIL: TestRepresentationScalarConstraint/string (0.03s)
+    --- PASS: TestRepresentationScalarConstraint/unknown (0.03s)
+    --- PASS: TestRepresentationScalarConstraint/object (0.03s)
+    --- PASS: TestRepresentationScalarConstraint/string_|_number (0.02s)
+    --- PASS: TestRepresentationScalarConstraint/{_readonly_length:_number_} (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.215s
+FAIL

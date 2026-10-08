@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 6805,
+      "body_end": 7070,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "wrapCustomTransformerFactory",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:211:35",
+      "reason": "a function value returning union of differently held members",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:211:35: stage 0 can't lower a function value returning union of differently held members yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:211:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:211:35: stage 0 can't lower a function value returning union of differently held members yet",
+      "start": 6832,
+      "end": 6889
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:212:23",
+      "reason": "reading customTransformer",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:212:23: stage 0 can't lower reading customTransformer yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:209:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:212:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/transformer.ts:212:23: stage 0 can't lower reading customTransformer yet",
+      "start": 6889,
+      "end": 7059
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "90bd37b67e667256d29b21a3a042df92d7b44a070f62740b0657f7ad90e5a116"
+}

@@ -1,0 +1,43 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 156850,
+      "body_end": 157428,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindObjectDefinePropertyExport",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:45",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:45: stage 0 can't lower a value of type BindableObjectDefinePropertyCall yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:5",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/binder.ts:3201:45: stage 0 can't lower a value of type BindableObjectDefinePropertyCall yet",
+      "start": 156850,
+      "end": 157428
+    }
+  ],
+  "transcript_note": "Excerpt: declaration inventory omitted; units and findings retained.",
+  "full_transcript_sha256": "a9c1c45371cb76a3ec88f48df78507af51f23b4646fe9d89338846f858ed6fba"
+}
