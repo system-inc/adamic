@@ -1,5 +1,25 @@
 # Scanner blockers
 
+## October 8: records follow-up, both requested merges skipped
+
+Tried named-index-records c20e5b56 and records-lowering 456c981b (includes
+70fb62b1) on the existing b05a9306 scratch. Both conflicted, respectively in
+17 and six files, and were aborted and skipped without compiler edits.
+Compiler rebuild passed in 1.968s and produced the same binary SHA256.
+
+Both native scanner modes still refuse corePublic.ts:9:5, the MapLike index
+signature. Both fresh Node streams match the full-tree reference byte for byte;
+509,014 skipped-trivia tokens, 860,418 retained-trivia tokens and 466 errors.
+Both fresh token-end mutants fail diff. No native scanner comparison or timing
+is available, and neither records feature is claimed integrated or tested.
+
+[Fresh ordered evidence](evidence/native3-records/REPORT.md) contains fifteen
+successive stops and fifteen rerun Node-success/build-refusal witnesses.
+Discovery placeholders have the same limits as the preceding native3 run,
+including the Debug-dependent observation 14 and whole createScanner removal.
+No compiler, adaptation or oracle fixture change is on the delivery branch.
+
+
 ## October 8: native unit 3, library merged and front-3 skipped
 
 Scratch compiler b05a9306 includes main efe9f404 and library's 2bf78f6a /
