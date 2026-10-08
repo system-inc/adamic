@@ -1,0 +1,7 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface KeywordTypeSyntaxKind {readonly value:number;}
+interface KeywordTypeNode<T0> {readonly value:number;}
+interface Base {readonly createKeywordTypeNode:unknown;}
+interface Target {createKeywordTypeNode<TKind extends KeywordTypeSyntaxKind>(kind: TKind): KeywordTypeNode<TKind>;}
+function probe(value:Base):void {const factory=value as Target;factory.createKeywordTypeNode({value:3});}
+probe({createKeywordTypeNode:7});

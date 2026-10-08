@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SyntacticTypeNodeBuilderContext { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly tryReuseExistingTypeNode:unknown;}
+interface Target {tryReuseExistingTypeNode: (context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => TypeNode | undefined;}
+function probe(value:Base):void {const syntacticNodeBuilder=value as Target;const result=syntacticNodeBuilder.tryReuseExistingTypeNode({value:3},{value:3});if (result !== undefined) {console.log(`${result.value}`);}}
+probe({tryReuseExistingTypeNode:(context:number,existing:number):TypeNode | undefined=>{return {value:3};}});

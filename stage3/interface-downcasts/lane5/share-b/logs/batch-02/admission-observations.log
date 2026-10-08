@@ -1,0 +1,82 @@
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-16
+    checked_views_callable_share_b_test.go:250: rank 16 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-16/contract-probe.a:6:63: Adamic 0.1 refuses checked view read of field entries with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-25
+    checked_views_callable_share_b_test.go:250: rank 25 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-25/contract-probe.a:9:64: Adamic 0.1 refuses checked view read of field getGeneratedNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-28
+    checked_views_callable_share_b_test.go:250: rank 28 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-28/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field createKeywordTypeNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-40
+    checked_views_callable_share_b_test.go:250: rank 40 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-40/contract-probe.a:31:64: Adamic 0.1 refuses checked view read of field createToken with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-55
+    checked_views_callable_share_b_test.go:250: rank 55 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-55/contract-probe.a:5:61: Adamic 0.1 refuses checked view read of field max with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-112
+    checked_views_callable_share_b_test.go:250: rank 112 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-130
+    checked_views_callable_share_b_test.go:250: rank 130 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-130/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field mergeLexicalEnvironment with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-172
+    checked_views_callable_share_b_test.go:250: rank 172 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-172/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field copyPrologue with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-175
+    checked_views_callable_share_b_test.go:250: rank 175 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-181
+    checked_views_callable_share_b_test.go:250: rank 181 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-181/contract-probe.a:4:38: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-184
+    checked_views_callable_share_b_test.go:250: rank 184 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-190
+    checked_views_callable_share_b_test.go:250: rank 190 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-190/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field restoreEnclosingLabel with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-214
+    checked_views_callable_share_b_test.go:250: rank 214 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-226
+    checked_views_callable_share_b_test.go:250: rank 226 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-226/contract-probe.a:5:70: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-229
+    checked_views_callable_share_b_test.go:250: rank 229 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-232
+    checked_views_callable_share_b_test.go:250: rank 232 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-244
+    checked_views_callable_share_b_test.go:250: rank 244 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-244/contract-probe.a:8:64: Adamic 0.1 refuses checked view read of field getGeneratedPrivateNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-250
+    checked_views_callable_share_b_test.go:250: rank 250 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-250/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field defineProperties with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-253
+    checked_views_callable_share_b_test.go:250: rank 253 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-253/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-259
+    checked_views_callable_share_b_test.go:250: rank 259 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-280
+    checked_views_callable_share_b_test.go:250: rank 280 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-283
+    checked_views_callable_share_b_test.go:250: rank 283 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-292
+    checked_views_callable_share_b_test.go:250: rank 292 admission observation: <nil>
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-319
+    checked_views_callable_share_b_test.go:250: rank 319 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-319/contract-probe.a:6:69: Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-322
+    checked_views_callable_share_b_test.go:250: rank 322 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-322/contract-probe.a:5:65: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewCallableShareBAdmissionProbes (3.09s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-16 (0.17s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-25 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-28 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-40 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-55 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-112 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-130 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-172 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-175 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-181 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-184 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-190 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-214 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-226 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-229 (0.11s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-232 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-244 (0.11s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-250 (0.11s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-253 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-259 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-280 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-283 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-292 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-319 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-322 (0.12s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=25
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.093s

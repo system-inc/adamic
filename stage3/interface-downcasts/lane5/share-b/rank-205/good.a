@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface PackageJsonInfoCache { readonly value: number; }
+interface Base {readonly getPackageJsonInfoCache:unknown;}
+interface Target {getPackageJsonInfoCache(): PackageJsonInfoCache;}
+function probe(value:Base):void {const cache=value as Target;console.log(`${cache?.getPackageJsonInfoCache().value}`);}
+probe({getPackageJsonInfoCache:():PackageJsonInfoCache=>{return {value:3};}});

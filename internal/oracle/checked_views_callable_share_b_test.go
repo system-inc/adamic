@@ -24,7 +24,11 @@ type callableShareBFamily struct {
 
 func callableShareBFamilies(t *testing.T) []callableShareBFamily {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b/families.json"))
+	filename := "families.json"
+	if selected := os.Getenv("ADAMIC_CALLABLE_SHARE_B_FAMILIES"); selected != "" {
+		filename = filepath.Base(selected)
+	}
+	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,6 +169,7 @@ func TestCheckedViewCallableShareBBlockers(t *testing.T) {
 		{"stage3/interface-downcasts/lane5/share-b/blocked-assignment.a", "7\n", "checked view read of field createAssignment with unsupported callable contract"},
 		{"stage3/interface-downcasts/lane5/share-b/blocked-push.a", "2\n", "checked view read of field push with unsupported callable contract"},
 		{"stage3/interface-downcasts/lane5/share-b/blocked-join.a", "first|second\n", "native-array-receiver"},
+		{"stage3/interface-downcasts/lane5/share-b/rank-205/good.a", "3\n", "optional chain longer than one step"},
 	} {
 		t.Run(filepath.Base(probe.path), func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, probe.path))
@@ -212,5 +217,38 @@ func callableShareBArityMutant(t *testing.T, program *ir.Program, family callabl
 	} else {
 		program.ViewContracts = append(program.ViewContracts, ir.ViewContract{Kind: ir.ViewScalar, Of: ir.Number, Name: "number"})
 		program.ViewContracts[id-1].Parameters = []ir.ViewContractID{ir.ViewContractID(len(program.ViewContracts))}
+	}
+}
+
+// Not parallel: ordered admission evidence is collected for this share's ledger.
+func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b/batch-02-probes.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var probes []struct {
+		Rank     int
+		Filename string
+		Refusal  string
+	}
+	if err := json.Unmarshal(data, &probes); err != nil {
+		t.Fatal(err)
+	}
+	for _, probe := range probes {
+		t.Run(filepath.Dir(probe.Filename), func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", probe.Filename))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "TypeError:") {
+				t.Fatalf("Node: %#v", truth)
+			}
+			_, err = lowered(t, path)
+			if probe.Refusal != "" && (err == nil || !strings.Contains(err.Error(), probe.Refusal)) {
+				t.Fatalf("expected refusal %q, got %v", probe.Refusal, err)
+			}
+			t.Logf("rank %d admission observation: %v", probe.Rank, err)
+		})
 	}
 }

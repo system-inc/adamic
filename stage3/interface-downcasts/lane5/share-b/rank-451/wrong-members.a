@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ExpressionStatement { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly updateExpressionStatement:unknown;}
+interface Target {updateExpressionStatement(node: ExpressionStatement, expression: Expression): ExpressionStatement;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateExpressionStatement({value:3},{value:3}).value}`);}
+probe({updateExpressionStatement:(node:number,expression:number):ExpressionStatement=>{return {value:3};}});

@@ -1,0 +1,8 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface NodeArray<T0> {readonly value:number;}
+interface Statement {readonly value:number;}
+interface Base {readonly mergeLexicalEnvironment:unknown;}
+interface Target {mergeLexicalEnvironment(statements: NodeArray<Statement>, declarations: readonly Statement[] | undefined): NodeArray<Statement>;
+mergeLexicalEnvironment(statements: Statement[], declarations: readonly Statement[] | undefined): Statement[];}
+function probe(value:Base):void {const factory=value as Target;factory.mergeLexicalEnvironment({value:3},undefined);}
+probe({mergeLexicalEnvironment:7});

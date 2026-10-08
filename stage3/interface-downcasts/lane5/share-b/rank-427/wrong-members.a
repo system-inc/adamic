@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ConciseBody { readonly value: number; }
+interface Block { readonly value: number; }
+interface Base {readonly convertToFunctionBlock:unknown;}
+interface Target {convertToFunctionBlock(node: ConciseBody, multiLine?: boolean): Block;}
+function probe(value:Base):void {const context = {factory:{converters:value as Target}};console.log(`${context.factory.converters.convertToFunctionBlock({value:3},true).value}`);}
+probe({convertToFunctionBlock:(node:number,multiLine:number):Block=>{return {value:3};}});

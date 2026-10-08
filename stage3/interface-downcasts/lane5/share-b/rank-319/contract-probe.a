@@ -1,0 +1,7 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface T {readonly value:number;}
+interface UnionType {readonly types:Target;}
+interface Base {readonly map:unknown;}
+interface Target {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const type={types:value as Target};(type as UnionType).types?.map(()=>3,undefined);}
+probe({map:7});

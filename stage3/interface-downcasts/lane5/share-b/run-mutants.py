@@ -8,7 +8,7 @@ import subprocess
 root = Path(__file__).resolve().parents[4]
 logs = Path('/tmp/lane5-b-mutants')
 logs.mkdir(exist_ok=True)
-families = json.loads((Path(__file__).parent / 'families.json').read_text())
+families = json.loads((Path(__file__).parent / os.environ.get('ADAMIC_CALLABLE_SHARE_B_FAMILIES', 'families.json')).read_text())
 controls = logs / 'controls.log'
 with controls.open('w') as log:
     result = subprocess.run(['go', 'test', './internal/oracle', '-run', '^TestCheckedViewCallableShareBArityMutants$', '-count=1', '-v', '-timeout', '5m'], cwd=root, stdout=log, stderr=subprocess.STDOUT)

@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+
+interface Base {readonly max:unknown;}
+interface Target {max(...values: number[]): number;}
+function probe(value:Base):void {const Math=value as Target;Math.max(3);}
+probe({max:7});

@@ -1,0 +1,377 @@
+[
+  {
+    "rank": 16,
+    "receiver_type_id": 2397,
+    "type": "ObjectConstructor",
+    "field": "entries",
+    "candidateReads": 75,
+    "witness": {
+      "file": "src/compiler/scanner.ts",
+      "line": 222,
+      "column": 31
+    },
+    "read": "Object.entries",
+    "call": "Object.entries(textToKeywordObj)",
+    "utf16Start": 8377,
+    "utf16End": 8391,
+    "fileSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+    "declaration": "entries<T>(o: { [s: string]: T; } | ArrayLike<T>): [string, T][];\nentries(o: {}): [string, any][];",
+    "declarationFile": "src/lib/es2017.object.d.ts",
+    "declarationSha256": "c2611bd81c212755401ddbd80063dbf5d97d36ed8616e29c3ce8a9f5f49b30aa",
+    "inheritancePath": [
+      "ObjectConstructor"
+    ],
+    "filename": "rank-16/contract-probe.a",
+    "refusal": "checked view read of field entries with unsupported callable contract"
+  },
+  {
+    "rank": 25,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "getGeneratedNameForNode",
+    "candidateReads": 58,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 791,
+      "column": 20
+    },
+    "read": "factory.getGeneratedNameForNode",
+    "call": "factory.getGeneratedNameForNode(node)",
+    "utf16Start": 31619,
+    "utf16End": 31650,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags): Identifier;\ngetGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-25/contract-probe.a",
+    "refusal": "checked view read of field getGeneratedNameForNode with unsupported callable contract"
+  },
+  {
+    "rank": 28,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createKeywordTypeNode",
+    "candidateReads": 53,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 6783,
+      "column": 24
+    },
+    "read": "factory.createKeywordTypeNode",
+    "call": "factory.createKeywordTypeNode(SyntaxKind.AnyKeyword)",
+    "utf16Start": 356770,
+    "utf16End": 356799,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "createKeywordTypeNode<TKind extends KeywordTypeSyntaxKind>(kind: TKind): KeywordTypeNode<TKind>;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-28/contract-probe.a",
+    "refusal": "checked view read of field createKeywordTypeNode with unsupported callable contract"
+  },
+  {
+    "rank": 40,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createToken",
+    "candidateReads": 41,
+    "witness": {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "line": 508,
+      "column": 13
+    },
+    "read": "factory.createToken",
+    "call": "factory.createToken(SyntaxKind.AsteriskToken)",
+    "utf16Start": 21532,
+    "utf16End": 21551,
+    "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "declaration": "createToken(token: SyntaxKind.SuperKeyword): SuperExpression;\ncreateToken(token: SyntaxKind.ThisKeyword): ThisExpression;\ncreateToken(token: SyntaxKind.NullKeyword): NullLiteral;\ncreateToken(token: SyntaxKind.TrueKeyword): TrueLiteral;\ncreateToken(token: SyntaxKind.FalseKeyword): FalseLiteral;\ncreateToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;\ncreateToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;\ncreateToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;\ncreateToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;\ncreateToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;\ncreateToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;\ncreateToken<TKind extends SyntaxKind>(token: TKind): Token<TKind>;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-40/contract-probe.a",
+    "refusal": "checked view read of field createToken with unsupported callable contract"
+  },
+  {
+    "rank": 55,
+    "receiver_type_id": 2376,
+    "type": "Math",
+    "field": "max",
+    "candidateReads": 30,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 2004,
+      "column": 16
+    },
+    "read": "Math.max",
+    "call": "Math.max(init, mapper(arr[i]))",
+    "utf16Start": 70195,
+    "utf16End": 70203,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declaration": "max(...values: number[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Math"
+    ],
+    "filename": "rank-55/contract-probe.a",
+    "refusal": "checked view read of field max with unsupported callable contract"
+  },
+  {
+    "rank": 130,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "mergeLexicalEnvironment",
+    "candidateReads": 13,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 386,
+      "column": 12
+    },
+    "read": "factory.mergeLexicalEnvironment",
+    "call": "factory.mergeLexicalEnvironment(statements, context.endLexicalEnvironment())",
+    "utf16Start": 13658,
+    "utf16End": 13689,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "mergeLexicalEnvironment(statements: NodeArray<Statement>, declarations: readonly Statement[] | undefined): NodeArray<Statement>;\nmergeLexicalEnvironment(statements: Statement[], declarations: readonly Statement[] | undefined): Statement[];",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-130/contract-probe.a",
+    "refusal": "checked view read of field mergeLexicalEnvironment with unsupported callable contract"
+  },
+  {
+    "rank": 172,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "copyPrologue",
+    "candidateReads": 10,
+    "witness": {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1393,
+      "column": 40
+    },
+    "read": "factory.copyPrologue",
+    "call": "factory.copyPrologue(body.statements, statements, /*ensureUseStrict*/ false, visitor)",
+    "utf16Start": 58627,
+    "utf16End": 58647,
+    "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+    "declaration": "copyPrologue(source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean, visitor?: (node: Node) => VisitResult<Node | undefined>): number;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-172/contract-probe.a",
+    "refusal": "checked view read of field copyPrologue with unsupported callable contract"
+  },
+  {
+    "rank": 181,
+    "receiver_type_id": 2275,
+    "type": "ArrayConstructor",
+    "field": "isArray",
+    "candidateReads": 9,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 1752,
+      "column": 12
+    },
+    "read": "Array.isArray",
+    "call": "Array.isArray(value)",
+    "utf16Start": 61346,
+    "utf16End": 61359,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declaration": "isArray(arg: any): arg is any[];",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ArrayConstructor"
+    ],
+    "filename": "rank-181/contract-probe.a",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 190,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "restoreEnclosingLabel",
+    "candidateReads": 9,
+    "witness": {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 477,
+      "column": 20
+    },
+    "read": "factory.restoreEnclosingLabel",
+    "call": "factory.restoreEnclosingLabel(visitNode(statement, visitor, isStatement, factory.liftToBlock), node)",
+    "utf16Start": 18390,
+    "utf16End": 18419,
+    "fileSha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+    "declaration": "restoreEnclosingLabel(node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: (node: LabeledStatement) => void): Statement;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-190/contract-probe.a",
+    "refusal": "checked view read of field restoreEnclosingLabel with unsupported callable contract"
+  },
+  {
+    "rank": 226,
+    "receiver_type_id": 72172,
+    "type": "ElementFlags[]",
+    "field": "push",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 18023,
+      "column": 13
+    },
+    "read": "expandedFlags.push",
+    "call": "expandedFlags.push(flags)",
+    "utf16Start": 1048314,
+    "utf16End": 1048332,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "push(...items: T[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-226/contract-probe.a",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 244,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "getGeneratedPrivateNameForNode",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1615,
+      "column": 9
+    },
+    "read": "factory.getGeneratedPrivateNameForNode",
+    "call": "factory.getGeneratedPrivateNameForNode(node.name, /*prefix*/ undefined, \"_accessor_storage\")",
+    "utf16Start": 70680,
+    "utf16End": 70718,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "getGeneratedPrivateNameForNode(node: Node): PrivateIdentifier;\ngetGeneratedPrivateNameForNode(node: Node, prefix?: string | GeneratedNamePart, suffix?: string): PrivateIdentifier;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-244/contract-probe.a",
+    "refusal": "checked view read of field getGeneratedPrivateNameForNode with unsupported callable contract"
+  },
+  {
+    "rank": 250,
+    "receiver_type_id": 2397,
+    "type": "ObjectConstructor",
+    "field": "defineProperties",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 518,
+      "column": 13
+    },
+    "read": "Object.defineProperties",
+    "call": "Object.defineProperties(flowNode, {\r\n                // for use with vscode-js-debug's new customDescriptionGenerator in launch.json\r\n                __tsDebuggerDisplay: {\r\n                    value(this: FlowNode) {\r\n                        const flowHeader = this.flags & FlowFlags.Start ? \"FlowStart\" :\r\n                            this.flags & FlowFlags.BranchLabel ? \"FlowBranchLabel\" :\r\n                            this.flags & FlowFlags.LoopLabel ? \"FlowLoopLabel\" :\r\n                            this.flags & FlowFlags.Assignment ? \"FlowAssignment\" :\r\n                            this.flags & FlowFlags.TrueCondition ? \"FlowTrueCondition\" :\r\n                            this.flags & FlowFlags.FalseCondition ? \"FlowFalseCondition\" :\r\n                            this.flags & FlowFlags.SwitchClause ? \"FlowSwitchClause\" :\r\n                            this.flags & FlowFlags.ArrayMutation ? \"FlowArrayMutation\" :\r\n                            this.flags & FlowFlags.Call ? \"FlowCall\" :\r\n                            this.flags & FlowFlags.ReduceLabel ? \"FlowReduceLabel\" :\r\n                            this.flags & FlowFlags.Unreachable ? \"FlowUnreachable\" :\r\n                            \"UnknownFlow\";\r\n                        const remainingFlags = this.flags & ~(FlowFlags.Referenced - 1);\r\n                        return `${flowHeader}${remainingFlags ? ` (${formatFlowFlags(remainingFlags)})` : \"\"}`;\r\n                    },\r\n                },\r\n                __debugFlowFlags: {\r\n                    get(this: FlowNode) {\r\n                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);\r\n                    },\r\n                },\r\n                __debugToString: {\r\n                    value(this: FlowNode) {\r\n                        return formatControlFlowGraph(this);\r\n                    },\r\n                },\r\n            })",
+    "utf16Start": 22112,
+    "utf16End": 22135,
+    "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "declaration": "defineProperties<T>(o: T, properties: PropertyDescriptorMap & ThisType<any>): T;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ObjectConstructor"
+    ],
+    "filename": "rank-250/contract-probe.a",
+    "refusal": "checked view read of field defineProperties with unsupported callable contract"
+  },
+  {
+    "rank": 253,
+    "receiver_type_id": 10369,
+    "type": "Signature[]",
+    "field": "push",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 14265,
+      "column": 17
+    },
+    "read": "result.push",
+    "call": "result.push(sig)",
+    "utf16Start": 826246,
+    "utf16End": 826257,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "push(...items: T[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-253/contract-probe.a",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 319,
+    "receiver_type_id": 8242,
+    "type": "Type[]",
+    "field": "map",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/tracing.ts",
+      "line": 321,
+      "column": 62
+    },
+    "read": "(type as UnionType).types?.map",
+    "call": "(type as UnionType).types?.map(t => t.id)",
+    "utf16Start": 13095,
+    "utf16End": 13125,
+    "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-319/contract-probe.a",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 322,
+    "receiver_type_id": 1277,
+    "type": "string[]",
+    "field": "forEach",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/sys.ts",
+      "line": 796,
+      "column": 25
+    },
+    "read": "existing.forEach",
+    "call": "existing.forEach(callback)",
+    "utf16Start": 31963,
+    "utf16End": 31979,
+    "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "declaration": "forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-322/contract-probe.a",
+    "refusal": "checked view read of field forEach with unsupported callable contract"
+  }
+]

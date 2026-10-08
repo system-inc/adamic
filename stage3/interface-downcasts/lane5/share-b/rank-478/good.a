@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly resetTokenState:unknown;}
+interface Target {resetTokenState(pos: number): void;}
+function probe(value:Base):void {const scanner=value as Target;scanner.resetTokenState(3);}
+probe({resetTokenState:(pos: number):void=>{console.log(`${pos}`);}});

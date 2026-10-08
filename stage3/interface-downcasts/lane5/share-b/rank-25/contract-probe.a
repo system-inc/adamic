@@ -1,0 +1,10 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface Node {readonly value:number;}
+interface GeneratedIdentifierFlags {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface GeneratedNamePart {readonly value:number;}
+interface Base {readonly getGeneratedNameForNode:unknown;}
+interface Target {getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags): Identifier;
+getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;}
+function probe(value:Base):void {const factory=value as Target;factory.getGeneratedNameForNode(undefined,undefined);}
+probe({getGeneratedNameForNode:7});

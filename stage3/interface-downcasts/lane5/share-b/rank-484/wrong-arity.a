@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SyntacticTypeNodeBuilderContext { readonly value: number; }
+interface Declaration { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Symbol { readonly value: number; }
+interface Base {readonly canReuseTypeNodeAnnotation:unknown;}
+interface Target {canReuseTypeNodeAnnotation(context: SyntacticTypeNodeBuilderContext, node: Declaration, existing: TypeNode, symbol: Symbol | undefined, requiresAddingUndefined?: boolean): boolean;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.canReuseTypeNodeAnnotation({value:3},{value:3},{value:3},{value:3},true)}`);}
+probe({canReuseTypeNodeAnnotation:():boolean=>{return true;}});

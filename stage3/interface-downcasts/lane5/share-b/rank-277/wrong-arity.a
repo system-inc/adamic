@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface BindingOrAssignmentElementTarget { readonly value: number; }
+interface Expression { readonly value: number; }
+interface TextRange { readonly value: number; }
+interface Node { readonly value: number; }
+interface Base {readonly emitBindingOrAssignment:unknown;}
+interface Target {emitBindingOrAssignment: (target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange, original: Node | undefined) => void;}
+function probe(value:Base):void {const flattenContext=value as Target;flattenContext.emitBindingOrAssignment({value:3},{value:3},{value:3},{value:3});}
+probe({emitBindingOrAssignment:():void=>{}});

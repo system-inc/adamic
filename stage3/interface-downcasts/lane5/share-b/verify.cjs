@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const ts = require(path.join(process.argv[2], 'lib/typescript.js'));
-const families = JSON.parse(fs.readFileSync(path.join(__dirname, 'families.json')));
+const families = JSON.parse(fs.readFileSync(path.join(__dirname, process.env.ADAMIC_CALLABLE_SHARE_B_FAMILIES || 'families.json')));
 const normalized = text => text.replace(/\s+/g, '');
 let count = 0;
 for (const family of families) {
@@ -40,5 +40,22 @@ for (const member of blocked) {
  }
  visit(source);
  if (normalized(declarations.join('\n')) !== normalized(member.declaration) || !read) throw Error(files[member.rank] + ': original blocker declaration/read changed');
+}
+
+const probes = JSON.parse(fs.readFileSync(path.join(__dirname,'batch-02-probes.json')));
+const optional = JSON.parse(fs.readFileSync(path.join(__dirname,'batch-02-original.json'))).members.find(m=>m.rank===205);
+for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
+ const source = ts.createSourceFile(member.filename,fs.readFileSync(path.join(__dirname,member.filename),'utf8'),ts.ScriptTarget.Latest,true);
+ let declarations=[],read;
+ function visit(node) {
+  if ((ts.isMethodSignature(node)||ts.isPropertySignature(node))&&node.parent.name?.text==='Target'&&node.name.getText(source)===member.field) declarations.push(node.getText(source));
+  if (ts.isPropertyAccessExpression(node)&&normalized(node.getText(source))===normalized(member.read)) read=node;
+  ts.forEachChild(node,visit);
+ }
+ visit(source);
+ for (const [file,hash] of [[member.witness.file,member.fileSha256],[member.declarationFile,member.declarationSha256]]) {
+  if (crypto.createHash('sha256').update(fs.readFileSync(path.join(process.argv[2],file))).digest('hex')!==hash) throw Error('original source changed '+file);
+ }
+ if (normalized(declarations.join('\n'))!==normalized(member.declaration)||!read) throw Error(member.filename+': original declaration/read changed');
 }
 console.log('Verified ' + families.length + ' pairs / ' + families.reduce((n,f)=>n+f.candidateReads,0) + ' candidate reads in ' + count + ' original-member fixtures.');

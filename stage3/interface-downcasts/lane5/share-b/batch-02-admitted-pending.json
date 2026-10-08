@@ -1,0 +1,243 @@
+[
+  {
+    "rank": 112,
+    "receiver_type_id": 10096,
+    "type": "Map<string, boolean>",
+    "field": "get",
+    "candidateReads": 15,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 1223,
+      "column": 100
+    },
+    "read": "usedLines.get",
+    "call": "usedLines.get(line)",
+    "utf16Start": 41356,
+    "utf16End": 41369,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-112/contract-probe.a"
+  },
+  {
+    "rank": 175,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createModuleDeclaration",
+    "candidateReads": 10,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 8311,
+      "column": 22
+    },
+    "read": "factory.createModuleDeclaration",
+    "call": "factory.createModuleDeclaration(modifiers, name, body, flags)",
+    "utf16Start": 410229,
+    "utf16End": 410260,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createModuleDeclaration(modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined, flags?: NodeFlags): ModuleDeclaration;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-175/contract-probe.a"
+  },
+  {
+    "rank": 184,
+    "receiver_type_id": 9525,
+    "type": "NodeArray<Statement>",
+    "field": "slice",
+    "candidateReads": 9,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 7022,
+      "column": 48
+    },
+    "read": "statements.slice",
+    "call": "statements.slice()",
+    "utf16Start": 309267,
+    "utf16End": 309283,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "slice(start?: number, end?: number): T[];",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "NodeArray",
+      "ReadonlyArray"
+    ],
+    "filename": "rank-184/contract-probe.a"
+  },
+  {
+    "rank": 214,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateForOfStatement",
+    "candidateReads": 8,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1342,
+      "column": 16
+    },
+    "read": "context.factory.updateForOfStatement",
+    "call": "context.factory.updateForOfStatement(\r\n            node,\r\n            tokenVisitor ? nodeVisitor(node.awaitModifier, tokenVisitor, isAwaitKeyword) : node.awaitModifier,\r\n            Debug.checkDefined(nodeVisitor(node.initializer, visitor, isForInitializer)),\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n            visitIterationBody(node.statement, visitor, context, nodeVisitor),\r\n        )",
+    "utf16Start": 65193,
+    "utf16End": 65229,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateForOfStatement(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-214/contract-probe.a"
+  },
+  {
+    "rank": 229,
+    "receiver_type_id": 11271,
+    "type": "Map<string, CommandLineOption>",
+    "field": "get",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2146,
+      "column": 12
+    },
+    "read": "optionsNameMap.get",
+    "call": "optionsNameMap.get(optionName)",
+    "utf16Start": 83190,
+    "utf16End": 83208,
+    "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-229/contract-probe.a"
+  },
+  {
+    "rank": 232,
+    "receiver_type_id": 14773,
+    "type": "Map<string, string>",
+    "field": "has",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/sys.ts",
+      "line": 1685,
+      "column": 47
+    },
+    "read": "remappedPaths.has",
+    "call": "remappedPaths.has(url)",
+    "utf16Start": 74675,
+    "utf16End": 74692,
+    "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "declaration": "has(key: K): boolean;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-232/contract-probe.a"
+  },
+  {
+    "rank": 259,
+    "receiver_type_id": 1086,
+    "type": "number[]",
+    "field": "pop",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 6621,
+      "column": 13
+    },
+    "read": "context.typeStack.pop",
+    "call": "context.typeStack.pop()",
+    "utf16Start": 349305,
+    "utf16End": 349326,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "pop(): T | undefined;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-259/contract-probe.a"
+  },
+  {
+    "rank": 280,
+    "receiver_type_id": 100577,
+    "type": "Map<Path, ParsedConfig> | undefined",
+    "field": "get",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 674,
+      "column": 32
+    },
+    "read": "parsedConfigs?.get",
+    "call": "parsedConfigs?.get(configPath)",
+    "utf16Start": 33333,
+    "utf16End": 33351,
+    "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "declaration": "get(key: K): V | undefined;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-280/contract-probe.a"
+  },
+  {
+    "rank": 283,
+    "receiver_type_id": 8212,
+    "type": "Map<string, number>",
+    "field": "clear",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/performance.ts",
+      "line": 148,
+      "column": 10
+    },
+    "read": "durations.clear",
+    "call": "durations.clear()",
+    "utf16Start": 4394,
+    "utf16End": 4409,
+    "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+    "declaration": "clear(): void;",
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-283/contract-probe.a"
+  },
+  {
+    "rank": 292,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createImportEqualsDeclaration",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 747,
+      "column": 58
+    },
+    "read": "nodeFactory.createImportEqualsDeclaration",
+    "call": "nodeFactory.createImportEqualsDeclaration(\r\n                    /*modifiers*/ undefined,\r\n                    /*isTypeOnly*/ false,\r\n                    externalHelpersModuleName,\r\n                    nodeFactory.createExternalModuleReference(nodeFactory.createStringLiteral(externalHelpersModuleNameText)),\r\n                )",
+    "utf16Start": 29386,
+    "utf16End": 29427,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "createImportEqualsDeclaration(modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, name: string | Identifier, moduleReference: ModuleReference): ImportEqualsDeclaration;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-292/contract-probe.a"
+  }
+]

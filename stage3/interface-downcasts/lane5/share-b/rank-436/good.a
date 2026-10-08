@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface ExternalModuleReference { readonly value: number; }
+interface Base {readonly createExternalModuleReference:unknown;}
+interface Target {createExternalModuleReference(expression: Expression): ExternalModuleReference;}
+function probe(value:Base):void {const nodeFactory=value as Target;console.log(`${nodeFactory.createExternalModuleReference({value:3}).value}`);}
+probe({createExternalModuleReference:(expression: Expression):ExternalModuleReference=>{console.log(`${expression.value}`);return {value:3};}});

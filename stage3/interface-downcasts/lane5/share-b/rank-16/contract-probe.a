@@ -1,0 +1,7 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+
+interface Base {readonly entries:unknown;}
+interface Target {entries<T>(o: { [s: string]: T; } | ArrayLike<T>): [string, T][];
+entries(o: {}): [string, any][];}
+function probe(value:Base):void {const Object=value as Target;Object.entries({value:3});}
+probe({entries:7});

@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface ComputedPropertyName { readonly value: number; }
+interface Base {readonly createComputedPropertyName:unknown;}
+interface Target {createComputedPropertyName(expression: Expression): ComputedPropertyName;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createComputedPropertyName({value:3}).value}`);}
+probe({createComputedPropertyName:7});

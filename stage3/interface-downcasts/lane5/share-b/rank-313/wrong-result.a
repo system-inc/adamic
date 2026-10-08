@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SyntacticTypeNodeBuilderContext { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly canReuseTypeNode:unknown;}
+interface Target {canReuseTypeNode(context: SyntacticTypeNodeBuilderContext, existing: TypeNode): boolean;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.canReuseTypeNode({value:3},{value:3})}`);}
+probe({canReuseTypeNode:(context: SyntacticTypeNodeBuilderContext, existing: TypeNode):number=>9});

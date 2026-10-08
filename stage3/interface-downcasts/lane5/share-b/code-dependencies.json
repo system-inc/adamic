@@ -24,11 +24,523 @@
     "needed": "rest-parameter intrinsic contract and actual array receiver certification"
   },
   {
+    "rank": 16,
+    "pair": "ObjectConstructor.entries",
+    "reads": 75,
+    "read": "Object.entries",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-16/contract-probe.a:6:63: Adamic 0.1 refuses checked view read of field entries with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overload-set callable descriptors and overload selection checks",
+    "fixture": "rank-16/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 25,
+    "pair": "NodeFactory.getGeneratedNameForNode",
+    "reads": 58,
+    "read": "factory.getGeneratedNameForNode",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-25/contract-probe.a:9:64: Adamic 0.1 refuses checked view read of field getGeneratedNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overload-set callable descriptors and overload selection checks",
+    "fixture": "rank-25/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 28,
+    "pair": "NodeFactory.createKeywordTypeNode",
+    "reads": 53,
+    "read": "factory.createKeywordTypeNode",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-28/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field createKeywordTypeNode with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "generic callable descriptors with proven instantiation",
+    "fixture": "rank-28/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
     "rank": 37,
     "pair": "string[].join",
     "reads": 42,
     "read": "result.join",
     "stop": "native array-to-object argument conversion clang error; JavaScript unknown intrinsic signature exit 70",
     "needed": "array receiver conversion and immutable intrinsic signature metadata"
+  },
+  {
+    "rank": 40,
+    "pair": "NodeFactory.createToken",
+    "reads": 41,
+    "read": "factory.createToken",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-40/contract-probe.a:31:64: Adamic 0.1 refuses checked view read of field createToken with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overload-set callable descriptors and overload selection checks",
+    "fixture": "rank-40/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 55,
+    "pair": "Math.max",
+    "reads": 30,
+    "read": "Math.max",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-55/contract-probe.a:5:61: Adamic 0.1 refuses checked view read of field max with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "rest-parameter callable descriptors and intrinsic signature checks",
+    "fixture": "rank-55/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 130,
+    "pair": "NodeFactory.mergeLexicalEnvironment",
+    "reads": 13,
+    "read": "factory.mergeLexicalEnvironment",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-130/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field mergeLexicalEnvironment with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overload-set callable descriptors and overload selection checks",
+    "fixture": "rank-130/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 172,
+    "pair": "NodeFactory.copyPrologue",
+    "reads": 10,
+    "read": "factory.copyPrologue",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-172/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field copyPrologue with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "callable descriptors for optional callback parameters and their return contracts",
+    "fixture": "rank-172/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 178,
+    "pair": "Set<__String>.add",
+    "reads": 10,
+    "read": "nonTypeOnlyNames.add",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 5254,
+      "column": 53
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 181,
+    "pair": "ArrayConstructor.isArray",
+    "reads": 9,
+    "read": "Array.isArray",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-181/contract-probe.a:4:38: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "needed": "proven type-predicate callable admission",
+    "fixture": "rank-181/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 190,
+    "pair": "NodeFactory.restoreEnclosingLabel",
+    "reads": 9,
+    "read": "factory.restoreEnclosingLabel",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-190/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field restoreEnclosingLabel with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "callable descriptors for optional callback parameters and their return contracts",
+    "fixture": "rank-190/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 205,
+    "pair": "ModuleResolutionCache | undefined.getPackageJsonInfoCache",
+    "reads": 8,
+    "read": "cache?.getPackageJsonInfoCache",
+    "stop": "stage 0 can't lower an optional chain longer than one step yet",
+    "needed": "lower the original optional-chain member call and its following object field read",
+    "fixture": "rank-205/good.a",
+    "basis": "observed original-member positive probe refusal"
+  },
+  {
+    "rank": 220,
+    "pair": "Set<string> | undefined.has",
+    "reads": 8,
+    "read": "topNamedCapturingGroupsScope?.has",
+    "witness": {
+      "file": "src/compiler/scanner.ts",
+      "line": 3007,
+      "column": 22
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 226,
+    "pair": "ElementFlags[].push",
+    "reads": 7,
+    "read": "expandedFlags.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-226/contract-probe.a:5:70: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "rest-parameter callable descriptors and intrinsic signature checks",
+    "fixture": "rank-226/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 244,
+    "pair": "NodeFactory.getGeneratedPrivateNameForNode",
+    "reads": 7,
+    "read": "factory.getGeneratedPrivateNameForNode",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-244/contract-probe.a:8:64: Adamic 0.1 refuses checked view read of field getGeneratedPrivateNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overload-set callable descriptors and overload selection checks",
+    "fixture": "rank-244/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 250,
+    "pair": "ObjectConstructor.defineProperties",
+    "reads": 7,
+    "read": "Object.defineProperties",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-250/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field defineProperties with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "generic callable descriptors with proven instantiation",
+    "fixture": "rank-250/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 253,
+    "pair": "Signature[].push",
+    "reads": 7,
+    "read": "result.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-253/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "rest-parameter callable descriptors and intrinsic signature checks",
+    "fixture": "rank-253/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 310,
+    "pair": "Set<__String>.has",
+    "reads": 6,
+    "read": "skippedPrivateMembers.has",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 20216,
+      "column": 17
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 319,
+    "pair": "Type[].map",
+    "reads": 6,
+    "read": "(type as UnionType).types?.map",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-319/contract-probe.a:6:69: Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "generic callable descriptors with proven instantiation",
+    "fixture": "rank-319/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 322,
+    "pair": "string[].forEach",
+    "reads": 6,
+    "read": "existing.forEach",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-322/contract-probe.a:5:65: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "callable descriptors for optional callback parameters and their return contracts",
+    "fixture": "rank-322/contract-probe.a",
+    "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 637,
+    "pair": "Set<Path>.delete",
+    "reads": 3,
+    "read": "state.changedFilesSet.delete",
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 667,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 1075,
+    "pair": "Set<Path>.forEach",
+    "reads": 2,
+    "read": "rootFileNames.forEach",
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 1429,
+      "column": 9
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 1078,
+    "pair": "Set<Signature>.add",
+    "reads": 2,
+    "read": "candidatesSet.add",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 1970,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 1081,
+    "pair": "Set<string> | undefined.forEach",
+    "reads": 2,
+    "read": "cache.get(dirPath)?.links?.forEach",
+    "witness": {
+      "file": "src/compiler/sys.ts",
+      "line": 732,
+      "column": 9
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2221,
+    "pair": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined.has",
+    "reads": 1,
+    "read": "newMap?.has",
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 8219,
+      "column": 14
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2236,
+    "pair": "ReadonlySet<__String> | undefined.forEach",
+    "reads": 1,
+    "read": "sourceFile.classifiableNames?.forEach",
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 2167,
+      "column": 17
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2314,
+    "pair": "Set<FileIncludeReason>.add",
+    "reads": 1,
+    "read": "(seenReasons ??= new Set()).add",
+    "witness": {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 302,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2317,
+    "pair": "Set<FlowNode>.delete",
+    "reads": 1,
+    "read": "seen.delete",
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 1025,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2320,
+    "pair": "Set<Identifier>.add",
+    "reads": 1,
+    "read": "bindingsSet.add",
+    "witness": {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2476,
+      "column": 29
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2323,
+    "pair": "Set<Node>.delete",
+    "reads": 1,
+    "read": "commonDeclarations!.delete",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 15789,
+      "column": 21
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2326,
+    "pair": "Set<ParameterDeclaration> | undefined.has",
+    "reads": 1,
+    "read": "parametersWithPrecedingObjectRestOrSpread?.has",
+    "witness": {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 947,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2329,
+    "pair": "Set<ResolutionWithFailedLookupLocations>.forEach",
+    "reads": 1,
+    "read": "nonRelativeExternalModuleResolutions.forEach",
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1250,
+      "column": 9
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2332,
+    "pair": "Set<ResolvedConfigFilePath>.delete",
+    "reads": 1,
+    "read": "watcher.projects.delete",
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 695,
+      "column": 21
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2335,
+    "pair": "Set<ResolvedConfigFilePath> | undefined.forEach",
+    "reads": 1,
+    "read": "state.allWatchedExtendedConfigFiles.get(extendedConfigFilePath)?.projects.forEach",
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2137,
+      "column": 23
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2338,
+    "pair": "Set<Symbol> | undefined.has",
+    "reads": 1,
+    "read": "seenSymbols?.has",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 4376,
+      "column": 38
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2341,
+    "pair": "Set<T>.delete",
+    "reads": 1,
+    "read": "watcher.projects.delete",
+    "witness": {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 418,
+      "column": 13
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2344,
+    "pair": "Set<V>.add",
+    "reads": 1,
+    "read": "set.add",
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 177,
+      "column": 9
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2347,
+    "pair": "Set<__String> | undefined.has",
+    "reads": 1,
+    "read": "excludedProperties?.has",
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 24510,
+      "column": 60
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 2350,
+    "pair": "Set<string>.keys",
+    "reads": 1,
+    "read": "result.extendedSourceFiles.keys",
+    "witness": {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3449,
+      "column": 98
+    },
+    "stop": "Set receiver dependency absent from this delivery base; listed by user instruction, not rechecked against the fix",
+    "needed": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+    "dependencyBranch": "codex/views-set-receiver",
+    "dependencySha": "058635b9",
+    "basis": "user-provided dependency; no branch merge or certification claimed"
   }
 ]

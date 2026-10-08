@@ -1,5 +1,35 @@
 [
   {
+    "rank": 61,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createStringLiteralFromNode",
+    "candidateReads": 27,
+    "directory": "rank-61",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 277,
+    "receiver_type_id": 83084,
+    "type": "FlattenContext",
+    "field": "emitBindingOrAssignment",
+    "candidateReads": 6,
+    "directory": "rank-277",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 313,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "canReuseTypeNode",
+    "candidateReads": 6,
+    "directory": "rank-313",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 331,
     "receiver_type_id": 11678,
     "type": "EmitHost",
@@ -110,6 +140,16 @@
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
   },
   {
+    "rank": 385,
+    "receiver_type_id": 13389,
+    "type": "SyntacticNodeBuilder",
+    "field": "tryReuseExistingTypeNode",
+    "candidateReads": 5,
+    "directory": "rank-385",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 394,
     "receiver_type_id": 11233,
     "type": "CompilerHost",
@@ -150,6 +190,96 @@
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
   },
   {
+    "rank": 427,
+    "receiver_type_id": 11732,
+    "type": "NodeConverters",
+    "field": "convertToFunctionBlock",
+    "candidateReads": 4,
+    "directory": "rank-427",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 430,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createCaseBlock",
+    "candidateReads": 4,
+    "directory": "rank-430",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 433,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createComputedPropertyName",
+    "candidateReads": 4,
+    "directory": "rank-433",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 436,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createExternalModuleReference",
+    "candidateReads": 4,
+    "directory": "rank-436",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 445,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createThrowStatement",
+    "candidateReads": 4,
+    "directory": "rank-445",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 451,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateExpressionStatement",
+    "candidateReads": 4,
+    "directory": "rank-451",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 454,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updatePrefixUnaryExpression",
+    "candidateReads": 4,
+    "directory": "rank-454",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 457,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeReferenceNode",
+    "candidateReads": 4,
+    "directory": "rank-457",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 478,
+    "receiver_type_id": 28206,
+    "type": "Scanner",
+    "field": "resetTokenState",
+    "candidateReads": 4,
+    "directory": "rank-478",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 481,
     "receiver_type_id": 9942,
     "type": "SourceFileMayBeEmittedHost",
@@ -158,6 +288,16 @@
     "directory": "rank-481",
     "certified": true,
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
+  },
+  {
+    "rank": 484,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "canReuseTypeNodeAnnotation",
+    "candidateReads": 4,
+    "directory": "rank-484",
+    "certified": true,
+    "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
     "rank": 622,

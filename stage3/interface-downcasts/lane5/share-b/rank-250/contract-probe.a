@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+
+interface Base {readonly defineProperties:unknown;}
+interface Target {defineProperties<T>(o: T, properties: PropertyDescriptorMap & ThisType<any>): T;}
+function probe(value:Base):void {const Object=value as Target;Object.defineProperties({value:3},{});}
+probe({defineProperties:7});

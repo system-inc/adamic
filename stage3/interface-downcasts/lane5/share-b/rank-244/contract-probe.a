@@ -1,0 +1,9 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface Node {readonly value:number;}
+interface PrivateIdentifier {readonly value:number;}
+interface GeneratedNamePart {readonly value:number;}
+interface Base {readonly getGeneratedPrivateNameForNode:unknown;}
+interface Target {getGeneratedPrivateNameForNode(node: Node): PrivateIdentifier;
+getGeneratedPrivateNameForNode(node: Node, prefix?: string | GeneratedNamePart, suffix?: string): PrivateIdentifier;}
+function probe(value:Base):void {const factory=value as Target;factory.getGeneratedPrivateNameForNode({value:3});}
+probe({getGeneratedPrivateNameForNode:7});

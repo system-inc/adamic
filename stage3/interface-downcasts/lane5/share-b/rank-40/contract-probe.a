@@ -1,0 +1,32 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface SuperExpression {readonly value:number;}
+interface ThisExpression {readonly value:number;}
+interface NullLiteral {readonly value:number;}
+interface TrueLiteral {readonly value:number;}
+interface FalseLiteral {readonly value:number;}
+interface EndOfFileToken {readonly value:number;}
+interface Token<T0> {readonly value:number;}
+interface PunctuationSyntaxKind {readonly value:number;}
+interface PunctuationToken<T0> {readonly value:number;}
+interface KeywordTypeSyntaxKind {readonly value:number;}
+interface KeywordTypeNode<T0> {readonly value:number;}
+interface ModifierSyntaxKind {readonly value:number;}
+interface ModifierToken<T0> {readonly value:number;}
+interface KeywordSyntaxKind {readonly value:number;}
+interface KeywordToken<T0> {readonly value:number;}
+enum SyntaxKind {SuperKeyword=0,ThisKeyword=1,NullKeyword=2,TrueKeyword=3,FalseKeyword=4,EndOfFileToken=5,Unknown=6}
+interface Base {readonly createToken:unknown;}
+interface Target {createToken(token: SyntaxKind.SuperKeyword): SuperExpression;
+createToken(token: SyntaxKind.ThisKeyword): ThisExpression;
+createToken(token: SyntaxKind.NullKeyword): NullLiteral;
+createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;
+createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;
+createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;
+createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;
+createToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;
+createToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;
+createToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;
+createToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;
+createToken<TKind extends SyntaxKind>(token: TKind): Token<TKind>;}
+function probe(value:Base):void {const factory=value as Target;factory.createToken(SyntaxKind.SuperKeyword);}
+probe({createToken:7});

@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface PropertyNameLiteral { readonly value: number; }
+interface PrivateIdentifier { readonly value: number; }
+interface StringLiteral { readonly value: number; }
+interface Base {readonly createStringLiteralFromNode:unknown;}
+interface Target {createStringLiteralFromNode(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean): StringLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createStringLiteralFromNode({value:3},true).value}`);}
+probe({createStringLiteralFromNode:(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean):number=>9});

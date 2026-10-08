@@ -1,5 +1,106 @@
 [
   {
+    "rank": 61,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createStringLiteralFromNode",
+    "candidateReads": 27,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 12356,
+      "column": 63
+    },
+    "read": "factory.createStringLiteralFromNode",
+    "call": "factory.createStringLiteralFromNode(node)",
+    "utf16Start": 509390,
+    "utf16End": 509425,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declaration": "createStringLiteralFromNode(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean): StringLiteral;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(sourceNode: PrivateIdentifier | PropertyNameLiteral, isSingleQuote?: boolean | undefined) => StringLiteral",
+    "directory": "rank-61",
+    "resultType": "StringLiteral",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 277,
+    "receiver_type_id": 83084,
+    "type": "FlattenContext",
+    "field": "emitBindingOrAssignment",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 373,
+      "column": 9
+    },
+    "read": "flattenContext.emitBindingOrAssignment",
+    "call": "flattenContext.emitBindingOrAssignment(bindingTarget, value!, location, /*original*/ element)",
+    "utf16Start": 16259,
+    "utf16End": 16297,
+    "fileSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+    "declaration": "emitBindingOrAssignment: (target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange, original: Node | undefined) => void;",
+    "declarationFile": "src/compiler/transformers/destructuring.ts",
+    "declarationSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+    "inheritancePath": [
+      "FlattenContext"
+    ],
+    "expected": "(target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange, original: Node | undefined) => void",
+    "directory": "rank-277",
+    "resultType": "void",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 313,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "canReuseTypeNode",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 186,
+      "column": 18
+    },
+    "read": "resolver.canReuseTypeNode",
+    "call": "resolver.canReuseTypeNode(context, existing)",
+    "utf16Start": 5188,
+    "utf16End": 5213,
+    "fileSha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+    "declaration": "canReuseTypeNode(context: SyntacticTypeNodeBuilderContext, existing: TypeNode): boolean;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "SyntacticTypeNodeBuilderResolver"
+    ],
+    "expected": "(context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => boolean",
+    "directory": "rank-313",
+    "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 331,
     "receiver_type_id": 11678,
     "type": "EmitHost",
@@ -371,6 +472,40 @@
     "expected": "() => boolean"
   },
   {
+    "rank": 385,
+    "receiver_type_id": 13389,
+    "type": "SyntacticNodeBuilder",
+    "field": "tryReuseExistingTypeNode",
+    "candidateReads": 5,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 7203,
+      "column": 46
+    },
+    "read": "syntacticNodeBuilder.tryReuseExistingTypeNode",
+    "call": "syntacticNodeBuilder.tryReuseExistingTypeNode(context, existing)",
+    "utf16Start": 387208,
+    "utf16End": 387253,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "tryReuseExistingTypeNode: (context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => TypeNode | undefined;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "SyntacticNodeBuilder"
+    ],
+    "expected": "(context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => TypeNode | undefined",
+    "directory": "rank-385",
+    "resultType": "TypeNode | undefined",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 394,
     "receiver_type_id": 11233,
     "type": "CompilerHost",
@@ -505,6 +640,311 @@
     "expected": "(reportErrors: boolean) => GenericType"
   },
   {
+    "rank": 427,
+    "receiver_type_id": 11732,
+    "type": "NodeConverters",
+    "field": "convertToFunctionBlock",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 530,
+      "column": 23
+    },
+    "read": "context.factory.converters.convertToFunctionBlock",
+    "call": "context.factory.converters.convertToFunctionBlock(updated)",
+    "utf16Start": 22124,
+    "utf16End": 22173,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "convertToFunctionBlock(node: ConciseBody, multiLine?: boolean): Block;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeConverters"
+    ],
+    "expected": "(node: ConciseBody, multiLine?: boolean | undefined) => Block",
+    "directory": "rank-427",
+    "resultType": "Block",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 430,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createCaseBlock",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 7039,
+      "column": 27
+    },
+    "read": "factory.createCaseBlock",
+    "call": "factory.createCaseBlock(clauses)",
+    "utf16Start": 348725,
+    "utf16End": 348748,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createCaseBlock(clauses: readonly CaseOrDefaultClause[]): CaseBlock;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(clauses: readonly CaseOrDefaultClause[]) => CaseBlock",
+    "directory": "rank-430",
+    "resultType": "CaseBlock",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 433,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createComputedPropertyName",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 2744,
+      "column": 27
+    },
+    "read": "factory.createComputedPropertyName",
+    "call": "factory.createComputedPropertyName(expression)",
+    "utf16Start": 140160,
+    "utf16End": 140194,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createComputedPropertyName(expression: Expression): ComputedPropertyName;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(expression: Expression) => ComputedPropertyName",
+    "directory": "rank-433",
+    "resultType": "ComputedPropertyName",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 436,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createExternalModuleReference",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 751,
+      "column": 21
+    },
+    "read": "nodeFactory.createExternalModuleReference",
+    "call": "nodeFactory.createExternalModuleReference(nodeFactory.createStringLiteral(externalHelpersModuleNameText))",
+    "utf16Start": 29587,
+    "utf16End": 29628,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "createExternalModuleReference(expression: Expression): ExternalModuleReference;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(expression: Expression) => ExternalModuleReference",
+    "directory": "rank-436",
+    "resultType": "ExternalModuleReference",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 445,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createThrowStatement",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 7074,
+      "column": 37
+    },
+    "read": "factory.createThrowStatement",
+    "call": "factory.createThrowStatement(expression)",
+    "utf16Start": 350418,
+    "utf16End": 350446,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createThrowStatement(expression: Expression): ThrowStatement;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(expression: Expression) => ThrowStatement",
+    "directory": "rank-445",
+    "resultType": "ThrowStatement",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 451,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateExpressionStatement",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1291,
+      "column": 16
+    },
+    "read": "context.factory.updateExpressionStatement",
+    "call": "context.factory.updateExpressionStatement(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n        )",
+    "utf16Start": 62527,
+    "utf16End": 62568,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateExpressionStatement(node: ExpressionStatement, expression: Expression): ExpressionStatement;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(node: ExpressionStatement, expression: Expression) => ExpressionStatement",
+    "directory": "rank-451",
+    "resultType": "ExpressionStatement",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 454,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updatePrefixUnaryExpression",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1155,
+      "column": 16
+    },
+    "read": "context.factory.updatePrefixUnaryExpression",
+    "call": "context.factory.updatePrefixUnaryExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.operand, visitor, isExpression)),\r\n        )",
+    "utf16Start": 55535,
+    "utf16End": 55578,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updatePrefixUnaryExpression(node: PrefixUnaryExpression, operand: Expression): PrefixUnaryExpression;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(node: PrefixUnaryExpression, operand: Expression) => PrefixUnaryExpression",
+    "directory": "rank-454",
+    "resultType": "PrefixUnaryExpression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 457,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeReferenceNode",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 7597,
+      "column": 28
+    },
+    "read": "factory.updateTypeReferenceNode",
+    "call": "factory.updateTypeReferenceNode(\r\n                        root,\r\n                        typeName,\r\n                        typeArguments,\r\n                    )",
+    "utf16Start": 413291,
+    "utf16End": 413322,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "updateTypeReferenceNode(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined): TypeReferenceNode;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(node: TypeReferenceNode, typeName: EntityName, typeArguments: NodeArray<TypeNode> | undefined) => TypeReferenceNode",
+    "directory": "rank-457",
+    "resultType": "TypeReferenceNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 478,
+    "receiver_type_id": 28206,
+    "type": "Scanner",
+    "field": "resetTokenState",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 1892,
+      "column": 17
+    },
+    "read": "scanner.resetTokenState",
+    "call": "scanner.resetTokenState(nextStatement.pos)",
+    "utf16Start": 102976,
+    "utf16End": 102999,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "resetTokenState(pos: number): void;",
+    "declarationFile": "src/compiler/scanner.ts",
+    "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+    "inheritancePath": [
+      "Scanner"
+    ],
+    "expected": "(pos: number) => void",
+    "directory": "rank-478",
+    "resultType": "void",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 481,
     "receiver_type_id": 9942,
     "type": "SourceFileMayBeEmittedHost",
@@ -536,6 +976,40 @@
       "wrong-result"
     ],
     "expected": "() => string"
+  },
+  {
+    "rank": 484,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "canReuseTypeNodeAnnotation",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 639,
+      "column": 14
+    },
+    "read": "resolver.canReuseTypeNodeAnnotation",
+    "call": "resolver.canReuseTypeNodeAnnotation(context, node, declaredType, symbol, requiresAddingUndefined)",
+    "utf16Start": 31018,
+    "utf16End": 31053,
+    "fileSha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+    "declaration": "canReuseTypeNodeAnnotation(context: SyntacticTypeNodeBuilderContext, node: Declaration, existing: TypeNode, symbol: Symbol | undefined, requiresAddingUndefined?: boolean): boolean;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "SyntacticTypeNodeBuilderResolver"
+    ],
+    "expected": "(context: SyntacticTypeNodeBuilderContext, node: Declaration, existing: TypeNode, symbol: Symbol | undefined, requiresAddingUndefined?: boolean | undefined) => boolean",
+    "directory": "rank-484",
+    "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
   },
   {
     "rank": 622,

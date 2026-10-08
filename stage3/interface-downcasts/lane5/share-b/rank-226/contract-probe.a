@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface T {readonly value:number;}
+interface Base {readonly push:unknown;}
+interface Target {push(...items: T[]): number;}
+function probe(value:Base):void {const expandedFlags=value as Target;expandedFlags.push({value:3});}
+probe({push:7});
