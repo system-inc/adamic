@@ -1,0 +1,29 @@
+let starts = 0;
+let tuple: [string, string, string] = ["item" + (1).toFixed(0), "item" + (2).toFixed(0), "item" + (3).toFixed(0)];
+function source(): [string, string, string] {
+    starts++;
+    return tuple;
+}
+const captures: (() => string)[] = [];
+for (const value of source()) {
+    console.log(value);
+    captures.push(() => value);
+    if (value === "item1") {
+        tuple = ["changed" + (1).toFixed(0), "changed" + (2).toFixed(0), "changed" + (3).toFixed(0)];
+        continue;
+    }
+}
+tuple = ["replaced", "other", "last"];
+for (const capture of captures) { console.log(capture()); }
+console.log(starts.toFixed(0));
+for (const value of ["dependencies", "peerDependencies", "optionalDependencies"] as const) {
+    console.log(value);
+    if (value === "peerDependencies") { break; }
+}
+function first(): string {
+    for (const value of tuple) { return value; }
+    return "empty";
+}
+console.log(first());
+for (const value of [4, 5, 6] as const) { console.log(value.toFixed(0)); }
+for (const value of [true, false] as const) { console.log(value ? "yes" : "no"); }

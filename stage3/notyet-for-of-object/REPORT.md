@@ -2,7 +2,8 @@
 
 Base `b410340dc8f889b5799c3bc519117c63def3aa24`; replay merge
 `c68b6ceb0bd43283c6b919f8bc2c823084bd69e2` (includes `9a1f14c5`).
-**0 of the 118 object-iteration roots lowered.** The named examples reproduce.
+**1 of the 118 original object-iteration gates now advances**, after the fixed
+primitive tuple change below. The named NodeArray examples still reproduce.
 
 ## Observed scope
 
@@ -169,3 +170,72 @@ both still exit 0 and reproduce their exact original object stops, recorded in
 /tmp/for-of-after-432.log and /tmp/for-of-after-1296.log. No backend comparison
 is claimed for those stopped reductions. Counts were refreshed again after
 merge (/tmp/for-of-landing-counts.log). No full package tests or full gate ran.
+
+## October 8 correction and fixed tuple group
+
+The pushed views merge 40c696f2 is reverted by 472923b6, without rewriting
+history. The revert tree exactly matches c59c040b. The incomplete non-null merge
+was aborted first; cab81a59 then merges only c41c0e06. The October 8 ruling keeps
+non-null assertions refused in .a. No views-dependent certification is claimed
+on this branch. Compiler area still resolves to b410340d at 11:23 UTC.
+
+On this permitted base the fourteen recorded replays were rerun. Both binder
+examples still reproduce the exact object stop; all four original object-binding
+gates still advance to the stops already recorded above. The three generator
+units still reproduce their latent object stops, while normal lowering refuses
+generator functions by design. They need ownership and cancellation rules for
+suspended frames, not removal of the generator refusal. core.ts:2173:29 is
+masked by a function returning T | undefined at 2169:17. The SortedReadonlyArray
+site is masked by reading bundle at emitter.ts:2051:13, with an unchecked cast
+also refused. Neither masked site is counted as covered.
+
+The one fixed readonly string tuple at moduleSpecifiers.ts:800:25 now lowers
+through the tuple's existing numeric object fields. The new helper accepts only
+nonempty required tuples with homogeneous string, number or boolean storage and
+a plain binding. It holds the source once, selects a field for each index, and
+declares a fresh loop binding. Existing Loop IR handles continue, break and
+return; builtin array iterators have no return method to call. Custom iterables
+still take iteration.go's protocol path before tuple handling. No IR, backend or
+runtime changes were required.
+
+The .a fixture covers built strings, source reassignment during iteration,
+captured bindings, continue, break, return, and primitive tuple storage. Tuple
+element writes remain an existing separate stop and are not certified. Optional,
+rest, mixed and object-element tuple storage remains stopped. Eight isolated
+mutants were run and restored:
+
+| Mutant | Catcher |
+| --- | --- |
+| Admit empty storage | lower storage-stop assertion |
+| Admit binding patterns | lower storage-stop assertion |
+| Admit optional/rest storage | lower storage-stop assertion |
+| Admit mixed/object storage | lower storage-stop assertion |
+| Shorten length by one | oracle stdout differs |
+| Read field zero for every element | oracle stdout differs |
+| Evaluate source each iteration | oracle stdout differs |
+| Reuse one captured binding | oracle stdout differs |
+
+Commands, all redirected to logs:
+
+```
+ADAMIC_GATE_UNCACHED=1 go test ./cmd/adamic ./internal/flow ./internal/ir ./internal/lower ./internal/oracle -run 'TestNonNull|TestExplainChecksDriver|TestAdamicNullishAssertionsAreRefused|TestImpossibleNonNullFixturesAreRefused|TestPossibleNonNullAdamicAssertionsAreRefused|TestCheckedNonNull|TestForOfObjectBindingChecks|TestForOfObjectNodeArrayStops|TestNativeAgreesWithNode/internal/oracle/testdata/for_of_object_destructure' -count=1 -timeout 10m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run 'TestForOfTupleStorageChecks|TestForOfObjectBindingChecks|TestForOfObjectNodeArrayStops|TestNativeAgreesWithNode/internal/oracle/testdata/for_of_(tuple|object_destructure)' -count=1 -timeout 10m
+python3 internal/lower/testdata/run-for-of-tuple-mutants.py
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+go run ./stage3/census/latent/replay -project /tmp/for-of-adapted/src/tsc/tsc.ts -where /tmp/for-of-adapted/src/compiler/moduleSpecifiers.ts:800:25 -kind NotYet -reason 'for...of over an object'
+```
+
+c41 focus passes: CLI 4.354s, lower 2.329s, oracle 3.808s; flow and IR
+compile with no tests selected. Tuple final focus passes: lower 0.406s, oracle
+0.957s. Node agrees with release native, sanitized native and JavaScript.
+Counts update passes in 26.062s, recording 29 allocations and 29 frees.
+The tuple replay exits 1 because its original signature no longer reproduces;
+its next loop-body stop is an ElementAccessExpression at 801:22. The earlier
+any at 799:9 and later unbound deps/result remain. This is one advanced gate,
+not a fully compiled compiler function. Raw CSV coverage is **1/118** for the
+object reason and **4/4** for the original object-binding gate.
+
+Logs: /tmp/for-of-c41-focus.log, /tmp/for-of-c41-recorded.log,
+/tmp/for-of-night-replays/recorded.json, /tmp/for-of-tuple-final.log,
+/tmp/for-of-tuple-mutants.log, /tmp/adamic-for-of-tuple-mutants/*.log,
+/tmp/for-of-tuple-counts.log and /tmp/for-of-tuple-after-800.log.

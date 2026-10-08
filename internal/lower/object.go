@@ -887,6 +887,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	case ir.Object:
+		if proven := l.checker.GetTypeAtLocation(iterated); checker.IsTupleType(proven) {
+			return l.forOfTuple(node, name, iterable, proven)
+		}
 		if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(iterated)), "RegExpStringIterator") {
 			return nil, l.notYet(iterated, "for...of over an object")
 		}
