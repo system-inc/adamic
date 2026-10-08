@@ -1168,3 +1168,18 @@ distinguishes an absent receiver from a missing required field on a present
 receiver; `javascript/readiness.go:adamicViewField` permits undefined because
 of optional chaining only when the receiver is absent. The compiling C/JS
 optional-absence mutant deliberately restores that conflation.
+
+### Dictionary group 7: erased-source lookup admission
+
+New lane files: `internal/oracle/checked_view_dictionary_lookup_test.go` and
+`dictionaries/source/{map-string,map-generic,package-paths}-*.a`. Named hook
+`lower/view_dictionaries.go:dictionaryCastNeedsView` is called minimally from
+`lower/cast_proof.go` before apparent upcast admission. An erased structural
+source declaring no keys cannot certify dictionary storage by assignability;
+its reads install the ordinary lazy dictionary view. Nominal and writable-slot
+restrictions remain required. Existing shared record storage is reused.
+
+Group 7 also adds the minimal dictionary-property pointer traversal in
+`lower/readiness.go:readinessStatement`. Its record read descriptor must receive
+the same parameter readiness facts as its enclosing operation; otherwise a
+generic dictionary helper emits a nonexistent parameter readiness flag.

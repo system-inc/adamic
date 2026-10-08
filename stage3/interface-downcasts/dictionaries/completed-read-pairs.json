@@ -252,5 +252,64 @@
       "source/optional-wildcard-undefined.a"
     ],
     "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 34464,
+    "field": "<dynamic-key>",
+    "type": "MapLike<string>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/map-string-good.a",
+      "source/map-string-wrong.a",
+      "source/map-string-missing.a",
+      "source/map-string-producer-good.a",
+      "source/map-string-producer-wrong.a",
+      "source/map-string-producer-missing.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 2413,
+    "field": "<dynamic-key>",
+    "type": "MapLike<T>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/map-generic-good.a",
+      "source/map-generic-wrong.a",
+      "source/map-generic-missing.a",
+      "source/map-generic-producer-good.a",
+      "source/map-generic-producer-wrong.a",
+      "source/map-generic-producer-missing.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 37516,
+    "field": "<dynamic-key>",
+    "type": "PackageJsonPathFields",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/package-paths-good.a",
+      "source/package-paths-wrong.a",
+      "source/package-paths-missing.a",
+      "source/package-paths-nested-wrong.a",
+      "source/package-paths-producer-good.a",
+      "source/package-paths-producer-wrong.a",
+      "source/package-paths-producer-missing.a",
+      "source/package-paths-producer-nested-wrong.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
   }
 ]

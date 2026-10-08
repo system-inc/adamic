@@ -218,3 +218,12 @@ func (l *lowering) regexDictionaryReceiver(t *checker.Type) bool {
 	}
 	return false
 }
+
+// An erased structural source can appear assignable to a dictionary because
+// it declares no keys. That relation does not certify the source storage.
+func (l *lowering) dictionaryCastNeedsView(source, target *checker.Type) bool {
+	return source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 &&
+		!isClassInstance(source) && !isClassInstance(target) && l.recordElement(source) == nil &&
+		(l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil) &&
+		l.checker.IsTypeAssignableTo(target, source)
+}
