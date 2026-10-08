@@ -2214,3 +2214,13 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
 | internal/oracle/testdata/predicate_callback_contract.a | 4 | 4 | 8 | 10 | 4 | 0 |
 | internal/oracle/testdata/predicate_helper_return.a | 8 | 8 | 6 | 6 | 4 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_direct_valid.a (.ts mode) | 3 | 3 | 5 | 7 | 3 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_direct_invalid.a (.ts mode) | 1 | 0 | 2 | 2 | 1 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_statement_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_statement_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_intersection_valid.a (.ts mode) | 3 | 3 | 5 | 7 | 3 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_intersection_invalid.a (.ts mode) | 1 | 0 | 2 | 2 | 1 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_union_valid.a (.ts mode) | 4 | 4 | 12 | 16 | 4 | 0 | 0 | 0 |
+| internal/oracle/testdata/predicate_hatches/view_union_invalid.a (.ts mode) | 2 | 0 | 9 | 8 | 2 | 0 | 0 | 0 |

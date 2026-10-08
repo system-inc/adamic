@@ -90,7 +90,7 @@ func (l *lowering) predicateTagContract(source, target *checker.Type) (castProof
 
 func (l *lowering) predicateCheckedRead(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
-	if node.Kind != ast.KindIdentifier || value.Type() != ir.Object || !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts") {
+	if (node.Kind != ast.KindIdentifier && node.Kind != ast.KindPropertyAccessExpression) || value.Type() != ir.Object || !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts") {
 		return value, nil
 	}
 	symbol := l.symbol(node)
@@ -103,6 +103,13 @@ func (l *lowering) predicateCheckedRead(node *ast.Node, value ir.Expression) (ir
 	}
 	proof, valid := l.predicateTagContract(source, target)
 	if !valid {
+		admitted, err := l.structuralViewCast(node, value, l.checker.GetNonNullableType(l.concrete(source)), l.concrete(target))
+		if err != nil {
+			return nil, err
+		}
+		if admitted != nil {
+			return admitted, nil
+		}
 		return value, nil
 	}
 	cast := ir.CheckedCast{Value: value, Field: proof.field, Message: "predicate narrowing failed: expected " + l.checker.TypeToString(target)}

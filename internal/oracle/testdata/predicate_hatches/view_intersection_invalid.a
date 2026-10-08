@@ -1,0 +1,18 @@
+interface Node { readonly kind: number }
+type Expression = Node & { readonly label: string };
+const accepted: boolean = true;
+function opaque(kind: number): boolean { return accepted; }
+function isExpression(node: Node): node is Expression { return opaque(node.kind); }
+function cast(node: Node, test: (node: Node) => node is Expression): Expression {
+    if (test(node)) { return node; }
+    throw new Error('not an expression');
+}
+const original = { kind: 1, label: 42 };
+const node: Node | undefined = original;
+function describe(value: Node): void {
+    if (isExpression(value)) {
+        console.log(value.kind === 1 ? '1' : 'other');
+        console.log(value.label);
+    }
+}
+describe(node!);

@@ -397,6 +397,10 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		return nil
 	}
 	proof, err := l.provePredicate(node)
+	if (err != nil || proof.TaggedView) && l.predicateViewHatch(node) {
+		_, admission := l.admitPredicateView(node, nil, l.concrete(l.checker.GetTypeFromTypeNode(node.AsTypePredicateNode().Type)))
+		return admission
+	}
 	if err != nil {
 		return l.closedPredicateRefusal(node)
 	}
