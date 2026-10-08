@@ -1,0 +1,53 @@
+import type {RuleContext} from '../../context.ts';
+import {structureFileContext} from '../../helpers/structure_file_context.a';
+import {goLower} from './unicode_lower.a';
+import {utf8Length} from './utf8_length.a';
+import {hookResultNamingBadSuffix,hookResultNamingGeneric,hookResultNamingMismatch} from './messages.a';
+export class Rule {
+ readonly context:RuleContext;
+ readonly active:boolean;
+ readonly counts:Map<string,number>=new Map<string,number>();
+ readonly names:number[]=[];
+ readonly hooks:string[]=[];
+ constructor(context:RuleContext){this.context=context;this.active=structureFileContext(context.parser.path).isReactFile;}
+ scan(index:number):void {
+  const node=this.context.node(index);
+  if(node.kind==='CallExpression'){
+   const callee=this.context.unwrap(this.context.child(index,0));
+   if(this.context.kind(callee)==='Identifier'){
+    const hook=this.context.node(callee).text;
+    if(hook.startsWith('use')){this.counts.set(hook,(this.counts.get(hook) ?? 0)+1);}
+   }
+  }
+  if(node.kind==='VariableDeclaration' && node.children.length>1){
+   const name=node.children[0] ?? -1;
+   const last=node.children[node.children.length-1] ?? -1;
+   const initializer=last<0 ? -1 : this.context.unwrap(last);
+   if(this.context.kind(name)==='Identifier' && this.context.kind(initializer)==='CallExpression'){
+    const callee=this.context.unwrap(this.context.child(initializer,0));
+    if(this.context.kind(callee)==='Identifier'){
+     const hook=this.context.node(callee).text;
+     if(hook.startsWith('use')){this.names.push(name);this.hooks.push(hook);}
+    }
+   }
+  }
+  for(const child of node.children){this.scan(child);}
+ }
+ visit(index:number):void {
+  if(!this.active){return;}
+  this.scan(index);
+  for(let i=0;i<this.names.length;i++){
+   const name=this.names[i] ?? -1;const hook=this.hooks[i] ?? '';
+   if((this.counts.get(hook) ?? 0) !== 1){continue;}
+   const variable=this.context.node(name).text;
+   const expected=goLower(hook.length<=3 ? hook : hook.slice(3));
+   const lower=goLower(variable);
+   if(lower.startsWith(expected) || lower.endsWith(expected) || (expected.endsWith('s') && lower.includes(expected.slice(0,-1)))){continue;}
+   let id='hookResultNamingMismatch';let message=hookResultNamingMismatch;
+   if(['Result','Data','Value','State','Hook'].some((suffix:string):boolean=>variable.endsWith(suffix))){id='hookResultNamingBadSuffix';message=hookResultNamingBadSuffix;}
+   else if(lower==='data' || lower==='result' || utf8Length(variable)<=2){id='hookResultNamingGeneric';message=hookResultNamingGeneric;}
+   this.context.report(name,'structure/react-hook-require-result-naming',id,message,'','','');
+  }
+ }
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

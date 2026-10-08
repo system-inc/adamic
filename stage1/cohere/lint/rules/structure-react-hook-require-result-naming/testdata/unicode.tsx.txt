@@ -1,0 +1,7 @@
+export function Panel(){
+ const 𐐀=useAccountQuery();
+ const é=useThings();
+ const istanbul=useİstanbul();
+ const ΣΟσ=useΣΟΣ();
+ return [𐐀,é,istanbul,ΣΟσ];
+}

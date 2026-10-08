@@ -1,0 +1,8 @@
+export function Panel(){
+ const data=(useAccountQuery)();
+ const widget=useWatch();
+ const somethingState=useOther();
+ const first=usePair(); const second=usePair();
+ let noInitializer: unknown;
+ return [data,widget,somethingState,first,second];
+}

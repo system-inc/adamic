@@ -1,0 +1,12 @@
+{
+  "name": "structure/react-hook-require-result-naming",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureReactHookRequireResultNaming",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestReactHookRequireResultNaming"
+}
