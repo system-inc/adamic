@@ -1,0 +1,70 @@
+{
+  "hashes_matched": 81,
+  "full_seconds": 193.80684253699997,
+  "attempted": 10551,
+  "replays": [
+    {
+      "file": "binder.ts",
+      "where": "/tmp/census-replay-adapted/src/compiler/binder.ts:331:22",
+      "kind": "NotYet",
+      "reason": "a PrefixUnaryExpression on a value",
+      "elapsed": 6.763726161000022,
+      "command": [
+        "go",
+        "run",
+        "./stage3/census/latent/replay",
+        "-project",
+        "/tmp/census-replay-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/census-replay-adapted/src/compiler/binder.ts:331:22",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "a PrefixUnaryExpression on a value"
+      ],
+      "log": "replay load/register/lower: 1.977015582s\nreproduced NotYet: a PrefixUnaryExpression on a value at /tmp/census-replay-adapted/src/compiler/binder.ts:331:22\nreplay total (including overlay and Go build): 6.647394747s\n"
+    },
+    {
+      "file": "parser.ts",
+      "where": "/tmp/census-replay-adapted/src/compiler/parser.ts:433:39",
+      "kind": "NotYet",
+      "reason": "new a ParenthesizedExpression",
+      "elapsed": 2.296680439999932,
+      "command": [
+        "go",
+        "run",
+        "./stage3/census/latent/replay",
+        "-project",
+        "/tmp/census-replay-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/census-replay-adapted/src/compiler/parser.ts:433:39",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "new a ParenthesizedExpression"
+      ],
+      "log": "replay load/register/lower: 1.977079353s\nreproduced NotYet: new a ParenthesizedExpression at /tmp/census-replay-adapted/src/compiler/parser.ts:433:39\nreplay total (including overlay and Go build): 2.261437271s\n"
+    },
+    {
+      "file": "scanner.ts",
+      "where": "/tmp/census-replay-adapted/src/compiler/scanner.ts:150:5",
+      "kind": "NotYet",
+      "reason": "a computed field name",
+      "elapsed": 2.1754190119999066,
+      "command": [
+        "go",
+        "run",
+        "./stage3/census/latent/replay",
+        "-project",
+        "/tmp/census-replay-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/census-replay-adapted/src/compiler/scanner.ts:150:5",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "a computed field name"
+      ],
+      "log": "replay load/register/lower: 1.882136881s\nreproduced NotYet: a computed field name at /tmp/census-replay-adapted/src/compiler/scanner.ts:150:5\nreplay total (including overlay and Go build): 2.139584836s\n"
+    }
+  ]
+}
