@@ -1,0 +1,43 @@
+function isArray(value: unknown): value is readonly unknown[] {
+	return Array.isArray(value);
+}
+function direct(value: unknown): number {
+	if (Array.isArray(value)) return value.length;
+	return -1;
+}
+function guarded(value: unknown): number {
+	if (isArray(value)) return value.length;
+	return -1;
+}
+function wrapped(value: string | readonly number[]): number {
+	if (isArray(value)) return (value[0] ?? 0) + value.length;
+	return value.length;
+}
+function builtin(value: string | readonly number[]): number {
+	if (Array.isArray(value)) return (value[0] ?? 0) + value.length;
+	return value.length;
+}
+const numbers = [4, 5];
+const strings = ['one', 'two', 'three'];
+const empty: number[] = [];
+const object = { length: 7 };
+console.log(String(isArray(numbers)) + ' ' + String(direct(numbers)));
+console.log(String(isArray(strings)) + ' ' + String(direct(strings)));
+console.log(String(isArray(empty)) + ' ' + String(direct(empty)));
+console.log(String(isArray('abc')) + ' ' + String(direct('abc')));
+console.log(String(isArray(object)) + ' ' + String(direct(object)));
+console.log(String(isArray(null)) + ' ' + String(direct(null)));
+console.log(String(isArray(undefined)) + ' ' + String(direct(undefined)));
+console.log(String(isArray(1)) + ' ' + String(isArray(false)));
+console.log(String(wrapped(numbers)) + ' ' + String(wrapped('text')));
+console.log(String(builtin(numbers)) + ' ' + String(builtin('text')));
+console.log(String(guarded(numbers)) + ' ' + String(guarded('abc')));
+console.log(String(guarded(null)) + ' ' + String(guarded(undefined)));
+const unknownArray: unknown = numbers;
+const unknownString: unknown = 'abc';
+const unknownNull: unknown = null;
+const unknownUndefined: unknown = undefined;
+console.log(String(Array.isArray(unknownArray)) + ' ' + String(isArray(unknownString)));
+console.log(String(Array.isArray(unknownNull)) + ' ' + String(isArray(unknownUndefined)));
+if (Array.isArray(unknownArray)) console.log(String(unknownArray.length));
+if (isArray(unknownArray)) console.log(String(unknownArray.length));

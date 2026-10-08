@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 // From TypeScript 6.0.3, src/compiler/checker.ts:18832
 // From TypeScript 6.0.3, src/compiler/checker.ts:18838
 // Census reason: a function inside a function (a closure)
@@ -12,7 +13,7 @@ function createTypeChecker() {
     return getConstituentCount;
     function getConstituentCount(type: Type): number {
         return !(type.flags & TypeFlags.UnionOrIntersection) || type.aliasSymbol ? 1 :
-            type.flags & TypeFlags.Union && (type as UnionType).origin ? getConstituentCount((type as UnionType).origin!) :
+            type.flags & TypeFlags.Union && (type as UnionType).origin ? getConstituentCount((type as UnionType).origin ?? type) :
             getConstituentCountOfTypes((type as UnionOrIntersectionType).types);
     }
     function getConstituentCountOfTypes(types: Type[]): number {

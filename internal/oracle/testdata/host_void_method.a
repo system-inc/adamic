@@ -1,0 +1,11 @@
+const system = {
+ write(s: string): void { console.log(s); }
+};
+system.write("hello");
+const receiver = {
+ prefix: "receiver",
+ write(s: string): void { console.log(this.prefix + s); }
+};
+receiver.write(": called");
+function argument(): string { console.log("argument"); return "last"; }
+system.write(argument());
