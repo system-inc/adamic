@@ -33,6 +33,8 @@ Two stage3 stage0 records move past eager literal assertions: assertions/06_memo
 
 Compiler mutation runs use temporary Go overlays; no mutant is committed in delivery sources. Sanitizer failures are not used as proof that a mutant was caught.
 
+A rehearsal full-lower run exposed an existing standalone refusal-pass caller with no IR result. Placeholder discovery now initializes its empty bookkeeping for that caller. Removing this initialization reproduces the Go panic in TestOptionalWideningSpreadOverwrite; the passing regression checks this compiler entry path. This correction changes no accepted program, refusal, runtime outcome or count.
+
 ## Local checks
 
 All output is written to log files. The Node oracle builds native with ASan/UBSan, compares stdout, stderr and exit status with source Node and the JavaScript backend, then checks leaks on completed runs. Negative checked stops pin exit 70 separately from Node's permitted unset observation.
@@ -45,6 +47,7 @@ All output is written to log files. The Node oracle builds native with ASan/UBSa
 - `go test ./stage1/... -run 'Gap|Gaps|Probes'` compared with main: 118 test outcomes and 35 package outcomes on each tree, zero changes.
 - `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`, then the same check without update.
 - Focused checked-sites CLI test, SSA contract test and go vet on affected packages.
+- The refreshed rehearsal additionally passes the full internal/lower package, including its standalone refusal-pass regression and both source-mode readiness cases. The final correction passes focused OptionalWidening, Placeholder, Readiness, NonNull and Uninitialized tests, a-check and the uncached placeholder oracle group.
 
 Linux counts are recorded below. Counts at a deliberate panic describe the stopping point, not a completed leak check. No full gate or macOS gate was run locally. Setup reported 47.951 seconds, including a 47.615-second build; nproc reported 5. Environment: Go 1.27.1, Node 24.19.0, clang 20.
 
