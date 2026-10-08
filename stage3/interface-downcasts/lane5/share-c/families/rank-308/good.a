@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:ParameterDeclaration[];}
+function probe(value:Base):void {const newParameters=(value as Target).items;const witnessResult=newParameters.push({value:1,kind:170});console.log(String(witnessResult));}
+const seed:ParameterDeclaration={value:1,kind:170};probe({items:[seed]});

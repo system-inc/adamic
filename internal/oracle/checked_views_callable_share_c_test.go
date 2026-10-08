@@ -98,8 +98,19 @@ func TestCheckedViewCallableShareCCounts(t *testing.T) {
 		t.Fatal(err)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
-	for _, row := range callableShareCRows(t) {
-		for _, variant := range []string{"good", "wrong-arity"} {
+	rows := callableShareCRows(t)
+	arrays := callableShareCArrayRows(t)
+	rows = append(rows, arrays...)
+	arrayRanks := map[int]bool{}
+	for _, r := range arrays {
+		arrayRanks[r.Rank] = true
+	}
+	for _, row := range rows {
+		variants := []string{"good", "wrong-arity"}
+		if arrayRanks[row.Rank] {
+			variants = []string{"good", "wrong-element"}
+		}
+		for _, variant := range variants {
 			p := fmt.Sprintf("stage3/interface-downcasts/lane5/share-c/families/rank-%d/%s.a", row.Rank, variant)
 			measured := counted(t, checkedViewFixturePath(p), false, nil, false, false)
 			if !*updateCounts {

@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface ReverseMappedSymbol {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:ReverseMappedSymbol[];}
+function probe(value:Base):void {const context={reverseMappedStack:(value as Target).items};const witnessResult=context.reverseMappedStack.push({value:1});console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

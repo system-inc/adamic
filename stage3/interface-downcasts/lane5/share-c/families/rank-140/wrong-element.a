@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface Comparator {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Comparator[];}
+function probe(value:Base):void {const comparators=(value as Target).items;const witnessResult=comparators.push({value:1});console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

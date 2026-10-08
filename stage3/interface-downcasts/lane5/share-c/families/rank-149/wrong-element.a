@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface TypeElement {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:TypeElement[];}
+function probe(value:Base):void {const typeElements=(value as Target).items;const witnessResult=typeElements.push({value:1});console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface EnumMember {readonly value:number;readonly kind:307;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:EnumMember[];}
+function probe(value:Base):void {const members=(value as Target).items;const witnessResult=members.push({value:1,kind:307});console.log(String(witnessResult));}
+probe({items:[{value:"bad",kind:307}]});

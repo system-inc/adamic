@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface SourceMappedPosition {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:SourceMappedPosition[];}
+function probe(value:Base):void {const list=(value as Target).items;const witnessResult=list.push({value:1});console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

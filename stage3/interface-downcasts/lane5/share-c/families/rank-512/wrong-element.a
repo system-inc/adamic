@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface ClassElement {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:ClassElement[];}
+function probe(value:Base):void {const newMembers=(value as Target).items;const witnessResult=newMembers.push({value:1});console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

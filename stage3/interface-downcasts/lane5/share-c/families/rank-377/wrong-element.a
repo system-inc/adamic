@@ -1,0 +1,7 @@
+// Original Array intrinsic member and receiver; adjacent payload interface reduced.
+interface PropertyAssignment {readonly value:number;readonly kind:304;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:PropertyAssignment[];}
+function probe(value:Base):void {const properties=(value as Target).items;const witnessResult=properties.push({value:1,kind:304});console.log(String(witnessResult));}
+probe({items:[{value:"bad",kind:304}]});
