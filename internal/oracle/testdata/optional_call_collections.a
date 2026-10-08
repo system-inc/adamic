@@ -1,0 +1,28 @@
+let argumentsRun = 0;
+function key(): string { argumentsRun += 1; return 'key'; }
+function collections(map: Map<string, number> | undefined, set: Set<string> | undefined): void {
+    console.log(`${map?.has(key()) ?? true} ${set?.has(key()) ?? true}`);
+    map?.set(key(), 0);
+    set?.add(key());
+    console.log(`${map?.get('key') ?? -1}`);
+    map?.forEach((value, name) => { console.log(`${name}:${value}`); });
+    set?.forEach((value, name) => { console.log(`${name}:${value}`); });
+    console.log(`${map?.delete(key()) ?? false} ${set?.delete(key()) ?? false}`);
+    map?.clear(); set?.clear();
+}
+collections(undefined, undefined);
+collections(new Map<string, number>(), new Set<string>());
+console.log(`${argumentsRun}`);
+function arrays(values: number[] | undefined): void {
+    console.log(`${values?.push(3) ?? -1}`);
+    console.log(values?.map((value) => value + 1)?.join(':') ?? 'absent');
+    console.log(`${values?.find((value) => value === 3) ?? -1}`);
+    console.log(`${values?.some((value) => value > 5) ?? false}`);
+    console.log(values?.filter((value) => value > 1)?.join(':') ?? 'absent');
+    console.log(values?.sort((a, b) => a - b)?.join(':') ?? 'absent');
+    console.log(`${values?.indexOf(3) ?? -1}`);
+    values?.forEach((value) => { console.log(`${value}`); });
+}
+arrays(undefined); arrays([2, 1]);
+function text(value: string | undefined): string { return value?.substring(1) ?? 'absent'; }
+console.log(text(undefined)); console.log(text('abcd'));

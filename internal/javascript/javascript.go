@@ -54,7 +54,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
-	builder.WriteString("const adamicCallee = (object, name) => { if (!Object.hasOwn(object, name)) return { code: (closure, values) => object[name](object, ...values) }; const callee = object[name]; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
+	builder.WriteString("const adamicCallee = (object, name, optional = false) => { if (!Object.hasOwn(object, name)) { const method = object[name]; if (optional && method == null) return method; return { code: (closure, values) => method(object, ...values) }; } const callee = object[name]; if (optional && callee == null) return callee; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -846,6 +846,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Optional {
+			return e.optionalClosureCall(expression)
+		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.

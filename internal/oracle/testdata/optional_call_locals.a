@@ -1,0 +1,19 @@
+interface Container { readonly locals: ReadonlyMap<string, string> | undefined; }
+let reads = 0;
+let keys = 0;
+function container(value: Container | undefined): Container | undefined {
+    reads += 1;
+    return value;
+}
+function key(): string {
+    keys += 1;
+    return 'name';
+}
+function lookup(value: Container | undefined): string | undefined {
+    return container(value)?.locals?.get(key());
+}
+const locals: ReadonlyMap<string, string> = new Map([['name', ['fresh', 'value'].join('-')]]);
+console.log(lookup(undefined) ?? 'missing container');
+console.log(lookup({ locals: undefined }) ?? 'missing locals');
+console.log(lookup({ locals }) ?? 'missing entry');
+console.log(`${reads} ${keys}`);
