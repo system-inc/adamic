@@ -1,0 +1,86 @@
+{
+  "float64array": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized"
+      ],
+      "exit": 1,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": "\n=================================================================\n==14126==ERROR: LeakSanitizer: detected memory leaks\n\nDirect leak of 96 byte(s) in 2 object(s) allocated from:\n    #0 0x557ecc1e2274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x557ecc238def in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2623394424/heap.c:196:10\n    #2 0x7ffa05a8dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nIndirect leak of 160 byte(s) in 2 object(s) allocated from:\n    #0 0x557ecc1e2449 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:74:3\n    #1 0x557ecc27f087 in allocate /home/agent/.cache/adamic/runtime/.build-2623394424/typed_array.c:35:16\n    #2 0x7ffa05a8dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: 256 byte(s) leaked in 4 allocation(s).\n"
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/float64array-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-release"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/float64array.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "agree": true
+  }
+}

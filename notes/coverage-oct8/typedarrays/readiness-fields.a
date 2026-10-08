@@ -1,0 +1,21 @@
+class Box {
+ value: string;
+ constructor(flag: boolean) {
+  if (flag) { this.value = 'left'; } else { this.value = 'right'; }
+ }
+}
+function view(box: {readonly value: string}): string { return box.value; }
+const a = new Box(true);
+const b = new Box(false);
+console.log(`${view(a)}:${view(b)}`);
+function replace(): void { a.value = 'after'; }
+const read = (): string => a.value;
+replace();
+console.log(read());
+function overloaded(flag: boolean): boolean | undefined;
+function overloaded(flag: boolean): boolean { return flag; }
+const value = overloaded(false);
+console.log(`${value === undefined}:${value ?? true}:${!value}`);
+function packed(label: string = 'default', ...items: number[]): string { return `${label}:${items.length}:${items[0] ?? -1}`; }
+console.log(packed());
+console.log(packed(undefined, 4, 5));

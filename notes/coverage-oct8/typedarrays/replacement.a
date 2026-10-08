@@ -1,0 +1,16 @@
+const text = '😀ab-b-ab!';
+const tokens = "[$$][$&][$1][$2][$<letter>][$<missing>][$`][$']";
+console.log(text.replace(/(?<letter>a)?(b)/g, tokens));
+console.log(text.replaceAll(/(?<letter>a)?(b)/g, tokens));
+console.log(text.replaceAll('ab', tokens));
+console.log(text.replace('ab', tokens));
+console.log('😀'.replaceAll(/(?:)/gu, '$$:$&'));
+console.log('😀'.replaceAll(/(?:)/g, '$$:$&'));
+console.log('ab'.replace(/(a)|(b)/g, (match: string, a: string | undefined, b: string | undefined, offset: number, input: string) => `${offset}:${a ?? '-'}:${b ?? '-'}:${input}:$$:$&`));
+console.log('😀ab'.replaceAll(/(?:)/gu, (match: string, offset: number) => `${offset}`));
+console.log('ab'.replace(/(?<letter>a)?b/, (match: string, a: string | undefined, offset: number, input: string, groups: {readonly letter: string | undefined}) => `${groups.letter ?? '-'}:${offset}:${input}`));
+let calls = 0;
+const regex = /a/g;
+console.log('aaa'.replaceAll(regex, (match: string, offset: number) => { calls += 1; regex.lastIndex = 40 + offset; return `${calls}:${regex.lastIndex}`; }));
+console.log(`${calls}:${regex.lastIndex}`);
+console.log('miss'.replace(/z/g, () => 'unused'));

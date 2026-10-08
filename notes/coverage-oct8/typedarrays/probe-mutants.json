@@ -1,0 +1,28 @@
+[
+  {
+    "mutant": "new-probes-negative-wrap",
+    "before": "if (modulo < 0) { modulo += modulus; }",
+    "after": "if (false && modulo < 0) { modulo += modulus; }",
+    "program": "uint8array.a",
+    "command": [
+      "python3",
+      "/workspace/adamic/notes/coverage-oct8/typedarrays/run.py",
+      "uint8array"
+    ],
+    "build_exit": 0,
+    "exit": 1
+  },
+  {
+    "mutant": "new-probes-extra-retain",
+    "before": "view->owner = adamic_retain(array->owner != NULL ? array->owner : (adamic_typed_array *)array);",
+    "after": "view->owner = adamic_retain(adamic_retain(array->owner != NULL ? array->owner : (adamic_typed_array *)array));",
+    "program": "float64array.a",
+    "command": [
+      "python3",
+      "/workspace/adamic/notes/coverage-oct8/typedarrays/run.py",
+      "float64array"
+    ],
+    "build_exit": 0,
+    "exit": 1
+  }
+]

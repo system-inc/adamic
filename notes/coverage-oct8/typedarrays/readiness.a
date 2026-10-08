@@ -1,0 +1,24 @@
+function choose(flag: boolean): string {
+ let value: string = 'initial';
+ if (flag) { value = 'yes'; } else { value = 'no'; }
+ for (let i = 0; i < 2; i += 1) { value = value + i.toString(); }
+ return value;
+}
+console.log(choose(true));
+console.log(choose(false));
+function exceptional(): string {
+ let value: string = 'initial';
+ try { value = 'before'; throw new Error('boom'); }
+ catch (error) { if (error instanceof Error) { value = value + error.message; } }
+ finally { value = value + '!'; }
+ return value;
+}
+console.log(exceptional());
+const record: {value: string} = {value: 'initial'};
+record.value = 'ready';
+const alias = record;
+console.log(alias.value);
+function replace(): void { record.value = 'changed'; }
+replace();
+console.log(record.value);
+console.log({...record, value: record.value + 'copy'}.value);

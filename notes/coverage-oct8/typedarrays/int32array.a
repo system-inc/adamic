@@ -1,0 +1,25 @@
+const edges: number[] = [NaN, Infinity, -Infinity, -0, 256.5, -256.5, 2147483647.9, 2147483648, -2147483649, 4294967297, -4294967297, 9007199254740991, 1e100, -1e100, 5e-324];
+const parent = new Int32Array(edges);
+const target = new Int32Array(edges.length);
+for (let i = 0; i < edges.length; i += 1) {
+ target[i] = edges[i] ?? 0;
+ console.log(`${i}:${parent[i]}:${target[i]}:${1 / (target[i] ?? 0)}`);
+}
+const left = parent.subarray(2, 12);
+const middle = left.subarray(2, -2);
+console.log(`lengths:${parent.length}:${left.length}:${middle.length}`);
+middle.set(left.subarray(0, 4), 1.9);
+for (const value of parent) { console.log(`right:${value}`); }
+left.subarray(0, 6).set(left.subarray(3, 9), -0.9);
+for (const value of parent) { console.log(`left:${value}`); }
+middle.fill(-257.9, -Infinity, Infinity);
+console.log(`fill:${parent[4]}:${parent[9]}:${parent[10]}`);
+const empty = middle.subarray(Infinity);
+empty.set(empty, NaN);
+console.log(`empty:${empty.length}:${empty.subarray().length}`);
+function escaped(): Int32Array {
+ return new Int32Array([11, 22, 33, 44, 55]).subarray(1, 5).subarray(1, 3);
+}
+const alive = escaped();
+alive.set(alive.subarray(0, 1), 1);
+console.log(`escaped:${alive.length}:${alive[0]}:${alive[1]}`);

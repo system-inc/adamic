@@ -1,0 +1,81 @@
+[
+  {
+    "mutant": "typed-negative-wrap",
+    "file": "internal/native/runtime/typed_array.c",
+    "before": "if (modulo < 0) { modulo += modulus; }",
+    "after": "if (false && modulo < 0) { modulo += modulus; }",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestTypedArrayRuntime$",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1
+  },
+  {
+    "mutant": "regexp-argument-guard",
+    "file": "internal/native/runtime/regexp_replace.c",
+    "before": "if (!accepted) {",
+    "after": "if (false && !accepted) {",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "RegexPrograms|ClosureConvention",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "oracle": {
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "exit": 1
+    }
+  },
+  {
+    "mutant": "readiness-call-invalidation",
+    "file": "internal/lower/readiness.go",
+    "before": "if readinessCalls(instruction) {",
+    "after": "if false && readinessCalls(instruction) {",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0
+  },
+  {
+    "mutant": "typed-kind-guard",
+    "file": "internal/native/runtime/typed_array.c",
+    "before": "if (array->kind != source->kind) {",
+    "after": "if (false && array->kind != source->kind) {",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestTypedArrayRuntime$",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1
+  }
+]

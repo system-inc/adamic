@@ -1,0 +1,78 @@
+{
+  "uint8array": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/uint8array-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/uint8array-sanitized"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/home/agent/.cache/adamic/runtime/.build-26075203/typed_array.c:72:37: runtime error: -1 is outside the range of representable values of type 'unsigned char'\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-26075203/typed_array.c:72:37 \n"
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/uint8array-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/uint8array-release"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-mutant-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/uint8array.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "agree": false
+  }
+}

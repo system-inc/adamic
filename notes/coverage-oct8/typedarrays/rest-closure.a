@@ -1,0 +1,5 @@
+const pack = (...values: number[]): number => values.length;
+class Counter {
+ count(...values: number[]): number { return values.length; }
+}
+console.log(`${pack(1, 2, 3)}:${new Counter().count(4, 5)}`);

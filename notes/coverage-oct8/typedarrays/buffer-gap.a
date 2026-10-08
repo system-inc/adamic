@@ -1,0 +1,4 @@
+const buffer = new ArrayBuffer(16);
+const bytes = new Uint8Array(buffer, 4, 8);
+bytes[0] = 255;
+console.log(`${bytes.length}:${bytes[0]}`);

@@ -1,0 +1,4 @@
+let box: {value: string} = {value: undefined!};
+box.value = 'ready';
+console.log('a'.replace(/a/, () => { box = {value: undefined!}; return 'replaced'; }));
+console.log(box.value);

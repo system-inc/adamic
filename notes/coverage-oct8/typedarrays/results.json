@@ -1,0 +1,724 @@
+{
+  "buffer-gap": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a"
+      ],
+      "exit": 0,
+      "stdout": "8:255\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/buffer-gap-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n"
+    },
+    "sanitized": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n",
+      "phase": "compiler"
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/buffer-gap-release"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n"
+    },
+    "release": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n",
+      "phase": "compiler"
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/buffer-gap.a:1:16: stage 0 can't lower ArrayBuffer yet\n",
+      "phase": "compiler"
+    },
+    "agree": false
+  },
+  "float64array": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/float64array-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/float64array-release"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/float64array.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/float64array.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0:NaN:NaN:NaN\n1:Infinity:Infinity:0\n2:-Infinity:-Infinity:0\n3:0:0:-Infinity\n4:256.5:256.5:0.003898635477582846\n5:-256.5:-256.5:-0.003898635477582846\n6:2147483647.9:2147483647.9:4.656612873294233e-10\n7:2147483648:2147483648:4.656612873077393e-10\n8:-2147483649:-2147483649:-4.656612870908988e-10\n9:4294967297:4294967297:2.3283064359965952e-10\n10:-4294967297:-4294967297:-2.3283064359965952e-10\n11:9007199254740991:9007199254740991:1.1102230246251568e-16\n12:1e+100:1e+100:1e-100\n13:-1e+100:-1e+100:-1e-100\n14:5e-324:5e-324:Infinity\nlengths:15:10:6\nright:NaN\nright:Infinity\nright:-Infinity\nright:0\nright:256.5\nright:-Infinity\nright:0\nright:256.5\nright:-256.5\nright:4294967297\nright:-4294967297\nright:9007199254740991\nright:1e+100\nright:-1e+100\nright:5e-324\nleft:NaN\nleft:Infinity\nleft:-Infinity\nleft:0\nleft:256.5\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:-256.5\nleft:4294967297\nleft:-4294967297\nleft:9007199254740991\nleft:1e+100\nleft:-1e+100\nleft:5e-324\nfill:-257.9:-257.9:-4294967297\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "int32array": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/int32array.a"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:256:256:0.00390625\n5:-256:-256:-0.00390625\n6:2147483647:2147483647:4.656612875245797e-10\n7:-2147483648:-2147483648:-4.656612873077393e-10\n8:2147483647:2147483647:4.656612875245797e-10\n9:1:1:1\n10:-1:-1:-1\n11:-1:-1:-1\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:256\nright:0\nright:0\nright:256\nright:-256\nright:1\nright:-1\nright:-1\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:256\nleft:-256\nleft:1\nleft:-1\nleft:-256\nleft:1\nleft:-1\nleft:-1\nleft:0\nleft:0\nleft:0\nfill:-257:-257:-1\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/int32array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/int32array-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/int32array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:256:256:0.00390625\n5:-256:-256:-0.00390625\n6:2147483647:2147483647:4.656612875245797e-10\n7:-2147483648:-2147483648:-4.656612873077393e-10\n8:2147483647:2147483647:4.656612875245797e-10\n9:1:1:1\n10:-1:-1:-1\n11:-1:-1:-1\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:256\nright:0\nright:0\nright:256\nright:-256\nright:1\nright:-1\nright:-1\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:256\nleft:-256\nleft:1\nleft:-1\nleft:-256\nleft:1\nleft:-1\nleft:-1\nleft:0\nleft:0\nleft:0\nfill:-257:-257:-1\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/int32array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:256:256:0.00390625\n5:-256:-256:-0.00390625\n6:2147483647:2147483647:4.656612875245797e-10\n7:-2147483648:-2147483648:-4.656612873077393e-10\n8:2147483647:2147483647:4.656612875245797e-10\n9:1:1:1\n10:-1:-1:-1\n11:-1:-1:-1\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:256\nright:0\nright:0\nright:256\nright:-256\nright:1\nright:-1\nright:-1\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:256\nleft:-256\nleft:1\nleft:-1\nleft:-256\nleft:1\nleft:-1\nleft:-1\nleft:0\nleft:0\nleft:0\nfill:-257:-257:-1\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/int32array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/int32array-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/int32array-release"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:256:256:0.00390625\n5:-256:-256:-0.00390625\n6:2147483647:2147483647:4.656612875245797e-10\n7:-2147483648:-2147483648:-4.656612873077393e-10\n8:2147483647:2147483647:4.656612875245797e-10\n9:1:1:1\n10:-1:-1:-1\n11:-1:-1:-1\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:256\nright:0\nright:0\nright:256\nright:-256\nright:1\nright:-1\nright:-1\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:256\nleft:-256\nleft:1\nleft:-1\nleft:-256\nleft:1\nleft:-1\nleft:-1\nleft:0\nleft:0\nleft:0\nfill:-257:-257:-1\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/int32array.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/int32array.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:256:256:0.00390625\n5:-256:-256:-0.00390625\n6:2147483647:2147483647:4.656612875245797e-10\n7:-2147483648:-2147483648:-4.656612873077393e-10\n8:2147483647:2147483647:4.656612875245797e-10\n9:1:1:1\n10:-1:-1:-1\n11:-1:-1:-1\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:256\nright:0\nright:0\nright:256\nright:-256\nright:1\nright:-1\nright:-1\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:256\nleft:-256\nleft:1\nleft:-1\nleft:-256\nleft:1\nleft:-1\nleft:-1\nleft:0\nleft:0\nleft:0\nfill:-257:-257:-1\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "readiness-callback": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a"
+      ],
+      "exit": 0,
+      "stdout": "replaced\nundefined\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-callback-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "sanitized": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "phase": "compiler"
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-callback-release"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "release": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "phase": "compiler"
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/typedarrays/readiness-callback.a:1:36: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "phase": "compiler"
+    },
+    "agree": false
+  },
+  "readiness-fields": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-fields.a"
+      ],
+      "exit": 0,
+      "stdout": "left:right\nafter\nfalse:false:true\ndefault:0:-1\ndefault:2:4\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-fields.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-fields-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-fields-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "left:right\nafter\nfalse:false:true\ndefault:0:-1\ndefault:2:4\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-fields-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "left:right\nafter\nfalse:false:true\ndefault:0:-1\ndefault:2:4\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-fields.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-fields-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-fields-release"
+      ],
+      "exit": 0,
+      "stdout": "left:right\nafter\nfalse:false:true\ndefault:0:-1\ndefault:2:4\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness-fields.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/readiness-fields.mjs"
+      ],
+      "exit": 0,
+      "stdout": "left:right\nafter\nfalse:false:true\ndefault:0:-1\ndefault:2:4\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "readiness": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness.a"
+      ],
+      "exit": 0,
+      "stdout": "yes01\nno01\nbeforeboom!\nready\nchanged\nchangedcopy\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "yes01\nno01\nbeforeboom!\nready\nchanged\nchangedcopy\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "yes01\nno01\nbeforeboom!\nready\nchanged\nchangedcopy\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/readiness-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/readiness-release"
+      ],
+      "exit": 0,
+      "stdout": "yes01\nno01\nbeforeboom!\nready\nchanged\nchangedcopy\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/readiness.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/readiness.mjs"
+      ],
+      "exit": 0,
+      "stdout": "yes01\nno01\nbeforeboom!\nready\nchanged\nchangedcopy\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "replacement": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/replacement.a"
+      ],
+      "exit": 0,
+      "stdout": "\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-ab!\n$:\ud83d\ude00$:\n$:\ufffd$:\ufffd$:\n0:a:-:ab:$$:$&1:-:b:ab:$$:$&\n0\ud83d\ude002a3b4\na:0:ab\n1:402:413:42\n3:42\nmiss\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/replacement.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/replacement-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/replacement-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-ab!\n$:\ud83d\ude00$:\n$:\ufffd$:\ufffd$:\n0:a:-:ab:$$:$&1:-:b:ab:$$:$&\n0\ud83d\ude002a3b4\na:0:ab\n1:402:413:42\n3:42\nmiss\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/replacement-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-ab!\n$:\ud83d\ude00$:\n$:\ufffd$:\ufffd$:\n0:a:-:ab:$$:$&1:-:b:ab:$$:$&\n0\ud83d\ude002a3b4\na:0:ab\n1:402:413:42\n3:42\nmiss\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/replacement.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/replacement-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/replacement-release"
+      ],
+      "exit": 0,
+      "stdout": "\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-ab!\n$:\ud83d\ude00$:\n$:\ufffd$:\ufffd$:\n0:a:-:ab:$$:$&1:-:b:ab:$$:$&\n0\ud83d\ude002a3b4\na:0:ab\n1:402:413:42\n3:42\nmiss\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/replacement.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/replacement.mjs"
+      ],
+      "exit": 0,
+      "stdout": "\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][a][b][a][][\ud83d\ude00][-b-ab!]-[$][b][][b][][][\ud83d\ude00ab-][-ab!]-[$][ab][a][b][a][][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00ab-b-][!]!\n\ud83d\ude00[$][ab][$1][$2][$<letter>][$<missing>][\ud83d\ude00][-b-ab!]-b-ab!\n$:\ud83d\ude00$:\n$:\ufffd$:\ufffd$:\n0:a:-:ab:$$:$&1:-:b:ab:$$:$&\n0\ud83d\ude002a3b4\na:0:ab\n1:402:413:42\n3:42\nmiss\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "rest-closure": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/rest-closure.a"
+      ],
+      "exit": 0,
+      "stdout": "3:2\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/rest-closure.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/rest-closure-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/rest-closure-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "3:2\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/rest-closure-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "3:2\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/rest-closure.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/rest-closure-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/rest-closure-release"
+      ],
+      "exit": 0,
+      "stdout": "3:2\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/rest-closure.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/rest-closure.mjs"
+      ],
+      "exit": 0,
+      "stdout": "3:2\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "uint8array": {
+    "source": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "sanitized-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/uint8array-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/uint8array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/uint8array-sanitized"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "release-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a",
+        "-o",
+        "/tmp/coverage-oct8-typedarrays/uint8array-release"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "release": {
+      "command": [
+        "/tmp/coverage-oct8-typedarrays/uint8array-release"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "javascript-build": {
+      "command": [
+        "/tmp/coverage-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/typedarrays/uint8array.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/coverage-oct8-typedarrays/uint8array.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0:0:0:Infinity\n1:0:0:Infinity\n2:0:0:Infinity\n3:0:0:Infinity\n4:0:0:Infinity\n5:0:0:Infinity\n6:255:255:0.00392156862745098\n7:0:0:Infinity\n8:255:255:0.00392156862745098\n9:1:1:1\n10:255:255:0.00392156862745098\n11:255:255:0.00392156862745098\n12:0:0:Infinity\n13:0:0:Infinity\n14:0:0:Infinity\nlengths:15:10:6\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:0\nright:1\nright:255\nright:255\nright:0\nright:0\nright:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:0\nleft:1\nleft:255\nleft:0\nleft:1\nleft:255\nleft:255\nleft:0\nleft:0\nleft:0\nfill:255:255:255\nempty:0:0\nescaped:2:33:33\n",
+      "stderr": ""
+    },
+    "agree": true
+  }
+}
