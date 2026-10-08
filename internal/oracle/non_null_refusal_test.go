@@ -13,7 +13,7 @@ func TestNonNullAdamicRefusal(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct{ path, position string }{
 		{"stage3/census/repro/r05/main.a", ":2:59"},
-		{"internal/oracle/testdata/non_null_initialized.a", ":3:25"},
+		{"internal/oracle/testdata/non_null_refused/initialized.a", ":3:25"},
 	} {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
