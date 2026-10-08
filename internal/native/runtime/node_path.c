@@ -28,58 +28,96 @@ static adamic_string *text(const char *bytes, size_t length) {
 	memcpy((char *)result->bytes, bytes, length);
 	return result;
 }
-// Each stack entry marks the beginning of a normal component or an unresolved
-// '..'.
+// Node v24.19.0 lib/path.js normalizeString and posix.normalize (MIT).
+// Slash and dot are ASCII; scanning WTF-8 bytes preserves all other code units.
 static adamic_string *normalize(const char *bytes, size_t length, bool absolute,
-								bool trailing) {
-	char *output = allocate(length + 3);
-	size_t *starts = allocate((length + 1) * sizeof *starts);
-	bool *parents = allocate((length + 1) * sizeof *parents);
-	size_t used = absolute ? 1 : 0, count = 0;
-	if (absolute) {
-		output[0] = '/';
-	}
-	for (size_t at = 0; at < length;) {
-		while (at < length && bytes[at] == '/') {
-			at++;
-		}
-		size_t begin = at;
-		while (at < length && bytes[at] != '/') {
-			at++;
-		}
-		size_t size = at - begin;
-		if (size == 0 || (size == 1 && bytes[begin] == '.')) {
-			continue;
-		}
-		bool parent =
-			size == 2 && bytes[begin] == '.' && bytes[begin + 1] == '.';
-		if (parent && count > 0 && !parents[count - 1]) {
-			used = starts[--count];
-			continue;
-		}
-		if (parent && absolute) {
-			continue;
-		}
-		starts[count] = used;
-		parents[count++] = parent;
-		if (used > 0 && output[used - 1] != '/') {
-			output[used++] = '/';
-		}
-		memcpy(output + used, bytes + begin, size);
-		used += size;
-	}
-	if (used == 0) {
-		output[used++] = '.';
-	}
-	if (trailing && output[used - 1] != '/') {
-		output[used++] = '/';
-	}
-	adamic_string *result = text(output, used);
-	free(parents);
-	free(starts);
-	free(output);
-	return result;
+                                bool trailing) {
+    char *output = allocate(length + 3);
+    size_t used = 0, last_segment_length = 0;
+    int64_t last_slash = -1, dots = 0;
+    char code = 0;
+    for (size_t i = 0; i <= length; i++) {
+        if (i < length) code = bytes[i];
+        else if (code == '/') break;
+        else code = '/';
+        if (code == '/') {
+            if (last_slash == (int64_t)i - 1 || dots == 1) {
+                // Repeated slash or a single dot.
+            } else if (dots == 2) {
+                if (used < 2 || last_segment_length != 2 ||
+                    output[used - 1] != '.' || output[used - 2] != '.') {
+                    if (used > 2) {
+                        int64_t slash = (int64_t)used - (int64_t)last_segment_length - 1;
+                        if (slash == -1) { used = 0; last_segment_length = 0; }
+                        else {
+                            used = (size_t)slash;
+                            int64_t previous = slash - 1;
+                            while (previous >= 0 && output[previous] != '/') previous--;
+                            last_segment_length = used - 1 - previous;
+                        }
+                        last_slash = (int64_t)i; dots = 0; continue;
+                    } else if (used != 0) {
+                        used = 0; last_segment_length = 0;
+                        last_slash = (int64_t)i; dots = 0; continue;
+                    }
+                }
+                if (!absolute) {
+                    if (used) output[used++] = '/';
+                    output[used++] = '.'; output[used++] = '.';
+                    last_segment_length = 2;
+                }
+            } else {
+                if (used) output[used++] = '/';
+                size_t begin = (size_t)(last_slash + 1);
+                last_segment_length = i - begin;
+                memcpy(output + used, bytes + begin, last_segment_length);
+                used += last_segment_length;
+            }
+            last_slash = (int64_t)i; dots = 0;
+        } else if (code == '.' && dots != -1) dots++;
+        else dots = -1;
+    }
+    if (absolute) {
+        memmove(output + 1, output, used); output[0] = '/'; used++;
+    } else if (used == 0) output[used++] = '.';
+    if (trailing && !(absolute && used == 1)) output[used++] = '/';
+    adamic_string *result = text(output, used);
+    free(output);
+    return result;
 }
+
+adamic_string *adamic_node_path_normalize(const adamic_string *path) {
+    if (path->length == 0) return text(".", 1);
+    return normalize(path->bytes, path->length, path->bytes[0] == '/',
+                     path->bytes[path->length - 1] == '/');
+}
+
+bool adamic_node_path_isAbsolute(const adamic_string *path) {
+    return path->length > 0 && path->bytes[0] == '/';
+}
+
+// Node v24.19.0 lib/path.js posix.extname (MIT).
+adamic_string *adamic_node_path_extname(const adamic_string *path) {
+    int64_t start_dot = -1, start_part = 0, end = -1, pre_dot_state = 0;
+    bool matched_slash = true;
+    for (int64_t i = (int64_t)adamic_string_length(path) - 1; i >= 0; i--) {
+        double code = adamic_string_char_code_at(path, (double)i);
+        if (code == '/') {
+            if (!matched_slash) { start_part = i + 1; break; }
+            continue;
+        }
+        if (end == -1) { matched_slash = false; end = i + 1; }
+        if (code == '.') {
+            if (start_dot == -1) start_dot = i;
+            else if (pre_dot_state != 1) pre_dot_state = 1;
+        } else if (start_dot != -1) pre_dot_state = -1;
+    }
+    if (start_dot == -1 || end == -1 || pre_dot_state == 0 ||
+        (pre_dot_state == 1 && start_dot == end - 1 && start_dot == start_part + 1))
+        return text("", 0);
+    return adamic_string_slice(path, (double)start_dot, (double)end, true);
+}
+
 adamic_string *adamic_node_path_join(size_t count,
 									 adamic_string *const paths[]) {
 	size_t length = 0;

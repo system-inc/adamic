@@ -1,0 +1,40 @@
+// a-check: checked
+// POSIX inputs from Node v24.19.0 test/parallel/test-path-relative.js
+// and test-path-zero-length-strings.js (MIT; THIRD_PARTY_NOTICES.md).
+// 16 upstream cases; additional UTF-16, NUL and root witnesses below.
+import { relative } from 'node:path';
+console.log(`[${relative("/var/lib", "/var")}]`);
+console.log(`[${relative("/var/lib", "/bin")}]`);
+console.log(`[${relative("/var/lib", "/var/lib")}]`);
+console.log(`[${relative("/var/lib", "/var/apache")}]`);
+console.log(`[${relative("/var/", "/var/lib")}]`);
+console.log(`[${relative("/", "/var/lib")}]`);
+console.log(`[${relative("/foo/test", "/foo/test/bar/package.json")}]`);
+console.log(`[${relative("/Users/a/web/b/test/mails", "/Users/a/web/b")}]`);
+console.log(`[${relative("/foo/bar/baz-quux", "/foo/bar/baz")}]`);
+console.log(`[${relative("/foo/bar/baz", "/foo/bar/baz-quux")}]`);
+console.log(`[${relative("/baz-quux", "/baz")}]`);
+console.log(`[${relative("/baz", "/baz-quux")}]`);
+console.log(`[${relative("/page1/page2/foo", "/")}]`);
+console.log(`[${relative("", "/workspace/adamic")}]`);
+console.log(`[${relative("/workspace/adamic", "")}]`);
+console.log(`[${relative("/workspace/adamic", "/workspace/adamic")}]`);
+console.log(JSON.stringify(relative("", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative(".", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("..", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("/", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("//", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("//a", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("///a//b///", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("./", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("a/..", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("a/../", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("../../x/", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("a\\b.txt", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("C:\\a", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("a\u0000b.c", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("h\u00e9llo/\ud83c\udf0d.txt", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("x.\ud800", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("\udfff/.x.", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("\ud83c\udf0d.\ud800/", "/x.\ud83c\udf0d")) ?? "<undefined>");
+console.log(JSON.stringify(relative("\ud800/../\ud83c\udf0d.ext", "/x.\ud83c\udf0d")) ?? "<undefined>");

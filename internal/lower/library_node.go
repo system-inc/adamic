@@ -64,6 +64,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
+	if err := l.nodePathRefusal(node); err != nil {
+		return err
+	}
 	if err := l.nodeFSDirectorySignature(node); err != nil {
 		return err
 	}

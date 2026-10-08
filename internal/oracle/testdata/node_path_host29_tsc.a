@@ -1,0 +1,14 @@
+// a-check: checked
+// Faithful path expressions from pinned TypeScript compiler/sys.ts:1498,1541,1675,1699,1702.
+import * as _path from 'node:path';
+const __dirname = '/work/typescript/built/local';
+const __filename = '/work/typescript/built/local/sys.js';
+const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+const resolvePath = (path: string): string => _path.resolve(path);
+console.log(executingFilePath);
+console.log(resolvePath('src/compiler/../compiler/sys.ts'));
+console.log(_path.dirname(executingFilePath));
+// Date/process.pid and filesystem work are outside this lexical excerpt.
+const profilePath = _path.join('/tmp/profiles', '2026-10-08T00-00-00+P1.cpuprofile');
+console.log(profilePath);
+console.log(_path.dirname(profilePath));

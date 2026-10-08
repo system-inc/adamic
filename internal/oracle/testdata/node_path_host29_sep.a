@@ -1,0 +1,4 @@
+// a-check: checked
+// Node v24.19.0 test/parallel/test-path.js POSIX separator (MIT; notices).
+import {sep} from 'node:path';
+console.log(sep);

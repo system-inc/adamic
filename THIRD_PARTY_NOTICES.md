@@ -13,11 +13,20 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/nodejs/node/blob/v24.14.1/lib/fs.js
 - Version: Node.js v24.14.1, lib/fs.js, realpathSync (POSIX component walk).
 - In Adamic: `internal/native/runtime/directory.c`, `real_path_input` and `adamic_real_path`.
-- Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native/runtime/node_path.c`.
+- Also ported: Node.js v24.19.0, [`lib/path.js`](https://github.com/nodejs/node/blob/v24.19.0/lib/path.js),
+  `normalizeString`, POSIX `normalize`, `isAbsolute`, `extname` and `basename`, in `internal/native/runtime/node_path.c`.
+- POSIX test inputs from Node.js v24.19.0 `test/parallel/test-path-basename.js`, `test-path-dirname.js`,
+  `test-path-extname.js`, `test-path-isabsolute.js`, `test-path-join.js`, `test-path-normalize.js`,
+  `test-path-relative.js`, `test-path-resolve.js`, `test-path-zero-length-strings.js` and `test-path.js`
+  are adapted in `internal/oracle/testdata/node_path_host29_basename.a`, `node_path_host29_dirname.a`,
+  `node_path_host29_extname.a`, `node_path_host29_isabsolute.a`, `node_path_host29_join.a`,
+  `node_path_host29_normalize.a`, `node_path_host29_relative.a`, `node_path_host29_resolve.a` and
+  `node_path_host29_sep.a` respectively (the zero-length cases are included in the corresponding method fixtures).
 - License: `MIT`
 
 ```text
 Copyright Node.js contributors. All rights reserved.
+Copyright Joyent, Inc. and other Node contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to

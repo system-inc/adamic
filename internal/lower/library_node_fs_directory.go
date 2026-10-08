@@ -85,39 +85,32 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 	if module == "" {
 		return nil, false, nil
 	}
-	lowered := ir.NodeHostCall{Module: module, Member: member}
 	if module == "node:path" {
-		switch member {
-		case "resolve", "dirname", "join", "relative", "basename":
-			lowered.Returns = ir.String
-			lowered.Throws = nodePathThrows(member)
-		default:
-			return nil, false, nil
+		return l.nodePathCall(node, member)
+	}
+	lowered := ir.NodeHostCall{Module: module, Member: member}
+	switch member {
+	case "symlinkSync":
+		lowered.Returns = ir.Number
+		lowered.Throws = true
+	case "readdirSync":
+		lowered.Returns = ir.Array
+		lowered.Throws = true
+	case "realpathSync", "native":
+		lowered.Returns = ir.String
+		lowered.Throws = true
+	case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
+		if call.Expression.Kind != ast.KindPropertyAccessExpression {
+			return nil, true, l.notYet(node, "a detached Dirent method")
 		}
-	} else {
-		switch member {
-		case "symlinkSync":
-			lowered.Returns = ir.Number
-			lowered.Throws = true
-		case "readdirSync":
-			lowered.Returns = ir.Array
-			lowered.Throws = true
-		case "realpathSync", "native":
-			lowered.Returns = ir.String
-			lowered.Throws = true
-		case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
-			if call.Expression.Kind != ast.KindPropertyAccessExpression {
-				return nil, true, l.notYet(node, "a detached Dirent method")
-			}
-			receiver, err := l.expression(call.Expression.AsPropertyAccessExpression().Expression)
-			if err != nil {
-				return nil, true, err
-			}
-			lowered.Arguments = append(lowered.Arguments, receiver)
-			lowered.Returns = ir.Boolean
-		default:
-			return nil, false, nil
+		receiver, err := l.expression(call.Expression.AsPropertyAccessExpression().Expression)
+		if err != nil {
+			return nil, true, err
 		}
+		lowered.Arguments = append(lowered.Arguments, receiver)
+		lowered.Returns = ir.Boolean
+	default:
+		return nil, false, nil
 	}
 	if member == "symlinkSync" {
 		outer := node
@@ -157,26 +150,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		// POSIX ignores the validated type. Literal arguments have no effects.
 		lowered.Arguments = lowered.Arguments[:2]
 	}
-	if module == "node:path" {
-		if member == "basename" {
-			if len(lowered.Arguments) < 1 || len(lowered.Arguments) > 2 {
-				return nil, true, l.notYet(node, "node:path.basename with these arguments")
-			}
-			if len(lowered.Arguments) == 2 {
-				if _, missing := lowered.Arguments[1].(ir.Undefined); missing {
-					lowered.Arguments = lowered.Arguments[:1]
-				}
-			}
-		}
-		if (member == "dirname" && len(lowered.Arguments) != 1) || (member == "relative" && len(lowered.Arguments) != 2) {
-			return nil, true, l.notYet(node, module+"."+member+" with these arguments")
-		}
-		for _, value := range lowered.Arguments {
-			if value.Type() != ir.String {
-				return nil, true, l.notYet(node, module+"."+member+" with a non-string path")
-			}
-		}
-	} else if member == "readdirSync" || member == "realpathSync" || member == "native" {
+	if member == "readdirSync" || member == "realpathSync" || member == "native" {
 		if len(lowered.Arguments) == 0 || lowered.Arguments[0].Type() != ir.String {
 			return nil, true, l.notYet(node, module+"."+member+" with a non-string path")
 		}
@@ -212,6 +186,9 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 	module, member := l.nodeHostMember(node)
 	if module == "" {
 		return nil, false, nil
+	}
+	if module == "node:path" && member == "sep" {
+		return ir.StringConstant{Index: l.constant("/")}, true, nil
 	}
 	if module == "node:fs" && member == "name" {
 		return nil, false, nil

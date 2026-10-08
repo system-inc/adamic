@@ -19,7 +19,7 @@ func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
 		{`import {userInfo} from 'node:os'; userInfo();`, "node:os.userInfo"},
 		{`import {randomUUID} from 'node:crypto'; randomUUID();`, "node:crypto.randomUUID"},
 		{`import {Buffer} from 'node:buffer'; Buffer.byteLength('x');`, "node:buffer.BufferConstructor.byteLength"},
-		{`import {sep} from 'node:path'; console.log(sep);`, "node:path.sep"},
+		{`import {parse} from 'node:path'; parse('a');`, "node:path.parse"},
 		{`import {readFile} from 'node:fs'; const saved=readFile;`, "node:fs.readFile"},
 	} {
 		t.Run(one.name, func(t *testing.T) {

@@ -94,3 +94,23 @@ func TestNodeLibraryKeepsOfficialConsoleSignatures(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestNodePathHost29PinnedSignatures(t *testing.T) {
+	for _, source := range []string{
+		`import {normalize,extname,isAbsolute,sep} from 'path'; const normalized:string=normalize('a/..'); const extension:string=extname('x.ts'); const absolute:boolean=isAbsolute('/'); const slash:'/'|'\\'=sep;`,
+		`import * as path from 'path/posix'; const normalized:string=path.normalize('a/..');`,
+	} {
+		if _, err := nodeSource(t, source); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, source := range []string{
+		`import {normalize} from 'node:path'; normalize(7);`,
+		`import {extname} from 'node:path'; const wrong:number=extname('a.b');`,
+		`import {isAbsolute} from 'node:path'; const wrong:string=isAbsolute('/');`,
+	} {
+		if _, err := nodeSource(t, source); err == nil {
+			t.Fatalf("official Node signature accepted %s", source)
+		}
+	}
+}

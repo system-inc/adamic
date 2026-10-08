@@ -1,0 +1,34 @@
+// a-check: checked
+// POSIX inputs from Node v24.19.0 test/parallel/test-path-resolve.js
+// and test-path-zero-length-strings.js (MIT; THIRD_PARTY_NOTICES.md).
+// 10 upstream cases; additional UTF-16, NUL and root witnesses below.
+import { resolve } from 'node:path';
+console.log(`[${resolve("/var/lib", "../", "file/")}]`);
+console.log(`[${resolve("/var/lib", "/../", "file/")}]`);
+console.log(`[${resolve("a/b/c/", "../../..")}]`);
+console.log(`[${resolve()}]`);
+console.log(`[${resolve("")}]`);
+console.log(`[${resolve(".")}]`);
+console.log(`[${resolve("/some/dir", ".", "/absolute/")}]`);
+console.log(`[${resolve("/foo/tmp.3/", "../tmp.3/cycles/root.js")}]`);
+console.log(`[${resolve("")}]`);
+console.log(`[${resolve("", "")}]`);
+console.log(JSON.stringify(resolve("")) ?? "<undefined>");
+console.log(JSON.stringify(resolve(".")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("..")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("/")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("//")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("//a")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("///a//b///")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("./")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("a/..")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("a/../")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("../../x/")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("a\\b.txt")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("C:\\a")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("a\u0000b.c")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("h\u00e9llo/\ud83c\udf0d.txt")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("x.\ud800")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("\udfff/.x.")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("\ud83c\udf0d.\ud800/")) ?? "<undefined>");
+console.log(JSON.stringify(resolve("\ud800/../\ud83c\udf0d.ext")) ?? "<undefined>");

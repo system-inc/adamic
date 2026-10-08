@@ -21,8 +21,8 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 			code = "adamic_node_path_basename(" + arguments[0] + ", " + suffix + ")"
 		} else if call.Member == "relative" {
 			code = "adamic_node_path_relative(" + arguments[0] + ", " + arguments[1] + ")"
-		} else if call.Member == "dirname" {
-			code = "adamic_node_path_dirname(" + arguments[0] + ")"
+		} else if call.Member == "dirname" || call.Member == "normalize" || call.Member == "extname" || call.Member == "isAbsolute" {
+			code = "adamic_node_path_" + call.Member + "(" + arguments[0] + ")"
 		} else {
 			array := "NULL"
 			if len(arguments) > 0 {

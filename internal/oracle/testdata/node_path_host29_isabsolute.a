@@ -1,0 +1,29 @@
+// a-check: checked
+// POSIX inputs from Node v24.19.0 test/parallel/test-path-isabsolute.js
+// and test-path-zero-length-strings.js (MIT; THIRD_PARTY_NOTICES.md).
+// 5 upstream cases; additional UTF-16, NUL and root witnesses below.
+import { isAbsolute } from 'node:path';
+console.log(`[${isAbsolute("/home/foo")}]`);
+console.log(`[${isAbsolute("/home/foo/..")}]`);
+console.log(`[${isAbsolute("bar/")}]`);
+console.log(`[${isAbsolute("./baz")}]`);
+console.log(`[${isAbsolute("")}]`);
+console.log(`[${isAbsolute("")}]`);
+console.log(`[${isAbsolute(".")}]`);
+console.log(`[${isAbsolute("..")}]`);
+console.log(`[${isAbsolute("/")}]`);
+console.log(`[${isAbsolute("//")}]`);
+console.log(`[${isAbsolute("//a")}]`);
+console.log(`[${isAbsolute("///a//b///")}]`);
+console.log(`[${isAbsolute("./")}]`);
+console.log(`[${isAbsolute("a/..")}]`);
+console.log(`[${isAbsolute("a/../")}]`);
+console.log(`[${isAbsolute("../../x/")}]`);
+console.log(`[${isAbsolute("a\\b.txt")}]`);
+console.log(`[${isAbsolute("C:\\a")}]`);
+console.log(`[${isAbsolute("a\u0000b.c")}]`);
+console.log(`[${isAbsolute("h\u00e9llo/\ud83c\udf0d.txt")}]`);
+console.log(`[${isAbsolute("x.\ud800")}]`);
+console.log(`[${isAbsolute("\udfff/.x.")}]`);
+console.log(`[${isAbsolute("\ud83c\udf0d.\ud800/")}]`);
+console.log(`[${isAbsolute("\ud800/../\ud83c\udf0d.ext")}]`);

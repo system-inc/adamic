@@ -1,0 +1,14 @@
+// a-check: checked
+import * as path from 'node:path';
+import {posix as paths, normalize as clean} from 'node:path';
+import * as unix from 'node:path/posix';
+console.log(`${path.sep}:${paths.sep}:${unix.sep}`);
+console.log(path.posix.normalize('/a//b/../c/'));
+console.log(paths.extname('x..🌍/'));
+console.log(`${unix.isAbsolute('C:\\a')}`);
+console.log(clean('../x/../'));
+console.log(unix.join('a','..','b'));
+
+import {normalize as plain, sep as slash} from 'path';
+import * as posix from 'path/posix';
+console.log(`${slash}:${plain('/a/..')}:${posix.extname('a.b')}`);

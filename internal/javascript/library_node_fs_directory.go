@@ -6,7 +6,7 @@ import (
 
 func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	if call.Module == "node:path" {
-		return "adamicNodePath." + call.Member + "(" + e.values(call.Arguments) + ")"
+		return "adamicNodePath.posix." + call.Member + "(" + e.values(call.Arguments) + ")"
 	}
 	switch call.Member {
 	case "native":

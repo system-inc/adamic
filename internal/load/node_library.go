@@ -54,7 +54,7 @@ func usesNodeModules(program *compiler.Program) bool {
 				continue
 			}
 			specifier := statement.ModuleSpecifier()
-			if specifier != nil && strings.HasPrefix(specifier.Text(), "node:") {
+			if specifier != nil && (strings.HasPrefix(specifier.Text(), "node:") || specifier.Text() == "path" || specifier.Text() == "path/posix" || specifier.Text() == "path/win32") {
 				return true
 			}
 		}
