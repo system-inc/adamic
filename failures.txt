@@ -107,6 +107,12 @@ census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 
     wasi_test.go:132: fixture does not lower
 --- SKIP: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.06s)
 
+== github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees (skipped; the census table classes it required-input)
+census: ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.
+=== RUN   TestSplitTSGoAgrees
+    units_tsgo_test.go:19: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgrees (0.00s)
+
 == github.com/system-inc/adamic/internal/oracle TestWasmtimeAgreesWithNode (skipped; no census row matches its name)
 === RUN   TestWasmtimeAgreesWithNode
     wasi_engines_test.go:66: set ADAMIC_ORACLE_WASMTIME=1
