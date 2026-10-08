@@ -1,0 +1,3 @@
+function take(value: IArguments): void { console.log(`${value.length}`); }
+function rejected() { return arguments; }
+rejected();

@@ -1,0 +1,52 @@
+[
+  {
+    "site": "internal/native/runtime/array.c:198",
+    "status": "integrated",
+    "typed_call": "adamic_closure_call(compare, arguments, 2); selects adamic_code(self, arguments) or adamic_counted_code(self, arguments, count), without a cast",
+    "owner_area": "Runtime"
+  },
+  {
+    "site": "internal/native/runtime/node_process.c:442",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
+    "snapshot": "132d9919",
+    "owner_area": "Library",
+    "original_site": "node_process.c:436",
+    "typed_call": "adamic_value result = adamic_closure_call(closure, padded, count);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
+  },
+  {
+    "site": "internal/native/runtime/node_process.c:447",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
+    "snapshot": "132d9919",
+    "owner_area": "Library",
+    "original_site": "node_process.c:441",
+    "typed_call": "return adamic_closure_call(closure, args, count);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
+  },
+  {
+    "site": "internal/native/runtime/parallel.c:197",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
+    "snapshot": "132d9919",
+    "owner_area": "Runtime",
+    "original_site": "parallel.c:197",
+    "typed_call": "adamic_value result = adamic_closure_call(scope->work, arguments, 2);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
+  },
+  {
+    "site": "internal/native/runtime/parallel.c:300",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
+    "snapshot": "132d9919",
+    "owner_area": "Runtime",
+    "original_site": "parallel.c:300",
+    "typed_call": "adamic_value result = adamic_closure_call(work, arguments, 2);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
+  },
+  {
+    "site": "internal/native/runtime/regexp_replace.c:114",
+    "status": "integrated",
+    "typed_call": "adamic_closure_call(callback, packed, argument_count); selects adamic_code(self, arguments) or adamic_counted_code(self, arguments, count) without a cast",
+    "packing": "Program.RestArgumentSlots supplies the rest slot; packed length differs from the observable actual count",
+    "mutant": "TestClosureConventionRuntimeDropCount: clang expected 3, have 2 under -Werror",
+    "owner_area": "Library"
+  }
+]

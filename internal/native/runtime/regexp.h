@@ -61,4 +61,6 @@ adamic_value adamic_regex_property(adamic_array *array, const char *name);
 adamic_maybe_boolean adamic_regex_done(adamic_object *object);
 void *adamic_regex_group_lookup(adamic_object *object, const char *name, bool optional);
 void adamic_regex_set_step_limit(uint64_t limit);
+typedef struct { size_t argument; bool rest; const char *name; bool optional; } adamic_regex_replacement_group;
+adamic_string *adamic_regex_replace_callback(adamic_string *, adamic_object *, adamic_closure *, bool, const unsigned char *, size_t, unsigned, unsigned, const adamic_regex_replacement_group *, size_t, size_t);
 #endif

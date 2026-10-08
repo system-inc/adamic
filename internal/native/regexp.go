@@ -7,6 +7,9 @@ import (
 )
 
 func (e *emitter) regexCall(call ir.RegExpCall) string {
+	if call.Replacement != nil {
+		return e.regexReplacement(call)
+	}
 	if call.Method == "iteratorDone" {
 		object := e.value(call.Value)
 		value := e.snapshot(ir.MaybeBoolean, "adamic_regex_done("+object+")")

@@ -1,0 +1,10 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:140-156
+// Reduced every: the outer overload result remains a predicate.
+function every<T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[];
+function every<T>(array: readonly T[], callback: (element: T, index: number) => boolean): boolean {
+    for (let i = 0; i < array.length; i++) {
+        if (!callback(array[i]!, i)) return false;
+    }
+    return true;
+}
+console.log("overload declarations loaded");
