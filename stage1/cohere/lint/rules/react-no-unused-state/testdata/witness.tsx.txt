@@ -1,0 +1,1 @@
+class C extends React.Component { state = {unused: 1}; render() { return null; } }

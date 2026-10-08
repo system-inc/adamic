@@ -1,0 +1,5 @@
+{
+  "name": "unused_state_read_inverted",
+  "from": "if(info.used.includes(field.name)){continue;}",
+  "to": "if(!info.used.includes(field.name)){continue;}"
+}

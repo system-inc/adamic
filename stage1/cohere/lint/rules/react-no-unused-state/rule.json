@@ -1,0 +1,13 @@
+{
+  "name": "react/no-unused-state",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoUnusedState",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoUnusedState"
+}
