@@ -1,0 +1,1 @@
+{"name": "no-regex-spaces", "kinds": ["RegularExpressionLiteral", "CallExpression", "NewExpression"], "visit": "visit", "factory": "create", "class": "Rule", "oracle": "oracleNoRegexSpaces", "upstreamPackage": "core", "upstreamTest": "TestNoRegexSpaces"}

@@ -1,0 +1,10 @@
+export function extendOctalEscape(pattern: number[], start: number, end: number): number {
+ if(end - start !== 2 || start + 1 >= pattern.length) { return end; }
+ const first = (pattern[start + 1] ?? 0); if(first < 48 || first > 55) { return end; }
+ let value = first - 48; let scan = start + 2;
+ for(let digits = 1; digits < 3 && scan < pattern.length; digits++) {
+  const next = (pattern[scan] ?? 0); if(next < 48 || next > 55) { break; }
+  if(value * 8 + next - 48 > 255) { break; } value = value * 8 + next - 48; scan++;
+ }
+ return scan;
+}

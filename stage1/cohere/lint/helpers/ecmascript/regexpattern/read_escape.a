@@ -1,0 +1,30 @@
+import { WalkerState, Character } from './state.a';
+import { skipPatternEscape } from '../../regexsyntax/skip_pattern_escape.a';
+import { decodeRune } from './decode_rune.a';
+import { extendOctalEscape } from './extend_octal_escape.a';
+import { kindFromSource } from './kind_from_source.a';
+import { escapeValue } from './escape_value.a';
+export class EscapeResult {
+ readonly present: boolean;
+ readonly character: Character;
+ readonly next: number;
+ readonly ok: boolean;
+ constructor(present: boolean, character: Character, next: number, ok: boolean) { this.present = present; this.character = character; this.next = next; this.ok = ok; }
+}
+export function readEscape(w: WalkerState, index: number): EscapeResult {
+ const empty = new Character(0, 0, 0, 0, 0, 0);
+ const step = skipPatternEscape(w.pattern, index, w.flags, (at: number): number => decodeRune(w.pattern, at).width);
+ if(!step.ok) { return new EscapeResult(false, empty, index, false); }
+ let end = index + step.value;
+ if(end > w.pattern.length) { return new EscapeResult(false, empty, index, false); }
+ end = extendOctalEscape(w.pattern, index, end);
+ const text = w.pattern.slice(index,end);
+ if(text.length < 2) { return new EscapeResult(false, empty, end, true); }
+ switch(text[1] ?? 0) {
+ case 100: case 68: case 115: case 83: case 119: case 87: case 112: case 80: case 107: case 113:
+ case 98: case 66: return new EscapeResult(false, empty, end, true);
+ }
+ const kind = kindFromSource(w.pattern,index,end); const value = escapeValue(text,kind);
+ if(!value.ok) { return new EscapeResult(false, empty, end, true); }
+ return new EscapeResult(true, new Character(value.value,kind,index,end,0,0), end, true);
+}

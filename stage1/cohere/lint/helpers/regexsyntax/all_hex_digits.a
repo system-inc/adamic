@@ -1,0 +1,7 @@
+import { isHexDigit } from './is_hex_digit.a';
+// Go inspects UTF-8 bytes, so the caller supplies bytes, not UTF-16 code units.
+export function allHexDigits(bytes: readonly number[]): boolean {
+ if (bytes.length === 0) { return false; }
+ for (const byte of bytes) { if (!isHexDigit(byte)) { return false; } }
+ return true;
+}

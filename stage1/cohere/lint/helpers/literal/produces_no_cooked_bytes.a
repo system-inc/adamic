@@ -1,0 +1,12 @@
+// cohere/internal/lint/ecmascript/literal/offsets.go:87
+export function producesNoCookedBytes(tail: string): boolean {
+    let index = 0;
+    while(index < tail.length) {
+        if(tail.charAt(index) !== '\\') { return false; }
+        if(index + 1 >= tail.length) { return true; }
+        if(tail.charAt(index + 1) !== '\n' && tail.charAt(index + 1) !== '\r') { return false; }
+        index += 2;
+        if(tail.charAt(index - 1) === '\r' && index < tail.length && tail.charAt(index) === '\n') { index++; }
+    }
+    return true;
+}

@@ -1,0 +1,36 @@
+import { OctalValue, octalEscapeValue } from './octal_escape_value.a';
+import { allHexDigits } from '../../regexsyntax/all_hex_digits.a';
+import { parseHexUint } from '../../regexsyntax/parse_hex_uint.a';
+import { unicodeEscapeValue } from './unicode_escape_value.a';
+import { isAsciiLetter } from './is_ascii_letter.a';
+import { decodeRune } from './decode_rune.a';
+export function escapeValue(text: number[], kind: number): OctalValue {
+ if(text.length < 2 || text[0] !== 92) { return new OctalValue(0, false); }
+ switch(kind) {
+ case 1:
+  switch(text[1] ?? 0) {
+  case 110: return new OctalValue(10, true);
+  case 114: return new OctalValue(13, true);
+  case 116: return new OctalValue(9, true);
+  case 118: return new OctalValue(11, true);
+  case 102: return new OctalValue(12, true);
+  case 98: return new OctalValue(8, true);
+  default: return new OctalValue(0, false);
+  }
+ case 2: return new OctalValue(0, true);
+ case 3:
+  if(text.length !== 4 || !allHexDigits(text.slice(2))) { return new OctalValue(0, false); }
+  return new OctalValue(parseHexUint(text.slice(2)), true);
+ case 4: return unicodeEscapeValue(text);
+ case 5:
+  if(text.length !== 3 || !isAsciiLetter(text[2] ?? 0)) { return new OctalValue(0, false); }
+  return new OctalValue((text[2] ?? 0) % 32, true);
+ case 6: return octalEscapeValue(text.slice(1));
+ case 7: {
+  const rune = decodeRune(text, 1);
+  if(rune.width === 0) { return new OctalValue(0, false); }
+  return new OctalValue(rune.value, true);
+ }
+ default: return new OctalValue(0, false);
+ }
+}

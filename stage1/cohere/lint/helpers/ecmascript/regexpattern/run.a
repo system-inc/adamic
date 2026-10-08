@@ -1,0 +1,49 @@
+import { WalkerState, Character } from './state.a';
+import { classEnd } from '../../regexsyntax/class_end.a';
+import { readEscape } from './read_escape.a';
+import { decodeRune } from './decode_rune.a';
+import { applyQuantifier } from './apply_quantifier.a';
+import { quantifierAt } from './quantifier_at.a';
+import { walkClass } from './walk_class.a';
+import { groupPrologueEnd } from './group_prologue_end.a';
+import { emitAndQuantify } from './emit_and_quantify.a';
+export function run(w: WalkerState): boolean {
+ let index = 0;
+ while(index < w.pattern.length) {
+  if(w.stopped) { return false; }
+  switch(w.pattern[index] ?? 0) {
+  case 92: {
+   const escape = readEscape(w,index);
+   if(!escape.ok) { return false; }
+   if(!escape.present) { index = applyQuantifier(w,escape.next); break; }
+   index = emitAndQuantify(w,escape.character);
+   if(w.stopped) { return false; }
+   break;
+  }
+  case 91: {
+   const end = classEnd(w.pattern,index,w.flags,(at: number): number => decodeRune(w.pattern,at).width);
+   if(!end.ok) { return false; }
+   const next = quantifierAt(w.pattern,end.value);
+   if(next.ok) { w.quantifierDepth++; }
+   const walked = walkClass(w,index,end.value);
+   if(next.ok) { w.quantifierDepth--; }
+   if(!walked) { return false; }
+   index = next.end; break;
+  }
+  case 40: index = groupPrologueEnd(w.pattern,index); break;
+  case 41: index = applyQuantifier(w,index+1); break;
+  case 124: case 94: case 36: index++; break;
+  case 46:
+   index = emitAndQuantify(w,new Character(46,0,index,index+1,0,0));
+   if(w.stopped) { return false; }
+   break;
+  default: {
+   const rune = decodeRune(w.pattern,index);
+   index = emitAndQuantify(w,new Character(rune.value,0,index,index+rune.width,0,0));
+   if(w.stopped) { return false; }
+   break;
+  }
+  }
+ }
+ return !w.stopped;
+}

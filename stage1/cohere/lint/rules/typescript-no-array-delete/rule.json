@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-array-delete",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "DeleteExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave14NoArrayDelete",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoArrayDelete"
+}

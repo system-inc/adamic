@@ -1,0 +1,33 @@
+// Go utf8.DecodeRuneInString, including invalid byte and truncated sequence behavior.
+export function decode(bytes: readonly number[], i: number): number[] {
+ if(i >= bytes.length) { return [65533, 0]; }
+ const b = bytes[i] ?? 0;
+ if(b < 128) { return [b, 1]; }
+ let n = 0; let v = 0; let minimum = 0;
+ if(b >= 194 && b <= 223) { n = 2; v = b & 31; minimum = 128; }
+ else if(b >= 224 && b <= 239) { n = 3; v = b & 15; minimum = 2048; }
+ else if(b >= 240 && b <= 244) { n = 4; v = b & 7; minimum = 65536; }
+ else { return [65533, 1]; }
+ if(i + n > bytes.length) { return [65533, 1]; }
+ for(let j = 1; j < n; j++) { const c = bytes[i+j] ?? 0; if(c < 128 || c > 191) { return [65533, 1]; } v = (v << 6) | (c & 63); }
+ if(v < minimum || v > 1114111 || (v >= 55296 && v <= 57343)) { return [65533, 1]; }
+ return [v,n];
+}
+// UTF-8 projection of JS source, with an offset map for rule reporting.
+export class Bytes {
+ readonly values: number[] = []; readonly positions: number[] = [];
+ constructor(text: string) {
+  for(let i = 0; i < text.length; i++) {
+   let cp = text.charCodeAt(i); const at = i;
+   if(cp >= 55296 && cp <= 56319 && i+1 < text.length) { const low = text.charCodeAt(i+1); if(low >= 56320 && low <= 57343) { cp = 65536 + (cp-55296)*1024 + low-56320; i++; } }
+   if(cp >= 55296 && cp <= 57343) { cp = 65533; }
+   const start = this.values.length;
+   if(cp < 128) { this.values.push(cp); }
+   else if(cp < 2048) { this.values.push(192 | (cp >> 6)); this.values.push(128 | (cp & 63)); }
+   else if(cp < 65536) { this.values.push(224 | (cp >> 12)); this.values.push(128 | ((cp >> 6)&63)); this.values.push(128 | (cp&63)); }
+   else { this.values.push(240 | (cp >> 18)); this.values.push(128 | ((cp >> 12)&63)); this.values.push(128 | ((cp >> 6)&63)); this.values.push(128 | (cp&63)); }
+   for(let j = start; j < this.values.length; j++) { this.positions.push(at); }
+  }
+  this.positions.push(text.length);
+ }
+}
