@@ -125,6 +125,9 @@ func (l *lowering) internStructuralViewIntersection(node *ast.Node, target *chec
 func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID, target *checker.Type) string {
 	root := l.result.ViewContracts[id-1]
 	if root.Kind == ir.ViewUnion {
+		if l.viewIntersectionAbsorbSupertype(id, target) {
+			return ""
+		}
 		hasIntersection := false
 		for _, member := range root.Members {
 			hasIntersection = hasIntersection || l.result.ViewContracts[member-1].Intersection
@@ -402,6 +405,20 @@ func (l *lowering) viewIntersectionReadChecks(id ir.ViewContractID) bool {
 // emitters, which defer every remaining refusal, walk exactly what was proven.
 func (l *lowering) finishBoundedIntersections() {
 	program := l.result
+	// Absorbed recursive ancestors can still be reservations at construction.
+	// A fieldless single-member object conjunction retains that canonical id;
+	// complete its obligations now, before any candidate is considered walkable.
+	for i, c := range program.ViewContracts {
+		if c.Kind != ir.ViewObject || !c.Intersection || len(c.Fields) != 0 || len(c.Members) != 1 {
+			continue
+		}
+		ancestor := program.ViewContracts[c.Members[0]-1]
+		if ancestor.Kind == ir.ViewObject && ancestor.Unsupported == "" && len(ancestor.Fields) != 0 {
+			program.ViewContracts[i].Fields = append([]ir.ViewFieldContract{}, ancestor.Fields...)
+		} else {
+			program.ViewContracts[i].Unsupported = "unavailable intersection ancestor"
+		}
+	}
 	pending := func(family string) bool {
 		switch family {
 		case "union intersection", "recursive intersection payload", "mixed intersection payload", "compound intersection payload":
@@ -470,4 +487,87 @@ func (l *lowering) viewIntersectionBindingRead(node *ast.Node, receiver, target 
 	property.ViewReceiverTypeID = int(receiver.Id())
 	property.ViewWhere = l.program.Where(node)
 	return nil
+}
+
+// A union containing a declared ancestor equals that ancestor only when every
+// alternative inherits it and the checker also verifies assignability. Keep
+// the ancestor's complete fields and bounded read obligations, never just kind.
+func (l *lowering) viewIntersectionAbsorbSupertype(id ir.ViewContractID, target *checker.Type) bool {
+	root := l.result.ViewContracts[id-1]
+	if target.Flags()&checker.TypeFlagsUnion == 0 || root.Of != ir.Object {
+		return false
+	}
+	hasIntersection := false
+	for _, member := range root.Members {
+		hasIntersection = hasIntersection || l.result.ViewContracts[member-1].Intersection
+	}
+	if !hasIntersection {
+		return false
+	}
+	for _, ancestor := range target.Types() {
+		if !viewInterfaceType(ancestor) || ancestor.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			continue
+		}
+		candidateID := l.result.ViewContractTypes[int(ancestor.Id())]
+		if candidateID == 0 {
+			continue
+		}
+		candidate := l.result.ViewContracts[candidateID-1]
+		if candidate.Kind != ir.ViewObject || candidate.Of != ir.Object || candidate.Nominal != "" || candidate.Unsupported != "" {
+			continue
+		}
+		all := true
+		for _, arm := range target.Types() {
+			if !l.viewIntersectionInherits(arm, ancestor, map[*checker.Type]bool{}) || !l.checker.IsTypeAssignableTo(arm, ancestor) {
+				all = false
+				break
+			}
+		}
+		if !all {
+			continue
+		}
+		candidate.Name = root.Name
+		candidate.Fields = nil
+		candidate.Members = []ir.ViewContractID{candidateID}
+		candidate.Intersection = true
+		candidate.IntersectionRecursive = false
+		candidate.IntersectionBounded = false
+		candidate.Unsupported = "recursive intersection payload"
+		l.result.ViewContracts[id-1] = candidate
+		return true
+	}
+	return false
+}
+
+func (l *lowering) viewIntersectionInherits(source, ancestor *checker.Type, seen map[*checker.Type]bool) bool {
+	if source == ancestor {
+		return true
+	}
+	if seen[source] {
+		return false
+	}
+	seen[source] = true
+	if source.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, part := range source.Types() {
+			if l.viewIntersectionInherits(part, ancestor, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if !viewInterfaceType(source) {
+		return false
+	}
+	// Generic arguments cannot invent inheritance. Walk the declared target;
+	// assignability of the actual instantiated arm is checked separately.
+	original := source
+	if source.ObjectFlags()&checker.ObjectFlagsReference != 0 && source.Target() != nil {
+		original = source.Target()
+	}
+	for _, base := range l.checker.GetBaseTypes(original) {
+		if l.viewIntersectionInherits(base, ancestor, seen) {
+			return true
+		}
+	}
+	return false
 }

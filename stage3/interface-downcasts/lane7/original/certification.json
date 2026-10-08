@@ -532,6 +532,25 @@
       "parent",
       "pos",
       "transformFlags"
+    ],
+    "JSDocTypeLiteral": [
+      "_declarationBrand",
+      "_jsDocTypeBrand",
+      "_typeNodeBrand",
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "isArrayType",
+      "jsDocPropertyTags",
+      "kind",
+      "localSymbol",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "symbol",
+      "transformFlags"
     ]
   },
   "pairs": [
@@ -1736,6 +1755,43 @@
         "transformFlags"
       ],
       "status": "certified"
+    },
+    {
+      "type_id": 7644,
+      "type": "JSDoc | JSDocTypeLiteral",
+      "field": "parent",
+      "read_count": 1,
+      "sites": [
+        {
+          "type_id": 7644,
+          "receiver": "JSDoc | JSDocTypeLiteral",
+          "field": "parent",
+          "declared_type": "Node | HasJSDoc",
+          "file": "src/compiler/utilities.ts",
+          "line": 4832,
+          "column": 32,
+          "start": 188215,
+          "end": 188240,
+          "text": "node.parent.parent.parent",
+          "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+          "source_sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+          "context": "erDeclaration & { parent: JSDocTemplateTag; }): TypeParameterDeclaration | undefined {\r\n    const name = node.name.escapedText;\r\n    const { typeParameters } = node.parent.parent.parent as SignatureDeclaration | InterfaceDeclaration | ClassDeclaration;\r\n    return typeParameters && find(typeParameters, p => p.name.escapedText === name);\r\n}\r\n\r\n"
+        }
+      ],
+      "declared_type": "Node | HasJSDoc",
+      "present_fields": [
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "status": "certified"
     }
   ],
   "scope": "Original field contract certified with representative reads, not compilation of enclosing upstream functions or allocation reachability. Callable bodies and collection element reads retain their own lazy obligations. Bindable reads check every descriptor once per path with tagged arm selection; a descriptor already entered on the path, array elements, mixed scalar unions and refused families keep their own checked reads.",
@@ -1790,7 +1846,6 @@
   "pending": {
     "9657 class.expression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified",
     "92175 (JSDocImplementsTag | JSDocAugmentsTag).class": "the union receiver read resolves no contract, so only its object kind is checked; shared lowering interns none for a field type first seen through a union receiver",
-    "7644 (JSDoc | JSDocTypeLiteral).parent": "Node | HasJSDoc has an open-kind Node arm no tag separates; refused at the read",
     "68704 SymbolTrackerImpl.moduleResolverHost": "SymbolTrackerImpl is a non-exported checker class, absent from every emitted declaration",
     "97923 and 98493 fileInfos.forEach": "stage 0 NotYet: an array of string | (Omit<FileInfo, \"signature\"> & {...})",
     "9454 argumentExpression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified"

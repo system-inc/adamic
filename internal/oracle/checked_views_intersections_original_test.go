@@ -42,7 +42,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1, 8883: 4, 8882: 3, 7642: 10, 36241: 1}
+	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1, 8883: 4, 8882: 3, 7642: 10, 36241: 1, 7644: 1}
 	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) != 78 || len(manifest.Pairs) != len(reads) || manifest.Pairs[0].ID != 10236 {
 		t.Fatal("original provenance changed")
 	}

@@ -2169,3 +2169,15 @@ in lower/view_intersections.go supplies contract metadata from destructureFrom
 in collections.go. Selector-removal and hook-removal mutants fail these controls.
 Full original certification is restored to ten pairs / 56 reads; see lane7's
 DEFERRED-REPORT.md for evidence and remaining candidates.
+
+### Lane 7 declared ancestor absorption
+
+viewIntersectionAbsorbSupertype admits an intersected object union containing a
+declared ancestor only when every arm inherits that ancestor and the checker
+verifies actual-arm assignability. Structural similarity alone is refused.
+Generic interface ancestry is traced through its original declared target. The
+complete ancestor contract is retained by canonical ID and completed after
+recursive reservations, before bounded admission. An unavailable ancestor stays
+a named refusal. Original 7644 parent is now certified, including an open-kind
+Node control, named wrong-pos failure, and a three-backend omission mutant.
+Lane 7 now totals eleven pairs / 57 reads; see ABSORPTION-REPORT.md.

@@ -31,7 +31,7 @@ for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedId
   'Node','Symbol','Declaration','LeftHandSideExpression','PropertyAccessEntityNameExpression','ElementAccessExpression',
   'StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral','BinaryExpression',
   'ExpressionWithTypeArguments','JSDocAugmentsTag','JSDocImplementsTag','SourceMapRange',
-  'JSDoc','FunctionDeclaration','EmptyStatement']) {
+  'JSDoc','JSDocTypeLiteral','FunctionDeclaration','EmptyStatement']) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  if (!symbol) throw Error('missing original type '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(field=>field.name).sort();
@@ -41,9 +41,12 @@ for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[761
   [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
   [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
   [9454,'BindableStaticElementAccessExpression','argumentExpression'],
-  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent']]) {
- const symbol = moduleExports.find(symbol=>symbol.name===name);
- const receiver = checker.getDeclaredTypeOfSymbol(symbol);
+  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent']]) {
+ const receiver = checker.getUnionType(name.split(' | ').map(part => {
+  const symbol = moduleExports.find(symbol=>symbol.name===part);
+  if (!symbol) throw Error('missing original receiver '+part);
+  return checker.getDeclaredTypeOfSymbol(symbol);
+ }));
  const member = checker.getPropertyOfType(receiver,field);
  // Union aliases have synthetic members, whose type the checker combines.
  const declared = checker.getTypeOfSymbol(member);
