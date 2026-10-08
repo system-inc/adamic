@@ -101,7 +101,7 @@ class Gate:
             "session": arguments.session,
             "session_source": arguments.session_source,
             "base": arguments.base,
-            "tools_sha": git(arguments.tools, "rev-parse", "HEAD"),
+            "tools_sha": self.git(arguments.tools, "rev-parse", "HEAD"),
             "machine": {"hostname": socket.gethostname(), "nproc": os.cpu_count()},
             "uncached_tests": True,
             "build_ok": False,
@@ -112,7 +112,7 @@ class Gate:
 
     def run(self):
         tree = self.arguments.tree
-        head = git(tree, "rev-parse", "HEAD")
+        head = self.git(tree, "rev-parse", "HEAD")
         if head != self.arguments.sha:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
             return
@@ -125,7 +125,7 @@ class Gate:
         smoke, smokeSource = self.smokeList()
         self.deferred = self.deferredList()
         # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
-        changed = git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
+        changed = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
         packages, unowned = self.touched(changed)
         # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
@@ -136,7 +136,7 @@ class Gate:
             handle.write("".join(path + "\n" for path in changed))
         self.sampling = {"ADAMIC_GATE_SAMPLE": self.arguments.base, "ADAMIC_GATE_CHANGED": changedList}
         # Paths the change adds or deletes (renames as both): a "reads ... paths" line fires only on these.
-        pathSetChanged = git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
+        pathSetChanged = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         executors = self.cover(unowned, changed, [path for path in pathSetChanged if path])
         if executors is None:
             return
@@ -152,7 +152,7 @@ class Gate:
             "unowned_files": unowned,
             "smoke_list": "cloud/fast-gate/smoke.txt",
             "smoke_list_source": smokeSource,
-            "smoke_list_blob": git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
+            "smoke_list_blob": self.git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
             "smoke_fixtures": ["%s %s" % entry for entry in smoke],
         })
         if not smoke:
@@ -189,7 +189,7 @@ class Gate:
         self.checkCensus()
 
     def runFull(self):
-        listing = subprocess.run(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
+        listing = self.command(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
         order = []
         if self.arguments.weights and os.path.exists(self.arguments.weights):
             with open(self.arguments.weights) as handle:
@@ -198,8 +198,8 @@ class Gate:
         packages = order + [name for name in listing if name not in order]
         self.result.update({"packages": "all", "package_list": packages})
         # The no-executor check holds on main too: what this main changed against its first parent.
-        parents = git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
-        changed = git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
+        parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+        changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
         _, unowned = self.touched([path for path in changed if path])
         self.cover(unowned, [path for path in changed if path])
         try:
@@ -315,7 +315,7 @@ class Gate:
         return executors
 
     def goList(self, pattern):
-        listing = subprocess.run(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
+        listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
         return listing.stdout.split() if listing.returncode == 0 else []
 
     def stage3(self):
@@ -531,7 +531,7 @@ class Gate:
                 for name in ("package.json", "package-lock.json"):
                     with open(os.path.join(self.arguments.tree, directory, name), "rb") as source, open(os.path.join(staging, name), "wb") as target:
                         target.write(source.read())
-                process = subprocess.run(["node", self.npmCli(), "ci", "--ignore-scripts", "--no-audit", "--no-fund", "--install-strategy=hoisted",
+                process = self.command(["node", self.npmCli(), "ci", "--ignore-scripts", "--no-audit", "--no-fund", "--install-strategy=hoisted",
                                           "--registry=https://registry.npmjs.org", "--cache", os.path.join(staging, ".npm-cache")],
                                          cwd=staging, capture_output=True, text=True, env=dict(os.environ, npm_config_update_notifier="false"))
                 if process.returncode != 0:
@@ -550,7 +550,7 @@ class Gate:
             if current != key:
                 if os.path.lexists(target):
                     os.rename(target, os.path.join(os.path.expanduser("~/fast-gate/npm"), "replaced-%d-%d" % (time.time(), os.getpid())))
-                subprocess.run(["cp", "-al", os.path.join(cache, "node_modules"), target], check=True)
+                self.command(["cp", "-al", os.path.join(cache, "node_modules"), target], check=True)
                 with open(marker, "w") as handle:
                     handle.write(key + "\n")
             self.result.setdefault("npm", {})[directory] = {"lockfile_sha256": key, "seconds": round(time.monotonic() - started, 1)}
@@ -567,12 +567,12 @@ class Gate:
             staging = home + ".staging-%d" % os.getpid()
             os.makedirs(staging)
             archive = os.path.join(staging, "npm.tgz")
-            subprocess.run(["curl", "-fsSL", pin["url"], "-o", archive], check=True)
+            self.command(["curl", "-fsSL", pin["url"], "-o", archive], check=True)
             with open(archive, "rb") as handle:
                 algorithm, expected = pin["integrity"].split("-", 1)
                 if algorithm != "sha512" or base64.b64encode(hashlib.sha512(handle.read()).digest()).decode() != expected:
                     raise ValueError("npm bootstrap integrity mismatch for %s" % pin["url"])
-            subprocess.run(["tar", "--no-same-owner", "-xzf", archive, "-C", staging], check=True)
+            self.command(["tar", "--no-same-owner", "-xzf", archive, "-C", staging], check=True)
             try:
                 os.rename(staging, home)
             except OSError:
@@ -610,7 +610,7 @@ class Gate:
                         fields = line.split()
                         if fields and not fields[0].startswith("#"):
                             deferred.setdefault(module + "/" + fields[0], set()).add(fields[1])
-                self.result["deferred_list_blob"] = git(root, "hash-object", path)
+                self.result["deferred_list_blob"] = self.git(root, "hash-object", path)
                 return deferred
         return {}
 
@@ -628,7 +628,7 @@ class Gate:
         """Each changed file's package: its own directory's, one that embeds it, or the nearest package
         directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
         a package's tree is that package's to test). Anything else is unowned and goes to cover()."""
-        listing = subprocess.run(["go", "list", "-f", "{{.Dir}}\t{{.ImportPath}}\t{{join .EmbedFiles \",\"}}\t{{join .TestEmbedFiles \",\"}}\t{{join .XTestEmbedFiles \",\"}}", "./..."],
+        listing = self.command(["go", "list", "-f", "{{.Dir}}\t{{.ImportPath}}\t{{join .EmbedFiles \",\"}}\t{{join .TestEmbedFiles \",\"}}\t{{join .XTestEmbedFiles \",\"}}", "./..."],
                                  cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
@@ -668,7 +668,7 @@ class Gate:
         Anything it can't classify (a changed helper, a deleted file, any other file) runs it whole."""
         tree, base, sha = self.arguments.tree, self.arguments.base, self.arguments.sha
         whole = lambda reason: {"whole": True, "reason": reason}
-        statuses = [line.split("\t") for line in git(tree, "diff", "--name-status", "%s...%s" % (base, sha), "--", "internal/oracle").splitlines() if line]
+        statuses = [line.split("\t") for line in self.git(tree, "diff", "--name-status", "%s...%s" % (base, sha), "--", "internal/oracle").splitlines() if line]
         fixtures, tests = set(), set()
         directory = os.path.join(tree, "internal/oracle")
         for status, *paths in statuses:
@@ -686,7 +686,7 @@ class Gate:
                 tests.update(re.findall(r"^func (Test\w+)\(t \*testing\.T\)", source, re.M))
                 fixtures.update(re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source))
             elif name.endswith("_test.go") and "/" not in name:
-                for line in git(tree, "diff", "-U0", "%s...%s" % (base, sha), "--", path).splitlines():
+                for line in self.git(tree, "diff", "-U0", "%s...%s" % (base, sha), "--", path).splitlines():
                     if line.startswith(("+++", "---", "@@")) or not line.startswith(("+", "-")):
                         continue
                     entry = fixtureEntry.match(line[1:])
@@ -753,7 +753,7 @@ class Gate:
         started = time.monotonic()
         with open(os.path.join(self.arguments.tools, "cloud/fast-gate/tools.txt")) as handle:
             declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
-        found = subprocess.run(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--", "*.go", ":!cohere", ":!stage3/upstream"],
+        found = self.command(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--", "*.go", ":!cohere", ":!stage3/upstream"],
                                capture_output=True, text=True)
         if found.returncode not in (0, 1):
             raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
@@ -980,6 +980,19 @@ class Gate:
         if process.returncode != 0:
             self.fail("census", (stdout + stderr)[-4000:])
 
+    def git(self, directory, *arguments):
+        return self.command(["git", "-C", directory] + list(arguments),
+                            capture_output=True, text=True, check=True).stdout.strip()
+
+    def command(self, command, cwd=None, capture_output=False, text=True, check=False, env=None):
+        process = self.spawn(command, subprocess.PIPE if capture_output else None,
+                             subprocess.PIPE if capture_output else None, cwd, env)
+        stdout, stderr = process.communicate()
+        result = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+        if check:
+            result.check_returncode()
+        return result
+
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
             if self.failure is not None and not self.arguments.full:
@@ -1007,18 +1020,43 @@ class Gate:
                     handle.write(detail + "\n")
                 self.status("red: %s first failure at %s after %.1f s (still running for triage)" % (self.arguments.sha, step, self.failure["after_seconds"]))
                 return
-            for process in self.processes:
-                if process.poll() is None:
-                    try:
-                        os.killpg(process.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
+            self.killSessions()
+
+    def killSessions(self):
+        """Drain our sessions even after a leader exited and children were reparented.
+
+        Setpgid cannot escape a session. Zombies cannot run or fork and must be
+        reaped by their new parent; waiting for those would hang on a slow init.
+        Call under self.lock so spawn cannot register a new session mid-drain.
+        """
+        sessions = {process.pid for process in self.processes if process.pid > 0}
+        while sessions:
+            live = []
+            for path in glob.glob("/proc/[0-9]*/stat"):
+                try:
+                    with open(path) as handle:
+                        # comm may contain spaces and ')'; fields after its final ')' start at 3.
+                        fields = handle.read().rsplit(")", 1)[1].split()
+                    if int(fields[3]) in sessions and fields[0] not in ("Z", "X"):
+                        live.append(int(path.split("/")[2]))
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+            if not live:
+                return
+            for pid in live:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            time.sleep(0.01)
 
     def status(self, line):
         with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
             handle.write(line + "\n")
 
     def finish(self):
+        with self.lock:
+            self.killSessions()
         wall = round(time.monotonic() - self.started, 1)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
         if unfinished and self.failure is None:
