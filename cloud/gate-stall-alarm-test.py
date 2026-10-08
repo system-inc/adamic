@@ -26,6 +26,18 @@ class StallAlarmTests(unittest.TestCase):
                         ADAMIC_FAST_GATE_WATCH_STATE=str(self.root), ADAMIC_FAST_GATE_WAITS=str(self.root / 'waits.csv'),
                         ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.now = int(time.time())
+        (self.root / 'slots').write_text('box0 B\nbox0 S\nbox1 S\n')
+        (self.root / 'running').mkdir()
+        (self.root / 'reserved-running').mkdir()
+        self.sleeper = subprocess.Popen(['sleep', '60'])
+        self.addCleanup(self.sleeper.wait)
+        self.addCleanup(self.sleeper.kill)
+
+    def running(self, box, pid=None, reserved=False):
+        pid = pid or self.sleeper.pid
+        (self.root / 'running' / str(pid)).write_text('codex/r %s S %s S token log\n' % ('e' * 40, box))
+        if reserved:
+            (self.root / 'reserved-running' / str(pid)).write_text(box + '\n')
 
     def state(self, queuedAgo, startedAgo):
         (self.root / 'queue').write_text('' if queuedAgo is None else 'S %d codex/old %s\nB %d codex/new %s\n' % (self.now - queuedAgo, 'a' * 40, self.now - 10, 'b' * 40))
@@ -60,6 +72,21 @@ class StallAlarmTests(unittest.TestCase):
     def test_a_void_row_is_not_a_start(self):
         # The record's newest row is a void one second ago: still a stall.
         self.state(queuedAgo=400, startedAgo=360)
+        self.assertEqual(len(self.check()), 2)
+
+
+    def test_a_full_fleet_is_not_a_stall(self):
+        # box0 is drained for a reserved run (its slots aren't usable) and box1's one slot is busy.
+        self.state(queuedAgo=400, startedAgo=360)
+        self.running('box0', reserved=True)
+        other = subprocess.Popen(['sleep', '60'])
+        self.addCleanup(other.wait)
+        self.addCleanup(other.kill)
+        self.running('box1', pid=other.pid)
+        self.assertEqual(self.check(), [])
+        # A dead watcher's leftover doesn't fill a slot: box1's gate is gone, so its slot is free.
+        other.kill()
+        other.wait()
         self.assertEqual(len(self.check()), 2)
 
 

@@ -24,6 +24,23 @@ tell() {
   done
 }
 
+# Slots a queued tip could take now: the slot table's lines on boxes not drained for a reserved run, less
+# the gates running on them. A gate counts only while its watcher-recorded pid is alive, so a dead
+# watcher's leftovers never make a stalled fleet look full.
+freeSlots() {
+  local drained="" pid box total=0 busy=0
+  for pid in "${state}"/reserved-running/*; do
+    [ -f "${pid}" ] && kill -0 "$(basename "${pid}")" 2>/dev/null && drained="${drained} $(cat "${pid}")"
+  done
+  total=$(awk -v drained="${drained} " 'NF >= 2 && index(drained, " " $1 " ") == 0' "${state}/slots" 2>/dev/null | grep -c .)
+  for pid in "${state}"/running/*; do
+    [ -f "${pid}" ] && kill -0 "$(basename "${pid}")" 2>/dev/null || continue
+    box=$(awk '{print ($4 == "" ? "threadripper" : $4)}' "${pid}")
+    case " ${drained} " in *" ${box} "*) ;; *) busy=$(( busy + 1 )) ;; esac
+  done
+  echo $(( total - busy ))
+}
+
 check() {
   local now oldest lastStart queued waited idle watcher
   now=$(date -u +%s)
@@ -48,8 +65,10 @@ print(int(max(starts)) if starts else 0)' "${waits}")
   waited=$(( now - oldest ))
   idle=$(( now - lastStart ))
   pgrep -f "fast-gate-watch.sh" > /dev/null 2>&1 && watcher="running" || watcher="not running"
-  echo "$(date -u +%H:%M:%S) ${queued} queued, oldest ${waited} s, last start ${idle} s ago, watcher ${watcher}"
-  if [ "${waited}" -ge "${limit}" ] && [ "${idle}" -ge "${limit}" ]; then
+  free=$(freeSlots)
+  echo "$(date -u +%H:%M:%S) ${queued} queued, oldest ${waited} s, last start ${idle} s ago, ${free} slots free, watcher ${watcher}"
+  # Every slot busy is a full fleet, not a stall (Oct 8 19:01Z: 13 gates on 13 usable slots raised one).
+  if [ "${waited}" -ge "${limit}" ] && [ "${idle}" -ge "${limit}" ] && [ "${free}" -gt 0 ]; then
     [ -f "${state}/stall-alarmed" ] && return 0
     touch "${state}/stall-alarmed"
     tell "fast gate stall (the standalone alarm): no gate has started anywhere for ${idle} s while ${queued} tips wait, the oldest for ${waited} s ($(sort -k2,2n "${state}/queue" | head -1 | awk '{print $3}')); the watcher is ${watcher}. Its log: ~/Projects/system/adamic-gate-logs/fast-gate-watch.log on Kirk's Mac."
