@@ -1,0 +1,14 @@
+function make(): () => number {
+ let value = 3;
+ function f(): number { return value; }
+ function get(): () => number { return f; }
+ function same(): boolean { return f === f; }
+ console.log(String(same()));
+ const held = get();
+ value = 4;
+ console.log(String(held === f));
+ return f;
+}
+const kept = make();
+console.log(String(kept === kept));
+console.log(String(kept()));

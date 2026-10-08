@@ -1,0 +1,36 @@
+import { parallelMap } from 'adamic';
+interface Base { readonly kind: 'item' | 'other'; readonly value: number; }
+interface Item extends Base { readonly kind: 'item'; }
+interface Left { readonly value: number; readonly kind: 'item'; readonly padding: boolean; }
+interface Right { readonly padding: string; readonly extra: boolean; readonly kind: 'item'; readonly value: number; }
+class Owner implements Left {
+ readonly value = 7;
+ readonly kind = 'item';
+ readonly padding = true;
+ readonly unused!: string;
+}
+function run(): void {
+const left: Left = new Owner();
+const right: Right = { padding: `pad${1}`, extra: false, kind: 'item', value: 11 };
+const items: readonly Base[] = [
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+ left, right, left, right, left, right, left, right,
+];
+function read(item: Base): number {
+ const view = item as Item;
+ let sum = 0;
+ for (let i = 0; i < 4096; i++) { sum += view.value; }
+ return sum;
+}
+const result = parallelMap(items, read);
+let sum = 0;
+for (const value of result) { sum += value; }
+console.log(String(sum));
+}
+run();

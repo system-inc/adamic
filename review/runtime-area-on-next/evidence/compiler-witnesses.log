@@ -1,0 +1,16 @@
+FAIL minimal_self/sanitize build: native: clang failed: exit status 1
+/tmp/adamic-gate/adamic-build-2225322945/main.c:16:55: error: self-comparison always evaluates to true [-Werror,-Wtautological-compare]
+   16 |         adamic_write_line(adamic_stdout, (((adamic_local_0_f == adamic_local_0_f)) ? &adamic_string_true : &adamic_string_false));
+      |                                                              ^
+1 error generated.
+
+FAIL minimal_self/count build: native: clang failed: exit status 1
+/tmp/adamic-gate/adamic-build-2996765380/main.c:16:55: error: self-comparison always evaluates to true [-Werror,-Wtautological-compare]
+   16 |         adamic_write_line(adamic_stdout, (((adamic_local_0_f == adamic_local_0_f)) ? &adamic_string_true : &adamic_string_false));
+      |                                                              ^
+1 error generated.
+
+FAIL minimal_canonical_region panic: native: a canonical closure that joins a graph region was not refused in lowering
+REFUSED refuse_async_void: /workspace/scratch/review-area-on-next/refuse_async_void.a:2:1: Adamic 0.1 refuses an unawaited async task through the void operator; await the call or keep and return its Promise
+SUMMARY programs=9 failed-or-refused=4
+exit status 1

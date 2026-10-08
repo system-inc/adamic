@@ -1,0 +1,29 @@
+PASS async_identity-sanitize-4-1 
+PASS async_identity/leaks/4
+PASS async_identity-count-4-1 adamic: counts: allocations 10 frees 10 retains 24 releases 38 peak 9 regions 0
+PASS awaited_void-sanitize-4-1 
+PASS awaited_void/leaks/4
+PASS awaited_void-count-4-1 adamic: counts: allocations 10 frees 10 retains 22 releases 37 peak 10 regions 0
+PASS environment_identity-sanitize-4-1 
+PASS environment_identity/leaks/4
+PASS environment_identity-count-4-1 adamic: counts: allocations 5 frees 5 retains 11 releases 11 peak 4 regions 0
+PASS inherited_statics-sanitize-4-1 
+PASS inherited_statics/leaks/4
+PASS inherited_statics-count-4-1 adamic: counts: allocations 27 frees 27 retains 25 releases 52 peak 10 regions 0
+PASS parallel_shapes-sanitize-4-1 
+PASS parallel_shapes/leaks/4
+PASS parallel_shapes-sanitize-16-1 
+PASS parallel_shapes/leaks/16
+PASS parallel_shapes-count-4-1 adamic: counts: allocations 10 frees 10 retains 197 releases 138 peak 8 regions 0
+PASS parallel_shapes-count-16-1 adamic: counts: allocations 10 frees 10 retains 197 releases 138 peak 8 regions 0
+PASS parallel_shapes-tsan-4-1 
+PASS parallel_shapes-tsan-4-2 
+PASS parallel_shapes-tsan-4-3 
+PASS parallel_shapes-tsan-16-1 
+PASS parallel_shapes-tsan-16-2 
+PASS parallel_shapes-tsan-16-3 
+PASS region_partial-sanitize-4-1 
+PASS region_partial/leaks/4
+PASS region_partial-count-4-1 adamic: graph region: live 1 bytes 80 reachable 1 bytes 80 unreachable 0 bytes 0 metadata 16
+adamic: counts: allocations 9 frees 9 retains 12 releases 19 peak 4 regions 0
+SUMMARY programs=6 failed-or-refused=0

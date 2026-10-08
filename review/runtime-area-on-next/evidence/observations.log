@@ -1,0 +1,233 @@
+===== async_identity-count-4-1.log =====
+exit 0
+stdout:
+true
+true
+true
+true
+9
+stderr:
+adamic: counts: allocations 10 frees 10 retains 24 releases 38 peak 9 regions 0
+===== async_identity-node.log =====
+exit 0
+stdout:
+true
+true
+true
+true
+9
+stderr:
+===== async_identity-sanitize-4-1.log =====
+exit 0
+stdout:
+true
+true
+true
+true
+9
+stderr:
+===== async_identity-sanitize-leaks-4.log =====
+exit 0
+stdout:
+true
+true
+true
+true
+9
+stderr:
+===== awaited_void-count-4-1.log =====
+exit 0
+stdout:
+done
+undefined
+stderr:
+adamic: counts: allocations 10 frees 10 retains 22 releases 37 peak 10 regions 0
+===== awaited_void-node.log =====
+exit 0
+stdout:
+done
+undefined
+stderr:
+===== awaited_void-sanitize-4-1.log =====
+exit 0
+stdout:
+done
+undefined
+stderr:
+===== awaited_void-sanitize-leaks-4.log =====
+exit 0
+stdout:
+done
+undefined
+stderr:
+===== environment_identity-count-4-1.log =====
+exit 0
+stdout:
+true
+true
+true
+4
+stderr:
+adamic: counts: allocations 5 frees 5 retains 11 releases 11 peak 4 regions 0
+===== environment_identity-node.log =====
+exit 0
+stdout:
+true
+true
+true
+4
+stderr:
+===== environment_identity-sanitize-4-1.log =====
+exit 0
+stdout:
+true
+true
+true
+4
+stderr:
+===== environment_identity-sanitize-leaks-4.log =====
+exit 0
+stdout:
+true
+true
+true
+4
+stderr:
+===== inherited_statics-count-4-1.log =====
+exit 0
+stdout:
+parent1/17/parent1
+parent2/18/parent2
+parent4/20/child3/19/child3/19
+parent4/child3/leaf5
+evidence1/1
+stderr:
+adamic: counts: allocations 27 frees 27 retains 25 releases 52 peak 10 regions 0
+===== inherited_statics-node.log =====
+exit 0
+stdout:
+parent1/17/parent1
+parent2/18/parent2
+parent4/20/child3/19/child3/19
+parent4/child3/leaf5
+evidence1/1
+stderr:
+===== inherited_statics-sanitize-4-1.log =====
+exit 0
+stdout:
+parent1/17/parent1
+parent2/18/parent2
+parent4/20/child3/19/child3/19
+parent4/child3/leaf5
+evidence1/1
+stderr:
+===== inherited_statics-sanitize-leaks-4.log =====
+exit 0
+stdout:
+parent1/17/parent1
+parent2/18/parent2
+parent4/20/child3/19/child3/19
+parent4/child3/leaf5
+evidence1/1
+stderr:
+===== parallel_shapes-count-16-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+adamic: counts: allocations 10 frees 10 retains 197 releases 138 peak 8 regions 0
+===== parallel_shapes-count-4-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+adamic: counts: allocations 10 frees 10 retains 197 releases 138 peak 8 regions 0
+===== parallel_shapes-node.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-sanitize-16-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-sanitize-4-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-sanitize-leaks-16.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-sanitize-leaks-4.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-16-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-16-2.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-16-3.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-4-1.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-4-2.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== parallel_shapes-tsan-4-3.log =====
+exit 0
+stdout:
+2359296
+stderr:
+===== region_partial-count-4-1.log =====
+exit 0
+stdout:
+true/node7/7
+node7
+changed8
+changed8/7
+stderr:
+adamic: graph region: live 1 bytes 80 reachable 1 bytes 80 unreachable 0 bytes 0 metadata 16
+adamic: counts: allocations 9 frees 9 retains 12 releases 19 peak 4 regions 0
+===== region_partial-node.log =====
+exit 0
+stdout:
+true/node7/7
+node7
+changed8
+changed8/7
+stderr:
+===== region_partial-sanitize-4-1.log =====
+exit 0
+stdout:
+true/node7/7
+node7
+changed8
+changed8/7
+stderr:
+===== region_partial-sanitize-leaks-4.log =====
+exit 0
+stdout:
+true/node7/7
+node7
+changed8
+changed8/7
+stderr:

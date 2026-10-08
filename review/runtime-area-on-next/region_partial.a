@@ -1,0 +1,23 @@
+interface Base { readonly kind: 'node' | 'other'; }
+interface Checked extends Base { readonly kind: 'node'; readonly text: string; readonly count: number; }
+class Link {
+ next: Link | undefined = undefined;
+ readonly kind = 'node';
+ text!: string;
+ count!: number;
+}
+function run(): void {
+ const node = new Link();
+ node.next = node;
+ node.text = `node${7}`;
+ node.count = 7;
+ console.log(`${node.next === node}/${node.text}/${node.count}`);
+ const linked = node.next;
+ if (linked !== undefined) { console.log(linked.text); }
+ node.text = `changed${8}`;
+ if (linked !== undefined) { console.log(linked.text); }
+ const base: Base = node;
+ const view = base as Checked;
+ console.log(`${view.text}/${view.count}`);
+}
+run();

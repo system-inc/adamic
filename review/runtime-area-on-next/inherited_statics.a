@@ -1,0 +1,16 @@
+class Parent { static text = `parent${1}`; static count = 17; }
+class Child extends Parent { static other = true; }
+class Leaf extends Child {}
+console.log(`${Child.text}/${Child.count}/${Leaf.text}`);
+Parent.text = `parent${2}`; Parent.count = 18;
+console.log(`${Child.text}/${Child.count}/${Leaf.text}`);
+Child.text = `child${3}`; Child.count = 19;
+Parent.text = `parent${4}`; Parent.count = 20;
+console.log(`${Parent.text}/${Parent.count}/${Child.text}/${Child.count}/${Leaf.text}/${Leaf.count}`);
+Leaf.text = `leaf${5}`;
+console.log(`${Parent.text}/${Child.text}/${Leaf.text}`);
+interface Base { readonly kind: 'record' | 'other'; }
+interface Checked extends Base { readonly kind: 'record'; readonly text: string; readonly count: number; }
+function check(value: Base): string { const view = value as Checked; return `${view.text}/${view.count}`; }
+const evidence = { kind: 'record' as const, text: `evidence${1}`, count: 1 };
+console.log(check(evidence));

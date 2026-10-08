@@ -1,0 +1,17 @@
+let kept: (() => number) | undefined = undefined;
+async function run(): Promise<void> {
+ let value = 7;
+ function f(): number { return value; }
+ function get(): () => number { return f; }
+ const before = get();
+ console.log(String(f === f));
+ await Promise.resolve(1);
+ value = 9;
+ console.log(String(before === f));
+ console.log(String(f === f));
+ kept = f;
+}
+await run();
+function use(): void { if (kept !== undefined) { console.log(String(kept === kept)); console.log(String(kept())); } }
+use();
+kept = undefined;
