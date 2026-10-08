@@ -28,6 +28,11 @@ func TestWASI(t *testing.T) {
 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
+	// The toolchain is pinned: a clang other than wasi-sdk's fails here, by name, rather than skipping.
+	clang, err := WASIClang()
+	if err != nil {
+		t.Fatal(err)
+	}
 	directory := t.TempDir()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -37,7 +42,7 @@ func TestWASI(t *testing.T) {
 		"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := exec.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
+	if output, err := exec.Command(clang, append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
@@ -66,7 +71,7 @@ func TestWASI(t *testing.T) {
 			continue
 		}
 		object := filepath.Join(directory, file.name+".o")
-		wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-c", filepath.Join(directory, file.name), "-o", object)...)
+		wasiCommand(t, repository, clang, append(append([]string{}, flags...), "-c", filepath.Join(directory, file.name), "-o", object)...)
 		objects = append(objects, object)
 	}
 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
@@ -83,7 +88,7 @@ func TestWASI(t *testing.T) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		wasiCommand(t, repository, "clang", arguments...)
+		wasiCommand(t, repository, clang, arguments...)
 	}
 	fixtures := []string{
 		"internal/load/testdata/0.1/compile/01_hello.ts",
@@ -143,7 +148,7 @@ func TestWASI(t *testing.T) {
 		// Counters are for the memory probe only; oracle command stderr stays untouched.
 		for _, file := range files {
 			if strings.HasSuffix(file.name, ".c") {
-				wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-DADAMIC_COUNT", "-c", filepath.Join(directory, file.name), "-o", filepath.Join(directory, file.name+".o"))...)
+				wasiCommand(t, repository, clang, append(append([]string{}, flags...), "-DADAMIC_COUNT", "-c", filepath.Join(directory, file.name), "-o", filepath.Join(directory, file.name+".o"))...)
 			}
 		}
 		scratch := t.TempDir()

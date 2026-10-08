@@ -3,7 +3,10 @@ package native
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
+	"sync"
 )
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
@@ -30,16 +33,52 @@ func ValidateOptions(options Options) error {
 	if info, err := os.Stat(sysroot); err != nil || !info.IsDir() {
 		return fmt.Errorf("native: WASI_SYSROOT is not a directory: %s", sysroot)
 	}
+	_, err := WASIClang()
+	return err
+}
+
+// WASISDKVersion is the one wasi-sdk release every wasm32 build and test uses (bash cloud/setup.sh
+// --wasi-sdk installs it). Another clang can emit different Wasm for the same sha, and then two boxes
+// give two verdicts, so any other clang is refused by name.
+const WASISDKVersion = "27"
+
+// wasiClangVersion is how that release's clang begins its --version output.
+const wasiClangVersion = "clang version 20.1.8-wasi-sdk"
+
+type wasiClangCheck struct{ err error }
+
+// Each clang path is checked once per process; the oracle builds hundreds of modules.
+var wasiClangChecks sync.Map
+
+// WASIClang is the pinned wasi-sdk clang beside WASI_SYSROOT, or an error naming what it found instead.
+func WASIClang() (string, error) {
+	candidate := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
+	if checked, ok := wasiClangChecks.Load(candidate); ok {
+		return candidate, checked.(wasiClangCheck).err
+	}
+	err := checkWASIClang(candidate)
+	wasiClangChecks.Store(candidate, wasiClangCheck{err})
+	return candidate, err
+}
+
+func checkWASIClang(path string) error {
+	info, err := os.Stat(path)
+	if err != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
+		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk", WASISDKVersion, path)
+	}
+	output, err := exec.Command(path, "--version").Output()
+	first, _, _ := strings.Cut(string(output), "\n")
+	if err != nil || !strings.HasPrefix(first, wasiClangVersion) {
+		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s is %q", WASISDKVersion, wasiClangVersion, path, strings.TrimSpace(first))
+	}
 	return nil
 }
 
-// Prefer the SDK compiler beside its sysroot without changing the native compiler.
+// The pinned SDK compiler for wasm32, and the native compiler otherwise. ValidateOptions has refused any
+// other wasm32 clang before this is reached.
 func compilerName(options Options) string {
 	if options.Target == "wasm32-wasi" {
-		candidate := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
-		if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
-			return candidate
-		}
+		return filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	}
 	return "clang"
 }
