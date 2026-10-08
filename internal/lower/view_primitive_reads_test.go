@@ -62,7 +62,7 @@ func TestPrimitiveBindingConversionRequiresCompleteDeclaration(t *testing.T) {
 		admit bool
 	}{
 		{1, "value (field value)", true}, {0, "value (field value)", false},
-		{5, "value (field value)", false}, {1, "x.value", false},
+		{5, "value (field value)", false}, {1, "x.value", true},
 	} {
 		property := ir.Property{Name: "value", Of: ir.Union, Nullish: true, ViewContract: probe.id, View: probe.label}
 		if got := primitiveBindingConversion(program, property); got != probe.admit {

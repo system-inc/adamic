@@ -4,7 +4,6 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
 )
 
 // A representation exemption requires a complete declared primitive contract.
@@ -49,9 +48,9 @@ func (l *lowering) preparePrimitiveDestructuredRead(node *ast.Node, receiver, de
 
 // The scalar-to-box conversion is required even when no cast exists. Erasing
 // it would read a primitive producer slot as a boxed pointer. This exemption is
-// limited to binding reads with complete primitive declarations.
+// limited to complete primitive reads with complete primitive declarations.
 func primitiveBindingConversion(program *ir.Program, property ir.Property) bool {
-	if !property.Nullish || property.Of != ir.Union || !strings.HasSuffix(property.View, " (field "+property.Name+")") {
+	if !property.Nullish || property.Of != ir.Union || property.View == "" {
 		return false
 	}
 	id := property.ViewContract
@@ -67,4 +66,16 @@ func primitiveBindingConversion(program *ir.Program, property ir.Property) bool 
 	}
 	members, complete := ir.PrimitiveViewMembers(program, id)
 	return complete && len(members) > 0
+}
+
+// Pure primitive unions use the existing kind/member selector with no nullish
+// alternatives. The declared descriptor, not producer storage, admits the read.
+func (l *lowering) preparePrimitivePropertyRead(declared *checker.Type, property *ir.Property) {
+	if !l.viewPrimitiveUnionRead(declared) {
+		return
+	}
+	property.Nullish = true
+	property.NullAllowed = l.includesNull(declared)
+	property.UndefinedAllowed = l.includesUndefined(declared)
+	property.NullishKinds = l.nullishViewKinds(declared)
 }

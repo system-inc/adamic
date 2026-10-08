@@ -63,7 +63,7 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 				}
 				want := run{stdout: []byte(text)}
 				if variant == "wrong" || variant == "null" {
-					found := map[string]string{"wrong": "boolean", "null": "null"}[variant]
+					found := map[string]string{"wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of string | number | undefined; expected string | number | undefined, found " + found + "\n")}
 				}
 				if variant == "missing" {
@@ -84,7 +84,7 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 					}
 				}
 				if variant == "undefined" {
-					assertPrimitiveFirstMemberMutant(t, program, "value", false)
+					assertPrimitiveFirstMemberMutant(t, program, "value", false, "undefined\n")
 				}
 				if variant == "wrong" {
 					index := len(program.Strings)
@@ -115,6 +115,7 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 		name, root, field, declared string
 		variants                    []string
 	}{
+		{"literal-union", "StringLiteralType | NumberLiteralType", "value", "string | number", []string{"string", "number", "wrong", "null", "undefined", "missing"}},
 		{"node-links", "NodeLinks", "isExhaustive", "0 | boolean | undefined", []string{"true", "false", "zero", "undefined", "wrong-number", "wrong-string", "null", "missing"}},
 		{"emit-node", "EmitNode", "constantValue", "string | number | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
 		{"emit-node-optional", "EmitNode", "constantValue", "string | number | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing", "absent"}},
@@ -138,15 +139,22 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
+				rootName := group.root
+				if group.name == "literal-union" {
+					rootName = "StringLiteralType"
+					if variant == "number" {
+						rootName = "NumberLiteralType"
+					}
+				}
 				root := false
 				for _, contract := range program.ViewContracts {
-					if contract.Name == group.root {
+					if contract.Name == rootName {
 						for _, field := range contract.Fields {
 							root = root || field.Name == group.field
 						}
 					}
 				}
-				assertOriginalPrimitiveFields(t, directory, program, group.root, group.root)
+				assertOriginalPrimitiveFields(t, directory, program, rootName, rootName)
 				if !root {
 					t.Fatal("original complete receiver contract absent")
 				}
@@ -158,9 +166,12 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					label = "value?." + group.field
 				}
 				want := run{stdout: []byte(text)}
-				if strings.HasPrefix(variant, "wrong") || variant == "null" {
-					found := map[string]string{"wrong-number": "number", "wrong-string": "string", "wrong": "boolean", "null": "null"}[variant]
+				if strings.HasPrefix(variant, "wrong") || variant == "null" || group.name == "literal-union" && (variant == "undefined" || variant == "missing") {
+					found := map[string]string{"wrong-number": "number", "wrong-string": "string", "wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
+				}
+				if group.name == "literal-union" && variant == "missing" {
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.value is not initialized; expected string | number, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {
@@ -176,8 +187,11 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 						t.Fatal(report)
 					}
 				}
-				if variant == "undefined" {
-					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links")
+				if variant == "undefined" && group.name != "literal-union" {
+					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links", "undefined\n")
+				}
+				if group.name == "literal-union" && variant == "number" {
+					assertPrimitiveFirstMemberMutant(t, program, group.field, false, "42\n")
 				}
 				if variant == "wrong-number" || variant == "wrong" {
 					index := len(program.Strings)
@@ -258,7 +272,7 @@ func TestPrimitiveOrdinaryBinding(t *testing.T) {
 	}
 }
 
-func assertPrimitiveFirstMemberMutant(t *testing.T, program *ir.Program, field string, numeric bool) {
+func assertPrimitiveFirstMemberMutant(t *testing.T, program *ir.Program, field string, numeric bool, expected string) {
 	t.Helper()
 	var replacement ir.Expression
 	text := "firstfirst\n"
@@ -277,9 +291,36 @@ func assertPrimitiveFirstMemberMutant(t *testing.T, program *ir.Program, field s
 		if got.exitCode != 0 || string(got.stdout) != text {
 			t.Fatalf("first-member mutant must execute valid code: stdout %q stderr %q", got.stdout, got.stderr)
 		}
-		if disagreement(run{stdout: []byte("undefined\n")}, got) == "" {
+		if disagreement(run{stdout: []byte(expected)}, got) == "" {
 			t.Fatal("untested first member escaped Node control")
 		}
-		t.Log("first-member substitution caught by undefined Node control")
+		t.Log("first-member substitution caught by Node control")
+	}
+}
+
+func TestPrimitiveOrdinaryProperty(t *testing.T) {
+	file, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-property.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{stdout: []byte("word-built\n42\n")}
+	if diff := disagreement(want, onNode(t, file)); diff != "" {
+		t.Fatal("Node: " + diff)
+	}
+	program, err := lowered(t, file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Fatalf("%s: %s", diff, got.stderr)
+		}
+	}
+	got, binary := nativelyUncached(t, program)
+	if diff := disagreement(want, got); diff != "" {
+		t.Fatalf("%s: %s", diff, got.stderr)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

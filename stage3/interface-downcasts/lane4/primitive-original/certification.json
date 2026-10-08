@@ -69,6 +69,54 @@
       "tokenSourceMapRanges",
       "trailingComments",
       "typeNode"
+    ],
+    "StringLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "NumberLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "StringLiteralType | NumberLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
     ]
   },
   "pairs": [
@@ -94,6 +142,40 @@
         "isSyntacticallyString",
         "resolvedOtherFiles",
         "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 46428,
+      "type": "StringLiteralType | NumberLiteralType",
+      "field": "value",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11175,
+        "column": 46
+      },
+      "original_fields": [
+        "aliasSymbol",
+        "aliasTypeArguments",
+        "checker",
+        "flags",
+        "freshType",
+        "id",
+        "immediateBaseConstraint",
+        "pattern",
+        "permissiveInstantiation",
+        "regularType",
+        "restrictiveInstantiation",
+        "symbol",
+        "value",
+        "widened"
       ],
       "state": "certified original declarations and read syntax"
     },
@@ -267,8 +349,8 @@
       "state": "certified original declarations and read syntax"
     }
   ],
-  "certified_pairs": 5,
-  "certified_reads": 70,
-  "remaining_nonbrand_pairs": 23,
-  "remaining_nonbrand_reads": 68
+  "certified_pairs": 6,
+  "certified_reads": 76,
+  "remaining_nonbrand_pairs": 22,
+  "remaining_nonbrand_reads": 62
 }

@@ -1689,3 +1689,18 @@ conversion. Named primitiveBindingConversion in readiness.go retains the
 existing selector only for union binding reads with complete primitive
 descriptors. This is representation conversion, necessary with or without a
 view; ordinary helpers are held to Node in native, JS and sanitizer runs.
+
+### Lane 4 pure primitive property selectors
+
+Named preparePrimitivePropertyRead reuses the existing nullable selector with
+no admitted nullish alternative for pure primitive unions. Minimal object.go
+and interface_cast.go hooks require complete primitive descriptors. Readiness
+retains primitive-to-box conversion for property reads as well as bindings,
+including ordinary values. No runtime layout or emitter change. Original
+StringLiteralType | NumberLiteralType.value is the next six-read candidate.
+
+The lower NotYet table drops only its now-supported primitive field-read row;
+union field writes, class fields and array/closure storage refusals remain.
+An ordinary pure-primitive field fixture supplies Node/backend coverage.
+The original union helper is tested with viewed values of each full member;
+direct untagged union admission remains lane 4c and is not credited here.

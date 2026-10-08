@@ -66,3 +66,29 @@ is 23 / 68, using candidate counts. __String is delivered early; mixed primitive
 retain October 13, 2026, 17:00 MDT as the estimate. Whole-tsc exact reachability
 still depends on a checker-clean program. Continue most-read primitive groups;
 there is no overnight time stop.
+
+
+Pure primitive follow-up: StringLiteralType | NumberLiteralType.value is now
+certified, six candidate reads. The helper retains the exact original union
+receiver type; each fixture feeds it a viewed value of one complete original
+member. No narrowed receiver declaration is substituted. Both full member field
+sets and the stock original union read witness are checked. This does not certify
+a direct cast to the untagged object union, which is lane 4c's obligation.
+
+New preparePrimitivePropertyRead hook plus minimal object.go/interface_cast.go
+admission and readiness conversion retention reuse the existing runtime selector
+with null/undefined alternatives disabled. Ordinary pure-union field reads match
+Node and sanitizer/leak checks too. One now-supported NotYet field-read row is
+removed; writes, class fields, arrays and closure storage refusals remain tested.
+Wrong boolean, null, undefined and missing fields have exact named exit-70 pins.
+The new bypass and untested-first-member mutants execute valid release code in
+both backends and are caught: four more backend kills, 24 in the six-group suite.
+
+Uncached six-group + ordinary binding/property oracle PASS 132.186s, exit 0,
+native misses 25 and Node misses 96, no hits; logs/pure-oracle.log. Filtered lower
+refusal, primitive, callable and lazy-flow tests PASS 1.698s. Vet passes. The full
+repository gate is not claimed. Counts now: 40 / 627 certified, 23 / 63 remaining
+in the original mixed-primitive column; one remaining pair/read is lane 7.
+Nonbrand remaining is 22 / 62. Larger object-plus-primitive entries remain lane
+4b and are not credited here. Continuing with three-read nullable primitive
+fields; October 13, 17:00 MDT remains the estimate.

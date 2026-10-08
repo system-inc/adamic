@@ -16,15 +16,15 @@ const checker = program.getTypeChecker();
 const source = program.getSourceFile(path.join(root,'src/compiler/types.ts'));
 const exportsOfModule = checker.getExportsOfModule(checker.getSymbolAtLocation(source));
 const fields = {};
-for (const name of ['EvaluatorResult','NodeLinks','EmitNode']) {
+for (const name of ['EvaluatorResult','NodeLinks','EmitNode','StringLiteralType','NumberLiteralType']) {
  const symbol = exportsOfModule.find(s => s.name === name);
  if (!symbol) throw Error('original receiver absent: '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f => f.name).sort();
 }
 const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(__dirname,'../read-demand-pairs.json.gz'))));
-const ids = [10524,10525,10747,6994,6995];
+const ids = [10524,10525,10747,6994,6995,46428];
 const pairs = inventory.filter(p=>ids.includes(p.receiver_type_id) && ['value','isExhaustive','constantValue'].includes(p.field));
-if (pairs.length !== 5 || pairs.reduce((n,p)=>n+p.reads,0)!==70) throw Error('candidate pair inventory drift');
+if (pairs.length !== 6 || pairs.reduce((n,p)=>n+p.reads,0)!==76) throw Error('candidate pair inventory drift');
 for (const pair of pairs) {
  const file=program.getSourceFile(path.join(root,pair.witness.file));
  if(!file)throw Error('read source absent');
@@ -38,9 +38,10 @@ for (const pair of pairs) {
  visit(file);if(!receiverNode)throw Error('original read witness drift');
  const receiver=checker.getNonNullableType(checker.getTypeAtLocation(receiverNode));
  const names=checker.getPropertiesOfType(receiver).map(f=>f.name).sort();
- const rootName=pair.type.startsWith('EvaluatorResult')?'EvaluatorResult':pair.type.startsWith('EmitNode')?'EmitNode':'NodeLinks';
+ if(pair.receiver_type_id===46428) fields[pair.type]=names;
+ const rootName=pair.receiver_type_id===46428?pair.type:pair.type.startsWith('EvaluatorResult')?'EvaluatorResult':pair.type.startsWith('EmitNode')?'EmitNode':'NodeLinks';
  if(JSON.stringify(names)!==JSON.stringify(fields[rootName]))throw Error('original instantiated field set changed');
  pair.original_fields=names;
 }
 fs.writeFileSync(path.join(out,'primitive-manifest.json'),JSON.stringify({upstream_commit:pin.commit,types_source_sha256:hash(path.join(root,'src/compiler/types.ts')),fields,pairs},null,2)+'\n');
-console.log('Verified five original primitive pairs / seventy candidate reads and complete receiver fields');
+console.log('Verified six original primitive pairs / seventy-six candidate reads and complete receiver fields');
