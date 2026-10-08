@@ -62,9 +62,10 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
 		// Value reflection cannot use a widened view: hidden fields can have another representation.
-		// hasOwn only tests named presence and never reads a hidden value.
+		// Named hasOwn can also use literal-origin interface aliases. Unknown origins
+		// may hide constructor storage whose inherited slots are not own properties.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if name != "hasOwn" && !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) {
+		if !((name == "keys" || name == "assign" || name == "hasOwn") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])

@@ -197,9 +197,10 @@ and static descriptors retain their existing path. Plain quoted # names remain
 public; the shared key enumerator must not mistake them for private identifiers.
 The existing class_features_private.a and library_for_in.a controls hold this.
 
-Object.hasOwn on interface-annotated values is included as a small fix. It does
-not read values, so it does not need a complete-shape proof. Present plain-object,
-declared literal-key and private-name checks remain, with NUL names refused.
+Object.hasOwn on literal-origin interface annotations and aliases is included
+as a small fix. Present plain-object, declared literal-key and private-name checks
+remain, with NUL names refused. General parameters and constructor-object views
+remain NotYet: inherited constructor storage needs separate own-presence handling.
 Values/entries still require their exact shape and homogeneous representation.
 Homogeneous number | undefined values/entries are admitted using the existing
 packed-number runtime path so the requested entries control can preserve present
@@ -227,3 +228,11 @@ The complete uncached lower/native/oracle/stage3 gate is running on fixed source
 at this checkpoint. Vet, formatting and whitespace checks pass. No protected
 emit.go/lower.go hooks were needed. Full repository/stage-1 tests, Darwin/WASI
 execution and performance measurements remain outside this follow-up.
+
+A constructor boundary probe caught overbroad hasOwn admission during this
+follow-up: Object.hasOwn(Child, 'first') for an inherited static field produced
+native true versus Node false. The final admission therefore uses the existing
+literal-origin proof for annotated plain values; constructor views and unknown
+parameter origins retain their previous NotYet outcome. The empty interface
+literal and both alias directions still compile and agree with Node. Logs:
+/tmp/optional-alias-static-node.log and /tmp/optional-alias-static-native.log.
