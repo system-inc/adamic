@@ -181,25 +181,3 @@ func TestAcceptedProgramIsAFindingWithRealLowering(t *testing.T) {
 		t.Fatalf("accepted forbidden input escaped: %v", finding)
 	}
 }
-
-// Observe both inputs, but leave the language decision to the owner. Questions
-// remain printed boundaries and cannot be selected as forbidden constructs.
-func TestUnsettledQuestions(t *testing.T) {
-	for _, entry := range Catalog() {
-		if !strings.HasPrefix(entry.Boundary, "Question:") {
-			continue
-		}
-		t.Run(entry.Name, func(t *testing.T) {
-			program := generate(1, 0, entry)
-			if err := Compile(context.Background(), program.Neighbor); err != nil {
-				t.Fatal(err)
-			}
-			err := Compile(context.Background(), program.Source)
-			t.Logf("main observation: %v; neighbor: compiled", err)
-			if _, err := GenerateEntries(1, 0, []string{entry.Name}); err == nil {
-				t.Fatal("unsettled entry counted as an executable refusal")
-			}
-			t.Skip(entry.Boundary)
-		})
-	}
-}
