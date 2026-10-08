@@ -13,8 +13,9 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
+// Parallel execution reserves memory: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
 func TestMarkdownTextSplitting(t *testing.T) {
+	parallelMarkdownMemory(t, 8)
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
@@ -139,8 +140,7 @@ func TestMarkdownTextSplitting(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, f), b)
 			}
-			mutant := lowered(t, filepath.Join(scratch, "testdata/text_probe.ts"))
-			r := nativelyRun(t, mutant, cases)
+			r := onNode(t, filepath.Join(scratch, "testdata/text_probe.ts"), cases)
 			clean(t, m.name, r)
 			if bytes.Equal(r.stdout, want.stdout) {
 				t.Fatal("survived")

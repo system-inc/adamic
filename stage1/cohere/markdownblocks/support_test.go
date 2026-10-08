@@ -30,6 +30,58 @@ var formatterOnce sync.Once
 var formatterBinary string
 var formatterError error
 
+// Eight GiB for the formerly serial tests leaves eight GiB on the measured
+// sixteen-GiB box for layoutSlots' work, other parallel tests and retained heaps.
+// Each unit is 512 MiB; weights round 125% of the isolated process-tree peak up.
+var markdownMemory = newMarkdownMemoryBudget(16)
+
+type markdownMemoryBudget struct {
+	mu       sync.Mutex
+	changed  *sync.Cond
+	capacity int
+	used     int
+}
+
+func newMarkdownMemoryBudget(capacity int) *markdownMemoryBudget {
+	budget := &markdownMemoryBudget{capacity: capacity}
+	budget.changed = sync.NewCond(&budget.mu)
+	return budget
+}
+
+func (budget *markdownMemoryBudget) acquire(weight int) {
+	budget.mu.Lock()
+	defer budget.mu.Unlock()
+	for budget.used+weight > budget.capacity {
+		budget.changed.Wait()
+	}
+	budget.used += weight
+}
+
+func (budget *markdownMemoryBudget) release(weight int) {
+	budget.mu.Lock()
+	budget.used -= weight
+	budget.changed.Broadcast()
+	budget.mu.Unlock()
+}
+
+func parallelMarkdownMemory(t *testing.T, weight int) {
+	t.Helper()
+	// KEEP modes export to caller-chosen directories. Leave the newly parallel
+	// tests in the serial phase whenever an export is requested, even if callers
+	// assign the same directory to different KEEP variables.
+	for _, name := range []string{
+		"ADAMIC_MARKDOWNAST_KEEP", "ADAMIC_MDAST_KEEP", "ADAMIC_PATH_KEEP",
+		"ADAMIC_MARKDOWNBLOCKS_KEEP", "ADAMIC_MARKDOWNLISTS_KEEP",
+	} {
+		if os.Getenv(name) != "" {
+			return
+		}
+	}
+	t.Parallel()
+	markdownMemory.acquire(weight)
+	t.Cleanup(func() { markdownMemory.release(weight) })
+}
+
 type artifactKey struct {
 	source   [32]byte
 	sanitize bool
@@ -82,20 +134,25 @@ func cohereFormatter(t *testing.T) string {
 // All corpora, oracle comparisons and leak checks execute afresh even uncached.
 func nativeBinary(t *testing.T, source string, sanitize bool) string {
 	t.Helper()
-	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: sanitize}
+	binary, err := nativeBinaryResult(source, native.Options{Sanitize: sanitize})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return binary
+}
+
+func nativeBinaryResult(source string, options native.Options) (string, error) {
+	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: options.Sanitize}
 	pending := &artifactBuild{done: make(chan struct{})}
 	actual, loaded := artifacts.LoadOrStore(key, pending)
 	build := actual.(*artifactBuild)
 	if !loaded {
-		build.binary = filepath.Join(artifactDirectory, fmt.Sprintf("%x-%t", key.source, sanitize))
-		build.err = native.Build(source, build.binary, native.Options{Sanitize: sanitize})
+		build.binary = filepath.Join(artifactDirectory, fmt.Sprintf("%x-%t", key.source, key.sanitize))
+		build.err = native.Build(source, build.binary, options)
 		close(build.done)
 	}
 	<-build.done
-	if build.err != nil {
-		t.Fatal(build.err)
-	}
-	return build.binary
+	return build.binary, build.err
 }
 
 func TestNativeBuildModesAreDistinct(t *testing.T) {
@@ -130,15 +187,23 @@ type run struct {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(t *testing.T, path string) *ir.Program {
 	t.Helper()
+	result, err := loweredResult(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+
+func loweredResult(path string) (*ir.Program, error) {
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		return nil, fmt.Errorf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		return nil, fmt.Errorf("Lower: %v", err)
 	}
-	return result
+	return result, nil
 }
 
 // bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
@@ -158,6 +223,15 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
+	result, err := executeResult(t, environment, name, arguments...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+
+func executeResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
+	t.Helper()
 	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
@@ -168,19 +242,28 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := command.Run()
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		return run{}, fmt.Errorf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(t *testing.T, path string, arguments ...string) run {
 	t.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	result, err := onNodeResult(t, path, arguments...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return result
+}
+
+func onNodeResult(t *testing.T, path string, arguments ...string) (run, error) {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		return run{}, err
+	}
+	return executeResult(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
@@ -294,4 +377,38 @@ func equal(t *testing.T, name string, a, b []byte) {
 		}
 		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
+}
+
+// A fixture task collects its result without calling Fatal from a worker. The caller
+// joins every task before returning, then reports errors and comparisons on the test
+// goroutine, keeping each failure's message intact.
+type fixtureTask[T any] struct {
+	done  chan struct{}
+	value T
+	err   error
+}
+
+func startFixtureTask[T any](workers *sync.WaitGroup, work func() (T, error)) *fixtureTask[T] {
+	task := &fixtureTask[T]{done: make(chan struct{})}
+	workers.Add(1)
+	go func() {
+		defer workers.Done()
+		defer close(task.done)
+		task.value, task.err = work()
+	}()
+	return task
+}
+
+func (task *fixtureTask[T]) result() (T, error) {
+	<-task.done
+	return task.value, task.err
+}
+
+func (task *fixtureTask[T]) await(t *testing.T) T {
+	t.Helper()
+	value, err := task.result()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return value
 }
