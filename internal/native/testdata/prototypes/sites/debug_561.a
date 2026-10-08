@@ -1,0 +1,5 @@
+// debug.ts:561: live edge flowNode -> flowNodeProto; shared debug descriptors.
+const flowNode = { flags: 4 };
+const flowNodeProto = { __debugFlowFlags: "flags" };
+Object.setPrototypeOf(flowNode, flowNodeProto);
+console.log("linked");
