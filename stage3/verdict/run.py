@@ -115,7 +115,7 @@ def validate_manifest(manifest):
         raise RuntimeError('invalid baseline census')
 
 
-def baseline_suite(binary, tree, output, limit, manifest=None):
+def baseline_suite(binary, tree, output, limit, manifest=None, selected_rows=None, observer=None, command_runner=None):
     started = time.monotonic()
     output.mkdir()
     for ancestor in output.parents:
@@ -123,7 +123,7 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
             raise RuntimeError(f'outside package metadata at {ancestor}; choose an isolated output directory such as /tmp')
     manifest = manifest or json.loads((ROOT / 'selection.json').read_text())
     validate_manifest(manifest)
-    rows = manifest['cases'] if limit is None else manifest['cases'][:limit]
+    rows = selected_rows if selected_rows is not None else (manifest['cases'] if limit is None else manifest['cases'][:limit])
     if not rows:
         raise RuntimeError('empty baseline suite')
     write_json(output / 'exclusions.json', manifest['exclusions'])
@@ -218,8 +218,9 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
         timed_out = False
         with (folder / 'actual.stdout').open('wb') as stdout, (folder / 'actual.stderr').open('wb') as stderr:
             try:
-                completed = subprocess.run(argv, cwd=cwd, stdout=stdout, stderr=stderr,
-                                           timeout=float(os.environ.get('TSC_TIMEOUT', '60')))
+                completed = (command_runner(argv, cwd, stdout, stderr) if command_runner else
+                             subprocess.run(argv, cwd=cwd, stdout=stdout, stderr=stderr,
+                                            timeout=float(os.environ.get('TSC_TIMEOUT', '60'))))
                 code = completed.returncode
             except subprocess.TimeoutExpired:
                 code, timed_out = 124, True
@@ -247,6 +248,8 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
         differences = compare(folder, wanted, {'stdout': diagnostics})
         if timed_out:
             differences['timeout'] = {'seconds': float(os.environ.get('TSC_TIMEOUT', '60'))}
+        if observer:
+            observer(row, folder, cwd, wanted, differences)
         return {'case': row['source'], 'configuration': row.get('configuration', ''),
                 'capture': folder.name, 'differences': differences} if differences else None
     with ThreadPoolExecutor(max_workers=int(os.environ.get('TSC_JOBS', '4'))) as executor:
@@ -266,6 +269,11 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--tsc', type=Path, help='one executable, not a shell command')
     mode.add_argument('--compare', nargs=2, type=Path, metavar=('LEFT', 'RIGHT'), help='run two binaries against unchanged expectations and compare their captures')
+    parser.add_argument('--since', help='TypeScript source commit matching the coverage map')
+    parser.add_argument('--coverage-map', type=Path, default=ROOT / 'coverage-map.json.gz')
+    parser.add_argument('--resume-coverage', type=Path, help='reuse source-bound passing captures from an interrupted coverage measurement')
+    parser.add_argument('--record-coverage', type=Path, help='save one complete instrumented Node baseline run')
+    parser.add_argument('--source', type=Path, help='source checkout for coverage recording')
     parser.add_argument('--baseline-limit', type=int, help='explicit smoke subset; deferred cases remain counted')
     parser.add_argument('output', type=Path)
     args = parser.parse_args()
@@ -278,6 +286,18 @@ def main():
     if output.exists():
         parser.error('output directory must be new')
     output.mkdir(parents=True)
+    if args.since or args.record_coverage:
+        from differential import differential, record_coverage
+        try:
+            if args.compare or args.baseline_limit is not None:
+                raise RuntimeError('differential/coverage recording requires --tsc and the full configuration inventory')
+            if args.since:
+                return differential(binaries[0], args.since, args.coverage_map.resolve(), output)
+            return record_coverage(binaries[0], args.source, args.record_coverage.resolve(), output, args.resume_coverage)
+        except Exception as error:
+            write_json(output / 'differential-error.json', {'harness_error': str(error)})
+            print(f'Differential harness error: {error}', file=sys.stderr)
+            return 2
     if args.compare:
         from comparison import compare_compilers
         try:

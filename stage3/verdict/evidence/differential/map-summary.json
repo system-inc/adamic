@@ -1,0 +1,25 @@
+{
+  "configurations": 13693,
+  "source_files": 80,
+  "functions": 11093,
+  "exercised_functions": 8840,
+  "source_sha256": "1dc7ef16ccddb38ebbe3b0122c3751bb96b22300031327958a7c524d91b3c276",
+  "map_file_sha256": "b338bbb7137ce28db45f340897242da6e4c5fc7804fb7e74f001787889f32996",
+  "map_bytes": 13135339,
+  "timing_function": {
+    "id": "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0",
+    "index": 127,
+    "start": 127781,
+    "end": 128535,
+    "bodyStart": 127852,
+    "bodyEnd": 128535,
+    "block": true,
+    "parent": "src/compiler/binder.ts/FunctionDeclaration:createBinder#0",
+    "file": "src/compiler/binder.ts",
+    "line": 2681,
+    "sha256": "6d4b862cc4cff522b744035e6a48bfd71d468e6afbc1215b6be4b3d623ce5eb6"
+  },
+  "timing_callers": [
+    "tests/cases/conformance/statements/for-ofStatements/ES5For-of19.ts\u0000alwaysstrict=true,target=es5"
+  ]
+}

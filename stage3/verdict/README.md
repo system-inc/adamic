@@ -258,3 +258,117 @@ PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/audit_mutants.py /absolute/disp
 
 Use a separate checkout for these mutants, never a tree serving another run.
 No Adamic oracle fixtures are added, so its counts table is unchanged.
+
+## Function differential
+
+The differential is scoped to the 13,693 baseline configurations. Acceptance
+and tiny remain available through the ordinary full verdict and are explicitly
+deferred by this mode. This mode never grants the full verdict's performance
+permission.
+
+```sh
+stage3/verdict/run.sh --since TYPE_SCRIPT_BASE_COMMIT --tsc /absolute/compiler \
+  /tmp/new-differential > /tmp/differential.log 2>&1
+```
+
+`--since` is a commit in the compiler's TypeScript source checkout, not an
+Adamic compiler implementation commit. The base must exactly match the map's
+source snapshot. `coverage-map.json.gz` contains the saved complete instrumented
+Node run: a stock-API function inventory, compressed function membership for
+every configuration, and expected output hashes. Each expected hash frames
+stdout, stderr and exit independently, using the unchanged verdict diagnostic
+projection. `--coverage-map` selects another complete map explicitly.
+
+The binary must have a builder-provided `<binary>.source.json` sidecar. Create
+it after building from that exact checkout:
+
+```sh
+SLICE_TYPESCRIPT=/absolute/typescript/lib/typescript.js \
+  python3 stage3/verdict/bind_source.py /absolute/compiler /absolute/source \
+  --artifact /absolute/runtime-dependency > /tmp/bind.log 2>&1
+```
+
+Repeat `--artifact` for every external compiler code or library dependency.
+A self-contained native executable has no external code dependency; its
+installed standard libraries still belong in the binding. A Node launcher must
+bind its compiled JS and all installed libraries. The sidecar is a builder's
+source attestation, not a method of reconstructing source from machine code.
+Binary, dependencies and source bytes are validated before execution; executable
+and dependency hashes are checked again afterwards. Missing provenance refuses
+the differential. Never relabel a binary built from another source.
+
+Stock TypeScript 6.0.3 parses function boundaries. It uses SLICE_TYPESCRIPT when
+set, otherwise the stage3 API cache (STAGE3_CACHE or ~/.cache/adamic-stage3),
+then Node module resolution; other API versions are rejected. Every candidate file is hashed; only changed files are reparsed.
+Function hashes omit nested
+function bodies so a nested-body edit does not select every caller of its
+lexical container. Parent bodies retain stable markers for nested declarations;
+adding/removing/reordering declarations is conservatively visible. Stable IDs
+combine file, lexical function path, syntax kind, name and sibling ordinal.
+Function deletions select their old callers. Added or unexercised changed
+functions, file additions/deletions and changes outside functions are reported
+as coverage gaps with exit 2. They require a fresh full coverage run, never an
+inferred pass. No call graph is guessed.
+
+Selected configurations are every observed caller of each changed function,
+plus eight configurations from the remainder. The sample orders identities by
+SHA256 of a fixed seed and identity, so it is deterministic and independent of
+filesystem traversal or Python hash randomization. A changed function missing
+from every configuration is a gap even when all eight sampled cases pass.
+Sampling is a backstop, not a proof of unobserved branches or complete semantic
+coverage. Partial association omissions are not guaranteed to hit the sample.
+The map checksum catches accidental edits; source hashes catch stale maps.
+
+`differential.json` records changed functions, affected and sampled populations,
+deferred counts, gaps, exact baseline failures and end-to-end seconds. Captures
+and argv use the ordinary baseline runner, with its mount namespaces, pinned
+resources, library projection and three byte comparisons. Exit 0 means selected
+cases passed without a coverage gap; 1 means a compiler difference; 2 means a
+coverage gap or infrastructure/provenance error.
+
+To regenerate the map, use a clean pinned source checkout with upstream's
+built/local standard libraries and its npm dependencies installed:
+
+```sh
+SLICE_TYPESCRIPT=/absolute/typescript/lib/typescript.js \
+  node stage3/verdict/function_map.cjs instrument /absolute/source \
+  /tmp/instrumented > /tmp/instrument.log 2>&1
+SLICE_TYPESCRIPT=/absolute/typescript/lib/typescript.js \
+  node stage3/verdict/function_map.cjs instrument-server /absolute/source \
+  /tmp/instrumented/server > /tmp/server.log 2>&1
+# An executable /tmp/instrumented/tsc invokes node /tmp/instrumented/tsc.cjs.
+SLICE_TYPESCRIPT=/absolute/typescript/lib/typescript.js \
+  stage3/verdict/run.sh --tsc /tmp/instrumented/tsc --source /absolute/source \
+  --record-coverage /tmp/new-map.json.gz /tmp/new-coverage \
+  > /tmp/coverage.log 2>&1
+```
+
+The single full coverage measurement uses four persistent Node CLI workers.
+It instantiates a fresh CommonJS compiler module after setting each case's cwd,
+with fresh output, exit and probes, then invokes the real executeCommandLine
+entry. Only the parsed JavaScript wrapper is cached; compiler globals and lazy
+initializers are never shared between configurations. Each case records its
+actual module-initialization probes. Absolute-path configurations use the
+ordinary instrumented CLI in the existing mount namespace, with a private
+hidden capture mount so root-cwd coverage survives namespace teardown. The collector does
+not replace checking or emit with a compiler test API. A map is saved only after
+all configurations match their independent pinned reference baselines. Ignored
+generated diagnostics are recreated with the base commit's own upstream
+generator when validating source hashes. No TypeScript source is committed.
+
+`--resume-coverage PREVIOUS_OUTPUT` can continue an interrupted collection. It
+requires an identical source inventory and revalidates every reused input,
+baseline, expected-output hash and actual stdout/stderr/exit. Missing captures
+are rerun. The final report names both reused and newly measured populations;
+its seconds apply only to the new configurations. The committed campaign was
+interrupted by the root-cwd capture bug, then resumed with 12,135 revalidated
+captures and 1,558 newly measured configurations. It is not represented as one
+uninterrupted process or as a 126-second full population run.
+
+For recording, case command.json is the corresponding ordinary CLI plan.
+Persistent workers execute that argument list through a fresh compiler module;
+namespace cases additionally mount the capture directory. Differential mode
+executes the recorded CLI argv directly, with no instrumentation.
+
+The exact measurements, proof commands and all mutant results are in
+[DIFFERENTIAL.md](DIFFERENTIAL.md).
