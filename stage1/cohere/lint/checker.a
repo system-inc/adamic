@@ -1,5 +1,6 @@
 // One file view of the run's checker. Facts retain the bridge's exact selector and grammar.
-import { panic, tsgoInspect, tsgoProgram, tsgoRelease } from 'adamic';
+import { panic } from 'adamic';
+import { openBridge as tsgoProgram, inspectBridge as tsgoInspect, releaseBridge as tsgoRelease } from './checker_bridge.a';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import { Frames } from '../typeaware/frames.ts';
 
