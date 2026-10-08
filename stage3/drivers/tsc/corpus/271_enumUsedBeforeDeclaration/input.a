@@ -1,4 +1,3 @@
-// a-check: type error TS2450
 ﻿// @target: es2015
 const v: Color = Color.Green;
 const v2: ConstColor = ConstColor.Green;

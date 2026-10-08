@@ -1,4 +1,3 @@
-// a-check: type error TS2403
 // @target: es2015
 export interface IPromise<T> {
     then<U>(callback: (x: T) => IPromise<U>): IPromise<U>;

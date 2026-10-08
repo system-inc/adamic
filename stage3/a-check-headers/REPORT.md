@@ -1,8 +1,8 @@
-Added 269 first-line expectations: 13 refusals and 256 type errors; preserved every original byte.
-Base 855d114e9b37776ec3739f25d63dbf4da968d02e; gate fbac28c62493f27a788edc02a18bc8edb68de5da; delivery branch codex/stage3-a-check-headers.
-Whole stage3: 675 files, 432 accepted and exactly 243 listed findings; non-findings gate exit 0.
-All 539 header mutants caught by unchanged Gate.aCheck; focused functions Node/native oracle passes.
-No compiler repairs or full repository gate; corpus provenance audit now fails on inserted headers.
+Retained 51 first-line expectations: 13 refusals and 38 type errors; removed exactly 218 corpus headers.
+Base 855d114e; original commits 6d75652e and c59f9ab5; correction is a new commit on codex/stage3-a-check-headers.
+Whole stage3: 675 files, 214 accepted, 243 findings and 218 awaiting a corpus exemption; audit.py passes.
+Historical 539 header mutants caught; a fresh corpus-header mutant is caught by the provenance audit.
+No developer-tools exemption implemented or full repository gate run; the remaining 51 headers are unchanged.
 
 # Stage 3 a-check headers
 
@@ -12,11 +12,13 @@ Fetched current main and created the requested branch. Read CLAUDE.md and its pr
 
 The unchanged `Gate.aCheck` method was imported from `git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py`, with a harness implementing only its process/build/log interfaces. It builds `./cmd/adamic`, then calls `adamic c PATH` for every `.a` under stage3. Each process completed; full stderr and return codes for every baseline and final outcome are retained in [outcomes.json](outcomes.json).
 
-Main contains 675 files, rather than the historical 401. Baseline: **95 clean, 68 not-yet, 162 refused, 350 type errors**. The gate labels both clean and not-yet as `checked`. Final diagnostic categories are identical. There are **13 refusal headers, 256 type-error headers, 243 findings, and zero unclassified files**. The 243 findings comprise 149 refusals and 94 type errors. The raw whole-tree gate exits 1 and says `a-check failed for 243 files`; those files equal the findings set exactly. Running the identical gate over the other 432 files exits 0. No exception was built into the gate.
+Main contains 675 files, rather than the historical 401. Baseline: **95 clean, 68 not-yet, 162 refused, 350 type errors**. The gate labels both clean and not-yet as `checked`. Current diagnostic categories are identical. There are **13 refusal headers, 38 type-error headers, 243 findings, 218 files awaiting a corpus exemption, and zero unclassified files**. The 243 findings comprise 149 refusals and 94 type errors. After restoring the corpus, the raw whole-tree gate exits 1 and says `a-check failed for 461 files`: exactly the 243 findings plus the 218 restored corpus inputs. The same gate over the other 214 files exits 0. No exemption was implemented in developer tools by this unit.
+
+The user corrected the initial classification: the corpus files are verbatim upstream TypeScript test data, pinned by selection.json and exact diagnostic positions, not authored Adamic programs. Exactly the 218 corpus headers added in 6d75652e were removed. Every restored file matches its original SHA-256; the other 51 header files are byte-identical to c59f9ab5. All 300 corpus inputs now pass the existing provenance/expectation audit.
 
 ## Classification decisions
 
-Each failing file's purpose, source documents and diagnostic are recorded separately in outcomes.json. A header is inserted only where the current refusal/code reproduces the documented negative case. Census reproducers get their documented TS code or the observed refusal phrase. The 218 negative tsc corpus inputs whose errors overlap selection.json get the first observed overlapping TS code; two tiny negative checker controls also get headers. Four record CLI inputs deliberately expect unresolved paths TS2307/exit 2. Seven ledger files are explicit checker-error/diagnostic-isolation controls.
+Each failing file's purpose, source documents and diagnostic are recorded separately in outcomes.json. A header is inserted only where the current refusal/code reproduces the documented negative case. Census reproducers get their documented TS code or the observed refusal phrase. The 218 previously marked negative tsc corpus inputs are now restored verbatim and listed as awaiting a corpus exemption. Two authored tiny negative checker controls retain their headers. Four record CLI inputs deliberately expect unresolved paths TS2307/exit 2. Seven ledger files are explicit checker-error/diagnostic-isolation controls.
 
 Executable fixtures and their supporting modules retain their source unchanged, including future runtime panic cases. Parser/scanner driver probes and memoize candidates are runnable controls. The optional-widening stock-checker/analyzer witnesses remain findings. Six historical iterator/Set ledger witnesses remain findings because the dated library-fix rerun says their declaration errors should be removed. Their current standalone errors must stay visible. The repeated-destructuring source explicitly isolates a checker diagnostic, so its documented TS2488 gets a header; that does not claim the historical compiler-tree discrepancy remains.
 
@@ -26,45 +28,47 @@ The 60 clean tsc corpus controls have 28 passes and 32 findings. Of 240 negative
 
 This compact table groups census reproducer subdirectories, corpus cases, fixture cases and driver probes by their owning directory. [directories.md](directories.md) supplies counts for **every exact parent directory**, without aggregation.
 
-| Directory | Refused headers | Type-error headers | Findings | Unclassified | Pass without header |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| stage3/adapt/48-memoize | 0 | 0 | 4 | 0 | 0 |
-| stage3/adapt/75-optional-widening | 0 | 0 | 2 | 0 | 0 |
-| stage3/census/repro | 13 | 25 | 0 | 0 | 16 |
-| stage3/drivers/parser | 0 | 0 | 5 | 0 | 4 |
-| stage3/drivers/scanner | 0 | 0 | 16 | 0 | 14 |
-| stage3/drivers/tsc | 0 | 220 | 52 | 0 | 31 |
-| stage3/fixtures/assertions | 0 | 0 | 18 | 0 | 2 |
-| stage3/fixtures/cycles | 0 | 0 | 25 | 0 | 18 |
-| stage3/fixtures/enums | 0 | 0 | 3 | 0 | 11 |
-| stage3/fixtures/host | 0 | 0 | 25 | 0 | 0 |
-| stage3/fixtures/namespaces | 0 | 0 | 12 | 0 | 0 |
-| stage3/fixtures/nested-functions | 0 | 0 | 2 | 0 | 9 |
-| stage3/fixtures/objects | 0 | 0 | 16 | 0 | 9 |
-| stage3/fixtures/predicates | 0 | 0 | 10 | 0 | 1 |
-| stage3/fixtures/records | 0 | 4 | 35 | 0 | 30 |
-| stage3/fixtures/runner | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/taste | 0 | 0 | 12 | 0 | 14 |
-| stage3/ledger/checker-259 | 0 | 7 | 6 | 0 | 1 |
-| **Total** | 13 | 256 | 243 | 0 | 163 |
+| Directory | Refused headers | Type-error headers | Findings | Awaiting a corpus exemption | Unclassified | Pass without header |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| stage3/adapt/48-memoize | 0 | 0 | 4 | 0 | 0 | 0 |
+| stage3/adapt/75-optional-widening | 0 | 0 | 2 | 0 | 0 | 0 |
+| stage3/census/repro | 13 | 25 | 0 | 0 | 0 | 16 |
+| stage3/drivers/parser | 0 | 0 | 5 | 0 | 0 | 4 |
+| stage3/drivers/scanner | 0 | 0 | 16 | 0 | 0 | 14 |
+| stage3/drivers/tsc | 0 | 2 | 52 | 218 | 0 | 31 |
+| stage3/fixtures/assertions | 0 | 0 | 18 | 0 | 0 | 2 |
+| stage3/fixtures/cycles | 0 | 0 | 25 | 0 | 0 | 18 |
+| stage3/fixtures/enums | 0 | 0 | 3 | 0 | 0 | 11 |
+| stage3/fixtures/host | 0 | 0 | 25 | 0 | 0 | 0 |
+| stage3/fixtures/namespaces | 0 | 0 | 12 | 0 | 0 | 0 |
+| stage3/fixtures/nested-functions | 0 | 0 | 2 | 0 | 0 | 9 |
+| stage3/fixtures/objects | 0 | 0 | 16 | 0 | 0 | 9 |
+| stage3/fixtures/predicates | 0 | 0 | 10 | 0 | 0 | 1 |
+| stage3/fixtures/records | 0 | 4 | 35 | 0 | 0 | 30 |
+| stage3/fixtures/runner | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/taste | 0 | 0 | 12 | 0 | 0 | 14 |
+| stage3/ledger/checker-259 | 0 | 7 | 6 | 0 | 0 | 1 |
+| **Total** | 13 | 38 | 243 | 218 | 0 | 163 |
 
 ## Verification and mutants
 
-All 269 edited sources equal `header + LF + original bytes from origin/main`; all other 406 `.a` files are byte-identical. Existing comments, BOMs and CRLF source bodies are preserved below the inserted line. `git diff --check` passes. No compiler or runtime source changed.
+The 51 remaining edited sources equal `header + LF + original bytes from origin/main`; all other 624 `.a` files are byte-identical to origin/main. This correction changes exactly 218 `.a` files, each by deleting only the first header line; all 51 retained header files are byte-identical to the previous branch head c59f9ab5. Existing comments, BOMs and CRLF source bodies are preserved below the inserted line. `git diff --check` passes. No compiler or runtime source changed.
 
-Actual temporary first-line mutants were restored in finally blocks. [mutants.json](mutants.json) lists every mutant and the exact gate failure that caught it:
+The original pass ran actual temporary first-line mutants, restored in finally blocks. The following results are historical; corpus headers tested then have now been removed. [mutants.json](mutants.json) lists every mutant and the exact gate failure that caught it:
 
 * 269 wrong-code/rule headers: TS999999 or MUTANT_NONEXISTENT_RULE; each singleton gate exits 1.
 * 269 deleted headers: each intentional failure becomes an unexpected failure; each gate exits 1.
 * One expected-error header on green-control.a: the actual checked outcome is rejected; gate exits 1.
 
-All **539/539** were caught. The final whole-tree and 432-file checks were run after restoration. [logs/mutants.log](logs/mutants.log) records elapsed time.
+All **539/539** were caught in the original pass. This includes 103 checks for the retained 51 headers and green control. The correction reran the whole-tree and 214-file checks after restoring corpus bytes. A fresh temporary header on 061_constEnumErrors/input.a makes audit.py exit 1 on the source hash; restoring the bytes makes the audit exit 0 again. [logs/mutants.log](logs/mutants.log) records elapsed time.
 
-`go test ./internal/oracle -count=1 -v -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^functions[.]a$' -timeout 10m > /tmp/stage3-a-check/oracle-functions.log 2>&1` passes the actual functions fixture, comparing Node, JavaScript backend, native release and sanitized native output (11.677s). An initial shorter subtest filter matched no tests; its log is retained and is not counted as coverage. No full repository gate, entire Node fixture suite, or compiler semantic mutant run is claimed.
+The original pass ran `go test ./internal/oracle -count=1 -v -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^functions[.]a$' -timeout 10m > /tmp/stage3-a-check/oracle-functions.log 2>&1` passes the actual functions fixture, comparing Node, JavaScript backend, native release and sanitized native output (11.677s). An initial shorter subtest filter matched no tests; its log is retained and is not counted as coverage. No full repository gate, entire Node fixture suite, or compiler semantic mutant run is claimed.
 
-## Corpus provenance limitation
+## Corpus provenance restored; exemption pending
 
-`python3 stage3/drivers/tsc/audit.py` passed before header insertion. It now exits 1 with `AssertionError: source hash: 061_constEnumErrors`, because selection.json asserts byte-for-byte original upstream source hashes. All 218 edited corpus source hashes differ by the required header. Source materialization preserves this new comment, so corpus diagnostic line positions also shift; downstream golden comparisons can require follow-up. The four negative record CLI inputs can likewise shift their stock-tsc diagnostic positions; that complete CLI golden suite was not rerun. Manifests, materialization code and goldens are outside this first-line-only unit and were left unchanged. This is an observed additional red check, not a claim that all repository gates pass. Both audit logs are retained. The unchanged source bodies can be recovered by removing the new first line and match the original hashes; this does not make the existing audit green.
+`python3 stage3/drivers/tsc/audit.py` now exits **0** and prints `PASS provenance, 300 cases, 60 clean, baseline summaries, headers, golden bytes and exits`. The initial failure after corpus header insertion is retained as historical evidence in logs/provenance-after.log. All 218 affected inputs are restored byte-for-byte, including original BOMs, comments and CRLFs, so their source hashes and materialized source positions are restored. selection.json, materialization code, baselines and goldens were not changed.
+
+A fresh first-line comment mutant in 061_constEnumErrors/input.a is caught solely by the audit's source-hash assertion; its log is retained in logs/corpus-provenance-mutant.log. The mutant is restored before the final passing audit. The new byte-verification log proves exactly 218 first-line removals and all other 51 header files unchanged. No corpus exemption was implemented here: these 218 inputs await the developer-tools change, and the unmodified a-check still rejects them. The four negative record CLI inputs retain their original branch headers; their complete CLI golden suite was not rerun.
 
 ## Reproduce the exact local check
 
@@ -74,16 +78,18 @@ Run from the repository root after sourcing setup's env.sh. Save this harness to
 mkdir -p /tmp/stage3-a-check
 git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py > /tmp/stage3-a-check/gate.py
 python3 /tmp/stage3-a-check/run.py final > /tmp/stage3-a-check/final.log 2>&1
-# Expected whole-tree exit: 1, exactly the 243 report findings.
+# Expected whole-tree exit: 1, 243 findings plus 218 awaiting a corpus exemption.
 python3 - <<'PYCODE'
 import json
 from pathlib import Path
 rows = json.loads(Path('stage3/a-check-headers/outcomes.json').read_text())
 Path('/tmp/stage3-a-check/accepted-paths.json').write_text(json.dumps(
-    [p for p, r in rows.items() if r['classification'] not in ('finding', 'unclassified')]))
+    [p for p, r in rows.items() if r['classification'] not in ('finding', 'unclassified', 'awaiting a corpus exemption')]))
 PYCODE
 python3 /tmp/stage3-a-check/run.py accepted /tmp/stage3-a-check/accepted-paths.json > /tmp/stage3-a-check/accepted.log 2>&1
-# Expected exit: 0, 432 files.
+# Expected exit: 0, 214 files.
+python3 stage3/drivers/tsc/audit.py > /tmp/stage3-a-check/provenance-restored.log 2>&1
+# Expected exit: 0, all 300 corpus hashes and baseline/golden consistency.
 ```
 
 ```python
@@ -113,6 +119,231 @@ print(h.failure or 'PASS')
 
 sys.exit(h.exits["a-check"])
 ```
+
+## Awaiting a corpus exemption
+
+These **218** files are upstream test data restored to their pinned original bytes. Their observed stage-0 type errors remain in outcomes.json; each awaits a developer-tools corpus exemption.
+
+| File | Disposition |
+| --- | --- |
+| stage3/drivers/tsc/corpus/061_constEnumErrors/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/062_interfaceDeclaration1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/063_didYouMeanSuggestionErrors/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/064_recursiveFunctionTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/065_callOverloads2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/066_decoratorUsedBeforeDeclaration/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/067_undefinedTypeAssignment4/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/068_emitCapturingThisInTupleDestructuring1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/069_computedPropertiesInDestructuring1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/070_assignmentToReferenceTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/071_overloadModifiersMustAgree/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/072_noImplicitAnyForIn/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/073_superNewCall1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/075_recursiveConditionalCrash4/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/076_interfacedeclWithIndexerErrors/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/077_objectLitIndexerContextualType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/078_weakType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/079_nullableFunctionError/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/081_errorForUsingPropertyOfTypeAsType03/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/083_indirectSelfReferenceGeneric/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/084_thisInModule/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/086_noImplicitSymbolToString/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/087_strictModeInConstructor/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/088_baseConstraintOfDecorator/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/089_moduleVisibilityTest3/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/090_constraintWithIndexedAccess/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/091_excessivelyLargeTupleSpread/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/092_omittedExpressionForOfLoop/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/093_typeOfEnumAndVarRedeclarations/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/095_interfaceExtendsClassWithPrivate1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/096_importDeclRefereingExternalModuleWithNoResolve/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/097_mappedTypeGenericWithKnownKeys/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/098_moduleAugmentationGlobal7_1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/100_scopeCheckExtendedClassInsidePublicMethod2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/101_noUncheckedIndexedAccessCompoundAssignments/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/102_implicitAnyDeclareTypePropertyWithoutType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/104_mixedStaticAndInstanceClassMembers/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/105_exportDefaultTypeClassAndValue/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/106_interfaceMergeWithNonGenericTypeArguments/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/107_objectFreeze/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/108_redeclareParameterInCatchBlock/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/109_classExtendsNull2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/110_importDeclWithExportModifierAndExportAssignment/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/111_circularlyReferentialInterfaceAccessNoCrash/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/112_noImplicitAnyParametersInInterface/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/113_duplicateSymbolsExportMatching/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/116_recursivelyExpandingUnionNoStackoverflow/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/117_typeUsedAsTypeLiteralIndex/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/118_anyMappedTypesError/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/119_yieldExpressionInFlowLoop/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/120_excessPropertyCheckWithSpread/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/121_switchCasesExpressionTypeMismatch/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/122_literalsInComputedProperties1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/123_narrowByEquality/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/124_this_inside-enum-should-not-be-allowed/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/125_noMappedGetSet/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/126_restInvalidArgumentType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/127_forInStatement4/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/129_enumWithPrimitiveName/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/130_inheritedStringIndexersFromDifferentBaseTypes2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/131_errorsForCallAndAssignmentAreSimilar/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/132_missingCommaInTemplateStringsArray/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/133_forInStatement2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/134_augmentedTypesEnum/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/135_narrowingTruthyObject/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/136_nestedFreshLiteral/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/137_duplicateErrorNameNotFound/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/138_voidAsOperator/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/139_typeParametersInStaticAccessors/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/140_arrayAssignmentTest5/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/141_forInStrictNullChecksNoError/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/142_spreadUnionPropOverride/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/143_enumPropertyAccessBeforeInitalisation/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/144_inheritedStringIndexersFromDifferentBaseTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/145_ClassDeclaration10/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/146_noImplicitAnyIndexing/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/147_genericMappedTypeAsClause/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/148_nonArrayRestArgs/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/149_undefinedTypeAssignment1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/150_useUnknownInCatchVariables01/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/151_normalizedIntersectionTooComplex/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/152_errorOnEnumReferenceInCondition/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/153_returnTypeTypeArguments/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/154_emitThisInSuperMethodCall/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/155_varianceReferences/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/156_misspelledNewMetaProperty/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/157_varNameConflictsWithImportInDifferentPartOfModule/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/158_incorrectRecursiveMappedTypeConstraint/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/159_objectBindingPattern_restElementWithPropertyName/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/162_instanceofWithPrimitiveUnion/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/163_ArrowFunctionExpression1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/164_staticOffOfInstance1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/165_defaultValueInConstructorOverload1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/166_inheritanceMemberFuncOverridingProperty/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/167_compareTypeParameterConstrainedByLiteralToLiteral/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/168_importedModuleAddToGlobal/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/169_spreadInvalidArgumentType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/171_extendPrivateConstructorClass/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/172_constDeclarationShadowedByVarDeclaration/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/173_selfReferencesInFunctionParameters/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/174_baseExpressionTypeParameters/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/175_propertyOrdering/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/177_readonlyTupleAndArrayElaboration/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/178_bitwiseCompoundAssignmentOperators/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/179_callOnClass/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/180_keywordExpressionInternalComments/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/181_noImplicitAnyDestructuringParameterDeclaration/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/182_propertyAccessibility1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/183_internalImportInstantiatedModuleNotReferencingInstance/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/184_bindingPatternCannotBeOnlyInferenceSource/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/185_restParamsWithNonRestParams/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/186_superInConstructorParam1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/187_deleteReadonlyInStrictNullChecks/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/188_uncalledFunctionChecksInConditional/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/189_circularModuleImports/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/190_interfaceMayNotBeExtendedWitACall/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/191_extendedInterfacesWithDuplicateTypeParameters/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/192_constructorOverloads1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/195_inheritanceMemberAccessorOverridingProperty/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/197_classExtendsInterfaceInModule/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/198_shadowPrivateMembers/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/199_getterMissingReturnError/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/200_instantiationExpressionErrorNoCrash/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/201_thisPredicateInObjectLiteral/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/202_reservedNameOnInterfaceImport/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/203_incrementOnTypeParameter/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/204_classExpressionExtendingAbstractClass/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/208_importAliasInModuleAugmentation/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/209_genericSpecializations2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/210_illegalSuperCallsInConstructor/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/211_functionParameterArityMismatch/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/212_duplicateIdentifierDifferentModifiers/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/213_inheritanceMemberPropertyOverridingAccessor/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/215_classImplementsPrimitive/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/216_functionTypeArgumentArityErrors/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/218_shorthandPropertyUndefined/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/219_classImplementsClass4/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/222_staticPrototypeProperty/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/223_instanceofOnInstantiationExpression/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/224_newFunctionImplicitAny/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/225_returnInConstructor1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/226_assigningFromObjectToAnythingElse/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/227_classFieldSuperNotAccessible/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/228_inKeywordAndUnknown/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/230_parameterPropertyInConstructor3/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/231_circularReferenceInReturnType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/232_neverNullishThroughParentheses/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/233_noImplicitAnyNamelessParameter/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/234_superCallFromClassThatHasNoBaseType1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/236_returnValueInSetter/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/237_gettersAndSettersAccessibility/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/238_typeParameterAsBaseClass/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/240_indexedAccessPrivateMemberOfGenericConstraint/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/242_constDeclarations-access2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/243_classExtendsNull3/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/245_inheritanceMemberFuncOverridingAccessor/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/246_noCrashOnMixin/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/247_missingDomElements/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/248_relationComplexityError/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/249_mergedClassNamespaceRecordCast/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/250_parseInvalidNonNullableTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/253_correctOrderOfPromiseMethod/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/254_parseTypes/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/255_keyRemappingKeyofResult/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/256_namespaceDisambiguationInUnion/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/257_generatorES6_5/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/258_decoratorMetadataGenericTypeVariableInScope/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/259_conditionalAnyCheckTypePicksBothBranches/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/261_promiseIdentity2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/262_decoratorMetadataConditionalType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/263_keyofIsLiteralContexualType/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/265_promiseIdentity/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/266_decoratorMetadataGenericTypeVariableDefault/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/267_reverseMappedTypeContextualTypeNotCircular/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/270_promiseChaining1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/271_enumUsedBeforeDeclaration/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/272_conditionalExpressionNewLine3/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/273_stringMappingAssignability/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/274_ipromise3/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/276_intersectionsAndOptionalProperties/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/277_useBeforeDeclaration_destructuring/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/278_typeOfOperator1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/279_enumAssignmentCompat/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/281_doubleUnderStringLiteralAssignability/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/282_ipromise4/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/283_errorsWithInvokablesInUnions01/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/284_exhaustiveSwitchCheckCircularity/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/285_numberAssignableToEnumInsideUnion/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/286_conditionalExpressionNewLine9/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/288_numberOnLeftSideOfInExpression/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/289_awaitedTypeStrictNull/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/290_contextuallyTypingOrOperator/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/291_nonexistentPropertyOnUnion/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/292_scopingInCatchBlocks/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/293_augmentedTypesEnum2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/294_mappedTypeWithCombinedTypeMappers/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/296_numberToString/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/297_promiseIdentityWithAny/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/298_destructuringAssignmentWithDefault2/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/299_contextualTypingOfArrayLiterals1/input.a | awaiting a corpus exemption |
+| stage3/drivers/tsc/corpus/300_errorMessageOnIntersectionsWithDiscriminants01/input.a | awaiting a corpus exemption |
 
 ## Every finding
 

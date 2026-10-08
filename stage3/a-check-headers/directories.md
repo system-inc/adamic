@@ -1,443 +1,443 @@
 # Exact parent-directory counts
 
-Every directory containing a scanned `.a` file is listed, including zero-header controls.
+Every directory containing a scanned `.a` file is listed, including zero-header controls and restored corpus data awaiting an exemption.
 
-| Directory | Refused headers | Type-error headers | Findings | Unclassified | Pass without header |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| stage3/adapt/48-memoize | 0 | 0 | 4 | 0 | 0 |
-| stage3/adapt/75-optional-widening/coverage | 0 | 0 | 1 | 0 | 0 |
-| stage3/adapt/75-optional-widening/probes | 0 | 0 | 1 | 0 | 0 |
-| stage3/census/repro | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r01 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r02 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r03 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r04 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r05 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r06 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r07 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r08 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r09 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r10 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r11 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r12 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r13 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r14 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r15 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r16 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r17 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r18 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r19 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r20 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r21 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r22 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r23 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r24 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r25 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r26 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r27 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r28 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r29 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r30 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r31 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r32 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r33 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r34 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r35 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r36 | 0 | 0 | 0 | 0 | 1 |
-| stage3/census/repro/r37 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r38 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r39 | 1 | 0 | 0 | 0 | 0 |
-| stage3/census/repro/r40 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r41 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r42 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r43 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r44 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r45 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r46 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r47 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r48 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/r49 | 0 | 1 | 0 | 0 | 0 |
-| stage3/census/repro/structural-cycle | 0 | 0 | 0 | 0 | 2 |
-| stage3/census/repro/structural-roots | 0 | 0 | 0 | 0 | 2 |
-| stage3/drivers/parser | 0 | 0 | 5 | 0 | 4 |
-| stage3/drivers/scanner | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/scanner/probes | 0 | 0 | 15 | 0 | 2 |
-| stage3/drivers/scanner/probes/cyclic-initialized-enum | 0 | 0 | 0 | 0 | 4 |
-| stage3/drivers/scanner/probes/cyclic-initialized-value | 0 | 0 | 0 | 0 | 4 |
-| stage3/drivers/scanner/probes/cyclic-premature-value | 0 | 0 | 0 | 0 | 4 |
-| stage3/drivers/tsc/corpus/001_varianceCantBeStrictWhileStructureIsnt | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/003_commentOnClassAccessor1 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/004_metadataOfUnion | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/006_arrayDestructuringInSwitch1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/007_nestedBlockScopedBindings15 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/008_library_StringSlice | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/009_es6ModuleWithModuleGenTargetCommonjs | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/011_namespaces2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/012_expandoFunctionExpressionsWithDynamicNames2 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/013_parseEntityNameWithReservedWord | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/014_keyofObjectWithGlobalSymbolIncluded | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/015_decoratorReferences | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/016_yieldStarContextualType | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/017_binopAssignmentShouldHaveType | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/018_typeofUsedBeforeBlockScoped | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/019_superHasMethodsFromMergedInterface | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/020_intersectionApparentTypeCaching | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/021_commentOnArrayElement12 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/022_nestedBlockScopedBindings4 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/023_capturedLetConstInLoop10_ES6 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/024_genericTypeParameterEquivalence2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/025_exportArrayBindingPattern | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/026_functionAssignmentError | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/027_multiExtendsSplitInterfaces1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/028_stringMatchAll | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/029_enumLiteralUnionNotWidened | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/033_assignmentCompatability6 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/034_parseReplacementCharacter | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/035_classOrder1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/036_conditionalExpressions2 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/037_singletonLabeledTuple | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/038_breakInIterationOrSwitchStatement1 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/040_emitOneLineVariableDeclarationRemoveCommentsFalse | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/041_nongenericConditionalNotPartiallyComputed | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/043_collisionThisExpressionAndLocalVarInProperty | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/044_functionWithDefaultParameterWithNoStatements10 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/046_assignmentCompatForEnums | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/047_promiseWithResolvers | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/049_decoratorMetadataNoStrictNull | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/050_unusedInterfaceinNamespace4 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/051_extendedUnicodeEscapeSequenceIdentifiers | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/052_commentOnClassAccessor2 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/054_contextualTyping19 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/056_genericCallInferenceInConditionalTypes1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/057_localImportNameVsGlobalName | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/058_contextualTypingOfConditionalExpression | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/059_functionOverloads31 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/060_numberAsInLHS | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/061_constEnumErrors | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/062_interfaceDeclaration1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/063_didYouMeanSuggestionErrors | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/064_recursiveFunctionTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/065_callOverloads2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/066_decoratorUsedBeforeDeclaration | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/067_undefinedTypeAssignment4 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/068_emitCapturingThisInTupleDestructuring1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/069_computedPropertiesInDestructuring1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/070_assignmentToReferenceTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/071_overloadModifiersMustAgree | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/072_noImplicitAnyForIn | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/073_superNewCall1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/075_recursiveConditionalCrash4 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/076_interfacedeclWithIndexerErrors | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/077_objectLitIndexerContextualType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/078_weakType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/079_nullableFunctionError | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/080_builtinIterator | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/081_errorForUsingPropertyOfTypeAsType03 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/082_unusedDestructuring | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/083_indirectSelfReferenceGeneric | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/084_thisInModule | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/086_noImplicitSymbolToString | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/087_strictModeInConstructor | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/088_baseConstraintOfDecorator | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/089_moduleVisibilityTest3 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/090_constraintWithIndexedAccess | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/091_excessivelyLargeTupleSpread | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/092_omittedExpressionForOfLoop | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/093_typeOfEnumAndVarRedeclarations | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/095_interfaceExtendsClassWithPrivate1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/096_importDeclRefereingExternalModuleWithNoResolve | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/097_mappedTypeGenericWithKnownKeys | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/098_moduleAugmentationGlobal7_1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/100_scopeCheckExtendedClassInsidePublicMethod2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/101_noUncheckedIndexedAccessCompoundAssignments | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/102_implicitAnyDeclareTypePropertyWithoutType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/104_mixedStaticAndInstanceClassMembers | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/105_exportDefaultTypeClassAndValue | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/106_interfaceMergeWithNonGenericTypeArguments | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/107_objectFreeze | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/108_redeclareParameterInCatchBlock | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/109_classExtendsNull2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/110_importDeclWithExportModifierAndExportAssignment | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/111_circularlyReferentialInterfaceAccessNoCrash | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/112_noImplicitAnyParametersInInterface | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/113_duplicateSymbolsExportMatching | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/115_unusedClassesinNamespace4 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/116_recursivelyExpandingUnionNoStackoverflow | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/117_typeUsedAsTypeLiteralIndex | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/118_anyMappedTypesError | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/119_yieldExpressionInFlowLoop | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/120_excessPropertyCheckWithSpread | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/121_switchCasesExpressionTypeMismatch | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/122_literalsInComputedProperties1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/123_narrowByEquality | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/124_this_inside-enum-should-not-be-allowed | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/125_noMappedGetSet | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/126_restInvalidArgumentType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/127_forInStatement4 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/128_noImplicitAnyUnionNormalizedObjectLiteral1 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/129_enumWithPrimitiveName | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/130_inheritedStringIndexersFromDifferentBaseTypes2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/131_errorsForCallAndAssignmentAreSimilar | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/132_missingCommaInTemplateStringsArray | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/133_forInStatement2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/134_augmentedTypesEnum | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/135_narrowingTruthyObject | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/136_nestedFreshLiteral | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/137_duplicateErrorNameNotFound | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/138_voidAsOperator | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/139_typeParametersInStaticAccessors | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/140_arrayAssignmentTest5 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/141_forInStrictNullChecksNoError | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/142_spreadUnionPropOverride | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/143_enumPropertyAccessBeforeInitalisation | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/144_inheritedStringIndexersFromDifferentBaseTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/145_ClassDeclaration10 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/146_noImplicitAnyIndexing | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/147_genericMappedTypeAsClause | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/148_nonArrayRestArgs | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/149_undefinedTypeAssignment1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/150_useUnknownInCatchVariables01 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/151_normalizedIntersectionTooComplex | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/152_errorOnEnumReferenceInCondition | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/153_returnTypeTypeArguments | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/154_emitThisInSuperMethodCall | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/155_varianceReferences | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/156_misspelledNewMetaProperty | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/157_varNameConflictsWithImportInDifferentPartOfModule | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/158_incorrectRecursiveMappedTypeConstraint | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/159_objectBindingPattern_restElementWithPropertyName | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/162_instanceofWithPrimitiveUnion | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/163_ArrowFunctionExpression1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/164_staticOffOfInstance1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/165_defaultValueInConstructorOverload1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/166_inheritanceMemberFuncOverridingProperty | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/167_compareTypeParameterConstrainedByLiteralToLiteral | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/168_importedModuleAddToGlobal | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/169_spreadInvalidArgumentType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/171_extendPrivateConstructorClass | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/172_constDeclarationShadowedByVarDeclaration | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/173_selfReferencesInFunctionParameters | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/174_baseExpressionTypeParameters | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/175_propertyOrdering | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/176_exportSpecifierReferencingOuterDeclaration1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/177_readonlyTupleAndArrayElaboration | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/178_bitwiseCompoundAssignmentOperators | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/179_callOnClass | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/180_keywordExpressionInternalComments | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/181_noImplicitAnyDestructuringParameterDeclaration | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/182_propertyAccessibility1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/183_internalImportInstantiatedModuleNotReferencingInstance | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/184_bindingPatternCannotBeOnlyInferenceSource | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/185_restParamsWithNonRestParams | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/186_superInConstructorParam1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/187_deleteReadonlyInStrictNullChecks | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/188_uncalledFunctionChecksInConditional | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/189_circularModuleImports | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/190_interfaceMayNotBeExtendedWitACall | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/191_extendedInterfacesWithDuplicateTypeParameters | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/192_constructorOverloads1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/194_reachabilityChecks1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/195_inheritanceMemberAccessorOverridingProperty | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/197_classExtendsInterfaceInModule | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/198_shadowPrivateMembers | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/199_getterMissingReturnError | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/200_instantiationExpressionErrorNoCrash | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/201_thisPredicateInObjectLiteral | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/202_reservedNameOnInterfaceImport | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/203_incrementOnTypeParameter | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/204_classExpressionExtendingAbstractClass | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/205_noImplicitReturnsInAsync2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/208_importAliasInModuleAugmentation | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/209_genericSpecializations2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/210_illegalSuperCallsInConstructor | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/211_functionParameterArityMismatch | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/212_duplicateIdentifierDifferentModifiers | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/213_inheritanceMemberPropertyOverridingAccessor | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/214_ambientExternalModuleWithRelativeModuleName | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/215_classImplementsPrimitive | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/216_functionTypeArgumentArityErrors | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/217_fallFromLastCase2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/218_shorthandPropertyUndefined | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/219_classImplementsClass4 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/220_bigIntWithTargetLessThanES2016 | 0 | 0 | 0 | 0 | 1 |
-| stage3/drivers/tsc/corpus/221_unusedParameterProperty2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/222_staticPrototypeProperty | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/223_instanceofOnInstantiationExpression | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/224_newFunctionImplicitAny | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/225_returnInConstructor1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/226_assigningFromObjectToAnythingElse | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/227_classFieldSuperNotAccessible | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/228_inKeywordAndUnknown | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/230_parameterPropertyInConstructor3 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/231_circularReferenceInReturnType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/232_neverNullishThroughParentheses | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/233_noImplicitAnyNamelessParameter | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/234_superCallFromClassThatHasNoBaseType1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/235_reachabilityChecks3 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/236_returnValueInSetter | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/237_gettersAndSettersAccessibility | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/238_typeParameterAsBaseClass | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/240_indexedAccessPrivateMemberOfGenericConstraint | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/242_constDeclarations-access2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/243_classExtendsNull3 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/245_inheritanceMemberFuncOverridingAccessor | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/246_noCrashOnMixin | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/247_missingDomElements | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/248_relationComplexityError | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/249_mergedClassNamespaceRecordCast | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/250_parseInvalidNonNullableTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/252_unusedFunctionsinNamespaces3 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/253_correctOrderOfPromiseMethod | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/254_parseTypes | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/255_keyRemappingKeyofResult | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/256_namespaceDisambiguationInUnion | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/257_generatorES6_5 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/258_decoratorMetadataGenericTypeVariableInScope | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/259_conditionalAnyCheckTypePicksBothBranches | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/260_unusedFunctionsinNamespaces6 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/261_promiseIdentity2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/262_decoratorMetadataConditionalType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/263_keyofIsLiteralContexualType | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/264_unusedVariablesinNamespaces3 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/265_promiseIdentity | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/266_decoratorMetadataGenericTypeVariableDefault | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/267_reverseMappedTypeContextualTypeNotCircular | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/269_unusedFunctionsinNamespaces5 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/270_promiseChaining1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/271_enumUsedBeforeDeclaration | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/272_conditionalExpressionNewLine3 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/273_stringMappingAssignability | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/274_ipromise3 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/275_unusedInterfaceinNamespace1 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/276_intersectionsAndOptionalProperties | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/277_useBeforeDeclaration_destructuring | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/278_typeOfOperator1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/279_enumAssignmentCompat | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/280_unusedClassesinNamespace2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/281_doubleUnderStringLiteralAssignability | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/282_ipromise4 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/283_errorsWithInvokablesInUnions01 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/284_exhaustiveSwitchCheckCircularity | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/285_numberAssignableToEnumInsideUnion | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/286_conditionalExpressionNewLine9 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/287_unusedFunctionsinNamespaces2 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/288_numberOnLeftSideOfInExpression | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/289_awaitedTypeStrictNull | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/290_contextuallyTypingOrOperator | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/291_nonexistentPropertyOnUnion | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/292_scopingInCatchBlocks | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/293_augmentedTypesEnum2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/294_mappedTypeWithCombinedTypeMappers | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/295_unusedFunctionsinNamespaces4 | 0 | 0 | 1 | 0 | 0 |
-| stage3/drivers/tsc/corpus/296_numberToString | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/297_promiseIdentityWithAny | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/298_destructuringAssignmentWithDefault2 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/299_contextualTypingOfArrayLiterals1 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/corpus/300_errorMessageOnIntersectionsWithDiscriminants01 | 0 | 1 | 0 | 0 | 0 |
-| stage3/drivers/tsc/tiny | 0 | 2 | 0 | 0 | 1 |
-| stage3/fixtures/assertions | 0 | 0 | 18 | 0 | 2 |
-| stage3/fixtures/cycles/01_call_time | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/01_call_time/_namespaces | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/cycles/02_reverse_barrel | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/02_reverse_barrel/_namespaces | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/cycles/03_extensions | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/03_extensions/_namespaces | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/cycles/04_directory_callback | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/04_directory_callback/_namespaces | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/cycles/05_safe_load_read | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/cycles/05_safe_load_read/_namespaces | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/cycles/06_import_order_mutant | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/cycles/06_import_order_mutant/_namespaces | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/cycles/07_namespace_barrel | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/07_namespace_barrel/_namespaces | 0 | 0 | 2 | 0 | 0 |
-| stage3/fixtures/cycles/08_named_reexports | 0 | 0 | 3 | 0 | 0 |
-| stage3/fixtures/cycles/08_named_reexports/_namespaces | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/cycles/09_function_value_load | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/cycles/09_function_value_load/_namespaces | 0 | 0 | 0 | 0 | 2 |
-| stage3/fixtures/cycles/10_hoisted_before_body | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/cycles/10_hoisted_before_body/_namespaces | 0 | 0 | 0 | 0 | 2 |
-| stage3/fixtures/enums | 0 | 0 | 3 | 0 | 11 |
-| stage3/fixtures/host | 0 | 0 | 25 | 0 | 0 |
-| stage3/fixtures/namespaces | 0 | 0 | 12 | 0 | 0 |
-| stage3/fixtures/nested-functions | 0 | 0 | 2 | 0 | 9 |
-| stage3/fixtures/objects | 0 | 0 | 16 | 0 | 9 |
-| stage3/fixtures/predicates | 0 | 0 | 10 | 0 | 1 |
-| stage3/fixtures/records | 0 | 0 | 19 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/01_paths-missing_constructor | 0 | 1 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/02_paths-missing_toString | 0 | 1 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/03_paths-missing_hasOwnProperty | 0 | 1 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/04_paths-missing___proto__ | 0 | 1 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/05_paths-own_constructor | 0 | 0 | 1 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/06_paths-own_toString | 0 | 0 | 1 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty | 0 | 0 | 1 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/08_paths-own___proto__ | 0 | 0 | 1 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/09_exports-missing_constructor | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/10_exports-missing_toString | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/10_exports-missing_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/12_exports-missing___proto__ | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/12_exports-missing___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/13_exports-own_constructor | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/13_exports-own_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/14_exports-own_toString | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/14_exports-own_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/16_exports-own___proto__ | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/16_exports-own___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__ | 0 | 0 | 1 | 0 | 0 |
-| stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/21_config-unknown_constructor | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/22_config-unknown_toString | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/23_config-unknown_hasOwnProperty | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/24_config-unknown___proto__ | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/26_cli-unknown_toString | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/27_cli-unknown_hasOwnProperty | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/28_cli-unknown___proto__ | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/29_compare-old | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/records/input-fixtures/30_compare-new | 0 | 0 | 0 | 0 | 1 |
-| stage3/fixtures/runner | 0 | 0 | 0 | 0 | 3 |
-| stage3/fixtures/taste | 0 | 0 | 12 | 0 | 12 |
-| stage3/fixtures/taste/support | 0 | 0 | 0 | 0 | 2 |
-| stage3/ledger/checker-259/witnesses | 0 | 7 | 6 | 0 | 1 |
-| **Total** | 13 | 256 | 243 | 0 | 163 |
+| Directory | Refused headers | Type-error headers | Findings | Awaiting a corpus exemption | Unclassified | Pass without header |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| stage3/adapt/48-memoize | 0 | 0 | 4 | 0 | 0 | 0 |
+| stage3/adapt/75-optional-widening/coverage | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/adapt/75-optional-widening/probes | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/census/repro | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r01 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r02 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r03 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r04 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r05 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r06 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r07 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r08 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r09 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r10 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r11 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r12 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r13 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r14 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r15 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r16 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r17 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r18 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r19 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r20 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r21 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r22 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r23 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r24 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r25 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r26 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r27 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r28 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r29 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r30 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r31 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r32 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r33 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r34 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r35 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r36 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/census/repro/r37 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r38 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r39 | 1 | 0 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r40 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r41 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r42 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r43 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r44 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r45 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r46 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r47 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r48 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/r49 | 0 | 1 | 0 | 0 | 0 | 0 |
+| stage3/census/repro/structural-cycle | 0 | 0 | 0 | 0 | 0 | 2 |
+| stage3/census/repro/structural-roots | 0 | 0 | 0 | 0 | 0 | 2 |
+| stage3/drivers/parser | 0 | 0 | 5 | 0 | 0 | 4 |
+| stage3/drivers/scanner | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/scanner/probes | 0 | 0 | 15 | 0 | 0 | 2 |
+| stage3/drivers/scanner/probes/cyclic-initialized-enum | 0 | 0 | 0 | 0 | 0 | 4 |
+| stage3/drivers/scanner/probes/cyclic-initialized-value | 0 | 0 | 0 | 0 | 0 | 4 |
+| stage3/drivers/scanner/probes/cyclic-premature-value | 0 | 0 | 0 | 0 | 0 | 4 |
+| stage3/drivers/tsc/corpus/001_varianceCantBeStrictWhileStructureIsnt | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/003_commentOnClassAccessor1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/004_metadataOfUnion | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/006_arrayDestructuringInSwitch1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/007_nestedBlockScopedBindings15 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/008_library_StringSlice | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/009_es6ModuleWithModuleGenTargetCommonjs | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/011_namespaces2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/012_expandoFunctionExpressionsWithDynamicNames2 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/013_parseEntityNameWithReservedWord | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/014_keyofObjectWithGlobalSymbolIncluded | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/015_decoratorReferences | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/016_yieldStarContextualType | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/017_binopAssignmentShouldHaveType | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/018_typeofUsedBeforeBlockScoped | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/019_superHasMethodsFromMergedInterface | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/020_intersectionApparentTypeCaching | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/021_commentOnArrayElement12 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/022_nestedBlockScopedBindings4 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/023_capturedLetConstInLoop10_ES6 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/024_genericTypeParameterEquivalence2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/025_exportArrayBindingPattern | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/026_functionAssignmentError | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/027_multiExtendsSplitInterfaces1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/028_stringMatchAll | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/029_enumLiteralUnionNotWidened | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/033_assignmentCompatability6 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/034_parseReplacementCharacter | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/035_classOrder1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/036_conditionalExpressions2 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/037_singletonLabeledTuple | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/038_breakInIterationOrSwitchStatement1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/040_emitOneLineVariableDeclarationRemoveCommentsFalse | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/041_nongenericConditionalNotPartiallyComputed | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/043_collisionThisExpressionAndLocalVarInProperty | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/044_functionWithDefaultParameterWithNoStatements10 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/046_assignmentCompatForEnums | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/047_promiseWithResolvers | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/049_decoratorMetadataNoStrictNull | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/050_unusedInterfaceinNamespace4 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/051_extendedUnicodeEscapeSequenceIdentifiers | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/052_commentOnClassAccessor2 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/054_contextualTyping19 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/056_genericCallInferenceInConditionalTypes1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/057_localImportNameVsGlobalName | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/058_contextualTypingOfConditionalExpression | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/059_functionOverloads31 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/060_numberAsInLHS | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/061_constEnumErrors | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/062_interfaceDeclaration1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/063_didYouMeanSuggestionErrors | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/064_recursiveFunctionTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/065_callOverloads2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/066_decoratorUsedBeforeDeclaration | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/067_undefinedTypeAssignment4 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/068_emitCapturingThisInTupleDestructuring1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/069_computedPropertiesInDestructuring1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/070_assignmentToReferenceTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/071_overloadModifiersMustAgree | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/072_noImplicitAnyForIn | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/073_superNewCall1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/075_recursiveConditionalCrash4 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/076_interfacedeclWithIndexerErrors | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/077_objectLitIndexerContextualType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/078_weakType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/079_nullableFunctionError | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/080_builtinIterator | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/081_errorForUsingPropertyOfTypeAsType03 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/082_unusedDestructuring | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/083_indirectSelfReferenceGeneric | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/084_thisInModule | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/086_noImplicitSymbolToString | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/087_strictModeInConstructor | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/088_baseConstraintOfDecorator | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/089_moduleVisibilityTest3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/090_constraintWithIndexedAccess | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/091_excessivelyLargeTupleSpread | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/092_omittedExpressionForOfLoop | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/093_typeOfEnumAndVarRedeclarations | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/095_interfaceExtendsClassWithPrivate1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/096_importDeclRefereingExternalModuleWithNoResolve | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/097_mappedTypeGenericWithKnownKeys | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/098_moduleAugmentationGlobal7_1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/100_scopeCheckExtendedClassInsidePublicMethod2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/101_noUncheckedIndexedAccessCompoundAssignments | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/102_implicitAnyDeclareTypePropertyWithoutType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/104_mixedStaticAndInstanceClassMembers | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/105_exportDefaultTypeClassAndValue | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/106_interfaceMergeWithNonGenericTypeArguments | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/107_objectFreeze | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/108_redeclareParameterInCatchBlock | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/109_classExtendsNull2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/110_importDeclWithExportModifierAndExportAssignment | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/111_circularlyReferentialInterfaceAccessNoCrash | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/112_noImplicitAnyParametersInInterface | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/113_duplicateSymbolsExportMatching | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/115_unusedClassesinNamespace4 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/116_recursivelyExpandingUnionNoStackoverflow | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/117_typeUsedAsTypeLiteralIndex | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/118_anyMappedTypesError | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/119_yieldExpressionInFlowLoop | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/120_excessPropertyCheckWithSpread | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/121_switchCasesExpressionTypeMismatch | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/122_literalsInComputedProperties1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/123_narrowByEquality | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/124_this_inside-enum-should-not-be-allowed | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/125_noMappedGetSet | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/126_restInvalidArgumentType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/127_forInStatement4 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/128_noImplicitAnyUnionNormalizedObjectLiteral1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/129_enumWithPrimitiveName | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/130_inheritedStringIndexersFromDifferentBaseTypes2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/131_errorsForCallAndAssignmentAreSimilar | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/132_missingCommaInTemplateStringsArray | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/133_forInStatement2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/134_augmentedTypesEnum | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/135_narrowingTruthyObject | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/136_nestedFreshLiteral | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/137_duplicateErrorNameNotFound | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/138_voidAsOperator | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/139_typeParametersInStaticAccessors | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/140_arrayAssignmentTest5 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/141_forInStrictNullChecksNoError | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/142_spreadUnionPropOverride | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/143_enumPropertyAccessBeforeInitalisation | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/144_inheritedStringIndexersFromDifferentBaseTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/145_ClassDeclaration10 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/146_noImplicitAnyIndexing | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/147_genericMappedTypeAsClause | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/148_nonArrayRestArgs | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/149_undefinedTypeAssignment1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/150_useUnknownInCatchVariables01 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/151_normalizedIntersectionTooComplex | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/152_errorOnEnumReferenceInCondition | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/153_returnTypeTypeArguments | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/154_emitThisInSuperMethodCall | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/155_varianceReferences | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/156_misspelledNewMetaProperty | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/157_varNameConflictsWithImportInDifferentPartOfModule | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/158_incorrectRecursiveMappedTypeConstraint | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/159_objectBindingPattern_restElementWithPropertyName | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/162_instanceofWithPrimitiveUnion | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/163_ArrowFunctionExpression1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/164_staticOffOfInstance1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/165_defaultValueInConstructorOverload1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/166_inheritanceMemberFuncOverridingProperty | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/167_compareTypeParameterConstrainedByLiteralToLiteral | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/168_importedModuleAddToGlobal | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/169_spreadInvalidArgumentType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/171_extendPrivateConstructorClass | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/172_constDeclarationShadowedByVarDeclaration | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/173_selfReferencesInFunctionParameters | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/174_baseExpressionTypeParameters | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/175_propertyOrdering | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/176_exportSpecifierReferencingOuterDeclaration1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/177_readonlyTupleAndArrayElaboration | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/178_bitwiseCompoundAssignmentOperators | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/179_callOnClass | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/180_keywordExpressionInternalComments | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/181_noImplicitAnyDestructuringParameterDeclaration | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/182_propertyAccessibility1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/183_internalImportInstantiatedModuleNotReferencingInstance | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/184_bindingPatternCannotBeOnlyInferenceSource | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/185_restParamsWithNonRestParams | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/186_superInConstructorParam1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/187_deleteReadonlyInStrictNullChecks | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/188_uncalledFunctionChecksInConditional | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/189_circularModuleImports | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/190_interfaceMayNotBeExtendedWitACall | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/191_extendedInterfacesWithDuplicateTypeParameters | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/192_constructorOverloads1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/194_reachabilityChecks1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/195_inheritanceMemberAccessorOverridingProperty | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/197_classExtendsInterfaceInModule | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/198_shadowPrivateMembers | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/199_getterMissingReturnError | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/200_instantiationExpressionErrorNoCrash | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/201_thisPredicateInObjectLiteral | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/202_reservedNameOnInterfaceImport | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/203_incrementOnTypeParameter | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/204_classExpressionExtendingAbstractClass | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/205_noImplicitReturnsInAsync2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/208_importAliasInModuleAugmentation | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/209_genericSpecializations2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/210_illegalSuperCallsInConstructor | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/211_functionParameterArityMismatch | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/212_duplicateIdentifierDifferentModifiers | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/213_inheritanceMemberPropertyOverridingAccessor | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/214_ambientExternalModuleWithRelativeModuleName | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/215_classImplementsPrimitive | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/216_functionTypeArgumentArityErrors | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/217_fallFromLastCase2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/218_shorthandPropertyUndefined | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/219_classImplementsClass4 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/220_bigIntWithTargetLessThanES2016 | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/drivers/tsc/corpus/221_unusedParameterProperty2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/222_staticPrototypeProperty | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/223_instanceofOnInstantiationExpression | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/224_newFunctionImplicitAny | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/225_returnInConstructor1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/226_assigningFromObjectToAnythingElse | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/227_classFieldSuperNotAccessible | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/228_inKeywordAndUnknown | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/230_parameterPropertyInConstructor3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/231_circularReferenceInReturnType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/232_neverNullishThroughParentheses | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/233_noImplicitAnyNamelessParameter | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/234_superCallFromClassThatHasNoBaseType1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/235_reachabilityChecks3 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/236_returnValueInSetter | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/237_gettersAndSettersAccessibility | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/238_typeParameterAsBaseClass | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/240_indexedAccessPrivateMemberOfGenericConstraint | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/242_constDeclarations-access2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/243_classExtendsNull3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/245_inheritanceMemberFuncOverridingAccessor | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/246_noCrashOnMixin | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/247_missingDomElements | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/248_relationComplexityError | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/249_mergedClassNamespaceRecordCast | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/250_parseInvalidNonNullableTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/252_unusedFunctionsinNamespaces3 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/253_correctOrderOfPromiseMethod | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/254_parseTypes | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/255_keyRemappingKeyofResult | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/256_namespaceDisambiguationInUnion | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/257_generatorES6_5 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/258_decoratorMetadataGenericTypeVariableInScope | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/259_conditionalAnyCheckTypePicksBothBranches | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/260_unusedFunctionsinNamespaces6 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/261_promiseIdentity2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/262_decoratorMetadataConditionalType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/263_keyofIsLiteralContexualType | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/264_unusedVariablesinNamespaces3 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/265_promiseIdentity | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/266_decoratorMetadataGenericTypeVariableDefault | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/267_reverseMappedTypeContextualTypeNotCircular | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/269_unusedFunctionsinNamespaces5 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/270_promiseChaining1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/271_enumUsedBeforeDeclaration | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/272_conditionalExpressionNewLine3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/273_stringMappingAssignability | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/274_ipromise3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/275_unusedInterfaceinNamespace1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/276_intersectionsAndOptionalProperties | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/277_useBeforeDeclaration_destructuring | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/278_typeOfOperator1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/279_enumAssignmentCompat | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/280_unusedClassesinNamespace2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/281_doubleUnderStringLiteralAssignability | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/282_ipromise4 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/283_errorsWithInvokablesInUnions01 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/284_exhaustiveSwitchCheckCircularity | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/285_numberAssignableToEnumInsideUnion | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/286_conditionalExpressionNewLine9 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/287_unusedFunctionsinNamespaces2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/288_numberOnLeftSideOfInExpression | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/289_awaitedTypeStrictNull | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/290_contextuallyTypingOrOperator | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/291_nonexistentPropertyOnUnion | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/292_scopingInCatchBlocks | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/293_augmentedTypesEnum2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/294_mappedTypeWithCombinedTypeMappers | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/295_unusedFunctionsinNamespaces4 | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/drivers/tsc/corpus/296_numberToString | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/297_promiseIdentityWithAny | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/298_destructuringAssignmentWithDefault2 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/299_contextualTypingOfArrayLiterals1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/corpus/300_errorMessageOnIntersectionsWithDiscriminants01 | 0 | 0 | 0 | 1 | 0 | 0 |
+| stage3/drivers/tsc/tiny | 0 | 2 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/assertions | 0 | 0 | 18 | 0 | 0 | 2 |
+| stage3/fixtures/cycles/01_call_time | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/01_call_time/_namespaces | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/02_reverse_barrel | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/02_reverse_barrel/_namespaces | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/03_extensions | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/03_extensions/_namespaces | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/04_directory_callback | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/04_directory_callback/_namespaces | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/05_safe_load_read | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/cycles/05_safe_load_read/_namespaces | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/cycles/06_import_order_mutant | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/cycles/06_import_order_mutant/_namespaces | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/cycles/07_namespace_barrel | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/07_namespace_barrel/_namespaces | 0 | 0 | 2 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/08_named_reexports | 0 | 0 | 3 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/08_named_reexports/_namespaces | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/cycles/09_function_value_load | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/cycles/09_function_value_load/_namespaces | 0 | 0 | 0 | 0 | 0 | 2 |
+| stage3/fixtures/cycles/10_hoisted_before_body | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/cycles/10_hoisted_before_body/_namespaces | 0 | 0 | 0 | 0 | 0 | 2 |
+| stage3/fixtures/enums | 0 | 0 | 3 | 0 | 0 | 11 |
+| stage3/fixtures/host | 0 | 0 | 25 | 0 | 0 | 0 |
+| stage3/fixtures/namespaces | 0 | 0 | 12 | 0 | 0 | 0 |
+| stage3/fixtures/nested-functions | 0 | 0 | 2 | 0 | 0 | 9 |
+| stage3/fixtures/objects | 0 | 0 | 16 | 0 | 0 | 9 |
+| stage3/fixtures/predicates | 0 | 0 | 10 | 0 | 0 | 1 |
+| stage3/fixtures/records | 0 | 0 | 19 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/01_paths-missing_constructor | 0 | 1 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/02_paths-missing_toString | 0 | 1 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/03_paths-missing_hasOwnProperty | 0 | 1 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/04_paths-missing___proto__ | 0 | 1 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/05_paths-own_constructor | 0 | 0 | 1 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/06_paths-own_toString | 0 | 0 | 1 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty | 0 | 0 | 1 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/08_paths-own___proto__ | 0 | 0 | 1 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/09_exports-missing_constructor | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/10_exports-missing_toString | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/10_exports-missing_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/12_exports-missing___proto__ | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/12_exports-missing___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/13_exports-own_constructor | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/13_exports-own_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/14_exports-own_toString | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/14_exports-own_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/16_exports-own___proto__ | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/16_exports-own___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__ | 0 | 0 | 1 | 0 | 0 | 0 |
+| stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/21_config-unknown_constructor | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/22_config-unknown_toString | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/23_config-unknown_hasOwnProperty | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/24_config-unknown___proto__ | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/26_cli-unknown_toString | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/27_cli-unknown_hasOwnProperty | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/28_cli-unknown___proto__ | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/29_compare-old | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/records/input-fixtures/30_compare-new | 0 | 0 | 0 | 0 | 0 | 1 |
+| stage3/fixtures/runner | 0 | 0 | 0 | 0 | 0 | 3 |
+| stage3/fixtures/taste | 0 | 0 | 12 | 0 | 0 | 12 |
+| stage3/fixtures/taste/support | 0 | 0 | 0 | 0 | 0 | 2 |
+| stage3/ledger/checker-259/witnesses | 0 | 7 | 6 | 0 | 0 | 1 |
+| **Total** | 13 | 38 | 243 | 218 | 0 | 163 |

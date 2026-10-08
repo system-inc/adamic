@@ -1,4 +1,3 @@
-// a-check: type error TS2322
 // @target: es2015
 type Selector<S, R> = (state: S) => R;
 

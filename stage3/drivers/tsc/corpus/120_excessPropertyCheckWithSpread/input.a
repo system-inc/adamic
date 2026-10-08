@@ -1,4 +1,3 @@
-// a-check: type error TS2842
 // @target: es2015
 // @strict: false
 declare function f({ a: number }): void

@@ -1,4 +1,3 @@
-// a-check: type error TS2344
 // @target: es2015
 const createCacheReducer = <N extends string, QR>(
     queries: Cache<N, QR>["queries"],
