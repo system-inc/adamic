@@ -3,10 +3,10 @@
   "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
   "total_pairs": 30,
   "total_reads": 543,
-  "certified_pairs": 2,
-  "certified_reads": 448,
-  "remaining_pairs": 28,
-  "remaining_reads": 95,
+  "certified_pairs": 6,
+  "certified_reads": 496,
+  "remaining_pairs": 24,
+  "remaining_reads": 47,
   "pairs": [
     {
       "receiver_type_id": 6997,
@@ -63,7 +63,7 @@
         "line": 6360,
         "column": 51
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 7619,
@@ -82,7 +82,7 @@
         "line": 858,
         "column": 39
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 10393,
@@ -101,7 +101,7 @@
         "line": 1565,
         "column": 17
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 9170,
@@ -120,7 +120,7 @@
         "line": 10821,
         "column": 12
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,

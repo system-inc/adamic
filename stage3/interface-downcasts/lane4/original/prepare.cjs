@@ -26,7 +26,7 @@ for (const pair of pairs) {
  if (!lines[pair.witness.line-1].includes(pair.field === '[dynamic index]' ? '[' : pair.field)) throw Error('read witness drift: '+JSON.stringify(pair));
 }
 
-for (const name of ['Identifier','Symbol']) {
+for (const name of ['Identifier','Symbol','PrivateIdentifier','TransientSymbol']) {
  const symbol = exportsOfModule.find(s => s.name === name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f => f.name).sort();
 }

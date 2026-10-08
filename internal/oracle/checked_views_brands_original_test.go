@@ -43,10 +43,16 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 			t.Fatal("declaration drift: " + file)
 		}
 	}
-	for _, pair := range []struct{ typ, field string }{{"Identifier", "escapedText"}, {"Symbol", "escapedName"}} {
-		for _, variant := range []string{"good", "internal", "undefined", "wrong", "null", "missing"} {
-			t.Run(pair.typ+"/"+variant, func(t *testing.T) {
-				name := strings.ToLower(pair.typ) + "-" + variant
+	for _, pair := range []struct{ typ, field string }{{"Identifier", "escapedText"}, {"Symbol", "escapedName"}, {"PrivateIdentifier", "escapedText"}, {"Identifier | PrivateIdentifier", "escapedText"}, {"TransientSymbol", "escapedName"}, {"MemberName", "escapedText"}} {
+		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
+		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
+		if union {
+			variants = append(variants, "good-other", "internal-other", "undefined-other", "wrong-other", "null-other", "missing-other")
+		}
+		for _, fixtureVariant := range variants {
+			variant := strings.TrimSuffix(fixtureVariant, "-other")
+			t.Run(pair.typ+"/"+fixtureVariant, func(t *testing.T) {
+				name := strings.ToLower(pair.typ) + "-" + fixtureVariant
 				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + name + ".a")
 				if err != nil {
 					t.Fatal(err)
@@ -64,20 +70,37 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				complete := false
-				for _, contract := range program.ViewContracts {
-					if contract.Name != pair.typ {
-						continue
+				roots := []string{pair.typ}
+				if pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName" {
+					root := "Identifier"
+					if pair.typ == "MemberName" {
+						root = "PrivateIdentifier"
 					}
-					fields := []string{}
-					for _, field := range contract.Fields {
-						fields = append(fields, field.Name)
+					if strings.HasSuffix(fixtureVariant, "-other") {
+						if root == "Identifier" {
+							root = "PrivateIdentifier"
+						} else {
+							root = "Identifier"
+						}
 					}
-					slices.Sort(fields)
-					complete = complete || slices.Equal(fields, manifest.Fields[pair.typ]) && len(fields) > 0
+					roots = []string{root}
 				}
-				if !complete {
-					t.Fatal("original field set omitted: " + pair.typ)
+				for _, root := range roots {
+					complete := false
+					for _, contract := range program.ViewContracts {
+						if contract.Name != root {
+							continue
+						}
+						fields := []string{}
+						for _, field := range contract.Fields {
+							fields = append(fields, field.Name)
+						}
+						slices.Sort(fields)
+						complete = complete || slices.Equal(fields, manifest.Fields[root]) && len(fields) > 0
+					}
+					if !complete {
+						t.Fatal("original field set omitted: " + root)
+					}
 				}
 				want := run{stdout: []byte(text)}
 				if variant == "wrong" || variant == "null" {

@@ -22,3 +22,15 @@ mixed primitives October 13, 2026, 17:00 MDT. These are estimates for certified
 per-pair contracts, not whole-program tsc. Remaining groups are in progress.
 Setup: Node .061s, Go .069s, submodules .143s, Markdown .170s, clang .443s,
 build 95.977s, cache 96.519s, total 96.656s; nproc 5, quota 4 cores.
+
+Second group: four further original pairs / 48 candidate reads, bringing totals
+to six / 496 certified and twenty-four / 47 remaining in the 30 / 543 table.
+Uncached focused oracle passed in 63.094s, 36 cases. PrivateIdentifier and
+TransientSymbol preserve their full upstream field sets. MemberName and the
+explicit Identifier | PrivateIdentifier type receive checked member downcasts
+via normal upcasts; both alternatives are exercised. The initial fixture attempted
+a broad Base-to-union cast, which correctly refused at compile time. It was
+corrected to the approved cast path; no admission rule was weakened.
+Six helper-check removal mutants (one for each union alternative and one each
+for the two single receivers) were caught in both C and JavaScript by exit-70
+pins, rather than compiler warnings or sanitizer failures. Raw group logs retained.
