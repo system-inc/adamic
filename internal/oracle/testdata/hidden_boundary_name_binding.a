@@ -1,0 +1,2 @@
+function enclosing(): () => string { const name = 'node'; return () => name; }
+console.log(enclosing()());

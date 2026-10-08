@@ -1,0 +1,31 @@
+{
+  "base": "dcdbb9098f77f30ad41790c56df1bd63ad462b63",
+  "source_pin": "388096e6",
+  "file": "binder.ts",
+  "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+  "region": [
+    29754,
+    37459
+  ],
+  "all_source_hashes_verified": 82,
+  "binder_units": 181,
+  "binder_findings": 982,
+  "old_hidden_intersection": [
+    [
+      29754,
+      37459
+    ]
+  ],
+  "new_hidden_intersection": [
+    [
+      29754,
+      37459
+    ]
+  ],
+  "old_hidden_bytes": 7705,
+  "new_hidden_bytes": 7705,
+  "revealed_bytes": 0,
+  "independent_byte_mask_bytes": 7705,
+  "scope": "complete binder record from full-project checker and full latent census; stopped after binder completed, no whole-corpus total claimed",
+  "next_boundary": "unchanged reading name at binder.ts:760:13; preceding cause is __String | undefined at binder.ts:755:15"
+}

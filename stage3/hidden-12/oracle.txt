@@ -1,0 +1,20 @@
+=== RUN   TestHiddenBoundaryNameBindingRefusal
+--- PASS: TestHiddenBoundaryNameBindingRefusal (0.03s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding_refused.a
+    oracle_test.go:743: not yet: /workspace/adamic/internal/oracle/testdata/hidden_boundary_name_binding_refused.a:2:20: stage 0 can't lower a value of type Name | undefined yet
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding_refused.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_name_binding.a (0.45s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.514s

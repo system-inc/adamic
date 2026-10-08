@@ -1,0 +1,5 @@
+type Name = string & { readonly __escapedIdentifier: void };
+function enclosing(name: Name | undefined): () => string {
+    return () => name === undefined ? 'missing' : name;
+}
+console.log('unsupported branded representation stays refused');
