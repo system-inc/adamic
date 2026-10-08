@@ -84,6 +84,9 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "bind" {
 			return nil, false, nil
 		}
+		if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+			return nil, true, l.notYet(node, "optional binding of an absent callable")
+		}
 		access = ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
 		if access.Kind != ast.KindPropertyAccessExpression {
 			return nil, false, nil
@@ -106,10 +109,8 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 	if !l.methodValueAllowed(access, symbol) {
 		return nil, false, nil
 	}
-	if access.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return nil, true, l.notYet(access, "an optional method extraction")
-	}
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(access), checker.SignatureKindCall)
+
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access)), checker.SignatureKindCall)
 	if len(signatures) != 1 {
 		return nil, true, l.notYet(access, "an overloaded method value")
 	}
@@ -138,7 +139,7 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 				}
 				continue
 			}
-			if _, err := l.instantiate(declaration.Parent, l.checker.GetTypeAtLocation(receiver), access); err != nil {
+			if _, err := l.instantiate(declaration.Parent, l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), access); err != nil {
 				return nil, true, err
 			}
 		}
@@ -150,7 +151,7 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 	if object.Type() != ir.Object {
 		return nil, true, l.notYet(access, "a method value without an object receiver")
 	}
-	value := ir.Property{Object: object, Name: l.fieldName(access.Name()), Of: ir.Closure, Extracted: true}
+	value := ir.Property{Object: object, Name: l.fieldName(access.Name()), Of: ir.Closure, Extracted: true, Optional: access.Flags&ast.NodeFlagsOptionalChain != 0, Absent: symbol.Flags&ast.SymbolFlagsOptional != 0}
 	if bound != nil {
 		receiverType := l.checker.GetTypeAtLocation(receiver)
 		boundType := l.checker.GetTypeAtLocation(bound)

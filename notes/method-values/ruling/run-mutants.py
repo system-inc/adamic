@@ -2,6 +2,7 @@
 """Each mutant runs alone, logs its failure, and restores the exact source bytes."""
 from pathlib import Path
 import subprocess
+import os
 
 repository = Path(__file__).resolve().parents[3]
 logs = Path('/tmp/method-values-mutants')
@@ -29,8 +30,17 @@ mutants = [
     ('static-own-hidden', 'internal/native/runtime/object.c',
      'methods->own_static[index] && key[0]', 'false && methods->own_static[index] && key[0]',
      './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/static', ['stdout differs']),
+    ('optional-receiver-guard', 'internal/native/emit_expressions.go',
+     'e.line("if (%s != NULL) {", object)', 'e.line("if (%s == NULL) {", object)',
+     './internal/oracle', 'TestMethodValuesTypeScript/optional', ['runtime error:', 'AddressSanitizer']),
+    ('optional-member-hidden', 'internal/native/runtime/closure.c',
+     'if (!found) { return NULL; }', 'if (found) { return NULL; }',
+     './internal/oracle', 'TestMethodValuesTypeScript/optional', ['exit codes differ']),
 ]
 for name, relative, original, replacement, package, test, catchers in mutants:
+    selected = os.environ.get("METHOD_VALUES_MUTANTS")
+    if selected and name not in selected.split(","):
+        continue
     source = repository / relative
     saved = source.read_bytes()
     text = saved.decode()

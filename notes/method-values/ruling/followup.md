@@ -36,3 +36,28 @@ the original five plus static-throw-hidden (Node stdout disagreement) and
 static-own-hidden (Node stdout disagreement). Source is restored after every
 mutant. The fixtures run native with ASan/UBSan, release native, and the
 JavaScript backend against source Node, with successful-run leak checks.
+
+## Optional extraction
+
+Optional receiver extraction evaluates its receiver once and skips the complete
+binding expression, including receiver-producing arguments, when absent.
+Optional method signatures can read absent own fields as undefined; class
+implementations still use their callable table. Both .a and temporary .ts
+fixtures cover present and absent receivers, lazy bind arguments, missing
+optional members, and a caught unbound this-reading optional extraction.
+
+```sh
+go test ./internal/oracle -run 'TestMethodValuesTypeScript/optional' -count=1 -timeout 10m > /tmp/method-values-optional-typescript-2.log 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/optional' -count=1 -timeout 10m > /tmp/method-values-optional-adamic-2.log 2>&1
+go test ./internal/lower -run 'TestMethodValuesProof|TestMethodValuesSelectiveChecks|TestMethodBindCycleIsRefused' -count=1 > /tmp/method-values-optional-lower.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/method-values-optional-counts.log 2>&1
+METHOD_VALUES_MUTANTS=optional-receiver-guard,optional-member-hidden python3 notes/method-values/ruling/run-mutants.py
+```
+
+TypeScript and Adamic oracles each passed .495s, lower passed .204s,
+counts refresh passed 26.170s. Optional-receiver-guard exited 1 under sanitizers.
+Optional-member-hidden exited 1 with a Node exit-code disagreement. The first
+runner expectation incorrectly looked for stdout instead of the earlier exit-code
+comparison; after correcting that expectation, the mutant was rerun and caught
+(/tmp/method-values-optional-member-mutant.log). Source was restored.
+Optional binding of an absent callable (m?.bind) remains a separate boundary.

@@ -51,7 +51,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
-	builder.WriteString("const adamicMethodValues = new WeakMap();\nconst adamicMethodValue = (object, name) => { const original = object[name]; if (original instanceof AdamicClosure && !original.receiver) return original; let value = adamicMethodValues.get(original); if (!value) { value = new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, [undefined, ...values]) : original(undefined, ...values), []); value.original = original; adamicMethodValues.set(original, value); } return value; };\nconst adamicMethodBind = (value, receiver) => { const original = value.original || value; return new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, original.receiver ? [receiver, ...values] : values) : original(receiver, ...values), []); };\n")
+	builder.WriteString("const adamicMethodValues = new WeakMap();\nconst adamicMethodValue = (object, name) => { const original = object[name]; if (original === undefined) return undefined; if (original instanceof AdamicClosure && !original.receiver) return original; let value = adamicMethodValues.get(original); if (!value) { value = new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, [undefined, ...values]) : original(undefined, ...values), []); value.original = original; adamicMethodValues.set(original, value); } return value; };\nconst adamicMethodBind = (value, receiver) => { const original = value.original || value; return new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, original.receiver ? [receiver, ...values] : values) : original(receiver, ...values), []); };\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -667,6 +667,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		return object
 	case ir.Property:
 		if expression.Extracted {
+			if expression.Optional {
+				value := "adamicMethodValue(object, " + quote(expression.Name) + ")"
+				if expression.Bound != nil {
+					value = "adamicMethodBind(" + value + ", " + e.value(expression.Bound) + ")"
+				}
+				return "((object) => object === undefined ? undefined : " + value + ")(" + e.value(expression.Object) + ")"
+			}
 			value := "adamicMethodValue(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
 			if expression.Bound != nil {
 				value = "adamicMethodBind(" + value + ", " + e.value(expression.Bound) + ")"

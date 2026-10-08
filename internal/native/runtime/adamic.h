@@ -212,7 +212,7 @@ struct adamic_methods {
 	const bool *own_static;
 };
 adamic_value adamic_method_value_call(adamic_closure *self, adamic_value *arguments, size_t argument_count);
-adamic_closure *adamic_object_method_value(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_closure *adamic_object_method_value(const adamic_object *object, const char *name, adamic_slot_cache *cache, bool optional);
 adamic_closure *adamic_method_bind(adamic_closure *original, adamic_object *receiver);
 
 // adamic_object_callee finds what object.name(...) calls, where the object is seen through an

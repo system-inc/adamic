@@ -1,6 +1,7 @@
 // closure.c: closures and the cells they capture.
 
 #include "adamic.h"
+#include <string.h>
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references) {
 	adamic_cell *cell = adamic_allocate(sizeof *cell, adamic_kind_cell);
@@ -49,10 +50,22 @@ adamic_closure *adamic_method_bind(adamic_closure *original, adamic_object *rece
 	return bound;
 }
 
-adamic_closure *adamic_object_method_value(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+adamic_closure *adamic_object_method_value(const adamic_object *object, const char *name, adamic_slot_cache *cache, bool optional) {
+	if (optional && cache->shape != object->shape) {
+		bool found = false;
+		for (size_t index = 0; index < object->shape->count; index++) {
+			if (strcmp(object->shape->names[index], name) == 0) { found = true; break; }
+		}
+		const adamic_methods *methods = object->shape->methods;
+		for (size_t index = 0; !found && methods != NULL && index < methods->count; index++) {
+			if (strcmp(methods->names[index], name) == 0) { found = true; }
+		}
+		if (!found) { return NULL; }
+	}
 	adamic_method method = NULL;
 	adamic_closure *original = adamic_object_callee(object, name, cache, &method);
 	if (original == NULL) {
+		if (method == NULL) { return NULL; }
 		return adamic_retain(object->shape->methods->values[cache->index - object->shape->count]);
 	}
 	if (!original->receiver) {

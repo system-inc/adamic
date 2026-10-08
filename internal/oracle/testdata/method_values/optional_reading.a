@@ -1,0 +1,7 @@
+// Materialized as .ts; unbound this-reading .a extraction remains refused.
+class Counter { value = 3; read(): number { console.log('entered optional'); return this.value; } }
+function choose(present: boolean): Counter | undefined { return present ? new Counter() : undefined; }
+const absent = choose(false)?.read;
+console.log(`${absent === undefined}`);
+const present = choose(true)?.read;
+if (present !== undefined) { try { console.log(`${present()}`); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); } }

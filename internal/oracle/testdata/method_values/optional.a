@@ -1,0 +1,17 @@
+class Free { plus(value: number): number { return value + 2; } }
+function choose(present: boolean): Free | undefined { console.log(`choose ${present}`); return present ? new Free() : undefined; }
+function receiver(): Free { console.log('receiver'); return new Free(); }
+const absent = choose(false)?.plus;
+const present = choose(true)?.plus;
+console.log(`${absent === undefined}`);
+if (present !== undefined) console.log(`${present(3)}`);
+const noBind = choose(false)?.plus.bind(receiver());
+const bound = choose(true)?.plus.bind(receiver());
+console.log(`${noBind === undefined}`);
+if (bound !== undefined) console.log(`${bound(4)}`);
+interface Maybe { plus?(value: number): number; }
+function maybe(present: boolean): Maybe { return present ? new Free() : {}; }
+const missing = maybe(false).plus;
+const found = maybe(true).plus;
+console.log(`${missing === undefined}`);
+if (found !== undefined) console.log(`${found(5)}`);

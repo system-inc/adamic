@@ -116,7 +116,23 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Property:
 		if expression.Extracted {
 			object := e.value(expression.Object)
-			value := e.own(ir.Closure, fmt.Sprintf("adamic_object_method_value(%s, %s, &%s)", object, cString(expression.Name), e.cache()))
+			if expression.Optional {
+				text, value, owned := e.asideWith(func() string { return e.extractedMethodValue(expression, object) })
+				result := e.temporary()
+				e.line("adamic_closure *%s = NULL;", result)
+				e.line("if (%s != NULL) {", object)
+				e.out.WriteString(text)
+				e.indent++
+				e.line("%s = adamic_retain(%s);", result, value)
+				for index := len(owned) - 1; index >= 0; index-- {
+					e.line("adamic_release(%s);", owned[index])
+				}
+				e.indent--
+				e.line("}")
+				e.owned = append(e.owned, result)
+				return result
+			}
+			value := e.own(ir.Closure, fmt.Sprintf("adamic_object_method_value(%s, %s, &%s, %t)", object, cString(expression.Name), e.cache(), expression.Absent))
 			if expression.Bound != nil {
 				receiver := e.value(expression.Bound)
 				return e.own(ir.Closure, fmt.Sprintf("adamic_method_bind(%s, %s)", value, receiver))
