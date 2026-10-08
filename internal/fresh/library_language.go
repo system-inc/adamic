@@ -6,7 +6,21 @@ import "github.com/system-inc/adamic/internal/ir"
 // for their reachability until the cycle finder has a more precise model of reflected keys and
 // the current closure: operands escape, results are outside, and parameters are clobbered.
 func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
-	switch expression.(type) {
+	if value, known := a.typedArray(expression); known {
+		return value, true
+	}
+	switch expression := expression.(type) {
+	case ir.ArrayHoles, ir.ArraySetLength, ir.ArrayRangeErrorIs:
+		return a.arrayHoles(expression), true
+	case ir.NodeBufferCall:
+		return a.nodeBufferCall(expression), true
+	case ir.ProcessCall:
+		// Process state holds only a number. Environment results are copied immutable strings;
+		// evaluate operand effects, but no operation captures or writes a mutable heap slot.
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		return value{}, true
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return a.call(a.operands(expression), expression.Type()), true
 	}

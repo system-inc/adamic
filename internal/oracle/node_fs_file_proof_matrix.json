@@ -1,0 +1,755 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "original": {
+      "file": "01_readFile_utf8.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "file": "01_readFile_utf8.a",
+      "nodeMatches": true,
+      "adaptedSourceSha256": "98c869fbf8510df95dba2ce004f539d65422768013914c552dca5b78a11c2c77",
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-options-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-options-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+      },
+      "nodeMutantCaught": true
+    },
+    "adaptation47ChangedSource": true,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "original": {
+      "file": "02_readFile_utf16le.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "file": "02_readFile_utf16le.a",
+      "nodeMatches": true,
+      "adaptedSourceSha256": "374de5ecc317fa6c41ee21bb4d5f3fb0bdfee5346900ab743b9bdb34a284cd7e",
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "nodeMutantCaught": true
+    },
+    "adaptation47ChangedSource": true,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "original": {
+      "file": "03_readFile_utf16be.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "file": "03_readFile_utf16be.a",
+      "nodeMatches": true,
+      "adaptedSourceSha256": "5e8093063707d6c0c9e9fa382475b30d093d18b17b977e7bd1d84a2a27cdd8f6",
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "nodeMutantCaught": true
+    },
+    "adaptation47ChangedSource": true,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "original": {
+      "file": "04_readFile_missing.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "file": "04_readFile_missing.a",
+      "nodeMatches": true,
+      "adaptedSourceSha256": "18ac95a51734fb0e19adcd9a2e038b422cd66f43aacf2282630523a68540a791",
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "nodeMutantCaught": true
+    },
+    "adaptation47ChangedSource": true,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "05_writeFile.a",
+    "original": {
+      "file": "05_writeFile.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\n"
+      }
+    },
+    "adapted": {
+      "file": "05_writeFile.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "adaptation"
+  },
+  {
+    "file": "06_fileExists.a",
+    "original": {
+      "file": "06_fileExists.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "06_fileExists.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "07_directoryExists.a",
+    "original": {
+      "file": "07_directoryExists.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "07_directoryExists.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "08_getDirectories.a",
+    "original": {
+      "file": "08_getDirectories.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "08_getDirectories.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "09_realpath.a",
+    "original": {
+      "file": "09_realpath.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "09_realpath.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "original": {
+      "file": "10_getModifiedTime.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "10_getModifiedTime.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "original": {
+      "file": "11_setModifiedTime.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "file": "11_setModifiedTime.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "12_deleteFile.a",
+    "original": {
+      "file": "12_deleteFile.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adapted": {
+      "file": "12_deleteFile.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "13_createDirectory.a",
+    "original": {
+      "file": "13_createDirectory.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+      }
+    },
+    "adapted": {
+      "file": "13_createDirectory.a",
+      "nodeMatches": true,
+      "adaptedSourceSha256": "f937fe2575d55b2f1a88d19b1ce4232fb036fb3eb40190e6d1fc708708d88514",
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /tmp/fs-options-47-final/fixtures/13_createDirectory.a:2:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /tmp/fs-options-47-final/fixtures/13_createDirectory.a:2:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map\n"
+      },
+      "nodeMutantCaught": true
+    },
+    "adaptation47ChangedSource": true,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "original": {
+      "file": "14_getCurrentDirectory.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      }
+    },
+    "adapted": {
+      "file": "14_getCurrentDirectory.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "original": {
+      "file": "15_getExecutingFilePath.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet\n"
+      }
+    },
+    "adapted": {
+      "file": "15_getExecutingFilePath.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "original": {
+      "file": "16_getEnvironmentVariable.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "file": "16_getEnvironmentVariable.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "17_write.a",
+    "original": {
+      "file": "17_write.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "file": "17_write.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "none"
+  },
+  {
+    "file": "18_exit_0.a",
+    "original": {
+      "file": "18_exit_0.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adapted": {
+      "file": "18_exit_0.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "19_exit_1.a",
+    "original": {
+      "file": "19_exit_1.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adapted": {
+      "file": "19_exit_1.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "20_exit_2.a",
+    "original": {
+      "file": "20_exit_2.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adapted": {
+      "file": "20_exit_2.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "21_createHash.a",
+    "original": {
+      "file": "21_createHash.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/21_createHash.a:17:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/21_createHash.a:17:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet\n"
+      }
+    },
+    "adapted": {
+      "file": "21_createHash.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/21_createHash.a:17:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/21_createHash.a:17:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library (buffer worker)"
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "original": {
+      "file": "22_createHash_fallback.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adapted": {
+      "file": "22_createHash_fallback.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "compiler"
+  },
+  {
+    "file": "23_newLine.a",
+    "original": {
+      "file": "23_newLine.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet\n"
+      }
+    },
+    "adapted": {
+      "file": "23_newLine.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library (process worker)"
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "original": {
+      "file": "24_useCaseSensitiveFileNames.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet\n"
+      }
+    },
+    "adapted": {
+      "file": "24_useCaseSensitiveFileNames.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "library"
+  },
+  {
+    "file": "25_readDirectory.a",
+    "original": {
+      "file": "25_readDirectory.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    },
+    "adapted": {
+      "file": "25_readDirectory.a",
+      "nodeMatches": true,
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    },
+    "adaptation47ChangedSource": false,
+    "firstBlockerOwner": "adaptation"
+  }
+]

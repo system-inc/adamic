@@ -1,0 +1,26 @@
+Auto-merging docs/escape-hatches.md
+Auto-merging internal/lower/statements.go
+Auto-merging internal/oracle/counts.md
+Merge made by the 'ort' strategy.
+ docs/escape-hatches.md                             |  10 ++
+ internal/lower/statements.go                       |   8 ++
+ internal/oracle/counts.md                          |   8 ++
+ internal/oracle/non_null_logical_test.go           | 103 +++++++++++++++++++++
+ .../oracle/testdata/non_null_logical_element.a     |  14 +++
+ internal/oracle/testdata/non_null_logical_field.a  |  12 +++
+ internal/oracle/testdata/non_null_logical_local.a  |  12 +++
+ .../oracle/testdata/non_null_logical_missing_and.a |   8 ++
+ .../testdata/non_null_logical_missing_nullish.a    |   8 ++
+ .../oracle/testdata/non_null_logical_missing_or.a  |   8 ++
+ internal/oracle/testdata/non_null_logical_repro.a  |   5 +
+ .../testdata/non_null_logical_short_circuit.a      |   8 ++
+ 12 files changed, 204 insertions(+)
+ create mode 100644 internal/oracle/non_null_logical_test.go
+ create mode 100644 internal/oracle/testdata/non_null_logical_element.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_field.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_local.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_missing_and.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_missing_nullish.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_missing_or.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_repro.a
+ create mode 100644 internal/oracle/testdata/non_null_logical_short_circuit.a

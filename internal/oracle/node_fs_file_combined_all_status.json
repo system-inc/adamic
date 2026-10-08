@@ -1,0 +1,702 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+      },
+      "javascript": {
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Disagrees",
+        "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: read before assignment: variable 'callback' in callback\\n\", \"stdout\": \"true\\n\"}",
+        "observed": {
+          "stdout": "true\n",
+          "stderr": "adamic: panic: read before assignment: variable 'callback' in callback\n",
+          "exit": 70
+        },
+        "expected": {
+          "stdout": "true\ntrue\n",
+          "stderr": "",
+          "exit": 0
+        }
+      },
+      "javascript": {
+        "stage": "Disagrees",
+        "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: read before assignment: variable 'callback' in callback\\n\", \"stdout\": \"true\\n\"}",
+        "observed": {
+          "stdout": "true\n",
+          "stderr": "adamic: panic: read before assignment: variable 'callback' in callback\n",
+          "exit": 70
+        },
+        "expected": {
+          "stdout": "true\ntrue\n",
+          "stderr": "",
+          "exit": 0
+        }
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "17_write.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      },
+      "javascript": {
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
+      }
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "original": {
+      "native": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      "javascript": {
+        "stage": "Checker",
+        "diagnostic": "/tmp/fs-combined-pristine-host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    },
+    "adapted": {
+      "native": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+      },
+      "javascript": {
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+      }
+    }
+  }
+]

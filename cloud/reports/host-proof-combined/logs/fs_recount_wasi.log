@@ -1,0 +1,88 @@
+=== RUN   TestNonNullStorageReadinessMutants
+=== PAUSE TestNonNullStorageReadinessMutants
+=== RUN   TestNonNullStorageUnionRemainsRefused
+=== PAUSE TestNonNullStorageUnionRemainsRefused
+=== RUN   TestWASIHostRuntimeRefusals
+=== RUN   TestWASIHostRuntimeRefusals/mkdtemp
+=== RUN   TestWASIHostRuntimeRefusals/pid
+=== RUN   TestWASIHostRuntimeRefusals/platform
+=== RUN   TestWASIHostRuntimeRefusals/columns
+=== RUN   TestWASIHostRuntimeRefusals/memory_usage
+=== RUN   TestWASIHostRuntimeRefusals/argv
+=== RUN   TestWASIHostRuntimeRefusals/open
+=== RUN   TestWASIHostRuntimeRefusals/mkdir
+=== RUN   TestWASIHostRuntimeRefusals/utimes
+--- PASS: TestWASIHostRuntimeRefusals (8.83s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdtemp (7.80s)
+    --- PASS: TestWASIHostRuntimeRefusals/pid (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/platform (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/columns (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/memory_usage (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/argv (0.12s)
+    --- PASS: TestWASIHostRuntimeRefusals/open (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdir (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/utimes (0.12s)
+=== RUN   TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:24: gate cache node miss
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== NAME  TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:89: removed-adapter mutant caught by Node comparison: stdout "EINVAL\n-22\nEINVAL: invalid argument, symlink '' -> 'adamic-empty-symlink-link'\n"
+--- PASS: TestWASIEmptySymlinkAgreesWithNode (0.72s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/ (0.08s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi (0.14s)
+=== CONT  TestNonNullStorageReadinessMutants
+=== CONT  TestNonNullStorageUnionRemainsRefused
+=== RUN   TestNonNullStorageReadinessMutants/local
+=== PAUSE TestNonNullStorageReadinessMutants/local
+=== RUN   TestNonNullStorageReadinessMutants/field
+=== PAUSE TestNonNullStorageReadinessMutants/field
+=== RUN   TestNonNullStorageReadinessMutants/static
+=== PAUSE TestNonNullStorageReadinessMutants/static
+=== RUN   TestNonNullStorageReadinessMutants/identifier
+=== PAUSE TestNonNullStorageReadinessMutants/identifier
+=== CONT  TestNonNullStorageReadinessMutants/local
+=== CONT  TestNonNullStorageReadinessMutants/identifier
+=== CONT  TestNonNullStorageReadinessMutants/field
+=== CONT  TestNonNullStorageReadinessMutants/static
+    non_null_storage_test.go:38: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/field
+    non_null_storage_test.go:38: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/local
+    non_null_storage_test.go:38: gate cache node miss
+=== NAME  TestNonNullStorageUnionRemainsRefused
+    non_null_storage_test.go:96: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/identifier
+    non_null_storage_test.go:38: gate cache node miss
+=== NAME  TestNonNullStorageUnionRemainsRefused
+    non_null_storage_test.go:102: want unsupported structural union slot refusal, got <nil>
+--- FAIL: TestNonNullStorageUnionRemainsRefused (0.19s)
+=== NAME  TestNonNullStorageReadinessMutants/field
+    non_null_storage_test.go:51: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/identifier
+    non_null_storage_test.go:51: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/local
+    non_null_storage_test.go:51: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/static
+    non_null_storage_test.go:51: gate cache node miss
+=== NAME  TestNonNullStorageReadinessMutants/local
+    non_null_storage_test.go:85: drop local readiness caught: stdout "before\n0\n", exit 0
+=== NAME  TestNonNullStorageReadinessMutants/identifier
+    non_null_storage_test.go:85: drop identifier readiness caught: stdout "before\ntrue\n", exit 0
+=== NAME  TestNonNullStorageReadinessMutants/field
+    non_null_storage_test.go:85: drop field readiness caught: stdout "before\n0\n", exit 0
+=== NAME  TestNonNullStorageReadinessMutants/static
+    non_null_storage_test.go:85: drop static readiness caught: stdout "before\n0\n", exit 0
+--- PASS: TestNonNullStorageReadinessMutants (0.00s)
+    --- PASS: TestNonNullStorageReadinessMutants/local (0.57s)
+    --- PASS: TestNonNullStorageReadinessMutants/identifier (0.58s)
+    --- PASS: TestNonNullStorageReadinessMutants/field (0.59s)
+    --- PASS: TestNonNullStorageReadinessMutants/static (0.62s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.213s
+FAIL

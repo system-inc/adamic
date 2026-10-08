@@ -1,0 +1,1 @@
+function isArray(value: any): value is readonly unknown[] { return Array.isArray(value); } console.log(String(isArray([])));

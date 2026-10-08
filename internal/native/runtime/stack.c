@@ -9,13 +9,15 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <stdint.h>
+#include <string.h>
 #ifndef ADAMIC_TARGET_WASI
 #include <sys/resource.h>
 #endif
 
-uintptr_t adamic_stack_limit;
+_Thread_local uintptr_t adamic_stack_limit;
 
 #ifdef ADAMIC_TARGET_WASI
 // wasm-ld reserves a downward-growing linear stack. Keep 16 KB for the panic path.
@@ -34,7 +36,26 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 // The least Linux allows arguments and environment, whatever the stack (32 pages, ARG_MAX's floor).
 #define ARGUMENTS_FLOOR ((uintptr_t)128 << 10)
 
-__attribute__((constructor)) static void find_stack_limit(void) {
+// Room above the last argument or variable string for what the system keeps there too: the
+// executable's path, macOS's apple strings, Linux's auxiliary vector.
+#define ABOVE_STRINGS ((uintptr_t)16 << 10)
+
+// reach is how far above base the strings of a NULL-ended list end, or 0 when none does.
+static uintptr_t reach(char **strings, uintptr_t base) {
+	uintptr_t farthest = 0;
+	for (size_t index = 0; strings != NULL && strings[index] != NULL; index++) {
+		uintptr_t end = (uintptr_t)strings[index] + strlen(strings[index]) + 1;
+		if (end > base && end - base > farthest) {
+			farthest = end - base;
+		}
+	}
+	return farthest;
+}
+
+// Both C libraries Adamic runs on, glibc and macOS's, hand a constructor main's arguments and
+// environment, so the strings can be measured before main runs.
+__attribute__((constructor)) static void find_stack_limit(int count, char **values, char **environment) {
+	(void)count;
 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
 	uintptr_t size = ASSUMED_STACK;
 	struct rlimit limit;
@@ -50,10 +71,23 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	// the 128 KiB Linux allows them on a small stack. Measuring where they really end would be closer,
 	// but then how deep a program gets would change with its environment, and this way it never does.
 	//
+	//
+	// That holds on Linux, but macOS caps them at ARG_MAX whatever the stack: under a lowered limit
+	// (ulimit -s 1024) 400 KB of arguments is more than a quarter, and deep recursion crashed where Node
+	// panics. So what the strings really reach is measured too, and the larger of the two kept back.
+	// Arguments under a quarter of the stack, which is every program on Linux and most on macOS,
+	// still get the same depth whatever their environment.
+	//
 	// The margin shrinks with a small stack, so one of 1 MiB or 512 KiB still gets a limit: a fixed
 	// 256 KiB, with the quarter, once left nothing at 1 MiB, and recursion there crashed where Node
 	// panics. What's left to run in is then 5/8 of the stack, less on the smallest.
 	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
+	uintptr_t measured = reach(values, base);
+	uintptr_t variables = reach(environment, base);
+	measured = (variables > measured ? variables : measured) + ABOVE_STRINGS;
+	if (measured > arguments) {
+		arguments = measured;
+	}
 	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
 	uintptr_t reserved = arguments + margin;
 	// A stack too small to keep even that gets no check rather than one that fires at once.
@@ -64,5 +98,16 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 
 _Noreturn void adamic_stack_overflow(void) {
 	static const char message[] = "RangeError: Maximum call stack size exceeded";
-	adamic_panic(message, sizeof message - 1);
+	adamic_uncaught_library_error(message, sizeof message - 1);
+}
+
+void adamic_stack_thread_start(void) {
+#ifdef ADAMIC_TARGET_WASI
+	// The only executor already has the linear-stack limit from its constructor.
+	return;
+#else
+	// Pool workers are created with an explicit 8 MiB stack; keep the same panic margin.
+	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
+	adamic_stack_limit = base - ASSUMED_STACK + MARGIN;
+#endif
 }

@@ -1,0 +1,26 @@
+=== RUN   TestDateStringRuntimeZones
+=== PAUSE TestDateStringRuntimeZones
+=== RUN   TestDateStringNamedRefusal
+=== PAUSE TestDateStringNamedRefusal
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestDateStringRuntimeZones
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestDateStringNamedRefusal
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== NAME  TestDateStringNamedRefusal
+    library_date_string_test.go:89: Both backends loudly refuse where stock Node can format the zone
+--- PASS: TestDateStringNamedRefusal (0.86s)
+=== NAME  TestDateStringRuntimeZones
+    library_date_string_test.go:55: UTC: native and JavaScript agree with Node
+    library_date_string_test.go:55: America/Denver: native and JavaScript agree with Node
+--- PASS: TestDateStringRuntimeZones (1.46s)
+--- PASS: TestNativeAgreesWithNode (0.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a (1.60s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.730s

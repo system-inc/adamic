@@ -1,0 +1,5 @@
+function tag(value: unknown): string { return typeof value; }
+console.log(tag(null));
+console.log(tag(undefined));
+function truth(value: unknown): boolean { return !!value; }
+console.log(String(truth(null)));

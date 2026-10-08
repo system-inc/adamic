@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:17-19
+// From TypeScript 6.0.3, src/compiler/core.ts:1039
+interface SortedReadonlyArray<T> extends ReadonlyArray<T> {
+    " __sortedArrayBrand": undefined;
+}
+function sorted<T>(array: readonly T[]): SortedReadonlyArray<T> {
+    return array.slice() as readonly T[] as SortedReadonlyArray<T>;
+}
+console.log(`${sorted([1, 2]).length}`);

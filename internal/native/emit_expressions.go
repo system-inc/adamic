@@ -12,7 +12,30 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.HasProperty:
+		value := e.value(expression.Object)
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
+	case ir.DynamicProperty:
+		value := e.value(expression.Object)
+		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
+	case ir.NodeHostCall:
+		return e.nodeHostCall(expression)
+	case ir.ProcessCall:
+		return e.processCall(expression)
+	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
+		return e.typedArrayValue(expression)
+	case ir.PromiseValue:
+		return e.promiseValue(expression)
+	case ir.Await:
+		panic("native: await was not exposed before state cutting")
 	case ir.RegExpNew:
+		if expression.Index < 0 {
+			return e.dynamicRegExp(expression)
+		}
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}
@@ -26,21 +49,47 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
+		if expression.Of == ir.Union {
+			return "&adamic_box_null"
+		}
 		return "NULL"
 	case ir.IsNull:
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
 			return "false"
 		}
+		if expression.Value.Type() == ir.Union {
+			value := e.value(expression.Value)
+			return fmt.Sprintf("(%s == &adamic_null || %s == &adamic_box_null)", value, value)
+		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
+	case ir.StackExceeded:
+		return "((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit)"
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
 		return e.read(expression)
+	case ir.Truthy:
+		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Void:
+		e.line("(void)%s;", e.value(expression.Value))
+		if expression.Type().IsMaybe() {
+			return zero(expression.Type())
+		}
+		return "NULL"
+	case ir.Comma:
+		e.line("(void)%s;", e.value(expression.Left))
+		return e.value(expression.Right)
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		return e.logicalValue(expression)
 	case ir.Unary:
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
@@ -111,15 +160,35 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.conditional(expression)
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
+	case ir.PhantomMember:
+		return e.phantomMember(expression)
 	case ir.Property:
-		if taken, ok := e.take(expression); ok {
-			return taken
+		if expression.View != "" {
+			return e.viewField(expression)
+		}
+		if expression.Readiness == "" {
+			if taken, ok := e.take(expression); ok {
+				return taken
+			}
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
-		if expression.Of == ir.MaybeNumber {
+		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		if expression.Readiness != "" {
+			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+			if expression.Optional {
+				slot = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, slot)
+			}
+		}
+		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
+		if expression.Of.IsMaybe() {
+			if expression.Readiness != "" && !expression.Absent {
+				e.line("(void)%s;", slot)
+			}
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Of == ir.MaybeBoolean {
+				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			}
 		}
 		if expression.Absent {
 			slot := e.temporary()
@@ -128,18 +197,23 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
 			}
 			e.line("adamic_value *%s = %s;", slot, lookup)
+			if expression.Readiness != "" {
+				e.line("if (%s != NULL) {", slot)
+				e.line("\t(void)adamic_object_read(%s, %s, &%s, %s);", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+				e.line("}")
+			}
 			undefined := "NULL"
 			if expression.Of.IsMaybe() {
 				undefined = zero(expression.Of)
 			}
 			present := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
-			if expression.Of == ir.MaybeNumber {
+			if expression.Of.IsMaybe() {
 				present = field
 			}
 			field = fmt.Sprintf("(%s == NULL ? %s : %s)", slot, undefined, present)
 		}
-		if expression.Of == ir.MaybeNumber && expression.Optional {
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
+		if expression.Of.IsMaybe() && expression.Optional {
+			return e.snapshot(expression.Of, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(expression.Of), field))
 		}
 		if expression.Of.IsReference() {
 			// A field holds a reference as void *; read through the type the checker proved.
@@ -173,7 +247,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
+		e.line("\tstatic const char message[] = %s;", cArray(narrowedAwayMessage))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
@@ -189,6 +263,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
+		if expression.Nullable {
+			value := e.value(expression.Value)
+			return fmt.Sprintf("(%s == NULL ? &adamic_box_null : (adamic_heap *)%s)", value, value)
+		}
 		return e.box(expression.Value)
 	case ir.MakeError:
 		return e.makeError(expression)
@@ -204,6 +282,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
 	case ir.Narrow:
 		return e.narrow(expression)
+	case ir.ArrayIsArray:
+		value := e.snapshot(ir.Union, e.value(expression.Value))
+		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
 	case ir.TypeOf:
 		return e.typeOf(expression)
 	case ir.UnionToString:
@@ -225,8 +306,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MakeClosure:
 		environment := e.program.Functions[expression.Function].Environment
 		closure := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", e.functionName(expression.Function), len(environment)))
+		if e.program.Functions[expression.Function].Receiver {
+			e.line("%s->receiver = true;", closure)
+		}
+		e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), e.program.Functions[expression.Function].GraphClosure)
 		for index, local := range environment {
-			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))
+			e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
 		}
 		return closure
 	case ir.CallClosure:
@@ -275,6 +360,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return result
 	case ir.ArrayMap:
+		if e.hasArrayHoles() {
+			return e.arrayHolesMap(expression)
+		}
 		if mapped, ok := e.mapped(expression); ok {
 			return mapped
 		}
@@ -282,6 +370,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
 		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
+		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes))
 		count, index := e.temporary(), e.temporary()
 		// The length is read once, as JavaScript's map does; an array the callback shrinks is a
 		// panic here rather than JavaScript's holes, which 0.1 has no way to hold.
@@ -293,9 +382,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", element, callback, callback, source, index, index, source)
+		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
+		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
+			e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, mapped, element)
+		}
 		e.line("adamic_array_push(%s, %s);", mapped, element)
 		e.indent--
 		e.line("}")
@@ -306,11 +398,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.arrayReduce(expression)
 	case ir.ArraySearch:
 		return e.libraryArraySearch(expression)
+	case ir.ArrayRangeErrorIs:
+		return fmt.Sprintf("adamic_array_is_range_error(%s)", e.value(expression.Value))
+	case ir.ArraySetLength:
+		return e.arrayHolesLength(expression)
+	case ir.ArrayHoles:
+		return e.arrayHoles(expression)
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			length := e.value(expression.Length)
 			value := e.value(expression.Value)
-			return e.own(ir.Array, fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()))
+			return e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()), expression.GraphTypes)
 		}
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -324,7 +422,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
 		return array
 	case ir.ArraySplice:
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)))
+		return e.graphArray(fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)), expression.GraphTypes)
 	case ir.ArrayFrom:
 		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
@@ -336,11 +434,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, other := range expression.Others {
 			arrays = append(arrays, e.value(other))
 		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")))
+		return e.graphArray(fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")), expression.GraphTypes)
 	case ir.CheckedCast:
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
 		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Field), e.cache(), member(expression.FieldType))
+		if expression.CheckedFields {
+			slot := e.temporary()
+			e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(expression.Field), e.cache(), expression.FieldType, cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[expression.FieldType]), cString(expression.Field))
+			field = fmt.Sprintf("%s.%s", slot, member(expression.FieldType))
+		}
 		if expression.FieldType.IsReference() {
 			field = fmt.Sprintf("((%s)%s)", cType(expression.FieldType), field)
 		}
@@ -349,11 +452,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
 		}
 		e.line("if (!(%s)) {", strings.Join(tests, " || "))
-		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+		e.line("\tstatic const char message[] = %s;", cArray(expression.Message))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			index := e.value(expression.Index)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("adamic_typed_array_get(%s, %s)", array, index))
+		}
 		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
@@ -373,21 +481,27 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.snapshot(expression.Type(), fmt.Sprintf("%s->length == 0 ? %s : %s", array, zero(expression.Type()), popped))
 		}
 		// The array's reference to the element becomes the statement's.
-		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
+		popped := fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element))
+		if len(e.program.GraphTypes) != 0 {
+			popped = fmt.Sprintf("adamic_graph_escape(%s, %s)", array, popped)
+		}
+		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair))
+		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}
 		for index, argument := range expression.Arguments {
 			arguments[index] = e.value(argument)
 		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2))
+		return e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes)
 	case ir.ArraySort:
 		array := e.value(expression.Array)
 		sort := "adamic_array_sort"
-		if expression.Element == ir.MaybeNumber {
+		if expression.DefaultStrings {
+			sort = "adamic_array_sort_strings"
+		} else if expression.Element == ir.MaybeNumber {
 			sort = "adamic_array_sort_undefined_last"
 		}
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
@@ -424,17 +538,18 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
-			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
 		}
 		if expression.Pairs != nil {
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
 		}
 		return created
 	case ir.MapKeys:
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)))
+		return e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapValues:
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)))
+		return e.graphArray(fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapClear:
 		e.line("adamic_map_clear(%s);", e.value(expression.Map))
 		return "0"
@@ -446,6 +561,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			values = e.value(expression.Values)
 		}
 		created := e.own(ir.Map, newMap(expression.Element, false))
+		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)
 		}
@@ -453,10 +569,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.SetAdd:
 		set := e.value(expression.Set)
 		value := e.value(expression.Value)
-		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, held(expression.Element, value))
+		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, e.heldIn(set, expression.Element, value))
 		return set
 	case ir.SetValues:
-		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
+		return e.graphArray(fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)), expression.GraphTypes)
 	case ir.MapGet:
 		slot := e.mapGetSlot(expression)
 		if expression.Type().IsMaybe() {
@@ -468,7 +584,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
-		e.line("adamic_map_set(%s, %s, %s);", object, held(expression.KeyType, key), held(expression.ValueType, value))
+		e.line("adamic_map_set(%s, %s, %s);", object, e.heldIn(object, expression.KeyType, key), e.heldIn(object, expression.ValueType, value))
 		return object
 	case ir.MapHas:
 		object := e.value(expression.Map)
@@ -484,6 +600,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
 	case ir.HasOwn:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
+	case ir.ParallelMap:
+		return e.parallelMap(expression)
 	case ir.ReadTextFile:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
@@ -495,6 +613,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.RealPath:
+		return e.own(ir.Object, fmt.Sprintf("adamic_real_path(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
 		return e.own(ir.Object, fmt.Sprintf("adamic_file_status(%s)", e.value(expression.Path)))
 	case ir.WriteTextFile:
@@ -505,7 +625,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
 		if expression.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
@@ -513,6 +633,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if e.hasArrayHoles() {
+			array := e.value(expression.Array)
+			separator := e.value(expression.Separator)
+			return e.own(ir.String, fmt.Sprintf("adamic_array_holes_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+		}
 		if expression.Depth > 0 {
 			return e.libraryArrayJoin(expression)
 		}
@@ -527,13 +652,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
 			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 			for index, element := range expression.Elements {
 				value := e.value(element)
 				switch {
 				case expression.Spread[index]:
 					e.line("adamic_array_append(%s, %s);", array, value)
 				case expression.Element.IsReference():
-					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
+					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, e.heldReferenceIn(array, value))
 				default:
 					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 				}
@@ -545,14 +671,23 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			elements = append(elements, e.value(element))
 		}
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 		for _, element := range elements {
 			if expression.Element.IsReference() {
-				element = retained(element)
+				element = e.heldReferenceIn(array, element)
 			}
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
 		}
 		return array
 	case ir.Length:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			length := fmt.Sprintf("adamic_typed_array_length(%s)", array)
+			if expression.Optional {
+				return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, %s})", array, zero(ir.MaybeNumber), length))
+			}
+			return e.snapshot(ir.Number, length)
+		}
 		if expression.Optional {
 			array := e.value(expression.Array)
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))

@@ -1,0 +1,12 @@
+{
+  "file": "cloud/reports/host-proof-combined/probes/non_null_narrowed_scalar.a",
+  "source": "function narrowed(value: number | string | undefined): number { if (typeof value === 'number') return value!; return 1; } console.log(String(narrowed(0)));",
+  "native": {
+    "exit": 1,
+    "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3014596281/main.c:19:28: error: invalid operands to binary expression ('double' and 'void *')\n   19 |                 if (!(adamic_temporary_1 != NULL)) {\n      |                       ~~~~~~~~~~~~~~~~~~ ^  ~~~~\n1 error generated.\n\n"
+  },
+  "javascript": {
+    "exit": 0,
+    "diagnostic": ""
+  }
+}

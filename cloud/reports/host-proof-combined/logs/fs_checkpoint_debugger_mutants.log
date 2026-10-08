@@ -1,0 +1,6 @@
+trap-artifact: caught by debugger emitted a trap or breakpoint call, exit 1
+trap-oracle: caught by exit codes differ, exit 1
+javascript-dropped: caught by JavaScript kept 0 debugger statements, exit 1
+lowering-dropped: caught by JavaScript kept 0 debugger statements, exit 1
+debugger-refused: caught by refuses debugger, exit 1
+flow-instruction: caught by debugger changed the flow: 2 instructions, exit 1

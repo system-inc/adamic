@@ -1,0 +1,1 @@
+function update(value: number | string | boolean | undefined): void { value! ||= 7; console.log(`${value}`); } update(0);

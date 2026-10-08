@@ -1,0 +1,7 @@
+import { programArguments } from 'adamic';
+interface Box { readonly text: string; }
+let shared: Box = { text: 'before' + (programArguments()[0] ?? '!') };
+const observe = (match: string): string => { console.log(shared.text); return match; };
+function bump(value: Box, text: string): Box { return { ...value, text }; }
+shared = bump(shared, 'x'.replace(/x/, observe));
+console.log(shared.text);

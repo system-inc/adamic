@@ -1,0 +1,17 @@
+[codex/host-proof-combined 5e40b960] Take re-extracted readDirectory host fixture for recount
+ 23 files changed, 865 insertions(+), 42 deletions(-)
+ create mode 100644 stage3/fixtures/host/25-followup-proof.json
+ create mode 100644 stage3/fixtures/host/STYLE-OPTIONS.md
+ create mode 100644 stage3/fixtures/host/followup-evidence/checker-overlay.json
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-audit.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-extract.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-library-check.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-option-isolation.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-options.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-setup.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-stage0-style-mutant.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-stock-final-mutant.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-stock-final.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/host-followup-style-mutant.log
+ create mode 100644 stage3/fixtures/host/followup-evidence/original-options.json
+ create mode 100644 stage3/fixtures/host/followup-evidence/stock.json

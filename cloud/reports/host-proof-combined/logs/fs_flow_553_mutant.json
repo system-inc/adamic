@@ -1,0 +1,6 @@
+{
+  "mutant": "drop whole-statement deinitialization exemption",
+  "test": "TestStandaloneDeinitializationUsesReadiness",
+  "exit": 1,
+  "caught": true
+}

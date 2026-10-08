@@ -1,0 +1,182 @@
+package oracle
+
+import (
+ "encoding/json"
+ "os"
+	"errors"
+	"path/filepath"
+	"regexp"
+	"runtime"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+func init() {
+	for _, name := range []string{"a", "b", "host14", "self"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{
+			"internal/oracle/testdata/memoize_regions/" + name + ".a", true, false,
+		})
+	}
+}
+
+func TestMemoizeRegions(t *testing.T) {
+	t.Parallel()
+	for name, output := range map[string]string{
+		"a": "42 42 1\n", "b": "42 42 1\n", "host14": "cleared\ntrue\ntrue 1\n", "self": "cycle:ready\nfreed\n",
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/memoize_regions", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			observed := onNode(t, path)
+			if observed.exitCode != 0 || len(observed.stderr) != 0 || string(observed.stdout) != output {
+				t.Fatalf("Node: %+v", observed)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			cell := false
+			for _, local := range program.Locals {
+				if local.Captured && (local.Name == "callback" || local.Name == "pending") {
+					cell = cell || local.GraphCell
+				}
+			}
+			if !cell {
+				t.Fatal("callback capture has no graph ownership")
+			}
+			backend := onJavaScriptBackend(t, program)
+			actual, binary := natively(t, program)
+			for _, pair := range []struct {
+				name   string
+				result run
+			}{{"JavaScript", backend}, {"native", actual}, {"release", released(t, program)}} {
+				if difference := disagreement(observed, pair.result); difference != "" {
+					t.Errorf("%s: %s; stderr %q", pair.name, difference, pair.result.stderr)
+				}
+			}
+			if leak := leaks(t, program, binary); leak != "" {
+				t.Errorf("leaks: %s", leak)
+			}
+			counted := filepath.Join(t.TempDir(), "counted")
+			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			result := execute(t, counted)
+			if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}); report != "" {
+				t.Fatal(report)
+			}
+			if !graphRegionLine.Match(result.stderr) {
+				t.Fatalf("no graph region freed: %s", result.stderr)
+			}
+			if name == "self" && len(graphRegionLine.FindAll(result.stderr, -1)) != 1 {
+				t.Fatalf("self-cycle must free as one region: %s", result.stderr)
+			}
+			t.Logf("Node and both backends: %q; ownership:\n%s", output, result.stderr)
+		})
+	}
+}
+
+func TestMemoizeAsyncCaptureStillRefused(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/memoize_regions/async.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 || string(observed.stdout) != "done\n" {
+		t.Fatalf("Node: %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	const reason = "async frame capture cycle: 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free"
+	if !errors.As(err, &refused) || refused.What != reason {
+		t.Fatalf("want pinned async refusal, got %v", err)
+	}
+}
+
+func TestMemoizeEnvironmentOmissionLeaks(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/memoize_regions/self.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := native.C(program)
+	adoption := regexp.MustCompile(`(?m)^\s*adamic_temporary_\d+ = adamic_graph_adopt_owned\(adamic_temporary_\d+, sizeof \*adamic_temporary_\d+ \+ \d+ \* sizeof\(adamic_cell\)\);\n`)
+	if len(adoption.FindAllString(code, -1)) != 1 {
+		t.Fatal("expected one graph environment adoption")
+	}
+	mutant := adoption.ReplaceAllString(code, "")
+	binary := filepath.Join(t.TempDir(), "without-environment")
+	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	if difference := disagreement(observed, actual); difference != "" {
+		t.Fatalf("mutant must still print Node's answer: %s; stderr %s", difference, actual.stderr)
+	}
+	report := leakcheck.Report(t, mutant, binary)
+	caught := strings.Contains(report, "LeakSanitizer")
+	if runtime.GOOS == "darwin" {
+		caught = strings.Contains(report, "heap values leaked")
+	}
+	if !caught {
+		t.Fatalf("environment omission must be caught by the platform leak check: %s", report)
+	}
+	t.Logf("environment omission caught only by the leak check:\n%s", report)
+}
+
+// The resolved payload is the Box that strongly holds the Promise itself. A
+// counted Promise cannot be an internal region member, so this stays refused.
+func TestMemoizePromisePayloadCycleStillRefused(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/memoize_regions/promise-cycle.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 || string(observed.stdout) != "true\n" {
+		t.Fatalf("Node: %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	const reason = "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region"
+	const fix = "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)"
+	if !errors.As(err, &refused) || refused.What != reason || refused.Fix != fix {
+		t.Fatalf("want pinned Promise payload cycle refusal, got %v", err)
+	}
+}
+
+func TestMemoizeMergedCounts(t *testing.T) {
+ data,err:=os.ReadFile(countsPath); if err!=nil {t.Fatal(err)}
+ recorded:=map[string]string{}
+ for _,line:=range strings.Split(string(data),"\n") {if strings.HasPrefix(line,"| ") && !strings.HasPrefix(line,"| Fixture ") {recorded[strings.Split(line," | ")[0][2:]]=line}}
+ for _,path:=range []string{"internal/oracle/testdata/user_iterators.a","internal/oracle/testdata/optional_widening_class.a","internal/oracle/testdata/optional_widening_fresh.a","internal/oracle/testdata/optional_widening_declared.a"} {
+  measured:=counted(t,path,false,nil,false,false)
+  if recorded[path]!=measured {t.Fatalf("recorded %s; measured %s",recorded[path],measured)}
+  t.Log(measured)
+ }
+ ordered:=[]string{}
+ add:=func(path string) {row,ok:=recorded[path]; if !ok {t.Fatalf("missing row %s",path)}; ordered=append(ordered,row)}
+ for _,fixture:=range fixtures {if fixture.lowers&&!uncounted[fixture.path] {add(fixture.path)}}
+ for _,fixture:=range inputFixtures {add(fixture.path)}
+ probes,err:=filepath.Glob(filepath.Join(repository,"internal/oracle/testdata/fresh_refused/*.a")); if err!=nil {t.Fatal(err)}
+ for _,path:=range probes {relative,err:=filepath.Rel(repository,path); if err!=nil {t.Fatal(err)};add(relative)}
+ encoded,err:=json.Marshal(ordered); if err!=nil {t.Fatal(err)}
+ if err:=os.WriteFile("/tmp/memoize-area-evidence/counts-order.json",encoded,0644);err!=nil {t.Fatal(err)}
+}

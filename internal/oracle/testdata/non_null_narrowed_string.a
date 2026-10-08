@@ -1,0 +1,8 @@
+function narrowed(value: string | number | undefined): string {
+ if (typeof value === 'string') return value!;
+ return 'other';
+}
+console.log(narrowed(''));
+console.log(narrowed('present'));
+console.log(narrowed(0));
+console.log(narrowed(undefined));

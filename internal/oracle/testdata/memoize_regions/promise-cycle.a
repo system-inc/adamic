@@ -1,0 +1,9 @@
+interface Box { promise: Promise<Box> | undefined; }
+function stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }
+async function run(): Promise<void> {
+    const box: Box = { promise: undefined };
+const promise = Promise.resolve(box);
+stash(box, promise);
+console.log(`${(await promise) === box}`);
+}
+await run();

@@ -87,11 +87,14 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
 	}
-	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") {
+	if name != "valueOf" && l.errorType(l.checker.GetTypeAtLocation(receiver)) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
-	if of == ir.Object {
+	if l.exactPlainObject(receiver) {
+		of = ir.Object
+	}
+	if of == ir.Object || of == ir.Union {
 		if reason := l.prototypeHazard(receiver, name); reason != "" {
 			return nil, true, l.notYet(node, name+" through an object view ("+reason+")")
 		}
@@ -139,7 +142,9 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		return nil, true, err
 	}
 	if name == "valueOf" {
-		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result != of {
+		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+			return fit(value, result), true, nil
+		} else if result != of {
 			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+typeName(of)+" representation to Object (keeping or returning that result needs a tagged object view)")
 		}
 		switch of {
@@ -198,7 +203,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					reason = "a value with a different native representation may be hidden by the view"
 					return true
 				}
-				if name != "valueOf" && l.isLibraryType(shape, "Error") {
+				if name != "valueOf" && l.errorType(shape) {
 					reason = "an Error may be hidden by the view"
 					return true
 				}

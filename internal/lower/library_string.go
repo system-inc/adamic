@@ -71,6 +71,15 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
+	}
+	if text, known, err := l.dateStringConversion(node, value); known {
+		return text, err
+	}
+	if _, member := value.(ir.PhantomMember); member {
+		return l.phantomSpelling(value), nil
+	}
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
@@ -81,7 +90,7 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	case ir.String:
 		return l.spelled(node, value), nil
 	case ir.Union:
-		if l.writable(l.checker.GetTypeAtLocation(node)) {
+		if l.writable(l.checker.GetTypeAtLocation(node)) || l.dynamicScalarProperty(node) {
 			return ir.UnionToString{Value: value}, nil
 		}
 	}
@@ -135,7 +144,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf":
+		case "charAt", "substring", "substr", "concat", "toString", "valueOf":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -149,6 +158,14 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	// With no length argument, substr and slice use the same relative start and run to the end.
+	// A second argument is a length for substr, an end for slice, and cannot be substituted.
+	if name == "substr" {
+		if len(written) > 1 {
+			return nil, true, l.notYet(node, "substr with a length argument")
+		}
+		name = "slice"
+	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, name+" with arguments")
@@ -226,7 +243,7 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 			arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
 		}
 	}
-	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
+	return l.checkedStringCall(node, ir.StringCall{Method: name, Value: value, Arguments: arguments}), true, nil
 }
 
 // Helpers use the ordinary IR so both backends and ownership analyses see every evaluation. Each
@@ -349,7 +366,7 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
-	if l.stringReadOnlyArgument(node) {
+	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 		return nil
 	}
 	return l.refuseWidening(node)

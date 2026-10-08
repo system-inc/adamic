@@ -38,6 +38,15 @@ func Build(program *ir.Program, function int) *Function {
 	// Falling off the end returns, as a void function and the top level do.
 	builder.terminate(&Return{})
 	Finalize(builder.function)
+	// The pending shared-SSA switch owns general ordering. Extend its terminal adapter here.
+	order := EvaluationOrder(1)
+	for _, block := range builder.function.Blocks {
+		order += EvaluationOrder(len(block.Instructions))
+		if suspend, ok := block.Terminal.(*Suspend); ok {
+			suspend.Order = order
+		}
+		order++
+	}
 	return builder.function
 }
 
@@ -74,13 +83,14 @@ type attempt struct {
 }
 
 type jump struct {
+	name                string
 	breakTo, continueTo BlockId
 }
 
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
 func (b *builder) tracked(local int) bool {
 	declared := b.program.Locals[local]
-	return !declared.Global && !declared.Captured
+	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.
@@ -164,21 +174,34 @@ func (b *builder) statements(statements []ir.Statement) {
 
 func (b *builder) statement(at *ir.Statement) {
 	switch statement := (*at).(type) {
+	case ir.Debugger:
+		// With no debugger attached, it reads and writes nothing and keeps the path.
+		return
 	case ir.WriteLine:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.Evaluate:
+		if wait, ok := statement.Value.(ir.Await); ok {
+			b.suspend(at, wait, -1)
+			return
+		}
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.SetIndex:
 		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.SetProperty:
 		b.emit(at, 0, nil, b.uses(statement), nil)
+	case ir.AllocateEnvironment:
+		b.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
+		if wait, ok := statement.Value.(ir.Await); ok {
+			b.suspend(at, wait, statement.Local)
+			return
+		}
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Return:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		if len(b.attempts) == 0 {
+		if !slices.ContainsFunc(b.attempts, func(attempt *attempt) bool { return attempt.finally != nil }) {
 			b.terminate(&Return{})
 			break
 		}
@@ -189,6 +212,12 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Panic:
 		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
 		b.terminate(&Unreachable{})
+	case ir.Labeled:
+		after := b.function.NewBlock()
+		b.jumps = append(b.jumps, jump{name: statement.Name, breakTo: after.Id, continueTo: InvalidBlock})
+		b.statements(statement.Body)
+		b.enter(after)
+		b.jumps = b.jumps[:len(b.jumps)-1]
 	case ir.Block:
 		b.statements(statement.Body)
 	case ir.If:
@@ -208,11 +237,26 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Switch:
 		b.switchStatement(at, statement)
 	case ir.Break:
-		depth := len(b.jumps) - 1 - statement.Depth
+		depth := len(b.jumps) - 1
+		if statement.Label != "" {
+			for depth >= 0 && b.jumps[depth].name != statement.Label {
+				depth--
+			}
+		} else {
+			for depth >= 0 && b.jumps[depth].name != "" {
+				depth--
+			}
+		}
+		if depth < 0 {
+			panic("flow: unknown break target")
+		}
+		if statement.Label == "" {
+			depth -= statement.Depth
+		}
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].continueTo != InvalidBlock {
+			if b.jumps[index].continueTo != InvalidBlock && ((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
 				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}
@@ -239,6 +283,7 @@ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	} else {
 		b.enter(test)
 	}
+	b.linkLabels(statement.Labels, update.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: update.Id})
 	b.current = body
 	b.statements(statement.Body)
@@ -246,6 +291,7 @@ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	b.statements(statement.Update)
 	b.enter(test)
 	b.jumps = b.jumps[:len(b.jumps)-1]
+	b.statements(statement.Test)
 	if statement.Condition == nil {
 		b.current.Terminal = &Goto{Block: body.Id}
 	} else {
@@ -272,6 +318,7 @@ func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
 		defines = b.defines(statement.Local)
 	}
 	b.emit(at, 1, nil, nil, defines)
+	b.linkLabels(statement.Labels, head.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
 	b.statements(statement.Body)
 	b.jumps = b.jumps[:len(b.jumps)-1]
@@ -425,6 +472,9 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 // through a function value when one in the program can throw, or as a sort's comparator. A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
+	if statement, ok := (*instruction.At).(ir.Assign); ok && statement.Checked && instruction.Part == 0 {
+		return true
+	}
 	var node any = instruction.Expression
 	if instruction.Expression == nil {
 		switch statement := (*instruction.At).(type) {
@@ -446,14 +496,38 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+				throws = true
+			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.ProcessCall{}):
+				// Invalid exit codes and host failures throw before a valid exit
+				// can terminate the process; retain their catch/finally edges.
+				operation := value.Interface().(ir.ProcessCall).Operation
+				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+			case reflect.TypeOf(ir.ArrayHoles{}), reflect.TypeOf(ir.ArraySetLength{}):
+				throws = true
+			case reflect.TypeOf(ir.NodeHostCall{}):
+				throws = throws || value.Interface().(ir.NodeHostCall).Throws
+			case reflect.TypeOf(ir.PhantomMember{}):
+				if !value.Interface().(ir.PhantomMember).Optional {
+					throws = true
+				}
+			case reflect.TypeOf(ir.Read{}):
+				if value.Interface().(ir.Read).Checked {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
+			case reflect.TypeOf(ir.RegExpCall{}):
+				if value.Interface().(ir.RegExpCall).Replacement != nil && program.ClosuresMayThrow {
+					throws = true
+				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
-				if program.ClosuresMayThrow {
+				if program.ClosureMayThrow(value.Interface().(ir.Expression)) {
 					throws = true
 				}
 			case arraySortType:
@@ -485,3 +559,24 @@ var (
 	arraySortType   = reflect.TypeOf(ir.ArraySort{})
 	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
 )
+
+func (b *builder) linkLabels(names []string, target BlockId) {
+	for _, name := range names {
+		for index := len(b.jumps) - 1; index >= 0; index-- {
+			if b.jumps[index].name == name {
+				b.jumps[index].continueTo = target
+				break
+			}
+		}
+	}
+}
+
+func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
+	b.emit(at, 0, wait.Value, b.uses(wait.Value), nil)
+	fulfilled := b.function.NewBlock()
+	b.current.Terminal = &Suspend{Fulfilled: fulfilled.Id, Rejected: b.throwTarget(), Local: local, Of: wait.Of}
+	b.current = fulfilled
+	if local >= 0 {
+		b.function.AddInstruction(b.current, &Instruction{At: at, Part: 1, Defines: b.defines(local)})
+	}
+}

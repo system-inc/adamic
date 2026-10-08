@@ -1,0 +1,11 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a
+    oracle_test.go:577: not yet: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.074s

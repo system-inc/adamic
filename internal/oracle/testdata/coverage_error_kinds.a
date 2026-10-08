@@ -1,0 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-parameters -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Every built-in error keeps its nominal identity when stored and passed.
+function raise<T extends Error>(error: T): void {
+    throw error;
+}
+const errors: Error[] = [
+    new Error('base'),
+    new TypeError('type'),
+    new RangeError('range'),
+    new ReferenceError('reference'),
+    new SyntaxError('syntax'),
+    new URIError('uri'),
+    new EvalError('eval'),
+];
+for(const original of errors) {
+    try {
+        raise(original);
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            console.log(`${error === original} ${error.name} ${error.message}`);
+            console.log(
+                `${error instanceof TypeError} ${error instanceof RangeError} ${error instanceof ReferenceError} ${error instanceof SyntaxError} ${error instanceof URIError} ${error instanceof EvalError}`,
+            );
+        }
+    }
+}

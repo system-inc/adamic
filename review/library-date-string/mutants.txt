@@ -1,0 +1,24 @@
+=== RUN   TestDateStringRuntimeMutants
+=== PAUSE TestDateStringRuntimeMutants
+=== CONT  TestDateStringRuntimeMutants
+=== RUN   TestDateStringRuntimeMutants/offset_sign
+=== PAUSE TestDateStringRuntimeMutants/offset_sign
+=== RUN   TestDateStringRuntimeMutants/weekday
+=== PAUSE TestDateStringRuntimeMutants/weekday
+=== RUN   TestDateStringRuntimeMutants/invalid_spelling
+=== PAUSE TestDateStringRuntimeMutants/invalid_spelling
+=== CONT  TestDateStringRuntimeMutants/offset_sign
+=== CONT  TestDateStringRuntimeMutants/invalid_spelling
+=== CONT  TestDateStringRuntimeMutants/weekday
+=== NAME  TestDateStringRuntimeMutants/offset_sign
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+=== NAME  TestDateStringRuntimeMutants/invalid_spelling
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+=== NAME  TestDateStringRuntimeMutants/weekday
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+--- PASS: TestDateStringRuntimeMutants (0.00s)
+    --- PASS: TestDateStringRuntimeMutants/offset_sign (22.83s)
+    --- PASS: TestDateStringRuntimeMutants/invalid_spelling (23.12s)
+    --- PASS: TestDateStringRuntimeMutants/weekday (23.73s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	23.811s

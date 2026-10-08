@@ -1,0 +1,171 @@
+=== RUN   TestDebuggerNativeEmitsNothing
+=== PAUSE TestDebuggerNativeEmitsNothing
+=== RUN   TestNonNullLogicalMissingReadStopsBeforeRight
+=== PAUSE TestNonNullLogicalMissingReadStopsBeforeRight
+=== RUN   TestNonNullLogicalAlwaysEvaluateRightMutant
+=== PAUSE TestNonNullLogicalAlwaysEvaluateRightMutant
+=== RUN   TestWASIInputAgreesWithNode
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.argv: WASI has no executable paths; use a native Node host target
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+--- PASS: TestWASIInputAgreesWithNode (30.38s)
+    --- SKIP: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a (0.68s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a (11.57s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a (1.11s)
+    --- SKIP: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a (0.38s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.44s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/realpath.a (0.47s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/empty-path.a (0.55s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.65s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.53s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.57s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.87s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a (0.74s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a (0.91s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (1.32s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (1.27s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a (1.35s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a (1.26s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (1.05s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (1.14s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (1.55s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a (0.99s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (0.99s)
+=== RUN   TestWASIHostRuntimeRefusals
+=== RUN   TestWASIHostRuntimeRefusals/mkdtemp
+=== RUN   TestWASIHostRuntimeRefusals/pid
+=== RUN   TestWASIHostRuntimeRefusals/platform
+=== RUN   TestWASIHostRuntimeRefusals/columns
+=== RUN   TestWASIHostRuntimeRefusals/memory_usage
+=== RUN   TestWASIHostRuntimeRefusals/argv
+=== RUN   TestWASIHostRuntimeRefusals/open
+=== RUN   TestWASIHostRuntimeRefusals/mkdir
+=== RUN   TestWASIHostRuntimeRefusals/utimes
+--- PASS: TestWASIHostRuntimeRefusals (2.43s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdtemp (0.30s)
+    --- PASS: TestWASIHostRuntimeRefusals/pid (0.33s)
+    --- PASS: TestWASIHostRuntimeRefusals/platform (0.23s)
+    --- PASS: TestWASIHostRuntimeRefusals/columns (0.23s)
+    --- PASS: TestWASIHostRuntimeRefusals/memory_usage (0.20s)
+    --- PASS: TestWASIHostRuntimeRefusals/argv (0.32s)
+    --- PASS: TestWASIHostRuntimeRefusals/open (0.32s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdir (0.20s)
+    --- PASS: TestWASIHostRuntimeRefusals/utimes (0.30s)
+=== RUN   TestWASIFileAgreesWithNode
+=== RUN   TestWASIFileAgreesWithNode/read
+=== RUN   TestWASIFileAgreesWithNode/open
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/write
+=== RUN   TestWASIFileAgreesWithNode/close
+=== RUN   TestWASIFileAgreesWithNode/write_file
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/exists
+=== RUN   TestWASIFileAgreesWithNode/stat
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/mkdir
+    wasi_host_test.go:152: target refusal: directory creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/unlink
+=== RUN   TestWASIFileAgreesWithNode/utimes
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/date
+=== RUN   TestWASIFileAgreesWithNode/system
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/buffer
+=== RUN   TestWASIFileAgreesWithNode/read_sync
+=== RUN   TestWASIFileAgreesWithNode/write_buffer
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/mkdtemp
+    wasi_host_test.go:148: target refusal: wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target
+=== RUN   TestWASIFileAgreesWithNode/rm
+--- PASS: TestWASIFileAgreesWithNode (21.73s)
+    --- PASS: TestWASIFileAgreesWithNode/read (1.09s)
+    --- SKIP: TestWASIFileAgreesWithNode/open (1.09s)
+    --- PASS: TestWASIFileAgreesWithNode/write (1.14s)
+    --- PASS: TestWASIFileAgreesWithNode/close (0.92s)
+    --- SKIP: TestWASIFileAgreesWithNode/write_file (1.52s)
+    --- PASS: TestWASIFileAgreesWithNode/exists (1.39s)
+    --- SKIP: TestWASIFileAgreesWithNode/stat (1.17s)
+    --- SKIP: TestWASIFileAgreesWithNode/mkdir (1.43s)
+    --- PASS: TestWASIFileAgreesWithNode/unlink (1.79s)
+    --- SKIP: TestWASIFileAgreesWithNode/utimes (1.42s)
+    --- PASS: TestWASIFileAgreesWithNode/date (0.72s)
+    --- SKIP: TestWASIFileAgreesWithNode/system (1.48s)
+    --- PASS: TestWASIFileAgreesWithNode/buffer (1.39s)
+    --- PASS: TestWASIFileAgreesWithNode/read_sync (1.48s)
+    --- SKIP: TestWASIFileAgreesWithNode/write_buffer (1.42s)
+    --- SKIP: TestWASIFileAgreesWithNode/mkdtemp (0.70s)
+    --- PASS: TestWASIFileAgreesWithNode/rm (1.57s)
+=== RUN   TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:24: gate cache node miss
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== NAME  TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:89: removed-adapter mutant caught by Node comparison: stdout "EINVAL\n-22\nEINVAL: invalid argument, symlink '' -> 'adamic-empty-symlink-link'\n"
+--- PASS: TestWASIEmptySymlinkAgreesWithNode (34.39s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/ (0.32s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi (0.60s)
+=== CONT  TestDebuggerNativeEmitsNothing
+=== RUN   TestDebuggerNativeEmitsNothing/.a
+=== PAUSE TestDebuggerNativeEmitsNothing/.a
+=== RUN   TestDebuggerNativeEmitsNothing/.ts
+=== PAUSE TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestDebuggerNativeEmitsNothing/.a
+=== CONT  TestNonNullLogicalMissingReadStopsBeforeRight
+=== RUN   TestNonNullLogicalMissingReadStopsBeforeRight/missing_or
+=== PAUSE TestNonNullLogicalMissingReadStopsBeforeRight/missing_or
+=== RUN   TestNonNullLogicalMissingReadStopsBeforeRight/missing_and
+=== PAUSE TestNonNullLogicalMissingReadStopsBeforeRight/missing_and
+=== RUN   TestNonNullLogicalMissingReadStopsBeforeRight/missing_nullish
+=== PAUSE TestNonNullLogicalMissingReadStopsBeforeRight/missing_nullish
+=== CONT  TestNonNullLogicalMissingReadStopsBeforeRight/missing_or
+=== CONT  TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestNonNullLogicalMissingReadStopsBeforeRight/missing_nullish
+=== CONT  TestNonNullLogicalAlwaysEvaluateRightMutant
+    non_null_logical_test.go:56: gate cache node miss
+=== CONT  TestNonNullLogicalMissingReadStopsBeforeRight/missing_and
+--- PASS: TestDebuggerNativeEmitsNothing (0.00s)
+    --- PASS: TestDebuggerNativeEmitsNothing/.a (0.51s)
+    --- PASS: TestDebuggerNativeEmitsNothing/.ts (0.53s)
+=== NAME  TestNonNullLogicalMissingReadStopsBeforeRight/missing_or
+    non_null_logical_test.go:37: gate cache node miss
+=== NAME  TestNonNullLogicalMissingReadStopsBeforeRight/missing_nullish
+    non_null_logical_test.go:37: gate cache node miss
+=== NAME  TestNonNullLogicalAlwaysEvaluateRightMutant
+    non_null_logical_test.go:61: gate cache node miss
+=== NAME  TestNonNullLogicalMissingReadStopsBeforeRight/missing_and
+    non_null_logical_test.go:37: gate cache node miss
+--- PASS: TestNonNullLogicalMissingReadStopsBeforeRight (0.00s)
+    --- PASS: TestNonNullLogicalMissingReadStopsBeforeRight/missing_or (1.22s)
+    --- PASS: TestNonNullLogicalMissingReadStopsBeforeRight/missing_nullish (1.30s)
+    --- PASS: TestNonNullLogicalMissingReadStopsBeforeRight/missing_and (1.20s)
+=== NAME  TestNonNullLogicalAlwaysEvaluateRightMutant
+    non_null_logical_test.go:102: always-evaluate RHS caught by Node: stdout "3 0\n" versus "0 0\n", exit 0
+--- PASS: TestNonNullLogicalAlwaysEvaluateRightMutant (2.12s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	91.108s

@@ -12,6 +12,9 @@ import (
 // closure among them could, and not borrowed. Those are the assignments appendTo writes, where text's
 // own reference goes to adamic_string_append, which may write in place.
 func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
+	if _, suspended := e.asyncSlots[statement.Local]; suspended {
+		return nil, false
+	}
 	declared := e.program.Locals[statement.Local]
 	if declared.Type != ir.String || declared.Global || declared.Captured || declared.Borrowed || statement.Checked {
 		return nil, false
@@ -20,7 +23,7 @@ func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
 	if !isConcat || len(concat.Parts) < 2 {
 		return nil, false
 	}
-	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked {
+	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked || read.Readiness != "" {
 		return nil, false
 	}
 	return concat.Parts[1:], true

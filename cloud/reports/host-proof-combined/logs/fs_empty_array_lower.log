@@ -1,0 +1,5 @@
+--- FAIL: TestEmptyArrayScalarFallbacksStayNotYet (0.12s)
+    empty_arrays_test.go:64: want scalar fallback NotYet, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.193s
+FAIL

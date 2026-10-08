@@ -1,0 +1,13 @@
+// Generic toString defaults and primitive receiver failures across error prototypes.
+for(const value of [true, false]) {
+    try {
+        console.log(URIError.prototype.toString.call(value));
+    }
+    catch(error) {
+        if(error instanceof TypeError) console.log(`${error.name} ${error.message}`);
+    }
+}
+console.log(SyntaxError.prototype.toString.call({ name: '', message: '' }));
+console.log(EvalError.prototype.toString.call({ name: false, message: 0 }));
+console.log(ReferenceError.prototype.toString.call({ name: NaN, message: Infinity }));
+console.log(RangeError.prototype.toString.call(new URIError('native identity')));

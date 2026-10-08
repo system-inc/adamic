@@ -1,0 +1,1 @@
+function getTime(): Date | undefined { return new Date(0); } console.log(String(getTime()?.getTime()));

@@ -1,0 +1,6 @@
+function run(): void {
+    let value!: number;
+    console.log('before');
+    console.log(`${value}`);
+}
+run();

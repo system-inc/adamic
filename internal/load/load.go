@@ -127,6 +127,22 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
+	if usesNodeModules(program) {
+		index, err := nodeTypesIndex(workingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		roots = append(roots, tspath.RootedFilePathFromAbsolute(index))
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
+	}
+
 	loaded := &Program{compiler: program, fs: fs}
 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
 		return nil, &CheckError{Diagnostics: diagnostics}
@@ -137,7 +153,9 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	for _, root := range roots[:len(roots)-1] {
+	// The Node declarations' index follows the prelude when the program imports node:*, so only
+	// the named paths are checked here.
+	for _, root := range roots[:len(paths)] {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
@@ -232,7 +250,11 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
 		line, column := p.lineAndColumn(diagnostic.File(), diagnostic.Pos())
 		fmt.Fprintf(&builder, "%s:%d:%d: ", p.fs.displayName(diagnostic.File().FileName()), line, column)
 	}
-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), diagnostic.Localize(english))
+	message := starCollision(diagnostic)
+	if message == "" {
+		message = diagnostic.Localize(english)
+	}
+	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
 	writeChain(&builder, diagnostic.MessageChain(), 1)
 	return builder.String()
 }

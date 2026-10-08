@@ -52,7 +52,7 @@ import (
 // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
 // recursion included, and fall back to "returns something outside" if that takes too long.
 func ProveWrites(program *ir.Program) []Write {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program)}
+	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), top: program.HasAsync()}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -804,6 +804,13 @@ func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) 
 		}
 		a.run(id)
 	}
+	if _, suspends := block.Terminal.(*flow.Suspend); suspends {
+		// The environment owns these values, but confinement across queued work is unproved.
+		for _, held := range a.state.locals {
+			a.state.escape(held)
+		}
+		a.state.clobbered = true
+	}
 	return before, a.state
 }
 
@@ -824,6 +831,8 @@ func (a *analysis) run(id flow.InstructionId) {
 		a.value(statement.Index)
 		held := a.value(statement.Value)
 		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.AllocateEnvironment:
+		// Empty captured storage allocates no user value and changes no existing slot.
 	case ir.Declare:
 		a.define(statement.Local, a.value(statement.Value))
 	case ir.Assign:
@@ -1015,7 +1024,11 @@ func (a *analysis) value(expression ir.Expression) value {
 		return held
 	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
+	case ir.Await:
+		return a.call([]value{a.value(expression.Value)}, expression.Of)
+	case ir.PromiseValue:
+		return a.call([]value{a.value(expression.Value)}, ir.Promise)
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null, ir.StackExceeded:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
@@ -1032,6 +1045,53 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.Void:
+		a.value(expression.Value)
+		return value{}
+	case ir.Comma:
+		a.value(expression.Left)
+		return a.value(expression.Right)
+	case ir.Effects:
+		for _, statement := range expression.Body {
+			a.expressionEffect(statement)
+		}
+		return a.value(expression.Result)
+	case ir.LogicalAssignment:
+		result := a.value(expression.Read)
+		a.value(expression.Key)
+		before := a.state.copy()
+		switch write := expression.Write.(type) {
+		case ir.Assign:
+			held := a.value(write.Value)
+			result.merge(held)
+			a.define(write.Local, held)
+		case ir.SetProperty:
+			holder := a.value(write.Object)
+			held := a.value(write.Value)
+			result.merge(held)
+			if expression.Key != nil {
+				for _, name := range expression.KeyNames {
+					a.write(WriteField, write.Site, name, holder, held, name)
+				}
+			} else {
+				a.write(WriteField, write.Site, write.Name, holder, held, write.Name)
+			}
+		case ir.SetIndex:
+			holder := a.value(write.Array)
+			a.value(write.Index)
+			held := a.value(write.Value)
+			result.merge(held)
+			a.write(WriteElement, write.Site, "", holder, held, elementKey)
+		}
+		a.state.join(before)
+		return result
+	case ir.Truthy:
+		a.value(expression.Value)
+		return value{}
+	case ir.Logical:
+		result := a.value(expression.Left)
+		result.merge(a.value(expression.Right))
+		return result
 	case ir.Unary:
 		a.value(expression.Operand)
 		return value{}
@@ -1048,6 +1108,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.RegExpCall:
 		return a.regexCall(expression)
 	case ir.RegExpProperty:
@@ -1099,6 +1161,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.value(expression.Value)
 	case ir.MaybeOf:
 		return a.value(expression.Value)
+	case ir.PhantomMember:
+		a.value(expression.Value)
+		return value{}
 	case ir.CheckedCast:
 		result := a.value(expression.Value)
 		for _, allowed := range expression.Allowed {
@@ -1153,6 +1218,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Value)
 		return value{}
 	case ir.MaybeToString:
+		a.value(expression.Value)
+		return value{}
+	case ir.ArrayIsArray:
 		a.value(expression.Value)
 		return value{}
 	case ir.TypeOf:
@@ -1277,6 +1345,11 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeFSFile:
+		return a.nodeFSFile(expression)
+	case ir.RealPath:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1300,6 +1373,11 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasProperty:
+		a.value(expression.Object)
+		return value{}
+	case ir.DynamicProperty:
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}
@@ -1421,6 +1499,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
 		return a.call(a.operands(expression), expression.Returns)
+	case ir.ParallelMap:
+		// Tasks have a separate effect proof; results may alias shared inputs.
+		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:
@@ -1877,4 +1958,35 @@ func sortedKeys(set map[int]bool) []int {
 // (whose cells can), a union that may be one, or a Weak. Numbers, booleans and strings can't.
 func mutable(valueType ir.Type) bool {
 	return valueType.IsReference() && valueType != ir.String
+}
+
+// expressionEffect interprets only effects that lowering admits inside expressions.
+func (a *analysis) expressionEffect(statement ir.Statement) {
+	switch statement := statement.(type) {
+	case ir.Assign:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Declare:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Evaluate:
+		a.value(statement.Value)
+	case ir.WriteLine:
+		a.value(statement.Value)
+	case ir.Panic:
+		a.value(statement.Message)
+	case ir.SetProperty:
+		holder := a.value(statement.Object)
+		held := a.value(statement.Value)
+		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+	case ir.SetIndex:
+		holder := a.value(statement.Array)
+		a.value(statement.Index)
+		held := a.value(statement.Value)
+		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.Block:
+		for _, inner := range statement.Body {
+			a.expressionEffect(inner)
+		}
+	default:
+		a.unknown(statement)
+	}
 }

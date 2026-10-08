@@ -1,0 +1,6 @@
+=== RUN   TestRegExpRuntimeCompilerNotLinked
+    regexp_compile_test.go:255: a program without dynamic RegExp linked compiler symbols or tables
+--- FAIL: TestRegExpRuntimeCompilerNotLinked (0.34s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.354s
+FAIL

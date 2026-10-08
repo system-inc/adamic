@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_default_sort.a:1:37: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]

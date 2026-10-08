@@ -1,7 +1,8 @@
 # tsc Node host fixtures
 
 25 standalone programs cover the 19 requested System members as TypeScript
-6.0.3's getNodeSystem implements them. The census declares 44 System members;
+6.0.3's adapted getNodeSystem implements them. See [ADAPTED.md](ADAPTED.md)
+for source pins, per-fixture changes and current loader results. The census declares 44 System members;
 33 are reached at 196 sites. Its separate Node-derived ledger has 126 accesses.
 These populations overlap and must not be added. In the two measured noEmit
 workloads, readFile runs 53 times each, fileExists and directoryExists twice,
@@ -39,7 +40,8 @@ scratch directories before exiting.
 
 The hardest case is 25. Its matcher, glob/path helpers and Debug assertion
 functions are copied from upstream rather than replaced by a different walker.
-A source audit checks 124 function/method spans against the pinned source using
+A source audit checks 164 declarations, including 126 function/method spans,
+against the actual stage3/apply.sh output using
 canonical parsed syntax. Function statements retain their original operators,
 control flow, calls and literals. Removing the outer scope, indentation and
 CRLF formatting does not change them. Interfaces and helper types are included
@@ -51,20 +53,21 @@ explicitly reject the active-session case in their scaffolding. The executing
 filename and case-probe platform are controlled driver inputs.
 
 `status.json` has the requested schema and records Node stdout, stderr and exit,
-plus the exact output of `go run ./cmd/adamic build` at current main ef3d907.
-All 25 are Checker: current main has no declarations for these node: modules.
-Other checker findings, including upstream helper contracts outside the sound
-library, are retained verbatim. No fixture reaches native execution, so this is
-not evidence of native host correctness and no silent native miscompile was
-observed. The check runs a native binary and compares all three observations
-if any future fixture builds. It never treats a generic build/tool failure as
-Checker. A later library/compiler revision should rerecord its own outcomes.
+plus canonical stage 0 diagnostics under the library loader pinned in ADAPTED.md.
+All 25 Node observations are unchanged. Current results are 0 Checker,
+14 Refused, 11 NotYet and 0 Compiles with library c13622a0 and main's checker
+options. Stock tsc accepts all 25. See 25-followup-proof.json for every status
+movement and STYLE-OPTIONS.md for checker configuration.
+Fixture 11 historically passed native byte comparison, sanitizer checks and
+the Linux leak check; the current library integration stops at utimesSync. source-spans.json preserves the precise adapted-source provenance.
+Historical validation.md describes the initial pristine-source recording;
+ADAPTED.md supersedes its source and stage 0 results.
 
 After sourcing the setup environment, reproduce from the Adamic root:
 
 ```sh
-python3 stage3/fixtures/host/check.py --mutants --logs /tmp/host-fixture-check > /tmp/host-fixture-check.log 2>&1
-NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <upstream-v6.0.3-tree> > /tmp/host-source-audit.log 2>&1
+python3 stage3/fixtures/host/check.py --compiler-repo <scratch-stage3-library-merge> --mutants --logs /tmp/host-fixture-check > /tmp/host-fixture-check.log 2>&1
+NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <stage3-apply-output> > /tmp/host-source-audit.log 2>&1
 ```
 
 The first command independently invokes
@@ -113,3 +116,23 @@ the library worker; tsc's original requires retain their load semantics.
 The unused adaptation was removed; number 50 belongs to the scanner proof's
 temporary adaptations. Historical oracle evidence is retained in this bucket.
 The fixture Go test owned by another worker was not edited.
+
+Fixture 14 now applies adaptation 48 A, re-extracted from the actual composed
+adapted tree. Its memoize parameter is `callback: (() => T) | undefined` and
+its clearing assignment is `callback = undefined;`. Emitted JavaScript and
+Node stdout/stderr/exit are unchanged. See
+[ADAPTED.md](ADAPTED.md#fixture-14-applied-memoize-a) for current source pins,
+audit and mutant evidence. The earlier decline is historical; tsc adaptation
+acceptance and native compiler support are separate. The old status.json
+compiler observation for fixture 14 has not been remeasured on this source.
+
+## Fixture 25 Error host members
+
+Adaptation 40 now supplies the Node-declared Error host members. Fixture 25's
+`fail` was re-extracted from the composed tree after merging
+`e17f5248a0a3fe465489b9dfb1492ab465c132e3`, without rebasing. Only fixture 25
+copies `fail`; no host fixture copies `setStackTraceLimit`. Its two receivers
+now use `Error.captureStackTrace`. All 25 Node observations are unchanged,
+stock tsc accepts every fixture, and the full source audit passes. See
+[ADAPTED.md](ADAPTED.md#fixture-25-error-host-members) for reproduction and
+[evidence/error-host](evidence/error-host) for the logs and mutants.

@@ -3,7 +3,7 @@
 
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
     adamic_value *slot = adamic_object_find(object, name, cache);
-    size_t flag = object->class->static_flags[cache->index];
+    size_t flag = object->class->static_flags[(size_t)(slot - object->slots)];
     if (flag != 0 && object->slots[flag - 1].number == 0 && object->class->static_parent != 0) {
         return adamic_static_field(object->slots[object->class->static_parent - 1].reference, name, cache);
     }
@@ -11,9 +11,14 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 }
 
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache) {
-    if (object->class == NULL || !object->class->is_static) { return adamic_object_field(object, name, cache); }
+    if (object->class == NULL || !object->class->is_static) {
+        adamic_value *slot = adamic_object_field(object, name, cache);
+        adamic_object_initialized(object)[(size_t)(slot - object->slots)] = 1;
+        return slot;
+    }
     adamic_value *slot = adamic_object_find(object, name, cache);
-    size_t flag = object->class->static_flags[cache->index];
+    adamic_object_initialized(object)[(size_t)(slot - object->slots)] = 1;
+    size_t flag = object->class->static_flags[(size_t)(slot - object->slots)];
     if (flag != 0 && object->slots[flag - 1].number == 0) {
         double order = 0;
         for (size_t index = 0; index < object->shape->count; index++) {
@@ -23,4 +28,14 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
         object->slots[flag - 1].number = order + 1;
     }
     return slot;
+}
+
+adamic_string *adamic_object_typeof(const adamic_object *object) {
+    if (object == NULL) { return &adamic_typeof_undefined; }
+    return object->class != NULL && object->class->is_static ? &adamic_typeof_function : &adamic_typeof_object;
+}
+
+adamic_string *adamic_static_union_typeof(const adamic_heap *value) {
+    if (value != NULL && value != &adamic_null && value->kind == adamic_kind_object) { return adamic_object_typeof((const adamic_object *)value); }
+    return adamic_union_typeof(value, false);
 }

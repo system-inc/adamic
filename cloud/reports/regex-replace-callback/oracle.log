@@ -1,0 +1,90 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestRegExpReplacementNodeMutants
+=== RUN   TestRegExpReplacementNodeMutants/offset_off_by_one
+    regexp_replace_test.go:63: stdout differs
+=== RUN   TestRegExpReplacementNodeMutants/groups_wrong_order
+    regexp_replace_test.go:63: stdout differs
+=== RUN   TestRegExpReplacementNodeMutants/missing_named_groups_argument
+    regexp_replace_test.go:63: stdout differs
+--- PASS: TestRegExpReplacementNodeMutants (1.10s)
+    --- PASS: TestRegExpReplacementNodeMutants/offset_off_by_one (0.32s)
+    --- PASS: TestRegExpReplacementNodeMutants/groups_wrong_order (0.32s)
+    --- PASS: TestRegExpReplacementNodeMutants/missing_named_groups_argument (0.29s)
+=== RUN   TestRegExpReplacementTypeGuardMutants
+=== RUN   TestRegExpReplacementTypeGuardMutants/argument_guard
+    regexp_replace_test.go:105: exit codes differ
+=== RUN   TestRegExpReplacementTypeGuardMutants/group_guard
+    regexp_replace_test.go:105: exit codes differ
+--- PASS: TestRegExpReplacementTypeGuardMutants (0.66s)
+    --- PASS: TestRegExpReplacementTypeGuardMutants/argument_guard (0.32s)
+    --- PASS: TestRegExpReplacementTypeGuardMutants/group_guard (0.33s)
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a
+--- PASS: TestWASIAgreesWithNode (4.76s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.23s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace.a (0.29s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a (0.37s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a (0.30s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a (0.55s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a (1.89s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a (0.26s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a (0.26s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a (0.32s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a (0.27s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/arguments.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/effects.a (1.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/move_effect.a (1.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a (1.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/group_guard.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a (2.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/throw.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a (1.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/dynamic.a (5.30s)
+PASS
+gate cache: native hits=0 misses=37
+gate cache: node hits=0 misses=35
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.848s

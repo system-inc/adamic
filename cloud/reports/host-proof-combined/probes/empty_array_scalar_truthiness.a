@@ -1,0 +1,1 @@
+function numberFallback(value: number | undefined): number { return value || 7; } function stringFallback(value: string | undefined): string { return value || 'missing'; } console.log(`${numberFallback(0)} ${stringFallback('')} ${numberFallback(2)} ${stringFallback('present')}`);

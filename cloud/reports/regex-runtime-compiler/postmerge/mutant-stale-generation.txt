@@ -1,0 +1,6 @@
+=== RUN   TestRegExpRuntimePropertiesGenerated
+    regexp_compile_test.go:85: runtime property tables are stale; run generate-runtime-properties.py
+--- FAIL: TestRegExpRuntimePropertiesGenerated (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.126s
+FAIL

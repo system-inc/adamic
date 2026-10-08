@@ -1,19 +1,44 @@
-// From TypeScript 6.0.3, src/compiler/sys.ts:1487
-// From TypeScript 6.0.3, src/compiler/path.ts:28
-// From TypeScript 6.0.3, src/compiler/utilities.ts:10312
-// From TypeScript 6.0.3, src/compiler/sys.ts:1629
-// From TypeScript 6.0.3, src/compiler/path.ts:526
-// From TypeScript 6.0.3, src/compiler/path.ts:146
-// From TypeScript 6.0.3, src/compiler/path.ts:151
-// From TypeScript 6.0.3, src/compiler/path.ts:165
-// From TypeScript 6.0.3, src/compiler/path.ts:250
-// From TypeScript 6.0.3, src/compiler/path.ts:41
-// From TypeScript 6.0.3, src/compiler/path.ts:140
-// From TypeScript 6.0.3, src/compiler/path.ts:807
-// From TypeScript 6.0.3, src/compiler/path.ts:579
-// From TypeScript 6.0.3, src/compiler/sys.ts:1838
-// From TypeScript 6.0.3, src/compiler/sys.ts:1909
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:28; adapted line 28
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:30; adapted line 30
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:31; adapted line 31
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:32; adapted line 32
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:526; adapted line 526
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:146; adapted line 146
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:151; adapted line 151
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:165; adapted line 165
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:250; adapted line 250
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:41; adapted line 41
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:140; adapted line 140
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:807; adapted line 807
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:579; adapted line 579
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1838; adapted line 1839
+// Adaptations: 40-explicit-any
+// From TypeScript 6.0.3, src/compiler/sys.ts:1909; adapted line 1910
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10312; adapted line 10312
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/types.ts:23; adapted line 23
+// Adaptations: 40-explicit-any
 // Census reason: TS2591
+
+export type Path = string & { __pathBrand: void; };
 
 import * as _fs from "node:fs";
 import * as _path from "node:path";
@@ -34,8 +59,8 @@ function statSync(path: string): import("fs").Stats | undefined {
 }
 interface FileSystemEntries { files: string[]; directories: string[]; }
 const emptyFileSystemEntries: FileSystemEntries = { files: [], directories: [] };
-const directorySeparator = "/";
-const altDirectorySeparator = "\\";
+export const directorySeparator = "/";
+export const altDirectorySeparator = "\\";
 const urlSchemeSeparator = "://";
 const backslashRegExp = /\\/g;
 // Numeric enum constants are driver scaffolding; no enum syntax is required.
@@ -132,6 +157,8 @@ export function hasTrailingDirectorySeparator(path: string): boolean {
     return path.length > 0 && isAnyDirectorySeparator(path.charCodeAt(path.length - 1));
 }
 
+export function ensureTrailingDirectorySeparator(path: Path): Path;
+export function ensureTrailingDirectorySeparator(path: string): string;
 export function ensureTrailingDirectorySeparator(path: string) {
     if (!hasTrailingDirectorySeparator(path)) {
         return path + directorySeparator;
@@ -169,7 +196,7 @@ function getAccessibleFileSystemEntries(path: string): FileSystemEntries {
                 continue;
             }
 
-            let stat: any;
+            let stat: import("fs").Stats | import("fs").Dirent | undefined;
             if (typeof dirent === "string" || dirent.isSymbolicLink()) {
                 const name = combinePaths(path, entry);
 

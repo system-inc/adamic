@@ -1,0 +1,12 @@
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestRuntimeStaticsAreListed
+=== PAUSE TestRuntimeStaticsAreListed
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestRuntimeStaticsAreListed
+=== NAME  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 39 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+--- PASS: TestRuntimeStaticsAreListed (0.45s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.466s

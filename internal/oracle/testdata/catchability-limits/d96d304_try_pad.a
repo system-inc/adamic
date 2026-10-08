@@ -1,0 +1,16 @@
+const short = 'a'.repeat(2);
+try {
+    console.log(`${short.padStart(536870889, 'xy').length}`);
+}
+catch {
+    console.log('caught the long pad');
+}
+console.log('after');
+// The same length guard protects padEnd; an empty fill must still return the input.
+try {
+    console.log(`${short.padEnd(Infinity, 'xy').length}`);
+}
+catch {
+    console.log('caught the long padEnd');
+}
+console.log(short.padEnd(Infinity, ''));

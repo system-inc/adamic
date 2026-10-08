@@ -1,0 +1,4 @@
+class State { value: number = null!; }
+const state = new State();
+console.log("before");
+console.log(`${state.value}`);

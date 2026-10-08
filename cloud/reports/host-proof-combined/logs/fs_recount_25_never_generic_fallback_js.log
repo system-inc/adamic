@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/25_never_generic_fallback.a:1:148: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)

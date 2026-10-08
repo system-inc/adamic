@@ -1,0 +1,10 @@
+function depth(count: number): number {
+    return count === 0 ? 0 : 1 + depth(count - 1);
+}
+try {
+    console.log(`${depth(1e9)}`);
+}
+catch {
+    console.log('caught the overflow');
+}
+console.log('after');

@@ -10,6 +10,19 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks PredicateCheckCounts
+
+	// CheckedFields conservatively checks these field names at every object read.
+	CheckedFields map[string]bool
+	Generated     []*GeneratedType
+	AsyncEntry    int // one-based ordinary function for module suspension, zero when synchronous
+
+	// GraphTypes selects ownership by checker identity and negative allocation-site
+	// flow IDs after the cycle proof.
+	GraphTypes map[int]bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -38,10 +51,33 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// ReadyErrors constructs nominal ReferenceErrors for checked global reads and writes.
+	// These hidden throws participate in MayThrow and use the ordinary cleanup paths.
+	ReadyErrors map[int]Call
+}
+
+// PredicateCheckCounts counts emitted overload-result directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	Graph bool
+
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -65,13 +101,18 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// GraphClosure joins its environment instead of counting captured graph cells.
+	GraphClosure bool
+
 	Name string
 
 	// Parameters are locals, in order.
 	Parameters []int
 
 	// Returns is the result's type, or 0 for void.
-	Returns Type
+	Returns      Type
+	Async        bool
+	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
 
@@ -79,10 +120,22 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
+
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+	// LibraryGuarded is a generated wrapper whose checks throw before a library argument fails.
+	LibraryGuarded bool
+	// StackGuarded replaces the fatal entry check with an ordinary IR throw.
+	StackGuarded bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -125,6 +178,14 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
+	Uint16Array
+
+	Promise
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -157,11 +218,18 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray() || t == Promise
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	// GraphCell selects graph ownership for its capture cell or shared environment.
+	GraphCell bool
+
 	Name string
 	Type Type
 
@@ -173,6 +241,15 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
+
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -205,9 +282,11 @@ type (
 	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
 	// Adamic checks it out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
+		NoMove    bool
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -217,7 +296,13 @@ type (
 		Returns   Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
-		Virtual  int
+		Virtual int
+
+		// Pure says the call cannot invalidate borrowed operand reads on its
+		// successful path, and returns its own counted result. A throwing path
+		// stops evaluation and therefore never uses those borrowed reads again.
+		// Generated guards around pure primitives establish this fact.
+		Pure     bool
 		Accessor string
 		Setter   bool
 	}
@@ -242,7 +327,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -256,6 +341,9 @@ type (
 
 	// Concat joins strings, as + and template literals do.
 	Concat struct{ Parts []Expression }
+
+	// StackExceeded tests the native stack margin; JavaScript checks its own stack.
+	StackExceeded struct{}
 
 	// Conditional is the ?: operator.
 	Conditional struct {
@@ -274,6 +362,8 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		SpreadReadiness string
+		GraphTypes      []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -296,10 +386,16 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
-		Object   Expression
-		Name     string
-		Of       Type
-		Optional bool
+		// View names a required field read whose presence, readiness and representation are checked.
+		View        string
+		ViewType    string
+		ViewAllowed []Expression
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -317,9 +413,10 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		Element  Type
-		Elements []Expression
-		Spread   []bool
+		GraphTypes []int
+		Element    Type
+		Elements   []Expression
+		Spread     []bool
 	}
 
 	// Length is array.length.
@@ -412,7 +509,11 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		// Nullable references have NULL for null, rather than undefined, before boxing.
+		Nullable bool
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -489,11 +590,12 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
-		Value     Expression
-		Field     string
-		FieldType Type
-		Allowed   []Expression
-		Message   string
+		CheckedFields bool
+		Value         Expression
+		Field         string
+		FieldType     Type
+		Allowed       []Expression
+		Message       string
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
@@ -518,6 +620,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		GraphTypes          []int
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -529,6 +632,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		GraphTypes                       []int
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -541,6 +645,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		GraphTypes       []int
 		Length, Callback Expression
 		Element, First   Type
 	}
@@ -551,8 +656,9 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		Array  Expression
-		Others []Expression
+		GraphTypes []int
+		Array      Expression
+		Others     []Expression
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
@@ -579,6 +685,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct is a sibling code target plus one, sharing Closure as its environment.
+		Direct    int
 		Closure   Expression
 		Arguments []Expression
 		Returns   Type
@@ -587,10 +695,11 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Result   Type
+		GraphTypes []int
+		Array      Expression
+		Callback   Expression
+		Element    Type
+		Result     Type
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
@@ -599,24 +708,27 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		GraphTypes []int
+		Method     string
+		Array      Expression
+		Callback   Expression
+		Element    Type
+		Returns    Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
+		GraphTypes         []int
 		Map                Expression
 		KeyType, ValueType Type
 	}
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		Array     Expression
-		Arguments []Expression
+		GraphTypes []int
+		Array      Expression
+		Arguments  []Expression
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
@@ -626,10 +738,13 @@ type (
 		Comparator int
 		Callback   Expression
 		Element    Type
+		// DefaultStrings selects default string ordering, with undefined and holes last.
+		DefaultStrings bool
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		GraphTypes []int
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -640,12 +755,14 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		Map Expression
-		Key Type
+		GraphTypes []int
+		Map        Expression
+		Key        Type
 	}
 	MapValues struct {
-		Map   Expression
-		Value Type
+		GraphTypes []int
+		Map        Expression
+		Value      Type
 	}
 
 	// MapClear is map.clear() and set.clear(), which is void.
@@ -690,8 +807,9 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		Element Type
-		Values  Expression
+		GraphTypes []int
+		Element    Type
+		Values     Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
@@ -706,8 +824,9 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		Set     Expression
-		Element Type
+		GraphTypes []int
+		Set        Expression
+		Element    Type
 	}
 
 	// MapSize is map.size.
@@ -727,6 +846,19 @@ type (
 		Separator Expression
 		Element   Type
 		Depth     int
+	}
+
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -757,13 +889,18 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Uninitialized reserves storage without making its typed value readable.
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -781,6 +918,7 @@ func (BooleanConstant) Type() Type { return Boolean }
 func (StringConstant) Type() Type  { return String }
 func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
+func (StackExceeded) Type() Type   { return Boolean }
 func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type {
 	if c.Of != 0 {
@@ -902,6 +1040,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -930,6 +1069,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
@@ -993,18 +1135,24 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
@@ -1025,9 +1173,10 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		Uninitialized bool
+		Object        Expression
+		Name          string
+		Value         Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1049,7 +1198,9 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
+		Test       []Statement // normalization before every loop condition
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool
@@ -1066,6 +1217,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1093,10 +1245,11 @@ type (
 		Default []Statement
 	}
 
-	// Depth counts the enclosing loops and switches skipped by a labeled break.
-	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct {
+		Label string
+		Depth int
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
@@ -1124,23 +1277,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {
@@ -1150,3 +1304,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

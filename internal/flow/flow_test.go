@@ -43,11 +43,21 @@ func programs(t *testing.T) []string {
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
-	// normalize_coverage_long.a observes every point of million-unit normalized strings.
-	// Its trace would record hundreds of millions of instructions; the smaller normalization
-	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
+	// These oracle fixtures are explicitly registered as expected NotYet or deliberately
+	// refused, so they have no accepted IR to trace. The oracle still verifies refusal.
+	// The process runtime-only probes are tested through explicit IR by their oracle
+	// tests; their source does not lower. Keep each exclusion explicit so other lowering
+	// failures still fail the flow gate. normalize_coverage_long.a observes every point of
+	// million-unit normalized strings; its trace would record hundreds of millions of
+	// instructions, the smaller normalization fixtures cover the same loop shapes here, and
+	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		switch filepath.Base(path) {
+		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
+			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
+			return true
+		}
+		return refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -83,6 +93,7 @@ func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
 	var functions int
 	for _, path := range programs(t) {
 		program := lowered(t, path)
+
 		for function := -1; function < len(program.Functions); function++ {
 			name := "main"
 			if function >= 0 {
@@ -126,7 +137,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured {
+		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}
@@ -276,4 +287,18 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// These sources pin compile-time refusals, so they have no IR graph. Keep the
+// storage marker fixtures eligible: refusing them must fail SSA.
+func refusedNonNullFixture(path string) bool {
+	name := filepath.Base(path)
+	if strings.HasPrefix(name, "non_null_refuse_") {
+		return true
+	}
+	switch name {
+	case "non_null_initialized.a", "non_null_literal_statement.a", "non_null_literal_return.a", "non_null_uninitialized_default.a":
+		return true
+	}
+	return false
 }

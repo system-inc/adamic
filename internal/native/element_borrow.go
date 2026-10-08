@@ -74,7 +74,7 @@ func borrowedArray(declare ir.Declare) int {
 // function names, never assigned and not captured, directly or as the left of ??.
 func borrowable(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
 	local := program.Locals[declare.Local]
-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
 		return false
 	}
 	value := declare.Value
@@ -93,7 +93,7 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned 
 		return false
 	}
 	held := program.Locals[array.Local]
-	return !held.Global && !held.Captured && held.Function == function && !assigned[array.Local]
+	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
 }
 
 // assignedLocals is every variable an assignment in a function's body writes.
@@ -212,6 +212,9 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 	lookup := "adamic_array_at"
 	if element.Relative {
 		lookup = "adamic_array_at_relative"
+	}
+	if e.hasArrayHoles() {
+		lookup = "adamic_array_holes_at"
 	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 	name := e.localName(declare.Local)

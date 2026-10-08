@@ -1,6 +1,8 @@
 // array.c: arrays.
 
 #include "adamic.h"
+#include "library_errors.h"
+#include "graph_regions.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -15,6 +17,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->references = references;
 	array->elements = NULL;
 	array->properties = NULL;
+	array->sparse = NULL;
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {
@@ -182,10 +185,12 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 		if (index < array->length) {
 			adamic_value old = array->elements[index];
 			array->elements[index] = work[index];
+			if (references) { adamic_graph_take(array, work[index].reference); }
 			if (references) {
-				adamic_release(old.reference);
+				if (adamic_graph_is(array)) { adamic_graph_drop(array, old.reference); } else { adamic_release(old.reference); }
 			}
 		} else {
+			if (references) { adamic_graph_take(array, work[index].reference); }
 			adamic_array_push(array, work[index]);
 		}
 	}
@@ -195,7 +200,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context) {
 	// JavaScript reads the comparator's result by its sign, and NaN as 0.
 	adamic_closure *compare = context;
-	double result = compare->code(compare, (adamic_value[]){left, right}).number;
+	double result = compare->code(compare, (adamic_value[]){left, right}, 2).number;
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
@@ -227,6 +232,14 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 		case adamic_equal_strings:
 			equal = adamic_string_equal(element.reference, value.reference);
 			break;
+		case adamic_equal_unions: {
+			const adamic_heap *left = element.reference, *right = value.reference;
+			equal = adamic_union_equal(left, right);
+			if (!equal && same_value_zero && left != NULL && right != NULL && left->kind == adamic_kind_number && right->kind == adamic_kind_number) {
+				equal = isnan(((const adamic_number_box *)left)->number) && isnan(((const adamic_number_box *)right)->number);
+			}
+			break;
+		}
 		case adamic_equal_identity:
 			equal = element.reference == value.reference;
 			break;
@@ -258,7 +271,7 @@ adamic_array *adamic_array_filled(double length, adamic_value value, bool refere
 	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
 	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
 		static const char message[] = "RangeError: Invalid array length";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	adamic_array *array = adamic_array_new((size_t)length, references);
 	for (size_t index = 0; index < (size_t)length; index++) {
@@ -280,8 +293,13 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 	for (size_t index = (size_t)start; (double)index < end; index++) {
 		if (array->references) {
 			// The new reference first: the value may be the one already there.
-			adamic_retain(value.reference);
-			adamic_release(array->elements[index].reference);
+			if (adamic_graph_is(array)) {
+				adamic_graph_hold(array, value.reference);
+				adamic_graph_drop(array, array->elements[index].reference);
+			} else {
+				adamic_retain(value.reference);
+				adamic_release(array->elements[index].reference);
+			}
 		}
 		array->elements[index] = value;
 	}
@@ -306,7 +324,9 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	if (removed != NULL) {
 		*removed = adamic_array_new(removed_count, array->references);
 		for (size_t index = 0; index < removed_count; index++) {
-			adamic_array_push(*removed, array->elements[from + index]);
+			adamic_value value = array->elements[from + index];
+			if (array->references) { adamic_graph_escape(array, value.reference); }
+			adamic_array_push(*removed, value);
 		}
 	}
 	// Let go of after the array is whole again, below: releasing one may free what releases another.
@@ -342,7 +362,7 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	array->length = new_length;
 	if (dropped != NULL) {
 		for (size_t index = 0; index < removed_count; index++) {
-			adamic_release(dropped[index].reference);
+			if (adamic_graph_is(array)) { adamic_graph_drop(array, dropped[index].reference); } else { adamic_release(dropped[index].reference); }
 		}
 		free(dropped);
 	}
@@ -364,7 +384,7 @@ void adamic_array_append(adamic_array *array, const adamic_array *source) {
 	for (size_t index = 0; index < length; index++) {
 		adamic_value value = source->elements[index];
 		if (array->references) {
-			adamic_retain(value.reference);
+			adamic_graph_hold(array, value.reference);
 		}
 		adamic_array_push(array, value);
 	}
@@ -402,7 +422,7 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 	if (array->references) {
 		void *old = slot->reference;
 		slot->reference = value.reference;
-		adamic_release(old);
+		if (adamic_graph_is(array)) { adamic_graph_drop(array, old); } else { adamic_release(old); }
 		return;
 	}
 	*slot = value;

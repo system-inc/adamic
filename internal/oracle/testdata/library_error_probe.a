@@ -1,0 +1,12 @@
+import type { Stats } from 'node:fs';
+// The pinned Node declaration removes the original probe's unchecked any cast.
+if (Error.captureStackTrace) {
+ Error.captureStackTrace(new Error('probe'));
+ console.log('captureStackTrace available');
+} else {
+ console.log('captureStackTrace unavailable');
+}
+console.log(typeof Error.captureStackTrace);
+const capture = Error.captureStackTrace;
+console.log(`${capture === Error.captureStackTrace}`);
+capture(new Error('detached'));

@@ -33,6 +33,9 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 
 // box emits a value where a union goes.
 func (e *emitter) box(value ir.Expression) string {
+	if _, null := value.(ir.Null); null {
+		return "&adamic_null"
+	}
 	boxed, fresh := converted(value.Type(), ir.Union, e.value(value))
 	if fresh {
 		return e.own(ir.Union, boxed)
@@ -53,6 +56,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 		return e.snapshot(ir.MaybeNumber, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeNumber), maybe(ir.MaybeNumber, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))))
 	case ir.MaybeBoolean:
 		return e.snapshot(ir.MaybeBoolean, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeBoolean), maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))))
+	}
+	if narrow.To == ir.Object || narrow.To == ir.Array {
+		return fmt.Sprintf("((%s)(%s == &adamic_box_null ? NULL : %s))", cType(narrow.To), value, value)
 	}
 	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
 }

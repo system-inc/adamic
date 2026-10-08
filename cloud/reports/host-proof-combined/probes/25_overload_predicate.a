@@ -1,0 +1,1 @@
+export function some<T>(array: readonly T[] | undefined): array is readonly T[]; export function some<T>(array: readonly T[] | undefined): boolean { return array !== undefined && array.length > 0; } console.log(String(some([1])));

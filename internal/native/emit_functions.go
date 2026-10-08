@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t argument_count)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -45,19 +45,23 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
-	e.line("ADAMIC_CHECK_STACK();")
+	if !function.StackGuarded {
+		e.line("ADAMIC_CHECK_STACK();")
+	}
 	if function.Closure {
 		e.line("(void)self;")
 		e.line("(void)arguments;")
+		e.line("(void)argument_count;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
-			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
+			value := closureArgument(local.Type, index)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -67,6 +71,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
+		}
+		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
+			e.line("bool %s = true;", readyName(parameter))
 		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
@@ -160,6 +167,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
+		if index >= len(parameters) {
+			e.value(argument) // Extra arguments still run, before the call.
+			continue
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
@@ -230,23 +241,32 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			call = fmt.Sprintf("%s(%s, %s, %d)", method, receiver, packed, len(arguments))
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			received := "(adamic_value[]){ {.reference = " + receiver + "}"
+			if len(arguments) > 0 {
+				received += ", " + strings.Join(arguments, ", ")
+			}
+			received += "}"
+			call = fmt.Sprintf("(%s != NULL ? adamic_node_performance_invoke(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0), %t) : %s(%s, %s, %d))", closure, closure, closure, received, packed, len(arguments), closure, expression.Returns == 0, method, receiver, packed, len(arguments))
 		}
 	}
 	if expression.Returns == 0 {
 		e.line("%s;", call)
-		e.closureThrown()
+		if e.program.ClosureMayThrow(expression) {
+			e.checkThrown()
+		}
 		return "0"
 	}
 	result := e.temporary()
 	e.line("adamic_value %s = %s;", result, call)
 	// A throw gives back a zero value, nothing to let go.
-	e.closureThrown()
+	if e.program.ClosureMayThrow(expression) {
+		e.checkThrown()
+	}
 	if expression.Returns.IsReference() {
 		// A closure's result comes back owned.
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))

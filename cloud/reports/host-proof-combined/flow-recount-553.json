@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestEveryFunctionIsInSingleAssignment",
+    "state": "FAIL",
+    "firstDiagnostic": "flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+  },
+  {
+    "test": "TestEveryPathNodeTakesIsInTheGraph",
+    "state": "FAIL",
+    "firstDiagnostic": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+  },
+  {
+    "test": "TestEveryMutationIsInItsRange",
+    "state": "FAIL",
+    "firstDiagnostic": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+  },
+  {
+    "test": "TestLivenessHoldsOnEveryPath",
+    "state": "FAIL",
+    "firstDiagnostic": "trace_test.go:390: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+  }
+]

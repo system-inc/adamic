@@ -1,0 +1,350 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "17_write.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+    }
+  }
+]

@@ -1,0 +1,326 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+    oracle_test.go:795: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+    oracle_test.go:629: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a
+    oracle_test.go:622: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+    oracle_test.go:795: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:795: gate cache node miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+    oracle_test.go:795: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a
+    oracle_test.go:636: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+    oracle_test.go:610: gate cache native miss
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a
+    oracle_test.go:636: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_repro.a (41.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_and.a (41.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_or.a (41.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_element.a (41.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array.a (42.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_union_logical.a (2.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_scanner.a (2.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_accessor.a (2.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_missing_nullish.a (2.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_receiver_once.a (2.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_typed_array_missing.a (1.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array_missing.a (2.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_read_missing.a (1.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_logical.a (2.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_index_once.a (2.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_short_circuit.a (2.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_local.a (3.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_local.a (2.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_field.a (3.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_logical_field.a (1.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_write_array.a (2.32s)
+PASS
+gate cache: native hits=15 misses=63
+gate cache: node hits=0 misses=42
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	49.944s

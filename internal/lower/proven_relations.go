@@ -9,7 +9,10 @@ import (
 // proofs as assignments. Contextual typing may build a fresh literal at the target type;
 // values it contains are still checked at their own assignment sites by the refusal walk.
 func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
-	source := l.checker.GetTypeAtLocation(expression)
+	return l.provenTypesRelation(where, expression, l.checker.GetTypeAtLocation(expression), target)
+}
+
+func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, target *checker.Type) error {
 	refuse := func(part, fix string) error {
 		return &Refused{Where: l.program.Where(where), What: "an unproven relation from " + l.checker.TypeToString(source) + " to " + l.checker.TypeToString(target) + ": " + part, Fix: fix}
 	}
@@ -74,7 +77,11 @@ func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.N
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		for index, parameter := range toSignatures[0].Parameters() {
+		parameters := toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			parameters = nil
+		}
+		for index, parameter := range parameters {
 			if index >= len(fromSignatures[0].Parameters()) {
 				break
 			}
@@ -163,13 +170,14 @@ func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.N
 }
 
 // An explicitly written field may itself be an exact literal. Shorthands and spread fields
-// remain structural views, whose runtime fields their types may hide.
+// remain structural views, whose runtime fields their types may hide. Computed keys
+// do too: syntax alone cannot prove which runtime field they initialize.
 func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
 	if origin == nil || origin.Kind != ast.KindObjectLiteralExpression {
 		return nil
 	}
 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
+		if property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {
 			return property.AsPropertyAssignment().Initializer
 		}
 	}

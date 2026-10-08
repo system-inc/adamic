@@ -44,7 +44,9 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	// never has no values to expose through a wider element view. Mutable
+	// containers still check the reverse slot relation in widenedArguments.
+	if from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -114,9 +116,21 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
 			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
 		}
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+				return nil
+			}
+			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+			if !l.checker.IsTypeAssignableTo(source, target) {
+				return &widening{source: source, target: target}
+			}
+			return l.widened(source, target, visited)
+
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
+			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
@@ -237,6 +251,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	}
 	var found []*checker.Type
 	for _, member := range members {
+		member = l.phantomArrayView(member)
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
@@ -394,12 +409,16 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) {
+		return nil
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
@@ -459,7 +478,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		// Conditional and logical operands inherit a context even though they
 		// are not direct assignment sites. Query the checker before using the
 		// expression's uninstantiated inferred type as an implied target.
-		contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		if viewSite(node) {
+			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		} else if candidate := l.checker.GetContextualType(node, checker.ContextFlagsNone); candidate != nil && len(l.checker.GetSignaturesOfType(l.withoutUndefined(candidate), checker.SignatureKindCall)) > 0 {
+			contextual = candidate
+		}
 		if contextual == nil {
 			// With no type written for it, a value can still be taken into a wider one tsc made: the
 			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
@@ -613,10 +636,8 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	case ast.KindBinaryExpression:
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
-			// In particular, && may leave its left operand without a context
-			// and infer a generic result type. Its contextual result is the
-			// actual slot, not a new obligation to accept an unbound T.
-			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil {
+			// Judge logical branches against the checker's callable or array destination.
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && (l.checker.IsArrayType(l.withoutUndefined(contextual)) || len(l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), checker.SignatureKindCall)) > 0) {
 				return contextual
 			}
 			return l.checker.GetTypeAtLocation(parent)

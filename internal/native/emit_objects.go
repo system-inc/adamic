@@ -129,6 +129,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.adoptGraphObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -136,10 +137,13 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_field_types(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, field.Value.Type())
+			e.line("adamic_object_initialized(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
-				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = %s;", slot, e.kept(values[index]))
+				e.dropIn(object, slot+"->reference")
+				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -163,14 +167,42 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	object := ""
 	if region {
-		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
+		allocator := "adamic_object_new_filled_in"
+		if literal.Class != 0 {
+			// Constructor writes can call or throw after allocation, so its untouched slots need zero.
+			allocator = "adamic_object_new_in"
+		}
+		object = e.regionValue(fmt.Sprintf("%s(region, &%s)", allocator, e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
+		e.adoptGraphObject(object, literal)
+	}
+	if len(literal.Fields) > 0 && e.dynamicProperties() {
+		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		if e.dynamicProperties() {
+			class := e.program.Classes[literal.Class-1]
+			public := len(class.PublicFields)
+			if !class.Literal {
+				public = 0
+				for _, field := range class.Fields {
+					if !field.Private {
+						public++
+					}
+				}
+			}
+			if public > 0 {
+				e.line("adamic_register_shape_types(&%s_metadata);", e.publicClassShape(class))
+			}
+		}
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -178,7 +210,11 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = e.kept(value)
+			if region && !constantUndefined.MatchString(value) {
+				// Report both retained and moved heap references. Constants pass over at runtime.
+				e.line("adamic_region_hold(region, %s);", value)
+			}
+			value = e.keptIn(object, value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -217,13 +253,18 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
 func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
-	names, references := []string{}, []string{}
+	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
+		kinds = append(kinds, strconv.Itoa(int(fieldTypes[index])))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	layout := references
+	if e.dynamicProperties() {
+		layout = kinds
+	}
+	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -259,16 +300,21 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
 	}
+	if len(fields) > 0 && e.dynamicProperties() {
+		e.declarations = append(e.declarations,
+			fmt.Sprintf("static const int %s_types[] = {%s};", name, strings.Join(kinds, ", ")),
+			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL};", name, name, name))
+	}
 	return name
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -291,13 +337,13 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
 		if index > 0 {
-			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -324,4 +370,15 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// Programs without reflection keep their original layouts and allocation code.
+func (e *emitter) dynamicProperties() bool {
+	found := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
+			found = true
+		}
+	})
+	return found
 }

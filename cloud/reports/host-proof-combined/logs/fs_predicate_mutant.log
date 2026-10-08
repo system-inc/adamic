@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:745: gate cache node hit
+    oracle_test.go:745: gate cache node miss
+    oracle_test.go:592: gate cache native miss
+    oracle_test.go:585: gate cache native miss
+    oracle_test.go:766: exit codes differ
+        node:   exit 0, stdout "true 2\ntrue 3\ntrue 0\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse false\n6 4\n6 4\n2 -1\n-1 -1\ntrue false\nfalse false\n2\n2\n", stderr ""
+        native: exit 70, stdout "false -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse false\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:772: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "true 2\ntrue 3\ntrue 0\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse false\n6 4\n6 4\n2 -1\n-1 -1\ntrue false\nfalse false\n2\n2\n", stderr ""
+        backend: exit 70, stdout "false -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse -1\nfalse false\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:599: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a (0.39s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.419s
+FAIL

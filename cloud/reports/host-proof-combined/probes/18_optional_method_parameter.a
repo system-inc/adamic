@@ -1,0 +1,1 @@
+const system = { exit(code?: number): void { console.log(String(code)); } }; system.exit(0);

@@ -1,0 +1,1 @@
+import { readFileSync } from 'node:fs'; try { readFileSync('/adamic-deliberately-missing-file'); } catch (error) { console.log(String(error instanceof Error)); }

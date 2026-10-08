@@ -1,0 +1,4 @@
+import type { Stats } from 'node:fs';
+const e = new Error('no invented stack');
+Error.captureStackTrace(e);
+console.log(e.stack ?? 'absent');

@@ -1,0 +1,5 @@
+--- FAIL: TestNodeFSDirectorySymlinkSignatures (2.74s)
+    library_node_fs_directory_test.go:27: want named NotYet, got /tmp/adamic-gate/TestNodeFSDirectorySymlinkSignatures3802013314/005/main.a:1:86: stage 0 can't lower Buffer or Hash viewed as another object type (native host internal slots) yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.759s
+FAIL

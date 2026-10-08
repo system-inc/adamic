@@ -22,6 +22,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if proof.interfaceView {
+		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
+	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
@@ -44,6 +47,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		cast.Allowed = append(cast.Allowed, allowed)
 		cast.FieldType = fieldType
 	}
+	if _, err := l.view(node, value, target); err != nil {
+		return nil, err
+	}
+	cast.CheckedFields = true
 	return cast, nil
 }
 

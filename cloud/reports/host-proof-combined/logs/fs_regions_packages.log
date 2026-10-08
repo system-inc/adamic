@@ -1,0 +1,9 @@
+--- FAIL: TestMemoizeCaptureStopsAtAssertion (0.20s)
+    memoize_capture_test.go:16: want the pinned main assertion stop, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.274s
+ok  	github.com/system-inc/adamic/internal/flow	0.010s
+ok  	github.com/system-inc/adamic/internal/fresh	0.010s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/ir	0.010s [no tests to run]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+FAIL

@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -61,6 +63,16 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
+	// Only their runtime-owned protocol edges are exempt. Source types, including a class
+	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
+	if l.result.HasAsync() {
+		for _, generated := range l.result.Generated {
+			if !fresh.RuntimeBreaksCycles(generated) {
+				return fmt.Errorf("lower: unaudited generated cycle identity")
+			}
+		}
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
@@ -96,33 +108,13 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
-	for _, proven := range finder.seen {
-		if err := finder.slotsOf(proven); err != nil {
-			return err
-		}
-	}
-	for local, declared := range l.result.Locals {
-		if !declared.Captured || declared.Global {
-			continue
-		}
-		proven, node := l.localTypes[local], l.localNodes[local]
-		if proven == nil || node == nil || finder.weak(proven) {
-			continue
-		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
-			return &Refused{
-				Where: l.program.Where(node),
-				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
-			}
-		}
-	}
-	return nil
+	return finder.graphTypes(modules)
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is
 // made of as used.
 func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	switch {
 	case proven == nil:
 	case proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
@@ -131,7 +123,7 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -158,6 +150,7 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 
 // use notes a type the program uses, and every type it's made of.
 func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	if proven == nil {
 		return
 	}
@@ -187,7 +180,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if f.isFunction(proven) {
 		return
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -349,10 +342,48 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 // reaches reports whether a value of type from can reach target: a value seen as target's type
 // (either way round, since either may be what the value really is), or target's cell.
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+	target.proven = f.l.phantomArrayView(target.proven)
 	visited := map[cycleNode]bool{}
 	queue := []cycleNode{{proven: from}}
+	// Tracing records the same breadth-first search, including structural matches.
+	// It does not change which edges are followed or which slots are refused.
+	tracing := os.Getenv("ADAMIC_TRACE_CYCLES") == "1"
+	type step struct {
+		parent cycleNode
+		edge   string
+	}
+	var parents map[cycleNode]step
+	root := cycleNode{proven: from}
+	if tracing {
+		parents = map[cycleNode]step{root: {}}
+	}
+	var current cycleNode
+	enqueue := func(next cycleNode, edge string) {
+		if tracing {
+			if _, found := parents[next]; !found {
+				parents[next] = step{current, edge}
+			}
+		}
+		queue = append(queue, next)
+	}
+	trace := func(last cycleNode, edge string) {
+		if !tracing {
+			return
+		}
+		path := []cycleNode{last}
+		for path[len(path)-1] != root {
+			path = append(path, parents[path[len(path)-1]].parent)
+		}
+		fmt.Fprintf(os.Stderr, "cycle reach: %s -- slot contents --> %s\n", f.cycleNodeName(target), f.cycleNodeName(root))
+		for index := len(path) - 1; index > 0; index-- {
+			next := path[index-1]
+			fmt.Fprintf(os.Stderr, "  %s -- %s --> %s\n", f.cycleNodeName(path[index]), parents[next].edge, f.cycleNodeName(next))
+		}
+		fmt.Fprintf(os.Stderr, "  %s -- %s --> %s\n", f.cycleNodeName(last), edge, f.cycleNodeName(target))
+	}
 	for len(queue) > 0 {
 		node := queue[0]
+		current = node
 		queue = queue[1:]
 		if visited[node] {
 			continue
@@ -360,18 +391,33 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		visited[node] = true
 		if node.cell != 0 {
 			if node == target {
+				trace(node, "same captured cell")
 				return true
 			}
+			// An interior async cell retains its owner, not just its declared value.
+			// Completion drops private slots; captured slots remain reachable through
+			// any escaped cell. Follow every such slot irrespective of signature.
+			local := f.l.result.Locals[node.cell-1]
+			if local.EnvironmentCell && local.Function >= 0 {
+				owner := f.l.result.Functions[local.Function]
+				if owner.Async {
+					for _, held := range owner.FrameEnvironment {
+						if f.l.result.Locals[held].Captured {
+							enqueue(cycleNode{cell: held + 1}, "async frame captured slot")
+						}
+					}
+				}
+			}
 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
-				queue = append(queue, cycleNode{proven: proven})
+				enqueue(cycleNode{proven: proven}, "captured cell contents")
 			}
 			// A this shared by every instantiation of a class held the same way is each of them.
 			for _, proven := range f.l.localAlso[node.cell-1] {
-				queue = append(queue, cycleNode{proven: proven})
+				enqueue(cycleNode{proven: proven}, "captured cell contents")
 			}
 			continue
 		}
-		proven := node.proven
+		proven := f.l.phantomArrayView(node.proven)
 		flags := proven.Flags()
 		if f.weak(proven) || f.template(proven) {
 			// A Weak holds nothing.
@@ -379,26 +425,36 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 			for _, member := range proven.Types() {
-				queue = append(queue, cycleNode{proven: member})
+				enqueue(cycleNode{proven: member}, "union or intersection member")
 			}
 			continue
+		}
+		if flags&checker.TypeFlagsUnknown != 0 {
+			if errors := f.l.instances["builtin-error:Error"]; errors != nil {
+				for _, cause := range errors.errorCauses {
+					queue = append(queue, cycleNode{proven: cause})
+				}
+			}
 		}
 		if flags&checker.TypeFlagsObject == 0 {
 			continue
 		}
 		if target.proven != nil && f.related(proven, target.proven) {
+			trace(node, "related holder types")
 			return true
 		}
 		switch {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
-			queue = append(queue, f.libraryIteratorCaptures(proven)...)
+			for _, capture := range f.libraryIteratorCaptures(proven) {
+				enqueue(capture, "library iterator capture")
+			}
 		case f.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
 			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 				for symbol := range f.l.statics {
 					actual := f.l.checker.GetTypeOfSymbol(symbol)
 					if f.l.checker.IsTypeAssignableTo(actual, proven) {
-						queue = append(queue, cycleNode{proven: actual})
+						enqueue(cycleNode{proven: actual}, "assignable constructor")
 					}
 				}
 			}
@@ -409,39 +465,51 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					continue
 				}
 				for _, local := range f.l.result.Functions[closure.function].Environment {
-					queue = append(queue, cycleNode{cell: local + 1})
+					edge := "closure capture"
+					if tracing {
+						edge += " at " + fmt.Sprint(f.l.program.Where(closure.node))
+					}
+					enqueue(cycleNode{cell: local + 1}, edge)
 				}
 			}
-		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
-				queue = append(queue, cycleNode{proven: argument})
+				enqueue(cycleNode{proven: argument}, "collection type argument")
 			}
 		default:
 			if f.l.isStaticType(proven) {
 				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
-					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+					enqueue(cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))}, "static base")
 				}
 			}
 			for _, accessor := range f.l.accessorCaptures {
 				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
 					for _, local := range f.l.result.Functions[accessor.function].Environment {
-						queue = append(queue, cycleNode{cell: local + 1})
+						enqueue(cycleNode{cell: local + 1}, "accessor capture")
 					}
 				}
 			}
 			for _, field := range f.fields(proven) {
-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+				enqueue(cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)}, "field "+field.Name)
 			}
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.
 			for _, shape := range f.shapes {
 				if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
-					queue = append(queue, cycleNode{proven: shape})
+					enqueue(cycleNode{proven: shape}, "assignable program shape")
 				}
 			}
 		}
 	}
 	return false
+}
+
+// cycleNodeName identifies both type holders and captured variable holders in a debug path.
+func (f *cycleFinder) cycleNodeName(node cycleNode) string {
+	if node.cell != 0 {
+		return "cell " + f.l.result.Locals[node.cell-1].Name
+	}
+	return f.l.checker.TypeToString(node.proven)
 }
 
 // present is a type as written without undefined, as Weak<Target> wants its Target.

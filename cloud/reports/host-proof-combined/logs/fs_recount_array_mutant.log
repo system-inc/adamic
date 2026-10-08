@@ -1,0 +1,30 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:745: gate cache node hit
+    oracle_test.go:745: gate cache node hit
+    oracle_test.go:592: gate cache native miss
+    oracle_test.go:585: gate cache native miss
+    oracle_test.go:599: gate cache native hit
+    oracle_test.go:779: leaks:
+        exit 1
+        
+        =================================================================
+        ==420444==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 74 byte(s) in 1 object(s) allocated from:
+            #0 0x55a5af58b314 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55a5af5e404f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3125471248/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 74 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a (0.34s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.362s
+FAIL

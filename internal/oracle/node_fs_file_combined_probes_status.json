@@ -1,0 +1,194 @@
+[
+  {
+    "file": "cloud/reports/host-proof-combined/probes/01_array_never.a",
+    "source": "import { Buffer } from 'node:buffer'; const cases = [[], [0x61]]; for (const bytes of cases) { console.log(Buffer.from(bytes).toString('utf8')); }",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/01_array_never.a:1:54: stage 0 can't lower an array of never yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/01_array_never.a:1:54: stage 0 can't lower an array of never yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/06_string_boolean.a",
+    "source": "console.log('file=' + true);",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/06_string_boolean.a:1:13: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/06_string_boolean.a:1:13: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/08_explicit_any.a",
+    "source": "let stat: any; console.log(String(stat));",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_explicit_any.a:1:5: stage 0 can't lower a value of type any yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_explicit_any.a:1:5: stage 0 can't lower a value of type any yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/08_rest_parameter.a",
+    "source": "function combinePaths(path: string, ...paths: (string | undefined)[]): string { return path; } console.log(combinePaths('a', 'b'));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/10_date_string.a",
+    "source": "console.log(String(new Date(0)));",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_date_string.a:1:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_date_string.a:1:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/10_optional_call.a",
+    "source": "function getTime(): Date | undefined { return new Date(0); } console.log(String(getTime()?.getTime()));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/13_error_code.a",
+    "source": "import { statSync } from 'node:fs'; function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; } try { statSync('/adamic-proof-missing'); } catch (e) { console.log(errorCode(e)); }",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/13_method_read.a",
+    "source": "const system = { directoryExists(path: string): boolean { return true; }, createDirectory(path: string): void { if (!system.directoryExists(path)) console.log(path); } }; system.createDirectory('x');",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/13_method_shorthand.a",
+    "source": "function directoryExists(path: string): boolean { return true; } const system = { directoryExists, createDirectory(path: string): void { if (!system.directoryExists(path)) console.log(path); } }; system.createDirectory('x');",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/14_callback_cycle.a",
+    "source": "function memoize<T>(callback: () => T): () => T { let value: T; return () => { if (callback) { value = callback(); callback = undefined!; } return value; }; } const get = memoize(() => 'cwd'); console.log(get());",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/14_callback_cycle.a:1:21: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/14_callback_cycle.a:1:21: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a",
+    "source": "const system = { exit(code?: number): void { console.log(String(code)); } }; system.exit(0);",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/18_undefined.a",
+    "source": "let activeSession: undefined; console.log(String(activeSession));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/22_ambient_hash.a",
+    "source": "declare function createSHA256Hash(data: string): string; console.log('unused');",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_ambient_hash.a:1:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_ambient_hash.a:1:1: stage 0 can't lower a function without a body yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/22_undefined.a",
+    "source": "const crypto: undefined = undefined; console.log(crypto ? 'present' : 'absent');",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/non_null_narrowed_scalar.a",
+    "source": "function narrowed(value: number | string | undefined): number { if (typeof value === 'number') return value!; return 1; } console.log(String(narrowed(0)));",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-1053939341/main.c:19:28: error: invalid operands to binary expression ('double' and 'void *')\n   19 |                 if (!(adamic_temporary_1 != NULL)) {\n      |                       ~~~~~~~~~~~~~~~~~~ ^  ~~~~\n1 error generated.\n\n"
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/null_classifier.a",
+    "source": "function tag(value: unknown): string { return typeof value; }\nconsole.log(tag(null));\nconsole.log(tag(undefined));\nfunction truth(value: unknown): boolean { return !!value; }\nconsole.log(String(truth(null)));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  }
+]

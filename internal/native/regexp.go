@@ -3,10 +3,14 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"math"
 	"strings"
 )
 
 func (e *emitter) regexCall(call ir.RegExpCall) string {
+	if call.Replacement != nil {
+		return e.regexReplacement(call)
+	}
 	if call.Method == "iteratorDone" {
 		object := e.value(call.Value)
 		value := e.snapshot(ir.MaybeBoolean, "adamic_regex_done("+object+")")
@@ -22,12 +26,34 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 		return e.snapshot(ir.Boolean, value+".boolean")
 	}
 	arguments := []string{e.value(call.Value)}
-	for _, argument := range call.Arguments {
+	split := call.Method == "split" || call.Method == "symbol:split"
+	defaultLimit := "false"
+	for index, argument := range call.Arguments {
+		if split && index == len(call.Arguments)-1 {
+			if _, undefined := argument.(ir.Undefined); undefined {
+				arguments = append(arguments, "4294967295.0")
+				defaultLimit = "true"
+				continue
+			}
+			if value, constant := argument.(ir.NumberConstant); constant && value.Value >= -2147483648 && value.Value <= 2147483647 && value.Value == math.Trunc(value.Value) {
+				defaultLimit = "true"
+			}
+			if argument.Type() == ir.MaybeNumber {
+				value := e.value(argument)
+				arguments = append(arguments, "("+value+".present ? "+value+".number : 4294967295.0)")
+				defaultLimit = "!" + value + ".present"
+				continue
+			}
+		}
 		arguments = append(arguments, e.value(argument))
+	}
+	if split {
+		arguments = append(arguments, defaultLimit)
 	}
 	method := map[string]string{"test": "test", "exec": "exec", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "split": "split", "search": "search"}[call.Method]
 	if method == "replace" {
 		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll"))
+
 	}
 	invocation := "adamic_regex_" + method + "(" + strings.Join(arguments, ", ") + ")"
 	if call.Returns.IsReference() {

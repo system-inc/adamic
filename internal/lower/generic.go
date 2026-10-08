@@ -109,6 +109,11 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	// whatever function or closure called it.
 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	// Validation can return before signature or body lowering starts. Restore
+	// the caller's closure stack and type context on those exits too.
+	defer func() {
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+	}()
 	sources, targets := []*checker.Type{}, []*checker.Type{}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -129,10 +134,7 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		}
 	}
 	l.genericDepth++
-	defer func() {
-		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
-		l.genericDepth--
-	}()
+	defer func() { l.genericDepth-- }()
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
 		return 0, err
 	}
@@ -145,6 +147,7 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 // signatures and structural fields; a native representation alone loses those facts.
 // This is also where nullable representations can extend the key.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	proven = l.phantomArrayView(proven)
 	held, known := l.representation(proven)
 	if !known {
 		return "unread"
@@ -218,6 +221,17 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 // so a generic function calling another with its own type parameter passes the concrete type on.
 func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
 	if declared == nil || instantiated == nil {
+		return
+	}
+	// Optional implementation parameters and results can wrap the same generic
+	// binder that the resolved overload exposes directly. Infer from the present
+	// member; an absent argument supplies no evidence about that binder.
+	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+		present := l.checker.GetNonNullableType(declared)
+		given := l.checker.GetNonNullableType(instantiated)
+		if present.Flags()&checker.TypeFlagsUnion == 0 && given.Flags()&checker.TypeFlagsNever == 0 {
+			l.inferTypes(present, given, into)
+		}
 		return
 	}
 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {

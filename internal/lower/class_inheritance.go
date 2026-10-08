@@ -23,6 +23,9 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		if len(bases) != 1 {
 			return nil, l.notYet(clause, "a class base whose type isn't known")
 		}
+		if name := l.errorGlobal(types[0].AsExpressionWithTypeArguments().Expression); name != "" {
+			return l.errorInstance(name), nil
+		}
 		baseType := bases[0]
 		symbol := baseType.Symbol()
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
@@ -244,7 +247,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -376,6 +379,33 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		if err != nil {
 			return nil, err
 		}
+		if l.uninitializedDeclaration(member) {
+			value := zeroValue(of)
+			if of.IsReference() {
+				value = ir.Undefined{Of: of}
+			}
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Uninitialized: true, Site: l.writeSite(declaration.Name())})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
+
+		if initializer := member.AsPropertyDeclaration().Initializer; assertionInitializer(initializer) {
+			if err := l.initializerReads(initializer, available); err != nil {
+				return nil, err
+			}
+			prefix, present, value, err := l.lazyAssertion(initializer, of)
+			if err != nil {
+				return nil, err
+			}
+			empty := ir.Expression(zeroValue(of))
+			if of.IsReference() {
+				empty = ir.Undefined{Of: of}
+			}
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: empty, Uninitialized: true, Site: l.writeSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())}}})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
 		value := zeroValue(of)
 		if member.AsPropertyDeclaration().Initializer != nil {
 			if err := l.initializerReads(member.AsPropertyDeclaration().Initializer, available); err != nil {
@@ -398,6 +428,17 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
 	if l.instance == nil || l.instance.base == nil || l.this < 0 {
 		return nil, l.notYet(node, "super outside a derived constructor")
+	}
+	if l.instance.base.builtinError != "" || l.instance.base.defaultError {
+		message, err := l.errorMessage(node, nodesOf(node.AsCallExpression().Arguments))
+		if err != nil {
+			return nil, err
+		}
+		cause, err := l.errorCause(node, nodesOf(node.AsCallExpression().Arguments))
+		if err != nil {
+			return nil, err
+		}
+		return ir.Call{Function: l.instance.base.initializer, Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, message, cause}}, nil
 	}
 	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
 	for _, argument := range nodesOf(node.AsCallExpression().Arguments) {
@@ -435,6 +476,14 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 
 func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
+	if name := l.errorGlobal(binary.Right); name != "" {
+		instance := l.errorInstance(name)
+		value, err := l.expression(binary.Left)
+		if err != nil {
+			return nil, err
+		}
+		return ir.InstanceOf{Value: value, Class: instance.class}, nil
+	}
 	declaration := l.classes[l.symbol(ast.SkipParentheses(binary.Right))]
 	if declaration == nil {
 		return nil, l.notYet(node, "instanceof against a value that isn't a declared class")
@@ -509,6 +558,9 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if target == nil {
 		return nil
 	}
+	if l.errorType(l.checker.GetTypeAtLocation(node)) && target.Flags()&checker.TypeFlagsObject != 0 && !l.errorType(target) {
+		return l.notYet(node, "an Error seen through a structural object view: nonenumerable error fields and native stack placeholders cannot be reflected as own fields")
+	}
 	// Fresh literals are built as their contextual type; their explicit values are
 	// checked at their own sites. Spreads still need the whole inherited shape checked.
 	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression {
@@ -540,8 +592,11 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 	if weak := l.weakTarget(source); weak != nil {
 		source = weak
 	}
-	if !isClassInstance(source) {
+	if !isClassInstance(source) && !l.errorType(source) {
 		return false
+	}
+	if l.isLibraryType(source, errorNames...) && l.isLibraryType(target, "Error") {
+		return true
 	}
 	if source.Symbol() == target.Symbol() {
 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
@@ -658,6 +713,9 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return nil
 	}
+	if l.errorType(from) && to.Flags()&checker.TypeFlagsObject != 0 && !l.errorType(to) {
+		return to
+	}
 	if l.isStaticType(to) {
 		wanted := l.staticClass(to, nil)
 		actual := l.staticClass(from, nil)
@@ -669,7 +727,8 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return to
 	}
-	if isClassInstance(to) {
+	if isClassInstance(to) || l.errorType(to) {
+
 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			return nil
 		}
@@ -684,7 +743,11 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		for index, parameter := range toSignatures[0].Parameters() {
+		parameters := toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			parameters = nil
+		}
+		for index, parameter := range parameters {
 			if index >= len(fromSignatures[0].Parameters()) {
 				break
 			}
@@ -885,7 +948,7 @@ func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
 	if weak := l.weakTarget(proven); weak != nil {
 		proven = weak
 	}
-	if isClassInstance(proven) {
+	if isClassInstance(proven) || l.errorType(proven) {
 		return true
 	}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {

@@ -47,6 +47,8 @@ struct adamic_regex_program {
 
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags);
+adamic_object *adamic_regex_new_owned(const adamic_regex_program *program, adamic_string *source,
+                                    adamic_string *flags, adamic_array *storage);
 bool adamic_regex_test(adamic_object *regex, adamic_string *input);
 adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input);
 adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex);
@@ -55,10 +57,15 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator);
 adamic_object *adamic_regex_next(adamic_object *iterator);
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global);
-adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit);
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit, bool default_limit);
 double adamic_regex_search(adamic_string *input, adamic_object *regex);
 adamic_value adamic_regex_property(adamic_array *array, const char *name);
 adamic_maybe_boolean adamic_regex_done(adamic_object *object);
 void *adamic_regex_group_lookup(adamic_object *object, const char *name, bool optional);
 void adamic_regex_set_step_limit(uint64_t limit);
+typedef struct { size_t argument; bool rest; const char *name; bool optional; } adamic_regex_replacement_group;
+adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object *regex,
+ adamic_closure *callback, bool require_global, const unsigned char *parameters,
+ size_t parameter_count, unsigned rest_kind, unsigned return_kind,
+ const adamic_regex_replacement_group *group_checks, size_t group_check_count);
 #endif

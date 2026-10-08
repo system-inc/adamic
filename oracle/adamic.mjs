@@ -2,19 +2,41 @@
 //
 // A panic writes one line to stderr and exits 70 without running catch or finally. Blocking stdio
 // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
-import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 
 // A second failure while the first is being reported (stderr closed under it, say) ends the program
 // at once. Without this, the write fails, that failure is another uncaught exception, whose report
 // fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
 let panicking = false;
 
+// Explicit exit stops source execution at once, but the host event loop must remain alive
+// until both streams have written everything already queued. Only generated code calls
+// this helper: raw source Node keeps its own process.exit behavior for the oracle.
+const exitSignal = Symbol('Adamic exit');
+let exiting = false;
+
+export function processExiting() { return exiting; }
+
+export function processExit(code) {
+	// Validate before committing to exit, so an invalid code remains catchable.
+	process.exitCode = code;
+	const status = process.exitCode ?? 0;
+	exiting = true;
+	const drained = [process.stdout, process.stderr].map((stream) =>
+		new Promise((resolve) => stream.write('', resolve)));
+	Promise.all(drained).then(() => process.exit(status));
+	throw exitSignal;
+}
+
 process.on('uncaughtException', (error) => {
+	if (error === exitSignal) { return; }
 	if (panicking) {
 		process.exit(70);
 	}
 	panicking = true;
-	const message = String(error);
+	const message = error instanceof AdamicPanic ? error.message
+		: error !== null && typeof error === 'object' && typeof error.name === 'string' && typeof error.message === 'string'
+			? Error.prototype.toString.call(error) : String(error);
 	process.stderr.write(`adamic: panic: ${message}\n`);
 	process.exitCode = 70;
 });
@@ -131,4 +153,18 @@ export function fileStatus(path) {
 // program itself (node.mjs takes its own place out of argv first). A new array every call.
 export function programArguments() {
 	return process.argv.slice(2);
+}
+
+// The sequential witness: only item and index, in input order, stopping at the first throw.
+export function parallelMap(items, work) {
+	return items.map((item, index) => work(item, index));
+}
+
+// Canonical path identity for directory visitation, following links as the host filesystem does.
+export function realPath(path) {
+	try {
+		return { kind: 'Ok', path: realpathSync(path) };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot resolve path ${path}: ${failure(error.code, false)}` };
+	}
 }
