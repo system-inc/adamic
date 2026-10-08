@@ -150,6 +150,21 @@ class Coverage(FailClosed):
         self.assertTrue(status.startswith("green:"), status)
         self.assertEqual(result["executors"], {"inert": 1})
 
+    def test_a_ruled_corpus_is_exempt_from_a_check_and_named(self):
+        # The exemption line comes first, so a path it matches would take it as its executor if the
+        # map read it as one; the path must still be covered by stage3.
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("a-check-exempt stage3/corpus/*\ninert *.md\nstage3 stage3/*\n")
+        os.makedirs(os.path.join(self.tree, "stage3/corpus"))
+        for path in ("stage3/corpus/upstream.a", "stage3/probe.a"):
+            with open(os.path.join(self.tree, path), "w") as handle:
+                handle.write("const x = 1\n")
+        gate, status, result = self.gate(unowned=["stage3/corpus/upstream.a", "stage3/probe.a"])
+        self.assertEqual(result["unchecked_a_files"], ["stage3/probe.a"])
+        self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
+        self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
+        self.assertEqual(result["executors"], {"stage3": 2})
+
 
 if __name__ == "__main__":
     unittest.main()

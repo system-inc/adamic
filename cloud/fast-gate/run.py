@@ -23,6 +23,7 @@ import hashlib
 import json
 import re
 import os
+import shutil
 import signal
 import socket
 import subprocess
@@ -229,6 +230,9 @@ class Gate:
                     enforce = False  # record uncovered paths without failing, until the rulings are in
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
+        # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
+        exempt = [glob for name, glob in rules if name == "a-check-exempt"]
+        rules = [rule for rule in rules if rule[0] != "a-check-exempt"]
         executors, covered, uncovered, unchecked = set(), {}, [], []
         if "cloud/fast-gate/executors.txt" in changed:
             # The map itself changed: every executor it names runs, so it can't quietly lose a path.
@@ -253,10 +257,12 @@ class Gate:
                     self.result.setdefault("needs_darwin", []).append(path)
         # Every changed .a outside a package gets a-check, beside whatever else runs for it (stage3's
         # probes too): the extension promises proven types wherever the file sits.
-        unchecked = [path for path in unowned if path.endswith(".a")]
+        # A ruled exemption is named in the result, never dropped silently.
+        unchecked = [path for path in unowned if path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt)]
         if unchecked:
             executors.add("a-check")
         self.result["unchecked_a_files"] = unchecked
+        self.result["a_check_exempt"] = [path for path in unowned if path.endswith(".a") and path not in unchecked]
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
         self.extraPackages = sorted(module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:"))
         self.result["executors"] = covered
@@ -303,10 +309,21 @@ class Gate:
                     ("stage3-lane-tests", ["python3", "-m", "unittest", "test_check", "test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
                     ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
         codes = {}
+        # Each command gets its own STAGE3_CACHE: apply runs npm ci into the cache's api/, which deletes
+        # node_modules first, so two applies sharing one (apply's test and the lane here, or another
+        # slot's gate) take typescript away from each other's adaptations mid-run (MODULE_NOT_FOUND,
+        # 5a5d4436's red). Only the bare TypeScript mirror is shared, and clone only reads it.
+        mirror = os.path.expanduser("~/.cache/adamic-stage3/typescript.git")
 
         def one(name, command, directory):
+            cache = os.path.realpath(self.arguments.tree) + "-stage3-cache/" + name
+            if os.path.isdir(cache):
+                shutil.rmtree(cache)
+            os.makedirs(cache)
+            if os.path.isdir(mirror):
+                os.symlink(mirror, os.path.join(cache, "typescript.git"))
             with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
-                codes[name] = self.spawn(command, output, subprocess.STDOUT, directory).wait()
+                codes[name] = self.spawn(command, output, subprocess.STDOUT, directory, {"STAGE3_CACHE": cache}).wait()
 
         threads = [self.guarded("stage3", one, name, command, directory) for name, command, directory in commands]
         for thread in threads:
@@ -950,6 +967,8 @@ class Gate:
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
             if self.result.get("gate_samples"):
                 steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
+            if self.result.get("a_check_exempt"):
+                steps += "; a-check exempt by ruling: %d .a files (fast.json a_check_exempt)" % len(self.result["a_check_exempt"])
             if self.result.get("unchecked_a_files") and "a_check" not in self.result:
                 steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
         if green:
