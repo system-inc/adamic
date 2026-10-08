@@ -1,0 +1,6 @@
+{
+  "name": "first repeated directive kept",
+  "file": "rule.a",
+  "from": "pending.set(value, comment)",
+  "to": "if(!pending.has(value)) { pending.set(value, comment); }"
+}

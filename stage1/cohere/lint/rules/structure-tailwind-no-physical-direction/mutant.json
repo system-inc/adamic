@@ -1,0 +1,6 @@
+{
+  "name": "rtl exemption removed",
+  "file": "rule.a",
+  "from": "parts.includes('rtl') || parts.includes('ltr')",
+  "to": "parts.includes('ltr')"
+}

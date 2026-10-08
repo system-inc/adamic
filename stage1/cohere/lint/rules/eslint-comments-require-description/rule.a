@@ -1,0 +1,88 @@
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { message } from './messages.a';
+
+const separator = /\s-{2,}\s/u;
+const upstream = /^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:\s|$)/u;
+const goWhitespace = /^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*$/u;
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly ignored: string[];
+    readonly additional: string[];
+    readonly literalEnds = new Map<number, number>();
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.ignored = context.settings.list('ignore', []);
+        this.additional = context.settings.list('additionaldirectives', []);
+    }
+    literals(index: number): void {
+        const node = this.context.node(index);
+        if(['StringLiteral', 'RegularExpressionLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateHead', 'TemplateMiddle', 'TemplateTail'].includes(node.kind)) {
+            this.literalEnds.set(this.context.start(index), node.end);
+        }
+        for(const child of node.children) { this.literals(child); }
+    }
+    recognized(inner: string, block: boolean): string {
+        const text = (inner.split(separator)[0] ?? '').trim();
+        const match = text.match(upstream);
+        const kind = match === null ? '' : match[1] ?? '';
+        if(kind !== '' && (block || kind === 'eslint-disable-line' || kind === 'eslint-disable-next-line' || this.additional.includes(kind))) { return kind; }
+        for(const candidate of this.additional) {
+            if(text.startsWith(candidate) && (text.length === candidate.length || /\s/u.test(text.slice(candidate.length, candidate.length + 1)))) {
+                return candidate;
+            }
+        }
+        // The suppression grammar trims continuation furniture before matching.
+        const normalized = inner.includes('\n') ? inner.split('\n').map(line => line.replace(/^\s*\*?/, '')).join(' ') : inner;
+        let body = normalized;
+        while(body.length > 0 && goWhitespace.test(body.slice(0, 1))) { body = body.slice(1); }
+        while(body.length > 0 && goWhitespace.test(body.slice(-1))) { body = body.slice(0, -1); }
+        for(const tool of ['cohere', 'eslint', 'verify', 'oxlint']) {
+            for(const suffix of ['-disable-next-line', '-disable-line', '-disable', '-enable']) {
+                const candidate = tool + suffix;
+                if(!body.startsWith(candidate)) { continue; }
+                const rest = body.slice(candidate.length);
+                if(rest !== '' && !rest.startsWith(' ') && !rest.startsWith('\t')) { continue; }
+                if(!block && (suffix === '-disable' || suffix === '-enable')) { continue; }
+                return 'eslint' + suffix;
+            }
+        }
+        return '';
+    }
+    comment(start: number, end: number, block: boolean): void {
+        const source = this.context.source;
+        const interior = source.slice(start + 2, block ? end - 2 : end);
+        const kind = this.recognized(interior, block);
+        if(kind === '' || this.ignored.includes(kind)) { return; }
+        const pieces = interior.split(separator);
+        if((pieces[1] ?? '').trim() !== '') { return; }
+        this.context.findings.push(new Finding('@eslint-community/eslint-comments/require-description', 'missingDescription', message, start, end, '', '', ''));
+    }
+    visit(index: number): void {
+        this.literals(index);
+        const source = this.context.source;
+        for(let position = 0; position < source.length; position++) {
+            const literalEnd = this.literalEnds.get(position);
+            if(literalEnd !== undefined) { position = literalEnd - 1; continue; }
+            if(position === 0 && source.startsWith('#!')) {
+                while(position < source.length && source.charCodeAt(position) !== 10 && source.charCodeAt(position) !== 13) { position++; }
+                continue;
+            }
+            if(source.charCodeAt(position) !== 47) { continue; }
+            const next = source.charCodeAt(position + 1);
+            if(next === 47) {
+                let end = position + 2;
+                while(end < source.length && ![10, 13, 8232, 8233].includes(source.charCodeAt(end))) { end++; }
+                this.comment(position, end, false);
+                position = end - 1;
+            } else if(next === 42) {
+                const close = source.indexOf('*/', position + 2);
+                if(close < 0) { return; }
+                this.comment(position, close + 2, true);
+                position = close + 1;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,6 @@
+{
+  "name": "export report span misplaced",
+  "file": "rule.a",
+  "from": "item.kind === 'ExportKeyword'",
+  "to": "item.kind === 'DeclareKeyword'"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/prefer-function-type",
+  "kinds": [
+    "InterfaceDeclaration",
+    "TypeLiteral"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferFunctionType",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferFunctionType"
+}
