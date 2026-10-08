@@ -22,6 +22,8 @@ const (
 // Contracts describe declared logical types, independently of physical layout ids.
 // Readiness remains the shared non-null state and is never implied by a contract.
 type ViewContract struct {
+	// Generic requires an immutable producer with the same quantified declaration.
+	Generic bool
 	// Intersection marks conjunctive object members, distinct from union selection.
 	Intersection bool
 	// IntersectionTag selects disjoint object arms before validating their fields.

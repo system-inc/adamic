@@ -30,10 +30,17 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 					parameters[i] = 0
 				}
 			}
-			signature := e.viewCallableSignature(parameters, e.viewCallableMethodProducerResult(property, function.Returns), function.Name)
+			contracts := function.CallableContracts
+			if len(contracts) > 0 {
+				contracts = contracts[1:]
+			}
+			signature := e.viewCallableNestedSignature(parameters, e.viewCallableMethodProducerResult(property, function.Returns), function.Name, nil, contracts)
 			thunk := e.methodThunk(index)
 			e.line("if (%s == %s) %s = %s;", method, thunk, recorded, signature)
 		}
+	}
+	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Generic {
+		e.line("%s = NULL;", recorded)
 	}
 	witness := e.temporary()
 	e.line("adamic_closure %s = {.heap = {.references = 0, .kind = adamic_kind_closure, .slab = 0}, .code = NULL, .receiver = false, .count = 0};", witness)

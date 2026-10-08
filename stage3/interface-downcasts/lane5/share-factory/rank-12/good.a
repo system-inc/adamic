@@ -1,0 +1,7 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+interface Node {readonly value:number;}
+interface Base {readonly cloneNode:unknown;}
+interface Target {cloneNode<T extends Node | undefined>(node: T): T;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.cloneNode({value:7}).value}`);}
+function clone<T extends Node | undefined>(node:T):T {return node;}
+probe({cloneNode:clone});

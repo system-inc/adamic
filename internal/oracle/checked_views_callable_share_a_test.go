@@ -189,6 +189,24 @@ func TestCheckedViewCallableShareAFrontiers(t *testing.T) {
 					if report := leaksUncached(t, program, binary); report != "" {
 						t.Fatal(report)
 					}
+				case 165:
+					message := "adamic: panic: field read failed: context.onEmitNode expected (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void, found function with arity 0\n"
+					for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+						if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+							t.Fatalf("higher-order frontier: %#v want %q", got, message)
+						}
+					}
+				case 12, 174:
+					expected := "<T extends Node | undefined>(node: T) => T"
+					if member.Rank == 174 {
+						expected = "<T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T>"
+					}
+					message := "adamic: panic: field read failed: " + "factory." + member.Field + " expected " + expected + ", found function with unknown signature\n"
+					for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+						if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+							t.Fatalf("generic declaration frontier: %#v want %q", got, message)
+						}
+					}
 				case 186, 189:
 					// The reduced producer in these original controls serves only one arm.
 					// A full-set runtime check must stop before the selected call executes.

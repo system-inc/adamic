@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewCallableFactoryGenerics
+=== RUN   TestCheckedViewCallableFactoryGenerics/cloneNode
+=== RUN   TestCheckedViewCallableFactoryGenerics/cloneNode/conversion
+    checked_views_callable_factory_generics_test.go:45: generic instantiations collapsed: got 1 bodies, want 4
+--- FAIL: TestCheckedViewCallableFactoryGenerics (0.05s)
+    --- FAIL: TestCheckedViewCallableFactoryGenerics/cloneNode (0.05s)
+        --- FAIL: TestCheckedViewCallableFactoryGenerics/cloneNode/conversion (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.061s
+FAIL

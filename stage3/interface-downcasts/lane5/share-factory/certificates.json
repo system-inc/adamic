@@ -1,8 +1,8 @@
 {
   "base": "a62778110b958f54d52622da01bf7758bce629dc",
   "roadmapStep": 9,
-  "pairs": 5,
-  "reads": 386,
+  "pairs": 8,
+  "reads": 498,
   "members": [
     {
       "receiver_type_id": 11739,
@@ -179,6 +179,113 @@
       "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
       "certificateDirectory": "rank-189",
       "test": "TestCheckedViewCallableFactory"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "cloneNode",
+      "declared_types": [
+        "<T extends Node | undefined>(node: T) => T"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 91,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12358,
+        "column": 13
+      },
+      "rank": 12,
+      "certified": true,
+      "directory": "gap-12",
+      "read": "factory.cloneNode",
+      "declarations": [
+        "cloneNode<T extends Node | undefined>(node: T): T;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 509609,
+      "utf16End": 509626,
+      "stdout": "7\n",
+      "neededChange": "Demand-time generic callable instantiation with sound parameter/result contracts; do not replace generic identity with a function tag.",
+      "certificateDirectory": "rank-12",
+      "test": "TestCheckedViewCallableFactoryGenerics"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createModifier",
+      "declared_types": [
+        "<T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7634,
+        "column": 61
+      },
+      "rank": 174,
+      "certified": true,
+      "directory": "gap-174",
+      "read": "factory.createModifier",
+      "declarations": [
+        "createModifier<T extends ModifierSyntaxKind>(kind: T): ModifierToken<T>;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 415823,
+      "utf16End": 415845,
+      "stdout": "7\n",
+      "neededChange": "Demand-time generic callable instantiation with sound parameter/result contracts; do not replace generic identity with a function tag.",
+      "certificateDirectory": "rank-174",
+      "test": "TestCheckedViewCallableFactoryGenerics"
+    },
+    {
+      "receiver_type_id": 10108,
+      "type": "TransformationContext",
+      "field": "onEmitNode",
+      "declared_types": [
+        "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "column": 32
+      },
+      "rank": 165,
+      "certified": true,
+      "directory": "gap-165",
+      "expected": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
+      "read": "context.onEmitNode",
+      "declaration": "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "utf16Start": 6663,
+      "utf16End": 6681,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": "type EmitHint=number;\ninterface Node {readonly value:number;}",
+      "declarations": [
+        "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "neededChange": "Retain demand-time higher-order callable descriptors for malformed producers so arity and kind guards execute at the read without depending on compatible producer proof.",
+      "certificateDirectory": "rank-165",
+      "test": "TestCheckedViewCallableFactoryHigherOrder"
     }
   ]
 }

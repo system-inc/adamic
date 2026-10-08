@@ -106,8 +106,11 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	GenericTemplate bool
 	// CallableMasks records producer signature members independently of any view.
 	CallableMasks []uint16
+	// CallableContracts preserves nested callable parameter declarations.
+	CallableContracts []ViewContractID
 
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
@@ -701,6 +704,9 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// GenericInstances maps immutable template code to one instantiated closure body.
+		GenericInstances  [][2]int
+		CallableArguments []ViewContractID
 		// Direct is a sibling code target plus one, sharing Closure as its environment.
 		// CheckedDiscard releases the independently recorded producer result after a checked marker call.
 		CheckedDiscard  bool

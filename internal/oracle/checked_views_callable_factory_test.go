@@ -151,7 +151,7 @@ func TestCheckedViewCallableFactoryCounts(t *testing.T) {
 	}
 	text := string(data)
 	fixtures, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-factory/rank-*/*.a"))
-	if err != nil || len(fixtures) != 16 {
+	if err != nil || len(fixtures) != 26 {
 		t.Fatalf("factory fixture inventory: %d, %v", len(fixtures), err)
 	}
 	for _, fixture := range fixtures {
@@ -205,6 +205,12 @@ func TestCheckedViewCallableFactoryDeclarations(t *testing.T) {
 			t.Fatal(err)
 		}
 		variants := []string{"good", "conversion", "wrong-overload"}
+		if member.Rank == 12 || member.Rank == 174 {
+			variants[2] = "wrong-producer"
+		}
+		if member.Rank == 165 {
+			variants = []string{"good", "boundary", "wrong-arity", "wrong-nested"}
+		}
 		if member.Rank == 3 {
 			variants = append(variants, "wrong-result")
 		}
@@ -213,7 +219,7 @@ func TestCheckedViewCallableFactoryDeclarations(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if (member.Rank < 100 && variant == "good" || member.Rank >= 100 && variant == "wrong-overload") && string(fixture) != string(original) {
+			if ((member.Rank == 3 || member.Rank == 9 || member.Rank == 24) && variant == "good" || (member.Rank == 186 || member.Rank == 189) && variant == "wrong-overload" || (member.Rank == 12 || member.Rank == 174) && variant == "wrong-producer" || member.Rank == 165 && variant == "wrong-arity") && string(fixture) != string(original) {
 				t.Fatalf("rank %d original control changed", member.Rank)
 			}
 			for _, declaration := range member.Declarations {
@@ -226,7 +232,7 @@ func TestCheckedViewCallableFactoryDeclarations(t *testing.T) {
 			}
 		}
 	}
-	if evidence.Pairs != 5 || len(evidence.Members) != 5 || evidence.Reads != 386 || reads != 386 {
+	if evidence.Pairs != 8 || len(evidence.Members) != 8 || evidence.Reads != 498 || reads != 498 {
 		t.Fatalf("certificate inventory changed: %#v", evidence)
 	}
 }

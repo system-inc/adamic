@@ -14,6 +14,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 	if l.includesUndefined(target) {
 		target = l.checker.GetNonNullableType(target)
 	}
+	if l.genericCallableShape(target) {
+		return l.prepareGenericCallableRead(node, target)
+	}
 	if !l.callableViewContract(target) {
 		return 0, l.notYet(node, "checked callable read of "+l.checker.TypeToString(declared))
 	}
@@ -35,6 +38,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 	// of parameter/result types while preparing a callable read.
 	build := func(child *checker.Type) (ir.ViewContractID, error) {
 		of, known := l.representation(child)
+		if known && of == ir.Closure {
+			return l.prepareViewCallableRead(node, child)
+		}
 		if child.Flags()&checker.TypeFlagsVoid != 0 {
 			of, known = ir.Type(254), true
 		}
@@ -76,6 +82,9 @@ func (l *lowering) prepareViewCallableProperty(node *ast.Node, declared *checker
 }
 
 func (l *lowering) runtimeViewCallableShape(target *checker.Type) bool {
+	if l.genericCallableShape(target) {
+		return true
+	}
 	if l.includesUndefined(target) {
 		target = l.checker.GetNonNullableType(target)
 	}

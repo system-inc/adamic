@@ -12,6 +12,9 @@ import (
 func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
 	expected := e.viewCallableExpected(property)
+	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Generic {
+		return e.emitGenericCallableCertificate(property, value, expected)
+	}
 	recorded := e.temporary()
 	e.line("const adamic_callable_signature *%s = NULL;", recorded)
 	for _, producer := range e.viewCallableProducers() {
@@ -47,10 +50,19 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		masks[i] = e.program.ViewContracts[child-1].RepresentationMask
 	}
 	masks[len(masks)-1] = e.program.ViewContracts[contract.Result-1].RepresentationMask
-	return e.viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks)
+	return e.viewCallableNestedSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks, contract.Parameters)
 }
 
 func (e *emitter) viewCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
+	var masks []uint16
+	if len(members) != 0 {
+		masks = members[0]
+	}
+	return e.viewCallableSignatureChildren(parameters, result, name, masks, nil)
+}
+
+func (e *emitter) viewCallableSignatureChildren(parameters []ir.Type, result ir.Type, name string, masks []uint16, children []string) string {
+	members := [][]uint16{masks}
 	signature := e.temporary()
 	parameterName := "NULL"
 	if len(parameters) != 0 {
@@ -74,8 +86,13 @@ func (e *emitter) viewCallableSignature(parameters []ir.Type, result ir.Type, na
 			e.declarations = append(e.declarations, fmt.Sprintf("static const uint16_t %s[] = {%s};", maskName, strings.Join(values, ", ")))
 		}
 	}
+	childName := "NULL"
+	if len(children) != 0 {
+		childName = e.temporary()
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_callable_signature *const %s[] = {%s};", childName, strings.Join(children, ", ")))
+	}
 	// Zero remains unknown. Void producer signatures cannot satisfy a valued result.
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_callable_signature %s = {%d, %s, %d, %s, %s, %d};", signature, len(parameters), parameterName, result, cString(name), maskName, resultMask))
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_callable_signature %s = {%d, %s, %d, %s, %s, %d, %s};", signature, len(parameters), parameterName, result, cString(name), maskName, resultMask, childName))
 	return "&" + signature
 }
 
@@ -104,7 +121,7 @@ func (e *emitter) viewCallableProducers() []viewCallableProducer {
 				parameters[i] = 0
 			}
 		}
-		producers = append(producers, viewCallableProducer{index, e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)})
+		producers = append(producers, viewCallableProducer{index, e.viewCallableNestedSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks, function.CallableContracts)})
 	}
 	return producers
 }

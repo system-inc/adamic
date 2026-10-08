@@ -2721,3 +2721,13 @@ compiler proof counts, independent of the runtime allocation counts above.
 | stage3/interface-downcasts/lane5/share-factory/rank-189/conversion.a | 14 | 14 | 10 | 24 | 7 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-factory/rank-189/good.a | 5 | 5 | 4 | 8 | 5 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-factory/rank-189/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-12/conversion.a | 17 | 17 | 27 | 47 | 11 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-12/good.a | 6 | 6 | 5 | 12 | 6 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-12/wrong-producer.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-174/conversion.a | 13 | 13 | 5 | 20 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-174/good.a | 6 | 6 | 3 | 10 | 6 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-174/wrong-producer.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-165/boundary.a | 7 | 7 | 5 | 12 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-165/good.a | 4 | 4 | 5 | 8 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-165/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-165/wrong-nested.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |

@@ -79,3 +79,12 @@ func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
 		}
 	}
 }
+
+func TestGenericClosureTargetsUseInstantiatedBodies(t *testing.T) {
+	program := &ir.Program{Functions: []ir.Function{{GenericTemplate: true}, {}, {MayThrow: true}, {}}}
+	call := ir.CallClosure{Closure: ir.MakeClosure{Function: 0}, GenericInstances: [][2]int{{0, 2}, {1, 3}}}
+	targets := program.ClosureTargets(call)
+	if targets.Unknown || !reflect.DeepEqual(targets.Functions, []int{2, 3}) || !program.ClosureMayThrow(call) {
+		t.Fatalf("generic call followed template rather than instantiated effects: %#v", targets)
+	}
+}

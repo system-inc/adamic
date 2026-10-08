@@ -56,6 +56,15 @@ func (l *lowering) recordViewCallableRepresentations(index int, function *ir.Fun
 	}
 	masks[len(masks)-1] = l.viewCallableRepresentationMask(l.checker.GetReturnTypeOfSignature(signature))
 	function.CallableMasks = masks
+	function.CallableContracts = make([]ir.ViewContractID, len(function.Parameters))
+	for i, parameter := range signature.Parameters() {
+		proven := l.censusCallableParameterType(parameter)
+		if l.simpleNestedCallableShape(proven) {
+			if id, err := l.prepareViewCallableRead(declaration, proven); err == nil {
+				function.CallableContracts[i+offset] = id
+			}
+		}
+	}
 	l.recordViewCallableProducerPayloads(index, declaration, signature)
 }
 
@@ -63,6 +72,9 @@ func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
 	of, known := l.representation(proven)
 	if !known {
 		return false
+	}
+	if of == ir.Closure {
+		return l.simpleNestedCallableShape(proven)
 	}
 	if of == ir.Object && !isClassInstance(proven) && l.unsupportedViewFamily(proven) == "" {
 		return true

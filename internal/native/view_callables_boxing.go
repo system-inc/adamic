@@ -11,6 +11,9 @@ import (
 // type identifies the caller's representation. The ordinary closure ABI remains
 // unchanged; only the values at that boundary are adapted.
 func (e *emitter) viewCallableBoxedInvoke(expression ir.CallClosure, received bool) string {
+	if len(expression.GenericInstances) != 0 {
+		return e.genericCallableInvoke(expression)
+	}
 	from := []ir.Type{}
 	if received {
 		from = append(from, ir.Object)

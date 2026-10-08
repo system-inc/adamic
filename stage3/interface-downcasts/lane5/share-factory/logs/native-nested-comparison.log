@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewCallableFactoryHigherOrder
+=== RUN   TestCheckedViewCallableFactoryHigherOrder/wrong-nested
+    checked_views_callable_factory_higher_test.go:13: gate cache node miss
+    checked_views_callable_factory_higher_test.go:23: sanitized nested exit=0 stdout="done\n" stderr=""
+    checked_views_callable_factory_higher_test.go:25: gate cache node miss
+    checked_views_callable_factory_higher_test.go:36: backend0 negative exit=0 stdout="done\n" stderr=""
+    checked_views_callable_factory_higher_test.go:38: higher-order negative did not stop: oracle.run{stdout:[]uint8{0x64, 0x6f, 0x6e, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: context.onEmitNode expected (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void, found function with incompatible parameter representations\n"
+--- FAIL: TestCheckedViewCallableFactoryHigherOrder (33.35s)
+    --- FAIL: TestCheckedViewCallableFactoryHigherOrder/wrong-nested (33.35s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	33.364s
+FAIL

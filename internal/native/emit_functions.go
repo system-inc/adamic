@@ -242,8 +242,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		}
 	}
 	arguments := []string{}
-	for _, argument := range expression.Arguments {
-		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+	for index, argument := range expression.Arguments {
+		value := e.value(argument)
+		if index < len(expression.CallableArguments) && expression.CallableArguments[index] != 0 {
+			value = e.emitViewCallableCertificate(ir.Property{ViewContract: expression.CallableArguments[index], View: fmt.Sprintf("call argument %d", index+1)}, value)
+		}
+		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), value)))
 	}
 	packed := "NULL"
 	if len(arguments) > 0 {

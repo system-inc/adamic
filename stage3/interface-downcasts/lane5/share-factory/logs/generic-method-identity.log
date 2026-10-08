@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewCallableFactoryGenericMethodDeclaration
+    checked_views_callable_factory_generics_test.go:171: gate cache node miss
+    checked_views_callable_factory_generics_test.go:180: sanitized generic method exit=0 stdout="7\n" stderr=""
+    checked_views_callable_factory_generics_test.go:182: gate cache node miss
+    checked_views_callable_factory_generics_test.go:183: generic method negative exit=0 stdout="7\n" stderr=""
+    checked_views_callable_factory_generics_test.go:185: ordinary method admitted by generic contract0: oracle.run{stdout:[]uint8{0x37, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewCallableFactoryGenericMethodDeclaration (0.72s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.733s
+FAIL

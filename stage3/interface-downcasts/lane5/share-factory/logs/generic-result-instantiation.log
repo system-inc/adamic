@@ -1,0 +1,6 @@
+=== RUN   TestGenericCallableResultInstantiation
+    view_callables_generic_test.go:75: constraint substituted for result instantiation: <nil>
+--- FAIL: TestGenericCallableResultInstantiation (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.124s
+FAIL

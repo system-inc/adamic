@@ -8,6 +8,17 @@ import (
 
 func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
 	expected := e.viewCallableExpected(property)
+	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Generic {
+		tests := []string{}
+		for _, function := range e.program.ViewContracts[property.ViewContract-1].Functions {
+			tests = append(tests, "value.code === "+functionName(e.program, function))
+		}
+		known := "false"
+		if len(tests) != 0 {
+			known = strings.Join(tests, " || ")
+		}
+		return "((value) => value instanceof AdamicClosure && (" + known + ") ? value : " + emitViewCallableShape("value", "undefined", expected, property.View, false) + ")(" + value + ")"
+	}
 	recorded := e.viewCallableRecorded("value", property)
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	recorded = e.untaggedCallableRecorded(property, recorded, expected)
@@ -42,7 +53,7 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		masks[i] = e.program.ViewContracts[child-1].RepresentationMask
 	}
 	masks[len(masks)-1] = e.program.ViewContracts[contract.Result-1].RepresentationMask
-	return viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks)
+	return e.viewCallableNestedSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks, contract.Parameters)
 }
 
 func viewCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
@@ -104,7 +115,13 @@ func (e *emitter) viewCallableRecorded(value string, properties ...ir.Property) 
 				parameters[i] = 0
 			}
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), fmt.Sprintf("({...%s, function: %d})", viewCallableSignature(parameters, result, function.Name, masks), index)))
+		contracts := function.CallableContracts
+		if offset <= len(contracts) {
+			contracts = contracts[offset:]
+		} else {
+			contracts = nil
+		}
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), fmt.Sprintf("({...%s, function: %d})", e.viewCallableNestedSignature(parameters, result, function.Name, masks, contracts), index)))
 	}
 	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
 	return recorded

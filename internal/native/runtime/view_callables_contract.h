@@ -14,6 +14,7 @@ typedef struct adamic_callable_signature {
     const char *name;
     const uint16_t *parameter_masks;
     uint16_t result_mask;
+    const struct adamic_callable_signature *const *parameter_signatures;
 } adamic_callable_signature;
 
 static inline uint16_t adamic_callable_members(unsigned char representation, uint16_t members) {
@@ -31,13 +32,23 @@ static inline bool adamic_callable_representation_compatible(unsigned char from,
     return given != 0 && wanted != 0 && (given & wanted) == given;
 }
 
+static inline bool adamic_view_callable_signatures_match(const adamic_callable_signature *, const adamic_callable_signature *);
+
+static inline bool adamic_callable_parameter_compatible(const adamic_callable_signature *from, const adamic_callable_signature *to, size_t index) {
+    if (!adamic_callable_representation_compatible(from->parameters[index], to->parameters[index], from->parameter_masks == NULL ? 0 : from->parameter_masks[index], to->parameter_masks == NULL ? 0 : to->parameter_masks[index])) return false;
+    if (from->parameters[index] != 8 || to->parameters[index] != 8) return true;
+    const adamic_callable_signature *given = from->parameter_signatures == NULL ? NULL : from->parameter_signatures[index];
+    const adamic_callable_signature *wanted = to->parameter_signatures == NULL ? NULL : to->parameter_signatures[index];
+    return given != NULL && wanted != NULL && adamic_view_callable_signatures_match(given, wanted);
+}
+
 /* Shared immutable producer predicate for field reads and union selectors. */
 static inline bool adamic_view_callable_signatures_match(const adamic_callable_signature *recorded, const adamic_callable_signature *expected) {
     if (recorded == NULL || expected == NULL || recorded->arity != expected->arity || recorded->result == 0 || expected->result == 0) return false;
     if (expected->result != 255 && !adamic_callable_representation_compatible(recorded->result, expected->result, recorded->result_mask, expected->result_mask)) return false;
     if (recorded->arity != 0 && (recorded->parameters == NULL || expected->parameters == NULL)) return false;
     for (size_t i = 0; i < recorded->arity; i++) {
-        if (!adamic_callable_representation_compatible(expected->parameters[i], recorded->parameters[i], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[i], recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[i])) return false;
+        if (!adamic_callable_parameter_compatible(expected, recorded, i)) return false;
     }
     return true;
 }
@@ -64,7 +75,7 @@ static inline const adamic_heap *adamic_view_callable_shape(
         } else {
             bool compatible = recorded->arity == 0 || (recorded->parameters != NULL && expected->parameters != NULL);
             for (size_t index = 0; compatible && index < recorded->arity; index++) {
-                compatible = adamic_callable_representation_compatible(expected->parameters[index], recorded->parameters[index], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[index], recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[index]);
+                compatible = adamic_callable_parameter_compatible(expected, recorded, index);
             }
             if (compatible && adamic_view_callable_signatures_match(recorded, expected)) { return value; }
             found = "function with incompatible parameter representations";
@@ -89,7 +100,7 @@ static inline bool adamic_view_callable_overload_matches(const adamic_callable_s
         if (index >= expected->arity) {
             if ((adamic_callable_members(recorded->parameters[index], takes) & 1u) == 0) return false;
         } else {
-            if (expected->parameters == NULL || !adamic_callable_representation_compatible(expected->parameters[index], recorded->parameters[index], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[index], takes)) return false;
+            if (expected->parameters == NULL || !adamic_callable_parameter_compatible(expected, recorded, index)) return false;
         }
     }
     return true;

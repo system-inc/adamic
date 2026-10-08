@@ -1,0 +1,6 @@
+=== RUN   TestGenericCallableDeclarationIdentity
+    view_callables_generic_test.go:44: generic declaration badResult compatibility true, want false
+--- FAIL: TestGenericCallableDeclarationIdentity (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.112s
+FAIL

@@ -8,6 +8,15 @@ import (
 // JavaScript needs no boxing, but the shared unknown-producer boundary must stop
 // in both backends. Evaluate callee and arguments before entering this adapter.
 func (e *emitter) viewCallableBoxedDispatch(call ir.CallClosure) string {
+	if len(call.GenericInstances) != 0 {
+		cases := []string{}
+		for _, pair := range call.GenericInstances {
+			if pair[0] >= 0 {
+				cases = append(cases, "if (callee instanceof AdamicClosure && callee.code === "+functionName(e.program, pair[0])+") return "+functionName(e.program, pair[1])+"(callee, arguments_);")
+			}
+		}
+		return "((callee, arguments_) => {" + strings.Join(cases, " ") + "panic(\"generic callable: no compatible producer instantiation\");})"
+	}
 	needed := call.Returns == ir.Union
 	for _, argument := range call.Arguments {
 		needed = needed || argument.Type() == ir.Union

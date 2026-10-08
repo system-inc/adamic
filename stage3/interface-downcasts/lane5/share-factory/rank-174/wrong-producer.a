@@ -1,0 +1,7 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+type ModifierSyntaxKind=number;
+interface ModifierToken<T> {readonly value:number;}
+interface Base {readonly createModifier:unknown;}
+interface Target {createModifier<T extends ModifierSyntaxKind>(kind: T): ModifierToken<T>;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createModifier(1).value}`);}
+probe({createModifier:(kind:ModifierSyntaxKind):ModifierToken<ModifierSyntaxKind>=>({value:7})});

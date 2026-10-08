@@ -13,13 +13,19 @@ const viewCallableShapeRuntime = `const adamicCallableRepresentationCompatible =
     const wanted = toMembers !== 0 || to === 10 ? toMembers : (1 << to);
     return given !== 0 && wanted !== 0 && (given & wanted) === given;
 };
-const adamicViewCallableSignaturesMatch = (recorded, expected) => recorded!==undefined && recorded!==null && expected!==undefined && expected!==null && recorded.result!==0 && expected.result!==0 && (expected.result===255 || adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>adamicCallableRepresentationCompatible(expected.parameters[index], value, expected.parameterMasks?.[index], recorded.parameterMasks?.[index]));
+const adamicCallableParameterCompatible = (from, to, index) => {
+    if (!adamicCallableRepresentationCompatible(from.parameters[index], to.parameters[index], from.parameterMasks?.[index], to.parameterMasks?.[index])) return false;
+    if (from.parameters[index] !== 8 || to.parameters[index] !== 8) return true;
+    const given = from.parameterSignatures?.[index], wanted = to.parameterSignatures?.[index];
+    return given !== undefined && wanted !== undefined && adamicViewCallableSignaturesMatch(given, wanted);
+};
+const adamicViewCallableSignaturesMatch = (recorded, expected) => recorded!==undefined && recorded!==null && expected!==undefined && expected!==null && recorded.result!==0 && expected.result!==0 && (expected.result===255 || adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>adamicCallableParameterCompatible(expected, recorded, index));
 const adamicViewCallableOverloadMatches = (recorded, expected) => {
     if (recorded === undefined || recorded === null || expected === undefined || recorded.result === 0 || expected.result === 0) return false;
     if (!adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) return false;
     return recorded.parameters.every((takes, index) => index >= expected.parameters.length
         ? ((recorded.parameterMasks?.[index] || (1 << takes)) & 1) !== 0
-        : adamicCallableRepresentationCompatible(expected.parameters[index], takes, expected.parameterMasks?.[index], recorded.parameterMasks?.[index]));
+        : adamicCallableParameterCompatible(expected, recorded, index));
 };
 const adamicViewCallableShape = (value, recorded, expected, expression, optional = false) => {
     if (optional && value === undefined) return undefined;

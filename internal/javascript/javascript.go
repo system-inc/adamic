@@ -1088,20 +1088,20 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			return e.emitViewCallableDiscard(expression)
 		}
 		if expression.Direct > 0 {
-			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
+			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.viewCallableCheckedArguments(expression))
 		}
 		invoke := e.viewCallableBoxedDispatch(expression)
 		if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
-			return invoke + "(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
+			return invoke + "(" + e.emitViewCallableProperty(property) + ", [" + e.viewCallableCheckedArguments(expression) + "])"
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
-				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.values(expression.Arguments) + "])"
+				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.viewCallableCheckedArguments(expression) + "])"
 			}
-			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
+			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.viewCallableCheckedArguments(expression) + "])"
 		}
-		return invoke + "(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
+		return invoke + "(" + e.value(expression.Closure) + ", [" + e.viewCallableCheckedArguments(expression) + "])"
 	case ir.ArrayMap:
 		if expression.ViewRead.View != "" {
 			return "adamicViewMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"

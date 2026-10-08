@@ -42,6 +42,15 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	var value Expression
 	switch call := call.(type) {
 	case CallClosure:
+		if len(call.GenericInstances) != 0 {
+			targets := []int{}
+			for _, pair := range call.GenericInstances {
+				if pair[1] >= 0 {
+					targets = append(targets, pair[1])
+				}
+			}
+			return FunctionTargets{Functions: targets, Unknown: len(targets) == 0}
+		}
 		value = call.Closure
 	case ArrayMap:
 		value = call.Callback

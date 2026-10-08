@@ -131,6 +131,11 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	l.genericDepth++
 	defer func() { l.genericDepth-- }()
+	if resolved.Declaration() != declaration {
+		if err := l.checkGenericCallableReturns(call, declaration, l.concrete(l.checker.GetReturnTypeOfSignature(target))); err != nil {
+			return 0, err
+		}
+	}
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
 		return 0, err
 	}

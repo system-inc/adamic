@@ -526,8 +526,8 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
-		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
-			return nil, l.notYet(node, "a generic function as a value")
+		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return l.genericCallableValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
@@ -1195,7 +1195,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, CallableMasks: callee.CallableMasks}
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, CallableMasks: callee.CallableMasks, CallableContracts: callee.CallableContracts}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -1300,5 +1300,13 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
+	instances, err := l.genericCallableInstances(node, signatures)
+	if err != nil {
+		return nil, err
+	}
+	callableArguments, err := l.nestedCallableArguments(node)
+	if err != nil {
+		return nil, err
+	}
+	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns, GenericInstances: instances, CallableArguments: callableArguments}, nil
 }

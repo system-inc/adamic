@@ -1,0 +1,5 @@
+generic-method-identity: caught by generic method negative exit=0 stdout="7\n" stderr=""
+generic-instantiation-key: caught by generic instantiations collapsed: got 1 bodies, want 4
+generic-result-identity: caught by generic declaration badResult compatibility true, want false
+generic-result-instantiation: caught by constraint substituted for result instantiation: <nil>
+generic-call-effects: caught by generic call followed template rather than instantiated effects
