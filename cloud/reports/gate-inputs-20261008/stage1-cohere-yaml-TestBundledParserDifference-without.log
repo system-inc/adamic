@@ -1,0 +1,5 @@
+=== RUN   TestBundledParserDifference
+    format_test.go:199: set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestBundledParserDifference (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	0.010s

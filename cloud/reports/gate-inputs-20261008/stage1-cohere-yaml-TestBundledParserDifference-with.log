@@ -1,0 +1,10 @@
+=== RUN   TestBundledParserDifference
+    format_test.go:206: yaml: accepted
+        prettier: Invalid character
+        yaml: accepted
+        prettier: Invalid character
+        yaml: tag.resolve is not a function
+        prettier: c.resolve is not a function
+--- PASS: TestBundledParserDifference (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	0.158s

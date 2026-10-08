@@ -1,0 +1,12 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:53: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+    mediaquery_test.go:95: set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself
+--- PASS: TestThePortParsesAsGoCohereDoes (1.37s)
+    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	1.394s

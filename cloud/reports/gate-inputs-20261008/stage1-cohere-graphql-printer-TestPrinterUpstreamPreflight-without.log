@@ -1,0 +1,5 @@
+=== RUN   TestPrinterUpstreamPreflight
+    printer_test.go:84: set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestPrinterUpstreamPreflight (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql/printer	0.010s

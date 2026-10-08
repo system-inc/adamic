@@ -1,0 +1,5 @@
+=== RUN   TestOriginalLibraries
+    estree_test.go:255: set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestOriginalLibraries (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.016s

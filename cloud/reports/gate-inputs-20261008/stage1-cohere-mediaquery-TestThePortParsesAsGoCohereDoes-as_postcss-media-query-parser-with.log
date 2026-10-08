@@ -1,0 +1,11 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:53: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+--- PASS: TestThePortParsesAsGoCohereDoes (1.59s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	2.296s

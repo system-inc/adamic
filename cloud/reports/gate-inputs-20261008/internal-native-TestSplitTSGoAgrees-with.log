@@ -1,0 +1,8 @@
+=== RUN   TestSplitTSGoAgrees
+    units_tsgo_test.go:66: checker uncached=0: 85 identical bytes: file	/tmp/adamic-gate/TestSplitTSGoAgrees124619977/001/sample.a
+        findings 0 queries 1
+    units_tsgo_test.go:66: checker uncached=1: 85 identical bytes: file	/tmp/adamic-gate/TestSplitTSGoAgrees124619977/001/sample.a
+        findings 0 queries 1
+--- PASS: TestSplitTSGoAgrees (46.55s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	46.561s

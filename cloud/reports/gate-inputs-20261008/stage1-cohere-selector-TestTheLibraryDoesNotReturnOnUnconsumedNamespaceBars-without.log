@@ -1,0 +1,7 @@
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+    selector_test.go:505: set ADAMIC_SELECTOR_LIBRARY to prove upstream nontermination
+--- SKIP: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	0.012s

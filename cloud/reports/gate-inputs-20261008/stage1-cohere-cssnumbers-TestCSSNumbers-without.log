@@ -1,0 +1,24 @@
+=== RUN   TestCSSNumbers
+=== PAUSE TestCSSNumbers
+=== CONT  TestCSSNumbers
+    port_test.go:240: external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY
+=== RUN   TestCSSNumbers/quoted_numbers
+    port_test.go:318: caught by output case 152, byte 128: got "background: url('/+0px!/\"\\\\a?~^[]{} $%#');\\n  background: ur" want "background: url('/+0PX!/\"\\\\a?~^[]{} $%#');\\n  background: ur"
+    port_test.go:318: caught by output case 152, byte 128: got "background: url('/+0px!/\"\\\\a?~^[]{} $%#');\\n  background: ur" want "background: url('/+0PX!/\"\\\\a?~^[]{} $%#');\\n  background: ur"
+=== RUN   TestCSSNumbers/unknown_unit
+    port_test.go:318: caught by output case 68, byte 40: got "Name (MIN-WIDTH: 500PX);\\n\\n.foo {\\n    color: hsl(0.75TURN," want "Name (MIN-WIDTH: 500px);\\n\\n.foo {\\n    color: hsl(0.75turn,"
+    port_test.go:318: caught by output case 68, byte 40: got "Name (MIN-WIDTH: 500PX);\\n\\n.foo {\\n    color: hsl(0.75TURN," want "Name (MIN-WIDTH: 500px);\\n\\n.foo {\\n    color: hsl(0.75turn,"
+=== RUN   TestCSSNumbers/word_prefix
+    port_test.go:318: caught by output case 4, byte 36: got "at-root {\\n        .1 {\\n            width: 100px;\\n        " want "at-root {\\n        .child1 {\\n            width: 100px;\\n   "
+    port_test.go:318: caught by output case 4, byte 36: got "at-root {\\n        .1 {\\n            width: 100px;\\n        " want "at-root {\\n        .child1 {\\n            width: 100px;\\n   "
+=== NAME  TestCSSNumbers
+    port_test.go:352: throughput Go 266496.9 texts/s, 3 process runs 1.016455s (startup, input, escaping, output included; build excluded)
+    port_test.go:352: throughput native 237674.7 texts/s, 3 process runs 1.139718s (startup, input, escaping, output included; build excluded)
+    port_test.go:352: throughput Node 133054.7 texts/s, 3 process runs 2.035869s (startup, input, escaping, output included; build excluded)
+    port_test.go:354: corpus: 255 repository/submodule files, 44892 generated texts, 90294 preference cases; all byte-identical
+--- PASS: TestCSSNumbers (132.55s)
+    --- PASS: TestCSSNumbers/quoted_numbers (16.85s)
+    --- PASS: TestCSSNumbers/unknown_unit (3.64s)
+    --- PASS: TestCSSNumbers/word_prefix (2.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	132.563s
