@@ -1,0 +1,136 @@
+=== RUN   TestWave02ReadyParity
+    wave02_certification_test.go:20: checker compilation phases: load=228.449413ms lower=6.990484736s C=731.891615ms JavaScript=37.043449ms
+    wave02_certification_test.go:20: checker native build: 1m12.93601358s
+    lint_test.go:295: cohere cases: 5468 unique source/rule/options combinations
+=== RUN   TestWave02ReadyParity/typescript-no-restricted-types
+    wave02_certification_test.go:34: upstream case count: 52
+    wave02_certification_test.go:38: Go, Node, emitted JavaScript, native identical: 12773 bytes
+=== RUN   TestWave02ReadyParity/base-consistency-no-bare-throw
+    wave02_certification_test.go:34: upstream case count: 51
+    wave02_certification_test.go:38: Go, Node, emitted JavaScript, native identical: 16617 bytes
+=== RUN   TestWave02ReadyParity/grouped-accessor-pairs
+    wave02_certification_test.go:34: upstream case count: 160
+    wave02_certification_test.go:38: Go, Node, emitted JavaScript, native identical: 30075 bytes
+--- PASS: TestWave02ReadyParity (113.93s)
+    --- PASS: TestWave02ReadyParity/typescript-no-restricted-types (0.64s)
+    --- PASS: TestWave02ReadyParity/base-consistency-no-bare-throw (0.63s)
+    --- PASS: TestWave02ReadyParity/grouped-accessor-pairs (0.82s)
+=== RUN   TestWave02ReadyMutants
+    lint_test.go:295: cohere cases: 5468 unique source/rule/options combinations
+=== RUN   TestWave02ReadyMutants/typescript-no-restricted-types
+    lint_test.go:147: checker compilation phases: load=232.144307ms lower=6.715471913s C=722.199702ms JavaScript=35.956749ms
+    lint_test.go:155: checker native mutant build: 1m9.619185468s
+    wave02_certification_test.go:87: allowed restricted type ban reported caught on Node: case 19 line 120: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-678/repository/source/Restricted.ts:1:12", Go "fixed\tlet value: Foo;\\u000a"
+        Go context:
+          @typescript-eslint/no-restricted-types  Don't use `Foo` as a type. no Foo
+        
+        range 11 14 bannedTypeMessage suggestion	Bar	Replace `Foo` with `Bar`.	11 14
+        fixed	let value: Foo;\u000a
+        case 19
+        fixed	let value: Foo;\u000a
+        case 20
+        fixed	let value: NS.Banned._;\u000a
+        case 21
+        fixed	let value: _.NS.Banned;\u000a
+    wave02_certification_test.go:87: allowed restricted type ban reported caught on emitted JavaScript: case 19 line 120: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-678/repository/source/Restricted.ts:1:12", Go "fixed\tlet value: Foo;\\u000a"
+        Go context:
+          @typescript-eslint/no-restricted-types  Don't use `Foo` as a type. no Foo
+        
+        range 11 14 bannedTypeMessage suggestion	Bar	Replace `Foo` with `Bar`.	11 14
+        fixed	let value: Foo;\u000a
+        case 19
+        fixed	let value: Foo;\u000a
+        case 20
+        fixed	let value: NS.Banned._;\u000a
+        case 21
+        fixed	let value: _.NS.Banned;\u000a
+    wave02_certification_test.go:87: allowed restricted type ban reported caught on sanitized native: case 19 line 120: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-678/repository/source/Restricted.ts:1:12", Go "fixed\tlet value: Foo;\\u000a"
+        Go context:
+          @typescript-eslint/no-restricted-types  Don't use `Foo` as a type. no Foo
+        
+        range 11 14 bannedTypeMessage suggestion	Bar	Replace `Foo` with `Bar`.	11 14
+        fixed	let value: Foo;\u000a
+        case 19
+        fixed	let value: Foo;\u000a
+        case 20
+        fixed	let value: NS.Banned._;\u000a
+        case 21
+        fixed	let value: _.NS.Banned;\u000a
+=== RUN   TestWave02ReadyMutants/base-consistency-no-bare-throw
+    lint_test.go:147: checker compilation phases: load=241.15442ms lower=8.002137224s C=768.528722ms JavaScript=37.148048ms
+    lint_test.go:155: checker native mutant build: 1m10.611871371s
+    wave02_certification_test.go:87: AggregateError container reported caught on Node: case 29 line 80: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1117/repository/source/modules/thing/Service.ts:1:35", Go "fixed\texport function f(): void { throw new AggregateError([], 'x'); }"
+        Go context:
+        case 27
+        fixed	export function f(): void { throw errors[0]; }
+        case 28
+        fixed	export function f(): void { throw makeError(); }
+        case 29
+        fixed	export function f(): void { throw new AggregateError([], 'x'); }
+        case 30
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1118/repository/source/modules/thing/Service.ts:1:35
+          base/consistency-no-bare-throw  This throws a bare `Error`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+    wave02_certification_test.go:87: AggregateError container reported caught on emitted JavaScript: case 29 line 80: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1117/repository/source/modules/thing/Service.ts:1:35", Go "fixed\texport function f(): void { throw new AggregateError([], 'x'); }"
+        Go context:
+        case 27
+        fixed	export function f(): void { throw errors[0]; }
+        case 28
+        fixed	export function f(): void { throw makeError(); }
+        case 29
+        fixed	export function f(): void { throw new AggregateError([], 'x'); }
+        case 30
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1118/repository/source/modules/thing/Service.ts:1:35
+          base/consistency-no-bare-throw  This throws a bare `Error`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+    wave02_certification_test.go:87: AggregateError container reported caught on sanitized native: case 29 line 80: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1117/repository/source/modules/thing/Service.ts:1:35", Go "fixed\texport function f(): void { throw new AggregateError([], 'x'); }"
+        Go context:
+        case 27
+        fixed	export function f(): void { throw errors[0]; }
+        case 28
+        fixed	export function f(): void { throw makeError(); }
+        case 29
+        fixed	export function f(): void { throw new AggregateError([], 'x'); }
+        case 30
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1118/repository/source/modules/thing/Service.ts:1:35
+          base/consistency-no-bare-throw  This throws a bare `Error`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+=== RUN   TestWave02ReadyMutants/grouped-accessor-pairs
+    lint_test.go:147: checker compilation phases: load=228.816165ms lower=7.519889486s C=722.698793ms JavaScript=30.578262ms
+    lint_test.go:155: checker native mutant build: 5.212837139s
+    wave02_certification_test.go:87: ignore duplicate getter exemption caught on Node: case 44 line 134: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1348/repository/source/GroupedAccessorPairs.ts:1:41", Go "fixed\t({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })"
+        Go context:
+        case 42
+        fixed	({ get a(){}, b: 1, get a(){} })
+        case 43
+        fixed	({ get a(){}, b: 1, set [a](foo){} })
+        case 44
+        fixed	({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })
+        case 45
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1349/repository/source/GroupedAccessorPairs.ts:1:21
+          grouped-accessor-pairs  Accessor pair getter 'a' and setter 'a' should be grouped.
+    wave02_certification_test.go:87: ignore duplicate getter exemption caught on emitted JavaScript: case 44 line 134: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1348/repository/source/GroupedAccessorPairs.ts:1:41", Go "fixed\t({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })"
+        Go context:
+        case 42
+        fixed	({ get a(){}, b: 1, get a(){} })
+        case 43
+        fixed	({ get a(){}, b: 1, set [a](foo){} })
+        case 44
+        fixed	({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })
+        case 45
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1349/repository/source/GroupedAccessorPairs.ts:1:21
+          grouped-accessor-pairs  Accessor pair getter 'a' and setter 'a' should be grouped.
+    wave02_certification_test.go:87: ignore duplicate getter exemption caught on sanitized native: case 44 line 134: port "/tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1348/repository/source/GroupedAccessorPairs.ts:1:41", Go "fixed\t({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })"
+        Go context:
+        case 42
+        fixed	({ get a(){}, b: 1, get a(){} })
+        case 43
+        fixed	({ get a(){}, b: 1, set [a](foo){} })
+        case 44
+        fixed	({ get a(){}, b: 1, set a(foo){}, c: 2, get a(){} })
+        case 45
+        /tmp/adamic-gate/lint-shared-3300568163/upstream-843173931/case-1349/repository/source/GroupedAccessorPairs.ts:1:21
+          grouped-accessor-pairs  Accessor pair getter 'a' and setter 'a' should be grouped.
+--- PASS: TestWave02ReadyMutants (173.04s)
+    --- PASS: TestWave02ReadyMutants/typescript-no-restricted-types (78.10s)
+    --- PASS: TestWave02ReadyMutants/base-consistency-no-bare-throw (80.33s)
+    --- PASS: TestWave02ReadyMutants/grouped-accessor-pairs (14.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	287.103s
