@@ -1,0 +1,14 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface JSDocSignature {readonly value:number;readonly kind:324;}
+interface NodeArray<T0> {readonly value:number;}
+type JSDocComment = JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain;
+interface JSDocText {readonly value:number;readonly kind:322;}
+interface JSDocLink {readonly value:number;readonly kind:325;}
+interface JSDocLinkCode {readonly value:number;readonly kind:326;}
+interface JSDocLinkPlain {readonly value:number;readonly kind:327;}
+interface JSDocOverloadTag {readonly value:number;readonly kind:340;}
+interface Base {readonly createJSDocOverloadTag:unknown;}
+interface Target {createJSDocOverloadTag(tagName: Identifier | undefined, typeExpression: JSDocSignature, comment?: string | NodeArray<JSDocComment>): JSDocOverloadTag;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocOverloadTag({value:3,kind:80},{value:3,kind:324},"abc");console.log("completed");}
+probe({createJSDocOverloadTag:(tagName: Identifier | undefined,typeExpression: JSDocSignature,comment?: string | NodeArray<JSDocComment>):JSDocOverloadTag=>({value:3,kind:340})});

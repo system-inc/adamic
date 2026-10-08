@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SemicolonClassElement {readonly value:number;readonly kind:241;}
+interface Base {readonly createSemicolonClassElement:unknown;}
+interface Target {createSemicolonClassElement(): SemicolonClassElement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createSemicolonClassElement();console.log("completed");}
+probe({createSemicolonClassElement:(extra:number): SemicolonClassElement=>({value:3,kind:241})});

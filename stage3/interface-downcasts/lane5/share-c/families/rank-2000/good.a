@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface Statement {readonly value:number;}
+interface LabeledStatement {readonly value:number;readonly kind:257;}
+interface Base {readonly createLabeledStatement:unknown;}
+interface Target {createLabeledStatement(label: string | Identifier, statement: Statement): LabeledStatement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createLabeledStatement("abc",{value:3});console.log("completed");}
+probe({createLabeledStatement:(label: string | Identifier,statement: Statement):LabeledStatement=>({value:3,kind:257})});

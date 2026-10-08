@@ -2878,5 +2878,485 @@
       }
     ],
     "diagnostic": "adamic: panic: field read failed: host.isSourceOfProjectReferenceRedirect expected (fileName: string) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 1943,
+    "reads": 1,
+    "type": "NodeConverters",
+    "field": "convertToClassExpression",
+    "read": "factory.converters.convertToClassExpression",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "convertToClassExpression(node: ClassDeclaration): ClassExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1943-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1943-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.converters.convertToClassExpression expected (node: ClassDeclaration) => ClassExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 1946,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createArraySliceCall",
+    "read": "flattenContext.context.factory.createArraySliceCall",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createArraySliceCall(array: Expression, start?: number | Expression): CallExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1946-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1946-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: flattenContext.context.factory.createArraySliceCall expected (array: Expression, start?: number | Expression | undefined) => CallExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 1949,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createDebuggerStatement",
+    "read": "factory.createDebuggerStatement",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "createDebuggerStatement(): DebuggerStatement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1949-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1949-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createDebuggerStatement expected () => DebuggerStatement, found function with arity 1\n"
+  },
+  {
+    "rank": 1958,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocClassTag",
+    "read": "factory.createJSDocClassTag",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createJSDocClassTag(tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment>): JSDocClassTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1958-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1958-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocClassTag expected (tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocClassTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1961,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocEnumTag",
+    "read": "factory.createJSDocEnumTag",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJSDocEnumTag(tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment>): JSDocEnumTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1961-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1961-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocEnumTag expected (tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocEnumTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1964,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocLink",
+    "read": "factory.createJSDocLink",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createJSDocLink(name: EntityName | JSDocMemberName | undefined, text: string): JSDocLink;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1964-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1964-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocLink expected (name: JSDocMemberName | EntityName | undefined, text: string) => JSDocLink, found function with arity 0\n"
+  },
+  {
+    "rank": 1967,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocNameReference",
+    "read": "factory.createJSDocNameReference",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createJSDocNameReference(name: EntityName | JSDocMemberName): JSDocNameReference;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1967-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1967-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocNameReference expected (name: JSDocMemberName | EntityName) => JSDocNameReference, found function with arity 0\n"
+  },
+  {
+    "rank": 1970,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocOverloadTag",
+    "read": "factory.createJSDocOverloadTag",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJSDocOverloadTag(tagName: Identifier | undefined, typeExpression: JSDocSignature, comment?: string | NodeArray<JSDocComment>): JSDocOverloadTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1970-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1970-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocOverloadTag expected (tagName: Identifier | undefined, typeExpression: JSDocSignature, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocOverloadTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1973,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocPrivateTag",
+    "read": "factory.createJSDocPrivateTag",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createJSDocPrivateTag(tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment>): JSDocPrivateTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1973-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1973-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocPrivateTag expected (tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocPrivateTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1976,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocPublicTag",
+    "read": "factory.createJSDocPublicTag",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createJSDocPublicTag(tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment>): JSDocPublicTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1976-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1976-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocPublicTag expected (tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocPublicTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1979,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocSatisfiesTag",
+    "read": "factory.createJSDocSatisfiesTag",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJSDocSatisfiesTag(tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment>): JSDocSatisfiesTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1979-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1979-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocSatisfiesTag expected (tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocSatisfiesTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1982,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocTemplateTag",
+    "read": "factory.createJSDocTemplateTag",
+    "status": "ready for oracle",
+    "arity": 4,
+    "foundArity": 0,
+    "declaration": "createJSDocTemplateTag(tagName: Identifier | undefined, constraint: JSDocTypeExpression | undefined, typeParameters: readonly TypeParameterDeclaration[], comment?: string | NodeArray<JSDocComment>): JSDocTemplateTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1982-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1982-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocTemplateTag expected (tagName: Identifier | undefined, constraint: JSDocTypeExpression | undefined, typeParameters: readonly TypeParameterDeclaration[], comment?: string | ... 1 more ... | undefined) => JSDocTemplateTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1985,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocTypeTag",
+    "read": "factory.createJSDocTypeTag",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJSDocTypeTag(tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment>): JSDocTypeTag;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1985-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1985-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocTypeTag expected (tagName: Identifier | undefined, typeExpression: JSDocTypeExpression, comment?: string | NodeArray<JSDocComment> | undefined) => JSDocTypeTag, found function with arity 0\n"
+  },
+  {
+    "rank": 1988,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJSDocUnknownType",
+    "read": "factory.createJSDocUnknownType",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "createJSDocUnknownType(): JSDocUnknownType;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1988-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1988-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocUnknownType expected () => JSDocUnknownType, found function with arity 1\n"
+  },
+  {
+    "rank": 1991,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJsxAttributes",
+    "read": "factory.createJsxAttributes",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createJsxAttributes(properties: readonly JsxAttributeLike[]): JsxAttributes;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1991-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1991-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJsxAttributes expected (properties: readonly JsxAttributeLike[]) => JsxAttributes, found function with arity 0\n"
+  },
+  {
+    "rank": 1994,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJsxJsxClosingFragment",
+    "read": "factory.createJsxJsxClosingFragment",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "createJsxJsxClosingFragment(): JsxClosingFragment;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1994-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1994-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJsxJsxClosingFragment expected () => JsxClosingFragment, found function with arity 1\n"
+  },
+  {
+    "rank": 1997,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createJsxSelfClosingElement",
+    "read": "factory.createJsxSelfClosingElement",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJsxSelfClosingElement(tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes): JsxSelfClosingElement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1997-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1997-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJsxSelfClosingElement expected (tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes) => JsxSelfClosingElement, found function with arity 0\n"
+  },
+  {
+    "rank": 2000,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createLabeledStatement",
+    "read": "factory.createLabeledStatement",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createLabeledStatement(label: string | Identifier, statement: Statement): LabeledStatement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2000-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2000-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createLabeledStatement expected (label: string | Identifier, statement: Statement) => LabeledStatement, found function with arity 0\n"
+  },
+  {
+    "rank": 2003,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createNonNullExpression",
+    "read": "factory.createNonNullExpression",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createNonNullExpression(expression: Expression): NonNullExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2003-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2003-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createNonNullExpression expected (expression: Expression) => NonNullExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 2006,
+    "reads": 1,
+    "type": "NodeFactory",
+    "field": "createSemicolonClassElement",
+    "read": "factory.createSemicolonClassElement",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "createSemicolonClassElement(): SemicolonClassElement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2006-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2006-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createSemicolonClassElement expected () => SemicolonClassElement, found function with arity 1\n"
   }
 ]

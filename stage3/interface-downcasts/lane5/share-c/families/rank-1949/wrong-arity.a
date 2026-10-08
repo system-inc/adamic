@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface DebuggerStatement {readonly value:number;readonly kind:260;}
+interface Base {readonly createDebuggerStatement:unknown;}
+interface Target {createDebuggerStatement(): DebuggerStatement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createDebuggerStatement();console.log("completed");}
+probe({createDebuggerStatement:(extra:number): DebuggerStatement=>({value:3,kind:260})});

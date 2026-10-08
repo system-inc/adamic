@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface NonNullExpression {readonly value:number;readonly kind:236;}
+interface Base {readonly createNonNullExpression:unknown;}
+interface Target {createNonNullExpression(expression: Expression): NonNullExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createNonNullExpression({value:3});console.log("completed");}
+probe({createNonNullExpression:(): NonNullExpression=>({value:3,kind:236})});

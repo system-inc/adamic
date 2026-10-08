@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type EntityName = Identifier | QualifiedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface QualifiedName {readonly value:number;readonly kind:167;}
+interface JSDocMemberName {readonly value:number;readonly kind:312;}
+interface JSDocLink {readonly value:number;readonly kind:325;}
+interface Base {readonly createJSDocLink:unknown;}
+interface Target {createJSDocLink(name: EntityName | JSDocMemberName | undefined, text: string): JSDocLink;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocLink({value:3,kind:80},"abc");console.log("completed");}
+probe({createJSDocLink:(): JSDocLink=>({value:3,kind:325})});

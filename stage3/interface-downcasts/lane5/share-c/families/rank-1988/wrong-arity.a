@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JSDocUnknownType {readonly value:number;readonly kind:314;}
+interface Base {readonly createJSDocUnknownType:unknown;}
+interface Target {createJSDocUnknownType(): JSDocUnknownType;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocUnknownType();console.log("completed");}
+probe({createJSDocUnknownType:(extra:number): JSDocUnknownType=>({value:3,kind:314})});

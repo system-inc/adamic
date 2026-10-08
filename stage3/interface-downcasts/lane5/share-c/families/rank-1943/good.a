@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ClassDeclaration {readonly value:number;readonly kind:264;}
+interface ClassExpression {readonly value:number;readonly kind:232;}
+interface Base {readonly convertToClassExpression:unknown;}
+interface Target {convertToClassExpression(node: ClassDeclaration): ClassExpression;}
+function probe(value:Base):void {const factory={converters:value as Target};const result=factory.converters.convertToClassExpression({value:3,kind:264});console.log("completed");}
+probe({convertToClassExpression:(node: ClassDeclaration):ClassExpression=>({value:3,kind:232})});

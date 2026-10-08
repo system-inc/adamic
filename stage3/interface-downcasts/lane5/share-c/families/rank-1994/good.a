@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JsxClosingFragment {readonly value:number;readonly kind:291;}
+interface Base {readonly createJsxJsxClosingFragment:unknown;}
+interface Target {createJsxJsxClosingFragment(): JsxClosingFragment;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJsxJsxClosingFragment();console.log("completed");}
+probe({createJsxJsxClosingFragment:():JsxClosingFragment=>({value:3,kind:291})});

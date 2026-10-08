@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type EntityName = Identifier | QualifiedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface QualifiedName {readonly value:number;readonly kind:167;}
+interface JSDocMemberName {readonly value:number;readonly kind:312;}
+interface JSDocNameReference {readonly value:number;readonly kind:311;}
+interface Base {readonly createJSDocNameReference:unknown;}
+interface Target {createJSDocNameReference(name: EntityName | JSDocMemberName): JSDocNameReference;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocNameReference({value:3,kind:80});console.log("completed");}
+probe({createJSDocNameReference:(name: EntityName | JSDocMemberName):JSDocNameReference=>({value:3,kind:311})});

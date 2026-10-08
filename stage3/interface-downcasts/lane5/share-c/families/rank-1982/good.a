@@ -1,0 +1,15 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface JSDocTypeExpression {readonly value:number;readonly kind:310;}
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface NodeArray<T0> {readonly value:number;}
+type JSDocComment = JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain;
+interface JSDocText {readonly value:number;readonly kind:322;}
+interface JSDocLink {readonly value:number;readonly kind:325;}
+interface JSDocLinkCode {readonly value:number;readonly kind:326;}
+interface JSDocLinkPlain {readonly value:number;readonly kind:327;}
+interface JSDocTemplateTag {readonly value:number;readonly kind:346;}
+interface Base {readonly createJSDocTemplateTag:unknown;}
+interface Target {createJSDocTemplateTag(tagName: Identifier | undefined, constraint: JSDocTypeExpression | undefined, typeParameters: readonly TypeParameterDeclaration[], comment?: string | NodeArray<JSDocComment>): JSDocTemplateTag;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocTemplateTag({value:3,kind:80},{value:3,kind:310},[{value:3,kind:169}],"abc");console.log("completed");}
+probe({createJSDocTemplateTag:(tagName: Identifier | undefined,constraint: JSDocTypeExpression | undefined,typeParameters: readonly TypeParameterDeclaration[],comment?: string | NodeArray<JSDocComment>):JSDocTemplateTag=>({value:3,kind:346})});

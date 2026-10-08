@@ -1,0 +1,13 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface NodeArray<T0> {readonly value:number;}
+type JSDocComment = JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain;
+interface JSDocText {readonly value:number;readonly kind:322;}
+interface JSDocLink {readonly value:number;readonly kind:325;}
+interface JSDocLinkCode {readonly value:number;readonly kind:326;}
+interface JSDocLinkPlain {readonly value:number;readonly kind:327;}
+interface JSDocClassTag {readonly value:number;readonly kind:333;}
+interface Base {readonly createJSDocClassTag:unknown;}
+interface Target {createJSDocClassTag(tagName: Identifier | undefined, comment?: string | NodeArray<JSDocComment>): JSDocClassTag;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocClassTag({value:3,kind:80},"abc");console.log("completed");}
+probe({createJSDocClassTag:(tagName: Identifier | undefined,comment?: string | NodeArray<JSDocComment>):JSDocClassTag=>({value:3,kind:333})});

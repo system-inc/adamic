@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface CallExpression {readonly value:number;readonly kind:214;}
+interface Base {readonly createArraySliceCall:unknown;}
+interface Target {createArraySliceCall(array: Expression, start?: number | Expression): CallExpression;}
+function probe(value:Base):void {const flattenContext={context:{factory:value as Target}};const result=flattenContext.context.factory.createArraySliceCall({value:3},3);console.log("completed");}
+probe({createArraySliceCall:(): CallExpression=>({value:3,kind:214})});
