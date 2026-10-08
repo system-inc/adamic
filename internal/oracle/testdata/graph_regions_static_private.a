@@ -1,0 +1,2 @@
+class Box { static #value: typeof Box | undefined = undefined; static set(): void { this.#value=this; } static held(): boolean { return this.#value === this; } }
+Box.set(); console.log(`${Box.held()}`);
