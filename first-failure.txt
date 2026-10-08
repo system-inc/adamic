@@ -1,0 +1,7 @@
+FIRST FAILURE (a-check, at 45.0 s):
+a-check failed for 5 files:
+review/optional-indexing/record-index-signature.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree-2/review/optional-indexing/record-index-signature.a:1:21: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added)
+stage3/namespace-init-sys/cwd.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree-2/stage3/namespace-init-sys/cwd.a:3:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function hol)
+stage3/namespace-init-sys/latent-indexed/fixtures/guard-attribution.a: type error, expected checked (stage3/namespace-init-sys/latent-indexed/fixtures/guard-attribution.a:1:58: error TS2322: Type 'number | undefined' is not assignable to type 'number'.)
+stage3/namespace-init-sys/latent-indexed/replay-compiler-options/index-only.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree-2/stage3/namespace-init-sys/latent-indexed/replay-compiler-options/index-only.a:2:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order t)
+stage3/namespace-init-sys/latent-indexed/replay-compiler-options/minimal.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree-2/stage3/namespace-init-sys/latent-indexed/replay-compiler-options/minimal.a:3:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they)
