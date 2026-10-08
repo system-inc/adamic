@@ -37,6 +37,12 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/cycles_weak_parent.a", true, false},
+	{"internal/oracle/testdata/cycles_graph_parent.a", true, false},
+	{"internal/oracle/testdata/cycles_graph_relations.a", true, false},
+	{"internal/oracle/testdata/cycles_graph_symbols.a", true, false},
+	{"internal/oracle/testdata/cycles_weak_relations.a", true, false},
+	{"internal/oracle/testdata/cycles_weak_symbols.a", true, false},
 	{"internal/oracle/testdata/release_fma.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},

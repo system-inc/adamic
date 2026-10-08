@@ -1,0 +1,69 @@
+# Measurements, 2026-10-08
+
+Best wall time of three release runs; RSS belongs to that run. U bytes and metadata are maxima for a single region at teardown, not a whole-process peak. Counts come from separate counted builds. No graph diagnostics means U and metadata zero. See the decision brief for method and limits.
+
+| Fixture | Retains | Releases | Peak values | Regions | Merges | U bytes | Metadata bytes | Seconds | RSS KiB |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| cycles_weak_parent.a | 3004 | 3006 | 3004 | 0 | 0 | 0 | 0 | 0.001626282 | 896 |
+| cycles_graph_parent.a | 1003 | 4005 | 3003 | 1001 | 2001 | 0 | 96096 | 0.001332414 | 1024 |
+| cycles_graph_relations.a | 3003 | 7007 | 4004 | 1 | 2001 | 400 | 32096 | 0.001450380 | 1024 |
+| cycles_graph_symbols.a | 2006 | 4009 | 2004 | 1 | 1002 | 0 | 16112 | 0.001410050 | 896 |
+| cycles_weak_relations.a | 4004 | 6007 | 6004 | 0 | 0 | 0 | 0 | 0.001762950 | 1152 |
+| cycles_weak_symbols.a | 3008 | 3010 | 2005 | 0 | 0 | 0 | 0 | 0.001431611 | 896 |
+| graph_regions_weak_mixed.a | 10 | 17 | 6 | 0 | 0 | 0 | 16 | 0.001259345 | 768 |
+| graph_regions_structural_literal.a | 3 | 7 | 3 | 0 | 0 | 0 | 16 | 0.001450877 | 768 |
+| graph_regions_counted_container.a | 4 | 10 | 7 | 1 | 1 | 0 | 96 | 0.001587844 | 768 |
+| weak_region_review.a | 6 | 10 | 6 | 0 | 0 | 0 | 0 | 0.001441637 | 768 |
+| graph_regions_throw.a | 8 | 15 | 7 | 1 | 1 | 0 | 96 | 0.001441728 | 768 |
+| graph_regions_static_private.a | 4 | 8 | 2 | 0 | 0 | 0 | 16 | 0.001457030 | 768 |
+| graph_regions_generic_capture.a | 6 | 17 | 10 | 2 | 6 | 256 | 240 | 0.001105536 | 768 |
+| graph_regions_nested_self.a | 1 | 5 | 4 | 1 | 1 | 0 | 96 | 0.001291754 | 768 |
+| graph_regions_nested_disjoint.a | 2 | 7 | 5 | 1 | 2 | 48 | 112 | 0.001359165 | 768 |
+| graph_regions_coverage_readonly.a | 14 | 30 | 15 | 1 | 9 | 1168 | 224 | 0.001129402 | 768 |
+| graph_regions_coverage_iterator.a | 13 | 38 | 26 | 1 | 17 | 496 | 352 | 0.001118617 | 768 |
+| graph_regions_coverage_boundary.a | 21 | 33 | 8 | 1 | 2 | 144 | 112 | 0.001403710 | 768 |
+| graph_regions_coverage_closure_loop.a | 15 | 29 | 16 | 3 | 9 | 0 | 128 | 0.001151110 | 768 |
+| graph_regions_coverage_throw.a | 8 | 13 | 5 | 0 | 0 | 0 | 16 | 0.001101050 | 768 |
+| graph_regions_coverage_arrays.a | 46 | 79 | 23 | 2 | 12 | 664 | 224 | 0.001205946 | 768 |
+| graph_regions_coverage_maps.a | 75 | 115 | 42 | 1 | 30 | 2976 | 560 | 0.001220568 | 768 |
+| graph_regions_coverage_payload_loop.a | 266 | 450 | 17 | 20 | 40 | 72 | 112 | 0.001366926 | 768 |
+| graph_regions_coverage_spread.a | 11 | 21 | 8 | 1 | 2 | 56 | 112 | 0.001396479 | 768 |
+| graph_regions_coverage_merge.a | 6 | 17 | 9 | 3 | 5 | 224 | 288 | 0.001300211 | 768 |
+| graph_regions_entries.a | 6 | 11 | 7 | 1 | 4 | 456 | 144 | 0.001398393 | 768 |
+| million.a | 950001 | 1950004 | 1000003 | 1 | 999999 | 3199936 | 16000064 | 0.063565697 | 78976 |
+| graph_regions_accessor.a | 1 | 4 | 3 | 1 | 2 | 0 | 112 | 0.001237072 | 768 |
+| graph_regions_literal_method.a | 2 | 7 | 5 | 1 | 2 | 0 | 112 | 0.001391487 | 768 |
+| graph_regions_regression_01.a | 3 | 5 | 2 | 1 | 1 | 0 | 96 | 0.001651169 | 768 |
+| graph_regions_regression_02.a | 2 | 5 | 1 | 0 | 0 | 0 | 16 | 0.001610389 | 768 |
+| graph_regions_regression_03.a | 4 | 9 | 3 | 1 | 2 | 32 | 112 | 0.001326560 | 768 |
+| graph_regions_regression_04.a | 2 | 5 | 2 | 1 | 1 | 0 | 96 | 0.001260938 | 768 |
+| graph_regions_regression_05.a | 7 | 10 | 4 | 1 | 2 | 0 | 112 | 0.001344277 | 768 |
+| graph_regions_regression_06.a | 3 | 5 | 2 | 1 | 1 | 0 | 96 | 0.001486453 | 768 |
+| graph_regions_regression_07.a | 4 | 7 | 2 | 1 | 1 | 0 | 96 | 0.001576623 | 768 |
+| graph_regions_regression_08.a | 4 | 7 | 2 | 1 | 1 | 0 | 96 | 0.001434716 | 768 |
+| graph_regions_regression_09.a | 6 | 9 | 4 | 1 | 2 | 0 | 112 | 0.001301989 | 768 |
+| graph_regions_regression_10.a | 5 | 8 | 2 | 1 | 1 | 0 | 96 | 0.001384662 | 768 |
+| graph_regions_regression_11.a | 9 | 16 | 9 | 1 | 4 | 48 | 144 | 0.001510079 | 768 |
+| graph_regions_regression_12.a | 9 | 15 | 6 | 1 | 2 | 56 | 112 | 0.001547324 | 768 |
+| graph_regions_regression_13.a | 2 | 3 | 1 | 0 | 0 | 0 | 16 | 0.001721598 | 768 |
+| graph_regions_regression_14.a | 4 | 5 | 1 | 0 | 0 | 0 | 16 | 0.001550819 | 768 |
+| graph_regions_regression_15.a | 2 | 6 | 2 | 1 | 1 | 0 | 96 | 0.001329361 | 768 |
+| graph_regions_static.a | 4 | 8 | 2 | 0 | 0 | 0 | 16 | 0.001532502 | 768 |
+| graph_regions_static_interface.a | 8 | 16 | 5 | 1 | 1 | 0 | 96 | 0.001390771 | 768 |
+| graph_regions_static_parent.a | 8 | 16 | 5 | 1 | 1 | 0 | 96 | 0.001388467 | 768 |
+| graph_regions_anchor.a | 5 | 11 | 5 | 1 | 1 | 0 | 96 | 0.001454916 | 768 |
+| graph_regions_cache.a | 6 | 14 | 6 | 1 | 1 | 400 | 96 | 0.001317582 | 768 |
+| graph_regions_closure.a | 2 | 10 | 6 | 1 | 2 | 56 | 112 | 0.001439504 | 768 |
+| graph_regions_escape.a | 4 | 10 | 5 | 1 | 1 | 0 | 96 | 0.001345875 | 768 |
+| graph_regions_flow.a | 6 | 15 | 8 | 2 | 3 | 0 | 192 | 0.001306596 | 768 |
+| graph_regions_list.a | 10 | 19 | 7 | 1 | 2 | 0 | 112 | 0.001256866 | 768 |
+| graph_regions_literals.a | 12 | 22 | 8 | 1 | 2 | 64 | 112 | 0.001173803 | 768 |
+| graph_regions_parse.a | 10 | 21 | 10 | 3 | 5 | 0 | 288 | 0.001216461 | 768 |
+| graph_regions_symbols.a | 8 | 16 | 8 | 1 | 3 | 0 | 128 | 0.001315770 | 768 |
+| weak_parent.a | 253 | 302 | 41 | 0 | 0 | 0 | 0 | 0.001367587 | 768 |
+| weak_narrowed.a | 53 | 72 | 11 | 0 | 0 | 0 | 0 | 0.001553994 | 768 |
+| graph_regions_per_task.a | 4098 | 12299 | 13 | 4096 | 4096 | 0 | 96 | 0.001991050 | 768 |
+| freed.a | 10 | 14 | 5 | 0 | 0 | 0 | 0 | 0.001497200 | 768 |
+| narrowed.a | 7 | 10 | 5 | 0 | 0 | 0 | 0 | 0.001264843 | 768 |
+| probe_chain.a | 1302 | 1807 | 802 | 0 | 0 | 0 | 0 | 0.001204269 | 768 |
+| reuse.a | 10005 | 12012 | 4005 | 0 | 0 | 0 | 0 | 0.001510729 | 1024 |
