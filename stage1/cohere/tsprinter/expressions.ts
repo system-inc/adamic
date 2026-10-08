@@ -1790,7 +1790,13 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
     // Go formats the standalone text as a program: a leading brace is a block,
     // even when the selector extracted it from an object receiver.
     if(parser.kind() === 'OpenBraceToken') return formatProgram(parser, source, settings);
+    // Go parses the text as a file, so its expression is read inside the source
+    // elements' list context. Error recovery in a speculative parse (an arrow's
+    // parameters, say) stops where an outer context owns the token, so without
+    // this context `({ m() {} })` recovers into an arrow head and refuses.
+    parser.beginList('source');
     const root = parser.expression();
+    parser.endList('source');
     if(parser.kind() === 'SemicolonToken') parser.next();
     if(parser.kind() !== 'EndOfFile') return { kind: 'NotYet', reason: 'expression-file' };
     const docs = new Documents(settings);
