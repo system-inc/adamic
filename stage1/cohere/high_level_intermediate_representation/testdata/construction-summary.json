@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 100,
-  "pathProbes": 14,
-  "pathProbesMatched": 14,
+  "constructionCorpusFunctionsMatched": 112,
+  "pathProbes": 20,
+  "pathProbesMatched": 20,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -262,6 +262,15 @@
       ]
     },
     {
+      "key": "2e35d0add76ad479cde20a8c0b487e2bb19192945b6a8b8110999edb89a49483",
+      "start": 0,
+      "end": 67,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "2e69c108620f27288e9a4eada14b29bed91b7e8ade5f39d2fbeaebb8bcb20c5a",
       "start": 392,
       "end": 400,
@@ -344,6 +353,15 @@
       ]
     },
     {
+      "key": "46f3a4b10930ceb5e224fcdf50d6a63d8bf5c424ceb231bb78056c6b003637cf",
+      "start": 0,
+      "end": 48,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "46fb1754e400aba4608b14b381e8be983a7502559de89a3ec176cb9cc9f17a8c",
       "start": 0,
       "end": 62,
@@ -394,6 +412,15 @@
       ]
     },
     {
+      "key": "5b518a67b26fa4a06770d91a21b7acb3f53454d947fdaaf8b5019456702c9464",
+      "start": 645,
+      "end": 718,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
       "key": "5dd1d62ac14b217eb06b23a774f14dd2ea9905a2b29b74c351d2eee9afd70693",
       "start": 91,
       "end": 99,
@@ -412,12 +439,30 @@
       ]
     },
     {
+      "key": "5fa95ab0359329ff5564da402058511c95847c05ff8ae863d011d1ab94602e58",
+      "start": 0,
+      "end": 41,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "643b1003cc530887354f383f5f4b44a7b80c42b09bae0cd8634d5db22deb90ae",
       "start": 0,
       "end": 49,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "65bd5f75202cd1b11f8999a6ac92ebb0d9e7e92bafeb81a1d35c75d1ad5a5a03",
+      "start": 0,
+      "end": 51,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -459,6 +504,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "700539d98d0a60c95959ba081323bbea5a56e0d4ca70d4915675368171bb2cf1",
+      "start": 0,
+      "end": 57,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -552,6 +606,15 @@
       ]
     },
     {
+      "key": "875920fb8384afd7a2d399fe106162c7d8862057829a30a38d2cdfb19963bfa0",
+      "start": 0,
+      "end": 65,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "8865f8fcb6ed4320389df10fa949b43173b69d591491290f99e60a126b8b9e5c",
       "start": 36,
       "end": 134,
@@ -612,6 +675,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "9f1fa2f809570323724cfa3ef5aeeb4c5320ebb9af4341582657f51441a6be0f",
+      "start": 0,
+      "end": 57,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -726,12 +798,30 @@
       ]
     },
     {
+      "key": "b18597a0724e70d350661807bca72ebc77bff3d5788ffeb5e3f75765e587a391",
+      "start": 0,
+      "end": 48,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "b5bfbd48d5feb816da9a2e8d201104c6a785e40b573d6bacf227e9598447e1c0",
       "start": 30,
       "end": 67,
       "checker": true,
       "calls": [
         "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "b75cfea8e23e577a3c58c679ee7d136ceb2076907bea7682d3ee0daf7a92fb5d",
+      "start": 0,
+      "end": 48,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -921,6 +1011,15 @@
       ]
     },
     {
+      "key": "e287a3771dce0f8606e4a9fccb266817f08e06818eaaa30fedeecc816f29871c",
+      "start": 0,
+      "end": 47,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "e48bb74f6cea39cd71e25e811fab2ee5ce745400791090fe406bb293c2019c19",
       "start": 61,
       "end": 70,
@@ -1023,6 +1122,15 @@
         "preserve_manual_memoization_score_test.go:552/nested/nested",
         "prune_non_escaping_scopes_test.go:445/nested/nested",
         "upstream:preserve-use-memo-unused-state.js/nested/nested"
+      ]
+    },
+    {
+      "key": "fafa0746261b09e16a2403e9ed1e04fb089341b2784c046714af03d822a78d9e",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-as-conditional-test.js"
       ]
     },
     {

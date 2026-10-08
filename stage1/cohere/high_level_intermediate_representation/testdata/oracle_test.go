@@ -44,6 +44,7 @@ func oracleDump(f *Function) string {
 	for _, id := range f.Identifiers {
 		fmt.Fprintf(&out, "identifier %d %d %s\n", id.Id, id.Declaration, id.Name)
 	}
+	seen := map[InstructionId]bool{}
 	for _, b := range f.Blocks {
 		preds := []string{}
 		for _, p := range b.Predecessors {
@@ -59,39 +60,19 @@ func oracleDump(f *Function) string {
 		}
 		for _, id := range b.Instructions {
 			i := f.Instruction(id)
-			kind, payload := "", ""
-			switch v := i.Value.(type) {
-			case *Primitive:
-				kind = "Primitive"
-				switch x := v.Value.(type) {
-				case nil:
-					payload = "nil"
-				case string:
-					payload = "string:" + oracleText(x)
-				case bool:
-					payload = fmt.Sprintf("bool:%t", x)
-				default:
-					panic("literal outside slice")
-				}
-			case *LoadLocal:
-				kind = "LoadLocal"
-				payload = oraclePlace(v.Place)
-			case *UnaryExpression:
-				kind = "UnaryExpression"
-				payload = v.Operator + " " + oraclePlace(v.Value)
-			case *BinaryExpression:
-				kind = "BinaryExpression"
-				payload = oraclePlace(v.Left) + " " + v.Operator + " " + oraclePlace(v.Right)
-			default:
-				kind = reflect.TypeOf(v).Elem().Name()
-				payload = oraclePayload(v)
-			}
-			fmt.Fprintf(&out, "instruction %d %d %s %d:%d %s %s\n", i.Id, i.Order, oraclePlace(i.LValue), i.Range.Pos(), i.Range.End(), kind, payload)
+			seen[i.Id] = true
+			out.WriteString(oracleInstruction(i))
 		}
 		if terminal, ok := b.Terminal.(*Return); ok {
 			fmt.Fprintf(&out, "terminal %d Return %s\n", terminal.Order, oraclePlace(terminal.Value))
 		} else {
 			fmt.Fprintf(&out, "terminal %d %s %s\n", TerminalOrder(b.Terminal), reflect.TypeOf(b.Terminal).Elem().Name(), oraclePayload(b.Terminal))
+		}
+	}
+	for _, instruction := range f.Instructions {
+		if !seen[instruction.Id] {
+			out.WriteString("orphan ")
+			out.WriteString(oracleInstruction(instruction))
 		}
 	}
 	if len(f.ContextDeclarations) > 0 {
@@ -228,4 +209,37 @@ func oraclePayload(value any) string {
 		panic(err)
 	}
 	return string(data)
+}
+
+func oracleInstruction(i *Instruction) string {
+	var out strings.Builder
+	kind, payload := "", ""
+	switch v := i.Value.(type) {
+	case *Primitive:
+		kind = "Primitive"
+		switch x := v.Value.(type) {
+		case nil:
+			payload = "nil"
+		case string:
+			payload = "string:" + oracleText(x)
+		case bool:
+			payload = fmt.Sprintf("bool:%t", x)
+		default:
+			panic("literal outside slice")
+		}
+	case *LoadLocal:
+		kind = "LoadLocal"
+		payload = oraclePlace(v.Place)
+	case *UnaryExpression:
+		kind = "UnaryExpression"
+		payload = v.Operator + " " + oraclePlace(v.Value)
+	case *BinaryExpression:
+		kind = "BinaryExpression"
+		payload = oraclePlace(v.Left) + " " + v.Operator + " " + oraclePlace(v.Right)
+	default:
+		kind = reflect.TypeOf(v).Elem().Name()
+		payload = oraclePayload(v)
+	}
+	fmt.Fprintf(&out, "instruction %d %d %s %d:%d %s %s\n", i.Id, i.Order, oraclePlace(i.LValue), i.Range.Pos(), i.Range.End(), kind, payload)
+	return out.String()
 }

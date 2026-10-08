@@ -54,3 +54,14 @@ active non-Flow coverage is 100/1,442. The fixture-loader's 40 exclusions and al
 45 classified private-corpus skips remain. Prior straight-line regression: 12
 functions match. Resident symbol witness: 22 exact selectors, live native and
 Node/native replay; identity-collapse mutant caught.
+
+## Initial control flow
+
+Full construction comparison: **112/1,465** raw corpus functions, **20/20** probes,
+Node/native byte-identical to Go (132/1,485 including probes). Increase over the
+statement/expression seam: 12 corpus functions. All **24** lowering mutants compile,
+execute and are caught on both runtimes. Go dump repeat-print determinism is checked
+for each observed graph. hir-v1 now exposes orphan table entries as well as block
+kinds, terminal payloads and constructed phis. Private-corpus skips and Flow
+exclusions remain as catalogued. Earlier literal regression and symbol contract
+remain part of the complete package test.

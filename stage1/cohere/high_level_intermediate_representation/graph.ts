@@ -7,19 +7,30 @@ import { HIRFunction, BasicBlock } from './core.ts';
 import type { PlaceInterface } from './core.ts';
 export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> = {
     entry: (fn) => fn.entry,
-    blockBound: (_fn) => 2,
-    block: (fn, id) => fn.blocks.find((block) => block.id === id),
+    blockBound: (fn) => fn.nextBlock,
+    block: (fn, id) => fn.byId.get(id),
     blocks: (fn) => fn.blocks,
     setBlocks: function(fn, blocks) { fn.blocks = blocks; },
-    retain: function(fn, keep) { fn.blocks = fn.blocks.filter((block) => keep(block.id)); },
-    placeholder: (_fn, block) => block,
+    retain: function(fn, keep) { for(const id of fn.byId.keys()) { if(!keep(id)) { fn.byId.delete(id); } } },
+    placeholder: function(fn, block) {
+        const placeholder = new BasicBlock(block.id, { kind: 'Unreachable' }, block.kind);
+        placeholder.predecessors = [...block.predecessors];
+        fn.byId.set(block.id, placeholder);
+        return placeholder;
+    },
     id: (block) => block.id,
     predecessors: (block) => block.predecessors,
     setPredecessors: function(block, predecessors) { block.predecessors = predecessors; },
     phis: (block) => block.phis,
     setPhis: function(block, phis) { block.phis = phis; },
-    eachEdge: function(_block, _visit) {},
-    endsInReturn: (_block) => true,
+    eachEdge: function(block, visit) {
+        const terminal = block.terminal;
+        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.fallthrough, 'Fallthrough'); }
+        if(terminal.kind === 'Goto') { visit(terminal.block, 'Real'); }
+        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { visit(terminal.consequent, 'Real'); visit(terminal.alternate, 'Real'); }
+        else if(terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.test, 'Real'); }
+    },
+    endsInReturn: (block) => block.terminal.kind === 'Return',
     instructionCount: (_fn, block) => block.instructions.length,
     eachInstructionPlace: function(fn, block, index, visit) {
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
@@ -43,7 +54,11 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
         instruction.order = order;
     },
-    eachTerminalPlace: function(block, visit) { block.terminal = visit(block.terminal, 'Use'); },
+    eachTerminalPlace: function(block, visit) {
+        const terminal = block.terminal;
+        if(terminal.kind === 'Return' || terminal.kind === 'Throw') { terminal.value = visit(terminal.value, 'Use'); }
+        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { terminal.test = visit(terminal.test, 'Use'); }
+    },
     setTerminalOrder: function(block, order) { block.terminalOrder = order; },
     params: (fn) => fn.params,
     returns: (fn) => fn.returns,

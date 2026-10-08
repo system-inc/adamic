@@ -176,10 +176,10 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
-	{"concise arrow returns unused slot", "lower.ts", "if(conciseId >= 0) { block.terminal = builder.expression(conciseId); }", "if(conciseId >= 0) { builder.expression(conciseId); block.terminal = fn.returns; }"},
+	{"concise arrow returns unused slot", "lower.ts", "if(conciseId >= 0) { builder.close({ kind: 'Return', value: builder.expression(conciseId) }); }", "if(conciseId >= 0) { builder.expression(conciseId); builder.close({ kind: 'Return', value: fn.returns }); }"},
 	{"anonymous assignment name disappears", "lower.ts", "if(name === '') {", "if(name !== '') {"},
 
-	{"return store to nil", "lower.ts", "builder.emit(value, id, fn.returns);", "builder.emit({ kind: 'Primitive', literal: 'nil' }, id, fn.returns);"},
+	{"return store to nil", "lower.ts", "this.emit(value, id, this.fn.returns);", "this.emit({ kind: 'Primitive', literal: 'nil' }, id, this.fn.returns);"},
 	{"binary right operand becomes left", "lower.ts", "left, operator: operators.get(operator) ?? panic('unsupported binary'), right", "left, operator: operators.get(operator) ?? panic('unsupported binary'), right: left"},
 	{"unary operator becomes plus", "lower.ts", "{ kind: 'UnaryExpression', operator, value }", "{ kind: 'UnaryExpression', operator: '+', value }"},
 	{"comma returns left operand", "lower.ts", "if(operator === 'CommaToken') { return right; }", "if(operator === 'CommaToken') { return left; }"},
@@ -193,6 +193,14 @@ var constructionMutants = []constructionMutant{
 	{"update operation flips", "lower.ts", "node.operator === 'PlusPlusToken' ? '++' : '--'", "node.operator === 'PlusPlusToken' ? '--' : '++'"},
 	{"property load loses name", "lower.ts", "return this.emit({ kind: 'PropertyLoad', object, property: this.parser.node(node.children[1] ?? -1).text }", "return this.emit({ kind: 'PropertyLoad', object, property: '' }"},
 	{"computed load loses key", "lower.ts", "{ kind: 'ComputedLoad', object, property: this.expression(node.children[1] ?? -1) }", "{ kind: 'ComputedLoad', object, property: object }"},
+	{"if branch successors swap", "lower.ts", "kind: 'If', test, consequent: consequent.id, alternate: alternate.id", "kind: 'If', test, consequent: alternate.id, alternate: consequent.id"},
+	{"ternary true arm becomes false", "lower.ts", "logical === undefined ? 2 : 0", "logical === undefined ? 4 : 0"},
+	{"logical short circuit chooses wrong arm", "lower.ts", "const swapped = logical === '||' || logical === '??';", "const swapped = logical === '&&';"},
+	{"while back edge exits loop", "lower.ts", "this.jumps.pop(); this.jump(test.id, 1);", "this.jumps.pop(); this.jump(fallthrough.id, 0);"},
+	{"continue uses break target", "lower.ts", "node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock", "target.breakBlock"},
+	{"throw becomes return", "lower.ts", "this.close({ kind: 'Throw', value: this.expression(node.children[0] ?? -1) });", "this.close({ kind: 'Return', value: this.expression(node.children[0] ?? -1) });"},
+	{"return becomes unreachable", "lower.ts", "this.close({ kind: 'Return', value: this.fn.returns });", "this.close({ kind: 'Unreachable' });"},
+	{"post abrupt instructions disappear", "lower.ts", "for(const id of ids) { this.statement(id); }", "for(const id of ids) { this.statement(id); if(this.current === undefined) { break; } }"},
 }
 
 func checkConstructionMutants(t *testing.T, root, lane, input string, want []byte, census bool) {

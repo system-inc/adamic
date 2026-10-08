@@ -1,9 +1,9 @@
-// Straight-line part of lower.go / lower_expression.go. Other paths are explicit declines.
+// Construction slice of lower.go / lower_expression.go. Other paths are explicit declines.
 import { panic, utf8Length } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
-import { HIRFunction, Instruction } from './core.ts';
-import type { PlaceInterface, ValueType } from './core.ts';
+import { HIRFunction, Instruction, BasicBlock } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
@@ -25,6 +25,7 @@ const operators = new Map<string, string>([
 const compounds = new Map<string, string>([
  ['AmpersandAmpersandEqualsToken', '&&'], ['BarBarEqualsToken', '||'], ['QuestionQuestionEqualsToken', '??'], ['PlusEqualsToken', '+'], ['MinusEqualsToken', '-'], ['AsteriskEqualsToken', '*'], ['SlashEqualsToken', '/'], ['PercentEqualsToken', '%'], ['AsteriskAsteriskEqualsToken', '**'], ['AmpersandEqualsToken', '&'], ['BarEqualsToken', '|'], ['CaretEqualsToken', '^'], ['LessThanLessThanEqualsToken', '<<'], ['GreaterThanGreaterThanEqualsToken', '>>'], ['GreaterThanGreaterThanGreaterThanEqualsToken', '>>>'],
 ]);
+const logicals = new Map<string, string>([['AmpersandAmpersandToken', '&&'], ['BarBarToken', '||'], ['QuestionQuestionToken', '??']]);
 function supportedTarget(parser: Parser, id: number): boolean {
  const node = parser.node(id);
  if(node.kind === 'ParenthesizedExpression') { return supportedTarget(parser, node.children[0] ?? -1); }
@@ -44,20 +45,44 @@ function supportedExpression(parser: Parser, id: number): boolean {
         if(node.operator === 'PlusPlusToken' || node.operator === 'MinusMinusToken') { return supportedTarget(parser, node.children[0] ?? -1); }
         return ['PlusToken', 'MinusToken', 'ExclamationToken', 'TildeToken'].includes(node.operator) && supportedExpression(parser, node.children[0] ?? -1);
     }
+    if(node.kind === 'ConditionalExpression') { return supportedExpression(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1) && supportedExpression(parser, node.children[4] ?? -1); }
     if(node.kind === 'BinaryExpression') {
         const operator = parser.node(node.children[1] ?? -1).kind;
         if(operator === 'EqualsToken' || compounds.has(operator)) { return supportedTarget(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1); }
-        return (operator === 'CommaToken' || operators.has(operator)) && supportedExpression(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1);
+        return (operator === 'CommaToken' || operators.has(operator) || logicals.has(operator)) && supportedExpression(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1);
     }
     return false;
+}
+function supportedStatement(parser: Parser, id: number): boolean {
+    const statement = parser.node(id);
+    if(statement.kind === 'Block') { return statement.children.every((child) => supportedStatement(parser, child)); }
+    if(statement.kind === 'IfStatement') {
+        return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1) && (statement.children[2] === undefined || supportedStatement(parser, statement.children[2] ?? -1));
+    }
+    if(statement.kind === 'WhileStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1); }
+    if(statement.kind === 'BreakStatement' || statement.kind === 'ContinueStatement') { return statement.children.length === 0; }
+        if(statement.kind === 'VariableStatement') {
+            const list = parser.node(statement.children[0] ?? -1);
+            if(list.kind !== 'VariableDeclarationList') { return false; }
+            for(const declarationId of list.children) {
+                const declaration = parser.node(declarationId);
+                if(declaration.children.length > 2 || parser.node(declaration.children[0] ?? -1).kind !== 'Identifier') { return false; }
+                if(declaration.children[1] !== undefined && !supportedExpression(parser, declaration.children[1] ?? -1)) { return false; }
+            }
+            return true;
+        }
+    if(!['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'EmptyStatement'].includes(statement.kind) || statement.children.length > 1) { return false; }
+    return statement.children.every((child) => supportedExpression(parser, child));
 }
 class StraightLineBuilder {
     readonly parser: Parser;
     readonly source: string;
     readonly fn: HIRFunction;
+    current: BasicBlock | undefined;
+    readonly jumps: { readonly breakBlock: number; readonly continueBlock: number }[] = [];
     readonly symbols: SymbolSnapshot | undefined;
     readonly locals: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
-    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined) { this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; }
+    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined) { this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; this.current = fn.blocks[0]; }
     identity(id: number): number {
         const node = this.parser.node(id);
         if(this.symbols === undefined) { return 0; }
@@ -126,13 +151,88 @@ class StraightLineBuilder {
             }
         }
     }
+    ensureBlock(): BasicBlock {
+        if(this.current === undefined) { this.current = this.fn.newBlock('block'); }
+        return this.current;
+    }
+    close(terminal: TerminalType): void {
+        if(this.current !== undefined) { this.current.terminal = terminal; this.current = undefined; }
+    }
+    jump(block: number, variant: number): void { this.close({ kind: 'Goto', block, variant }); }
+    statements(ids: readonly number[]): void { for(const id of ids) { this.statement(id); } }
+    statement(id: number): void {
+        const node = this.parser.node(id);
+        if(node.kind === 'Block') { this.statements(node.children); }
+        else if(node.kind === 'VariableStatement') { this.declarations(id); }
+        else if(node.kind === 'IfStatement') {
+            const test = this.expression(node.children[0] ?? -1);
+            const consequent = this.fn.newBlock('block'); const fallthrough = this.fn.newBlock('block');
+            const alternate = node.children[2] === undefined ? fallthrough : this.fn.newBlock('block');
+            this.close({ kind: 'If', test, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
+            this.current = consequent; this.statement(node.children[1] ?? -1); this.jump(fallthrough.id, 0);
+            if(node.children[2] !== undefined) { this.current = alternate; this.statement(node.children[2] ?? -1); this.jump(fallthrough.id, 0); }
+            this.current = fallthrough;
+        }
+        else if(node.kind === 'WhileStatement') {
+            const test = this.fn.newBlock('block'); const loop = this.fn.newBlock('loop'); const fallthrough = this.fn.newBlock('block');
+            this.close({ kind: 'While', test: test.id, loop: loop.id, fallthrough: fallthrough.id });
+            this.current = test;
+            const value = this.expression(node.children[0] ?? -1);
+            this.close({ kind: 'Branch', test: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id });
+            this.current = loop; this.jumps.push({ breakBlock: fallthrough.id, continueBlock: test.id });
+            this.statement(node.children[1] ?? -1); this.jumps.pop(); this.jump(test.id, 1);
+            this.current = fallthrough;
+        }
+        else if(node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') {
+            const target = this.jumps[this.jumps.length - 1];
+            if(target === undefined) { this.close({ kind: 'Unsupported' }); }
+            else { this.jump(node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock, node.kind === 'BreakStatement' ? 0 : 1); }
+        }
+        else if(node.kind === 'ReturnStatement') {
+            const expressionId = node.children[0];
+            const result = expressionId === undefined ? undefined : this.expression(expressionId);
+            const value: ValueType = result === undefined ? { kind: 'Primitive', literal: 'nil' } : { kind: 'LoadLocal', place: result };
+            this.emit(value, id, this.fn.returns);
+            this.close({ kind: 'Return', value: this.fn.returns });
+        }
+        else if(node.kind === 'ThrowStatement') { this.close({ kind: 'Throw', value: this.expression(node.children[0] ?? -1) }); }
+        else if(node.kind === 'ExpressionStatement') { this.expression(node.children[0] ?? -1); }
+    }
+    valueBranch(id: number, logical: string | undefined): PlaceInterface {
+        const node = this.parser.node(id);
+        const result = this.fn.temporary(this.byte(node.pos), this.byte(node.end));
+        const testBlock = this.fn.newBlock('value'); const fallthrough = this.fn.newBlock('block');
+        if(logical === undefined) { this.close({ kind: 'Ternary', test: testBlock.id, fallthrough: fallthrough.id }); }
+        else { this.close({ kind: 'Logical', operator: logical, test: testBlock.id, fallthrough: fallthrough.id }); }
+        this.current = testBlock;
+        const left = this.expression(node.children[0] ?? -1);
+        const first = this.fn.newBlock('value'); const second = this.fn.newBlock('value');
+        const swapped = logical === '||' || logical === '??';
+        // A logical's first arm is the short-circuit arm; a ternary's is the true arm.
+        const consequent = logical === undefined || swapped ? first : second;
+        const alternate = logical === undefined || swapped ? second : first;
+        this.close({ kind: 'Branch', test: left, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
+        const shared = (this.fn.identifiers[result.identifier] ?? panic('missing result')).declaration;
+        this.current = first;
+        const firstNode = node.children[logical === undefined ? 2 : 0] ?? -1;
+        const firstValue = logical === undefined ? this.expression(firstNode) : left;
+        const firstPlace = logical === undefined ? result : this.fn.temporary(this.byte(this.parser.node(firstNode).pos), this.byte(this.parser.node(firstNode).end), shared);
+        this.emit({ kind: 'LoadLocal', place: firstValue }, firstNode, firstPlace); this.jump(fallthrough.id, 0);
+        this.current = second;
+        const secondNode = node.children[logical === undefined ? 4 : 2] ?? -1;
+        const secondValue = this.expression(secondNode);
+        const secondPlace = logical === undefined ? result : this.fn.temporary(this.byte(this.parser.node(secondNode).pos), this.byte(this.parser.node(secondNode).end), shared);
+        this.emit({ kind: 'LoadLocal', place: secondValue }, secondNode, secondPlace); this.jump(fallthrough.id, 0);
+        this.current = fallthrough;
+        return result;
+    }
     byte(index: number): number { return utf8Length(this.source.slice(0, index)); }
     emit(value: ValueType, id: number, target: PlaceInterface | undefined): PlaceInterface {
         const node = this.parser.node(id);
         const start = this.byte(node.pos);
         const end = this.byte(node.end);
         const place = target ?? this.fn.temporary(start, end);
-        const block = this.fn.blocks[0] ?? panic('missing entry');
+        const block = this.ensureBlock();
         block.instructions.push(this.fn.instructions.length);
         this.fn.instructions.push(new Instruction(this.fn.instructions.length, place, value, start, end));
         return place;
@@ -141,6 +241,7 @@ class StraightLineBuilder {
         const node = this.parser.node(id);
         const primitive = literal(node.kind, node.text);
         if(primitive !== undefined) { return this.emit({ kind: 'Primitive', literal: primitive }, id, undefined); }
+        if(node.kind === 'ConditionalExpression') { return this.valueBranch(id, undefined); }
         if(node.kind === 'Identifier') { return this.loadIdentifier(id); }
         if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
             const object = this.expression(node.children[0] ?? -1);
@@ -158,6 +259,8 @@ class StraightLineBuilder {
         if(node.kind === 'ParenthesizedExpression') { return this.expression(node.children[0] ?? -1); }
         if(node.kind === 'BinaryExpression') {
             const operator = this.parser.node(node.children[1] ?? -1).kind;
+            const logical = logicals.get(operator);
+            if(logical !== undefined) { return this.valueBranch(id, logical); }
             if(operator === 'EqualsToken') { return this.assign(node.children[0] ?? -1, this.expression(node.children[2] ?? -1)); }
             const left = this.expression(node.children[0] ?? -1);
             const right = this.expression(node.children[2] ?? -1);
@@ -207,43 +310,16 @@ export function lowerSourceAt(source: string, start: number, end: number, symbol
         }
     }
     const statements: number[] = bodyId < 0 ? [] : parser.node(bodyId).children;
-    for(const id of statements) {
-        const statement = parser.node(id);
-        if(statement.kind === 'VariableStatement') {
-            const list = parser.node(statement.children[0] ?? -1);
-            if(list.kind !== 'VariableDeclarationList') { return undefined; }
-            for(const declarationId of list.children) {
-                const declaration = parser.node(declarationId);
-                if(declaration.children.length > 2 || parser.node(declaration.children[0] ?? -1).kind !== 'Identifier') { return undefined; }
-                if(declaration.children[1] !== undefined && !supportedExpression(parser, declaration.children[1] ?? -1)) { return undefined; }
-            }
-            continue;
-        }
-        if(!['ExpressionStatement', 'ReturnStatement', 'EmptyStatement'].includes(statement.kind)) { return undefined; }
-        if(statement.children.length > 1) { return undefined; }
-        for(const expression of statement.children) { if(!supportedExpression(parser, expression)) { return undefined; } }
-    }
+    for(const id of statements) { if(!supportedStatement(parser, id)) { return undefined; } }
     const fn = new HIRFunction(name);
     const builder = new StraightLineBuilder(parser, source, fn, symbols);
     for(const id of parameters) {
         const parameter = parser.node(id);
         fn.params.push(builder.bind(id));
     }
-    const block = fn.blocks[0] ?? panic('missing entry');
-    for(const id of statements) {
-        const statement = parser.node(id);
-        if(statement.kind === 'EmptyStatement') { continue; }
-        if(statement.kind === 'VariableStatement') { builder.declarations(id); continue; }
-        let result: PlaceInterface | undefined;
-        const expressionId = statement.children[0];
-        if(expressionId !== undefined) { result = builder.expression(expressionId); }
-        if(statement.kind === 'ReturnStatement') {
-            const value: ValueType = result === undefined ? { kind: 'Primitive', literal: 'nil' } : { kind: 'LoadLocal', place: result };
-            builder.emit(value, id, fn.returns);
-            break;
-        }
-    }
-    if(conciseId >= 0) { block.terminal = builder.expression(conciseId); }
+    builder.statements(statements);
+    if(conciseId >= 0) { builder.close({ kind: 'Return', value: builder.expression(conciseId) }); }
+    else { builder.close({ kind: 'Return', value: fn.returns }); }
     constructHIR(fn);
     return fn;
 }

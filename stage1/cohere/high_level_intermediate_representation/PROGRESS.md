@@ -1,10 +1,10 @@
-# Unit 2 clean seam: checker-backed statements and expressions
+# Unit 2 clean seam: statements, expressions and initial control flow
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
 
 ## Construction corpus and coverage
 
-At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 100 match byte for byte on Node and native Adamic**. Fourteen additional path probes also match: 114/1,479 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
+At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 112 match byte for byte on Node and native Adamic**. Twenty additional path probes also match: 132/1,485 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
 
 Every original Go HIR test runs through a test-file overlay that redirects its `Lower`, `ForFunction` and `ForFunctionWithoutManualMemoization` calls to observers. The original production implementations are called unchanged, their return values are returned unchanged, and the observer constructs/dumps a deep clone. For the memo-erased entry, a separate original Lower is observed because the erased result is not the construction oracle. Production files, test files on disk, and the cohere gitlink are untouched. This captures generated test inputs and their actual checker contexts, including multi-file programs, rather than approximating them by extracting raw strings.
 
@@ -16,22 +16,22 @@ Forty-five original Go tests skip under this environment. Their names and requir
 
 ## What now lowers
 
-Function declarations, function expressions and block/concise arrows with simple identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns; resident-symbol parameter/local reads, let/const/var declarations, assignments and compound assignments, prefix/postfix updates, global/module/import loads, global stores and property/computed loads and stores. Other syntax is declined. Typed/optional/rest/destructured parameters and nested function creation remain outside this seam.
+Function declarations, function expressions and block/concise arrows with simple identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns; resident-symbol parameter/local reads, let/const/var declarations, assignments and compound assignments, prefix/postfix updates, global/module/import loads, global stores and property/computed loads and stores. Other syntax is declined. Blocks, if/else, returns/throws (including subsequent unreachable code), ternaries, logical &&/||/??, while loops and unlabeled break/continue are also admitted. Typed/optional/rest/destructured parameters and nested function creation remain outside this seam.
 
 Literal strings use the parser's deterministic UTF-16 `written` escape alphabet, including newlines, backslashes and surrogate pairs. Source positions are converted from the port parser's UTF-16 indexes to Go's UTF-8 byte positions before becoming places or instruction spans. Concise arrows return the expression place directly; block returns copy into the shared returns place, matching Go. Identifiers/declarations and parameter versions come from the imported SSA implementation, not a local replacement.
 
 The new coverage driver consumes the entire census and emits either a dump or an explicit decline for every record. The oracle's eligibility predicate describes this slice's grammar; every eligible row must independently parse and lower on the port and compare exactly. It is a scheduling boundary for partial coverage, not a whole-unit pass. Admission cannot turn a mismatch into a decline.
 
-The Go hir-v1 adapter now serializes all instruction/terminal payload variants, phis, nested functions, context declarations and outlined function references. General payloads use sorted JSON field names; AST references are stable kind/span handles. Existing Primitive, LoadLocal, UnaryExpression and BinaryExpression records use the explicit field formats implemented by the slice. Scopes remain `scopes -` at construction; scope analysis has not run. The adapter does not infer or normalize IDs to hide differences.
+The Go hir-v1 adapter now serializes all instruction/terminal payload variants, phis, nested functions, context declarations and outlined function references, including orphan instructions retained in the complete table. General payloads use sorted JSON field names; AST references are stable kind/span handles. Existing Primitive, LoadLocal, UnaryExpression and BinaryExpression records use the explicit field formats implemented by the slice. Scopes remain `scopes -` at construction; scope analysis has not run. The adapter does not infer or normalize IDs to hide differences.
 
 Eight semantic mutants are caught on both Node and native Adamic: literal boolean flip; binary right operand replaced by left; unary operator replaced by plus; comma returning left; parameter moved to context; return store replaced by nil; concise arrow returning the unused returns slot; inferred function name omitted. They compile and execute successfully before their answers disagree.
 
 ## Remaining unit 2 work
 
-1. Complete core variants and graph terminal/edge visitors beyond the one-block adapter. Emit all owned instruction-table entries, including unreachable/orphan instructions, in the oracle before admitting paths that create them. The current dump covers instructions reachable through blocks; its existing complete identifier table already exposes unreachable allocations.
+1. Complete the remaining core variants and terminal/edge visitors. The multi-block adapter and complete instruction-table dump now cover the admitted control-flow paths.
 2. Complete captures and contextual binding reads/writes through the resident checker. Local/parameter reads, versioned declarations, module/import classification and checker-less test behavior now match the admitted census. No lexical-only approximation has been introduced. `stage1/cohere/lint/context.ts` already provides `context.checker`; its `Checker.ask` bridge must support the symbol identity/binding queries needed by Go lower.go:1245 onward, rather than inventing local IDs independently of checker resolution.
 3. Lower destructuring, calls/new/spread, object/array/template/regex/type-cast/await/yield forms, JSX, nested function tables, context identifiers, and optional-chain control flow. Give each major path a caught native/Node mutant and an exact corpus dump comparison.
-4. Add branches/short-circuit/ternaries, switch, loops/iterators, break/continue/labels and exception/finally terminals. Finish the adapter using the imported SSA graph and construct modules. Keep structural fallthrough separate from real predecessors.
+4. Add switch, do/for/iterator loops, labeled break/continue and exception/finally terminals. If/else, ternaries, short-circuit expressions, while and unlabeled jumps now match. Finish the adapter using the imported SSA graph and construct modules. Keep structural fallthrough separate from real predecessors.
 5. Implement the actual rule-context `ForFunction` cache and cheap spelling gate, clone/full visitors, and postdominator/control-dominator analyses. Construct each cached function exactly once and preserve source/checker handles for rule consumers.
 6. Reach 1,465/1,465 (or the freshly exported count after a pin/input change), with all declines eliminated or specifically escalated as language/source gaps. Supply private corpora to eliminate relevant environment skips; resolve Flow through the agreed parser boundary rather than claiming it was tested.
 7. Port `react-hooks/static-components` into its own `stage1/cohere/lint/rules/<slug>/` directory, following docs/lint-registration.md: concrete listener/factory, exact messages, descriptor, tagged original Go rule/options adapter, raw finding witnesses and a caught rule mutant. Then regenerate the registry and run the discovered comparison harness to green. No shared registry lines or premature rule directory were added at this seam.
@@ -107,3 +107,42 @@ Still ahead: structured control flow and its complete table dump; calls/new,
 arrays/objects/templates/casts, destructuring, closures/context bindings, optional
 chains, JSX, ForFunction integration and static-components. This is a landable
 partial statement/expression seam, not a claim that unit 2 or any rule is complete.
+
+## Initial control-flow seam
+
+**112/1,465 corpus functions match Go on Node and native Adamic**, a further
+increase of **12** over the statement/expression seam (and 61 over its predecessor).
+Twenty probes also match: **132/1,485** with probes included. The active non-Flow
+coverage is 112/1,442; the 23 catalogued Flow reloads and 40 fixture-loader exclusions
+remain unchanged. The original 45 private-corpus skips retain their unit assignments.
+
+This seam adds blocks, if/else, returns/throws, code after abrupt exits, conditional
+expressions, &&/||/??, while loops and unlabeled break/continue. Function-local block
+IDs and the lookup table survive RPO ordering; unreachable entries are removed or
+replaced with the same structural placeholder as Go. Real successors and structural
+fallthroughs are separate adapter edges. All RPO, predecessor/evaluation ordering,
+phi construction and elimination come from the imported SSA module. There is no
+local copy of any of those algorithms.
+
+The hir-v1 dump now includes block kinds, constructed phis/operands, all admitted
+terminal payload fields and **orphan instruction** records in original table order.
+A structural fallthrough with no incoming real edges becomes an empty Unreachable
+placeholder; its removed instructions remain in the table with their original
+unassigned order and IDs. The adapter emits every instruction exactly once, either
+under its block or as an orphan. Prior certified straight-line dumps remain unchanged.
+Every observed Go dump is printed twice and checked for byte stability.
+
+Eight new mutants are caught on Node and native: swap if successors, take the wrong
+ternary arm, swap logical short-circuit arms, exit instead of taking the while back
+edge, send continue to the break target, turn throw into return, replace return by
+Unreachable, and drop post-abrupt instructions. Together with the prior sixteen,
+**24 lowering mutants** compile and run successfully before their dumps disagree.
+The independent symbol-identity mutant is also retained. Six new probes exercise
+control flow and orphan retention; the probes themselves do not raise corpus coverage.
+
+Remaining construction work includes calls/new/spreads, objects/arrays/templates/
+casts, destructuring and typed parameters, closures/context bindings, do/for/iterator
+loops, switch/labels, exception/finally and optional chains. JSX, live ForFunction
+integration/cache, full visitors/cloning/postdominators and static-components remain
+unfinished. No rule is claimed green at this seam, and no blocking Adamic language
+gap was encountered.

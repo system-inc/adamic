@@ -53,6 +53,9 @@ func constructionExpression(n *ast.Node) bool {
 		return constructionExpression(n.AsTypeOfExpression().Expression)
 	case ast.KindVoidExpression:
 		return constructionExpression(n.AsVoidExpression().Expression)
+	case ast.KindConditionalExpression:
+		x := n.AsConditionalExpression()
+		return constructionExpression(x.Condition) && constructionExpression(x.WhenTrue) && constructionExpression(x.WhenFalse)
 	case ast.KindPropertyAccessExpression:
 		x := n.AsPropertyAccessExpression()
 		return x.QuestionDotToken == nil && constructionExpression(x.Expression)
@@ -73,7 +76,7 @@ func constructionExpression(n *ast.Node) bool {
 		if op == ast.KindEqualsToken || isCompoundAssignment(op) {
 			return constructionTarget(x.Left) && constructionExpression(x.Right)
 		}
-		return op != ast.KindAmpersandAmpersandToken && op != ast.KindBarBarToken && op != ast.KindQuestionQuestionToken && op != ast.KindEqualsToken && !isCompoundAssignment(op) && constructionExpression(x.Left) && constructionExpression(x.Right)
+		return constructionExpression(x.Left) && constructionExpression(x.Right)
 	}
 	return false
 }
@@ -105,36 +108,52 @@ func constructionEligible(node *ast.Node) bool {
 	if body.Kind != ast.KindBlock {
 		return node.Kind == ast.KindArrowFunction && constructionExpression(body)
 	}
-	statements := body.AsBlock().Statements
-	if statements != nil {
-		for index, statement := range statements.Nodes {
-			switch statement.Kind {
-			case ast.KindVariableStatement:
-				list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList()
-				for _, decl := range list.Declarations.Nodes {
-					d := decl.AsVariableDeclaration()
-					if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
-						return false
-					}
-				}
-			case ast.KindEmptyStatement:
-			case ast.KindExpressionStatement:
-				if !constructionExpression(statement.AsExpressionStatement().Expression) {
+	return constructionStatement(body)
+}
+func constructionStatement(statement *ast.Node) bool {
+	if statement == nil {
+		return false
+	}
+	switch statement.Kind {
+	case ast.KindBlock:
+		if list := statement.AsBlock().Statements; list != nil {
+			for _, n := range list.Nodes {
+				if !constructionStatement(n) {
 					return false
 				}
-			case ast.KindReturnStatement:
-				if index != len(statements.Nodes)-1 {
-					return false
-				}
-				if expression := statement.AsReturnStatement().Expression; expression != nil && !constructionExpression(expression) {
-					return false
-				}
-			default:
+			}
+		}
+		return true
+	case ast.KindIfStatement:
+		x := statement.AsIfStatement()
+		return constructionExpression(x.Expression) && constructionStatement(x.ThenStatement) && (x.ElseStatement == nil || constructionStatement(x.ElseStatement))
+	case ast.KindWhileStatement:
+		x := statement.AsWhileStatement()
+		return constructionExpression(x.Expression) && constructionStatement(x.Statement)
+	case ast.KindBreakStatement:
+		return statement.AsBreakStatement().Label == nil
+	case ast.KindContinueStatement:
+		return statement.AsContinueStatement().Label == nil
+	case ast.KindVariableStatement:
+		list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList()
+		for _, decl := range list.Declarations.Nodes {
+			d := decl.AsVariableDeclaration()
+			if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
 				return false
 			}
 		}
+		return true
+	case ast.KindExpressionStatement:
+		return constructionExpression(statement.AsExpressionStatement().Expression)
+	case ast.KindReturnStatement:
+		x := statement.AsReturnStatement()
+		return x.Expression == nil || constructionExpression(x.Expression)
+	case ast.KindThrowStatement:
+		return constructionExpression(statement.AsThrowStatement().Expression)
+	case ast.KindEmptyStatement:
+		return true
 	}
-	return true
+	return false
 }
 
 func constructionObserve(f *Function, typeChecker *checker.Checker, caller string, constructed bool) {
@@ -162,6 +181,9 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 		excluded = "Flow"
 	}
 	dump := oracleDump(clone)
+	if oracleDump(clone) != dump {
+		panic("hir-v1 dump is nondeterministic")
+	}
 	key := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s:%d:%d:%t:%s", source.Text(), f.Node.Pos(), f.Node.End(), checked, dump))))
 	constructionMutex.Lock()
 	if old := constructionRecords[key]; old != nil {
@@ -297,6 +319,12 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Orphan() { return 1; 2; }",
+		"function Branches(flag) { let x = 1; if (flag) { x = 2; } else { x = 3; } return x; }",
+		"function Abrupt(flag) { if (flag) { return 1; } else { throw 2; } return 3; }",
+		"function Ternary(flag) { return flag ? 1 : 2; }",
+		"function Logical(a, b) { a && b; a || b; return a ?? b; }",
+		"function Loop(n) { let x = 0; while (x < n) { x++; if (x === 2) continue; if (x === 3) break; } return x; }",
 		"function Binding(value) { let local = value; local = 2; return local; }",
 		"function Declaration() { let local; local = 3; return local; }",
 		"function Updates(value) { ++value; value--; value += 2; return value; }",

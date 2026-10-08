@@ -37,20 +37,30 @@ export class Instruction {
         this.id = id; this.lvalue = lvalue; this.value = value; this.start = start; this.end = end;
     }
 }
+export type TerminalType = { readonly kind: 'Return' | 'Throw'; value: PlaceInterface }
+    | { readonly kind: 'Unreachable' | 'Unsupported' }
+    | { readonly kind: 'Goto'; readonly block: number; readonly variant: number }
+    | { readonly kind: 'If' | 'Branch'; test: PlaceInterface; readonly consequent: number; readonly alternate: number; readonly fallthrough: number }
+    | { readonly kind: 'Logical'; readonly operator: string; readonly test: number; readonly fallthrough: number }
+    | { readonly kind: 'Ternary'; readonly test: number; readonly fallthrough: number }
+    | { readonly kind: 'While'; readonly test: number; readonly loop: number; readonly fallthrough: number };
 export class BasicBlock {
     readonly id: BlockIdType;
     readonly instructions: number[] = [];
     predecessors: readonly BlockIdType[] = [];
     phis: readonly PhiInterface<PlaceInterface>[] = [];
-    terminal: PlaceInterface;
+    terminal: TerminalType;
+    readonly kind: string;
     terminalOrder: EvaluationOrderType = 0;
-    constructor(id: BlockIdType, terminal: PlaceInterface) { this.id = id; this.terminal = terminal; }
+    constructor(id: BlockIdType, terminal: TerminalType, kind: string = 'block') { this.id = id; this.terminal = terminal; this.kind = kind; }
 }
 export class HIRFunction {
     readonly name: string;
     readonly kind: string;
     readonly entry: BlockIdType = 1;
     blocks: readonly BasicBlock[];
+    readonly byId: Map<number, BasicBlock> = new Map<number, BasicBlock>();
+    nextBlock = 2;
     readonly instructions: Instruction[] = [];
     readonly identifiers: IdentifierInterface[] = [];
     readonly params: PlaceInterface[] = [];
@@ -63,17 +73,25 @@ export class HIRFunction {
         const next = name.charCodeAt(3);
         this.kind = first >= 65 && first <= 90 ? 'component' : name.startsWith('use') && ((next >= 65 && next <= 90) || (next >= 48 && next <= 57)) ? 'hook' : 'other';
         this.returns = { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 };
-        this.blocks = [new BasicBlock(1, this.returns)];
+        this.blocks = [new BasicBlock(1, { kind: 'Return', value: this.returns })];
         this.identifiers.push({ id: 0, declaration: 1, name: '' });
+        this.byId.set(1, this.blocks[0] ?? new BasicBlock(1, { kind: 'Unreachable' }));
     }
     named(name: string, start: number, end: number, declaration: number = 0): PlaceInterface {
         const id = this.identifiers.length;
         this.identifiers.push({ id, declaration: declaration === 0 ? id + 1 : declaration, name });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
-    temporary(start: number, end: number): PlaceInterface {
+    newBlock(kind: string): BasicBlock {
+        const block = new BasicBlock(this.nextBlock, { kind: 'Unreachable' }, kind);
+        this.nextBlock++;
+        this.blocks = [...this.blocks, block];
+        this.byId.set(block.id, block);
+        return block;
+    }
+    temporary(start: number, end: number, declaration: number = 0): PlaceInterface {
         const id = this.identifiers.length;
-        this.identifiers.push({ id, declaration: id + 1, name: '' });
+        this.identifiers.push({ id, declaration: declaration === 0 ? id + 1 : declaration, name: '' });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
 }
