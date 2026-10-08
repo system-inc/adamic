@@ -1,4 +1,4 @@
-# rules/tailwind/collapse package claim
+# rules/tailwind/collapse package claim — PARKED
 
 Branch: lint-helpers/rules-tailwind-collapse; base origin/area/stage1-lint.
 Triage d7ab0bc4 rank 14. Earlier eligible packages claimed; rank 13 generic strict-options already landed and its missing per-rule contracts belong in rule adapters per helpers/README.md.
@@ -29,3 +29,11 @@ Two fresh helpers now live in ../tailwind/collapse/: next_build_count.a (nextBui
 Stopped helper: rules/tailwind/collapse.*stylesheetCollector.loadFile, cohere/internal/lint/rules/tailwind/collapse/design_system.go:597. Go os.ReadFile preserves arbitrary bytes; stage 1's only file-input primitive, readTextFile, decodes invalid UTF-8 irreversibly. The actual Go loadFile installs a theme value retaining byte 0xff, while all stage 1 backends produce bytes 0xef 0xbf 0xbd from the same file. ASCII and Unicode controls match; this is not a compile refusal, crash or skipped parity case. The missing byte-preserving-input API probe reports TS2305: Module '"adamic"' has no exported member 'readFileBytes'; see raw-file-input.compiler.txt. No private filesystem or byte-decoder substitute is supplied.
 
 This boundary prevents claiming complete collapse package parity and a full consuming-rule proof. No rule is ported and no newly unblocked rule is credited. The other retained package slices have not been landed. The complete-package forecast remains conditional, not achieved. See ../tailwind/collapse/REPORT.md for current gate counts and logs.
+
+## Parked tested slice
+
+Parked by the user: all Tailwind work waits on runtime regex compilation. The finished counter slice is local commit 8862e69e64e8beac93dc2e241d1050e191a3be6e: 293 Go calls agree across Node, emitted JavaScript and sanitized native; both mutants are caught.
+
+Byte-preserving input need: `cohere/internal/lint/rules/tailwind/collapse/design_system.go:597` reads the stylesheet file as arbitrary raw bytes with `os.ReadFile`, then passes `string(content)` to `ParseCSS`. Adamic needs a file-input primitive that preserves those bytes (including invalid UTF-8) into the CSS parser, rather than the lossy Unicode decoding of `readTextFile`. First mismatch: `invalid80`, Go byte 128 versus UTF-8 replacement bytes 239, 191, 189.
+
+Bigint note (informational): `testdata/atomic-counter.compiler.txt` records `atomic-counter.a:4:10: stage 0 can't lower a function returning bigint yet`. The supported number counter resolves this slice because process-local builds remain below 2^53; no counter value reaches production lint output.
