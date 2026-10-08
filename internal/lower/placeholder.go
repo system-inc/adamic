@@ -115,6 +115,10 @@ func (l *lowering) placeholderOrigin(node *ast.Node) string {
 // never loses its origin when another path writes it. Readiness still proves
 // individual writes using the existing CFG; every remaining use as T is checked.
 func (l *lowering) notePlaceholderSlots() {
+	// The refusal pass is also used independently of IR construction.
+	if l.result == nil {
+		l.result = &ir.Program{}
+	}
 	if l.result.PlaceholderSources != nil {
 		return
 	}
