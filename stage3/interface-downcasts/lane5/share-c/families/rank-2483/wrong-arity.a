@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface CompilerOptions {readonly value:number;}
+interface Base {readonly getCompilerOptions:unknown;}
+interface Target {getCompilerOptions(): CompilerOptions;}
+function probe(value:Base):void {const builderProgram=value as Target;const result=builderProgram.getCompilerOptions();console.log("completed");}
+probe({getCompilerOptions:(extra:number): CompilerOptions=>({value:3})});

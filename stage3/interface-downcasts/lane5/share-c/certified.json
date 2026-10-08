@@ -4318,5 +4318,485 @@
       }
     ],
     "diagnostic": "adamic: panic: field read failed: state.writeLog expected (s: string) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 2408,
+    "reads": 1,
+    "type": "SourceFileMayBeEmittedHost",
+    "field": "getCompilerOptions",
+    "read": "host.getCompilerOptions",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getCompilerOptions(): CompilerOptions;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2408-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2408-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.getCompilerOptions expected () => CompilerOptions, found function with arity 1\n"
+  },
+  {
+    "rank": 2411,
+    "reads": 1,
+    "type": "SourceFileMayBeEmittedHost",
+    "field": "isSourceOfProjectReferenceRedirect",
+    "read": "host.isSourceOfProjectReferenceRedirect",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2411-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2411-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.isSourceOfProjectReferenceRedirect expected (fileName: string) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 2417,
+    "reads": 1,
+    "type": "SourceMapGenerator",
+    "field": "getSources",
+    "read": "sourceMapGenerator.getSources",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getSources(): readonly string[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2417-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2417-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: sourceMapGenerator.getSources expected () => readonly string[], found function with arity 1\n"
+  },
+  {
+    "rank": 2450,
+    "reads": 1,
+    "type": "SymbolTrackerImpl",
+    "field": "pushErrorFallbackNode",
+    "read": "context.tracker.pushErrorFallbackNode",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "pushErrorFallbackNode(node: Declaration | undefined): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2450-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2450-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.tracker.pushErrorFallbackNode expected (node: Declaration | undefined) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 2459,
+    "reads": 1,
+    "type": "SymlinkCache",
+    "field": "setSymlinksFromResolution",
+    "read": "links.setSymlinksFromResolution",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "setSymlinksFromResolution(resolution: ResolvedModuleFull | undefined): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2459-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2459-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: links.setSymlinksFromResolution expected (resolution: ResolvedModuleFull | undefined) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 2462,
+    "reads": 1,
+    "type": "SyntacticNodeBuilder",
+    "field": "serializeTypeOfAccessor",
+    "read": "syntacticNodeBuilder.serializeTypeOfAccessor",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "serializeTypeOfAccessor: (accessor: AccessorDeclaration, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2462-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2462-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: syntacticNodeBuilder.serializeTypeOfAccessor expected (accessor: AccessorDeclaration, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined, found function with arity 0\n"
+  },
+  {
+    "rank": 2465,
+    "reads": 1,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "evaluateEntityNameExpression",
+    "read": "resolver.evaluateEntityNameExpression",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "evaluateEntityNameExpression(expression: EntityNameExpression): EvaluatorResult;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2465-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2465-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.evaluateEntityNameExpression expected (expression: EntityNameExpression) => EvaluatorResult, found function with arity 0\n"
+  },
+  {
+    "rank": 2471,
+    "reads": 1,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "isOptionalParameter",
+    "read": "resolver.isOptionalParameter",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "isOptionalParameter(p: ParameterDeclaration): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2471-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2471-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.isOptionalParameter expected (p: ParameterDeclaration) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 2474,
+    "reads": 1,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "serializeReturnTypeForSignature",
+    "read": "resolver.serializeReturnTypeForSignature",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "serializeReturnTypeForSignature(context: SyntacticTypeNodeBuilderContext, signatureDeclaration: SignatureDeclaration | JSDocSignature, symbol: Symbol | undefined): TypeNode | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2474-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2474-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.serializeReturnTypeForSignature expected (context: SyntacticTypeNodeBuilderContext, signatureDeclaration: JSDocSignature | SignatureDeclaration, symbol: Symbol | undefined) => TypeNode | undefined, found function with arity 0\n"
+  },
+  {
+    "rank": 2480,
+    "reads": 1,
+    "type": "T",
+    "field": "close",
+    "read": "existingWatcher.watcher.close",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "close(): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2480-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2480-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: existingWatcher.watcher.close expected () => void, found function with arity 1\n"
+  },
+  {
+    "rank": 2483,
+    "reads": 1,
+    "type": "T",
+    "field": "getCompilerOptions",
+    "read": "builderProgram.getCompilerOptions",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getCompilerOptions(): CompilerOptions;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2483-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2483-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: builderProgram.getCompilerOptions expected () => CompilerOptions, found function with arity 1\n"
+  },
+  {
+    "rank": 2486,
+    "reads": 1,
+    "type": "T",
+    "field": "getConfigFileParsingDiagnostics",
+    "read": "program.getConfigFileParsingDiagnostics",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getConfigFileParsingDiagnostics(): readonly Diagnostic[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2486-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2486-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: program.getConfigFileParsingDiagnostics expected () => readonly Diagnostic[], found function with arity 1\n"
+  },
+  {
+    "rank": 2489,
+    "reads": 1,
+    "type": "T",
+    "field": "getProgram",
+    "read": "program.getProgram",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getProgram(): Program;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2489-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2489-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: program.getProgram expected () => Program, found function with arity 1\n"
+  },
+  {
+    "rank": 2492,
+    "reads": 1,
+    "type": "T",
+    "field": "getSemanticDiagnostics",
+    "read": "program.getSemanticDiagnostics",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "getSemanticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2492-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2492-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: program.getSemanticDiagnostics expected (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], found function with arity 0\n"
+  },
+  {
+    "rank": 2495,
+    "reads": 1,
+    "type": "T",
+    "field": "getSyntacticDiagnostics",
+    "read": "program.getSyntacticDiagnostics",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2495-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2495-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: program.getSyntacticDiagnostics expected (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], found function with arity 0\n"
+  },
+  {
+    "rank": 2552,
+    "reads": 1,
+    "type": "TypeCheckerHost",
+    "field": "isSourceOfProjectReferenceRedirect",
+    "read": "host.isSourceOfProjectReferenceRedirect",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2552-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2552-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.isSourceOfProjectReferenceRedirect expected (fileName: string) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 2558,
+    "reads": 1,
+    "type": "TypeReferenceDirectiveResolutionCache",
+    "field": "getOrCreateCacheForDirectory",
+    "read": "cache.getOrCreateCacheForDirectory",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "getOrCreateCacheForDirectory(directoryName: string, redirectedReference?: ResolvedProjectReference): ModeAwareCache<T>;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2558-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2558-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: cache.getOrCreateCacheForDirectory expected (directoryName: string, redirectedReference?: ResolvedProjectReference | undefined) => ModeAwareCache<T>, found function with arity 0\n"
+  },
+  {
+    "rank": 2789,
+    "reads": 1,
+    "type": "{ getExecutingFilePath(): string; resolvePath(path: string): string; fileExists(fileName: string): boolean; readFile(fileName: string): string | undefined; }",
+    "field": "getExecutingFilePath",
+    "read": "sys.getExecutingFilePath",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getExecutingFilePath(): string;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2789-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2789-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: sys.getExecutingFilePath expected () => string, found function with arity 1\n"
+  },
+  {
+    "rank": 2795,
+    "reads": 1,
+    "type": "{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: (() => string) | undefined; }",
+    "field": "func",
+    "read": "mapper.func",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "func: (t: Type) => Type;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2795-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2795-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: mapper.func expected (t: Type) => Type, found function with arity 0\n"
+  },
+  {
+    "rank": 2804,
+    "reads": 1,
+    "type": "{ readFile(fileName: string): string | undefined; }",
+    "field": "readFile",
+    "read": "hostOrText.readFile",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "readFile(fileName: string): string | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2804-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2804-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: hostOrText.readFile expected (fileName: string) => string | undefined, found function with arity 0\n"
   }
 ]

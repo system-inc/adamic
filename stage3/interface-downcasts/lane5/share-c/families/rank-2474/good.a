@@ -1,0 +1,38 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SyntacticTypeNodeBuilderContext {readonly value:number;}
+type SignatureDeclaration =
+    | CallSignatureDeclaration
+    | ConstructSignatureDeclaration
+    | MethodSignature
+    | IndexSignatureDeclaration
+    | FunctionTypeNode
+    | ConstructorTypeNode
+    | JSDocFunctionType
+    | FunctionDeclaration
+    | MethodDeclaration
+    | ConstructorDeclaration
+    | AccessorDeclaration
+    | FunctionExpression
+    | ArrowFunction;
+interface CallSignatureDeclaration {readonly value:number;readonly kind:180;}
+interface ConstructSignatureDeclaration {readonly value:number;readonly kind:181;}
+interface MethodSignature {readonly value:number;readonly kind:174;}
+interface IndexSignatureDeclaration {readonly value:number;readonly kind:182;}
+interface FunctionTypeNode {readonly value:number;readonly kind:185;}
+interface ConstructorTypeNode {readonly value:number;readonly kind:186;}
+interface JSDocFunctionType {readonly value:number;readonly kind:318;}
+interface FunctionDeclaration {readonly value:number;readonly kind:263;}
+interface MethodDeclaration {readonly value:number;readonly kind:175;}
+interface ConstructorDeclaration {readonly value:number;readonly kind:177;}
+type AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;
+interface GetAccessorDeclaration {readonly value:number;readonly kind:178;}
+interface SetAccessorDeclaration {readonly value:number;readonly kind:179;}
+interface FunctionExpression {readonly value:number;readonly kind:219;}
+interface ArrowFunction {readonly value:number;readonly kind:220;}
+interface JSDocSignature {readonly value:number;readonly kind:324;}
+interface Symbol {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly serializeReturnTypeForSignature:unknown;}
+interface Target {serializeReturnTypeForSignature(context: SyntacticTypeNodeBuilderContext, signatureDeclaration: SignatureDeclaration | JSDocSignature, symbol: Symbol | undefined): TypeNode | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.serializeReturnTypeForSignature({value:3},{value:3,kind:180},{value:3});console.log("completed");}
+probe({serializeReturnTypeForSignature:(context: SyntacticTypeNodeBuilderContext,signatureDeclaration: SignatureDeclaration | JSDocSignature,symbol: Symbol | undefined):TypeNode | undefined=>({value:3})});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly close:unknown;}
+interface Target {close(): void;}
+function probe(value:Base):void {const existingWatcher={watcher:value as Target};existingWatcher.watcher.close();console.log("completed");}
+probe({close:(extra:number): void=>{}});

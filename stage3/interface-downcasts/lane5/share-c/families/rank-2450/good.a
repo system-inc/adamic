@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Declaration {readonly value:number;}
+interface Base {readonly pushErrorFallbackNode:unknown;}
+interface Target {pushErrorFallbackNode(node: Declaration | undefined): void;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker.pushErrorFallbackNode({value:3});console.log("completed");}
+probe({pushErrorFallbackNode:(node: Declaration | undefined):void=>{}});

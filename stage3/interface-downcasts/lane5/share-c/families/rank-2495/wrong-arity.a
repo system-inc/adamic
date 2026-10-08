@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface CancellationToken {readonly value:number;}
+interface Diagnostic {readonly value:number;}
+interface Base {readonly getSyntacticDiagnostics:unknown;}
+interface Target {getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];}
+function probe(value:Base):void {const program=value as Target;const result=program.getSyntacticDiagnostics({value:3,kind:308},{value:3});console.log("completed");}
+probe({getSyntacticDiagnostics:(): readonly Diagnostic[]=>([{value:3}])});

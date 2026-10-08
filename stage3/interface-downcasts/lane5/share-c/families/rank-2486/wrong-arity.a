@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Diagnostic {readonly value:number;}
+interface Base {readonly getConfigFileParsingDiagnostics:unknown;}
+interface Target {getConfigFileParsingDiagnostics(): readonly Diagnostic[];}
+function probe(value:Base):void {const program=value as Target;const result=program.getConfigFileParsingDiagnostics();console.log("completed");}
+probe({getConfigFileParsingDiagnostics:(extra:number): readonly Diagnostic[]=>([{value:3}])});

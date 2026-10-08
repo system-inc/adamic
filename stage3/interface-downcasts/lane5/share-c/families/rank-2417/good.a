@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getSources:unknown;}
+interface Target {getSources(): readonly string[];}
+function probe(value:Base):void {const sourceMapGenerator=value as Target;const result=sourceMapGenerator.getSources();console.log("completed");}
+probe({getSources:():readonly string[]=>(["abc"])});

@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type EntityNameExpression = Identifier | PropertyAccessEntityNameExpression;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface PropertyAccessEntityNameExpression {readonly value:number;readonly kind:212;}
+interface EvaluatorResult {readonly value:number;}
+interface Base {readonly evaluateEntityNameExpression:unknown;}
+interface Target {evaluateEntityNameExpression(expression: EntityNameExpression): EvaluatorResult;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.evaluateEntityNameExpression({value:3,kind:80});console.log("completed");}
+probe({evaluateEntityNameExpression:(expression: EntityNameExpression):EvaluatorResult=>({value:3})});

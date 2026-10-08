@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ResolvedProjectReference {readonly value:number;}
+interface ModeAwareCache<T0> {readonly value:number;}
+interface T {readonly value:number;}
+interface Base {readonly getOrCreateCacheForDirectory:unknown;}
+interface Target {getOrCreateCacheForDirectory(directoryName: string, redirectedReference?: ResolvedProjectReference): ModeAwareCache<T>;}
+function probe(value:Base):void {const cache=value as Target;const result=cache.getOrCreateCacheForDirectory("abc",{value:3});console.log("completed");}
+probe({getOrCreateCacheForDirectory:(): ModeAwareCache<T>=>({value:3})});

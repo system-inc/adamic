@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface Base {readonly isOptionalParameter:unknown;}
+interface Target {isOptionalParameter(p: ParameterDeclaration): boolean;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.isOptionalParameter({value:3,kind:170});console.log("completed");}
+probe({isOptionalParameter:(): boolean=>(true)});

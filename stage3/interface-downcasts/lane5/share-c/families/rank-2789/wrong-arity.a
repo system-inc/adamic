@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getExecutingFilePath:unknown;}
+interface Target {getExecutingFilePath(): string;}
+function probe(value:Base):void {const sys=value as Target;const result=sys.getExecutingFilePath();console.log("completed");}
+probe({getExecutingFilePath:(extra:number): string=>("abc")});

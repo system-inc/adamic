@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Type {readonly value:number;}
+interface Base {readonly func:unknown;}
+interface Target {func: (t: Type) => Type;}
+function probe(value:Base):void {const mapper=value as Target;const result=mapper.func({value:3});console.log("completed");}
+probe({func:(t: Type):Type=>({value:3})});

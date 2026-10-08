@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ResolvedModuleFull {readonly value:number;}
+interface Base {readonly setSymlinksFromResolution:unknown;}
+interface Target {setSymlinksFromResolution(resolution: ResolvedModuleFull | undefined): void;}
+function probe(value:Base):void {const links=value as Target;links.setSymlinksFromResolution({value:3});console.log("completed");}
+probe({setSymlinksFromResolution:(resolution: ResolvedModuleFull | undefined):void=>{}});
