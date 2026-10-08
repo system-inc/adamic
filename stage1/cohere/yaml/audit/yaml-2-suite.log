@@ -1,0 +1,271 @@
+=== RUN   TestComposeMatchGo
+    compose_test.go:150: 36 repository files, 9216 cases, 13235527 compose answer bytes identical on all five sides
+--- PASS: TestComposeMatchGo (18.37s)
+=== RUN   TestComposeMutants
+=== RUN   TestComposeMutants/document_start_marker_lost
+    compose_test.go:208: native successful execution, wrong bytes caught: byte 241655: got "00750065|PLAIN||0|[]|-|-,]|-|-,]|-|-,]|-|-,]|-|-|errors:|warnings:\ncase 3\n1.2|0|0|0|00210021=007400610067003a00790061006d006c002e006f00720067002c003200300030003", want "00750065|PLAIN||0|[]|-|-,]|-|-,]|-|-,]|-|-,]|-|-|errors:|warnings:\ncase 3\n1.2|0|1|0|00210021=007400610067003a00790061006d006c002e006f00720067002c003200300030003"
+    compose_test.go:208: Node successful execution, wrong bytes caught: byte 241655: got "00750065|PLAIN||0|[]|-|-,]|-|-,]|-|-,]|-|-,]|-|-|errors:|warnings:\ncase 3\n1.2|0|0|0|00210021=007400610067003a00790061006d006c002e006f00720067002c003200300030003", want "00750065|PLAIN||0|[]|-|-,]|-|-,]|-|-,]|-|-,]|-|-|errors:|warnings:\ncase 3\n1.2|0|1|0|00210021=007400610067003a00790061006d006c002e006f00720067002c003200300030003"
+=== RUN   TestComposeMutants/block_mapping_pair_lost
+    compose_test.go:208: native successful execution, wrong bytes caught: byte 6896: got "007000750062006c00690073006800650073002e|0|0|1|006e0061006d0065|PLAIN||0|[]|-|-|-,Pair|Pair|-|-|1|0|||||0|0|0||||0|[]|Scalar|Scalar|1677,1679,1679|scalar,1677,0", want "007000750062006c00690073006800650073002e|0|0|1|006e0061006d0065|PLAIN||0|[]|-|-|Scalar|Scalar|1668,1675,1676|scalar,1668,00720065006c0065006100730065|0|0|||||0|"
+    compose_test.go:208: Node successful execution, wrong bytes caught: byte 6896: got "007000750062006c00690073006800650073002e|0|0|1|006e0061006d0065|PLAIN||0|[]|-|-|-,Pair|Pair|-|-|1|0|||||0|0|0||||0|[]|Scalar|Scalar|1677,1679,1679|scalar,1677,0", want "007000750062006c00690073006800650073002e|0|0|1|006e0061006d0065|PLAIN||0|[]|-|-|Scalar|Scalar|1668,1675,1676|scalar,1668,00720065006c0065006100730065|0|0|||||0|"
+=== RUN   TestComposeMutants/implicit_key_limit_skipped
+    compose_test.go:208: native successful execution, wrong bytes caught: byte 13235125: got "1031,1032,1033|scalar,1031,0076|0|0|||||0|0|1|0076|PLAIN||0|[]|-|-,]|-|-|errors:|warnings:\n", want "1031,1032,1033|scalar,1031,0076|0|0|||||0|0|1|0076|PLAIN||0|[]|-|-,]|-|-|errors:4,1029,KEY_"
+    compose_test.go:208: Node successful execution, wrong bytes caught: byte 13235125: got "1031,1032,1033|scalar,1031,0076|0|0|||||0|0|1|0076|PLAIN||0|[]|-|-,]|-|-|errors:|warnings:\n", want "1031,1032,1033|scalar,1031,0076|0|0|||||0|0|1|0076|PLAIN||0|[]|-|-,]|-|-|errors:4,1029,KEY_"
+--- PASS: TestComposeMutants (11.78s)
+    --- PASS: TestComposeMutants/document_start_marker_lost (3.74s)
+    --- PASS: TestComposeMutants/block_mapping_pair_lost (3.55s)
+    --- PASS: TestComposeMutants/implicit_key_limit_skipped (3.63s)
+=== RUN   TestCSTMatchesGo
+    cst_test.go:88: 36 repository files, 8732 cases, 8198809 CST answer bytes identical on all five sides
+--- PASS: TestCSTMatchesGo (8.44s)
+=== RUN   TestCSTMutants
+=== RUN   TestCSTMutants/null_key_absent
+    cst_test.go:142: native successful execution, wrong bytes caught: byte 8086: got "|000a||[]|-|-|-|[]|[]\ndocument|1662|-|||[]|-|block-map|1662|0|||[]|-|-|-|[]|[[]|0|scalar|1662|0|006e0061006d0065||[]|-|-|-|[]|[]|[map-value-ind|1666|0|003a||[]|", want "|000a||[]|-|-|-|[]|[]\ndocument|1662|-|||[]|-|block-map|1662|0|||[]|-|-|-|[]|[[]|1|scalar|1662|0|006e0061006d0065||[]|-|-|-|[]|[]|[map-value-ind|1666|0|003a||[]|"
+    cst_test.go:142: Node successful execution, wrong bytes caught: byte 8086: got "|000a||[]|-|-|-|[]|[]\ndocument|1662|-|||[]|-|block-map|1662|0|||[]|-|-|-|[]|[[]|0|scalar|1662|0|006e0061006d0065||[]|-|-|-|[]|[]|[map-value-ind|1666|0|003a||[]|", want "|000a||[]|-|-|-|[]|[]\ndocument|1662|-|||[]|-|block-map|1662|0|||[]|-|-|-|[]|[[]|1|scalar|1662|0|006e0061006d0065||[]|-|-|-|[]|[]|[map-value-ind|1666|0|003a||[]|"
+=== RUN   TestCSTMutants/source_offset_advanced
+    cst_test.go:142: native successful execution, wrong bytes caught: byte 15: got "case 0\ncomment|1|0|00230020004200750069006c0064007300200065007600650072007900200070006c00610074", want "case 0\ncomment|0|0|00230020004200750069006c0064007300200065007600650072007900200070006c00610074"
+    cst_test.go:142: Node successful execution, wrong bytes caught: byte 15: got "case 0\ncomment|1|0|00230020004200750069006c0064007300200065007600650072007900200070006c00610074", want "case 0\ncomment|0|0|00230020004200750069006c0064007300200065007600650072007900200070006c00610074"
+=== RUN   TestCSTMutants/line_start_shifted
+    cst_test.go:142: native successful execution, wrong bytes caught: byte 180490: got "newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\nlines 0,75,77,167,267,365,466,518,520,617,715,815,882,884,987,1086,1188,1291,1350,1352,14", want "newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\nlines 0,76,78,168,268,366,467,519,521,618,716,816,883,885,988,1087,1189,1292,1351,1353,14"
+    cst_test.go:142: Node successful execution, wrong bytes caught: byte 180490: got "newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\nlines 0,75,77,167,267,365,466,518,520,617,715,815,882,884,987,1086,1188,1291,1350,1352,14", want "newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\nlines 0,76,78,168,268,366,467,519,521,618,716,816,883,885,988,1087,1189,1292,1351,1353,14"
+--- PASS: TestCSTMutants (5.94s)
+    --- PASS: TestCSTMutants/null_key_absent (1.78s)
+    --- PASS: TestCSTMutants/source_offset_advanced (1.73s)
+    --- PASS: TestCSTMutants/line_start_shifted (1.77s)
+=== RUN   TestFormatterMatchesGo
+    format_test.go:181: recorded original Prettier difference, case 8783: "error\tInvalid character" versus Go "ok\t!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 8785: "error\tInvalid character" versus Go "ok\t!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 8852: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8853: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8854: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8855: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8862: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8863: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8864: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8865: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8872: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8873: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8874: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8875: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8943: "error\tInvalid character" versus Go "ok\t%YAML 1.1\\n---\\n!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 8945: "error\tInvalid character" versus Go "ok\t%YAML 1.1\\n---\\n!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 9012: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9013: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9014: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9015: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9022: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9023: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9024: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9025: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9032: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9033: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9034: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9035: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9103: "error\tInvalid character" versus Go "ok\t%YAML 1.2\\n---\\n!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 9105: "error\tInvalid character" versus Go "ok\t%YAML 1.2\\n---\\n!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 9172: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9173: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9174: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9175: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9182: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9183: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9184: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9185: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9192: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9193: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9194: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9195: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:186: original Prettier: 9984 matching cases, 42 proved binary/minification differences
+    format_test.go:188: 36 repository files, 10026 cases, 992282 format answer bytes identical on Go/native/Node/emitted JavaScript
+--- PASS: TestFormatterMatchesGo (29.82s)
+=== RUN   TestBundledParserDifference
+    format_test.go:206: yaml: accepted
+        prettier: Invalid character
+        yaml: accepted
+        prettier: Invalid character
+        yaml: tag.resolve is not a function
+        prettier: c.resolve is not a function
+--- PASS: TestBundledParserDifference (0.10s)
+=== RUN   TestFileDriver
+    format_test.go:269: 36 repository files and 14 direct stdout controls byte-identical to Go on all three port executions
+--- PASS: TestFileDriver (30.05s)
+=== RUN   TestFormatterMutants
+=== RUN   TestFormatterMutants/root_final_newline_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 28293: got "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custom-", want "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\\n\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custo"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 28293: got "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custom-", want "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\\n\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custo"
+=== RUN   TestFormatterMutants/colon_separation_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 1694: got "own here refusing a file with one byte flipped before anything publishes.\\nname:release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        descr", want "own here refusing a file with one byte flipped before anything publishes.\\nname: release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        desc"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 1694: got "own here refusing a file with one byte flipped before anything publishes.\\nname:release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        descr", want "own here refusing a file with one byte flipped before anything publishes.\\nname: release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        desc"
+=== RUN   TestFormatterMutants/flow_trailing_comma_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 783469: got "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b]\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end]", want "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b],\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 783469: got "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b]\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end]", want "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b],\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end"
+=== RUN   TestFormatterMutants/batch_backslash_scan_misses_escapes
+    format_test.go:330: native successful execution, wrong bytes caught: byte 79: got "ok\t# Builds every platform binary and stages the npm packages for one version.\\\\n#\\\\n# There is no build matrix, which is the whole point of writing cohere in ", want "ok\t# Builds every platform binary and stages the npm packages for one version.\\n#\\n# There is no build matrix, which is the whole point of writing cohere in Go"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 79: got "ok\t# Builds every platform binary and stages the npm packages for one version.\\\\n#\\\\n# There is no build matrix, which is the whole point of writing cohere in ", want "ok\t# Builds every platform binary and stages the npm packages for one version.\\n#\\n# There is no build matrix, which is the whole point of writing cohere in Go"
+=== RUN   TestFormatterMutants/emoji_first_unit_range_loses_endpoint
+    format_test.go:330: native successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+=== RUN   TestFormatterMutants/emoji_surrogate_slot_shifted
+    format_test.go:330: native successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+--- PASS: TestFormatterMutants (46.51s)
+    --- PASS: TestFormatterMutants/root_final_newline_lost (7.08s)
+    --- PASS: TestFormatterMutants/colon_separation_lost (7.23s)
+    --- PASS: TestFormatterMutants/flow_trailing_comma_lost (7.37s)
+    --- PASS: TestFormatterMutants/batch_backslash_scan_misses_escapes (7.37s)
+    --- PASS: TestFormatterMutants/emoji_first_unit_range_loses_endpoint (7.85s)
+    --- PASS: TestFormatterMutants/emoji_surrogate_slot_shifted (8.24s)
+=== RUN   TestLexerGaps
+=== RUN   TestLexerGaps/prefixIncrement.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/prefixIncrement.ts:2:16: stage 0 can't lower a PrefixUnaryExpression on a number yet
+=== RUN   TestLexerGaps/assignmentValue.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/assignmentValue.ts:2:16: stage 0 can't lower a BinaryExpression with a number and a number yet
+=== RUN   TestLexerGaps/stringPresence.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/stringPresence.ts:2:16: stage 0 can't lower a PrefixUnaryExpression on a string yet
+=== RUN   TestLexerGaps/emptyAlternative.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/emptyAlternative.ts:3:37: stage 0 can't lower an array of never yet
+=== RUN   TestLexerGaps/dynamicCase.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/dynamicCase.ts:3:9: stage 0 can't lower a case that isn't a constant yet
+=== RUN   TestLexerGaps/negativeCase.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/negativeCase.ts:3:9: stage 0 can't lower a case that isn't a constant yet
+=== RUN   TestLexerGaps/multiplePush.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet
+=== RUN   TestLexerGaps/stringFallback.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/stringFallback.ts:2:13: stage 0 can't lower a BinaryExpression with a string and a string yet
+=== RUN   TestLexerGaps/valuePresence.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/valuePresence.ts:6:16: stage 0 can't lower a PrefixUnaryExpression on a value yet
+=== RUN   TestLexerGaps/valueConjunction.ts
+    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/valueConjunction.ts:6:16: stage 0 can't lower a BinaryExpression with a value and a boolean yet
+--- PASS: TestLexerGaps (0.98s)
+    --- PASS: TestLexerGaps/prefixIncrement.ts (0.09s)
+    --- PASS: TestLexerGaps/assignmentValue.ts (0.10s)
+    --- PASS: TestLexerGaps/stringPresence.ts (0.09s)
+    --- PASS: TestLexerGaps/emptyAlternative.ts (0.10s)
+    --- PASS: TestLexerGaps/dynamicCase.ts (0.10s)
+    --- PASS: TestLexerGaps/negativeCase.ts (0.10s)
+    --- PASS: TestLexerGaps/multiplePush.ts (0.12s)
+    --- PASS: TestLexerGaps/stringFallback.ts (0.09s)
+    --- PASS: TestLexerGaps/valuePresence.ts (0.11s)
+    --- PASS: TestLexerGaps/valueConjunction.ts (0.09s)
+=== RUN   TestStructuralPositionRefusal
+    gaps_test.go:75: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:8:5: Adamic 0.1 refuses Span[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where append is called from the top level); declare the elements weak, Weak<Span>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly Span[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- PASS: TestStructuralPositionRefusal (0.09s)
+=== RUN   TestLexerMatchesGo
+    lexer_test.go:231: 36 repository files; 8732 complete/chunked cases; 4181796 answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical
+--- PASS: TestLexerMatchesGo (5.48s)
+=== RUN   TestLexerMutants
+=== RUN   TestLexerMutants/keep_chomping_lost
+    lexer_test.go:274: native successful execution, wrong bytes caught: byte 859077: got "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a\n=000a\n=000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000", want "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a000a000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=0020002000"
+    lexer_test.go:274: Node successful execution, wrong bytes caught: byte 859077: got "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a\n=000a\n=000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000", want "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a000a000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=0020002000"
+=== RUN   TestLexerMutants/tab_not_whitespace
+    lexer_test.go:274: native successful execution, wrong bytes caught: byte 864210: got "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061003a00090078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n=0061003a000", want "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061\n=003a\n=0009\n=001f\n=0078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n"
+    lexer_test.go:274: Node successful execution, wrong bytes caught: byte 864210: got "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061003a00090078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n=0061003a000", want "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061\n=003a\n=0009\n=001f\n=0078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n"
+=== RUN   TestLexerMutants/BOM_not_split
+    lexer_test.go:274: native successful execution, wrong bytes caught: byte 858065: got "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=0002\n=001f\n=feff\ncase 41\n=0002\n=001f\n=feff\ncase 42\n=0002\n=001f\n=feff\ncase 43\n=00", want "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=feff\ncase 41\n=feff\ncase 42\n=feff\ncase 43\n=feff\ncase 44\n=feff\n=0002\n=001f\n=0061\n="
+    lexer_test.go:274: Node successful execution, wrong bytes caught: byte 858065: got "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=0002\n=001f\n=feff\ncase 41\n=0002\n=001f\n=feff\ncase 42\n=0002\n=001f\n=feff\ncase 43\n=00", want "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=feff\ncase 41\n=feff\ncase 42\n=feff\ncase 43\n=feff\ncase 44\n=feff\n=0002\n=001f\n=0061\n="
+=== RUN   TestLexerMutants/cached_NUL_becomes_space
+    lexer_test.go:274: native successful execution, wrong bytes caught: byte 926523: got "006200300026002c002100610026005d002000630027005d00320032d83dde00002700310027\n=003a\n=001f\n=0000d83dde00005d4e2d00300063\n=003a\n=0020\n=000a\n=007b\n=0026feff\n=001f\n=", want "006200300026002c002100610026005d002000630027005d00320032d83dde00002700310027\n=001f\n=003a0000d83dde00005d4e2d00300063\n=003a\n=0020\n=000a\n=007b\n=0026feff\n=001f\n=\n="
+    lexer_test.go:274: Node successful execution, wrong bytes caught: byte 926523: got "006200300026002c002100610026005d002000630027005d00320032d83dde00002700310027\n=003a\n=001f\n=0000d83dde00005d4e2d00300063\n=003a\n=0020\n=000a\n=007b\n=0026feff\n=001f\n=", want "006200300026002c002100610026005d002000630027005d00320032d83dde00002700310027\n=001f\n=003a0000d83dde00005d4e2d00300063\n=003a\n=0020\n=000a\n=007b\n=0026feff\n=001f\n=\n="
+=== RUN   TestLexerMutants/numeric_whitespace_excludes_space
+    lexer_test.go:274: native successful execution, wrong bytes caught: byte 6772: got "0020007000750062006c00690073006800650073002e\n=000a\n=0002\n=001f\n=006e0061006d0065003a002000720065006c0065006100730065000a000a006f006e\n=003a\n=000a\n=00200020002000", want "0020007000750062006c00690073006800650073002e\n=000a\n=0002\n=001f\n=006e0061006d0065\n=003a\n=0020\n=001f\n=00720065006c0065006100730065\n=000a\n=000a\n=001f\n=006f006e\n=00"
+    lexer_test.go:274: Node successful execution, wrong bytes caught: byte 6772: got "0020007000750062006c00690073006800650073002e\n=000a\n=0002\n=001f\n=006e0061006d0065003a002000720065006c0065006100730065000a000a006f006e\n=003a\n=000a\n=00200020002000", want "0020007000750062006c00690073006800650073002e\n=000a\n=0002\n=001f\n=006e0061006d0065\n=003a\n=0020\n=001f\n=00720065006c0065006100730065\n=000a\n=000a\n=001f\n=006f006e\n=00"
+--- PASS: TestLexerMutants (8.42s)
+    --- PASS: TestLexerMutants/keep_chomping_lost (1.55s)
+    --- PASS: TestLexerMutants/tab_not_whitespace (1.47s)
+    --- PASS: TestLexerMutants/BOM_not_split (1.54s)
+    --- PASS: TestLexerMutants/cached_NUL_becomes_space (1.55s)
+    --- PASS: TestLexerMutants/numeric_whitespace_excludes_space (1.82s)
+=== RUN   TestPropsMatchGo
+    props_test.go:122: 36 repository files, 8732 cases, 1182227 props answer bytes identical on all five sides
+--- PASS: TestPropsMatchGo (6.59s)
+=== RUN   TestPropsMutants
+=== RUN   TestPropsMutants/indicator_presence_lost
+    props_test.go:176: native successful execution, wrong bytes caught: byte 63: got "case 0\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1668|1668||\n-|-|1||1|-|-|-|1677|1677||\n-|-|0||1|-|-|-|1685|1685||\n-", want "case 0\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1662|1662||\n-|map-value-ind,1666,003a|0||0|-|-|-|1668|1668||\n-|-|1||1|-|-|-|1677|1677||\n-|map-"
+    props_test.go:176: Node successful execution, wrong bytes caught: byte 63: got "case 0\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1668|1668||\n-|-|1||1|-|-|-|1677|1677||\n-|-|0||1|-|-|-|1685|1685||\n-", want "case 0\n-|-|0||0|-|-|-|1662|1662||\n-|-|0||0|-|-|-|1662|1662||\n-|map-value-ind,1666,003a|0||0|-|-|-|1668|1668||\n-|-|1||1|-|-|-|1677|1677||\n-|map-"
+=== RUN   TestPropsMutants/anchor_separation_unchecked
+    props_test.go:176: native successful execution, wrong bytes caught: byte 309370: got "ap-value-ind,28,003a|0||0|-|-|-|29|29||\ncase 760\n-|-|0||0|anchor,0,0026|-|-|1|0||\ncase 761\n-|-|0||0|anchor,0,0026|-|-|1|0||\ncase 762\n-|-|0||0|anchor,0,0026|-|-|", want "ap-value-ind,28,003a|0||0|-|-|-|29|29||\ncase 760\n-|-|0||0|anchor,0,0026|-|-|1|0|1,2,MISSING_CHAR,005400610067007300200061006e006400200061006e00630068006f0072007"
+    props_test.go:176: Node successful execution, wrong bytes caught: byte 309370: got "ap-value-ind,28,003a|0||0|-|-|-|29|29||\ncase 760\n-|-|0||0|anchor,0,0026|-|-|1|0||\ncase 761\n-|-|0||0|anchor,0,0026|-|-|1|0||\ncase 762\n-|-|0||0|anchor,0,0026|-|-|", want "ap-value-ind,28,003a|0||0|-|-|-|29|29||\ncase 760\n-|-|0||0|anchor,0,0026|-|-|1|0|1,2,MISSING_CHAR,005400610067007300200061006e006400200061006e00630068006f0072007"
+=== RUN   TestPropsMutants/tab_indentation_accepted
+    props_test.go:176: native successful execution, wrong bytes caught: byte 318861: got "\n-|-|0||0|-|-|-|0|0||\ncase 843\n-|-|0||0|-|-|-|0|0||\ncase 844\n-|-|0||0|-|-|-|1|1||\ncase 845\n-|-|0||0|-|-|-|1|1||\ncase 846\n-|-|0||0|-|-|-|1|1||\ncase 847\n-|-|0||0|", want "\n-|-|0||0|-|-|-|0|0||\ncase 843\n-|-|0||0|-|-|-|0|0||\ncase 844\n-|-|0||0|-|-|-|1|1|0,1,TAB_AS_INDENT,005400610062007300200061007200650020006e006f007400200061006c00"
+    props_test.go:176: Node successful execution, wrong bytes caught: byte 318861: got "\n-|-|0||0|-|-|-|0|0||\ncase 843\n-|-|0||0|-|-|-|0|0||\ncase 844\n-|-|0||0|-|-|-|1|1||\ncase 845\n-|-|0||0|-|-|-|1|1||\ncase 846\n-|-|0||0|-|-|-|1|1||\ncase 847\n-|-|0||0|", want "\n-|-|0||0|-|-|-|0|0||\ncase 843\n-|-|0||0|-|-|-|0|0||\ncase 844\n-|-|0||0|-|-|-|1|1|0,1,TAB_AS_INDENT,005400610062007300200061007200650020006e006f007400200061006c00"
+--- PASS: TestPropsMutants (5.61s)
+    --- PASS: TestPropsMutants/indicator_presence_lost (1.73s)
+    --- PASS: TestPropsMutants/anchor_separation_unchecked (1.59s)
+    --- PASS: TestPropsMutants/tab_indentation_accepted (1.69s)
+=== RUN   TestSharedSliceAppendMatchesNode
+=== RUN   TestSharedSliceAppendMatchesNode/0
+=== RUN   TestSharedSliceAppendMatchesNode/48
+--- PASS: TestSharedSliceAppendMatchesNode (0.40s)
+    --- PASS: TestSharedSliceAppendMatchesNode/0 (0.07s)
+    --- PASS: TestSharedSliceAppendMatchesNode/48 (0.06s)
+=== RUN   TestScalarsMatchGo
+    scalar_test.go:149: 36 repository files, 9272 cases, 8415462 scalar answer bytes identical on all five sides
+--- PASS: TestScalarsMatchGo (10.05s)
+=== RUN   TestScalarMutants
+=== RUN   TestScalarMutants/escaped_line_feed_becomes_carriage_return
+    scalar_test.go:203: native successful execution, wrong bytes caught: byte 1431265: got "0270072|QUOTE_SINGLE|4,10,16|00200063|\ncase 348\ndouble-quoted-scalar|0|1|0061000d0062|QUOTE_DOUBLE|0,6,7||\ndouble-quoted-scalar|0|0|0061000d0062|QUOTE_DOUBLE|0,", want "0270072|QUOTE_SINGLE|4,10,16|00200063|\ncase 348\ndouble-quoted-scalar|0|1|0061000a0062|QUOTE_DOUBLE|0,6,7||\ndouble-quoted-scalar|0|0|0061000a0062|QUOTE_DOUBLE|0,"
+    scalar_test.go:203: Node successful execution, wrong bytes caught: byte 1431265: got "0270072|QUOTE_SINGLE|4,10,16|00200063|\ncase 348\ndouble-quoted-scalar|0|1|0061000d0062|QUOTE_DOUBLE|0,6,7||\ndouble-quoted-scalar|0|0|0061000d0062|QUOTE_DOUBLE|0,", want "0270072|QUOTE_SINGLE|4,10,16|00200063|\ncase 348\ndouble-quoted-scalar|0|1|0061000a0062|QUOTE_DOUBLE|0,6,7||\ndouble-quoted-scalar|0|0|0061000a0062|QUOTE_DOUBLE|0,"
+=== RUN   TestScalarMutants/strip_becomes_clip
+    scalar_test.go:203: native successful execution, wrong bytes caught: byte 1390653: got "calar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nblock-scalar|3|1|0062000a|BLOCK_LITERAL|3,10,10||\nblock-scalar|3|0|0062000a|BLOCK_LITERAL|3,10,10||\nc", want "calar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nblock-scalar|3|1|0062|BLOCK_LITERAL|3,10,10||\nblock-scalar|3|0|0062|BLOCK_LITERAL|3,10,10||\ncase 57\ns"
+    scalar_test.go:203: Node successful execution, wrong bytes caught: byte 1390653: got "calar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nblock-scalar|3|1|0062000a|BLOCK_LITERAL|3,10,10||\nblock-scalar|3|0|0062000a|BLOCK_LITERAL|3,10,10||\nc", want "calar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nblock-scalar|3|1|0062|BLOCK_LITERAL|3,10,10||\nblock-scalar|3|0|0062|BLOCK_LITERAL|3,10,10||\ncase 57\ns"
+=== RUN   TestScalarMutants/flow_line_break_stops_folding
+    scalar_test.go:203: native successful execution, wrong bytes caught: byte 1395121: got "76\nscalar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nscalar|3|1|0078000a0079|PLAIN|3,7,8||\nscalar|3|0|0078000a0079|PLAIN|3,7,8||\nscalar|8|1|007a|PLAIN", want "76\nscalar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nscalar|3|1|007800200079|PLAIN|3,7,8||\nscalar|3|0|007800200079|PLAIN|3,7,8||\nscalar|8|1|007a|PLAIN"
+    scalar_test.go:203: Node successful execution, wrong bytes caught: byte 1395121: got "76\nscalar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nscalar|3|1|0078000a0079|PLAIN|3,7,8||\nscalar|3|0|0078000a0079|PLAIN|3,7,8||\nscalar|8|1|007a|PLAIN", want "76\nscalar|0|1|0061|PLAIN|0,1,1||\nscalar|0|0|0061|PLAIN|0,1,1||\nscalar|3|1|007800200079|PLAIN|3,7,8||\nscalar|3|0|007800200079|PLAIN|3,7,8||\nscalar|8|1|007a|PLAIN"
+--- PASS: TestScalarMutants (7.79s)
+    --- PASS: TestScalarMutants/escaped_line_feed_becomes_carriage_return (2.29s)
+    --- PASS: TestScalarMutants/strip_becomes_clip (2.41s)
+    --- PASS: TestScalarMutants/flow_line_break_stops_folding (2.39s)
+=== RUN   TestSchemaMatchesGo
+    schema_test.go:112: 36 repository files, 9388 cases, 271142 Schema answer bytes identical on all five sides
+--- PASS: TestSchemaMatchesGo (2.09s)
+=== RUN   TestSchemaMutants
+=== RUN   TestSchemaMutants/class_range_loses_last_character
+    schema_test.go:167: native successful execution, wrong bytes caught: byte 260024: got "000\n9002|00000000000000000000000\n9003|00000000000000000000000\n9004|00010000000000100000000\n9005|00000000000000000000000\n9006|00000000000000100000000\n9007|000000", want "000\n9002|00000000000000000000000\n9003|00000000000000000000000\n9004|00010000000001100000000\n9005|00000000000000000000000\n9006|00000000000001100000000\n9007|000000"
+    schema_test.go:167: Node successful execution, wrong bytes caught: byte 260024: got "000\n9002|00000000000000000000000\n9003|00000000000000000000000\n9004|00010000000000100000000\n9005|00000000000000000000000\n9006|00000000000000100000000\n9007|000000", want "000\n9002|00000000000000000000000\n9003|00000000000000000000000\n9004|00010000000001100000000\n9005|00000000000000000000000\n9006|00000000000001100000000\n9007|000000"
+=== RUN   TestSchemaMutants/plus_accepts_empty
+    schema_test.go:167: native successful execution, wrong bytes caught: byte 968: got "0000000000000000000\n34|00000000000000000000000\n35|00000000000000000000000\n36|10010000010000000000000\n37|10010000010000000000000\n38|10010000010000000000000\n39|10", want "0000000000000000000\n34|00000000000000000000000\n35|00000000000000000000000\n36|10000000010000000000000\n37|10000000010000000000000\n38|10000000010000000000000\n39|10"
+    schema_test.go:167: Node successful execution, wrong bytes caught: byte 968: got "0000000000000000000\n34|00000000000000000000000\n35|00000000000000000000000\n36|10010000010000000000000\n37|10010000010000000000000\n38|10010000010000000000000\n39|10", want "0000000000000000000\n34|00000000000000000000000\n35|00000000000000000000000\n36|10000000010000000000000\n37|10000000010000000000000\n38|10000000010000000000000\n39|10"
+=== RUN   TestSchemaMutants/optional_accepts_twice
+    schema_test.go:167: native successful execution, wrong bytes caught: byte 262914: got "0000000000000\n9102|00000000000000100000000\n9103|00000001000000000010000\n9104|00010000000000100000000\n9105|00000000000000000000000\n9106|00000000000000100000000\n9", want "0000000000000\n9102|00000000000000100000000\n9103|00000001000000000010000\n9104|00000000000000000000000\n9105|00000000000000000000000\n9106|00000000000000000000000\n9"
+    schema_test.go:167: Node successful execution, wrong bytes caught: byte 262914: got "0000000000000\n9102|00000000000000100000000\n9103|00000001000000000010000\n9104|00010000000000100000000\n9105|00000000000000000000000\n9106|00000000000000100000000\n9", want "0000000000000\n9102|00000000000000100000000\n9103|00000001000000000010000\n9104|00000000000000000000000\n9105|00000000000000000000000\n9106|00000000000000000000000\n9"
+=== RUN   TestSchemaMutants/nullable_prefix_loses_successors
+    schema_test.go:167: native successful execution, wrong bytes caught: byte 6953: got "0000000000000000\n250|00000000000000000000000\n251|00000000000000000000000\n252|00000000000000000000000\n253|00000000000000000000000\n254|00000000000000000000000\n255", want "0000000000000000\n250|00000000000000000000000\n251|00000000000000000000000\n252|00010000000000100000000\n253|00010000000000100000000\n254|00010000000000100000000\n255"
+    schema_test.go:167: Node successful execution, wrong bytes caught: byte 6953: got "0000000000000000\n250|00000000000000000000000\n251|00000000000000000000000\n252|00000000000000000000000\n253|00000000000000000000000\n254|00000000000000000000000\n255", want "0000000000000000\n250|00000000000000000000000\n251|00000000000000000000000\n252|00010000000000100000000\n253|00010000000000100000000\n254|00010000000000100000000\n255"
+--- PASS: TestSchemaMutants (2.47s)
+    --- PASS: TestSchemaMutants/class_range_loses_last_character (0.55s)
+    --- PASS: TestSchemaMutants/plus_accepts_empty (0.52s)
+    --- PASS: TestSchemaMutants/optional_accepts_twice (0.50s)
+    --- PASS: TestSchemaMutants/nullable_prefix_loses_successors (0.50s)
+=== RUN   TestSpeedCostProbes
+=== RUN   TestSpeedCostProbes/stringUnitScan.ts
+    speed_gap_test.go:71: both modes match Node's checksum 52998400000
+=== RUN   TestSpeedCostProbes/arenaNodeRead.ts
+    speed_gap_test.go:71: both modes match Node's checksum 57600000000
+=== RUN   TestSpeedCostProbes/numericMapLookup.ts
+    speed_gap_test.go:71: both modes match Node's checksum 1702000
+--- PASS: TestSpeedCostProbes (2.50s)
+    --- PASS: TestSpeedCostProbes/stringUnitScan.ts (1.38s)
+    --- PASS: TestSpeedCostProbes/arenaNodeRead.ts (0.67s)
+    --- PASS: TestSpeedCostProbes/numericMapLookup.ts (0.44s)
+=== RUN   TestUnistMatchesGo
+    unist_test.go:90: 36 repository files, 9216 cases, 5940046 unist answer bytes identical on all five sides
+--- PASS: TestUnistMatchesGo (18.60s)
+=== RUN   TestUnistMutants
+=== RUN   TestUnistMutants/comment_prefix_lost
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 9609: got "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|0041002000720065006c0065006100730065002000770072006900740065007300200074006f002000", want "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|00200041002000720065006c0065006100730065002000770072006900740065007300200074006f00"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 9609: got "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|0041002000720065006c0065006100730065002000770072006900740065007300200074006f002000", want "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|00200041002000720065006c0065006100730065002000770072006900740065007300200074006f00"
+=== RUN   TestUnistMutants/point_column_shifted
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 14: got "case 0\nroot|1,2,0|564,2,30841|-|||-1|0|0|||[document|1,2,0|564,2,30841|root,1,2,0,564,2,30841|", want "case 0\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 14: got "case 0\nroot|1,2,0|564,2,30841|-|||-1|0|0|||[document|1,2,0|564,2,30841|root,1,2,0,564,2,30841|", want "case 0\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|"
+=== RUN   TestUnistMutants/document_end_marker_lost
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 1974423: got "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|0|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0", want "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|1|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 1974423: got "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|0|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0", want "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|1|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0"
+--- PASS: TestUnistMutants (13.56s)
+    --- PASS: TestUnistMutants/comment_prefix_lost (3.84s)
+    --- PASS: TestUnistMutants/point_column_shifted (3.82s)
+    --- PASS: TestUnistMutants/document_end_marker_lost (3.94s)
+=== RUN   TestWidthsMatchGo
+    width_test.go:110: 1112320 width cases: every Unicode scalar and 256 emoji/context sequences; 2224684 exact Go answer bytes
+--- PASS: TestWidthsMatchGo (14.43s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	250.076s
