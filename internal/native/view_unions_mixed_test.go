@@ -43,7 +43,7 @@ int main(int argc,char **argv){
 			command.Stderr = &errout
 			err := command.Run()
 			failure, ok := err.(*exec.ExitError)
-			want := "adamic: panic: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n"
+			want := "adamic: panic: cast failed: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n"
 			if !ok || failure.ExitCode() != 70 || out.Len() != 0 || errout.String() != want {
 				t.Fatalf("got %v, stdout %q, stderr %q; want exit 70 and %q", err, out.String(), errout.String(), want)
 			}

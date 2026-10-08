@@ -26,6 +26,14 @@ func (e *emitter) viewArrayReferenceWrite(array, value string) {
 	e.line("bool %s = false;", checked)
 	e.line("switch (%s->element_contract) {", array)
 	for index, source := range e.program.ViewContracts {
+		if source.Of == ir.Union {
+			if _, complete := ir.PrimitiveViewMembers(e.program, ir.ViewContractID(index+1)); complete {
+				e.line("case %d:", index+1)
+				e.arrayPrimitiveUnionRead(ir.ViewContractID(index+1), value, "<array write>", source.Name)
+				e.line("%s = true; break;", checked)
+				continue
+			}
+		}
 		if source.Of != ir.Object && source.Of != ir.Union {
 			continue
 		}

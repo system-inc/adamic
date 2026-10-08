@@ -73,7 +73,7 @@ func viewArrayReferenceRuntime(program *ir.Program) string {
 	named, _ := json.Marshal(names)
 	pairs, _ := json.Marshal(ir.ArrayRecordWritePairs(program))
 	descriptors, _ := json.Marshal(fields)
-	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayNominalNull = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, nullJSON, named, pairs, descriptors) + viewArrayReferenceHelpers
+	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayNominalNull = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, nullJSON, named, pairs, descriptors) + primitiveArrayWriteRuntime(program) + viewArrayReferenceHelpers
 }
 
 const viewArrayReferenceHelpers = `const adamicArrayElementContracts = new WeakMap();
@@ -85,6 +85,10 @@ const adamicArrayReferenceWrite = (array, value) => {
  if (adamicArrayStorage.get(array) !== 10) adamicArrayWriteCheck(array, 4);
  const target = adamicArrayElementContracts.get(array) || 0;
  if (!target) adamicArrayReferenceFailure("object", "uncertified source element contract");
+ if (adamicArrayPrimitiveWrites[target]) {
+  if (!adamicArrayPrimitiveWrites[target](value)) panic("cast failed: field read failed: <array write> matches no member of " + adamicArrayReferenceNames[target] + "; expected " + adamicArrayReferenceNames[target] + ", found " + (value === null ? "null" : typeof value));
+  return;
+ }
  if (adamicArrayNominalClasses[target]) {
   if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target]) || value === undefined && adamicArrayNominalUndefined[target] || value === null && adamicArrayNominalNull[target])) adamicArrayReferenceFailure(adamicArrayReferenceNames[target],"object without required class identity");
   return;

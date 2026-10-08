@@ -17,6 +17,7 @@ const (
 	castLoweringNodeProjection
 	castLoweringOptionalPresence
 	castLoweringScalar
+	castLoweringGenericView
 )
 
 type castLowerer struct {
@@ -27,6 +28,7 @@ type castLowerer struct {
 }
 
 var deferredCastLowerers = []castLowerer{
+	{castLoweringGenericView, true, (*lowering).genericViewCastCandidate, (*lowering).unresolvedGenericViewCast},
 	{castLoweringScalar, true, (*lowering).scalarCastCandidate, (*lowering).scalarCast},
 	{castLoweringOptionalPresence, true, (*lowering).optionalPresenceViewCandidate, (*lowering).optionalPresenceViewCast},
 	{castLoweringViews, false, func(l *lowering, node *ast.Node, source, target *checker.Type) bool {
@@ -79,7 +81,7 @@ func (l *lowering) viewCastCandidate(source, target *checker.Type) bool {
 	if checker.IsTupleType(source) || checker.IsTupleType(target) {
 		return false
 	}
-	if l.checker.IsArrayType(source) && l.checker.IsArrayType(target) {
+	if l.checker.IsArrayType(l.withoutUndefined(source)) && l.checker.IsArrayType(target) {
 		return true
 	}
 	return source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !l.callableViewContract(source) && !l.callableViewContract(target) && l.checker.IsTypeAssignableTo(target, source)

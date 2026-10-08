@@ -39,6 +39,13 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 			return l.mapNominalEntrySlot(node, element)
 		}
 	}
+	if element != nil && interfaceScalar(element) {
+		if of, known := l.representation(element); known && of == ir.Union {
+			if err := l.preparePrimitiveViewDeclaration(node, element); err == nil && l.viewPrimitiveUnionRead(element) {
+				return l.slotContract(node, element)
+			}
+		}
+	}
 	return l.viewArrayRecordSourceContract(node, element)
 }
 

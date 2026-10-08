@@ -148,7 +148,7 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 			static const char failure[] = "out of memory";
 			adamic_panic(failure, sizeof failure - 1);
 		}
-		int length = expected != NULL ? snprintf(message, capacity, "field read failed: %s is not initialized; expected %s, found %s", expression, expected, slot == NULL ? "missing" : "uninitialized") : snprintf(message, capacity, "read before assignment: field '%s' in %s", name, expression);
+		int length = expected != NULL ? snprintf(message, capacity, "cast failed: field read failed: %s is not initialized; expected %s, found %s", expression, expected, slot == NULL ? "missing" : "uninitialized") : snprintf(message, capacity, "read before assignment: field '%s' in %s", name, expression);
 		adamic_panic(message, (size_t)length);
 	}
 	if (owner != NULL) { *owner = object; }
@@ -245,7 +245,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		static const char oom[] = "out of memory";
 		adamic_panic(oom, sizeof oom - 1);
 	}
-	int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, type, type, found);
+	int length = snprintf(message, capacity, "cast failed: field read failed: %s is not a %s; expected %s, found %s", expression, type, type, found);
 	adamic_panic(message, (size_t)length);
 }
 
@@ -255,7 +255,7 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 	size_t capacity = strlen(expression) + strlen(expected) + text->length + 100;
 	char *message = malloc(capacity);
 	if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-	int prefix = snprintf(message, capacity, "field read failed: %s expected %s, found %s ", expression, expected, kind);
+	int prefix = snprintf(message, capacity, "cast failed: field read failed: %s expected %s, found %s ", expression, expected, kind);
 	memcpy(message + prefix, text->bytes, text->length);
 	adamic_panic(message, (size_t)prefix + text->length);
 }

@@ -68,7 +68,7 @@ size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, cons
     size_t capacity = strlen(expression) + 2 * strlen(declared) + strlen(found) + 96;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "field read failed: %s matches no member of %s; expected %s, found %s", expression, declared, declared, found);
+    int length = snprintf(message, capacity, "cast failed: field read failed: %s matches no member of %s; expected %s, found %s", expression, declared, declared, found);
     adamic_panic(message, (size_t)length);
     return 0;
 }

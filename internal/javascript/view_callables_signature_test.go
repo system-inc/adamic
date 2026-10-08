@@ -42,7 +42,7 @@ func TestViewCallableProducerCertificateNode(t *testing.T) {
 			if probe.found != "" {
 				out = ""
 				exit = 70
-				stderr = "adamic: panic: field read failed: node.run expected (value: number) => number, found " + probe.found + "\n"
+				stderr = "adamic: panic: cast failed: field read failed: node.run expected (value: number) => number, found " + probe.found + "\n"
 			}
 			runViewNode(t, source, out, stderr, exit)
 		})

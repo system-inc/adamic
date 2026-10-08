@@ -21,7 +21,14 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	value, err := l.expression(as.Expression)
+	var value ir.Expression
+	handled := false
+	if proof.lowering == castLoweringScalar {
+		value, handled, err = l.scalarCastIndexOperand(node)
+	}
+	if !handled {
+		value, err = l.expression(as.Expression)
+	}
 	if err != nil {
 		return nil, err
 	}

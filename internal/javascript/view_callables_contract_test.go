@@ -29,7 +29,7 @@ console.log(checked === undefined ? "undefined" : adamicCall(checked, [7]));
 			exit, stderr := 0, ""
 			if probe.found != "" {
 				exit = 70
-				stderr = "adamic: panic: field read failed: node.run expected function(number) -> number, found " + probe.found + "\n"
+				stderr = "adamic: panic: cast failed: field read failed: node.run expected function(number) -> number, found " + probe.found + "\n"
 			}
 			runViewNode(t, source, probe.out, stderr, exit)
 		})

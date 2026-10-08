@@ -7,7 +7,7 @@ func DictionaryRuntime() string { return viewDictionariesRuntime }
 
 const viewDictionariesRuntime = `
 const adamicViewDictionaryRead = (record, key, kinds, childContract, expression, declared) => {
- const fail = found => panic('field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
+ const fail = found => panic('cast failed: field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
  if (record === null || typeof record !== 'object' || Array.isArray(record) || record instanceof Map) fail(record === null ? 'null' : Array.isArray(record) ? 'array' : record instanceof Map ? 'Map' : typeof record);
  // Match the existing own-key record contract. Never call a getter or inherited member.
  if (!Object.hasOwn(record, key) && key in Object.prototype) panic("record member '" + key + "' is missing; records hold own keys only");

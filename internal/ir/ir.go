@@ -608,16 +608,18 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
-		TupleUnion       bool // Selected read has the lowering tuple/scalar union plan.
-		Required         bool
-		UndefinedAllowed bool
-		View, ViewType   string
-		ViewAllowed      []ViewLiteral
-		ViewContract     ViewContractID
-		ViewTypeID       int
-		Array, Index     Expression
-		Element          Type
-		Relative         bool
+		// ScalarCastSnapshot reads physical storage once for an immediately checked owned scalar cast.
+		ScalarCastSnapshot bool
+		TupleUnion         bool // Selected read has the lowering tuple/scalar union plan.
+		Required           bool
+		UndefinedAllowed   bool
+		View, ViewType     string
+		ViewAllowed        []ViewLiteral
+		ViewContract       ViewContractID
+		ViewTypeID         int
+		Array, Index       Expression
+		Element            Type
+		Relative           bool
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,

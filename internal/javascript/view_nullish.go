@@ -64,5 +64,5 @@ func (e *emitter) nullishMemberSelection(property ir.Property, value string) str
 			checks += "if(v != null && adamicLogicalKind(v)===6){" + e.mapViewCertificate(mapped, "v") + ";}"
 		}
 	}
-	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('field read failed: '+%s+'; expected '+%s+', found '+typeof v);%s return v;})(%s)", strings.Join(tests, " || "), quote(property.View+" matches no member of "+property.ViewType), quote(property.ViewType), checks, value)
+	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('cast failed: field read failed: '+%s+'; expected '+%s+', found '+typeof v);%s return v;})(%s)", strings.Join(tests, " || "), quote(property.View+" matches no member of "+property.ViewType), quote(property.ViewType), checks, value)
 }

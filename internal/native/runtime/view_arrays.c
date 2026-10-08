@@ -8,7 +8,7 @@ static void array_view_failure(const char *expression, const char *expected, con
     size_t capacity = strlen(expression) + strlen(expected) + strlen(found) + 80;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "element read failed: %s expected %s, found %s", expression, expected, found);
+    int length = snprintf(message, capacity, "cast failed: element read failed: %s expected %s, found %s", expression, expected, found);
     adamic_panic(message, (size_t)length);
 }
 

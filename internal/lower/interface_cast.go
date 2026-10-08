@@ -58,6 +58,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
+					if err := l.preparePrimitiveViewDeclaration(binding, declared); err != nil {
+						found = err
+						return true
+					}
 					of, known := l.representation(declared)
 					if !known || (of < ir.Number || of > ir.Array) && !l.viewPrimitiveUnionRead(declared) || !l.viewDataType(declared) {
 						found = l.lazyReadRefusal(binding, name.Text(), "destructuring representation conversion")
@@ -70,6 +74,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && !l.callableViewContract(l.checker.GetTypeOfSymbol(field)) {
+					if err := l.preparePrimitiveViewDeclaration(part, l.checker.GetTypeOfSymbol(field)); err != nil {
+						found = err
+						return true
+					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")

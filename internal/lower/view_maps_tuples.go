@@ -136,7 +136,7 @@ func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, na
 		return ir.Unwrap{Value: property}, nil
 	}
 	if absent && of.IsReference() && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
-		return ir.Defined{Value: property, Message: "field read failed: " + property.View + " is not initialized; expected " + property.ViewType + ", found missing"}, nil
+		return ir.Defined{Value: property, Message: "cast failed: field read failed: " + property.View + " is not initialized; expected " + property.ViewType + ", found missing"}, nil
 	}
 	return property, nil
 }

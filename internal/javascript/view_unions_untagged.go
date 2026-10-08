@@ -99,7 +99,7 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };
  for(const member of contracts[id-1].Members){if(matches(value,member)) return member;}
- panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(Array.isArray(value)?'array':'object'));
+ panic('cast failed: field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(Array.isArray(value)?'array':'object'));
 };
 `
 

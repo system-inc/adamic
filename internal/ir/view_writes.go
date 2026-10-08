@@ -21,6 +21,31 @@ func ScalarWriteContracts(program *Program, written ViewContractID) []ViewContra
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
 		source = nominalReferenceSlot(program, source)
 		target = nominalReferenceSlot(program, target)
+		// A primitive union's declaration admits exactly its complete members.
+		// Producer storage and an unsupported descriptor cannot authorize writes.
+		if source.Kind == ViewUnion {
+			if _, complete := PrimitiveViewMembers(program, from); !complete {
+				return false
+			}
+			for _, member := range source.Members {
+				if !assignable(member, to, seen) {
+					return false
+				}
+			}
+			return len(source.Members) > 0
+		}
+		if target.Kind == ViewUnion {
+			if _, complete := PrimitiveViewMembers(program, to); !complete {
+				return false
+			}
+			for _, member := range target.Members {
+				if assignable(from, member, seen) {
+					return true
+				}
+			}
+			return false
+		}
+
 		if source.Kind == ViewNull {
 			return target.Kind == ViewNull || target.Null
 		}

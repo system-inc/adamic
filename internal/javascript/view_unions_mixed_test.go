@@ -12,7 +12,7 @@ func TestViewMixedUnionUnknownAndUnavailable(t *testing.T) {
 		{"literal false", `adamicViewMixedUnionSelect({kind:'boolean',value:true},[{kind:'boolean',literal:true,value:false},{kind:'string'}],undefined,'view.value','false | string');`, "false | string", "boolean"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			runViewNode(t, viewTestRuntime+viewMixedUnionsRuntime+sample.source, "", "adamic: panic: field read failed: view.value matches no member of "+sample.declared+"; expected "+sample.declared+", found "+sample.found+"\n", 70)
+			runViewNode(t, viewTestRuntime+viewMixedUnionsRuntime+sample.source, "", "adamic: panic: cast failed: field read failed: view.value matches no member of "+sample.declared+"; expected "+sample.declared+", found "+sample.found+"\n", 70)
 		})
 	}
 }

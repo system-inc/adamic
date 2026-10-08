@@ -22,7 +22,7 @@ const adamicViewIntersectionMatches = (snapshot, members, match) => {
 const adamicViewIntersectionRequire = (snapshot, members, match, expression, declared) => {
  if (adamicViewIntersectionMatches(snapshot, members, match)) return;
  const found = snapshot === undefined || snapshot.kind === 'unknown' ? 'unsupported representation' : snapshot.kind;
- panic('field read failed: ' + expression + ' does not satisfy every member; expected ' + declared + ', found ' + found);
+ panic('cast failed: field read failed: ' + expression + ' does not satisfy every member; expected ' + declared + ', found ' + found);
 };
 `
 
@@ -114,6 +114,6 @@ func (e *emitter) viewIntersectionUnion(property ir.Property, value string) stri
 		}
 		body += prefix + " ([" + strings.Join(allowed, ",") + "].includes(adamicIntersectionTag)) {" + e.viewIntersectionFields(member, "adamicIntersectionValue", property.View, map[ir.ViewContractID]bool{}, root.IntersectionTag) + "}"
 	}
-	body += "else {panic(" + quote("field read failed: "+property.View+"."+root.IntersectionTag+" expected "+tag.Name+", found ") + "+typeof adamicIntersectionTag+' '+adamicIntersectionTag); }"
+	body += "else {panic(" + quote("cast failed: field read failed: "+property.View+"."+root.IntersectionTag+" expected "+tag.Name+", found ") + "+typeof adamicIntersectionTag+' '+adamicIntersectionTag); }"
 	return "((adamicIntersectionValue) => { if (adamicIntersectionValue !== undefined) {" + body + "} return adamicIntersectionValue; })(" + value + ")"
 }

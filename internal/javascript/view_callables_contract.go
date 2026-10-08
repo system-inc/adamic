@@ -28,7 +28,7 @@ const adamicViewCallableShape = (value, recorded, expected, expression, optional
         }
     }
     const wanted = expected === undefined || expected === null ? "function with known signature" : expected.name;
-    panic("field read failed: " + expression + " expected " + wanted + ", found " + found);
+    panic("cast failed: field read failed: " + expression + " expected " + wanted + ", found " + found);
 };
 `
 

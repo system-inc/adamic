@@ -74,7 +74,7 @@ static inline const adamic_heap *adamic_view_callable_shape(
     size_t capacity = strlen(expression) + strlen(wanted) + strlen(found) + 80;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "field read failed: %s expected %s, found %s", expression, wanted, found);
+    int length = snprintf(message, capacity, "cast failed: field read failed: %s expected %s, found %s", expression, wanted, found);
     adamic_panic(message, (size_t)length);
 }
 #endif

@@ -408,7 +408,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
 	nominalUnion := l.nominalUnionWriteTarget(target)
-	if nominalUnion {
+	primitiveUnion := l.primitiveUnionWriteTarget(target)
+	boxedUnion := nominalUnion || primitiveUnion
+	if boxedUnion {
 		l.optionalViewWriteField(l.fieldName(target.Name()))
 	}
 	if symbol := l.checker.GetSymbolAtLocation(target); symbol != nil && symbol.Flags&ast.SymbolFlagsOptional != 0 && (l.result.OptionalViewFields[l.fieldName(target.Name())] || freshOptionalReceiver(target.AsPropertyAccessExpression().Expression) || l.neverOptionalReceiver(target.AsPropertyAccessExpression().Expression)) {
@@ -444,7 +446,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
+	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !boxedUnion {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	value := uninitializedValue(of)
@@ -454,7 +456,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, err
 		}
 	}
-	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
+	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !boxedUnion {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	writeContract := l.slotContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
@@ -492,7 +494,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")
 		}
 		write.Value, write.WriteContract = rawValue, writeContract
-		if nominalUnion {
+		if boxedUnion {
 			write.Value = fit(rawValue, ir.Union)
 		}
 		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(target))))

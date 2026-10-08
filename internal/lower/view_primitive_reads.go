@@ -79,3 +79,20 @@ func (l *lowering) preparePrimitivePropertyRead(declared *checker.Type, property
 	property.UndefinedAllowed = l.includesUndefined(declared)
 	property.NullishKinds = l.nullishViewKinds(declared)
 }
+
+// A backing slot can have a wider primitive union than the view reads. Intern
+// that declaration before deciding whether its representation conversion is
+// supported. The complete descriptor is still required; a storage tag alone
+// is never a certificate, and writes retain their original slot contract.
+func (l *lowering) preparePrimitiveViewDeclaration(node *ast.Node, declared *checker.Type) error {
+	declared = l.concrete(declared)
+	if !interfaceScalar(declared) {
+		return nil
+	}
+	of, known := l.representation(declared)
+	if !known || of != ir.Union {
+		return nil
+	}
+	_, err := l.viewContract(node, declared)
+	return err
+}

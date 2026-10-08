@@ -158,6 +158,11 @@ func (l *lowering) viewArrayCast(node *ast.Node, value ir.Expression, source, ta
 	if value.Type() != ir.Array || !l.checker.IsArrayType(l.withoutUndefined(source)) || !l.checker.IsArrayType(target) {
 		return nil, nil
 	}
+	if l.includesUndefined(source) && !l.isLibraryType(target, "ReadonlyArray") {
+		if err := l.nullableWritableArrayConsumers(node); err != nil {
+			return nil, err
+		}
+	}
 	// Readonly scalar elements introduce no writable slot; their type is checked
 	// lazily when read, including an unknown[] bridge into a readonly result.
 	readonlyScalar := l.isLibraryType(target, "ReadonlyArray") && interfaceScalar(l.concrete(l.viewArrayElementType(target)))

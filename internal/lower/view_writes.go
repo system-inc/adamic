@@ -23,7 +23,12 @@ func (l *lowering) slotContract(node *ast.Node, target *checker.Type) ir.ViewCon
 		return 0
 	}
 	of, known := l.representation(target)
-	if !known || (of != ir.Number && of != ir.Boolean && of != ir.String && of != ir.MaybeNumber && of != ir.MaybeBoolean && of != ir.Object) {
+	if known && of == ir.Union && interfaceScalar(target) {
+		if err := l.preparePrimitiveViewDeclaration(node, target); err != nil {
+			return 0
+		}
+	}
+	if !known || (of != ir.Number && of != ir.Boolean && of != ir.String && of != ir.MaybeNumber && of != ir.MaybeBoolean && of != ir.Object && !(of == ir.Union && l.viewPrimitiveUnionRead(target))) {
 		return 0
 	}
 	if of == ir.Object && len(l.checker.GetIndexInfosOfType(target)) != 0 {
@@ -110,4 +115,18 @@ func (l *lowering) nominalUnionWriteTarget(target *ast.Node) bool {
 	declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
 	of, known := l.representation(declared)
 	return known && of == ir.Union && isClassInstance(l.checker.GetNonNullableType(declared)) && l.mapNominalEntrySlot(target, declared) != 0
+}
+
+// Primitive-union backing slots remain boxed on every write. This is scoped
+// to a checked field and requires the complete declared union certificate.
+func (l *lowering) primitiveUnionWriteTarget(target *ast.Node) bool {
+	if !l.result.CheckedFields[l.fieldName(target.Name())] {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(target)
+	if symbol == nil {
+		return false
+	}
+	declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
+	return l.viewPrimitiveUnionRead(declared) && l.slotContract(target, declared) != 0
 }

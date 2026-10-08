@@ -62,7 +62,7 @@ int main(int argc,char **argv) {
 				continue
 			}
 			failure, ok := err.(*exec.ExitError)
-			want := "adamic: panic: field read failed: item matches no member of ID | Tuple; expected ID | Tuple, found " + sample.found + "\n"
+			want := "adamic: panic: cast failed: field read failed: item matches no member of ID | Tuple; expected ID | Tuple, found " + sample.found + "\n"
 			if !ok || failure.ExitCode() != 70 || out.Len() != 0 || errout.String() != want {
 				t.Fatalf("sanitize %v: %v %q %q", sanitize, err, out.String(), errout.String())
 			}
