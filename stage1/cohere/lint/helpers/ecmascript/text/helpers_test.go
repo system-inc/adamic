@@ -149,6 +149,7 @@ func TestTextMutants(t *testing.T) {
 	}
 	for _, m := range mutants {
 		t.Run(m.Symbol, func(t *testing.T) {
+			t.Parallel()
 			dir := t.TempDir()
 			for _, file := range files {
 				data, e := os.ReadFile(file)
