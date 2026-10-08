@@ -6,36 +6,40 @@
     "owner_area": "Runtime"
   },
   {
-    "site": "node_process.c:436",
-    "status": "external library source absent from this branch",
+    "site": "internal/native/runtime/node_process.c:442",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
     "snapshot": "132d9919",
-    "requires": "padding length is 3; pass actual count to typed dispatcher, and adapt builtin code definitions and closure initializers to this header",
     "owner_area": "Library",
-    "exact_replacement": "adamic_value result = adamic_closure_call(closure, padded, count);"
+    "original_site": "node_process.c:436",
+    "typed_call": "adamic_value result = adamic_closure_call(closure, padded, count);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
   },
   {
-    "site": "node_process.c:441",
-    "status": "external library source absent from this branch",
+    "site": "internal/native/runtime/node_process.c:447",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
     "snapshot": "132d9919",
-    "requires": "adamic_closure_call(closure, args, count)",
     "owner_area": "Library",
-    "exact_replacement": "return adamic_closure_call(closure, args, count);"
+    "original_site": "node_process.c:441",
+    "typed_call": "return adamic_closure_call(closure, args, count);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
   },
   {
-    "site": "parallel.c:197",
-    "status": "external library source absent from this branch",
+    "site": "internal/native/runtime/parallel.c:197",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
     "snapshot": "132d9919",
-    "requires": "adamic_closure_call(scope->work, arguments, 2); frontend must pack optional/rest layout consistently",
     "owner_area": "Runtime",
-    "exact_replacement": "adamic_value result = adamic_closure_call(scope->work, arguments, 2);"
+    "original_site": "parallel.c:197",
+    "typed_call": "adamic_value result = adamic_closure_call(scope->work, arguments, 2);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
   },
   {
-    "site": "parallel.c:300",
-    "status": "external library source absent from this branch",
+    "site": "internal/native/runtime/parallel.c:300",
+    "status": "carried; complete translation unit compiles in all three closure configurations under -Werror",
     "snapshot": "132d9919",
-    "requires": "adamic_closure_call(work, arguments, 2); same packing requirement",
     "owner_area": "Runtime",
-    "exact_replacement": "adamic_value result = adamic_closure_call(work, arguments, 2);"
+    "original_site": "parallel.c:300",
+    "typed_call": "adamic_value result = adamic_closure_call(work, arguments, 2);",
+    "mutant": "TestClosureConventionOwnerRuntimeSites drops the actual count; clang rejects expected 3, have 2"
   },
   {
     "site": "internal/native/runtime/regexp_replace.c:114",

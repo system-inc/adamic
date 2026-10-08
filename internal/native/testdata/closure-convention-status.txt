@@ -1,8 +1,8 @@
-Built: exact published scratch refusal, reconciled closure ABI, runtime owner handoff and taste21 diagnosis. Parser C/binary cmp against main 48c05d09 both exit 1; release best-five main 10.208 ms versus branch 10.854 ms, no parity claim.
-Commits: exact replay 6114dc36, diagnosis 287495fc, prior checkpoint b8acd621; all pushed on codex/closure-convention. Warning fa48dc2d is pushed on codex/arguments-length. Detached scratch 33bf53ac was never pushed or merged into this branch.
-Commands and outputs: original exact scratch Go/native builds succeed and print 9 versus Node 1; enforcement Go build succeeds, native Build and independent emitted-C compile both exit 1 under -Werror. Earlier release/sanitized reader and host24 Node acceptance pass.
-Mutants: drop-count, swapped definition/call and erased casts fail clang; wrong-slot 9-versus-1 fails Node stdout in release/sanitized builds. Exact scratch now refuses expected 2, have 3 at runtime sort, and its counted constructor fails _Generic checking.
-Not covered: parser literal byte identity, hardware instructions/cycles, recursive checked view required by taste21, and compilation of four external process/parallel sites. Exact replacement lines and owner areas are supplied. Historical pending replay statements below are superseded.
+Built: same-tree convention-only parser identity, no unused optional parser thunks, and all four owner runtime sites carried through the shared typedef. Parser C cmp=0 and release binary cmp=0 against be3926dc with only counted transport reverted.
+Commits: d2c2dc2b carries typed owner sites and receiver-aware optional admission; be3926dc selects owner modules consistently in cache harnesses. Exact scratch refusal remains proven by 6114dc36. Report/evidence follow on codex/closure-convention; neither scratch worktree is pushed.
+Commands and outputs: full native 193.860s, lower 53.986s and IR 17.792s pass; final uncached release/sanitized reader and two-backend Node gate 16.961s passes; touched vet passes. Both identical release parsers print 10523, exit 0, empty stderr.
+Mutants: each of four owner drop-count sites fails expected 3, have 2; missing required optional thunk compiles but Node catches native exit 70; forced unused thunk fails the emitted-C pin. Existing drop-count, wrong-order, cast and clean wrong-slot mutants remain caught.
+Not covered: hardware instructions/cycles, complete repository gate, broad new performance-host or threaded-runtime activation. Taste21 is an unchanged recursive checked-views gap for the views lanes. Historical main-only identity failures below do not isolate convention overhead.
 
 One convention
 
@@ -277,3 +277,10 @@ The exact replay requirement is now covered; historical pending statements above
 are superseded. Parser byte identity and the full taste21 acceptance remain open.
 Literal C/binary cmp both exit 1; parser-literal-cmp.log records byte locations
 and all four artifact hashes. No performance parity is claimed.
+
+Convention-only completion
+
+See closure-convention-evidence/clean-parser-identity.md and .json for the exact
+three-file reverted baseline, hashes, commands, cmp=0 results, runtime audit and
+mutants. Earlier claims that four sites remain external or clean byte identity
+is unmet are superseded. Taste21 remains assigned to checked views.

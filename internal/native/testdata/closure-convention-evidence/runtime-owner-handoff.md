@@ -1,8 +1,10 @@
 # External runtime call-site handoff
 
-Source locations are from library snapshot 132d9919. These four sites are absent
-from codex/closure-convention; the replacements below are owner instructions,
-not a claim that those translation units have been built on this branch.
+Source locations are from library snapshot 132d9919. All four sites are now carried on codex/closure-convention. node_process.c
+locations move to 442/447 after prior typed declarations were inserted; parallel
+locations remain 197/300. Both complete translation units compile under -Werror
+in plain, counted and counted plus receiver/canonical configurations. Broader
+host/shared-heap activation remains outside this compiler's admitted operations.
 
 | File:line | Owner area | Exact replacement line |
 | --- | --- | --- |
