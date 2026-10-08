@@ -1,0 +1,14 @@
+function right(): number { console.log('right side'); return 9; }
+function write(mode: string): void {
+    switch (mode) {
+        case 'init':
+            let value = 7;
+            console.log(`${value}`);
+            break;
+        default:
+            const write = (): void => { value = right(); };
+            write();
+            console.log('unreachable');
+    }
+}
+write('skip');

@@ -1,0 +1,13 @@
+function read(mode: string): void {
+    switch (mode) {
+        case 'init':
+            let value = 7;
+            console.log(`${value}`);
+            break;
+        default:
+            const read = (): number => value;
+            console.log('before read');
+            console.log(`${read()}`);
+    }
+}
+read('skip');

@@ -4,7 +4,7 @@ function name(kind: string, parent: FunctionType, parameter: string): string {
         case 'Parameter':
             const functionType = parent;
             const index = functionType.parameters.indexOf(parameter);
-            return 'arg' + index;
+            return `arg${index}`;
         default:
             return 'other';
     }
