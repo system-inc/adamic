@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return classSetPropertyRefusalFixture(path) || refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

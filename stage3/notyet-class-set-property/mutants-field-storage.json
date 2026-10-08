@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "undefined-symbol",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-undefined-symbol.log"
+  },
+  {
+    "mutant": "undefined-write-elided",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-undefined-write-elided.log"
+  },
+  {
+    "mutant": "intersection-kept",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-intersection-kept.log"
+  },
+  {
+    "mutant": "intersection-packed",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-intersection-packed.log"
+  },
+  {
+    "mutant": "intersection-phantom",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-intersection-phantom.log"
+  },
+  {
+    "mutant": "intersection-agreement",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-intersection-agreement.log"
+  }
+]

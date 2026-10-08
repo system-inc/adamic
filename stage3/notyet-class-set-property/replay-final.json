@@ -1,0 +1,428 @@
+[
+  {
+    "site": "method",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:1543:17",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1544:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1545:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1546:12",
+        "reason": "reading map"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-method.log"
+  },
+  {
+    "site": "method2",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/sys.ts:1387:49",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-method2.log"
+  },
+  {
+    "site": "node",
+    "exit": 1,
+    "findings": [],
+    "log": "/tmp/adamic-class-set-property-after-non-null-node.log"
+  },
+  {
+    "site": "node2",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8987:48",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8998:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-node2.log"
+  },
+  {
+    "site": "any",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2068:44",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-any.log"
+  },
+  {
+    "site": "any2",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2080:5",
+        "reason": "storing any in a field"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2083:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2291:114",
+        "reason": "a rest parameter outside a nongeneric named function"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:609:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:610:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:614:24",
+        "reason": "an array of ResolvedConfigFileName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:619:23",
+        "reason": "a BinaryExpression with a value and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:622:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:660:68",
+        "reason": "a function returning ResolvedConfigFileName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "a Map of ResolvedConfigFilePath"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:666:29",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:672:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8199:1",
+        "reason": "overload 1 of mutateMapSkippingNewValues with additional implementation type parameters"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:692:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:719:31",
+        "reason": "reading buildOrder"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:656:12",
+        "reason": "a BinaryExpression with a union of differently held members and a union of differently held members"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1212:47",
+        "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2287:109",
+        "reason": "a rest parameter outside a nongeneric named function"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2364:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2372:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2379:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2386:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2393:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2400:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2407:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2416:17",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2427:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2433:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2439:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2446:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2455:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2462:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2470:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:2484:31",
+        "reason": "a value of type T"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1321:39",
+        "reason": "a value of type ResolvedConfigFileName"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:1322:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2090:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2094:17",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2068:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2104:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/tsbuildPublic.ts:778:1",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-any2.log"
+  },
+  {
+    "site": "receiver",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-receiver.log"
+  },
+  {
+    "site": "intersection",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/jsx.ts:113:29",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/transformers/jsx.ts:114:48",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-intersection-packed-intersection.log"
+  },
+  {
+    "site": "false-type",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:15220:20",
+        "reason": "a BinaryExpression with a union of differently held members and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:15237:17",
+        "reason": "a BinaryExpression with a value and a boolean"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-false-type.log"
+  },
+  {
+    "site": "false-paths",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2409:49",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:2411:12",
+        "reason": "a BinaryExpression with a union of differently held members and a value"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-false-paths.log"
+  },
+  {
+    "site": "keyof",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/builder.ts:1502:71",
+        "reason": "a value of type Path"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-keyof.log"
+  },
+  {
+    "site": "scalar",
+    "exit": 1,
+    "findings": [],
+    "log": "/tmp/adamic-class-set-property-after-non-null-scalar.log"
+  },
+  {
+    "site": "big",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/checker.ts:20277:22",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:20278:9",
+        "reason": "reading type"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:20279:9",
+        "reason": "reading type"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:20280:16",
+        "reason": "reading type"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-big.log"
+  },
+  {
+    "site": "undefined",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/utilities.ts:10655:6",
+        "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      },
+      {
+        "kind": "Refused",
+        "where": "src/compiler/utilities.ts:10645:6",
+        "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after-non-null-undefined.log"
+  }
+]

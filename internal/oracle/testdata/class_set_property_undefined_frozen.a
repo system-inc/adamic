@@ -1,0 +1,4 @@
+const holder = { member: undefined };
+Object.freeze(holder);
+holder.member = undefined;
+console.log('unreachable');

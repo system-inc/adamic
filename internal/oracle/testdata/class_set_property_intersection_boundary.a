@@ -1,0 +1,4 @@
+interface Box { readonly label: string; }
+type Refined = { readonly name: Box | boolean } & { readonly name: Box };
+function read(value: Refined): string { return value.name.label; }
+console.log(read({ name: { label: 'kept' } }));
