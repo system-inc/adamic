@@ -144,8 +144,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/10_build_options.a:25:13: stage 0 can't lower an unrestricted dictionary write that can violate named property tscBuild; use a literal key or a value accepted by every named property yet"
     }
   },
   {

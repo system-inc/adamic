@@ -32,7 +32,7 @@ func TestNamedRecordReadTypes(t *testing.T) {
 func TestNamedRecordRefusals(t *testing.T) {
 	for _, probe := range []struct{ source, reason string }{
 		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind"},
-		{`interface R {named?:number;[key:string]:number|string|boolean|null|undefined} const r:R={};`, "slot representation"},
+		{`interface R {named?:number;[key:string]:number|string|boolean|null|undefined} const r:R={};`, "nullable reference"},
 		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named"},
 		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as"},
 		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as"},

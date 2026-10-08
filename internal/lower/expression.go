@@ -54,7 +54,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.finitePartialRecordElement(proven) != nil {
 		return ir.Record, true
 	}
-	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray", "String", "Uint8Array") {
 		if l.recordElement(proven) != nil {
 			return ir.Record, true
 		}
@@ -112,7 +112,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 					continue
 				}
 				held, known := l.representation(member)
-				if !known || !held.IsReference() || held == ir.Union || held == ir.Weak || (reference != 0 && (held != ir.String || reference != ir.String)) {
+				if !known || !held.IsReference() || held == ir.Record || held == ir.Union || held == ir.Weak || (reference != 0 && (held != ir.String || reference != ir.String)) {
 					return 0, false
 				}
 				reference = held
@@ -154,6 +154,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				return maybe, true
 			}
 			return 0, false
+		}
+		if shared == ir.Record && l.includesNull(proven) {
+			return 0, false // Dictionary nullable metadata is not part of this records path.
 		}
 		return shared, shared != 0
 	}
