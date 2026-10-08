@@ -1,0 +1,12 @@
+=== RUN   TestJsxKeyUnit
+=== PAUSE TestJsxKeyUnit
+=== CONT  TestJsxKeyUnit
+    lint_test.go:295: cohere cases: 5362 unique source/rule/options combinations
+    jsx_key_unit_test.go:29: checker compilation phases: load=227.608885ms lower=6.568317049s C=772.518164ms JavaScript=37.784503ms
+    jsx_key_unit_test.go:29: checker native build: 1m8.557989046s
+    jsx_key_unit_test.go:29: checker compilation phases: load=195.895868ms lower=6.268542462s C=581.324244ms JavaScript=28.785581ms
+    jsx_key_unit_test.go:29: Go, Node, emitted JavaScript, native identical: 557857 bytes
+    jsx_key_unit_test.go:30: jsx-key upstream cases matched: 157; owned witnesses: 2
+--- PASS: TestJsxKeyUnit (338.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	338.928s

@@ -1,0 +1,35 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestMutants
+=== RUN   TestMutants/jsx-key-collection-case-fold
+=== PAUSE TestMutants/jsx-key-collection-case-fold
+=== CONT  TestMutants/jsx-key-collection-case-fold
+    lint_test.go:1000: checker compilation phases: load=787.038125ms lower=7.744424423s C=1.899098047s JavaScript=68.980546ms
+    lint_test.go:1006: jsx-key-collection-case-fold caught on Node: case 89 line 4622: port "/tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:2:20", Go "/tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:1:2"
+        Go context:
+          react/jsx-key  This element is produced by an iterator and is written as a shorthand fragment, which has no syntax for a `key`. React reconciles the list by position instead, so inserting or reordering an item makes the elements after it adopt the wrong state. Write `React.Fragment` in full, which does accept a `key`.
+        
+        range 61 69 missingIterKeyUsePrag 			61 69
+        fixed	[<><A/></>, <A {...p} key="a"/>, <B key="a"/>];\u000a[1].map(x => <>{x}</>);\u000a
+        case 89
+        /tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:1:2
+          react/jsx-key  This element sits in an array literal and carries no `key`. React reconciles the array by position when it has no key, so changing the order or the length makes the surviving elements adopt their neighbours' state. Give each element a `key` that identifies it rather than its position.
+        
+        range 1 16 missingArrayKey 			1 16
+        /tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:2:20
+    lint_test.go:1006: jsx-key-collection-case-fold caught on emitted JavaScript: case 89 line 4622: port "/tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:2:20", Go "/tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:1:2"
+        Go context:
+          react/jsx-key  This element is produced by an iterator and is written as a shorthand fragment, which has no syntax for a `key`. React reconciles the list by position instead, so inserting or reordering an item makes the elements after it adopt the wrong state. Write `React.Fragment` in full, which does accept a `key`.
+        
+        range 61 69 missingIterKeyUsePrag 			61 69
+        fixed	[<><A/></>, <A {...p} key="a"/>, <B key="a"/>];\u000a[1].map(x => <>{x}</>);\u000a
+        case 89
+        /tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:1:2
+          react/jsx-key  This element sits in an array literal and carries no `key`. React reconciles the array by position when it has no key, so changing the order or the length makes the surviving elements adopt their neighbours' state. Give each element a `key` that identifies it rather than its position.
+        
+        range 1 16 missingArrayKey 			1 16
+        /tmp/adamic-gate/TestMutantsjsx-key-collection-case-fold2176207443/020/react-jsx-key-1.tsx:2:20
+--- PASS: TestMutants (3.34s)
+    --- PASS: TestMutants/jsx-key-collection-case-fold (13.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	17.304s
