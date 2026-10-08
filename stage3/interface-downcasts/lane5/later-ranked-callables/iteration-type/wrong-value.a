@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Type {readonly value:number;}
+interface Node {readonly value:number;}
+interface Base {readonly resolveIterationType:unknown;}
+interface Target {resolveIterationType: (type: Type, errorNode: Node | undefined) => Type | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.resolveIterationType({value:3},{value:4});console.log(`${result===undefined?0:result.value}`);}
+probe({resolveIterationType:3});

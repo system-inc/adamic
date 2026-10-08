@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type Path=string;
+interface Base {readonly toPath:unknown;}
+interface Target {toPath(fileName: string): Path;}
+function probe(value:Base):void {const host=value as Target;const rootDir="root";console.log(host.toPath(rootDir));}
+probe({toPath:(fileName:string):number=>9});

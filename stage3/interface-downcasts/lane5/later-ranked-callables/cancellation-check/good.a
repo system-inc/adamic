@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent helpers reduced.
+interface Base {readonly throwIfCancellationRequested:unknown;}
+interface Target {throwIfCancellationRequested(): void;}
+function probe(value:Base):void {const cancellationToken=value as Target;cancellationToken.throwIfCancellationRequested();}
+probe({throwIfCancellationRequested:():void=>{console.log("3");}});

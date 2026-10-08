@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ExpressionWithTypeArguments {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly createExpressionWithTypeArguments:unknown;}
+interface Target {createExpressionWithTypeArguments(expression: Expression, typeArguments: readonly TypeNode[] | undefined): ExpressionWithTypeArguments;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createExpressionWithTypeArguments({value:3},[{value:4}]).value}`);}
+probe({createExpressionWithTypeArguments:(expression:{readonly value:string},typeArguments:readonly TypeNode[]|undefined)=>({value:expression.value})});

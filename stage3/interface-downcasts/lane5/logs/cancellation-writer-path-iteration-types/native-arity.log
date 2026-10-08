@@ -1,0 +1,39 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.46s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/cancellation-check/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "throwIfCancellationRequested" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/writer-text/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "getText" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/redirect-path/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "toPath" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/iteration-type/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "resolveIterationType" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/specifier-directory/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "getCurrentDirectory" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/expression-type-arguments/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "createExpressionWithTypeArguments" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/indexed-access-type/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "createIndexedAccessTypeNode" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/logical-not/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node miss
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend0 exit 0 stdout "9\n" stderr "" want "createLogicalNot" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.463s
+FAIL

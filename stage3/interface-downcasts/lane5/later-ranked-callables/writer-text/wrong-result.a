@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly getText:unknown;}
+interface Target {getText(): string;}
+function probe(value:Base):void {const stringWriter=value as Target;console.log(stringWriter.getText());}
+probe({getText:():number=>3});

@@ -1,0 +1,7 @@
+native-arity: caught for cancellation-check, writer-text, redirect-path, iteration-type, specifier-directory, expression-type-arguments, indexed-access-type, logical-not
+javascript-arity: caught for cancellation-check, writer-text, redirect-path, iteration-type, specifier-directory, expression-type-arguments, indexed-access-type, logical-not
+native-result: caught for writer-text, redirect-path, iteration-type, specifier-directory, expression-type-arguments, indexed-access-type, logical-not
+javascript-result: caught for writer-text, redirect-path, iteration-type, specifier-directory, expression-type-arguments, indexed-access-type, logical-not
+native-parameters: caught for redirect-path, iteration-type, expression-type-arguments, indexed-access-type, logical-not
+javascript-parameters: caught for redirect-path, iteration-type, expression-type-arguments, indexed-access-type, logical-not
+payload-reads: caught for iteration-type, expression-type-arguments, indexed-access-type, logical-not

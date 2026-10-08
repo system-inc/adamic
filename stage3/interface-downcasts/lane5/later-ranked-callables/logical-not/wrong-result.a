@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface PrefixUnaryExpression {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly createLogicalNot:unknown;}
+interface Target {createLogicalNot(operand: Expression): PrefixUnaryExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createLogicalNot({value:3}).value}`);}
+probe({createLogicalNot:(operand:Expression):number=>0});

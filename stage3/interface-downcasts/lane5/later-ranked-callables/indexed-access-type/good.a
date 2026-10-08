@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface IndexedAccessTypeNode {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly createIndexedAccessTypeNode:unknown;}
+interface Target {createIndexedAccessTypeNode(objectType: TypeNode, indexType: TypeNode): IndexedAccessTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createIndexedAccessTypeNode({value:3},{value:4}).value}`);}
+probe({createIndexedAccessTypeNode:(objectType:TypeNode,indexType:TypeNode):IndexedAccessTypeNode=>{return {value:objectType.value+indexType.value};}});

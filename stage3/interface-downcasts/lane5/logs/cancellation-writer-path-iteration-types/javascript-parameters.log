@@ -1,0 +1,27 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.99s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/redirect-path/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "root/3\n" stderr "" want "toPath" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: host.toPath expected (fileName: string) => string, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/iteration-type/wrong-members (0.37s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "7\n" stderr "" want "resolveIterationType" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: resolver.resolveIterationType expected (type: Type, errorNode: Node | undefined) => Type | undefined, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/expression-type-arguments/wrong-members (0.37s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "7\n" stderr "" want "createExpressionWithTypeArguments" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExpressionWithTypeArguments expected (expression: Expression, typeArguments: readonly TypeNode[] | undefined) => ExpressionWithTypeArguments, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/indexed-access-type/wrong-members (0.42s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "7\n" stderr "" want "createIndexedAccessTypeNode" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createIndexedAccessTypeNode expected (objectType: TypeNode, indexType: TypeNode) => IndexedAccessTypeNode, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/logical-not/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "3\n" stderr "" want "createLogicalNot" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createLogicalNot expected (operand: Expression) => PrefixUnaryExpression, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=5 misses=5
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.998s
+FAIL

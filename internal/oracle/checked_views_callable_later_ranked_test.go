@@ -8,6 +8,14 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"cancellation-check", "throwIfCancellationRequested", "3\n", "", "1", "", "", "", "good,wrong-value,wrong-arity"},
+		{"writer-text", "getText", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"redirect-path", "toPath", "root/3\n", "", "0", "", "", "9\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"iteration-type", "resolveIterationType", "7\n", "0\n3\n7\n", "0", "type.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"specifier-directory", "getCurrentDirectory", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"expression-type-arguments", "createExpressionWithTypeArguments", "7\n", "3\n3\n7\n", "0", "expression.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"indexed-access-type", "createIndexedAccessTypeNode", "7\n", "", "0", "objectType.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"logical-not", "createLogicalNot", "3\n", "", "0", "operand.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"outer-expressions", "restoreOuterExpressions", "7\n", "4\n4\n9\n", "0", "innerExpression.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"get-accessor-update", "updateGetAccessorDeclaration", "21\n", "4\n4\n4\n4\n4\n4\n4\n21\n", "0", "parameter.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"parenthesized-update", "updateParenthesizedExpression", "7\n", "", "0", "node.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

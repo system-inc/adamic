@@ -1790,6 +1790,175 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 5045
+    },
+    {
+      "rank": 199,
+      "type": "CancellationToken",
+      "field": "throwIfCancellationRequested",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6770,
+        "column": 38
+      },
+      "read": "cancellationToken.throwIfCancellationRequested",
+      "readKind": "property",
+      "call": "cancellationToken && cancellationToken.throwIfCancellationRequested",
+      "utf16Start": 356136,
+      "utf16End": 356182,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "throwIfCancellationRequested(): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4592
+    },
+    {
+      "rank": 200,
+      "type": "EmitTextWriter",
+      "field": "getText",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 786,
+        "column": 23
+      },
+      "read": "stringWriter.getText",
+      "readKind": "property",
+      "call": "stringWriter.getText()",
+      "utf16Start": 20762,
+      "utf16End": 20782,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "getText(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9963
+    },
+    {
+      "rank": 201,
+      "type": "HostForUseSourceOfProjectReferenceRedirect",
+      "field": "toPath",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 4920,
+        "column": 75
+      },
+      "read": "host.toPath",
+      "readKind": "property",
+      "call": "host.toPath(out)",
+      "utf16Start": 257299,
+      "utf16End": 257310,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "toPath(fileName: string): Path;",
+      "declarationFile": "src/compiler/program.ts",
+      "declarationSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declarationLine": 4885
+    },
+    {
+      "rank": 202,
+      "type": "IterationTypesResolver",
+      "field": "resolveIterationType",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 39302,
+        "column": 21
+      },
+      "read": "resolver.resolveIterationType",
+      "readKind": "property",
+      "call": "resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)",
+      "utf16Start": 2323958,
+      "utf16End": 2323987,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "resolveIterationType: (type: Type, errorNode: Node | undefined) => Type | undefined;",
+      "declarationFile": "src/compiler/checker.ts",
+      "declarationSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationLine": 1215,
+      "declarationKind": "property-function"
+    },
+    {
+      "rank": 206,
+      "type": "ModuleSpecifierResolutionHost",
+      "field": "getCurrentDirectory",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 466,
+        "column": 70
+      },
+      "read": "host.getCurrentDirectory",
+      "readKind": "property",
+      "call": "host.getCurrentDirectory()",
+      "utf16Start": 19166,
+      "utf16End": 19190,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declaration": "getCurrentDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9989
+    },
+    {
+      "rank": 207,
+      "type": "NodeFactory",
+      "field": "createExpressionWithTypeArguments",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 6032,
+        "column": 34
+      },
+      "read": "factory.createExpressionWithTypeArguments",
+      "readKind": "property",
+      "call": "factory.createExpressionWithTypeArguments(expression, typeArguments)",
+      "utf16Start": 295336,
+      "utf16End": 295377,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createExpressionWithTypeArguments(expression: Expression, typeArguments: readonly TypeNode[] | undefined): ExpressionWithTypeArguments;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9006
+    },
+    {
+      "rank": 208,
+      "type": "NodeFactory",
+      "field": "createIndexedAccessTypeNode",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 4738,
+        "column": 43
+      },
+      "read": "factory.createIndexedAccessTypeNode",
+      "readKind": "property",
+      "call": "factory.createIndexedAccessTypeNode(type, indexType)",
+      "utf16Start": 233209,
+      "utf16End": 233244,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createIndexedAccessTypeNode(objectType: TypeNode, indexType: TypeNode): IndexedAccessTypeNode;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8917
+    },
+    {
+      "rank": 209,
+      "type": "NodeFactory",
+      "field": "createLogicalNot",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 867,
+        "column": 25
+      },
+      "read": "factory.createLogicalNot",
+      "readKind": "property",
+      "call": "factory.createLogicalNot(done)",
+      "utf16Start": 38293,
+      "utf16End": 38317,
+      "fileSha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+      "declaration": "createLogicalNot(operand: Expression): PrefixUnaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9348
     }
   ]
 }

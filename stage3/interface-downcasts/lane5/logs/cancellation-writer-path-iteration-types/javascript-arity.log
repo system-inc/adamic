@@ -1,0 +1,39 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.01s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/cancellation-check/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "throwIfCancellationRequested" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: cancellationToken.throwIfCancellationRequested expected () => void, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/writer-text/wrong-arity (0.35s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "getText" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: stringWriter.getText expected () => string, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/redirect-path/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "toPath" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: host.toPath expected (fileName: string) => string, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/iteration-type/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "resolveIterationType" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: resolver.resolveIterationType expected (type: Type, errorNode: Node | undefined) => Type | undefined, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/specifier-directory/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "getCurrentDirectory" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/expression-type-arguments/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "createExpressionWithTypeArguments" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExpressionWithTypeArguments expected (expression: Expression, typeArguments: readonly TypeNode[] | undefined) => ExpressionWithTypeArguments, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/indexed-access-type/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "createIndexedAccessTypeNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createIndexedAccessTypeNode expected (objectType: TypeNode, indexType: TypeNode) => IndexedAccessTypeNode, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/logical-not/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:97: gate cache node hit
+        checked_views_callable_later_ranked_test.go:117: gate cache node miss
+        checked_views_callable_later_ranked_test.go:137: backend2 exit 0 stdout "9\n" stderr "" want "createLogicalNot" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createLogicalNot expected (operand: Expression) => PrefixUnaryExpression, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=8 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.014s
+FAIL
