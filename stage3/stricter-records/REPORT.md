@@ -1,8 +1,8 @@
-Built readonly string-key record lowering for D129/D130/D131 through the existing runtime table and indexed presence guard.
-Commits: base dfb82dabbf7b548de84a334ae5e72935bd08ce90; implementation cb0e4d61dd1a2be5401f59cfe6eaf75f8232e3f1; final proof/report is this branch-head commit.
-Commands and outputs: record proofs 20.491s, lowering 15.145s, native package 179.381s, 36 uncached oracle fixtures 19.480s, vet exit 0.
-Mutants: six single-site guard erasures caught in both native modes (12 builds/runs), one JS prototype-guard erasure caught, and the existing nine native record runtime mutants pass their detection tests.
-Not covered: mutable records, recursive/nullable/tagged payloads, computed construction keys, reflection/spread, full repository gate and whole-program compiler build.
+Built finite nested readonly records for D119 using the existing representation and presence guard; chained reads check each level once.
+Commits: parent 28d30cd3b4924f975049aa686523de975f6a9cdb; extension 96e1eafc2d9c50fca730102305b368e3483b342f; final report is this branch-head commit.
+Commands and outputs: record proofs 23.896s, all lowering tests 15.557s, record runtime tests 30.502s, eight uncached Node oracle fixtures 1.318s, vet and diff check exit 0.
+Mutants: outer record, inner record and inner array guard erasures each caught in release and sanitized builds; all six print undefined with exit 0; previous guard and runtime mutants also pass.
+Not covered: mutable or cyclic records, expanding generic graphs, more than 64 record levels, nullable/tagged payloads, d's own harness, full repository gate or whole-program compiler build.
 
 ## Scope and merge contract
 
@@ -41,8 +41,9 @@ shorthand __proto__ data-property form work; prototype-setting literal syntax
 refuses. RegExp named-group dictionaries retain their existing representation.
 
 Conservative scope: one readonly string index signature, no named fields or
-call/construct signatures, with nonnullable number/boolean/string values or
-arrays of those scalars. Mutable tables and recursive payloads are refused until
+call/construct signatures, with finite nested readonly records, nonnullable number/boolean/string values or
+arrays of those scalars. Nesting beyond 64 record levels is conservatively refused.
+Mutable tables and cyclic or expanding generic payloads are refused until
 index-slot invariance and reachability proofs support them. Arrays stored as
 values still retain their ordinary mutable-slot invariance. Fixed-object/record
 views, including nested views and casts, cannot reinterpret one representation
@@ -50,7 +51,7 @@ as the other. Mixed record unions, intersections and reflection remain unsupport
 
 ## Observations
 
-Seven source templates are materialized as .ts interoperability probes under
+The initial seven source templates are materialized as .ts interoperability probes under
 their own strict tsconfig with noUncheckedIndexedAccess off. Node executes that
 same source with type stripping. These are requested interoperability witnesses,
 not newly authored Adamic programs.
@@ -134,3 +135,91 @@ Observed: the three blocked record rows' shared shape is supported and proven.
 Inference: d can complete those rows after merging and updating its harness
 expectations. This report does not claim d's unchanged harness passes, that the
 whole TypeScript compiler lowers, or that mutable Record<string,T> is supported.
+
+
+## D119 nested payload extension, October 8
+
+The latest request pins D119 on codex/stricter-indexed-d at 71897d7e.
+Its read `typesVersions[key]` has receiver type
+`{ readonly [key: string]: { readonly [path: string]: string[] } }`.
+The witness preserves that receiver and string-variable index form, including
+its record-valued result. Present `{ version: { entry: ["7"] } }` prints 7;
+absent `{}` prints undefined under source Node. Both compiled backends instead
+stop at the read with independently located, exact
+`adamic: panic: indexed read is absent: <file>:<line>:<column>` stderr and exit 70.
+CLI explain lists one checked indexed-presence site and trusted=0.
+
+The extension only changes record type validation and record view validation.
+Every nested level must satisfy the existing readonly string index signature
+constraints; scalars and scalar arrays remain the leaves. The active type path
+rejects direct and mutual recursive types. A 64-level bound also rejects
+expanding generics that instantiate a different checker type at every edge.
+This is a conservative implementation limit, not a claim that such finite
+JavaScript objects cannot exist. No IR kind, backend emitter, runtime table or
+guard helper was duplicated or changed. Nested views recurse through the existing
+keeping and mutable-array widening checks, so accepting a nested record cannot
+silently expose its literal-string array as a writable string array.
+
+Two supplemental witnesses isolate the next levels:
+
+| Prefix | Missing value | Checks / record gets / array gets | Mutant |
+|---|---|---|---|
+| `typesVersions[key]` (D119) | outer version key | 1 / 1 / 0 | erase outer record guard |
+| `typesVersions[key][path]` | inner entry key | 2 / 2 / 0 | erase inner record guard; outer retained |
+| `typesVersions[key][path][i]` | final array element | 3 / 2 / 1 | erase array guard; both record guards retained |
+
+Each prefix's present control matches source Node in JS and native release and
+ASan/UBSan. Each missing-last-level source Node control prints undefined, while
+both compiled backends stop with the pinned site stderr and exit 70. The IR
+and explain assertions require exactly one check per read; C assertions require
+exactly one lookup per read. Chained AST nodes share their starting location,
+so explain repeats that location two or three times with the corresponding
+checked count. Each emitted-C mutant builds and runs in both native modes,
+exits 0 and prints undefined: all six are caught by the exact stderr/exit assertion.
+Earlier prefix guards remain present. The successful counted sanitizer controls
+for all three prefixes each allocate and free five objects, with zero regions.
+
+The expanded function/alias witness returns the nested record through a
+side-effecting receiver, then calls side-effecting outer key, inner key and
+array index functions. Source Node and both compiled backends print each label
+once in that order, then vv, vv, true, true. This preserves outer and inner
+identity and uses an allocated string payload under native sanitizers.
+Six added Node-held refusal controls cover nested mutable tables, nested null,
+mutual recursion, expanding generics, nested mutable-array widening and nested
+record-to-fixed views. All original boundary controls still pass (21 total).
+
+The full record witness suite reran all nine native single-site erasures in
+both modes (18 mutant builds/runs) and the JS prototype guard erasure. The
+focused runtime suite reran its nine existing runtime mutants: unsorted keys,
+UINT32_MAX key classification, deleted iterator keys, overwrite-key leak,
+stored-key premature free, null own-slot read, restored prototype membership,
+silent missing read, and own-hit falsely guarded. All were caught by their
+Node, named-stop or sanitizer assertions. Raw output is in evidence/nested-*.log.
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/nested-records-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+go test -count=1 -v ./stage3/stricter-records > /tmp/nested-records-proof-final.log 2>&1
+go test -count=1 -timeout 10m ./internal/lower > /tmp/nested-records-lower.log 2>&1
+go test -count=1 -v ./internal/native -run '^TestRecordsAgainstNode$|^TestRecordMutants$|^TestRecordReadMutants$' > /tmp/nested-records-runtime.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 10m -v ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(indexing|string_index|maps_and_text|objects)\.a$' > /tmp/nested-records-oracle.log 2>&1
+go vet ./internal/lower ./stage3/stricter-records > /tmp/nested-records-vet.log 2>&1
+git diff --check > /tmp/nested-records-whitespace.log 2>&1
+```
+
+The oracle selection ran eight fixtures (including four object foreach fixtures
+matched by Go's slash-separated filtering), with native zero hits/24 misses,
+Node zero hits/16 misses. All passed. The first nested proof run also passed in
+28.202s; the final run above includes the expanded alias/evaluation-order control.
+No failed or resource-killed test run occurred in this extension.
+Setup timings: Go and Node ready 0.023s, submodules 0.084s, markdown skip step
+0.031s / ready 0.096s, clang 0.208s, Go build 40.268s, deferred test binaries
+40.405s, build cache warm 40.407s, done 40.439s. nproc=5, cpu.max=400000 100000;
+Go 1.27.1, clang 20.1.8, Node v24.19.0.
+
+Observed: D119's nested shape now lowers and its guard can fail. Inference: d can
+merge this branch and finish its own row by removing the refusal expectation;
+D119 itself requires one guard. Its supplemental full chain would require three.
+This branch does not claim d's unchanged harness passes or that nullable/typed-array
+work from its later dependency merges is part of this records base.
