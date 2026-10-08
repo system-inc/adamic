@@ -1,0 +1,2 @@
+const values = new Array<number>(2);
+console.log(`${values[0] ?? 'undefined'}`);
