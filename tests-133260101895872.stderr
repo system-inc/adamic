@@ -1,0 +1,12 @@
+# github.com/system-inc/adamic/bridge/tsgo/checker [github.com/system-inc/adamic/bridge/tsgo/checker.test]
+bridge/tsgo/checker/declaration_facts.go:17:11: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/declaration_facts.go:22:55: source.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/facts.go:303:14: cannot use f.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/program_module_resolution.go:17:12: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/program_module_resolution.go:63:60: cannot use resolved.ResolvedFileName (variable of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as *module.ResolvedModule value in argument to p.Compiler.GetSourceFileForResolvedModule
+bridge/tsgo/checker/program_module_resolution.go:64:15: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in assignment
+bridge/tsgo/checker/resolved_call_target.go:33:11: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/symbol_declaration_paths.go:27:12: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/type_declaration_ancestry.go:41:13: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/type_leaf_facts.go:54:12: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/type_leaf_facts.go:54:12: too many errors
