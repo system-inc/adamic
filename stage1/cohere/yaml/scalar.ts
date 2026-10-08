@@ -224,7 +224,7 @@ export class ScalarResolver {
         let chompStart = lines.length;
         for(let index = lines.length - 1; index >= 0; index--) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(emptyContent(line.content)) chompStart = index;
             else break;
         }
@@ -239,7 +239,7 @@ export class ScalarResolver {
         let contentStart = 0;
         for(let index = 0; index < chompStart; index++) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(emptyContent(line.content)) {
                 if(indent === 0 && line.indent.length > trimIndent) trimIndent = line.indent.length;
             }
@@ -260,7 +260,7 @@ export class ScalarResolver {
         }
         for(let index = lines.length - 1; index >= chompStart; index--) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(line.indent.length > trimIndent) chompStart = index + 1;
         }
         let separator = '';
@@ -271,7 +271,7 @@ export class ScalarResolver {
         }
         for(let index = contentStart; index < chompStart; index++) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             let lineIndent = line.indent;
             let content = line.content;
             offset += lineIndent.length + content.length + 1;

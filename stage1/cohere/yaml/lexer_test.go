@@ -227,6 +227,7 @@ func TestLexerMutants(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, mutant := range []struct{ name, from, to string }{
+		{"empty character waits at end", "if(!nextUnit && !this.atEnd)", "if(!nextUnit)"},
 		{"keep chomping lost", "this.blockScalarKeep = true;", "this.blockScalarKeep = false;"},
 		{"tab not whitespace", "|| unit === 9;", "|| unit === 8;"},
 		{"BOM not split", "character(line, 0) === '\\ufeff'", "character(line, 0) === 'X'"},
