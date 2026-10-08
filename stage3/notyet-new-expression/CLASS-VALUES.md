@@ -1,3 +1,5 @@
+Uint16Array coverage in this historical report is withdrawn. See [UINT16-WITHDRAWN.md](UINT16-WITHDRAWN.md) for the current NotYet and runtime-review disposition.
+
 Built class constructor values for identifiers, parentheses and properties, with constructor capture before arguments and nullish global caches.
 Commit SHA is reported with the push; the Uint16Array group is b50442f2e62d2a5b10bdb7d858780c542e271a45.
 Focused Node oracle passed 0.515s; lower 27.427s and oracle 161.952s; counts refresh 21.238s.

@@ -14,7 +14,7 @@ func cType(valueType ir.Type) string {
 		return "bool"
 	case ir.Object:
 		return "adamic_object *"
-	case ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array:
+	case ir.Uint8Array, ir.Int32Array, ir.Float64Array:
 		return "adamic_typed_array *"
 	case ir.Array:
 		return "adamic_array *"

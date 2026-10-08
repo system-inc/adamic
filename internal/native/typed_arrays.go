@@ -10,8 +10,7 @@ func typedArrayKind(kind ir.Type) string {
 	switch kind {
 	case ir.Uint8Array:
 		return "adamic_typed_array_uint8"
-	// Uint16 values use the existing counted Int32 buffer; buffer reflection is not lowered.
-	case ir.Uint16Array, ir.Int32Array:
+	case ir.Int32Array:
 		return "adamic_typed_array_int32"
 	case ir.Float64Array:
 		return "adamic_typed_array_float64"
@@ -35,17 +34,11 @@ func (e *emitter) typedArrayValue(expression ir.Expression) string {
 		function := "adamic_typed_array_new"
 		if v.FromArray {
 			function = "adamic_typed_array_from_numbers"
-			if v.Of == ir.Uint16Array {
-				function = "adamic_uint16_from_numbers"
-			}
 		}
 		return e.own(v.Of, fmt.Sprintf("%s(%s, %s)", function, typedArrayKind(v.Of), source))
 	case ir.TypedArrayFill:
 		array := e.value(v.Array)
 		value := e.snapshot(ir.Number, e.value(v.Arguments[0]))
-		if v.Array.Type() == ir.Uint16Array {
-			value = uint16Value(value)
-		}
 		start, hasStart := e.typedArrayOffset(v.Arguments, 1)
 		end, hasEnd := e.typedArrayOffset(v.Arguments, 2)
 		e.line("adamic_typed_array_fill(%s, %s, %s, %s, %s, %s);", array, value, start, end, hasStart, hasEnd)
@@ -64,9 +57,4 @@ func (e *emitter) typedArrayValue(expression ir.Expression) string {
 		return e.own(v.Type(), fmt.Sprintf("adamic_typed_array_subarray(%s, %s, %s, %s)", array, start, end, hasEnd))
 	}
 	panic(fmt.Sprintf("native: no typed array emission for %T", expression))
-}
-
-// ToUint32 followed by a low-bit mask is exactly ToUint16, including nonfinite values.
-func uint16Value(value string) string {
-	return fmt.Sprintf("adamic_bitwise_and(%s, 65535.0)", value)
 }

@@ -1,3 +1,5 @@
+Uint16Array coverage in this historical report is withdrawn. See [UINT16-WITHDRAWN.md](UINT16-WITHDRAWN.md) for the current NotYet and runtime-review disposition.
+
 Merged checked non-null c41c0e062e99da37820f822968d4df1b48cdaee7 and current main 749a69adbfae2a7bf22c1f0436d9ef73345c3070.
 Code groups are b50442f2 (Uint16Array) and 974c2bc2 (class constructor values); integration merge is c47cddda9bc10ec8c50d27de800f94c90045aa0d.
 Rebuilt guarded census replay and replayed all 22 original roots; counts refresh passed 92.633s and changed no row.
