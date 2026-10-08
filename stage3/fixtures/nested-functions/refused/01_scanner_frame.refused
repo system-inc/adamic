@@ -1,1 +1,1 @@
-stage3/fixtures/nested-functions/refused/01_scanner_frame.a:72:5: Adamic 0.1 refuses var; use const or let
+stage3/fixtures/nested-functions/refused/01_scanner_frame.a:49:12: Adamic 0.1 refuses the non-null assertion !; prove presence with a guard, or use a checked assertion in .ts

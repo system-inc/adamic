@@ -101,7 +101,7 @@ func TestCheckedViewCallableDestructuredSiblingRefusal(t *testing.T) {
 		t.Fatalf("Node %#v", truth)
 	}
 	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "rest parameter outside a nongeneric named function") {
+	if err == nil || !strings.Contains(err.Error(), "a function viewed as unknown or object (dynamic function descriptors)") {
 		t.Fatalf("rest callable refusal: %v", err)
 	}
 }

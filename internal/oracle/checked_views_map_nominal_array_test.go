@@ -448,7 +448,11 @@ func TestCheckedViewNullableNominalSlotBoundaryRefusals(t *testing.T) {
 			}
 			truth := onNode(t, path)
 			_, err = lowered(t, path)
-			if err == nil || !strings.Contains(err.Error(), "nullable nominal value from an unboxed reference") {
+			want := "nullable nominal value from an unboxed reference"
+			if name == "both-optional-helper" {
+				want = "writing a possibly absent optional own field"
+			}
+			if err == nil || !strings.Contains(err.Error(), want) {
 				t.Fatalf("unboxed boundary escaped: %v", err)
 			}
 			t.Logf("Node=%q; named refusal=%v", truth.stdout, err)

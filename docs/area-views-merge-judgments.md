@@ -331,3 +331,36 @@ source: 102 refusals, 68 NotYet, 38 type errors, three other errors and one
 accepted nonvoid-brand negative control. 140 outcomes match the merge. These
 comparisons distinguish inherited boundary behavior from newly stale views
 expectations; they do not establish a green a-check.
+
+## Additional approved-boundary validation
+
+Ruling 11 is also applied in refuseOptionalWidening at implicit assignments.
+A plain Error keeps the area's exact absent-optional-field refusal; typed
+ErrnoException producers remain accepted. All twelve fs-file refusal witnesses
+pass their existing diagnostics. Removing this assignment guard makes
+node_fs_file_read_sync.a lower and fails its oracle refusal control.
+
+Individually updated stale oracle expectations: scanner-frame pins the earlier
+.a postfix assertion refusal at 49:12; omitted_scanner_original.a keeps Node's
+11 output and now requires the approved .a assertion refusal; destructured
+sibling pins the existing dynamic-function-descriptor refusal; the
+both-optional-helper nominal control pins the earlier optional-own-write
+boundary. 21_truthy_loops.a now uses its independently certified object-union
+path and keeps the original Node, native, JavaScript and leak agreement.
+These four families and the fs-file controls pass in 3.983s.
+
+The restored shorthand, finite-key and nullable-source guards each have an
+isolated removal mutant: all lose their intended refusal and fail with nil
+error, rather than a compiler or warning failure. All 47 callback refusals
+pass after the approved changes (9.118s), including entry-live-mutation.a.
+
+Judgment 18's isolated overlay passes every numeric-callable variant in
+11.987s. Judgment 20's isolated overlay passes the performance family in
+5.139s. These are proposal evidence only; neither is applied in production.
+
+Latest required-package observations: lower is red only on four phantom erase
+comparisons (56.253s); IR passes (19.280s); flow is red on the four whole-fixture
+analysis suites (163.536s), including stale admitted-fixture expectations;
+JavaScript passes. The exact base lower and flow suites are green, so these
+reds are not reported as inherited package failures. Full oracle, counts and
+a-check are still not green. No compiler/area-views landing push has occurred.

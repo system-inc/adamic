@@ -37,12 +37,27 @@ func TestClosureMergeRefusals(t *testing.T) {
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			_, err := lowered(t, absolute)
+			program, err := lowered(t, absolute)
+			// The independently certified object-union path now supports this
+			// formerly unsupported read; keep the original Node agreement.
+			if strings.Contains(path, "21_truthy_loops") {
+				if err != nil {
+					t.Fatal(err)
+				}
+				actual, binary := nativelyUncached(t, program)
+				for label, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatalf("%s: %s", label, diff)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			var refused *lower.Refused
-			var notYet *lower.NotYet
-			temporary := strings.Contains(path, "21_truthy_loops")
-			if temporary && !errors.As(err, &notYet) || !temporary && !errors.As(err, &refused) {
-				t.Fatalf("want pinned refusal (temporary=%v), got %v", temporary, err)
+			if !errors.As(err, &refused) {
+				t.Fatalf("want pinned refusal, got %v", err)
 			}
 			expected, readErr := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if readErr != nil {
