@@ -19,6 +19,7 @@ the run ends.
 import argparse
 import base64
 import fnmatch
+import glob
 import hashlib
 import json
 import re
@@ -303,6 +304,10 @@ class Gate:
         results = os.path.realpath(self.arguments.tree) + "-stage3-lane"
         if os.path.lexists(results):
             os.rename(results, "%s-%d" % (results, time.time()))
+        # Each run's adapted tree is about 700 MB: keep the last two runs' for triage, drop the older.
+        previous = sorted(glob.glob(glob.escape(results) + "-[0-9]*"), key=lambda path: int(path.rsplit("-", 1)[1]))
+        for path in previous[:-2]:
+            shutil.rmtree(path, ignore_errors=True)
         # The lane's own tests import check and run from their directory (from the root both fail with
         # ModuleNotFoundError), and read the pinned TypeScript API from STAGE3_CACHE/api, so they get
         # the same npm ci of stage3/api that apply.py makes first: 32 of 32 on the box.
