@@ -3,6 +3,7 @@ package lint
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/testguard"
@@ -548,8 +549,8 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 }
 
 func TestCompilerAndStage1Agree(t *testing.T) {
-	t.Parallel()
 	skipWhenRuleScoped(t)
+	t.Parallel()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -580,7 +581,14 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	count := min(runtime.NumCPU(), 8)
+	// This test owns a process pool rather than parallel case subtests, so use
+	// the gate's -test.parallel limit instead of a separate CPU-based limit.
+	count, err := strconv.Atoi(flag.Lookup("test.parallel").Value.String())
+	if err != nil || count < 1 {
+		t.Fatalf("invalid -test.parallel: %d (%v)", count, err)
+	}
+	count = min(count, len(rows))
+	t.Logf("compiler workers: %d (-test.parallel), CPUs: %d", count, runtime.NumCPU())
 	assignments := compilerShardAssignments(t, rows, count)
 	for _, side := range []struct {
 		name    string
