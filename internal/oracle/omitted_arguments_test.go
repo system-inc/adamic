@@ -1,9 +1,7 @@
 package oracle
 
 import (
-	"errors"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
 	"testing"
 )
@@ -67,11 +65,11 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 	t.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
 }
 
-// Preserve the supplied source and Node output. October 8 00:27 keeps postfix
-// non-null assertions refused in .a, including ones the omitted branch avoids.
+// Preserve the supplied source verbatim, as tsc wrote it: a .ts, where a postfix ! is a checked
+// unwrap (a .a refuses it). The omitted branch never evaluates that assertion, as Node also proves.
 func TestOmittedOriginalProbePolicy(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -79,10 +77,19 @@ func TestOmittedOriginalProbePolicy(t *testing.T) {
 	if observed.exitCode != 0 || string(observed.stdout) != "11\n" || len(observed.stderr) != 0 {
 		t.Fatalf("want Node 11, got %+v", observed)
 	}
-	_, err = lowered(t, path)
-	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-		t.Fatalf("want .a non-null assertion refusal, got %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	native, sanitized := natively(t, program)
+	backend := onJavaScriptBackend(t, program)
+	for label, actual := range map[string]run{"native": native, "JavaScript": backend} {
+		if difference := disagreement(observed, actual); difference != "" {
+			t.Fatalf("%s: %s", label, difference)
+		}
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatal(report)
 	}
 }
 

@@ -89,3 +89,9 @@ TestOptionalWriteErasure/fresh now requires the candidate's missing optional-own
 | 27 | internal/lower/census_small.go and phantom_overload_results.go | The candidate evaluates extra direct-overload arguments ignored by the implementation; views rejects the call. | Keep the existing certified direct-overload path, including evaluation of extra arguments and all overload relation and callback proofs. | census_overload_contracts.a, including next() counts; TestCensusOverloadRelation. |
 
 All four remain unapplied pending rulings. No landing push has occurred.
+
+## 34c20abb merge
+
+7302410ecfe4d54c6321fde785f67bf39fc5dcc4 is protected on compiler/area-views-wip3. The current candidate is 34c20abb6e0982c07df4394eb8e03c3a7aacbf63. One comment hunk in omitted_arguments_test.go was resolved individually in favor of the candidate's .ts probe. The candidate's TestOmittedOriginalProbePolicy now checks the unchanged Node stdout 11 against native, JavaScript, sanitizers and leaks. The .a refusal stays in TestNonNullAdamicRefusal and TestNonNullAssertionIsRefusedInAdamic. No production lowering or refusal changed. The candidate's two recorded count moves are retained.
+
+TestNativeAgreesWithNode passed all seven pending-judgment witnesses on the configured 4885cec5 baseline in 2.691 seconds. Judgments 24 through 27 remain pending. The forwarded native AbsentString mutant failed TestFixtures/taste/06_localized_message.a/native with the original conversion panic. TestFixtures passed 625 frames and failed only the three inherited host Checker records. The merged full oracle is still running and red; counts, the .a audit and final catalog are not green.
