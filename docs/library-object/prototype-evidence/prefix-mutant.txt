@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_prefix_names.a (10.19s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "a: true true\nab: true true\nabc: false false\nac: false false\n", stderr ""
+            native: exit 0, stdout "a: true true\nab: true true\nabc: true true\nac: true true\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.202s
+FAIL

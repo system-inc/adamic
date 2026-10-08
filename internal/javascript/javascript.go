@@ -53,6 +53,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString("const adamicHasOwn = (object, name) => !name.startsWith('#') && Object.hasOwn(object, name);\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -925,7 +926,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+		return "adamicHasOwn(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
 	case ir.ProgramArguments:

@@ -1,0 +1,9 @@
+--- FAIL: TestObjectPrototypeRepresentationsStayDistinct (0.33s)
+    --- FAIL: TestObjectPrototypeRepresentationsStayDistinct/library_object_iterator_view.a (0.33s)
+        library_object_prototype_test.go:75: stdout differs: node exit 0 stdout "[object Map Iterator]\n"; native exit 0 stdout "[object Object]\n"
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.336s
+FAIL
