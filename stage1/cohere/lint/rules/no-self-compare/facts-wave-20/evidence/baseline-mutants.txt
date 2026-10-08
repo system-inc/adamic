@@ -1,0 +1,6 @@
+lint.jsonl:8: checker_cache_test.go:62: runtime 0: source-byte mutant caught by findings comparison; before=3ea5c197ea7641944caa5f1041b05c1d96ced06e85403bb819969a49ea4b8861 after=feb52337b477945579da156c89f9e675fecc3c9687f5d7d093925fec6f92aec6
+lint.jsonl:9: checker_cache_test.go:62: runtime 1: source-byte mutant caught by findings comparison; before=3ea5c197ea7641944caa5f1041b05c1d96ced06e85403bb819969a49ea4b8861 after=feb52337b477945579da156c89f9e675fecc3c9687f5d7d093925fec6f92aec6
+lint.jsonl:10: checker_cache_test.go:62: runtime 2: source-byte mutant caught by findings comparison; before=3ea5c197ea7641944caa5f1041b05c1d96ced06e85403bb819969a49ea4b8861 after=feb52337b477945579da156c89f9e675fecc3c9687f5d7d093925fec6f92aec6
+lint.jsonl:43: checker_pending_test.go:238: pilot type-verdict mutant caught only by findings comparison on Node
+lint.jsonl:109: harness_test.go:141: second suggestion edit mutant caught on Node: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+lint.jsonl:121: harness_test.go:141: second suggestion edit mutant caught on emitted JavaScript: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"

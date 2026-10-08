@@ -1,0 +1,38 @@
+{
+  "status": "incomplete: process ended without a final package result; cause not established",
+  "exit": null,
+  "top_level": {
+    "pass": 14,
+    "fail": 0,
+    "skip": 1
+  },
+  "including_subtests": {
+    "pass": 14,
+    "fail": 0,
+    "skip": 1
+  },
+  "unfinished_started_tests": [
+    "TestOptionAndComparatorGaps",
+    "TestRulesAgree"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "observed_wall_seconds": 3422.561,
+  "nproc": 5,
+  "load_start": [
+    12.7041015625,
+    6.6484375,
+    2.67529296875
+  ],
+  "load_last_sample": [
+    2.20751953125,
+    2.05419921875,
+    2.15185546875
+  ],
+  "load_1m_median": 2.16845703125,
+  "load_1m_max": 12.73291015625,
+  "last_log_time": "2026-10-08T17:52:21.914373312Z",
+  "new_upstream_cases_per_blocked_rule": 0,
+  "new_semantic_mutants": 0
+}
