@@ -63,6 +63,7 @@ esac
         (self.state / 'auto-area-merge').touch()
         self.script(cloud / 'fast-gate.sh', '''sha=$1; branch=$3
 printf '%s %s %s %s\\n' "$branch" "$sha" "$5" "$ADAMIC_FAST_GATE_BOX" >> "$TEST_ROOT/starts"
+[ "${6:-}" = --whole-box ] && printf '%s\\n' "$branch" >> "$TEST_ROOT/whole"
 if [ "$branch" = canary/main ]; then
   control=canary
   if [ ! -f "$TEST_ROOT/initial-started" ]; then
@@ -157,6 +158,8 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(starts[0].split()[-1], 'server')
         self.assertEqual(len([x for x in starts if x.endswith(' server')]), 1)
         self.assertTrue(any(x.startswith('codex/small ') and x.endswith(' other') for x in starts))
+        # Only the reserved gate holding its box runs on every CPU of it.
+        self.assertEqual(w.read('whole').splitlines(), ['cloud/land-area-next1'])
         time.sleep(.15)
         self.assertEqual(len(w.read('starts').splitlines()), 3)
         w.put('mode', 'pass')

@@ -19,13 +19,15 @@ set -euo pipefail
 
 sha=${1:?usage: cloud/fast-gate.sh <full sha> [--branch <name>] [--session <id>]}
 shift
-branch="" branchSource=given session="" sessionSource=given cpus="" class=""
+branch="" branchSource=given session="" sessionSource=given cpus="" class="" wholeBox=""
 while [ $# -gt 0 ]; do
   case $1 in
     --branch) branch=$2; shift 2 ;;
     --session) session=$2; shift 2 ;;
     --cpus) cpus=$2; shift 2 ;;
     --class) class=$2; shift 2 ;;
+    # A reserved gate that holds its box alone runs on every CPU of it, not only its slot's share.
+    --whole-box) wholeBox=1; shift ;;
     *) echo "unknown argument $1" >&2; exit 2 ;;
   esac
 done
@@ -66,9 +68,9 @@ if [[ ${branch} == cloud/land-* || ${branch} == area/* ]]; then
 fi
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
-ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}" "${baseName}")" <<'BOX'
+ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}" "${baseName}" "${wholeBox}")" <<'BOX'
 set -euo pipefail
-sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B} baseName=${11:-main}
+sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B} baseName=${11:-main} wholeBox=${12:-}
 mkdir -p ~/fast-gate
 # Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
 # stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
@@ -256,6 +258,9 @@ case ${slot} in
   3) first=$((area + small)) share=${small} ;;
   *) first=$((area + 2 * small)) share=$((cpus - area - 2 * small)) ;;
 esac
+# The watcher holds the whole box for a reserved gate (Server for the #1 step), so it takes every CPU:
+# area-next-12 ran on 0-23 of Server's 64 at load 13 while 40 CPUs and three small slots sat idle (Oct 8).
+[ -n "${wholeBox}" ] && first=0 share=${cpus}
 # --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
 range="${first}-$((first + ${width:-${share}} - 1))"
 echo "cpus=${range}" >> ~/"${out}"/box.txt

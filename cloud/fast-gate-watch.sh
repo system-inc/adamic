@@ -112,7 +112,9 @@ countVoid() {
 # even when a queued worker has main's sha, and carry the tools version they test.
 dispatch() {
   local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6
-  ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
+  local whole=""
+  slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
+  ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   local pid=$!
   echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/${pid}"
   if slotReserved "${branch}" "${box}" "${slot}"; then
