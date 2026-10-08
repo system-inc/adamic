@@ -190,3 +190,30 @@ After this push the exact production inventory remains **2,018 pairs/9,101
 reads awaiting lowering and reaching-view proof**. No production site counts
 are subtracted from fixture coverage. Ledger-driven option checks remain owned
 by stricter-checks worker 01a118d0.
+
+## Structural Map entries, October 8 follow-up
+
+Complete structural key/value schemas now reuse the existing recursive slot
+certificate and structural subtype relation. Readonly covariance and mutable
+invariance retain their original rules; incomplete member descriptors cannot
+stamp a Map constructor. Object keys keep identity semantics. Four new positives
+match Node (structural values, finite covariance, object keys, and packed optional
+number values). Five new source mutants stop at the demanded Map read or at a
+transitive payload read: wrong structural value schema, mutable widening, wrong
+object-key schema, wrong schema with an unread payload, and a viewed bad payload
+passed through Map.get to a helper that also accepts ordinary entries.
+
+The last mutant prints 1 then wrong on Node; both native modes and JavaScript
+print 1 then stop at entry.count. Wrong entry schemas stop at node.value even
+when the program never reads an entry. Temporarily replacing structural schema
+comparison with physical object-kind equality made the unread-payload mutant run
+on and print object (exit 0); the oracle failed. Restoring the relation passed
+all Map controls in 15.309s. The optional-number entry control prints true, 9, 7
+and passes in 0.479s. Scoped IR/lower/native/JavaScript checks passed in
+0.009s/5.876s/47.990s/1.110s. Evidence is compressed under evidence/.
+
+Arrays, callables, branded types, null-containing and mixed entry unions remain
+outside the Map certificate adapter. Some nullable Map entry representations
+also remain blocked by mapTypes/slotless, independently of view admission.
+Production inventory is unchanged: 2,018 pairs/9,101 reads remain unverified by
+whole-program lowering and reaching-view proof. Ledger checks are outside scope.

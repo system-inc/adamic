@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckedViewMapCertificates(t *testing.T) {
-	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean"}
+	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number"}
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-value-schema", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
@@ -24,13 +24,13 @@ func TestCheckedViewMapCertificates(t *testing.T) {
 			program, path := interfaceFixture(t, "nullish/maps/"+name)
 			truth := onNode(t, path)
 			native, binary := nativelyUncached(t, program)
-			mutant := strings.Contains(name, "schema") || strings.Contains(name, "wrong") || strings.Contains(name, "opposite") || name == "mutable-invariant"
+			mutant := strings.Contains(name, "schema") || strings.Contains(name, "wrong") || strings.Contains(name, "opposite") || strings.Contains(name, "mutable-invariant")
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if !mutant {
 					if diff := disagreement(truth, got); diff != "" {
 						t.Fatalf("%s: %#v", diff, got)
 					}
-				} else if got.exitCode != 70 || !strings.Contains(string(got.stderr), "node.value") {
+				} else if got.exitCode != 70 || !strings.Contains(string(got.stderr), mapReadField(name)) {
 					t.Fatalf("map certificate mutant ran on: %#v", got)
 				}
 			}
@@ -93,4 +93,11 @@ func TestCheckedViewMapPhantomRefusal(t *testing.T) {
 		t.Fatalf("phantom certificate fabricated: %v", err)
 	}
 	t.Logf("Node stdout=%q; caught unsupported brand at read: %v", truth.stdout, err)
+}
+
+func mapReadField(name string) string {
+	if name == "structural-payload-wrong" {
+		return "entry.count"
+	}
+	return "node.value"
 }
