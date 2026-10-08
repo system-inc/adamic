@@ -1157,13 +1157,9 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		property.Method = true
 		closure = property
 	}
-	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, lowered)
+	arguments, spread, err := l.methodCallableArguments(node, signatures)
+	if err != nil {
+		return nil, err
 	}
 	var returns ir.Type
 	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
@@ -1172,17 +1168,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
 		}
 	}
-	// Each argument is made what the function value takes: a number or undefined where it takes
-	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
-			}
-		}
-	}
+
 	for _, argument := range arguments {
 		if censusCallableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
@@ -1191,5 +1177,5 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
+	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, Returns: returns}, nil
 }

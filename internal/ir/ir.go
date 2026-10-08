@@ -82,6 +82,7 @@ type Function struct {
 
 	// Receiver marks a literal method closure whose first parameter receives the calling object.
 	Receiver bool
+	Rest     Type // element type of the final rest array, zero for fixed parameters
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -592,6 +593,7 @@ type (
 	CallClosure struct {
 		Closure   Expression
 		Arguments []Expression
+		Spread    []bool
 		Returns   Type
 	}
 
@@ -1160,6 +1162,15 @@ func (Try) statement()         {}
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {
 		if class.Base != 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func (c CallClosure) HasSpread() bool {
+	for _, spread := range c.Spread {
+		if spread {
 			return true
 		}
 	}

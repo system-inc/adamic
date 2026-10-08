@@ -1,0 +1,27 @@
+class Free {
+ sum(prefix: string, ...values: number[]): string { return prefix + values.join(','); }
+ static count(...values: string[]): number { return values.length; }
+}
+const object = new Free();
+const sum = object.sum;
+console.log(sum('a', 1, 2, 3));
+console.log(sum('empty'));
+console.log(object.sum('direct', 4, 5));
+const values = [6, 7];
+console.log(sum('spread', ...values, 8));
+const count = Free.count;
+console.log(`${count('a', 'b')} ${count()}`);
+function invoke(callback: (prefix: string, ...values: number[]) => string): string { return callback('callback', 9, 10); }
+console.log(invoke(sum));
+const literal = { join(...values: string[]): string { values.push('end'); return values.join(','); } };
+const join = literal.join;
+function text(value: number): string { return `word${value}`; }
+const words = [text(1), text(2)];
+console.log(join(...words));
+console.log(`${words.join(',')} ${join()} ${join(text(3))}`);
+function last(): string { words.pop(); return text(4); }
+console.log(join(...words, last()));
+class Bound { value=10; sum(...values: number[]): number { return this.value + values.length; } }
+const owner = new Bound();
+const bound = owner.sum.bind(owner);
+console.log(`${bound(1, 2, 3)} ${bound()}`);

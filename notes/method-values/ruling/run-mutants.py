@@ -36,6 +36,12 @@ mutants = [
     ('optional-member-hidden', 'internal/native/runtime/closure.c',
      'if (!found) { return NULL; }', 'if (found) { return NULL; }',
      './internal/oracle', 'TestMethodValuesTypeScript/optional', ['exit codes differ']),
+    ('rest-reference-without-retain', 'internal/native/runtime/closure.c',
+     'if (references) { adamic_retain(value.reference); }', 'if (references) { (void)value.reference; }',
+     './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/rest', ['heap-use-after-free']),
+    ('rest-spread-without-owner', 'internal/native/method_values.go',
+     'adamic_retain(%s->elements[%s].reference)', '(%s->elements[%s].reference)',
+     './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/rest', ['heap-use-after-free']),
 ]
 for name, relative, original, replacement, package, test, catchers in mutants:
     selected = os.environ.get("METHOD_VALUES_MUTANTS")

@@ -374,6 +374,12 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		}
 		lowered = l.instance.base
 	}
+	if function := lowered.methods[l.fieldName(callee.Name())]; l.result.Functions[function].Rest != 0 {
+		if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+			return nil, l.notYet(node, "a rest method called through super")
+		}
+		return l.callClosure(node)
+	}
 	var object ir.Expression
 	var err error
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {

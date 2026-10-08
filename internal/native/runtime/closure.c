@@ -79,3 +79,14 @@ adamic_closure *adamic_object_method_value(const adamic_object *object, const ch
 	original->unbound = unbound;
 	return unbound;
 }
+
+// Each call owns a fresh rest array; its references survive the caller's temporaries.
+adamic_array *adamic_rest_array(adamic_value *arguments, size_t count, size_t start, bool references) {
+	adamic_array *rest = adamic_array_new(count > start ? count - start : 0, references);
+	for (size_t index = start; index < count; index++) {
+		adamic_value value = arguments[index];
+		if (references) { adamic_retain(value.reference); }
+		adamic_array_push(rest, value);
+	}
+	return rest;
+}

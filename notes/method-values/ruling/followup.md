@@ -61,3 +61,31 @@ runner expectation incorrectly looked for stdout instead of the earlier exit-cod
 comparison; after correcting that expectation, the mutant was rerun and caught
 (/tmp/method-values-optional-member-mutant.log). Source was restored.
 Optional binding of an absent callable (m?.bind) remains a separate boundary.
+
+## Rest extraction
+
+Method callables pack a fresh rest array at their boundary, rather than treating
+an array slot as one ordinary incoming argument. Class thunks and literal method
+closures share the same runtime packer; JavaScript mirrors that convention.
+Direct class method calls use that callable convention when the method has rest.
+Spreads copy their slots at the source position and retain reference elements
+before later arguments can mutate the source. No source array is reused as rest.
+
+Fixtures cover fixed parameters plus rest, empty rest, class/static/literal
+methods, direct calls, bind, callbacks, spreads, array independence, dynamic
+strings, and later argument mutation. Temporary .ts inputs also check caught
+this-reading rest methods. Generic rest methods, super rest calls, and spreads
+filling fixed parameters remain explicit boundaries.
+
+```sh
+go test ./internal/oracle -run 'TestMethodValuesTypeScript/rest' -count=1 -timeout 10m > /tmp/method-values-rest-typescript-2.log 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/rest' -count=1 -timeout 10m > /tmp/method-values-rest-adamic-2.log 2>&1
+go test ./internal/lower -run 'TestMethodValuesProof|TestMethodValuesSelectiveChecks|TestMethodBindCycleIsRefused|TestCensusRestMutableElements' -count=1 > /tmp/method-values-rest-lower.log 2>&1
+go test ./internal/oracle -run TestMethodValuesTypeScript -count=1 -timeout 10m > /tmp/method-values-rest-regression.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/method-values-rest-counts.log 2>&1
+METHOD_VALUES_MUTANTS=rest-reference-without-retain,rest-spread-without-owner python3 notes/method-values/ruling/run-mutants.py > /tmp/method-values-rest-mutants.log 2>&1
+```
+
+All passed: rest TypeScript .574s, rest Adamic .589s, lower .233s, all method-value
+TypeScript cases 1.343s, counts refresh 26.918s. Both mutants exit 1 with ASan
+heap-use-after-free on dynamic strings. Each source was restored.

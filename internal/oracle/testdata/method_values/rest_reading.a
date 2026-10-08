@@ -1,0 +1,8 @@
+// Materialized as .ts; unbound this-reading .a extraction remains refused.
+class Counter { value=3; read(...values: string[]): string { console.log(values.join(',')); return `${this.value}`; } }
+const counter = new Counter();
+const read = counter.read;
+try { console.log(read('one', 'two')); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+const object = { value: 4, read(...values: number[]): number { console.log(`${values.length}`); return this.value; } };
+const literal = object.read;
+try { console.log(`${literal(1, 2)}`); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }

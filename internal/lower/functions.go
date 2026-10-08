@@ -111,6 +111,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
 		if declared.DotDotDotToken != nil {
+			function.Rest, _ = l.kept(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(parameter.Name())))
 			if err := l.censusRestParameter(declaration, parameter); err != nil {
 				return err
 			}

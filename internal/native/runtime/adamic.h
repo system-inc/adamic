@@ -305,6 +305,8 @@ typedef struct adamic_array {
 	adamic_object *properties;
 } adamic_array;
 
+adamic_array *adamic_rest_array(adamic_value *arguments, size_t count, size_t start, bool references);
+
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
 // subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
 enum adamic_typed_array_kind {

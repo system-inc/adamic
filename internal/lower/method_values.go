@@ -127,11 +127,7 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 	}
 	receiver := access.AsPropertyAccessExpression().Expression
 	for _, declaration := range symbol.Declarations {
-		for _, parameter := range declaration.Parameters() {
-			if parameter.AsParameterDeclaration().DotDotDotToken != nil {
-				return nil, true, l.notYet(access, "a method value with rest parameters")
-			}
-		}
+
 		if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
 			if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsStatic) {
 				if _, err := l.staticInstance(l.staticClass(l.checker.GetTypeAtLocation(receiver), declaration.Parent)); err != nil {

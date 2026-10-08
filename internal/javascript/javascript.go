@@ -51,11 +51,12 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
-	builder.WriteString("const adamicMethodValues = new WeakMap();\nconst adamicMethodValue = (object, name) => { const original = object[name]; if (original === undefined) return undefined; if (original instanceof AdamicClosure && !original.receiver) return original; let value = adamicMethodValues.get(original); if (!value) { value = new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, [undefined, ...values]) : original(undefined, ...values), []); value.original = original; adamicMethodValues.set(original, value); } return value; };\nconst adamicMethodBind = (value, receiver) => { const original = value.original || value; return new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, original.receiver ? [receiver, ...values] : values) : original(receiver, ...values), []); };\n")
+	builder.WriteString("const adamicMethodArguments = (method, values) => { if (method.rest === undefined) return values; const fixed = values.slice(0, method.rest); while (fixed.length < method.rest) fixed.push(undefined); return [...fixed, values.slice(method.rest)]; };\n")
+	builder.WriteString("const adamicMethodValues = new WeakMap();\nconst adamicMethodValue = (object, name) => { const original = object[name]; if (original === undefined) return undefined; if (original instanceof AdamicClosure && !original.receiver) return original; let value = adamicMethodValues.get(original); if (!value) { value = new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, [undefined, ...values]) : original(undefined, ...adamicMethodArguments(original, values)), []); value.original = original; adamicMethodValues.set(original, value); } return value; };\nconst adamicMethodBind = (value, receiver) => { const original = value.original || value; return new AdamicClosure((self, values) => original instanceof AdamicClosure ? original.code(original, original.receiver ? [receiver, ...values] : values) : original(receiver, ...adamicMethodArguments(original, values)), []); };\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
-	builder.WriteString("const adamicCallee = (object, name) => { if (!Object.hasOwn(object, name)) return { code: (closure, values) => object[name](object, ...values) }; const callee = object[name]; if (typeof callee === 'function') return { code: (closure, values) => callee(object, ...values) }; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
+	builder.WriteString("const adamicCallee = (object, name) => { if (!Object.hasOwn(object, name)) return { code: (closure, values) => object[name](object, ...adamicMethodArguments(object[name], values)) }; const callee = object[name]; if (typeof callee === 'function') return { code: (closure, values) => callee(object, ...adamicMethodArguments(callee, values)) }; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -138,7 +139,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		fmt.Fprintf(&builder, "\nfunction %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
 		if function.Closure {
 			for position, parameter := range function.Parameters {
-				emitter.line("let %s = values[%d];", emitter.name(parameter), position)
+				if function.Rest != 0 && position == len(function.Parameters)-1 {
+					emitter.line("let %s = values.slice(%d);", emitter.name(parameter), position)
+				} else {
+					emitter.line("let %s = values[%d];", emitter.name(parameter), position)
+				}
 			}
 		}
 		for _, parameter := range function.Parameters {
@@ -161,6 +166,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString(emitter.out.String())
 		emitter.out.Reset()
 		builder.WriteString("}\n")
+	}
+	for index, function := range program.Functions {
+		if function.Rest != 0 && !function.Closure {
+			fmt.Fprintf(&builder, "%s.rest = %d;\n", functionName(program, index), len(function.Parameters)-2)
+		}
 	}
 	emitter.function = nil
 	emitter.indent = 0
@@ -873,11 +883,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
-				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.values(expression.Arguments) + "])"
+				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callableValues(expression) + "])"
 			}
-			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
+			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.callableValues(expression) + "])"
 		}
-		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
+		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.callableValues(expression) + "])"
 	case ir.ArrayMap:
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
@@ -1026,3 +1036,15 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) callableValues(call ir.CallClosure) string {
+	values := []string{}
+	for index, argument := range call.Arguments {
+		value := e.value(argument)
+		if index < len(call.Spread) && call.Spread[index] {
+			value = "..." + value
+		}
+		values = append(values, value)
+	}
+	return strings.Join(values, ", ")
+}

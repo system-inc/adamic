@@ -7,13 +7,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// censusRestParameter admits rest only where every call passes a freshly packed array.
-// Function values and methods have a different calling convention and remain NotYet.
+// Named calls pack rest in IR; method callables pack a fresh array at their boundary.
 func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
-	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 {
+	if (declaration.Kind != ast.KindFunctionDeclaration && declaration.Kind != ast.KindMethodDeclaration) || len(declaration.TypeParameters()) != 0 {
 		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
-	if l.result.Functions[l.functionIndex].Closure {
+	if l.result.Functions[l.functionIndex].Closure && declaration.Kind != ast.KindMethodDeclaration {
 		return l.notYet(parameter, "a rest parameter in a named closure")
 	}
 	parameters := declaration.Parameters()

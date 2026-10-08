@@ -299,6 +299,9 @@ func (e *emitter) methodThunk(function int) string {
 	method := e.program.Functions[function]
 	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
 	values := []string{}
+	if method.Rest != 0 {
+		lines = append(lines, fmt.Sprintf("\tadamic_array *rest = adamic_rest_array(arguments, argument_count, %d, %t);", len(method.Parameters)-2, method.Rest.IsReference()))
+	}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
@@ -308,13 +311,22 @@ func (e *emitter) methodThunk(function int) string {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
 		}
+		if method.Rest != 0 && index == len(method.Parameters)-1 {
+			value = "rest"
+		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
 		}
 		values = append(values, value)
 	}
 	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
-	if method.Returns == 0 {
+	if method.Rest != 0 {
+		if method.Returns == 0 {
+			lines = append(lines, "\t"+call+";", "\tadamic_release(rest);", "\treturn (adamic_value){.number = 0};")
+		} else {
+			lines = append(lines, fmt.Sprintf("\tadamic_value result = {.%s = %s};", member(method.Returns), slotted(method.Returns, call)), "\tadamic_release(rest);", "\treturn result;")
+		}
+	} else if method.Returns == 0 {
 		lines = append(lines, "\t"+call+";", "\treturn (adamic_value){.number = 0};")
 	} else {
 		lines = append(lines, fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)))

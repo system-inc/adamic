@@ -53,6 +53,9 @@ func (e *emitter) functionBody(function ir.Function) {
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
 			value := closureArgument(local.Type, index)
+			if function.Rest != 0 && index == len(function.Parameters)-1 {
+				value = fmt.Sprintf("adamic_rest_array(arguments, argument_count, %d, %t)", index, function.Rest.IsReference())
+			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -61,6 +64,8 @@ func (e *emitter) functionBody(function ir.Function) {
 	}
 	for _, parameter := range function.Parameters {
 		switch {
+		case function.Closure && function.Rest != 0 && parameter == function.Parameters[len(function.Parameters)-1]:
+			e.hold(e.localName(parameter))
 		case e.reuse.consumed[parameter]:
 			// Its caller handed over a reference (reuse.go): it's the callee's to let go of.
 			e.hold(e.localName(parameter))
@@ -226,6 +231,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			e.line("adamic_method %s = NULL;", method)
 			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 		}
+	}
+	if expression.HasSpread() {
+		return e.callSpreadMethod(expression, closure, receiver, method)
 	}
 	arguments := []string{}
 	for _, argument := range expression.Arguments {
