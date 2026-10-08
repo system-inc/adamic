@@ -947,6 +947,8 @@ bool adamic_weak_held(const void *target);
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern _Thread_local adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
+// Host errors have three owning slots (name, message, code) and built-in nominal identity.
+void adamic_error_tag(adamic_object *error);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
