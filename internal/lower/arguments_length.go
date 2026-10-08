@@ -144,6 +144,7 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			types[int(proven.Id())] = proven
 		}
 	}
+	l.resolveStructuralMethodThunks(modules)
 	l.result.FunctionTypeTargets = map[int][]int{}
 	for id, proven := range types {
 		l.result.FunctionTypeTargets[id] = []int{}
@@ -216,5 +217,64 @@ func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spr
 			arguments[index] = fit(arguments[index], declared.RestElement)
 		}
 		position++
+	}
+}
+
+// Optional method admission must account for the receiver, not just an assignable
+// function signature. An own closure facade does not make every class with a
+// same-signature method reachable. This does not narrow the count candidate set.
+func (l *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile) {
+	l.result.StructuralMethodThunks = map[int]bool{}
+	finder := cycleFinder{l: l}
+	// A derived receiver can expose an inherited implementation through a wider
+	// structural view. Include every instantiation using that implementation.
+	actualReceivers := map[int][]*checker.Type{}
+	for _, instance := range l.instances {
+		for _, function := range instance.methods {
+			for _, local := range instance.thisLocals {
+				actualReceivers[function] = append(actualReceivers[function], l.localTypes[local])
+				actualReceivers[function] = append(actualReceivers[function], l.localAlso[local]...)
+			}
+		}
+	}
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindCallExpression {
+				callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+				if callee.Kind == ast.KindElementAccessExpression {
+					// Computed callees do not retain a receiver-name proof here.
+					// Preserve every method thunk rather than guessing a target.
+					for index, function := range l.result.Functions {
+						if function.Receiver {
+							l.result.StructuralMethodThunks[index] = true
+						}
+					}
+				}
+				if callee.Kind == ast.KindPropertyAccessExpression {
+					access := callee.AsPropertyAccessExpression()
+					receiver := l.concrete(l.checker.GetTypeAtLocation(access.Expression))
+					method := l.checker.GetSymbolAtLocation(callee)
+					nativeMethod := method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodDeclaration && access.QuestionDotToken == nil
+					if !nativeMethod {
+						for index, function := range l.result.Functions {
+							if !function.Receiver || function.MethodName != access.Name().Text() || len(function.Parameters) == 0 {
+								continue
+							}
+							local := function.Parameters[0]
+							actuals := append([]*checker.Type{l.localTypes[local]}, l.localAlso[local]...)
+							actuals = append(actuals, actualReceivers[index]...)
+							for _, actual := range actuals {
+								if actual == nil || finder.template(receiver) || finder.template(actual) || l.checker.IsTypeAssignableTo(actual, receiver) {
+									l.result.StructuralMethodThunks[index] = true
+								}
+							}
+						}
+					}
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
 	}
 }

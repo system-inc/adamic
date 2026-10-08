@@ -3,7 +3,9 @@ package native
 import (
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -159,4 +161,130 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 			t.Log(err)
 		})
 	}
+}
+
+// Every owner site compiles through the shared typedefs, including when receiver
+// and canonical fields change the closure layout. Dropping its count must fail.
+func TestClosureConventionOwnerRuntimeSites(t *testing.T) {
+	root, err := filepath.Abs("runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, module := range []string{"node_process.c", "parallel.c"} {
+		for _, features := range [][]string{nil, {"-DADAMIC_CLOSURE_CONVENTION=1"}, {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_CLOSURE_RECEIVERS=1", "-DADAMIC_CANONICAL_CLOSURES=1"}} {
+			arguments := append(Flags(Options{}), features...)
+			arguments = append(arguments, "-I", root, "-c", filepath.Join(root, module), "-o", filepath.Join(t.TempDir(), "runtime.o"))
+			if output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput(); err != nil {
+				t.Fatalf("%s with %v: %v\n%s", module, features, err, output)
+			}
+		}
+	}
+	for _, probe := range []struct{ module, call string }{
+		{"node_process.c", "adamic_closure_call(closure, padded, count)"},
+		{"node_process.c", "adamic_closure_call(closure, args, count)"},
+		{"parallel.c", "adamic_closure_call(scope->work, arguments, 2)"},
+		{"parallel.c", "adamic_closure_call(work, arguments, 2)"},
+	} {
+		source, err := os.ReadFile(filepath.Join(root, probe.module))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Count(string(source), probe.call) != 1 {
+			t.Fatalf("mutation site moved: %s", probe.call)
+		}
+		last := strings.LastIndex(probe.call, ", ")
+		mutant := strings.Replace(string(source), probe.call, probe.call[:last]+")", 1)
+		path := filepath.Join(t.TempDir(), probe.module)
+		if err := os.WriteFile(path, []byte(mutant), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		arguments := append(Flags(Options{}), "-DADAMIC_CLOSURE_CONVENTION=1", "-I", root, "-c", path, "-o", path+".o")
+		output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput()
+		if err == nil || !strings.Contains(string(output), "expected 3, have 2") {
+			t.Fatalf("owner drop-count mutant escaped: %s: %v\n%s", probe.call, err, output)
+		}
+		t.Logf("%s: drop-count mutant rejected under -Werror: expected 3, have 2", probe.call)
+	}
+}
+
+func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
+	checked, err := load.Load([]string{filepath.Join("..", "..", "stage1", "typescript", "parser", "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := C(program)
+	if program.ClosureConventionNeeded() {
+		t.Fatal("parser unexpectedly observes the count")
+	}
+	found := 0
+	for index, function := range program.Functions {
+		switch function.Name {
+		case "Parser_type", "Parser_assignment", "Parser_allowInAssignment", "Statements_type":
+			found++
+			if strings.Contains(code, "static adamic_method_function adamic_method_"+strconv.Itoa(index)+";") {
+				t.Fatalf("unused optional method thunk: %s", function.Name)
+			}
+		}
+	}
+	if found != 4 {
+		t.Fatalf("expected four optional method witnesses, found %d", found)
+	}
+}
+
+// Required optional methods keep their thunks; same-signature classes which
+// cannot inhabit the receiver view do not acquire a table entry from its closure.
+func TestOptionalMethodThunksMatchNode(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join("testdata", "optional_method_thunks.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := runWithInput(t, string(source), "node", "--disable-warning=ExperimentalWarning", "-e", "const fs=require('fs'),m=require('module');eval(m.stripTypeScriptTypes(fs.readFileSync(0,'utf8')))")
+	if program.ClosureConventionNeeded() {
+		t.Fatal("compatible optional absence must use caller padding, without a count")
+	}
+	code := C(program)
+	for index, function := range program.Functions {
+		if function.Name == "SameSignature_run" && strings.Contains(code, "static adamic_method_function adamic_method_"+strconv.Itoa(index)+";") {
+			t.Fatal("same-signature class cannot inhabit the facade receiver")
+		}
+	}
+	for _, sanitize := range []bool{false, true} {
+		binary := filepath.Join(t.TempDir(), "valid")
+		if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		if got := runWithInput(t, "", binary); got != want {
+			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
+		}
+	}
+	// Real input mutation: omit every required optional method's table thunk.
+	// Compilation still succeeds; only comparison with Node catches the failure.
+	for function := range program.StructuralMethodThunks {
+		program.StructuralMethodThunks[function] = false
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := Build(C(program), binary, Options{}); err != nil {
+		t.Fatal(err)
+	}
+	output, err := exec.Command(binary).CombinedOutput()
+	if err == nil && string(output) == want {
+		t.Fatal("Node failed to catch the omitted required method thunk")
+	}
+	t.Logf("Node catches compiled missing-thunk mutant: %v, output %q, Node %q", err, output, want)
 }

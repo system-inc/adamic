@@ -317,22 +317,24 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	needed := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		call, ok := expression.(ir.CallClosure)
-		if !ok {
-			return
-		}
-		targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
-		if !resolved {
-			targets = e.program.ClosureTargets(call).Functions
-		}
-		for _, target := range targets {
-			if e.program.Functions[target].Name == method.Name {
-				needed = true
+	needed := e.program.StructuralMethodThunks[function]
+	if e.program.StructuralMethodThunks == nil {
+		walkExpressions(e.program, func(expression ir.Expression) {
+			call, ok := expression.(ir.CallClosure)
+			if !ok {
+				return
 			}
-		}
-	})
+			targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
+			if !resolved {
+				targets = e.program.ClosureTargets(call).Functions
+			}
+			for _, target := range targets {
+				if e.program.Functions[target].Name == method.Name {
+					needed = true
+				}
+			}
+		})
+	}
 	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {

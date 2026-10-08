@@ -38,6 +38,10 @@ type Program struct {
 	Classes       []Class
 	MethodTargets map[int][]int
 
+	// StructuralMethodThunks records methods reachable through a source interface receiver.
+	// Nil keeps conservative admission for hand-built IR. Count candidates remain independent.
+	StructuralMethodThunks map[int]bool
+
 	// FunctionTypeTargets is the closed-world set for each checker function type.
 	FunctionTypeTargets map[int][]int
 	// Packed calls reserve fixed words and separate rest tails, never a count word.
