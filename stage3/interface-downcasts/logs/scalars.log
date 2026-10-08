@@ -1,0 +1,17 @@
+=== RUN   TestInterfaceCastScalarTags
+=== RUN   TestInterfaceCastScalarTags/number_passes
+=== RUN   TestInterfaceCastScalarTags/number_fails
+    interface_cast_test.go:231: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout "casting\npayloadpayload\n"
+=== RUN   TestInterfaceCastScalarTags/boolean_passes
+=== RUN   TestInterfaceCastScalarTags/boolean_fails
+    interface_cast_test.go:231: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout "casting\npayloadpayload\n"
+--- PASS: TestInterfaceCastScalarTags (4.09s)
+    --- PASS: TestInterfaceCastScalarTags/number_passes (0.90s)
+    --- PASS: TestInterfaceCastScalarTags/number_fails (1.12s)
+    --- PASS: TestInterfaceCastScalarTags/boolean_passes (0.94s)
+    --- PASS: TestInterfaceCastScalarTags/boolean_fails (1.13s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.098s

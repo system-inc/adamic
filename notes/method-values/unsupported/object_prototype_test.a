@@ -1,0 +1,2 @@
+// a-check: refused isPrototypeOf
+const method = Object.prototype.isPrototypeOf; console.log(`${method.call({}, {})}`);

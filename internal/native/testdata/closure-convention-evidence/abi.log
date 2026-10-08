@@ -1,0 +1,13 @@
+=== RUN   TestNoReaderCallingConvention
+=== RUN   TestNoReaderCallingConvention/closure_convention_plain.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+--- PASS: TestNoReaderCallingConvention (0.14s)
+    --- PASS: TestNoReaderCallingConvention/closure_convention_plain.a (0.07s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_no_reader.a (0.04s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_unrelated_type.a (0.04s)
+=== RUN   TestClosureConventionDropCount
+    closure_convention_test.go:49: drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionDropCount (0.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.594s

@@ -1,0 +1,12 @@
+let calls = 0;
+function text(value: string | undefined): string | undefined { calls += 1; return value; }
+console.log(`${text('hello')?.toUpperCase()}`);
+console.log(`${text(undefined)?.toUpperCase()}`);
+console.log(`${text('')?.toUpperCase()}`);
+function pop(value: number[] | undefined): number | undefined { calls += 1; return value?.pop(); }
+console.log(`${pop([0])}`);
+console.log(`${pop(undefined)}`);
+console.log(`${calls}`);
+
+function combine(path: string, ...paths: (string | undefined)[]): string { return path; }
+console.log(combine("x"));
