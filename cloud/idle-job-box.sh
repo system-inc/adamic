@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Delivered over ssh by idle-jobs.py. All descendants inherit the exact marker.
+# Delivered over ssh by idle-jobs.py. A private session also catches unmarked children.
 set -euo pipefail
 mode=$1
 shift
+[ ! -e ~/idle/disabled ] || { echo disabled; exit; }
 locks() {
   local path fd=30
   for path in "$HOME/fast-gate/lock" "$HOME/fast-gate/lock-2" "$HOME/fast-gate/lock-3" "$HOME/full-gate/lock"; do
@@ -32,12 +33,14 @@ mkdir -p ~/idle
 exec 8> ~/idle/lock
 flock -n 8 || { echo running; exit; }
 locks || { echo gated; exit; }
+# Recheck under every gate lock: preemption may have disabled us after the probe.
+[ ! -e ~/idle/disabled ] || { echo disabled; exit; }
 # Hold admission locks until the marked child acknowledges that it is alive.
 # The job holds only the idle lock; a gate never waits for its batch.
 cat > ~/idle/job.sh
 ready="$HOME/idle/ready-$seed"
 rm -f "$ready"
-nohup env ADAMIC_IDLE_JOB=1 nice -n 19 bash ~/idle/job.sh "$sha" "$seed" "$count" "$box" "$ready" 30>&- 31>&- 32>&- 33>&- </dev/null >~/idle/driver.log 2>&1 &
+nohup env ADAMIC_IDLE_JOB=1 setsid nice -n 19 bash ~/idle/job.sh "$sha" "$seed" "$count" "$box" "$ready" 30>&- 31>&- 32>&- 33>&- </dev/null >~/idle/driver.log 2>&1 &
 pid=$!
 for ((i=0; i<100; i++)); do
   if [ -f "$ready" ]; then echo started; exit; fi

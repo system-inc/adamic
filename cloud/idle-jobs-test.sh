@@ -14,14 +14,17 @@ bash -n "$here"/idle*.sh "$here/fast-gate.sh" "$here/full-gate-main.sh"
 sed -n '/^# BEGIN idle preemption/,/^# END idle preemption/p' "$here/fast-gate.sh" > "$tmp/preempt.sh"
 sed -n '/^# BEGIN idle preemption/,/^# END idle preemption/p' "$here/idle-preempt.sh" > "$tmp/expected.sh"
 cmp "$tmp/preempt.sh" "$tmp/expected.sh"
-env ADAMIC_IDLE_JOB=1 sleep 120 &
+env ADAMIC_IDLE_JOB=1 setsid sleep 120 &
 marked=$!
 sleep 120 &
 unmarked=$!
 sleep .1
 exec 9> "$tmp/fake-gate-lock"
 flock 9
-bash "$tmp/preempt.sh"
+HOME="$tmp/clean" bash "$tmp/preempt.sh" > "$tmp/clean.log"
+cat "$tmp/clean.log"
+grep -Eq "^idle preemption: 1 marked, 0 survivors in their sessions, [0-9]+ ms$" "$tmp/clean.log"
+[ ! -e "$tmp/clean/idle/disabled" ]
 if kill -0 "$marked" 2>/dev/null; then echo 'marked process survived' >&2; exit 1; fi
 kill -0 "$unmarked"
 wait "$marked" 2>/dev/null || true
@@ -77,9 +80,21 @@ PY
 [ "$(HOME="$tmp/box" bash "$here/idle-job-box.sh" probe)" = 'running a job' ]
 exec 11> "$tmp/box/fast-gate/lock"
 flock -n 11
-bash "$tmp/preempt.sh"
+HOME="$tmp/box" bash "$tmp/preempt.sh" > "$tmp/worker.log"
+cat "$tmp/worker.log"
+grep -Eq "^idle preemption: [0-9]+ marked, 0 survivors in their sessions, [0-9]+ ms$" "$tmp/worker.log"
+[ ! -e "$tmp/box/idle/disabled" ]
 [ "$(HOME="$tmp/box" bash "$here/idle-job-box.sh" probe)" = gated ]
 flock -u 11
 [ "$(HOME="$tmp/box" bash "$here/idle-job-box.sh" probe)" = idle ]
 kill -0 "$unmarked"
 echo 'PASS: admitted worker releases gate locks, retains idle lock, and preemption removes its children'
+# Persistent disabled state wins even over held gate locks and direct admission.
+touch "$tmp/box/idle/disabled"
+flock 11
+[ "$(HOME="$tmp/box" bash "$here/idle-job-box.sh" probe)" = disabled ]
+rm "$tmp/box/idle/job.sh"
+[ "$(HOME="$tmp/box" bash "$here/idle-job-box.sh" start 0123456789012345678901234567890123456789 1 2000 test)" = disabled ]
+[ ! -e "$tmp/box/idle/job.sh" ]
+[ -e "$tmp/box/idle/disabled" ]
+echo 'PASS: disabled box rejects probes and direct launches without clearing the file'

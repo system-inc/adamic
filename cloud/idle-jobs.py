@@ -107,6 +107,11 @@ def main():
                         if status == 'idle' and enabled:
                             entry['next'] += args.count
                         continue
+                    if status == 'disabled':
+                        print(f'{box}: disabled; main={sha[:12]} programs={entry.get("by_box", {}).get(box, 0)}', flush=True)
+                        # Collect existing findings, but preserve pending ranges and launch nothing.
+                        collect(box, destination)
+                        continue
                     collect(box, destination)
                     pending = entry['pending'].get(box)
                     # Pending ranges for older mains remain eligible until completed.
