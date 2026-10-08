@@ -1752,7 +1752,7 @@ go vet ./internal/lower ./internal/native > /tmp/coverage-vet.log 2>&1
 git diff --check > /tmp/coverage-diffcheck.log 2>&1
 ```
 
-The initial combined command exits 1 because lower lacks @types/node; its entire native package passes (437.854s). After installing the dependency, the entire lower package passes (49.131s). The uncached filtered oracle passes (42.486s). The final focused native command passes (1.495s). Vet and diff-check exit 0 with empty output. Final run.py exits 0 and checks seven agreeing/leak-clean programs plus two expected refusals. The full repository gate was not run.
+The initial combined command exits 1 because lower lacks @types/node; its entire native package passes (437.854s). After installing the dependency, the entire lower package passes (49.131s). The uncached filtered oracle passes (42.486s). The final focused native command passes (1.495s). Vet and diff-check exit 0 with empty output. Final run.py exits 0 and checks seven agreeing/leak-clean programs plus two expected refusals. The full repository gate was not run. The later staged `git diff --cached --check` reported one trailing space in typed-negative-wrap.log:7 (exit 2). That space is the verbatim UBSan output and is intentionally preserved; the earlier unstaged diff check had no output.
 
 `setup.log`:
 
