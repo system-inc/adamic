@@ -233,3 +233,38 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 	}
 	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
 }
+
+// Check the incoming value before ownership changes or a store. The old payload is never
+// evidence for a literal domain: the immutable actual shape carries the declaration.
+void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, const char *expression) {
+ adamic_slot_cache cache = {NULL, 0};
+ adamic_value *slot = adamic_object_optional_field(object, name, &cache);
+ const adamic_field_contract *contract = slot == NULL || object->shape->contracts == NULL ? NULL : &object->shape->contracts[cache.index];
+ bool present = true;
+ if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
+ if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
+ bool valid = contract != NULL && contract->kind == kind && (present || contract->nullable);
+ if (valid && present && contract->count != 0) {
+  valid = false;
+  for (size_t index = 0; index < contract->count; index++) {
+   adamic_value allowed = contract->allowed[index];
+   if ((kind == 1 || kind == 7) && (kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number) == allowed.number) { valid = true; }
+   if (kind == 2 && value.boolean == allowed.boolean) { valid = true; }
+   if (kind == 3 && adamic_string_equal(value.reference, allowed.reference)) { valid = true; }
+  }
+ }
+ if (valid) { return; }
+ const char *expected = contract == NULL || contract->declared == NULL ? "unavailable field contract" : contract->declared;
+ const char *got = kind == 1 ? "number" : kind == 2 ? "boolean" : kind == 3 ? "string" : kind == 4 ? "object" : kind == 5 ? "array" : kind == 6 ? "Map" : "unsupported representation";
+ const adamic_string *text = NULL;
+ if (!present) { got = "undefined"; }
+ else if (kind == 1 || kind == 7) { text = adamic_string_from_number(kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number); }
+ else if (kind == 2) { got = value.boolean ? "true" : "false"; }
+ else if (kind == 3) { text = value.reference; }
+ size_t capacity = strlen(expression) + strlen(expected) + strlen(got) + (text == NULL ? 0 : text->length) + 100;
+ char *message = malloc(capacity);
+ if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+ int prefix = snprintf(message, capacity, "write failed: %s expects %s, got %s", expression, expected, text == NULL ? got : "");
+ if (text != NULL) { memcpy(message + prefix, text->bytes, text->length); }
+ adamic_panic(message, (size_t)prefix + (text == NULL ? 0 : text->length));
+}

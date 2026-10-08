@@ -404,7 +404,7 @@ static const char *const regex_names[] = {"__program", "lastIndex",	 "source",		
 										  "sticky",	   "hasIndices", "unicodeSets", "dotAll"};
 static const bool regex_references[] = {false, false, true,	 true,	false, false,
 										false, false, false, false, false, false};
-static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL};
+static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL, NULL};
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags) {
 	adamic_object *result = adamic_object_new(&regex_shape);
@@ -522,7 +522,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 }
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
 static const bool match_references[] = {false, true, true, true};
-static const adamic_shape match_shape = {4, match_names, match_references, NULL};
+static const adamic_shape match_shape = {4, match_names, match_references, NULL, NULL};
 static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures) {
 	if (p->group_count == 0)
 		return NULL;
@@ -540,7 +540,7 @@ static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *
 }
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[] = {false, false};
-static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL};
+static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL, NULL};
 static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *input,
 								  const ptrdiff_t *spans) {
 	adamic_array *result = adamic_array_new(p->captures + 1, true);
@@ -700,7 +700,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 }
 static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
-static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL};
+static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL, NULL};
 static void regex_require_global(const adamic_regex_program *p, const char *message) {
 	if (!(p->flags & 8))
 		adamic_panic(message, strlen(message));
@@ -739,7 +739,7 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 }
 static const char *const next_names[] = {"done", "value"};
 static const bool next_references[] = {false, true};
-static const adamic_shape next_shape = {2, next_names, next_references, NULL};
+static const adamic_shape next_shape = {2, next_names, next_references, NULL, NULL};
 adamic_object *adamic_regex_next(adamic_object *iterator) {
 	adamic_array *value = adamic_regex_iterator_step(iterator);
 	adamic_object *result = adamic_object_new(&next_shape);

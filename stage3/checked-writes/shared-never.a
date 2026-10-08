@@ -1,0 +1,3 @@
+const shared: never[] = [];
+function store(values: number[]): void { values.push(1); }
+store(shared);

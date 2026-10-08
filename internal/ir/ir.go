@@ -18,6 +18,9 @@ type Program struct {
 
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
+	// CheckedWrites marks fields whose wider TypeScript views require actual-shape checks.
+	CheckedWrites map[string]bool
+	WriteChecks   []WriteCheck
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -869,8 +872,20 @@ type (
 	FileStatus struct{ Path Expression }
 )
 
+// FieldContract preserves a declared field domain independently of its current value.
+type FieldContract struct {
+	Kind     Type
+	Declared string
+	Nullable bool
+	Allowed  []Expression
+}
+
+// WriteCheck is one emitted actual-shape write check.
+type WriteCheck struct{ Where, Expression string }
+
 // Field is one field of an object literal.
 type Field struct {
+	Contract *FieldContract
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
 	Name          string
@@ -1145,6 +1160,7 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
+		WriteCheck    string
 		Uninitialized bool
 		Object        Expression
 		Name          string

@@ -131,7 +131,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: l.memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
+			field := ir.Field{Contract: l.fieldContract(l.checker.GetTypeAtLocation(member.Name())), Name: l.memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {

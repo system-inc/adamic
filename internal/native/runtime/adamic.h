@@ -215,11 +215,20 @@ extern char adamic_literal_mark;
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+typedef struct adamic_field_contract {
+	unsigned char kind;
+	bool nullable;
+	const char *declared;
+	size_t count;
+	const adamic_value *allowed;
+} adamic_field_contract;
+
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
 	const bool *references;
 	const adamic_methods *methods;
+	const adamic_field_contract *contracts;
 } adamic_shape;
 
 typedef struct adamic_object adamic_object;
@@ -1073,5 +1082,7 @@ void *adamic_library_identity(size_t index);
 #define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
 #endif
 #endif
+
+void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, const char *expression);
 
 #endif

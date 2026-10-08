@@ -68,7 +68,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if declared.IsReference() {
 					value = ir.Undefined{Of: declared}
 				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true, Contract: l.literalFieldContract(node, fieldName)})
 				continue
 			}
 			var value ir.Expression
@@ -91,9 +91,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Contract: l.literalFieldContract(node, fieldName)})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
+		}
+	}
+	// A copied shape retains the source declaration. Replacing a checked field would
+	// require a new contract-bearing shape, so keep that operation refused for now.
+	if literal.Spread != nil {
+		for _, field := range literal.Fields {
+			if l.result.CheckedWrites[field.Name] {
+				return nil, l.notYet(node, "overriding a checked field contract in an object spread")
+			}
 		}
 	}
 	if literal.SpreadMaybeUndefined {

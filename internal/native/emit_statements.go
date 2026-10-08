@@ -192,6 +192,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)
+		if statement.WriteCheck != "" {
+			object = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", object))
+		}
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
@@ -200,6 +203,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+		if statement.WriteCheck != "" {
+			e.line("adamic_object_check_contract(%s, %s, %d, (adamic_value){.%s = %s}, %s);", object, cString(statement.Name), statement.Value.Type(), member(statement.Value.Type()), slotted(statement.Value.Type(), value), cString(statement.WriteCheck))
+		}
 		slot := e.temporary()
 		cache := ""
 		if e.fieldTypesNeeded() {

@@ -5,6 +5,9 @@ import "fmt"
 // Hidden readiness state leaves own keys and object spread unchanged.
 const fieldReadinessRuntime = `const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
+const adamicFieldContracts = new WeakMap();
+const adamicRecordFieldContracts = (object, contracts) => { adamicFieldContracts.set(object, contracts); return object; };
+const adamicCheckedWrite = (object, name, value, kind, expression) => { const contract = adamicFieldContracts.get(object)?.[name]; if (!Object.hasOwn(object, name) || !contract || contract.kind !== kind || value == null && !contract.nullable || value != null && contract.allowed.length && !contract.allowed.includes(value)) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (value === undefined ? "undefined" : value === null ? "undefined" : typeof value === "object" ? "object" : String(value))); adamicWriteField(object, name, value); };
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
 const adamicViewWrite = (object, name, value, type) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
 const adamicUninitializedFields = (object, names) => { adamicFieldReadiness.set(object, new Set(names)); return object; };
@@ -26,7 +29,7 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
 };
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
-const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}); };
+const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldContracts(adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}), adamicFieldContracts.get(object) || {}); };
 const adamicWriteField = (object, name, value) => { object[name] = value; adamicFieldReadiness.get(object)?.delete(name); };
 `
 

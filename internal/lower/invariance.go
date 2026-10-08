@@ -489,6 +489,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if !found.parameter && l.checkedWidening(node, own, contextual) {
+		return nil
+	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}

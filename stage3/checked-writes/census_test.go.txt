@@ -1,0 +1,147 @@
+package lower
+
+import (
+	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+)
+
+// This worker exists only in the no-output latent overlay. It measures the relation
+// refusal at each pinned site; no checker-rejected program can leave usable IR.
+func TestCheckedWritesCensus(t *testing.T) {
+	tree := os.Getenv("CHECKED_WRITES_TREE")
+	input := os.Getenv("CHECKED_WRITES_RECORDS")
+	output := os.Getenv("CHECKED_WRITES_OUTPUT")
+	if tree == "" || input == "" || output == "" {
+		t.Fatal("missing census paths")
+	}
+	var cohort struct {
+		Records []json.RawMessage `json:"records"`
+		Hashes  map[string]string `json:"source_sha256"`
+	}
+	content, err := os.ReadFile(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(content, &cohort); err != nil {
+		t.Fatal(err)
+	}
+	for name, want := range cohort.Hashes {
+		data, err := os.ReadFile(filepath.Join(tree, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fmt.Sprintf("%x", sha256.Sum256(data)) != want {
+			t.Fatalf("source hash mismatch: %s", name)
+		}
+	}
+	var records []struct {
+		ID                                                                           int
+		Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere string
+	}
+	paths := []string{}
+	seen := map[string]bool{}
+	for _, raw := range cohort.Records {
+		var r map[string]json.RawMessage
+		if err = json.Unmarshal(raw, &r); err != nil {
+			t.Fatal(err)
+		}
+		get := func(name string) string { var s string; json.Unmarshal(r[name], &s); return s }
+		var id int
+		json.Unmarshal(r["id"], &id)
+		records = append(records, struct {
+			ID                                                                           int
+			Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere string
+		}{id, get("where"), get("reason"), get("classification"), get("family"), get("original_type"), get("source_expression"), get("source_expression_where")})
+		file := strings.Split(get("where"), ":")[0]
+		if !seen[file] {
+			seen[file] = true
+			paths = append(paths, filepath.Join(tree, file))
+		}
+	}
+	if ordinary, err := load.Load(paths); ordinary != nil || err == nil {
+		t.Fatal("latent overlay permitted ordinary Load")
+	}
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result, err := Lower(context.Background(), program); result != nil || err == nil {
+		t.Fatal("latent overlay permitted backend IR")
+	}
+	checker, release := program.Checker(context.Background(), program.Files()[0])
+	defer release()
+	nodes := map[string][]*ast.Node{}
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		where := strings.TrimPrefix(program.Where(n), tree+"/")
+		nodes[where] = append(nodes[where], n)
+		n.ForEachChild(visit)
+		return false
+	}
+	for _, file := range program.Files() {
+		file.AsNode().ForEachChild(visit)
+	}
+	rows := []map[string]any{}
+	counts := map[string]int{}
+	for _, r := range records {
+		candidates := nodes[r.Where]
+		var matched *ast.Node
+		for _, node := range candidates {
+			if !(&lowering{}).isExpression(node) && node.Kind != ast.KindShorthandPropertyAssignment {
+				continue
+			}
+			if r.OriginalType != "" && checker.TypeToString(checker.GetTypeAtLocation(node)) != r.OriginalType {
+				continue
+			}
+			if r.Expression != "" && !strings.HasPrefix(strings.Join(strings.Fields(sourceExpression(node)), " "), strings.Join(strings.Fields(r.Expression), " ")) {
+				continue
+			}
+			matched = node
+			break
+		}
+		status, reason := "unmatched", "pinned source expression could not be matched in the reproduced checker program"
+		fields := []string{}
+		if matched != nil {
+			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			failure := l.refuseWidening(matched)
+			if failure != nil {
+				status = "stopped"
+				reason = failure.Error()
+			} else if len(l.result.CheckedWrites) > 0 {
+				status = "checked relation"
+				reason = "actual-shape field contract"
+				for name := range l.result.CheckedWrites {
+					fields = append(fields, name)
+				}
+			} else {
+				status = "no current relation refusal"
+				reason = "no runtime-check admission recorded"
+			}
+		}
+		sort.Strings(fields)
+		reason = strings.TrimPrefix(reason, tree+"/")
+		if r.Classification == "d" {
+			counts[status]++
+		}
+		rows = append(rows, map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "status": status, "first_reason": reason, "fields": fields})
+	}
+	report := map[string]any{"measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced", "class_d_counts": counts, "records": rows}
+	data, err := json.MarshalIndent(report, "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(output, append(data, '\n'), 0644); err != nil {
+		t.Fatal(err)
+	}
+	fmt.Printf("class-d relation counts: %v\n", counts)
+}

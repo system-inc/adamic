@@ -46,6 +46,12 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 			fmt.Fprintf(output, "  %s: %s; %s\n", direction.Direction, status, direction.Reason)
 		}
 	}
+	for _, site := range program.WriteChecks {
+		fmt.Fprintf(output, "%s: checked write: %s against actual field contract\n", relative(site.Where), site.Expression)
+	}
+	if len(program.WriteChecks) != 0 {
+		fmt.Fprintf(output, "adamic: write checks: checked %d\n", len(program.WriteChecks))
+	}
 	counts := program.PredicateChecks
 	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
 }

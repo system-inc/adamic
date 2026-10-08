@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -58,4 +59,32 @@ func TestExplainChecksDriver(t *testing.T) {
 		}
 	}
 	t.Fatal("missing driver arguments")
+}
+
+func TestExplainCheckedWritesOutput(t *testing.T) {
+	source, err := os.ReadFile("../../stage3/checked-writes/number-misfit.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "number-misfit.ts")
+	if err = os.WriteFile(path, source, 0644); err != nil {
+		t.Fatal(err)
+	}
+	for _, backend := range []string{"c", "js", "build"} {
+		arguments := []string{backend, path, "--explain-checks"}
+		if backend == "build" {
+			arguments = append(arguments, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")
+		}
+		command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, arguments...)...)
+		command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1")
+		var output, diagnostic bytes.Buffer
+		command.Stdout, command.Stderr = &output, &diagnostic
+		if err = command.Run(); err != nil {
+			t.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
+		}
+		report := diagnostic.String()
+		if !strings.Contains(report, ": checked write: view.count against actual field contract\n") || !strings.Contains(report, "adamic: write checks: checked 1\n") {
+			t.Fatalf("%s lost checked write explanation: %s", backend, report)
+		}
+	}
 }

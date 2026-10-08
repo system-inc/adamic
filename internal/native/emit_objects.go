@@ -223,7 +223,7 @@ func (e *emitter) shape(fields []ir.Field) string {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeOf(names, types)
+	return e.shapeWith(names, types, nil, fields)
 }
 
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
@@ -237,7 +237,7 @@ func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeWith(names, types, literal.Methods)
+	return e.shapeWith(names, types, literal.Methods, literal.Fields)
 }
 
 // shapeOf declares a layout by its field names and types.
@@ -247,7 +247,7 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, contracts ...[]ir.Field) string {
 	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
@@ -260,6 +260,15 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		layout = kinds
 	}
 	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
+	if len(e.program.CheckedWrites) != 0 && len(contracts) != 0 {
+		for _, field := range contracts[0] {
+			if c := field.Contract; c != nil {
+				key += fmt.Sprintf("|%d:%s:%t:%#v", c.Kind, c.Declared, c.Nullable, c.Allowed)
+			} else {
+				key += "|no contract"
+			}
+		}
+	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -272,6 +281,10 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
 	e.shapes[key] = name
 	table := "NULL"
+	contractTable := "NULL"
+	if len(e.program.CheckedWrites) != 0 && len(contracts) != 0 && len(fields) > 0 {
+		contractTable = e.shapeContracts(name, contracts[0])
+	}
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
 		if !e.dispatchable(method.Function) {
@@ -296,12 +309,12 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s};", name, table))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s};", name, len(fields), name, name, table, contractTable))
 	}
 	if len(fields) > 0 && e.dynamicProperties() {
 		e.declarations = append(e.declarations,

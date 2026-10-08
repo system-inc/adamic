@@ -173,6 +173,7 @@ func TestCountsAreRecorded(t *testing.T) {
 		return
 	}
 	rows = append(rows, interfaceCastCounts(t)...)
+	rows = append(rows, checkedWriteCounts(t)...)
 	var table strings.Builder
 	table.WriteString(countsHeader)
 	for _, row := range rows {
