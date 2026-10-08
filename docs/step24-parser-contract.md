@@ -13,7 +13,7 @@ Lowering asks before trusting a factory result or erasing a checked field read:
 
 ```go
 AnalyzeFactory(factory *ast.Node, target *checker.Type, checker *checker.Checker) FactoryCompletion
-FactoryRead(summary FactoryCompletion, field string) FieldReadPlan
+FactoryReadPlan(summary FactoryCompletion, field string) FieldReadPlan
 ```
 
 The summary identifies allocation sites and aliases by bound symbols, each

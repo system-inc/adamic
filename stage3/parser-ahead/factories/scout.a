@@ -1,0 +1,8 @@
+// a-check: refused a cast the runtime can't check
+// Source: parser.ts finishNode and nodeFactory.ts createBaseNode's generic cast.
+interface Node { readonly kind: number; readonly pos: number; readonly end: number; }
+interface Identifier extends Node { readonly text: string; }
+function createBaseNode<T extends Node>(kind: number): T {
+    return { kind, pos: -1, end: -1 } as T;
+}
+console.log(createBaseNode<Identifier>(1).text);

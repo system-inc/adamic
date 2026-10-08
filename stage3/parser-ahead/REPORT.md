@@ -21,7 +21,7 @@ Lowering asks before trusting a factory result or erasing a checked field read:
 
 ```go
 AnalyzeFactory(factory *ast.Node, target *checker.Type, checker *checker.Checker) FactoryCompletion
-FactoryRead(summary FactoryCompletion, field string) FieldReadPlan
+FactoryReadPlan(summary FactoryCompletion, field string) FieldReadPlan
 ```
 
 The summary identifies allocation sites and aliases by bound symbols, each
@@ -158,3 +158,58 @@ Node slice drops NodeArray extras. Proposal: preserve ordinary Array return sema
 Node lookahead may return an allocated object after rewind. Proposal: its lifetime
 belongs to Program, not a rewind arena. These proposals do not certify unexecuted
 branches, key-reflection identity or the full parser.
+
+## Item 2: bounded completion analysis and factory observations
+
+AnalyzeFactory in internal/lower/factory_completion.go computes typed required-field
+writes at escapes and keeps read-time checks independent of completed returns.
+The first shape covers one literal allocation, bound-symbol aliases, blocks, if
+joins and early returns. Opaque calls, loops, closures, computed writes and multiple
+allocations are Unknown; reference-field certification awaits complete view contracts.
+No production lowering check is erased. FactoryReadPlan and reserved staged layouts
+remain integration work, so this analysis is pending for native parser acceptance.
+
+Eleven focused analysis cases pass. Four independent overlay mutants are caught:
+branch intersection replaced with union; missing fields omitted from escape facts;
+earlier read marked unchecked; asserted scalar payload trusted. Each fails the intended
+Go behavior assertion, with no build-only kill. The complete-layout control prints ready
+on source Node, sanitized native and the JavaScript backend, leak-clean. A payload
+mutant prints wrong normally in both backends and is caught by the original Node stdout.
+
+The original scout factory still refuses its generic cast, with its pinned a-check
+header. The reduced staged Identifier prints ready on source Node, but both native
+and emitted JavaScript stop at exit 70 on <write>.text with missing string. The early
+escape prints undefined on source Node; both backends stop at exit 70 on node.text
+with missing string. Boundary-test PASS means the observed stop is pinned, not that
+staged construction works. These observations await reserved slots and staged-write
+support, plus generic checked-result admission. No stub has acceptance credit.
+
+Exact final checks, with stdout/stderr redirected:
+
+```
+go test ./internal/lower -run '^TestParserFactory(Completion|ReadBeforeCompletion)$' -count=1 -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestParserAheadFactory(CompleteControl|Boundaries)$' -count=1 -v
+python3 stage3/parser-ahead/mutants.py
+python3 stage3/parser-ahead/check-local.py
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts
+go test ./internal/oracle -run '^TestParserAheadCounts$' -count=1 -args -update-counts
+go test ./internal/oracle -run '^TestParserAheadCounts$' -count=1
+go vet ./internal/lower ./internal/oracle
+```
+
+Analysis PASS 0.808s; oracle PASS 1.261s; four source-proof mutants caught;
+pinned Gate.aCheck passes four owned .a inputs, including the scout refusal header.
+The Gate source was fetched from fbac28c62493f27a788edc02a18bc8edb68de5da
+into scratch; no gate or other worker code is merged into this delivery.
+The mandatory global counts updater fails on sixteen inherited fixtures because
+stage3/api lacks @types/node 25.3.3. It changes no rows. The own updater passes
+0.339s and verification 0.355s. Three allocation rows are added: the complete-layout
+control 1/1/4/4/1/0; the staged-write boundary and early-read stop each 1/0/2/1/1/0.
+The latter count where panic stops, not leaks in successful programs. All old rows
+are unchanged. Gofmt, focused vet and diff checks pass. No whole package or full gate.
+
+Design question from the actual program: should a checked view write reserve the
+missing declared slot at allocation, or define it when written? Node adds text only
+at the actual write. Proposal: reserve physical storage without publishing an own
+property, then publish on the actual write. This preserves key presence and avoids
+an invented initial value. Current checked-field writes reject the absent slot.
