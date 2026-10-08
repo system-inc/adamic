@@ -83,3 +83,13 @@ Commands and observations:
 - The standard 16-case census replay was repeated after abort. Unresolved parameter signatures still reproduce, unknown still reproduces, and IncrementalBuildInfoRoot still encounters Path at builder:1408:25 before its array operation. Existing lowered-kind signatures remain gone, with the same named next stops.
 
 The representation worker's branch was checked before considering the Path blocker. No worker-owned representation function was edited to bypass it. Unknown still needs distinct null storage on this area-only base; the views branch's null tag was not retained.
+
+## Finished-unit array-content certification
+
+The separately registered element_type_array_unions.a reduction traverses concrete string array alternatives, skips undefined, flattens nested arrays, and accepts branded Extension inputs through a string-typed boundary. Both backends agree with Node under native sanitizers. This certifies content traversal, beyond the earlier slice-length checks; it does not claim that isolated generic flatten declarations acquire a concrete specialization.
+
+A native mutant discards every array push while releasing consumed references. It builds and exits normally with empty sanitizer stderr, but Node stdout differs. The failed exploratory generic reduction stopped at for-of variable representation (`T | T[] | readonly T[] | undefined`); it was replaced by the concrete reduction, without changing another worker's lowering function.
+
+Final checks: go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/element_type_|TestElementType' -count=1 -v, and go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts. Both passed: 7.473s for fixtures and mutants, 39.556s for the counts refresh. Outputs are in /tmp/element-type-unit-final-oracle.log and /tmp/element-type-unit-final-counts.log. Only oracle fixtures, their registration and this report changed in this finished unit; no new production rule requires another compiler-package test.
+
+Outstanding dependencies: the representation owner must resolve Path before the four IncrementalBuildInfoRoot examples can reach their array operation; unknown[] requires a reviewed distinct null representation. No unlanded worker branch was merged for either dependency. Under the latest standing rule, this completed unit is pushed once after its fixtures, mutants and counts pass.

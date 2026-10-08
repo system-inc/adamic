@@ -1,0 +1,22 @@
+// Array alternatives share reference slots, but their values keep their own kinds.
+function flattenWords(values: string[][] | readonly (string | readonly string[] | undefined)[]): string[] {
+    const output: string[] = [];
+    for (const value of values) {
+        if (typeof value === 'string') {
+            output.push(value);
+        } else if (value !== undefined) {
+            for (const word of value) output.push(word);
+        }
+    }
+    return output;
+}
+const rows: string[][] = [['x', 'y'], [], ['z']];
+const mixed: readonly (string | readonly string[] | undefined)[] = ['head', ['body', 'tail'], undefined, ''];
+console.log(flattenWords(rows).join('/'));
+console.log(flattenWords(mixed).join('/'));
+
+type Extension = string & { readonly extension?: never };
+const extensionRows: Extension[][] = [['.a', '.b'], ['.c']];
+const extensionMixed: readonly (Extension | readonly Extension[] | undefined)[] = ['.d', ['.e'], undefined];
+console.log(flattenWords(extensionRows).join('/'));
+console.log(flattenWords(extensionMixed).join('/'));
