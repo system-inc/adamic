@@ -1,3 +1,21 @@
+# Group 2 ruled statics delivery
+
+Built structural static-method dispatch through the existing counted method ABI; conditions remain delivered.
+Commits: d69d05ca0 and 36441fa62 replay b6aa4f00 and 1db2b324; 829446f68 adapts the mutant anchors to counted dispatch.
+Checks: lower 46.956s, IR 28.961s, flow 172.762s; six topic oracle fixtures passed against Node in both backends (1.555s); counts refresh passed (82.739s).
+Mutants: blanket guard, missing static map, guessed static side, missing inherited map, missing optional short circuit, missing generic static map, JavaScript missing map and JavaScript late map all failed their intended controls.
+Not delivered: logical-assignment-comma, method-values, binary and computed-name destructuring; reasons follow.
+
+Commands: `go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript`; `go test ./internal/oracle -run 'TestNativeAgreesWithNode/.*/structural_statics_' -count=1 -v`; `python3 cloud/notyet-statics-mutants.py`; `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`. Raw results and individual mutant catches are in [evidence/group2-statics](evidence/group2-statics).
+
+Logical-assignment-comma is skipped as a whole: its positive `logical_or_assignment.a:223:17` reaches the retained accessor logical-assignment refusal. The ruling requires that refusal to remain.
+
+Method-values remains held as described in [METHOD-VALUES-PROPOSAL.md](METHOD-VALUES-PROPOSAL.md). Automatic approval review rejected its unverified native closure ABI conflict resolution. No rejected edit ran.
+
+Binary remains held. Automatic approval review rejected the proposed combined ownership, freshness and assignment IR resolution as an unverified semantic merge that risks miscompilation. Files: `internal/flow/build.go`, `internal/fresh/fresh.go`, `internal/ir/ir.go`, `internal/lower/assignment_value.go`, `internal/lower/expression.go`. The stack has compound-assignment ownership and write guards; the topic introduces expression-valued plain assignments and freshness tracking. Proposal: retain the stack's compound operations and IR fields, introduce plain assignment values through the existing assignment lowering and all its guards, and combine both freshness/ownership analyses. No rejected edit ran; the topic cherry-pick was aborted.
+
+Computed-name destructuring remains skipped for checked views, as ruled. Namespace and enum admission remain held for the two namespace judgments recorded in [PARSER-REVIEW.md](PARSER-REVIEW.md); no views code was imported.
+
 # Current parser and scanner review
 
 See [PARSER-REVIEW.md](PARSER-REVIEW.md) for the fixture-base merge, every parser assertion outcome, exact enum and mutable-namespace dependencies, current checks and group 4 additions. Namespace prerequisite work is retained on compiler/area-stack-namespace-held pending two rulings; it is absent from this delivery. Checked-view topics remain skipped.
