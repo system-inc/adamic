@@ -182,7 +182,6 @@ func countCases() ([]countCase, error) {
 // Each fixture owns its comparison, so sharding and failures use the same unit.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	identity(t) // sync.Once shares the runtime builds across all fixtures.
 	cases, err := countCases()
 	if err != nil {
 		t.Fatal(err)
@@ -238,6 +237,8 @@ func TestCountsAreRecorded(t *testing.T) {
 	for index, each := range cases {
 		t.Run(each.path, func(t *testing.T) {
 			t.Parallel()
+			// Keep runtime initialization inside a measured leaf; identity builds once per process.
+			identity(t)
 			var row string
 			switch {
 			case each.predicate:

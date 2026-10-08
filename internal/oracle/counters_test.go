@@ -277,7 +277,6 @@ func (batch *loopCounterBatch) build(t *testing.T) {
 
 func TestLoopCountersAgreeWithNode(t *testing.T) {
 	t.Parallel()
-	identity(t)
 	cases := loopCounterCases()
 	if len(cases) != loopCounterCaseCount {
 		t.Fatalf("case count %d, want %d", len(cases), loopCounterCaseCount)
@@ -305,6 +304,8 @@ func TestLoopCountersAgreeWithNode(t *testing.T) {
 		batch := batches[index/batchSize]
 		t.Run(each.name, func(t *testing.T) {
 			t.Parallel()
+			// Include the once-per-process runtime setup in leaf timing, before shared batch work.
+			identity(t)
 			batch.build(t)
 			for name, integer := range each.expected {
 				kept := regexp.MustCompile(`int64_t adamic_local_\d+_` + name + ` =`).MatchString(batch.code)

@@ -23,7 +23,7 @@ Each test command exited 1. Parent failures are propagation from those leaves. T
 
 ## Cold measurements on this same box
 
-Instrument: Python `time.perf_counter` around the whole command. Unit durations: Go's `go test -json` `Elapsed` for leaf pass/fail events. Aggregate parents with parallel children are not shard units; their `Elapsed` excludes child waits, so command wall time is reported below.
+Instrument: Python `time.perf_counter` around the whole command. Unit durations: Go's `go test -json` `Elapsed` for leaf pass/fail events. Parent setup is also a budget unit. For parents with direct parallel children, the parent `Elapsed` excludes child waits and measures its own setup/cleanup. The table below reports command wall; setup measurements are recorded separately in the follow-up section.
 
 Pinned submodules, tool versions/binary hashes, quota, and cache policy are in `machine.json`. Repository Node dependencies were installed from `stage3/api/package-lock.json` before paired runs. Each measured run has a new empty native/result cache via XDG_CACHE_HOME, `ADAMIC_GATE_UNCACHED=1`, and `-count=1`. Go compilation is preparatory and its build cache is reused for paired measurements; this is cold test execution, not a fresh toolchain bootstrap. Sources and Node declaration hashes are included; `implementation.sha256` identifies the measured final harness, `generated-inputs.sha256` each original loop input, and `batch-inputs.json` the actual grouped dispatcher inputs.
 
@@ -41,3 +41,22 @@ The final combined cold run passes all 2,012 leaves; its largest leaf is 4.55 s.
 ## Required final command
 
 `go test ./internal/oracle -run TestLoopCountersAgreeWithNode` exits 0 with both plants removed; `requested-command.log` retains its output. The full cold counts command also exits 0. The complete `cmd/adamic-gate` test package passes.
+
+## Setup-budget follow-up
+
+The gate budgets both leaf subtests and each parent's own setup/cleanup. The initial wall comparison did not report setup explicitly. On this same instance, fresh cold measurements of commit `3b720788` show that its setup was already below 30 s (not the whole counts wall). This follow-up removes native initialization from both parents altogether, using option (b): the existing independent case units perform it, with the existing `sync.Once` still building once per process. All time spent building or waiting for shared initialization remains charged to those leaves; it is not subtracted as a build product. The `internal/buildcache` dependency is therefore unnecessary for this change.
+
+Before children, counts now only enumerates cases, reads/validates the recorded table, and allocates result slots and a CLI output path. Loop counters only generates its unchanged source declarations and allocates batch paths. Native runtime libraries, Node version discovery, Node batch observations, CLI builds, and result reads occur within selected leaves.
+
+| Test | Setup before this follow-up, cold | Setup after, cold | Largest after leaf | Case coverage |
+|---|---:|---:|---:|---:|
+| TestCountsAreRecorded | 14.38 s | 0.02 s | 11.56 s | 819 / 819 |
+| TestLoopCountersAgreeWithNode | 11.28 s | 0.03 s | 12.83 s | 1,193 / 1,193 |
+
+Instrument: Go's testing timer, reported as the parent pass event's `Elapsed` by `go test -json`. Direct parallel children's waits are excluded from that parent duration; shared initialization and `sync.Once` waits are included in each leaf's `Elapsed`. Python `time.perf_counter` also records the full command wall. Both before and after use `GOMAXPROCS=4`, `-parallel=4`, `-count=1`, `ADAMIC_GATE_UNCACHED=1`, and a distinct initially empty XDG native/result cache; the preparatory Go build cache is reused. `setup-timings.json` and the four compressed JSON logs retain all measurements and exact commands/environments. This distinguishes own setup from total wall; it does not assume that an almost unchanged wall means unchanged setup.
+
+For comparison with the original main-based harness, the previously retained cold logs have parent durations of 58.08 s for counts and 46.00 s for loops on this box. The original counts parent runs a synchronous fixture group plus interface/predicate helpers; the split moved those helper cases into their own leaves. The new follow-up moves its remaining shared runtime initialization into those measured leaf paths.
+
+Every before/after run's leaf names exactly match the existing 819 / 1,193 inventories, with no omissions or extra case units. All after parents and all 2,012 after leaves are under 30 s and pass. A separate cold `^never$` child filter passes both parents without creating any native/result cache directory (`setup-no-leaves.json`, JSON log), verifying that filtering out leaves performs no shared native/result initialization. Full gate package checks and the exact requested loop command pass on the final harness (follow-up logs).
+
+`implementation-before-setup.sha256` preserves the prior harness hashes; `implementation.sha256` now identifies this measured follow-up. Generated case and batch source hashes are unchanged.

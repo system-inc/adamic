@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-count=1",
+    "-parallel=4",
+    "-json",
+    "-run",
+    "^Test(CountsAreRecorded|LoopCountersAgreeWithNode)$/^never$"
+  ],
+  "exit": 0,
+  "native_or_result_cache_created": false
+}
