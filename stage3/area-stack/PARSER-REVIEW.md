@@ -1,8 +1,8 @@
-Built: merged the fixture base and replayed namespace prerequisites, enum reachability and namespace initialization; reduced the parser assertion to an extension-policy fixture.
-Commits: fixture-base merge 9c80835dd; duplicate refusal entry correction d78e4438b; remote remains 2c7d9fd2 until the group is green.
-Commands and outputs: compiler packages pass lower and IR; flow fails the two preserved namespace refusals below; focused enum and checked-assertion oracle passes in 17.293 seconds.
-Mutants: census continuation, eligibility and attribution mutants are caught on both comparator binaries; new parser fixture and policy mutants have separate logs.
-Not covered: a complete native parser build, checked views, runtime graph-region ownership, and unresolved namespace admissions.
+Built: merged the fixture base and reduced the parser assertion to an extension-policy fixture; the namespace and enum prerequisite replay is retained on a local held branch.
+Commits: delivery fixture-base merge 4f03163bc; parser proof d5c9a8f8c; held namespace candidate c1e42e612; remote remains 2c7d9fd2 until delivery validation finishes.
+Commands and outputs: delivery lower 51.294s, IR 31.647s, flow 163.247s, JavaScript has no tests; filtered oracle 2.470s; counts refresh 80.483s, all pass. The held namespace candidate fails flow and counts on the two refusals below.
+Mutants: three parser fixture/policy mutants, six debugger mutants, two empty-array checks, three Source boundary/output mutants, and three census audit mutants on each comparator are caught; individual logs are retained.
+Not covered: a complete native parser or scanner build, checked views, runtime graph-region ownership, and unresolved namespace admissions.
 
 The parser proof ec71eb48 contains 172 non-null expression sites: 168 in its
 archived TypeScript slice and four in three standalone probes. Evidence under
@@ -29,14 +29,20 @@ The permanent reduction is
 `TestParserNonNullSourceExtension` checks its refusal, writes the unchanged
 source to a temporary .ts control, requires a checked assertion, and compares
 both backends with Node. Existing checked-assertion fixtures retain the null
-and undefined panic controls. This refusal fixture adds no runnable count row.
+and undefined panic controls. The reduction passes with a Node stdout mutant
+in both backends. Production overlays which refuse .ts or admit .a fail this
+test at the intended extension check. This refusal fixture adds no runnable
+count row.
 
 The enum reduction from ec71eb48 is byte-identical to
 `stage3/fixtures/enum-init-reach/native-enum-map.a`, already carried by the
 authorized enum topic. It constructs `new Map<never, never>()` while an enum
 is pending. The local candidate lowers it, and the focused oracle compares
 sanitized native, release native and JavaScript with Node. The namespace
-prerequisite and enum topic are local; they have not yet reached the remote.
+prerequisite and enum topic are retained at `compiler/area-stack-namespace-held`
+commit c1e42e612; they have not reached the delivery or remote. Enum-init is
+named as blocked by its prerequisite judgments. No namespace refusal was
+removed to make the group green.
 
 Two prerequisite judgments still prevent a green group:
 
@@ -52,19 +58,50 @@ Two prerequisite judgments still prevent a green group:
   never reset it for a declaration without an initializer, and retain the
   repeated-var refusal elsewhere.
 
-The 8cb5e7c1 fixture base is merged. Its TypeScript helper and fixture-path
+The 8cb5e7c1 fixture base is merged in the delivery. Its TypeScript helper and fixture-path
 conflicts preserve the stack's checked .ts controls and .a refusals. Its new
 presence and logical-reference refusal witnesses remain. An identical duplicate
 non-null map entry introduced by the merge was removed; the remaining entry
 and its source-extension guard are unchanged.
 
-Group 4 additions are under review: array-literal-never-element's own
+Group 4 additions are prepared in a review worktree: array-literal-never-element's own
 94c85da88 and b3578751d, debugger-statement's own 0fe2588fe and 7d2cbc895,
 and Source boundary proof 19bcb8ee. The array resolution preserves the stack's
 nonempty contextual representation while adding the topic's empty-literal
 destination search. The debugger resolution retains namespace and labeled
 control flow; it removes only the debugger refusal required by that topic.
 19bcb8ee changes no production admission and conflicts only in counts rows.
+Their focused tests pass: lower 0.592 seconds, flow 0.010 seconds, oracle
+3.524 seconds; Source lower 0.177 seconds and oracle 1.057 seconds. All their
+mutants are caught, including the empty-array wrong-kind leak at native
+destruction. These topics still require group-wide checks before delivery.
+
+A review-only conflict script truncated file tails; complete stack files were
+restored and only the inspected topic deltas applied before successful tests.
+Discarding older build-cache files during active builds also interrupted a
+review build. The successful retry log replaces that infrastructure failure.
+The premature held-candidate catalog run was stopped with its logs retained
+after flow and counts established that its prerequisite group was not green.
+
+The scanner's `debug.ts:8:5` mutable export is reduced in
+`stage3/namespace-live-export/live.a`. Node observes `false:false`,
+`true:true`, and `false:false`: external reads and a namespace function agree
+after each outside write. The delivery stops exactly at `live.a:8:5`, in
+`internal/lower/namespaces.go`, with `a mutable namespace export; use a module
+or export functions around private state`. `TestNamespaceLiveExportBoundary`
+pins both Node's observation and that named stop. A production overlay which
+changes the boundary is caught by this test.
+
+The held namespace candidate produces Node's same output in release native
+and JavaScript for this reduction. Its namespace own commits supply the live
+slot; those commits remain held by the two unrelated namespace prerequisite
+judgments above. No whole scanner success is claimed. This fixture is a named
+NotYet boundary in the delivery and adds no runnable count row.
+
+The delivery count refresh adds the incoming logical-reference fixture in its
+normal position and removes `taste/17_binder_flow.a` from runnable counts:
+8cb5e7c1 records that fixture as NotYet at its optional own-field write. The
+fixture and refusal record remain; this is the authorized baseline change.
 
 Memoize-regions depends on runtime's synchronous captured-cell graph regions
 and environment adoption. This compiler stack still refuses those cycles and

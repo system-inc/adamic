@@ -1,3 +1,7 @@
+# Current parser and scanner review
+
+See [PARSER-REVIEW.md](PARSER-REVIEW.md) for the fixture-base merge, every parser assertion outcome, exact enum and mutable-namespace dependencies, current checks and group 4 additions. Namespace prerequisite work is retained on compiler/area-stack-namespace-held pending two rulings; it is absent from this delivery. Checked-view topics remain skipped.
+
 # Compiler area stack review
 
 Delivery branch: `compiler/area-stack`. Base `337aa466`; ruled runtime drop `5c05a776` merged as `1d60ab525`.
