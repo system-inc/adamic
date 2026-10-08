@@ -1,0 +1,23 @@
+interface Node { readonly id: number; next: Node | undefined; }
+function node(id: number): Node {
+ const made: Node = { id, next: undefined }; made.next = made; return made;
+}
+function run(): void {
+ const a = node(1); const b = node(2);
+ let source: Node[] = [a, b];
+ const spread = [...source, a];
+ const slice = source.slice(0, 1);
+ const joined = slice.concat(spread);
+ const mapped = source.map((value) => value.next ?? value);
+ const filtered = joined.filter((value) => value.id === 1);
+ const filled = new Array<Node>(2).fill(b);
+ const from = Array.from({ length: 3 }, (_, i) => node(i + 3));
+ source.fill(b); source[0] = a;
+ const removed = source.splice(0, 1, b);
+ const popped = source.pop(); source = [];
+ console.log(`${spread.length} ${slice[0]?.id} ${joined.length} ${mapped[1]?.id} ${filtered.length} ${filled[0]?.id} ${from[2]?.id}`);
+ console.log(`${removed[0]?.next?.id} ${popped?.next?.id}`);
+ from.sort((left, right) => right.id - left.id);
+ console.log(from.map((value) => value.id).join(','));
+}
+run();

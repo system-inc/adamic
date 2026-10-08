@@ -109,7 +109,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		want   string
 	}{
 		{"var", "var old = 1;\n", "main.a:1:1: Adamic 0.1 refuses var; use const or let"},
-		{"async", "async function wait(): Promise<void> {}\n", "main.a:1:1: Adamic 0.1 refuses an async function;"},
+		{"unawaited async", "async function wait(): Promise<void> {}\nwait();\n", "main.a:2:1: Adamic 0.1 refuses an unawaited async task;"},
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
 		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: Adamic 0.1 refuses throwing a number; throw an Error"},
 		{"!", "const map = new Map<string, number>();\nconst value = map.get('a')!;\n", "main.a:2:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
@@ -143,7 +143,14 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			program, err := lowerSource(t, probe.source)
+			if strings.Contains(probe.want, "cycle reference counting can't free") || strings.Contains(probe.want, "which can reach back") || strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				if err != nil || len(program.GraphTypes) == 0 {
+					t.Errorf("want graph ownership, got %v", err)
+				}
+				return
+			}
+
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)

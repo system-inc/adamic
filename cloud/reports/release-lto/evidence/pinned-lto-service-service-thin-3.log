@@ -1,0 +1,6 @@
+Benchmark 1: taskset -c 3 /workspace/scratch/release-lto/thin/service /tmp/wasm-requests-profile/requests.jsonl run
+serve:start
+serve:stop
+7394547
+  Time (abs ≡):         9.571 s               [User: 9.144 s, System: 0.410 s]
+ 

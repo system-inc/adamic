@@ -42,6 +42,15 @@ func Build(program *ir.Program, function int) *Function {
 	// Falling off the end returns, as a void function and the top level do.
 	builder.terminate(&Return{})
 	Finalize(builder.function)
+	// The pending shared-SSA switch owns general ordering. Extend its terminal adapter here.
+	order := EvaluationOrder(1)
+	for _, block := range builder.function.Blocks {
+		order += EvaluationOrder(len(block.Instructions))
+		if suspend, ok := block.Terminal.(*Suspend); ok {
+			suspend.Order = order
+		}
+		order++
+	}
 	return builder.function
 }
 
@@ -172,6 +181,10 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.WriteLine:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.Evaluate:
+		if wait, ok := statement.Value.(ir.Await); ok {
+			b.suspend(at, wait, -1)
+			return
+		}
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.SetIndex:
 		b.emit(at, 0, nil, b.uses(statement), nil)
@@ -180,12 +193,16 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.AllocateEnvironment:
 		b.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
+		if wait, ok := statement.Value.(ir.Await); ok {
+			b.suspend(at, wait, statement.Local)
+			return
+		}
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Return:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		if len(b.attempts) == 0 {
+		if !slices.ContainsFunc(b.attempts, func(attempt *attempt) bool { return attempt.finally != nil }) {
 			b.terminate(&Return{})
 			break
 		}
@@ -265,6 +282,7 @@ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	b.statements(statement.Update)
 	b.enter(test)
 	b.jumps = b.jumps[:len(b.jumps)-1]
+	b.statements(statement.Test)
 	if statement.Condition == nil {
 		b.current.Terminal = &Goto{Block: body.Id}
 	} else {
@@ -479,7 +497,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
-				if program.ClosuresMayThrow {
+				if program.ClosureMayThrow(value.Interface().(ir.Expression)) {
 					throws = true
 				}
 			case arraySortType:
@@ -511,6 +529,16 @@ var (
 	arraySortType   = reflect.TypeOf(ir.ArraySort{})
 	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
 )
+
+func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
+	b.emit(at, 0, wait.Value, b.uses(wait.Value), nil)
+	fulfilled := b.function.NewBlock()
+	b.current.Terminal = &Suspend{Fulfilled: fulfilled.Id, Rejected: b.throwTarget(), Local: local, Of: wait.Of}
+	b.current = fulfilled
+	if local >= 0 {
+		b.function.AddInstruction(b.current, &Instruction{At: at, Part: 1, Defines: b.defines(local)})
+	}
+}
 
 func (b *builder) linkLabels(names []string, target BlockId) {
 	for _, name := range names {

@@ -1,0 +1,7 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+function run(): number[] {
+ const options: { readonly cache: Map<string, number> } = { cache: new Map<string, number>() };
+ return parallelMap(items, (item) => options.cache.get('a') ?? item);
+}
+run();

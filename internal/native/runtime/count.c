@@ -8,14 +8,17 @@
 adamic_counts adamic_counted;
 
 void adamic_count_allocation(void) {
-	adamic_counted.allocations++;
-	adamic_counted.live++;
-	if (adamic_counted.live > adamic_counted.peak) {
-		adamic_counted.peak = adamic_counted.live;
-	}
+	atomic_fetch_add_explicit(&adamic_counted.allocations, 1, memory_order_relaxed);
+	size_t live = atomic_fetch_add_explicit(&adamic_counted.live, 1, memory_order_relaxed) + 1;
+	size_t peak = atomic_load_explicit(&adamic_counted.peak, memory_order_relaxed);
+	while (peak < live && !atomic_compare_exchange_weak_explicit(&adamic_counted.peak, &peak, live, memory_order_relaxed, memory_order_relaxed)) {}
+
 }
 
 void adamic_count_report(void) {
+	if (adamic_counted.graph_regions != 0) {
+		fprintf(stderr, "adamic: graph counts: regions %zu merges %zu\n", adamic_counted.graph_regions, adamic_counted.graph_merges);
+	}
 	char line[200];
 	int length = snprintf(line, sizeof line, "adamic: counts: allocations %zu frees %zu retains %zu releases %zu peak %zu regions %zu\n",
 		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak, adamic_counted.regions);
