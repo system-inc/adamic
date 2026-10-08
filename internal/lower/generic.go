@@ -18,16 +18,16 @@ const maximumGenericDepth = 32
 // each type parameter is what this call made it.
 //
 // The checker resolves the call's signature with its type arguments substituted, but doesn't export
-// the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
-// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
+// the mapping itself. Read its mapper through the existing checker bridge first, then infer any
+// remaining parameters from the resolved parameter and result types. A type parameter that neither
+// path resolves is left unmapped, and the body says not yet wherever it needs to know it.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
-	concreteTypes := map[*checker.Type]*checker.Type{}
+	concreteTypes := l.genericReturnTypes(resolved, declaration)
 	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
 	// calls must infer their own arguments: the outer mapper can still describe the
 	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
@@ -65,8 +65,15 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 
 	substitution := map[*checker.Type]ir.Type{}
 
+	owner := -1
+	if local, ok := l.locals[l.symbol(declaration.Name())]; ok && l.result.Locals[local].NestedFunction < 0 {
+		owner = l.result.Locals[local].Function
+	}
 	key := l.program.Where(declaration)
 	name := declaration.Name().Text()
+	if owner >= 0 {
+		key += ",frame:" + strconv.Itoa(owner)
+	}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
 		concrete, isKnown := concreteTypes[parameterType]
@@ -95,7 +102,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 
 	index := len(l.result.Functions)
 	name += "_" + strconv.Itoa(index)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Closure: owner >= 0, NestedParent: owner + 1})
 	if l.genericInstances == nil {
 		l.genericInstances = map[string]int{}
 	}
@@ -105,6 +112,19 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	// whatever function or closure called it.
 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	// Validation can return before signature or body lowering starts. Restore
+	// the caller's closure stack and type context on those exits too.
+	defer func() {
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+	}()
+	if owner >= 0 {
+		for proven, held := range outerSubstitution {
+			if _, ok := substitution[proven]; !ok {
+				substitution[proven] = held
+			}
+		}
+		l.closures = append(append([]int{}, outerClosures...), index)
+	}
 	sources, targets := []*checker.Type{}, []*checker.Type{}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -120,15 +140,15 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
-		if l.result.Locals[local].Global {
+		if l.result.Locals[local].Global || owner >= 0 {
 			l.locals[symbol] = local
 		}
 	}
 	l.genericDepth++
-	defer func() {
-		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
-		l.genericDepth--
-	}()
+	defer func() { l.genericDepth-- }()
+	if owner >= 0 {
+		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+	}
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
 		return 0, err
 	}

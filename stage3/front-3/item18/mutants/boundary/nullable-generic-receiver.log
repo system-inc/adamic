@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/nullable_generic_receiver
+=== PAUSE TestErrorBoundariesAreExplicit/nullable_generic_receiver
+=== CONT  TestErrorBoundariesAreExplicit/nullable_generic_receiver
+    error_classes_test.go:37: want refusal containing "a possibly undefined object", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/nullable_generic_receiver (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.305s
+FAIL

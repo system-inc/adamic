@@ -1,0 +1,57 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+--- FAIL: TestNativeAgreesWithNode (0.43s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a (0.21s)
+panic: ir: virtual call has no target set [recovered, repanicked]
+
+goroutine 23 [running]:
+testing.tRunner.func1.2({0x1cc3040, 0x1311200})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cc3040?, 0x1311200?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).CallTargets(0x409d53?, {0x9, {0x14dcfde69d90, 0x1, 0x1}, 0x1, 0xffffffffffffffff, 0x0, {0x14dcfd9fa2ca, 0x6}, ...})
+	/workspace/adamic/internal/ir/call_targets.go:13 +0x89
+github.com/system-inc/adamic/internal/lower.(*lowering).guardRuntimeRanges.func1.func1({0x1d55878?, 0x14dcfde06460?})
+	/workspace/adamic/internal/lower/error_runtime_ranges.go:38 +0x1bc
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d55878?, 0x14dcfde06460?, 0x14dcfde69e10?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:393 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf7c8?, 0x14dcfde69e10?, 0x1cdf830?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d0d390?, 0x14dcfde69e10?, 0x1cdf7c8?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf830?, 0x14dcfde69d10?, 0x14dcfd869980?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c436a8?, 0x14dcfd869990?, 0x1cdf830?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d36df8?, 0x14dcfd869980?, 0x14dcfe05cde8?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf830?, 0x14dcfdd92080?, 0x7f25d0d512a0?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c436a8?, 0x14dcfdf02168?, 0x489845?}, 0x14dcfe05d560)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1c436a8?, 0x14dcfdf02168?}, 0x2?)
+	/workspace/adamic/internal/lower/exceptions.go:369 +0x67
+github.com/system-inc/adamic/internal/lower.(*lowering).guardRuntimeRanges.func1(...)
+	/workspace/adamic/internal/lower/error_runtime_ranges.go:35
+github.com/system-inc/adamic/internal/lower.(*lowering).guardRuntimeRanges(0x14dcfdfc5600)
+	/workspace/adamic/internal/lower/error_runtime_ranges.go:84 +0x848
+github.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x14dcfdfc5600)
+	/workspace/adamic/internal/lower/exceptions.go:147 +0x111
+github.com/system-inc/adamic/internal/lower.Lower({0x1d7be60?, 0x1e69f40?}, 0x14dcfd568000)
+	/workspace/adamic/internal/lower/lower.go:73 +0x85b
+github.com/system-inc/adamic/internal/oracle.lowered(0x14dcfd62a008, {0x14dcfda98370, 0x45})
+	/workspace/adamic/internal/oracle/oracle_test.go:563 +0x18b
+github.com/system-inc/adamic/internal/oracle.TestNativeAgreesWithNode.func1(0x14dcfd62a008)
+	/workspace/adamic/internal/oracle/oracle_test.go:726 +0x114
+testing.tRunner(0x14dcfd62a008, 0x14dcfd7be660)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.412s
+FAIL

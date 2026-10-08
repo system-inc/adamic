@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/optional_generic_field
+=== PAUSE TestErrorBoundariesAreExplicit/optional_generic_field
+=== CONT  TestErrorBoundariesAreExplicit/optional_generic_field
+    error_classes_test.go:37: want refusal containing "optional or erased field", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/optional_generic_field (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.095s
+FAIL

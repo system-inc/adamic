@@ -1,0 +1,15 @@
+=== RUN   TestCodePointCatchabilityBoundary
+=== PAUSE TestCodePointCatchabilityBoundary
+=== CONT  TestCodePointCatchabilityBoundary
+=== RUN   TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a
+=== PAUSE TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a
+=== CONT  TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a
+    catchability_test.go:49: want String.fromCodePoint catchability refusal, got <nil>
+--- FAIL: TestCodePointCatchabilityBoundary (0.00s)
+    --- FAIL: TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a (0.52s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.532s
+FAIL

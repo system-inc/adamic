@@ -5,34 +5,37 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // nonNull uses the same nullish test and terminal panic as ?? panic(...).
-// Keep the operand's stored representation: checker narrowing can outlive a call.
+// Recover presence checks from nullable loads, but keep a checked union narrowing
+// in its result representation. Calls may invalidate the original narrowing.
 func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
 	value, err := l.expression(operand)
 	if err != nil {
 		return nil, err
 	}
+	return l.nonNullValue(node, value)
+}
+
+// nonNullValue also checks an already-held assignment target read.
+func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	operand := node.AsNonNullExpression().Expression
+	var err error
 	for {
 		switch narrowed := value.(type) {
 		case ir.Unwrap:
 			value = narrowed.Value
 		case ir.Defined:
 			value = narrowed.Value
-		case ir.Narrow:
-			value = narrowed.Value
 		default:
+			// Narrow and narrowing calls retain their representation and checks.
 			goto stored
 		}
 	}
 stored:
-	// A checked narrowing helper can return an already validated primitive.
-	// Unlike the original union, this representation has no nullish sentinel.
-	if value.Type() == ir.Number || value.Type() == ir.Boolean {
-		return value, nil
-	}
 	weakOperand := false
 	if target, ok := value.(ir.WeakTarget); ok {
 		// A narrowed Weak may have cleared since the narrowing. This assertion owns
@@ -49,7 +52,8 @@ stored:
 		}
 	}
 	of, err := l.typeOf(node)
-	if err != nil && l.uninitializedInitializer(node) {
+	flags := l.checker.GetTypeAtLocation(operand).Flags()
+	if err != nil && (flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull) {
 		of = ir.Object
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if representation, known := l.representation(contextual); known {
@@ -72,24 +76,42 @@ stored:
 	if err != nil {
 		return nil, err
 	}
-	proven := l.checker.GetTypeAtLocation(operand)
-	// A checked union extraction can already return a scalar. Its type guard
-	// remains in value; a scalar has no nullish representation to check again.
+	// A checked narrowing helper can already return a plain scalar. Its result
+	// has no nullish representation and must never receive a pointer test.
 	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+		l.recordNonNullCheck(node, true)
 		return value, nil
 	}
+	proven := l.checker.GetTypeAtLocation(operand)
 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {
+			l.recordNonNullCheck(node, true)
 			return ir.Narrow{Value: value, To: of}, nil
 		}
+		l.recordNonNullCheck(node, true)
 		return value, nil
 	}
 	file := ast.GetSourceFileOfNode(node)
 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
-	message := ir.StringConstant{Index: l.constant("non-null assertion failed: " + text + " is null or undefined")}
+	message := ir.StringConstant{Index: l.constant("non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined")}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
 	if result.Type() == ir.Union && of != ir.Union {
 		result = ir.Narrow{Value: result, To: of}
 	}
+	l.recordNonNullCheck(node, false)
 	return result, nil
+}
+
+func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+}
+
+func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+	counts := &l.result.NonNullChecks
+	if proven {
+		counts.Proven++
+	} else {
+		counts.Checked++
+	}
+	counts.Sites = append(counts.Sites, ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven})
 }

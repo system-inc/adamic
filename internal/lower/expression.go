@@ -25,6 +25,12 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		// Storage only: evaluating never always traps.
 		return ir.Number, nil
 	}
+	// A narrowed field still has its declared storage representation.
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			return l.typeOfSymbol(node, field)
+		}
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -33,6 +39,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if kind := l.typedArrayKind(proven); kind != 0 {
+		return kind, true
+	}
 	if l.phantomArrayBase(proven) != nil {
 		return ir.Array, true
 	}
@@ -59,6 +68,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+		// An undefined or erased void value uses the existing null reference representation.
+		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:
@@ -73,9 +85,19 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
+		if l.genericSignature(proven) != nil {
+			return ir.Object, true
+		}
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.genericSignature(proven) == nil {
+			for _, member := range proven.Types() {
+				if l.genericSignature(member) != nil {
+					return 0, false
+				}
+			}
+		}
 		if l.includesNull(proven) {
 			// A nullable match result uses NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
@@ -170,6 +192,10 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	assertion := ast.SkipParentheses(node)
+	if assertion.Kind == ast.KindAsExpression && l.genericSignature(l.checker.GetTypeAtLocation(assertion.AsAsExpression().Expression)) != nil && l.genericSignature(l.checker.GetTypeAtLocation(assertion)) == nil {
+		return nil, l.notYet(node, "a cast erasing a generic function value's representation")
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -178,6 +204,16 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
+	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {
+		return nil, l.notYet(node, "observing properties of a generic function value")
+	}
+	if parent != nil && parent.Kind == ast.KindSpreadAssignment && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {
+		return nil, l.notYet(node, "spreading a generic function value")
 	}
 	value, err := l.value(node)
 	if err == nil {
@@ -216,7 +252,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	read := l.checker.GetTypeAtLocation(node)
 	to, present := ir.Object, false
-	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
@@ -251,6 +287,13 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
 		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeeping(inside, viewed, visited)
+	}
+	fromGeneric, toGeneric := l.genericSignature(from), l.genericSignature(to)
+	if (fromGeneric != nil) != (toGeneric != nil) {
+		return false
+	}
+	if fromGeneric != nil && (len(fromGeneric.Declaration().TypeParameters()) != len(toGeneric.Declaration().TypeParameters()) || !l.checker.IsTypeAssignableTo(from, to) || !l.checker.IsTypeAssignableTo(to, from)) {
+		return false
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -569,6 +612,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 			operand = narrowed.Value
 		}
 		written := node.AsTypeOfExpression().Expression
+		if l.genericSignature(l.checker.GetTypeAtLocation(written)) != nil {
+			return ir.Conditional{Condition: ir.IsUndefined{Value: operand}, WhenTrue: ir.StringConstant{Index: l.constant("undefined")}, WhenNot: ir.StringConstant{Index: l.constant("function")}, Of: ir.String}, nil
+		}
 		null := l.typeOfNull(written)
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
@@ -588,6 +634,11 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 			return l.logicalAssignment(node)
 		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+			return l.coalesce(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindBarBarToken && l.arrayOrUndefined(l.checker.GetTypeAtLocation(binary.Left)) {
+			// Every array, including [], is truthy. Only undefined takes the
+			// fallback, so the existing lazy coalescing operation is exact here.
 			return l.coalesce(node)
 		}
 		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
@@ -634,6 +685,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		l.touch(l.this)
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
+		if len(node.TypeParameters()) > 0 {
+			return l.genericClosure(node)
+		}
 		return l.closure(node)
 	case ast.KindNonNullExpression:
 		return l.nonNull(node)
@@ -721,6 +775,9 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+		return l.incrementValue(node)
+	}
 	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
 		operand, err := l.libraryNumber(prefix.Operand)
 		if err != nil {
@@ -774,6 +831,9 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		left, right = l.concatenated(left), l.concatenated(right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
@@ -795,14 +855,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				value = right
 			}
-			if !value.Type().IsReference() {
-				return nil, l.notYet(node, "null comparison with a scalar")
-			}
 			operand := node.AsBinaryExpression().Left
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			// Scalars cannot hold null. IsNull still evaluates its operand, and a
+			// generic reference must consult this instantiation before erasing the test.
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().IsReference() || !l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand)))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -829,7 +888,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand))) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -866,6 +925,26 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	}
 
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
+}
+
+// concatenated writes the primitive operands of string addition as JavaScript does.
+// Objects retain their representation, so unsupported ToPrimitive remains NotYet.
+func (l *lowering) concatenated(value ir.Expression) ir.Expression {
+	switch value.(type) {
+	case ir.Null:
+		return ir.StringConstant{Index: l.constant("null")}
+	case ir.Undefined:
+		return ir.StringConstant{Index: l.constant("undefined")}
+	}
+	switch value.Type() {
+	case ir.Number:
+		return ir.NumberToString{Value: value}
+	case ir.Boolean:
+		return ir.BooleanToString{Value: value}
+	case ir.MaybeNumber, ir.MaybeBoolean:
+		return ir.MaybeToString{Value: value}
+	}
+	return value
 }
 
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
@@ -922,6 +1001,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if branch := l.literalCallableBranch(node); branch != nil {
+		return l.expression(branch)
+	}
 	conditional := node.AsConditionalExpression()
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
@@ -969,6 +1051,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 }
 
 func typeName(valueType ir.Type) string {
+	if valueType.IsTypedArray() {
+		return typedArrayName(valueType)
+	}
 	switch valueType {
 	case ir.Number:
 		return "number"
@@ -1022,6 +1107,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	qualified := l.namespaceMember(callee)
 	if value, handled, err := l.nestedOverloadCall(call); handled {
 		return value, err
 	}
@@ -1038,14 +1124,47 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			}
 			arguments = append(arguments, value)
 		}
-		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		carrier := ir.Expression(ir.ClosureSelf{})
+		if l.function.NestedParent != l.result.Functions[direct].NestedParent {
+			// Anonymous captures have their own layout. Materialize a temporary carrier
+			// for the target layout; do not capture a sibling's canonical function value.
+			carrier = ir.MakeClosure{Function: direct}
+		}
+		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
 	}
-	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
+		if nestedGenericDeclaration(declaration) {
+			// Registered nested declarations retain their frame specialization and sibling inference.
+			if local, known := l.locals[l.symbol(declaration.Name())]; !known || l.result.Locals[local].NestedFunction >= 0 {
+				return l.callNestedGeneric(node, declaration)
+			}
+		}
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
 		}
-		return l.callFunction(call, instance)
+		if l.result.Functions[instance].Closure {
+			arguments := []ir.Expression{}
+			for position, argument := range call.Arguments.Nodes {
+				value, err := l.expression(argument)
+				if err != nil {
+					return nil, err
+				}
+				if position < len(l.result.Functions[instance].Parameters) {
+					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
+				}
+				arguments = append(arguments, value)
+			}
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
+		}
+		value, err := l.callFunction(call, instance)
+		if err == nil {
+			value = l.namespaceReadyCall(callee, value)
+		}
+		return value, err
+	}
+	if signature := l.genericSignature(l.checker.GetTypeAtLocation(callee)); signature != nil {
+		return l.callGenericClosure(node, signature)
 	}
 	// Host units get their builtin dispatch first. Refuse the remainder by the
 	// resolved member name rather than attempting a declaration-only function.
@@ -1053,13 +1172,17 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, module+"."+member)
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
-	if !ast.IsIdentifier(callee) || !isFunction {
+	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
 			return l.callClosure(node)
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
-	return l.callFunction(call, function)
+	value, err := l.callFunction(call, function)
+	if err == nil {
+		value = l.namespaceReadyCall(callee, value)
+	}
+	return value, err
 }
 
 // callFunction lowers a call's arguments, in order, and the call to function.
@@ -1153,6 +1276,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
 	for _, parameter := range symbol.Declarations[0].Parameters() {
+		if parameter.Name().Text() == "this" {
+			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+		}
 		declared := parameter.AsParameterDeclaration()
 		if declared.DotDotDotToken != nil {
 			return nil, l.notYet(node, "a function with a rest parameter, as a value")
@@ -1231,6 +1357,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		property.Method = true
 		closure = property
 	}
+	return l.callClosureValue(node, closure, nil)
+}
+
+func (l *lowering) callClosureValue(node *ast.Node, closure ir.Expression, resolved *checker.Signature) (ir.Expression, error) {
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -1248,11 +1378,20 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	if resolved == nil {
+		resolved = l.checker.GetResolvedSignature(node)
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if resolved != nil {
+		signatures = []*checker.Signature{resolved}
+	}
+	if len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
+			if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
+				if index < len(arguments) {
 					arguments[index] = fit(arguments[index], takes)
+				} else {
+					arguments = append(arguments, fit(ir.Undefined{}, takes))
 				}
 			}
 		}
@@ -1267,3 +1406,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
 }
+
+// Optional booleans have a three-state byte in the function-call ABI.
+// General union arguments still need a representation adapter.
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }

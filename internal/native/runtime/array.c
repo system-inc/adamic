@@ -201,7 +201,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context) {
 	// JavaScript reads the comparator's result by its sign, and NaN as 0.
 	adamic_closure *compare = context;
-	double result = compare->code(compare, (adamic_value[]){left, right}, 2).number;
+	double result = compare->code(compare, 2, (adamic_value[]){left, right}).number;
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 

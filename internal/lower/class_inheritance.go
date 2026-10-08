@@ -47,7 +47,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 
 func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
 	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
-	for _, member := range declaration.Members() {
+	for _, member := range classMembersWithParameters(declaration) {
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
@@ -104,7 +104,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 				return refuse("an accessor override with an unsafe read or write type (adamic/invariant-mutable)", "keep the inherited accessor type; narrow values inside the accessor")
 			}
 		}
-		if member.Kind == ast.KindPropertyDeclaration {
+		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
 			}
@@ -225,8 +225,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
 	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
-	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindPropertyDeclaration {
+	for _, member := range classMembersWithParameters(declaration) {
+		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
 			continue
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
@@ -245,7 +245,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Contract: l.slotContract(member, l.concrete(l.checker.GetTypeAtLocation(member.Name()))), Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
+		field := ir.Field{Contract: l.slotContract(member, l.concrete(l.checker.GetTypeAtLocation(member.Name()))), Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || l.assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -369,6 +369,11 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 			available[field.Name] = true
 		}
 	}
+	resets, err := l.parameterPropertyResets(declaration, this, available)
+	if err != nil {
+		return nil, err
+	}
+	statements = append(statements, resets...)
 	for _, member := range declaration.Members() {
 		if member.Kind != ast.KindPropertyDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
@@ -387,7 +392,7 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 			continue
 		}
 
-		if initializer := member.AsPropertyDeclaration().Initializer; assertionInitializer(initializer) {
+		if initializer := member.AsPropertyDeclaration().Initializer; l.assertionInitializer(initializer) {
 			if err := l.initializerReads(initializer, available); err != nil {
 				return nil, err
 			}
@@ -458,7 +463,9 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return append(statements, initialized...), nil
+	statements = append(statements, initialized...)
+	assigned, err := l.parameterPropertyStores(declaration, l.this)
+	return append(statements, assigned...), err
 }
 
 func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {

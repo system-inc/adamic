@@ -1,0 +1,44 @@
+--- FAIL: TestErrorBoundariesAreExplicit (0.01s)
+    --- FAIL: TestErrorBoundariesAreExplicit/fake_error (0.23s)
+        error_classes_test.go:37: want refusal containing "without nominal ancestry", got /tmp/adamic-gate/TestErrorBoundariesAreExplicitfake_error3024970258/001/main.a:1:73: Adamic 0.1 refuses optional property stack in Error absent from structural source { name: string; message: string; toString: () => string; }, which can hide fields; declare stack on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	234.805s
+--- FAIL: TestUnitsPreserveSharedState (0.46s)
+    units_test.go:37: mkdir /home/agent/.cache/adamic/units/.publish-2391671964: no space left on device
+--- FAIL: TestTypedArrayRuntime (3.16s)
+    --- FAIL: TestTypedArrayRuntime/sanitized (0.05s)
+        typed_array_test.go:30: native: mkdir /home/agent/.cache/adamic/runtime/.build-1772917223: no space left on device
+--- FAIL: TestArithmeticIsNeverFused (0.34s)
+    contract_test.go:83: native: mkdir /home/agent/.cache/adamic/runtime/.build-3307783061: no space left on device
+--- FAIL: TestRuntimeReleasePaths (0.58s)
+    runtime_profile_test.go:49: native: mkdir /home/agent/.cache/adamic/runtime/.build-216327969: no space left on device
+--- FAIL: TestRecordsAgainstNode (0.06s)
+    record_test.go:67: native: mkdir /home/agent/.cache/adamic/runtime/.build-1525051461: no space left on device
+--- FAIL: TestFreedValuesAreCaughtWithSlabs (3.18s)
+    heap_test.go:47: native: mkdir /home/agent/.cache/adamic/runtime/.build-312630809: no space left on device
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	758.321s
+--- FAIL: TestCallTargetReaders (48.44s)
+    call_targets_guard_test.go:51: go list: github.com/system-inc/adamic/internal/fresh_test: write /home/agent/.cache/go-build/dc/dceea67318551530512e198b58b8e5ca076acdd7e3ba879799b1649c1670239d-d: no space left on device
+        github.com/system-inc/adamic/internal/native: write /home/agent/.cache/go-build/9a/9af270b64ce192b7346fe2d15b52a1e6769888893ebd6efe51bb71346021e0b7-d: no space left on device
+        github.com/system-inc/adamic/internal/lower: write /home/agent/.cache/go-build/c6/c6ce2e49147ac681e3d56911f2249aebf3a50a93d840e9a69cdd924bb17730c7-d: no space left on device
+        github.com/system-inc/adamic/internal/lower: write /home/agent/.cache/go-build/5f/5fe5cf479da8f1ab21727ebad5d82ccf25b2adbd81b558cfc877503cbf8c3e54-d: no space left on device
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	48.528s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (95.87s)
+    flow_test.go:85: Lower: /workspace/adamic/internal/oracle/testdata/library_error_stack_refused.a:4:13: stage 0 can't lower Error.stack: native frames have no JavaScript source stack; stack reads need a shared definition before lowering yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.19s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_error_stack_refused.a (4.20s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_error_stack_refused.a:4:13: stage 0 can't lower Error.stack: native frames have no JavaScript source stack; stack reads need a shared definition before lowering yet
+--- FAIL: TestEveryMutationIsInItsRange (454.43s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.19s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_error_stack_refused.a (2.56s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_error_stack_refused.a:4:13: stage 0 can't lower Error.stack: native frames have no JavaScript source stack; stack reads need a shared definition before lowering yet
+    ranges_test.go:78: 98215 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (455.09s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.18s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_error_stack_refused.a (3.10s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_error_stack_refused.a:4:13: stage 0 can't lower Error.stack: native frames have no JavaScript source stack; stack reads need a shared definition before lowering yet
+    trace_test.go:426: 56815150 variable-and-point pairs checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	455.197s

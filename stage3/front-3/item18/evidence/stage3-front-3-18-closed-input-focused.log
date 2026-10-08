@@ -1,0 +1,6 @@
+--- FAIL: TestClosedFrameInputRejectsMutation (0.24s)
+    nested_functions_test.go:137: closed literal input was not proven
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.323s
+ok  	github.com/system-inc/adamic/internal/oracle	3.289s
+FAIL

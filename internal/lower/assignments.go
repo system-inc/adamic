@@ -20,15 +20,24 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
 	binary := node.AsBinaryExpression()
-	if logicalAssignment(binary.OperatorToken.Kind) {
+	if logicalAssignment(binary.OperatorToken.Kind) && nonNullAssignmentTarget(binary.Left) == nil {
 		value, err := l.logicalAssignment(node)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
+	target := ast.SkipParentheses(binary.Left)
+	assertion := nonNullAssignmentTarget(target)
+	if assertion != nil {
+		for target.Kind == ast.KindNonNullExpression {
+			target = ast.SkipParentheses(target.AsNonNullExpression().Expression)
+		}
+		if isCompound || logicalAssignment(binary.OperatorToken.Kind) {
+			return l.nonNullUpdate(node, assertion, target, operator)
+		}
+	}
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
-	target := ast.SkipParentheses(binary.Left)
 
 	if target.Kind == ast.KindPropertyAccessExpression {
 		if isCompound {
@@ -39,6 +48,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	// array[index] += value never reaches here: the element may be missing, so the checker refuses it
 	// (noUncheckedIndexedAccess).
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		if body, handled, err := l.typedArrayWrite(target, binary.Right); handled {
+			return body, err
+		}
 		return l.setIndex(target, binary.Right)
 	}
 	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
@@ -48,10 +60,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateIndex(node, target, operator, binary.Right)
 	}
 	local, isLocal := l.local(target)
-	if !ast.IsIdentifier(target) || !isLocal {
+	if (!ast.IsIdentifier(target) && !l.namespaceMember(target)) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
-	if l.result.Locals[local].NestedFunction > 0 {
+	if l.result.Locals[local].NestedFunction != 0 {
 		return nil, l.notYet(target, "rebinding a nested function declaration")
 	}
 	if l.caught[l.symbol(target)] {
@@ -78,7 +90,18 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+	statements := l.namespaceReadyStatements(target, false)
+	if !isCompound && target.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(target) {
+		// A simple property assignment evaluates its RHS before PutValue discovers
+		// an undefined receiver. Earlier containers in a nested chain are reads.
+		statements = l.namespaceReadyStatements(target.Expression(), false)
+		temporary := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex})
+		statements = append(statements, ir.Declare{Local: temporary, Value: value})
+		statements = append(statements, l.namespaceReadyStatements(target, true)...)
+		value = ir.Read{Local: temporary, Of: value.Type()}
+	}
+	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type
@@ -124,6 +147,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		local, isLocal := l.local(element)
 		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
 			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
+		}
+		if l.result.Locals[local].NestedFunction != 0 {
+			return nil, l.notYet(element, "rebinding a nested function declaration")
 		}
 		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
 		if err != nil {
@@ -174,7 +200,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateProperty(node, operand, step, nil)
 	}
 	local, isLocal := l.local(operand)
-	if !ast.IsIdentifier(operand) || !isLocal {
+	if (!ast.IsIdentifier(operand) && !l.namespaceMember(operand)) || !isLocal {
 		return nil, l.notYet(operand, "incrementing "+describe(operand))
 	}
 	step := ir.Add
@@ -182,5 +208,5 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		step = ir.Subtract
 	}
 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
+	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
 }

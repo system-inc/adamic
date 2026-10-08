@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/stack_write
+=== PAUSE TestErrorBoundariesAreExplicit/stack_write
+=== CONT  TestErrorBoundariesAreExplicit/stack_write
+    error_classes_test.go:37: want refusal containing "writing Error.stack", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.01s)
+    --- FAIL: TestErrorBoundariesAreExplicit/stack_write (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.243s
+FAIL

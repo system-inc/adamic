@@ -13,10 +13,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/01_builder_state.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/namespaces/01_builder_state.a:13:16: stage 0 can't lower a BinaryExpression with a value and a boolean yet"}
   },
   {
     "file": "02_jsx_names.a",
@@ -30,10 +27,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/02_jsx_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "03_react_names.a",
@@ -47,10 +41,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/03_react_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_debug_state.a",
@@ -65,10 +56,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/04_debug_state.a:13:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "05_debug_log_merge.a",
@@ -84,10 +72,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/05_debug_log_merge.a:18:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/namespaces/05_debug_log_merge.a:39:5: stage 0 can't lower a namespace merged with a function; callable object properties, identity and receivers are not represented yet"}
   },
   {
     "file": "06_binary_expression_state.a",
@@ -102,10 +87,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/namespaces/06_binary_expression_state.a:13:27: Adamic 0.1 refuses a function taking TState[] seen as one taking TState[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) =\u003e void), which tsc checks one way, or take the wider type in the method (method-signature-style)"}
   },
   {
     "file": "07_parser_singleton.a",
@@ -120,10 +102,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/07_parser_singleton.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "08_parser_jsdoc_nested.a",
@@ -141,10 +120,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "09_incremental_parser.a",
@@ -159,10 +135,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/09_incremental_parser.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "10_tracing_escape.a",
@@ -178,10 +151,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/10_tracing_escape.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/namespaces/10_tracing_escape.a:38:11: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"}
   },
   {
     "file": "11_status_type_only.a",
@@ -195,10 +165,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/11_status_type_only.a:36:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "12_builder_release_cache.a",
@@ -213,9 +180,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   }
 ]

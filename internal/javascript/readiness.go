@@ -43,6 +43,9 @@ const adamicWriteField = (object, name, value) => { object[name] = value; adamic
 `
 
 func (e *emitter) localReady(local int) string {
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.variable(binding - 1)
+	}
 	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
 		if e.function != nil {
 			for index, captured := range e.function.Environment {

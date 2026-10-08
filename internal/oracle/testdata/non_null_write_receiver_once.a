@@ -1,0 +1,8 @@
+class Box { value = 1; }
+let calls = 0;
+let selected = new Box();
+const original = selected;
+function receiver(): Box { calls++; return selected; }
+function right(): number { selected = new Box(); return 2; }
+receiver().value! += right();
+console.log(`${calls} ${original.value} ${selected.value}`);

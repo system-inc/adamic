@@ -234,8 +234,19 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
 	case ast.KindEmptyStatement:
 		return paths, nil
 	case ast.KindExpressionStatement, ast.KindVariableStatement:
-		if node.Kind == ast.KindExpressionStatement && p.l.isPanicCall(node.Expression()) {
-			return nil, nil
+		if node.Kind == ast.KindExpressionStatement {
+			expression := ast.SkipParentheses(node.Expression())
+			if p.l.isPanicCall(expression) {
+				return nil, nil
+			}
+			// Only an independently inspected direct helper removes this path.
+			// A never annotation or a method's static signature is not evidence.
+			if expression.Kind == ast.KindCallExpression && ast.IsIdentifier(ast.SkipParentheses(expression.Expression())) {
+				verifier := predicateVerifier{l: p.l}
+				if verifier.neverCall(expression, map[*ast.Node]bool{}) {
+					return nil, nil
+				}
+			}
 		}
 		if predicateEffects(node) {
 			// Unknown calls and all writes can invalidate discriminants through an alias. Starting
@@ -377,7 +388,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 }
 
 // A signature on a plain function parameter is an argument contract. The call
-// visitor proves the actual function body before admitting any invocation.
+// visitor proves the actual function body before admitting any invocation. Live
+// contracts also need a closed set of direct callers; an uncalled declaration or
+// an escaped function value supplies no producer proof for its callback.
 func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	signature := node.Parent
 	if signature == nil || signature.Kind != ast.KindFunctionType || signature.Parent == nil || signature.Parent.Kind != ast.KindParameter {
@@ -418,7 +431,51 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	if changed {
 		return nil
 	}
+	// A bodyless overload's callback predicate is not the implementation's
+	// contract when the implementation takes an ordinary boolean callback.
+	if signature.Parent != parameter && parameter.Type() != nil && parameter.Type().Kind == ast.KindFunctionType && parameter.Type().Type() != nil && parameter.Type().Type().Kind != ast.KindTypePredicate {
+		return parameter
+	}
+	if !l.predicateCallbackCallers(function, symbol) {
+		return nil
+	}
 	return parameter
+}
+
+// Every producer is checked by predicateArguments before annotations are admitted.
+// Keep that proof within direct calls, and do not let a callback escape its body.
+func (l *lowering) predicateCallbackCallers(function *ast.Node, callback *ast.Symbol) bool {
+	if function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name()) || ast.HasSyntacticModifier(function, ast.ModifierFlagsExport) {
+		return false
+	}
+	owner := l.symbol(function.Name())
+	if owner == nil {
+		return false
+	}
+	found, safe := false, true
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if ast.IsIdentifier(node) && !ast.IsPartOfTypeNode(node) && !ast.IsDeclarationName(node) {
+			symbol := l.symbol(node)
+			if symbol == owner || symbol == callback {
+				callee := node
+				for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
+					callee = callee.Parent
+				}
+				call := callee.Parent
+				safe = safe && call != nil && call.Kind == ast.KindCallExpression && call.AsCallExpression().Expression == callee
+				if symbol == owner {
+					found = true
+				}
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	for _, file := range l.program.Files() {
+		file.AsNode().ForEachChild(visit)
+	}
+	return found && safe
 }
 
 func (l *lowering) predicateArguments(node *ast.Node) error {
@@ -465,7 +522,7 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
 			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 		}
-		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || implementation.Type() == nil || implementation.Type().Kind != ast.KindTypePredicate {
+		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || (implementation.Type() != nil && implementation.Type().Kind != ast.KindTypePredicate) {
 			return failure()
 		}
 		if argument.Kind == ast.KindIdentifier {
@@ -486,7 +543,6 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				return failure()
 			}
 		}
-		annotation := implementation.Type().AsTypePredicateNode()
 		wanted := contract.AsTypePredicateNode()
 		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
 		var target *checker.Type
@@ -495,11 +551,21 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				target = predicate.Type()
 			}
 		}
-		if annotation.Type == nil || wanted.Type == nil || target == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
+		if wanted.Type == nil || target == nil {
 			return failure()
 		}
-		if err := l.predicateRefusal(implementation.Type()); err != nil {
-			return failure()
+		if implementation.Type() == nil {
+			if !l.proveInferredPredicate(implementation, target) {
+				return failure()
+			}
+		} else {
+			annotation := implementation.Type().AsTypePredicateNode()
+			if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
+				return failure()
+			}
+			if err := l.predicateRefusal(implementation.Type()); err != nil {
+				return failure()
+			}
 		}
 	}
 	return nil

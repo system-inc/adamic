@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (139.18s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
+        --- FAIL: TestCountsAreRecorded/fixtures/stage3/fixtures/nested-functions/06_parser_token_state.a (0.24s)
+            counts_test.go:143: Lower: /workspace/adamic/stage3/fixtures/nested-functions/06_parser_token_state.a:6:17: Adamic 0.1 refuses 'scanner', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	139.242s
+FAIL

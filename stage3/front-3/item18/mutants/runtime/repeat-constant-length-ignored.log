@@ -1,0 +1,8 @@
+=== RUN   TestRepeatRefusalChecksResultLength
+=== PAUSE TestRepeatRefusalChecksResultLength
+=== CONT  TestRepeatRefusalChecksResultLength
+    exception_precision_test.go:213: oversized constant repeat must remain a named refusal without its guard, got ""
+--- FAIL: TestRepeatRefusalChecksResultLength (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.017s
+FAIL

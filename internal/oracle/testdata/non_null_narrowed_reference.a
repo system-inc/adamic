@@ -1,0 +1,7 @@
+class Box { value = 0; }
+function narrowed(value: Box | undefined): number {
+ if (value !== undefined) return value!.value;
+ return 1;
+}
+console.log(String(narrowed(new Box())));
+console.log(String(narrowed(undefined)));

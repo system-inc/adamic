@@ -1,0 +1,6 @@
+=== RUN   TestClosedFrameInputRejectsMutation
+    nested_functions_test.go:143: mutable graph accepted as closed
+--- FAIL: TestClosedFrameInputRejectsMutation (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.227s
+FAIL

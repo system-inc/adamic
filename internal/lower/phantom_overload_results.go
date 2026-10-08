@@ -55,21 +55,41 @@ func (l *lowering) overloadResults(implementation *ast.Node) error {
 			continue
 		}
 		if len(implementation.TypeParameters()) != 0 || len(overload.TypeParameters()) != 0 {
-			return l.notYet(overload, "generic overload result proofs")
+			// Existing census overload proofs compare generic binders rigidly.
+			continue
 		}
 		overloadSignature := l.checker.GetSignatureFromDeclaration(overload)
-		implementationSignature := l.checker.GetSignatureFromDeclaration(implementation)
-		for index, parameter := range overloadSignature.Parameters() {
-			if index >= len(implementationSignature.Parameters()) {
-				break
+		declared, served := overload.Parameters(), implementation.Parameters()
+		for index := 0; index <= max(len(declared), len(served)); index++ {
+			fromParameter, parameter, givenRest, err := l.censusOverloadParameter(declared, index)
+			if err != nil {
+				return err
 			}
-			fromParameter := l.checker.GetTypeOfSymbol(parameter)
-			toParameter := l.checker.GetTypeOfSymbol(implementationSignature.Parameters()[index])
+			toParameter, actual, takesRest, err := l.censusOverloadParameter(served, index)
+			if err != nil {
+				return err
+			}
+			if actual == nil || parameter == nil && takesRest {
+				continue
+			}
+			if parameter == nil {
+				fromParameter, parameter = l.checker.GetUndefinedType(), actual
+			}
+			if givenRest && !takesRest {
+				fromParameter = l.checker.GetUnionType([]*checker.Type{fromParameter, l.checker.GetUndefinedType()})
+			}
 			if !l.sameKeeping(fromParameter, toParameter, map[[2]*checker.Type]bool{}) || l.provenTypesRelation(overload, implementation.Name(), fromParameter, toParameter) != nil {
-				return &Refused{Where: l.program.Where(overload), What: "an overload parameter " + parameter.Name + " not proven compatible with its implementation", Fix: "make the implementation accept every overload parameter with compatible writable slots and ownership"}
+				name := "parameter"
+				if ast.IsIdentifier(parameter.Name()) {
+					name = parameter.Name().Text()
+				}
+				return &Refused{Where: l.program.Where(overload), What: "an overload parameter " + name + " not proven compatible with its implementation", Fix: "make the implementation accept every overload parameter with compatible writable slots and ownership"}
 			}
 		}
 		to := l.concrete(l.checker.GetReturnTypeOfSignature(overloadSignature))
+		if l.censusNullableOverloadResult(from, to) {
+			continue
+		}
 		if l.sameKeeping(from, to, map[[2]*checker.Type]bool{}) && l.provenTypesRelation(overload, implementation.Name(), from, to) == nil {
 			continue
 		}

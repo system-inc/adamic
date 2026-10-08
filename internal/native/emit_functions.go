@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t argument_count)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, size_t argument_count, adamic_value *arguments)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -48,6 +48,7 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.line("ADAMIC_CHECK_STACK();")
 	if function.Closure {
 		e.line("(void)self;")
+		e.line("(void)argument_count;")
 		e.line("(void)arguments;")
 		e.line("(void)argument_count;")
 		for index, parameter := range function.Parameters {
@@ -55,6 +56,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			value := closureArgument(local.Type, index)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			if local.Type.IsMaybe() || local.Type.IsReference() {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index, value, absent(local.Type))
 			}
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
@@ -205,11 +209,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
-		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
-			arguments = append(arguments, zero(of))
-		} else {
-			arguments = append(arguments, "NULL")
-		}
+		arguments = append(arguments, absent(e.program.Locals[parameter].Type))
 	}
 	return arguments
 }
@@ -249,7 +249,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s, %d)", method, receiver, packed, len(arguments))
+			call = fmt.Sprintf("%s(%s, %d, %s)", method, receiver, len(arguments), packed)
 		} else {
 			received := "(adamic_value[]){ {.reference = " + receiver + "}"
 			if len(arguments) > 0 {

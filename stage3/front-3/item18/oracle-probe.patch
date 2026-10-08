@@ -1,0 +1,20 @@
+--- a/internal/oracle/library_error_test.go
++++ b/internal/oracle/library_error_test.go
+@@ -43,3 +43,17 @@
+ 		}
+ 	}
+ }
++
++func TestFront3CaptureFrozenProbe(t *testing.T) {
++ path := repository + "/stage3/front-3/item18/capture-frozen.a"
++ truth := onNode(t, path)
++ t.Logf("Node stdout=%q stderr=%q exit=%d", truth.stdout, truth.stderr, truth.exitCode)
++ program, err := lowered(t, path)
++ if err != nil { t.Fatalf("Lower: %v", err) }
++ compiled, _ := natively(t, program)
++ backend := onJavaScriptBackend(t, program)
++ for index, result := range []run{compiled, backend} {
++  t.Logf("backend %d stdout=%q stderr=%q exit=%d", index, result.stdout, result.stderr, result.exitCode)
++  if diff := disagreement(truth, result); diff != "" { t.Errorf("backend %d: %s", index, diff) }
++ }
++}

@@ -69,12 +69,15 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+// checkReady guards globals, captured slots and switch lexical bindings.
 func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
 
 func (e *emitter) localReady(local int) string {
-	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
-		return e.cellReference(local) + "->ready"
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
+	}
+	if cell := e.cellReference(local); cell != "" {
+		return cell + "->ready"
 	}
 	return readyName(local)
 }
@@ -97,6 +100,8 @@ func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
 	if read.Readiness != "" {
 		e.checkReadyRead(read.Local, read.Readiness)
+	} else if read.Checked {
+		e.checkReady(read.Local)
 	}
 	if e.program.Locals[read.Local].Counter {
 		// Read as the double it stands for, which every value it can hold is exactly.
@@ -124,9 +129,6 @@ func (e *emitter) read(read ir.Read) string {
 	}
 	if !e.program.Locals[read.Local].Global {
 		return name
-	}
-	if read.Checked {
-		e.checkReady(read.Local)
 	}
 	if lent {
 		e.self = true

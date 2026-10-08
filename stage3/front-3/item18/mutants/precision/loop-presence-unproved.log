@@ -1,0 +1,10 @@
+=== RUN   TestLoopPresenceSurvivesRuntimeMutation
+=== PAUSE TestLoopPresenceSurvivesRuntimeMutation
+=== CONT  TestLoopPresenceSurvivesRuntimeMutation
+    exception_precision_test.go:239: loop condition proves cursor present; runtime operations cannot reassign it
+    exception_precision_test.go:239: loop condition proves cursor present; runtime operations cannot reassign it
+    exception_precision_test.go:239: loop condition proves cursor present; runtime operations cannot reassign it
+--- FAIL: TestLoopPresenceSurvivesRuntimeMutation (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.065s
+FAIL

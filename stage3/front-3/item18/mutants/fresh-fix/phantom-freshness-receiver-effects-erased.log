@@ -1,0 +1,8 @@
+=== RUN   TestPhantomMemberFreshness
+=== RUN   TestPhantomMemberFreshness/receiver_effects_remain
+    phantom_member_test.go:30: phantom receiver writes: got 1, want 2: [{Kind:2 Site:1 Name: Function:-1 Proven:true Why:}]
+--- FAIL: TestPhantomMemberFreshness (0.00s)
+    --- FAIL: TestPhantomMemberFreshness/receiver_effects_remain (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.020s
+FAIL

@@ -1,0 +1,19 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/structural_view
+=== PAUSE TestErrorBoundariesAreExplicit/structural_view
+=== RUN   TestErrorBoundariesAreExplicit/nested_structural_view
+=== PAUSE TestErrorBoundariesAreExplicit/nested_structural_view
+=== CONT  TestErrorBoundariesAreExplicit/structural_view
+=== CONT  TestErrorBoundariesAreExplicit/nested_structural_view
+=== NAME  TestErrorBoundariesAreExplicit/structural_view
+    error_classes_test.go:37: want refusal containing "structural object view", got <nil>
+=== NAME  TestErrorBoundariesAreExplicit/nested_structural_view
+    error_classes_test.go:37: want refusal containing "without nominal ancestry", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/structural_view (0.70s)
+    --- FAIL: TestErrorBoundariesAreExplicit/nested_structural_view (0.67s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.896s
+FAIL

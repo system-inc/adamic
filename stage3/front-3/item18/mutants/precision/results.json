@@ -1,0 +1,74 @@
+[
+  {
+    "name": "callback-method-receiver-unbound",
+    "status": "caught",
+    "test": "TestCallbackTypedClassMethodCallBindsReceiver$",
+    "catcher": "must bind its receiver",
+    "log": "mutants/precision/callback-method-receiver-unbound.log",
+    "suite": "precision"
+  },
+  {
+    "name": "loop-presence-unproved",
+    "status": "caught",
+    "test": "TestLoopPresenceSurvivesRuntimeMutation$",
+    "catcher": "loop condition proves cursor present",
+    "log": "mutants/precision/loop-presence-unproved.log",
+    "suite": "precision"
+  },
+  {
+    "name": "unknown-store-ignored",
+    "status": "caught",
+    "test": "TestGeneratedGuardFactsIncludeUnknownStores$",
+    "catcher": "must remain throwing",
+    "log": "mutants/precision/unknown-store-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "counter-body-write-ignored",
+    "status": "caught",
+    "test": "TestGeneratedGuardCounterWritesRemainThrowing$",
+    "catcher": "must remain throwing",
+    "log": "mutants/precision/counter-body-write-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "presence-call-mutation-ignored",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/error_checks.a$",
+    "catcher": "exit codes differ",
+    "log": "mutants/precision/presence-call-mutation-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-calls-pure",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a$",
+    "catcher": "heap-use-after-free",
+    "log": "mutants/precision/all-calls-pure.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-calls-throw",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/all-calls-throw.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-functions-throw",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/all-functions-throw.log",
+    "suite": "precision"
+  },
+  {
+    "name": "readiness-unproved",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/readiness-unproved.log",
+    "suite": "precision"
+  }
+]

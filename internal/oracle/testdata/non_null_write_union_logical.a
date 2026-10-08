@@ -1,0 +1,11 @@
+function update(value: number | string | boolean | undefined): void {
+ value! ||= 7;
+ console.log(`${value}`);
+ value! &&= 'set';
+ console.log(`${value}`);
+}
+update(0);
+update(NaN);
+update(false);
+update('');
+update('present');

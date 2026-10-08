@@ -1,0 +1,11 @@
+=== RUN   TestRuntimeStackCleanup
+=== PAUSE TestRuntimeStackCleanup
+=== CONT  TestRuntimeStackCleanup
+    catchability_test.go:213: stdout differs
+--- FAIL: TestRuntimeStackCleanup (2.17s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.251s
+FAIL

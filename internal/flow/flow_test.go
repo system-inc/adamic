@@ -287,3 +287,17 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 		}
 	}
 }
+
+// These sources pin compile-time refusals, so they have no IR graph. Keep the
+// storage marker fixtures eligible: refusing them must fail SSA.
+func refusedNonNullFixture(path string) bool {
+	name := filepath.Base(path)
+	if strings.HasPrefix(name, "non_null_refuse_") {
+		return true
+	}
+	switch name {
+	case "non_null_initialized.a", "non_null_literal_statement.a", "non_null_literal_return.a", "non_null_uninitialized_default.a":
+		return true
+	}
+	return false
+}

@@ -311,6 +311,18 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 		free(array->elements);
 		break;
 	}
+	case adamic_kind_typed_array: {
+		adamic_typed_array *array = value;
+		if (array->owner != NULL) {
+			let_go(array->owner);
+		} else {
+			free(array->data);
+		}
+		break;
+	}
+	case adamic_kind_typed_array_iterator:
+		let_go(((adamic_typed_array_iterator *)value)->array);
+		break;
 	case adamic_kind_map:
 		adamic_map_free_children(value, let_go);
 		break;
@@ -331,6 +343,7 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+		adamic_closure_uncache(closure);
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

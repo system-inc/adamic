@@ -10,12 +10,14 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	NonNullChecks NonNullCheckCounts
+
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
 	ViewOrigins []Expression
 
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
-	PredicateChecks struct{ Proven, Checked, Unobservable int }
+	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
@@ -53,6 +55,34 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// NonNullCheckCounts records proven assertions and inserted nullish checks.
+type NonNullCheckCounts struct {
+	Proven, Checked int
+	Sites           []NonNullCheck
+}
+
+type NonNullCheck struct {
+	Where, Expression string
+	Proven            bool
+}
+
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int // Zero for an ordinary predicate call.
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -101,9 +131,16 @@ type Function struct {
 	Environment []int
 	// NestedParent is the enclosing function plus one for a named nested declaration.
 	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
 	// FrameEnvironment is the layout of the single entry allocation for this frame.
 	FrameEnvironment []int
 	NestedFrame      bool
+	// FrameIdentity is a synthetic cell plus one, anchoring canonical nested values.
+	FrameIdentity int
+	// ReferenceParents are lexical groups whose completed layouts this closure needs.
+	ReferenceParents []int
 
 	// Receiver marks a literal method closure whose first parameter receives the calling object.
 	Receiver bool
@@ -153,6 +190,14 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
+	Uint16Array
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -185,7 +230,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -202,6 +247,12 @@ type Local struct {
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
 
+	// NamespaceState stays unready until assigned when its type excludes undefined.
+	NamespaceState bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
+
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int
 
@@ -213,6 +264,10 @@ type Local struct {
 	EnvironmentCell bool
 	// NestedFunction is the named declaration this binding holds, plus one.
 	NestedFunction int
+
+	// Ready is the readiness local index plus one for a switch lexical binding.
+	// Its storage exists at switch entry, but its declaration initializes it later.
+	Ready int
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -241,9 +296,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a global read whose initialization is not proven, including function
-	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
-	// Adamic checks it out loud.
+	// Checked guards switch lexical bindings, captured cells, and globals whose initialization
+	// is not proven, including function bodies and cyclic module evaluation. JavaScript throws
+	// in the temporal dead zone; Adamic checks it out loud.
 	Read struct {
 		Local     int
 		Of        Type
@@ -1105,7 +1160,7 @@ type (
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
-	// Read: a write to a global from inside a function.
+	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
 		Local         int
 		Value         Expression

@@ -1,0 +1,8 @@
+=== RUN   TestProtectedStringGuardPrecision
+=== PAUSE TestProtectedStringGuardPrecision
+=== CONT  TestProtectedStringGuardPrecision
+    exception_precision_test.go:179: finished cannot throw on this bounded protected path
+--- FAIL: TestProtectedStringGuardPrecision (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.303s
+FAIL

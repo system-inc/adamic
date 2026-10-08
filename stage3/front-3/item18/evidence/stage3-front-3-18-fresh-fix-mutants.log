@@ -1,0 +1,3 @@
+{'name': 'phantom-freshness-receiver-effects-erased', 'status': 'caught', 'test': 'TestPhantomMemberFreshness$/receiver_effects_remain$', 'catcher': 'phantom receiver writes', 'log': '/tmp/stage3-front-3-18-fresh-fix-mutants/phantom-freshness-receiver-effects-erased.log'}
+{'name': 'phantom-freshness-retains-receiver', 'status': 'caught', 'test': 'TestPhantomMemberFreshness$/absent_member_holds_no_receiver$', 'catcher': 'hold no receiver', 'log': '/tmp/stage3-front-3-18-fresh-fix-mutants/phantom-freshness-retains-receiver.log'}
+{'name': 'phantom-freshness-node-unrecognized', 'status': 'caught', 'test': 'TestPhantomMemberFreshness$', 'catcher': 'phantom receiver writes', 'log': '/tmp/stage3-front-3-18-fresh-fix-mutants/phantom-freshness-node-unrecognized.log'}

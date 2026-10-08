@@ -1,0 +1,8 @@
+=== RUN   TestGeneratedGuardFactsIncludeUnknownStores
+=== PAUSE TestGeneratedGuardFactsIncludeUnknownStores
+=== CONT  TestGeneratedGuardFactsIncludeUnknownStores
+    exception_precision_test.go:121: unknown field store must remain throwing
+--- FAIL: TestGeneratedGuardFactsIncludeUnknownStores (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.093s
+FAIL

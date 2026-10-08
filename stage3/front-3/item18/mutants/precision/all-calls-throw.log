@@ -1,0 +1,10 @@
+=== RUN   TestMayThrowPrecision
+=== PAUSE TestMayThrowPrecision
+=== CONT  TestMayThrowPrecision
+    exception_precision_test.go:33: forward cannot throw on any reachable path
+    exception_precision_test.go:45: call to forward cannot throw
+    exception_precision_test.go:45: call to forward cannot throw
+--- FAIL: TestMayThrowPrecision (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.234s
+FAIL

@@ -262,7 +262,18 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
 	case ir.MakeClosure:
-		environment := e.program.Functions[expression.Function].Environment
+		target := e.program.Functions[expression.Function]
+		environment := target.Environment
+		if target.NestedParent > 0 {
+			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+			if identity > 0 {
+				cells := make([]string, 0, len(environment))
+				for _, local := range environment {
+					cells = append(cells, e.cellReference(local))
+				}
+				return e.own(ir.Closure, fmt.Sprintf("adamic_closure_canonical(%s, %s, %d, (adamic_cell *const[]){%s})", e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+			}
+		}
 		closure := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", e.functionName(expression.Function), len(environment)))
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
@@ -421,6 +432,11 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			index := e.value(expression.Index)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("adamic_typed_array_get(%s, %s)", array, index))
+		}
 		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
@@ -657,6 +673,14 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			length := fmt.Sprintf("adamic_typed_array_length(%s)", array)
+			if expression.Optional {
+				return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, %s})", array, zero(ir.MaybeNumber), length))
+			}
+			return e.snapshot(ir.Number, length)
+		}
 		if expression.Optional {
 			array := e.value(expression.Array)
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
@@ -684,6 +708,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

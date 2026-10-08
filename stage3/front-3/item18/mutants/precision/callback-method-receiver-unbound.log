@@ -1,0 +1,8 @@
+=== RUN   TestCallbackTypedClassMethodCallBindsReceiver
+=== PAUSE TestCallbackTypedClassMethodCallBindsReceiver
+=== CONT  TestCallbackTypedClassMethodCallBindsReceiver
+    iteration_test.go:219: callback-typed class method must bind its receiver
+--- FAIL: TestCallbackTypedClassMethodCallBindsReceiver (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.263s
+FAIL

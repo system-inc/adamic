@@ -1,0 +1,52 @@
+--- FAIL: TestCountsAreRecorded (94.11s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a (1.30s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a (1.49s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a (1.50s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a (1.54s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (1.61s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a (1.19s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a (0.97s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (0.98s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (1.02s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a (1.09s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a (0.87s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (0.82s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a (0.81s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (0.88s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a (0.80s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a (0.97s)
+            counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a (0.79s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:7:19: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_system.a (0.91s)
+            counts_test.go:167: Lower: /workspace/adamic/stage3/host/fs_directory.a:77:18: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a (0.92s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:3:18: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a (0.84s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_system.a (1.37s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_process_system.a:3:11: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_host.a (1.08s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_process_host.a:3:20: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	94.129s
+FAIL

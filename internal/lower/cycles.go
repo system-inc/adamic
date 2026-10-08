@@ -114,6 +114,8 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
+	case f.l.recordElement(proven) != nil:
+		f.use(f.l.recordElement(proven), where)
 	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
@@ -169,6 +171,10 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		return
 	}
 	if f.isFunction(proven) {
+		return
+	}
+	if element := f.l.recordElement(proven); element != nil {
+		f.use(element, where)
 		return
 	}
 	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
@@ -262,6 +268,13 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				Where: l.program.Where(f.where[holder]),
 				What:  name + ", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
 				Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
+			}
+		}
+	case l.recordElement(holder) != nil:
+		element := l.recordElement(holder)
+		if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
+			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+				return &Refused{Where: l.program.Where(f.where[holder]), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
 			}
 		}
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
@@ -397,6 +410,8 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
+		case f.l.recordElement(proven) != nil:
+			queue = append(queue, cycleNode{proven: f.l.recordElement(proven)})
 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})

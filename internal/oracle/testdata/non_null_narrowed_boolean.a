@@ -1,0 +1,8 @@
+function narrowed(value: boolean | string | undefined): boolean {
+ if (typeof value === 'boolean') return value!;
+ return true;
+}
+console.log(String(narrowed(false)));
+console.log(String(narrowed(true)));
+console.log(String(narrowed('other')));
+console.log(String(narrowed(undefined)));

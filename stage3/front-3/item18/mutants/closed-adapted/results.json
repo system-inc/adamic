@@ -1,0 +1,10 @@
+[
+  {
+    "name": "closed-input-builtin-initializer-not-exempt",
+    "status": "caught",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "adamic/cycle-capable",
+    "log": "mutants/closed-adapted/closed-input-builtin-initializer-not-exempt.log",
+    "suite": "closed-adapted"
+  }
+]

@@ -71,7 +71,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
-		returns := l.checker.GetReturnTypeOfSignature(signature)
+		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
@@ -98,7 +98,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	// A destructured parameter, ([key, value]) or ({ x, y }), arrives whole in a parameter of its own,
 	// and its names are declared from it before the body runs.
 	patterns := []patterned{}
-	for _, parameter := range declaration.Parameters() {
+	for position, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
@@ -118,6 +118,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
 			return err
+		}
+		if parameterProperty(parameter) {
+			// The binder gives a parameter property both a field symbol and a lexical parameter
+			// symbol. Reads and assignments in the body refer to the latter.
+			parameters := l.checker.GetSignatureFromDeclaration(declaration).Parameters()
+			l.locals[parameters[position]] = local
 		}
 		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
@@ -153,6 +159,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	if declaration.Body() == nil {
+		return l.notYet(declaration, "a function without a body")
+	}
 	function := l.result.Functions[index]
 	if !function.Closure {
 		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
@@ -164,6 +173,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		defer func() { l.closures = outerClosures }()
 	}
 	body := declaration.Body()
+	l.registerNestedGenerics(body)
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
 	l.function, l.functionIndex = &function, index
 	if this >= 0 {
@@ -191,6 +201,11 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if err != nil {
 			break
 		}
+		if declaration.Kind == ast.KindConstructor {
+			if err = l.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
+				break
+			}
+		}
 		if l.uninitializedInitializer(parameter.initializer) {
 			l.result.Locals[parameter.local].Uninitialized = true
 			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
@@ -198,7 +213,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			continue
 		}
 
-		if assertionInitializer(parameter.initializer) {
+		if l.assertionInitializer(parameter.initializer) {
 			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
 			if lazyErr != nil {
 				err = lazyErr
@@ -226,6 +241,14 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
 		return err
+	}
+	if declaration.Kind == ast.KindConstructor && l.instance.base == nil {
+		assigned, assignErr := l.parameterPropertyStores(declaration.Parent, this)
+		if assignErr != nil {
+			l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+			return assignErr
+		}
+		prologue = append(prologue, assigned...)
 	}
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
@@ -256,6 +279,8 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
+	function.ReferenceParents = l.result.Functions[index].ReferenceParents
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
 	l.finishNestedEnvironment(&function, index)

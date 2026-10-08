@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_error_original_probe.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_error_original_probe.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_error_original_probe.a
+    oracle_test.go:736: Lower: /workspace/adamic/internal/oracle/testdata/library_error_original_probe.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_error_original_probe.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.099s
+FAIL

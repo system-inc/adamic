@@ -1,0 +1,19 @@
+let calls = 0;
+function right(): number { calls++; return 7; }
+let value: number | undefined = NaN;
+value! &&= right();
+console.log(`${calls} ${value}`);
+value! ||= right();
+value! ||= right();
+value! ??= right();
+console.log(`${calls} ${value}`);
+value! = 0;
+value! &&= right();
+console.log(`${calls} ${value}`);
+value! ||= right();
+value! &&= right();
+console.log(`${calls} ${value}`);
+let text: string | undefined = '';
+text! ||= 'present';
+text! &&= '';
+console.log(text!);

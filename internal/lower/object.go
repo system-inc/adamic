@@ -14,6 +14,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -56,25 +59,30 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
-			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
-				declared := l.declaredField(node, fieldName)
-				if declared == 0 || declared == ir.MaybeBoolean {
-					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
-				}
+			// Checked views carry a boxed union contract and validate every read/write.
+			// Ordinary uninitialized union fields retain the unsupported-storage refusal.
+			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) && l.declaredField(node, fieldName) == ir.Union && l.result.CheckedFields[fieldName] {
 				if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 				}
-				value := ir.Expression(zeroValue(declared))
-				if declared.IsReference() {
-					value = ir.Undefined{Of: declared}
-				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: ir.Undefined{Of: ir.Union}, Uninitialized: true})
 				continue
 			}
 			var value ir.Expression
 			var err error
+			uninitialized := false
 			if property.Kind == ast.KindPropertyAssignment {
-				value, err = l.expression(property.AsPropertyAssignment().Initializer)
+				initializer := property.AsPropertyAssignment().Initializer
+				uninitialized = l.uninitializedInitializer(initializer)
+				if uninitialized {
+					declared := l.declaredField(node, fieldName)
+					if declared == 0 || slotless(declared) {
+						return nil, &Refused{Where: l.program.Where(initializer), What: "an uninitialized object property without a supported stored type", Fix: "use a supported scalar or reference field type"}
+					}
+					value = uninitializedValue(declared)
+				} else {
+					value, err = l.expression(initializer)
+				}
 			} else {
 				value, err = l.shorthand(property)
 			}
@@ -91,7 +99,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: uninitialized})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -563,7 +571,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		for _, declaration := range field.Declarations {
 			if declaration.Kind == ast.KindPropertyDeclaration {
 				initializer := declaration.AsPropertyDeclaration().Initializer
-				if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+				if l.assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
 					property.Readiness = sourceExpression(initializer)
 				}
 			}
@@ -1053,6 +1061,18 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	storage, err := l.switchBindings(statement.CaseBlock)
+	if err != nil {
+		return nil, err
+	}
+	original := value
+	held := -1
+	if len(storage) > 0 {
+		// The discriminant runs outside the case block's lexical environment.
+		held = len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
+		value = ir.Read{Local: held, Of: value.Type()}
+	}
 	lowered := ir.Switch{Value: value}
 	groups := []switchGroup{}
 	prefix := []ir.Statement{}
@@ -1078,19 +1098,12 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	tests := []ir.Expression{}
 	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
-		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
-			if inner.Kind == ast.KindVariableStatement {
-				// A declaration directly in a case is scoped to the whole switch in JavaScript, where
-				// another case can see it (and hit its dead zone).
-				return nil, l.notYet(inner, "a declaration directly in a case (wrap the case in a block)")
-			}
-		}
 		isDefault := clause.Kind == ast.KindDefaultClause
 		if isDefault && len(tests) == 0 && l.enumDefaultUnreachable(node) && (len(groups) == 0 || switchBodyLeaves(groups[len(groups)-1].body)) {
 			continue
 		}
 		if !isDefault {
-			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
+			test, err := l.caseLabel(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
 				return nil, err
 			}
@@ -1133,17 +1146,25 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if len(tests) > 0 || defaultPending {
 		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
 	}
+	result := []ir.Statement{lowered}
 	if checkedDefault {
-		return append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...), nil
-	}
-	for index, group := range groups {
-		// A default with tests must also have one body, rather than sharing statement
-		// addresses between two branches (flow instrumentation identifies those addresses).
-		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
-			return append(prefix, l.fallthroughSwitch(value, groups, nil)...), nil
+		result = l.fallthroughSwitch(value, groups, neverCheck)
+	} else {
+		for index, group := range groups {
+			if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+				result = l.fallthroughSwitch(value, groups, nil)
+				break
+			}
 		}
 	}
-	return append(prefix, lowered), nil
+	result = append(prefix, result...)
+	if held >= 0 {
+		body := []ir.Statement{ir.Declare{Local: held, Value: original}}
+		body = append(body, storage...)
+		body = append(body, result...)
+		result = []ir.Statement{ir.Block{Body: body}}
+	}
+	return result, nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).
@@ -1410,6 +1431,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
+	// never has no inhabitant to store. Empty maps can still be observed through
+	// size or a readonly wider view; an unused object slot supplies storage only.
+	if arguments[0].Flags()&checker.TypeFlagsNever != 0 {
+		key, keyKnown = ir.Object, true
+	}
+	if arguments[1].Flags()&checker.TypeFlagsNever != 0 {
+		value, valueKnown = ir.Object, true
+	}
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}

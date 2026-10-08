@@ -82,7 +82,7 @@ func TestPhantomArrayProofs(t *testing.T) {
 		{"interface mutable widening", `interface Brand extends Array<{ kind: string }> { marker: void; } function widen(values: { kind: 'dog' }[]): Brand { return values as Brand; }`, "adamic/invariant-mutable"},
 		{"tuple representation", `type Brand = readonly number[] & { marker?: undefined }; function into(values: [number, number]): Brand { return values as Brand; }`, "not an array"},
 		{"element narrowing", `type Brand = readonly number[] & { marker: void }; function narrow(values: readonly (number | string)[]): Brand { return values as Brand; }`, "source is not assignable"},
-		{"readonly removal", `type Brand = number[] & { marker: void }; function widen(values: readonly number[]): Brand { return values as Brand; }`, "adamic/invariant-mutable"},
+		{"readonly removal", `type Brand = number[] & { marker: void }; function widen(values: readonly number[]): Brand { return values as Brand; }`, "source is not assignable"},
 		{"cycle", `interface Links extends Array<Link> { marker: void; } interface Link { readonly links: Links; } const root: Link = { links: [] as Link[] as Links }; root.links.push(root);`, "adamic/cycle-capable"},
 	} {
 		t.Run(test.name, func(t *testing.T) {

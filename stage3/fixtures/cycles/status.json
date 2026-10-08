@@ -14,10 +14,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/01_call_time/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/01_call_time/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "02_reverse_barrel/main.a",
@@ -34,10 +31,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/02_reverse_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/02_reverse_barrel/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "03_extensions/main.a",
@@ -55,10 +49,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/03_extensions/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/03_extensions/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "04_directory_callback/main.a",
@@ -75,10 +66,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/04_directory_callback/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/04_directory_callback/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "05_safe_load_read/main.a",
@@ -92,10 +80,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "06_import_order_mutant/main.a",
@@ -109,10 +94,7 @@
       "stderr": "adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization\n",
       "exit": 70
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_namespace_barrel/main.a",
@@ -129,10 +111,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/07_namespace_barrel/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "08_named_reexports/main.a",
@@ -149,10 +128,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/08_named_reexports/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/08_named_reexports/core.a:19:11: stage 0 can't lower lastIndexOf with these arguments yet"}
   },
   {
     "file": "09_function_value_load/main.a",

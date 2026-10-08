@@ -1,0 +1,72 @@
+[
+  {
+    "name": "capture-feature-false",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_probe.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-feature-false.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-throws",
+    "status": "invalid or unexpected failure",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_debug_fail.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-throws.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-stack-hook-removed",
+    "status": "caught",
+    "test": "TestLibraryErrorRefusals$/plain_target_stack$",
+    "catcher": "got <nil>",
+    "log": "mutants/library/capture-stack-hook-removed.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-destructuring-refusal-removed",
+    "status": "caught",
+    "test": "TestLibraryErrorRefusals$/destructured_stack$",
+    "catcher": "got <nil>",
+    "log": "mutants/library/capture-destructuring-refusal-removed.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-typeof-object",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_typeof.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-typeof-object.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-identity-fresh",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_probe.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-identity-fresh.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-intrinsic-cast-not-recognized",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_original_probe.a$",
+    "catcher": "no-unchecked-cast",
+    "log": "mutants/library/capture-intrinsic-cast-not-recognized.log",
+    "suite": "library"
+  },
+  {
+    "name": "accessor-targets-cleared",
+    "status": "needs adaptation",
+    "matches": 0,
+    "suite": "library"
+  },
+  {
+    "name": "node-named-refusal-delayed",
+    "status": "caught",
+    "test": "TestNodeLibraryNamesUnimplementedMembers$/node:fs.readFile",
+    "catcher": "want named NotYet",
+    "log": "mutants/library/node-named-refusal-delayed.log",
+    "suite": "library"
+  }
+]

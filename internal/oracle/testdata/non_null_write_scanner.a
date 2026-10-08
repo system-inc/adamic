@@ -1,0 +1,5 @@
+// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:10502
+// The slice's checked-index adaptation adds ! to this assignment target.
+const segments = new Uint16Array(1);
+segments[0]! = 1;
+console.log(`${segments[0]}`);

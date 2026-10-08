@@ -1,0 +1,3 @@
+const raw: { value: string | number } = { value: undefined! };
+console.log("before");
+console.log(`${raw.value}`);

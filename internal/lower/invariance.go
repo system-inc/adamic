@@ -106,6 +106,12 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
 	}
+	if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {
+		if !l.checker.IsTypeAssignableTo(target, source) {
+			return &widening{source: source, target: target}
+		}
+		return l.widened(source, target, visited)
+	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
@@ -276,6 +282,9 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 		return false
 	}
 	visited[proven] = true
+	if l.recordElement(proven) != nil {
+		return true
+	}
 	containers := l.containers(proven)
 	for _, container := range containers {
 		if !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly()) {
@@ -627,6 +636,12 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	case ast.KindBinaryExpression:
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
+			// A returned fallback may infer a mutable array even when its
+			// destination exposes only a readonly view. Judge the branch against
+			// that actual destination; an inferred mutable local still has none.
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+				return contextual
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindArrayLiteralExpression:

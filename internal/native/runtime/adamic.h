@@ -29,6 +29,8 @@ enum adamic_kind {
 	adamic_kind_boolean,
 	adamic_kind_weak,
 	adamic_kind_environment,
+	adamic_kind_typed_array,
+	adamic_kind_typed_array_iterator,
 };
 
 typedef struct adamic_heap {
@@ -60,7 +62,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 // that reads or writes one, and to the runtime through each object's shape and each array's flag.
 typedef union adamic_value {
 	double number;
-	bool boolean;
+	uint8_t boolean;
 	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
@@ -92,6 +94,8 @@ typedef struct adamic_cell {
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
+	// Weak cache: closures unlink themselves before releasing this frame.
+	struct adamic_closure *functions;
 	adamic_cell cells[];
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
@@ -101,17 +105,23 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value (*adamic_code)(adamic_closure *self, size_t argument_count, adamic_value *arguments);
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
 	bool receiver;
 	size_t count;
+	adamic_environment *canonical_owner;
+	adamic_closure *canonical_previous;
+	adamic_closure *canonical_next;
 	adamic_cell *cells[];
 };
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+// Returns an owned canonical value; the frame cache holds no count on it.
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+void adamic_closure_uncache(adamic_closure *closure);
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -248,7 +258,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value (*adamic_method)(adamic_object *self, size_t argument_count, adamic_value *arguments);
 #include "view_callables.h"
 struct adamic_methods {
 	size_t count;
@@ -360,6 +370,45 @@ bool adamic_array_is_range_error(const adamic_object *value);
 adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
 void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
 void adamic_array_holes_set_length(adamic_array *array, double length);
+
+// Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
+// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+enum adamic_typed_array_kind {
+	adamic_typed_array_uint8 = 1,
+	adamic_typed_array_int32,
+	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
+};
+typedef struct adamic_typed_array {
+	adamic_heap heap;
+	enum adamic_typed_array_kind kind;
+	size_t length;
+	void *data;
+	// NULL owns data; a view holds one count on the ultimate owning array.
+	struct adamic_typed_array *owner;
+} adamic_typed_array;
+
+adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
+adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
+// The check is also called by compiler-inserted write checks. set always checks itself.
+// Panic text is the plain-array form: index <index> is outside an array of length <length>.
+void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
+void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+double adamic_typed_array_length(const adamic_typed_array *array);
+adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
+adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
+
+// A counted iterator holds the array until released, including on early loop exits.
+// next reads current storage, never a snapshot. false means exhausted.
+typedef struct adamic_typed_array_iterator {
+	adamic_heap heap;
+	adamic_typed_array *array;
+	size_t next;
+} adamic_typed_array_iterator;
+adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
+bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
@@ -640,6 +689,8 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed);
 uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
 adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //

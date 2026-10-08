@@ -1,0 +1,13 @@
+=== RUN   TestStringLengthBoundsIncludeUnknownObjects
+=== PAUSE TestStringLengthBoundsIncludeUnknownObjects
+=== CONT  TestStringLengthBoundsIncludeUnknownObjects
+=== RUN   TestStringLengthBoundsIncludeUnknownObjects/unknown_producer
+    exception_precision_test.go:202: unknown object must retain the full string bound, got 5
+=== RUN   TestStringLengthBoundsIncludeUnknownObjects/unknown_producer#01
+    exception_precision_test.go:202: unknown object must retain the full string bound, got 5
+--- FAIL: TestStringLengthBoundsIncludeUnknownObjects (0.00s)
+    --- FAIL: TestStringLengthBoundsIncludeUnknownObjects/unknown_producer (0.00s)
+    --- FAIL: TestStringLengthBoundsIncludeUnknownObjects/unknown_producer#01 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.016s
+FAIL

@@ -268,7 +268,7 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 		return nil, err
 	}
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: value.Type(), Function: l.functionIndex})
 	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
 	if err != nil {
 		return nil, err
@@ -279,6 +279,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 // destructureFrom declares a pattern's names from the local held, which holds a value of type
 // destructured (held as heldAs): a tuple's elements by position, an object's fields by name.
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+	if heldAs == ir.String && pattern.Kind == ast.KindObjectBindingPattern && l.result.Locals[held].Type == ir.String {
+		return l.destructureString(pattern, held)
+	}
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && !checker.IsTupleType(destructured) {
 		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
@@ -352,7 +355,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
-		statements = append(statements, ir.Declare{Local: local, Value: value})
+		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil
 }
@@ -386,4 +389,53 @@ func (l *lowering) everyKnown(types []*checker.Type) bool {
 		}
 	}
 	return true
+}
+
+// String bindings read the held source once, then its UTF-16 properties in order.
+// Only length and canonical numeric keys are represented; methods stay refused.
+func (l *lowering) destructureString(pattern *ast.Node, held int) ([]ir.Statement, error) {
+	var statements []ir.Statement
+	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		declared := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a nested or rest string binding")
+		}
+		field := binding.Name().Text()
+		if key := declared.PropertyName; key != nil {
+			if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
+				return nil, l.notYet(key, "a computed string binding key")
+			}
+			field = key.Text()
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		source := ir.Read{Local: held, Of: ir.String}
+		var value ir.Expression
+		if field == "length" {
+			value = ir.StringLength{Value: source}
+		} else {
+			position, err := strconv.ParseUint(field, 10, 32)
+			if err != nil || strconv.FormatUint(position, 10) != field {
+				return nil, l.notYet(binding, "a string binding other than length or a canonical index")
+			}
+			value = ir.StringIndex{Value: source, Index: ir.NumberConstant{Value: float64(position)}}
+			if declared.Initializer != nil {
+				fallback, err := l.expression(declared.Initializer)
+				if err != nil {
+					return nil, err
+				}
+				if fallback.Type() != ir.String {
+					return nil, l.notYet(binding, "a string binding default held otherwise than a string")
+				}
+				value = ir.Coalesce{Value: value, Fallback: fallback, Of: ir.String}
+			}
+		}
+		if value.Type() != l.result.Locals[local].Type {
+			return nil, l.notYet(binding, "a string binding held otherwise than its property")
+		}
+		statements = append(statements, ir.Declare{Local: local, Value: value})
+	}
+	return statements, nil
 }

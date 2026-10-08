@@ -31,7 +31,6 @@ for (const file of files) {
    if (!node.name || node.typeParameters?.length) entry.reasons.push('generic or unnamed');
    if (node.parameters.some(parameter => !ts.isIdentifier(parameter.name) && (parameter.initializer || parameter.questionToken || parameter.dotDotDotToken))) entry.reasons.push('destructured parameter with modifiers');
    if (node.parameters.some(parameter => parameter.dotDotDotToken)) entry.reasons.push('rest parameter');
-   if (node.parameters.some(parameter => parameter.questionToken || parameter.initializer)) entry.reasons.push('optional or default parameter');
    if (node.parameters.some(parameter => ts.isIdentifier(parameter.name) && parameter.name.text === 'this')) entry.reasons.push('dynamic this');
   }
   ts.forEachChild(node, collect);

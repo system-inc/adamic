@@ -306,7 +306,7 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, size_t argument_count, adamic_value *arguments) {", name), "\t(void)argument_count;", "\t(void)arguments;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
@@ -315,6 +315,9 @@ func (e *emitter) methodThunk(function int) string {
 			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			if local.Type.IsMaybe() || local.Type.IsReference() {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
 			}
 		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {

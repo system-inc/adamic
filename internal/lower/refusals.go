@@ -23,11 +23,8 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
@@ -123,6 +120,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if node.Kind == ast.KindNonNullExpression && !l.checkedAssertionSource(node) {
+			found = &Refused{Where: l.program.Where(node), What: "the non-null assertion !", Fix: "write ?? panic(...)"}
+			return true
+		}
 		checkedCast := false
 		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
 		// reads through it, and processValue lowers the complete path or refuses it.
@@ -135,7 +136,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			checkedCast = proof.view || proof.lowering != castLoweringNone || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
@@ -240,4 +241,64 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// Literal markers are exempt only when they are the entire stored value.
+// Parameters and aggregate elements do not use the slot readiness machinery.
+func (l *lowering) uninitializedStorage(node *ast.Node) bool {
+	if !l.uninitializedInitializer(node) {
+		return false
+	}
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	if parent := node.Parent; parent != nil {
+		switch parent.Kind {
+		case ast.KindVariableDeclaration:
+			return ast.IsIdentifier(parent.Name()) && parent.AsVariableDeclaration().Initializer == node
+		case ast.KindPropertyDeclaration:
+			return parent.AsPropertyDeclaration().Initializer == node
+		case ast.KindPropertyAssignment:
+			// Accessor literals have a separate initializer path without marker state.
+			if literal := parent.Parent; literal != nil && literal.Kind == ast.KindObjectLiteralExpression {
+				for _, property := range literal.AsObjectLiteralExpression().Properties.Nodes {
+					if accessorMember(property) {
+						return false
+					}
+				}
+			}
+			return parent.AsPropertyAssignment().Initializer == node
+		}
+	}
+	return l.deinitializingStatement(node)
+}
+
+// Only a literal marker occupying the whole RHS of a standalone store clears
+// readiness. A use of that assertion or assignment as a value is still refused.
+func (l *lowering) deinitializingStatement(node *ast.Node) bool {
+	if !l.uninitializedInitializer(node) {
+		return false
+	}
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	assignment := node.Parent
+	if assignment == nil || assignment.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := assignment.AsBinaryExpression()
+	if binary.OperatorToken.Kind != ast.KindEqualsToken || binary.Right != node {
+		return false
+	}
+	target := ast.SkipParentheses(binary.Left)
+	for target.Kind == ast.KindNonNullExpression {
+		target = ast.SkipParentheses(target.AsNonNullExpression().Expression)
+	}
+	if target.Kind != ast.KindIdentifier && target.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	for assignment.Parent != nil && assignment.Parent.Kind == ast.KindParenthesizedExpression {
+		assignment = assignment.Parent
+	}
+	return assignment.Parent != nil && assignment.Parent.Kind == ast.KindExpressionStatement
 }
