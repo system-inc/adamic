@@ -25,7 +25,10 @@ Error.captureStackTrace(target, constructorOption());
 console.log(`repeated-own:${Object.hasOwn(target, 'stack')}`);
 console.log(`repeated-type:${typeof target.stack}`);
 console.log(`option-evaluated:${calls}`);
-target.stack = 'owned'.repeat(3);
+// Keep the optional-write proof: capture supplies stack, and this read proves presence.
+if (target.stack !== undefined) {
+ target.stack = 'owned'.repeat(3);
+}
 console.log(`written-type:${typeof target.stack}`);
 Error.captureStackTrace(target, undefined);
 console.log(`recaptured-type:${typeof target.stack}`);

@@ -30,6 +30,26 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	return runtimeLibrary(directory, options, nil)
 }
 
+func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
+	return runtimeLibrary(directory, options, featureFlags(source))
+}
+
+// featureFlags are the runtime features emitted C turns on with its leading #defines, as -D flags,
+// so every unit compiled with that C (the runtime's own .c files, and a header included before
+// those #defines) sees the same layouts.
+func featureFlags(source string) []string {
+	var flags []string
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+		if strings.Contains(source, "#define "+feature+" 1\n") {
+			flags = append(flags, "-D"+feature+"=1")
+		}
+	}
+	if strings.Contains(source, "\n#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
+		flags = append(flags, "-DADAMIC_REGEXP_RUNTIME_OWNER=1")
+	}
+	return flags
+}
+
 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
 	if err := ValidateOptions(options); err != nil {
 		return "", err
@@ -42,6 +62,24 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	files, err := readRuntime(sources, root)
 	if err != nil {
 		return "", fmt.Errorf("native: runtime: %w", err)
+	}
+	if !slicesContain(extraFlags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1") {
+		kept := files[:0]
+		for _, file := range files {
+			if file.name != "regexp_replace.c" {
+				kept = append(kept, file)
+			}
+		}
+		files = kept
+	}
+	if !slicesContain(extraFlags, "-DADAMIC_NODE_HOST=1") {
+		kept := files[:0]
+		for _, file := range files {
+			if file.name != "node_host.c" {
+				kept = append(kept, file)
+			}
+		}
+		files = kept
 	}
 	compiler, err := exec.LookPath(compilerName(options))
 	if err != nil {
@@ -124,6 +162,17 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+		if slicesContain(flags, "-D"+feature+"=1") {
+			files = append([]runtimeFile(nil), files...)
+			for i := range files {
+				if files[i].name == "adamic.h" {
+					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
+				}
+			}
+		}
+	}
+
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err
@@ -169,4 +218,13 @@ func RuntimeLinkFlags(library string) []string {
 		return []string{"-Xlinker", "-force_load", "-Xlinker", library}
 	}
 	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
+}
+
+func slicesContain(values []string, wanted string) bool {
+	for _, value := range values {
+		if value == wanted {
+			return true
+		}
+	}
+	return false
 }

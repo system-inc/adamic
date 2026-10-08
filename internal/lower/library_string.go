@@ -84,8 +84,8 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 			return l.spelled(node, value), nil
 		}
 	}
-	if l.checker.GetTypeAtLocation(node).Flags() == checker.TypeFlagsUndefined {
-		return ir.StringConstant{Index: l.constant("undefined")}, nil
+	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.StringConstant{Index: l.constant("null")}, nil
@@ -506,7 +506,7 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
-	if l.stringReadOnlyArgument(node) {
+	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 		return nil
 	}
 	return l.refuseWidening(node)

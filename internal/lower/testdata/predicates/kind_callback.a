@@ -1,0 +1,9 @@
+const SyntaxKind = { Identifier: 80 } as const;
+interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string }
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function apply(callback: (node: Node) => node is Identifier, node: Node): boolean { return callback(node); }
+const identifier: Identifier = { kind: SyntaxKind.Identifier, escapedText: "name" };
+const node: Node = identifier;
+console.log(`${apply(isIdentifier, node)}`);
+if (isIdentifier(node)) console.log(node.escapedText);

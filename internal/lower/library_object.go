@@ -12,6 +12,10 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	if value, handled, err := l.objectDescriptorCall(node, name); handled {
 		return value, handled, err
 	}
+	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
@@ -38,17 +42,16 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	case "groupBy":
 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
 	}
-	if value, handled, err := l.objectNamesCall(node, name); handled {
+	if value, handled, err := l.objectNamesCallArguments(node, name, written); handled {
 		return value, handled, err
 	}
-	if value, handled, err := l.objectIntegrityCall(node, name); handled {
+	if value, handled, err := l.objectIntegrityCallArguments(node, name, written); handled {
 		return value, handled, err
 	}
 	count := 1
 	if name == "is" || name == "hasOwn" {
 		count = 2
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
 		if len(written) < 1 {
 			return nil, true, l.notYet(node, "Object.assign without a target")

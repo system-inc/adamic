@@ -208,6 +208,9 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(node, "RegExp input other than a string")
 	}
 	if name == "replace" || name == "replaceAll" {
+		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
+			return l.regexReplacement(node, value, arguments, name, args[1])
+		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.String {
 			return nil, true, l.notYet(node, "regex replacement other than a string")
 		}

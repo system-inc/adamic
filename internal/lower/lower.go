@@ -39,6 +39,10 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteAccessorNames(modules)
+	lowering.noteOmittedOptionals(modules)
+	if err := lowering.namespaceInitialization(modules); err != nil {
+		return nil, err
+	}
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
@@ -79,6 +83,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil
@@ -116,11 +121,18 @@ type lowering struct {
 
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
+	// omittedOptionals is every optional property some object literal typed by its context leaves out:
+	// that object has no slot for it (class.go's absentOptionalWrite).
+	omittedOptionals map[*ast.Symbol]bool
 	classes          map[*ast.Symbol]*ast.Node
 	statics          map[*ast.Symbol]*instance
 	staticGlobals    map[*ast.Symbol]int
 	instances        map[string]*instance
 	derivedAncestors map[*ast.Symbol]bool
+
+	// privateOwners numbers each class that declares a private name, in the order first met, to
+	// qualify its private members' names (privateName).
+	privateOwners map[*ast.Node]int
 
 	// instance is the class instantiation being lowered, if any.
 	instance *instance

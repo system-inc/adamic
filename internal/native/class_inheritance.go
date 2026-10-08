@@ -8,7 +8,7 @@ import (
 )
 
 // classDeclarations emits one table per class, with inherited slots retained in place. Function
-// pointers are converted back to their original signature before calls, as C11 permits.
+// identities select a typed direct call; no function pointer loses its signature.
 func (e *emitter) classDeclarations(builder *strings.Builder) {
 	for index := range e.program.Classes {
 		fmt.Fprintf(builder, "static const adamic_class adamic_class_%d;\n", index+1)
@@ -18,10 +18,10 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 		if len(class.Methods) > 0 {
 			entries := []string{}
 			for _, method := range class.Methods {
-				entries = append(entries, "(adamic_virtual_method)"+e.functionName(method))
+				entries = append(entries, fmt.Sprint(method))
 			}
 			methods = fmt.Sprintf("adamic_methods_%d", index+1)
-			fmt.Fprintf(builder, "static const adamic_virtual_method %s[] = {%s};\n", methods, strings.Join(entries, ", "))
+			fmt.Fprintf(builder, "static const size_t %s[] = {%s};\n", methods, strings.Join(entries, ", "))
 		}
 		base := "NULL"
 		if class.Base != 0 {
@@ -52,14 +52,42 @@ func (e *emitter) callCode(call ir.Call, arguments []string) string {
 		return fmt.Sprintf("%s(%s)", e.functionName(e.program.Classes[class-1].Methods[call.Virtual-1]), strings.Join(arguments, ", "))
 	}
 	signature := e.program.Functions[call.Function]
-	parameters := []string{}
-	for _, parameter := range signature.Parameters {
-		parameters = append(parameters, cType(e.program.Locals[parameter].Type))
+	name := fmt.Sprintf("adamic_virtual_dispatch_%d", call.Function)
+	parameters, values := []string{}, []string{}
+	for index, parameter := range signature.Parameters {
+		value := fmt.Sprintf("argument_%d", index)
+		parameters = append(parameters, cType(e.program.Locals[parameter].Type)+" "+value)
+		values = append(values, value)
+	}
+	if signature.ArgumentsCount != 0 {
+		parameters = append(parameters, "double argument_count")
+		values = append(values, "argument_count")
 	}
 	result := "void"
 	if signature.Returns != 0 {
 		result = cType(signature.Returns)
 	}
-	code := fmt.Sprintf("((%s (*)(%s))adamic_virtual(%s, %d))", result, strings.Join(parameters, ", "), arguments[0], call.Virtual-1)
-	return code + "(" + strings.Join(arguments, ", ") + ")"
+	prefix := fmt.Sprintf("static %s %s(", result, name)
+	declared := false
+	for _, declaration := range e.declarations {
+		if strings.HasPrefix(declaration, prefix) {
+			declared = true
+			break
+		}
+	}
+	if !declared {
+		var body strings.Builder
+		fmt.Fprintf(&body, "%s%s) {\n\tswitch (adamic_virtual(%s, %d)) {\n", prefix, strings.Join(parameters, ", "), values[0], call.Virtual-1)
+		for _, target := range targets {
+			invocation := fmt.Sprintf("%s(%s)", e.functionName(target), strings.Join(values, ", "))
+			if signature.Returns == 0 {
+				fmt.Fprintf(&body, "\tcase %d: %s; return;\n", target, invocation)
+			} else {
+				fmt.Fprintf(&body, "\tcase %d: return %s;\n", target, invocation)
+			}
+		}
+		body.WriteString("\tdefault: adamic_panic(\"compiler bug: virtual target outside the closed world\", sizeof \"compiler bug: virtual target outside the closed world\" - 1);\n\t}\n}")
+		e.declarations = append(e.declarations, body.String())
+	}
+	return fmt.Sprintf("%s(%s)", name, strings.Join(arguments, ", "))
 }

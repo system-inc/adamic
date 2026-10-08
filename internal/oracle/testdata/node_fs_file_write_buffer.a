@@ -5,13 +5,19 @@ import { programArguments } from 'adamic';
 import { Buffer } from 'node:buffer';
 import { readFileSync, writeFileSync, openSync, writeSync, closeSync } from 'node:fs';
 const root = programArguments()[0] ?? '';
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 const data = Buffer.from([0,0xe2,0x82,0xff,0xed,0xa0,0x80,0xff]);
-writeFileSync(root + '/binary',data,{mode:0o600});
+const binaryOptions = {mode:0o600};
+writeFileSync(root + '/binary',data,binaryOptions);
 console.log(readFileSync(root + '/binary').toString('hex'));
-writeFileSync(root + '/binary',Buffer.from([255]),{flag:'a',flush:true});
+const appendOptions = {flag:'a',flush:true};
+writeFileSync(root + '/binary',Buffer.from([255]),appendOptions);
 console.log(readFileSync(root + '/binary').toString('hex'));
 const fd = openSync(root + '/binary-fd','w');
-writeFileSync(fd,data,{flush:true});
+const flushOptions = {flush:true};
+writeFileSync(fd,data,flushOptions);
 writeSync(fd,'!');
 closeSync(fd);
 console.log(readFileSync(root + '/binary-fd').toString('hex'));

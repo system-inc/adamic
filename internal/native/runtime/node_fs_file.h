@@ -34,4 +34,8 @@ double adamic_fs_file_date_time(const adamic_object *);
 // opened, and raises the saved errno after any cleanup. No fake Buffer type.
 int adamic_fs_file_read_bytes(int, unsigned char **, size_t *);
 #include "date_string.h"
+adamic_string *adamic_fs_file_host_join(size_t, adamic_string *const[]);
+adamic_string *adamic_fs_file_host_cwd(void);
+adamic_string *adamic_fs_file_host_tmpdir(void);
+double adamic_fs_file_host_chdir(const adamic_string *);
 #endif

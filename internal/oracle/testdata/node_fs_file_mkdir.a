@@ -3,16 +3,21 @@ function errorCode(error: unknown): string | undefined {
 }
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 function failure(error: Error): void {
     console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { mkdirSync, statSync } from 'node:fs';
 mkdirSync(root + '/one', 0o750);
 console.log(`${statSync(root + '/one').isDirectory()}`);
-console.log((mkdirSync(root + '/parent/child/grandchild',{recursive:true,mode:0o750}) ?? 'none').replace(root,'<root>'));
-console.log(mkdirSync(root + '/parent/child/grandchild',{recursive:true}) ?? 'none');
+const recursiveMode = {recursive:true,mode:0o750};
+const recursive = {recursive:true};
+console.log((mkdirSync(root + '/parent/child/grandchild',recursiveMode) ?? 'none').replace(root,'<root>'));
+console.log(mkdirSync(root + '/parent/child/grandchild',recursive) ?? 'none');
 try { mkdirSync(root + '/one'); } catch(error) { if (error instanceof Error) { failure(error); } }
-try { mkdirSync(root + '/file',{recursive:true}); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { mkdirSync(root + '/file',recursive); } catch(error) { if (error instanceof Error) { failure(error); } }
 try { mkdirSync(root + '/missing/child'); } catch(error) { if (error instanceof Error) { failure(error); } }
 try { mkdirSync(root + '/locked/child'); } catch(error) { if (error instanceof Error) { failure(error); } }
-try { mkdirSync(root + '/file/child',{recursive:true}); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { mkdirSync(root + '/file/child',recursive); } catch(error) { if (error instanceof Error) { failure(error); } }

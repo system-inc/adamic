@@ -1,0 +1,8 @@
+--- FAIL: TestTypedArrayWriteStopIsPinned (0.41s)
+    typed_arrays_test.go:37: JavaScript: exit codes differ: exit 0 stdout "before 2 7 undefined\nafter 2 7 undefined\n" stderr ""
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.413s
+FAIL

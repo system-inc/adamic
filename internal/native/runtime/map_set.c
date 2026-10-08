@@ -93,6 +93,8 @@ static bool collection_reference(int type) {
 	return type != 1 && type != 2 && type != 7;
 }
 
+static adamic_code_function collection_next;
+
 static adamic_value collection_next(adamic_closure *self, adamic_value *arguments) {
 	(void)arguments;
 	adamic_object *state = self->cells[0]->value.reference;
@@ -106,6 +108,8 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
 	result->slots[0].boolean = !present;
+	adamic_object_field_types(result)[0] = 2;
+	adamic_object_field_types(result)[1] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
 	if (!present) {
 		if (!reference) {
 			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
@@ -118,6 +122,8 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
 		pair->slots[0] = key;
 		pair->slots[1] = value;
+		adamic_object_field_types(pair)[0] = (unsigned char)key_type;
+		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
 		if (collection_reference(value_type)) { adamic_retain(value.reference); }
 		result->slots[1].reference = pair;

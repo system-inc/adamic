@@ -19,6 +19,10 @@ var libraryArrayMethods = map[string]bool{
 
 // libraryArrayMethod keeps this slice's additions out of the shared method dispatch.
 func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.libraryArrayMethodArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	element, err := l.elementType(receiver)
 	if err != nil {
 		return nil, true, err
@@ -38,7 +42,6 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	if err != nil {
 		return nil, true, err
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
 	case "filter", "some", "every":
 		return l.libraryArrayPredicate(node, array, element, name)

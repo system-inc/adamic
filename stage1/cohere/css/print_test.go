@@ -374,3 +374,34 @@ func printerLeaks(t *testing.T, binary string, arguments ...string) string {
 	t.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
+
+// This corpus isolates boolean flags and namespace choices without the full printer corpus.
+func TestOptionalBooleanPrinterMatchesGo(t *testing.T) {
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	inputs := ">Ca{b:c}\n>Ca{b:c!important}\n>C*|a{b:c}\n>C|a{b:c}\n>Csvg|a{b:c}\n>S$x:1!default;a{b:$x!important}\n"
+	if err := os.WriteFile(cases, []byte(inputs), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := printerAnswers(t, cases, "default")
+	path, err := filepath.Abs("print_main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	arguments := []string{cases, "output", "once", "default"}
+	nativeRun, binary := natively(t, program, arguments...)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node", onNode(t, path, arguments...)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program, arguments...)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != expected {
+			t.Fatalf("%s: %d %s %s", side.name, side.result.exitCode, side.result.stderr, firstDifference(string(side.result.stdout), expected))
+		}
+	}
+	if report := leaks(t, program, binary, arguments...); report != "" {
+		t.Fatal(report)
+	}
+	t.Log("six boolean-flag and namespace cases agree with Go, Node and both backends; leak clean")
+}

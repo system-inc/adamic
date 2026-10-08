@@ -161,6 +161,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if held, known := l.representation(t); generic && known && held == ir.Union {
 		return nil, l.notYet(node, "JSON.stringify a generic union without per-instantiation container metadata")
 	}
+	if depth == 0 && l.censusCallReturnsUndefined(node) {
+		return &ir.JSONSchema{Kind: "undefined"}, nil
+	}
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
 	}
