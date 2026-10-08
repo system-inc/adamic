@@ -23,8 +23,8 @@ certificates and erasure; its hook names describe the intended interfaces,
 not additional admissions. The implemented subset is smaller: exact scalar
 contracts on closed immutable records.
 
-The following non-merge lane commits were cherry-picked in order onto current
-main in the private worktree /workspace/scratch/views-v6-lane-replay, branch
+The following non-merge lane commits were previously cherry-picked for historical
+conflict discovery onto current main in the private worktree /workspace/scratch/views-v6-lane-replay, branch
 codex/views-v6-lane-replay. Complete hashes and changed paths are in
 [the lane manifest](views-v6/lane-commits.json).
 
@@ -264,6 +264,55 @@ go test -buildvcs=false ./internal/lower -run 'TestShapeFlow|TestShapeProjection
 This is not a mutant kill or a green package comparison. Full package/oracle,
 counts, stage3 normal/platform-lifted, stage1 gaps and a-check comparisons remain
 unrun because the required compiler/views-v5 base is absent. No result move is
-claimed. The private cherry-pick replay is not suitable for delivery. No push
-to compiler/views-v6 is made until that base exists and every required comparison
-and mutant passes. Origin is rechecked on each work pass.
+claimed. The private cherry-pick replay is not suitable for delivery. The revised delivery rule is to push a partial to compiler/views-v6 as soon as
+it compiles on its required V5 base, including red test results with their exact
+failures reported. The complete sweep and mutants still define completion. Origin
+is rechecked on each work pass.
+
+
+## Revised lane application method
+
+The compiler's method ruling replaces the chronological replay. Take one net diff
+per lane from its fork to its final own tree, apply once to the required base,
+resolve each conflicted file once, and apply both merge ledgers once per touched
+file. Hold the resolved implementation to that lane's own tests and fixtures.
+The earlier replay and its logs remain historical discovery evidence only.
+
+V6 takes lane 3 only. Its fork is 523cc5d224966a1bf6bc66628f6fa8563df2e5bf,
+the parent of its first own commit 55b6b4aa. Its final own checkpoint is
+b8316acde743a436dded1ff19dc833fe2acb25c5. Generate a binary-capable net diff
+between those trees, restricted to lane-owned paths from lane-commits.json.
+The integrated checkpoints 7302410e and 432d4913 supply final integration context;
+they are not whole-tree imports of the other lanes.
+
+A fresh isolated application to origin/main applied this net diff once. Only
+internal/ir/ir.go is unmerged in that discovery worktree. The application and
+identity are recorded in [net-diff-discovery.json](views-v6/net-diff-discovery.json).
+This is a textual result, not a claim that dependencies exist or that it compiles.
+The patch is retained at /workspace/scratch/views-v6-lane3-net.patch; historical
+measurement artifacts account for most of its size and are not current evidence.
+
+The final lane tree contains changes inherited through its historical merges in
+shared files. Resolve those files against V5 by preserving V5's frame, readiness,
+allocation/ownership and cast dispatch, and adding only V6 proof metadata,
+queries and erasure. Do not import runtime 2724dabd, its fixtures or graph-count
+admission guard. Do not replace unrelated shared-file logic merely because it is
+present in the lane final tree. Preserve the dictionary safety boundary and apply
+the named judgments above once per changed file. This is the same exclusion rule
+as before, applied to the single diff rather than repeated picks.
+
+Make one implementation commit for lane 3. Its message lists all ten original
+non-merge commits with their full hashes and subjects from lane-commits.json,
+then names the applied judgments and any actual Moved-result trailers. Do not
+cherry-pick those commits or use the old replay worktree as the delivery base.
+
+Push that lane commit to compiler/views-v6 as soon as it compiles, even if tests
+are red. Report what is included, the compile command and outcome, and every
+known failing test. Keep the required base comparison, Node/backend/sanitizer/leak
+checks, stage3 platform-lifted sweep, gaps, counts, a-check and mutants for the
+completed unit. A partial push is not completion and is not evidence of safety.
+
+The new origin check still reports no compiler/views-v5. No compiler/views-v6
+branch or compiler admission is created on an invented base. The planning branch
+contains only the method update and discovery record; implementation waits for
+the required slice base.
