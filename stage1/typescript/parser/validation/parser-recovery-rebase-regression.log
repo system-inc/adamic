@@ -1,0 +1,46 @@
+=== RUN   TestStrongAstParentGap
+--- PASS: TestStrongAstParentGap (0.11s)
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.09s)
+=== RUN   TestTypeImportCycleGap
+--- PASS: TestTypeImportCycleGap (0.10s)
+=== RUN   TestClassMethodInterfaceAgreesWithNode
+--- PASS: TestClassMethodInterfaceAgreesWithNode (5.50s)
+=== RUN   TestOptionalFunctionValueGap
+--- PASS: TestOptionalFunctionValueGap (0.11s)
+=== RUN   TestConditionalEmptyArrayGap
+--- PASS: TestConditionalEmptyArrayGap (0.11s)
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (14.40s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:202: /tmp/adamic-gate/TestExpressionsAgree2797345432/005/scanner [--manifest /tmp/adamic-gate/TestExpressionsAgree2797345432/001/manifest]: exit status 70
+        adamic: panic: source has parse diagnostics; use --recovery to inspect the recovered tree
+--- FAIL: TestExpressionsAgree (12.72s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:289: Node: case 1 line 2: port "expression", Go "case 1"
+        Go context:
+        case 0
+        case 1
+        case 2
+        case 3
+        expression
+        0 NumericLiteral 8134 8136 0 0 -1 0 0		0	
+--- FAIL: TestCompilerExpressionsAgree (3.41s)
+=== RUN   TestPerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestPerformance (0.00s)
+=== RUN   TestWholePerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestWholePerformance (0.00s)
+=== RUN   TestNodeCountCheckCatchesMutant
+    performance_test.go:182: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+    performance_test.go:182: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+--- PASS: TestNodeCountCheckCatchesMutant (25.68s)
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (34.31s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+signal: terminated
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	109.263s
+FAIL
