@@ -294,7 +294,12 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	if limit%time.Second != 0 {
 		seconds++
 	}
-	script := fmt.Sprintf(`ulimit -t %d || exit; exec "$0" "$@"`, seconds)
+	// The soft limit is set first (a hard limit below the current soft one is refused), and the hard
+	// limit sits one second past it, so a child that ignores SIGXCPU is killed a
+	// full second after its budget, and the SIGKILL check below compares against the soft limit:
+	// rusage is tick-sampled and can read a hair under the hard limit the kernel enforced
+	// (TestExecuteCPULimit/infinite on 6f16a169's whole gate, "TimedOut:false").
+	script := fmt.Sprintf(`ulimit -S -t %d && ulimit -H -t %d || exit; exec "$0" "$@"`, seconds, seconds+1)
 	command := exec.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	command.Dir = directory
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
