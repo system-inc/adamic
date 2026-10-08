@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/audit-research.py", line 43, in <module>
+    assert row['latent_counts'] == dict(Counter(site[0] for site in expected)), 'actual file attribution'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual file attribution

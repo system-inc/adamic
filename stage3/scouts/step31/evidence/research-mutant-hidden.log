@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/audit-research.py", line 55, in <module>
+    assert hidden['bytes'] == len(body) and hidden['lines'] == body.count(b'\n') + 1, 'hidden source extent'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: hidden source extent

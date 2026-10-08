@@ -1,0 +1,9 @@
+export function outer(value: number): number {
+    let result = value;
+    if (value > 0) {
+        const delta = 2;
+        result += delta;
+    }
+    return result;
+}
+export const label: string = 'scope';

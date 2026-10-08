@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/audit-research.py", line 46, in <module>
+    assert family['count'] == len(matching), 'family unique-site recount'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: family unique-site recount

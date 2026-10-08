@@ -1,0 +1,26 @@
+{
+  "projects": [
+    {
+      "id": "binder-witnesses",
+      "options": {
+        "target": "es2020",
+        "module": "esnext",
+        "strict": true
+      },
+      "files": [
+        {
+          "path": "aliases.a",
+          "text": "import { Counter as ImportedCounter } from './members.a';\nexport { ImportedCounter as PublicCounter };\nexport function make(): ImportedCounter {\n    return new ImportedCounter();\n}\n"
+        },
+        {
+          "path": "members.a",
+          "text": "export class Counter {\n    private value: number = 0;\n    static readonly label: string = 'counter';\n    increment(): number {\n        this.value += 1;\n        return this.value;\n    }\n}\nexport interface Named {\n    readonly name: string;\n}\nexport type MaybeName = Named | undefined;\n"
+        },
+        {
+          "path": "scopes.a",
+          "text": "export function outer(value: number): number {\n    let result = value;\n    if (value > 0) {\n        const delta = 2;\n        result += delta;\n    }\n    return result;\n}\nexport const label: string = 'scope';\n"
+        }
+      ]
+    }
+  ]
+}

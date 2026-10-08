@@ -1,0 +1,5 @@
+import { Counter as ImportedCounter } from './members.a';
+export { ImportedCounter as PublicCounter };
+export function make(): ImportedCounter {
+    return new ImportedCounter();
+}

@@ -1,0 +1,32 @@
+{
+  "diagnostics": [
+    {
+      "code": 2322,
+      "start": 29,
+      "length": 5,
+      "message": "Type 'string' is not assignable to type 'number'."
+    }
+  ],
+  "printed": "// kept comment\nexport const value: number = \"wrong\";\n",
+  "emitted": [
+    {
+      "name": "/probe.js",
+      "text": "// kept comment\nexport const value = \"wrong\";\n",
+      "bom": false
+    }
+  ],
+  "hostCapabilitiesUsed": [
+    "getCommonSourceDirectory",
+    "getCompilerOptions",
+    "getEmitModuleFormatOfFile",
+    "getGlobalTypingsCacheLocation",
+    "getSourceFiles",
+    "getSymlinkCache",
+    "isEmitBlocked",
+    "isSourceFileFromExternalLibrary",
+    "isSourceOfProjectReferenceRedirect",
+    "readFile",
+    "redirectTargetsMap",
+    "writeFile"
+  ]
+}
