@@ -1,0 +1,13 @@
+{
+  "rule": "no-promise-executor-return",
+  "upstream_cases": 0,
+  "runtimes": [
+    "Go",
+    "source Node",
+    "emitted JavaScript",
+    "ASan/UBSan native"
+  ],
+  "mutant": "promise_return_accepts_concise_executor_results",
+  "package_result": "PASS",
+  "common_evidence": "stage1/cohere/lint/rules/react-jsx-no-undef/validation/merged-full.jsonl.gz"
+}

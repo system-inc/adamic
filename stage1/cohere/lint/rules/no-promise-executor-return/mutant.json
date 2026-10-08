@@ -1,0 +1,5 @@
+{
+  "name": "promise return accepts concise executor results",
+  "from": "if(body < 0 || context.kind(body) === 'Block' || !this.executor(index)) { return; }",
+  "to": "if(body < 0 || context.kind(body) !== 'Block' || !this.executor(index)) { return; }"
+}

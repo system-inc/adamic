@@ -1,0 +1,70 @@
+import { noEdits } from '../../context.ts';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+const message = 'This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.';
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowVoid: boolean;
+    constructor(context: RuleContext) { this.context = context; this.allowVoid = context.settings.read('allowvoid', 'false') === 'true'; }
+    executor(at: number): boolean {
+        const context = this.context;
+        const parent = context.parent(at);
+        if(parent < 0 || context.kind(parent) !== 'NewExpression' || context.arguments(parent)[0] !== at) { return false; }
+        const callee = context.node(parent).children[0] ?? -1;
+        if(callee < 0) { return false; }
+        const target = context.node(callee);
+        const checker = context.checker;
+        if(target.kind !== 'Identifier' || target.text !== 'Promise' || checker === undefined) { return false; }
+        const answer = checker.ask(callee, 'node-symbol-details');
+        if(answer.value === undefined) { return false; }
+        const facts = new SymbolDetails(answer.value);
+        return facts.present && facts.declarations[0]?.declarationFile === true;
+    }
+    voidSuggestion(at: number): Suggestion {
+        const context = this.context;
+        const node = context.node(at);
+        const start = context.start(at);
+        const prefix = context.kind(context.parent(at)) === 'ReturnStatement' && context.source.slice(start - 6, start) === 'return' ? ' void ' : 'void ';
+        const parens = ['BinaryExpression', 'ConditionalExpression', 'YieldExpression', 'ArrowFunction'].includes(node.kind);
+        const edits: SuggestionEdit[] = [new SuggestionEdit(start, start, parens ? `${prefix}(` : prefix)];
+        if(parens) { edits.push(new SuggestionEdit(node.end, node.end, ')')); }
+        return new Suggestion('prependVoid', 'Prepend `void` to the expression, saying the value is deliberately discarded.', edits);
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        if(context.checker === undefined) { return; }
+        let body = -1;
+        let report = index;
+        const arrow = node.kind === 'ArrowFunction';
+        if(arrow) {
+            body = node.children[node.children.length - 1] ?? -1;
+            if(body < 0 || context.kind(body) === 'Block' || !this.executor(index)) { return; }
+            report = context.unwrap(body);
+        }
+        else {
+            body = node.children[0] ?? -1;
+            if(body < 0) { return; }
+            let enclosing = context.parent(index);
+            while(enclosing >= 0 && !context.functionLike(enclosing) && context.kind(enclosing) !== 'SourceFile') { enclosing = context.parent(enclosing); }
+            if(enclosing < 0 || context.kind(enclosing) === 'SourceFile' || !this.executor(enclosing)) { return; }
+        }
+        if(this.allowVoid && context.kind(context.unwrap(body)) === 'VoidExpression') { return; }
+        const suggestions: Suggestion[] = [];
+        if(this.allowVoid) { suggestions.push(this.voidSuggestion(body)); }
+        if(arrow) {
+            const expression = context.node(body);
+            let named = false;
+            if(expression.kind === 'FunctionExpression' || expression.kind === 'ClassExpression') {
+                for(const child of expression.children) { if(context.kind(child) === 'Identifier') { named = true; break; } }
+            }
+            if(!['FunctionExpression', 'ClassExpression'].includes(expression.kind) || named) {
+                suggestions.push(new Suggestion('wrapBraces', 'Wrap the expression in `{}`, making the arrow body a statement rather than a return.', [new SuggestionEdit(context.start(body), context.start(body), '{'), new SuggestionEdit(expression.end, expression.end, '}')]));
+            }
+        }
+        const reported = report === index ? node : context.node(report);
+        context.reportRange(context.start(report), reported.end, 'no-promise-executor-return', 'returnsValue', message, noEdits, suggestions);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
