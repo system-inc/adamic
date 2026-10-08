@@ -1,3 +1,5 @@
+Historical isolated probe only. The user clarified that NotYet workers must not merge views-integration, and c41 governs .a refusal. No views merge is present in this branch; the merge had already been aborted. The assertion-policy question below is resolved and is not a current blocker.
+
 Fetched views-integration ffe428ab and replayed all 22 roots in an isolated measurement checkout; the combined merge is blocked by conflicting assertion contracts.
 Current production code is 6b0d705e91d13e99135883f07a3379089a794270; the evidence commit SHA is reported with the push.
 21 exact constructor signatures reproduce; Uint16Array stops earlier at its type representation. The class-value fixture passes source Node, both backends and sanitizers in the isolated views checkout plus our constructor helper.

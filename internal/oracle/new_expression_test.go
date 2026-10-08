@@ -9,12 +9,12 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"uint16", "uint16_notyet", "class_value"} {
+	for _, name := range []string{"uint16", "uint16_notyet", "class_value", "class_cache_or"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "class_value", false})
+		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "class_value" || name == "class_cache_or", false})
 	}
 }
 
