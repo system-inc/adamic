@@ -1,0 +1,5 @@
+interface Table { readonly [key:string]: string | undefined; }
+const payload={item:42};
+const base:{}=payload;
+const view=base as Table;
+console.log(`${view['item']}`);

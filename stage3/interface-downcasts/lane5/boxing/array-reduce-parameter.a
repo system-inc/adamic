@@ -1,0 +1,2 @@
+const callback = (total:number|string, value:number|string):number => typeof total === "number" && typeof value === "number" ? total + value : 0;
+console.log(`${[1,2,3].reduce(callback,0)}`);

@@ -1,1 +1,2 @@
+// a-check: type error TS2307
 import {value} from "./missing.a"; console.log(String(value));

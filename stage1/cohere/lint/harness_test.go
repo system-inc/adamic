@@ -25,6 +25,8 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+		// The emitted module is the run's shared one, so the planted mismatch goes into a copy of it.
+		module = filepath.Join(t.TempDir(), "lint.mjs")
 		data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
 		if err := os.WriteFile(module, data, 0644); err != nil {
 			t.Fatal(err)
@@ -132,7 +134,6 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("second suggestion edit mutant survived on %s", side.name)

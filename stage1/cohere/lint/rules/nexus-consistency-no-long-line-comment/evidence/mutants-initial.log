@@ -1,0 +1,8 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/nexus_long_line_comment_configured_threshold_ignored
+    lint_test.go:751: /tmp/adamic-gate/TestMutantsnexus_long_line_comment_configured_threshold_ignored3458606893/024/rules/nexus-consistency-no-long-line-comment/rule.a:34:75: stage 0 can't lower an array of never yet
+--- FAIL: TestMutants (6.65s)
+    --- FAIL: TestMutants/nexus_long_line_comment_configured_threshold_ignored (2.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	6.679s
+FAIL

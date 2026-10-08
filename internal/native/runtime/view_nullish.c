@@ -41,9 +41,9 @@ adamic_heap *adamic_object_nullish_view(const adamic_object *object,const char *
  if(actual==1)number=slot->number;
  else if(actual==2)boolean=slot->boolean;
  else if(actual==7){adamic_maybe_number value=adamic_maybe_number_unpack(slot->number);kind=value.present?1:13;number=value.number;}
- else if(actual==9){reference=slot->reference;kind=reference==NULL?13:logical_kind(reference);if(kind==2)boolean=((adamic_boolean_box *)reference)->boolean;}
+ else if(actual==9){adamic_maybe_boolean value=adamic_maybe_boolean_unpack(slot->maybe_boolean);kind=value.present?2:13;boolean=value.boolean;}
  else if(actual==10){reference=slot->reference;kind=logical_kind(reference);if(kind==1)number=((adamic_number_box *)reference)->number;else if(kind==2)boolean=((adamic_boolean_box *)reference)->boolean;}
- else if((actual>=3&&actual<=6)||actual==8){reference=slot->reference;kind=reference==NULL?13:logical_kind(reference);if(reference!=NULL&&kind!=actual)kind=0;}
+ else if((actual>=3&&actual<=6)||actual==8||actual==14){reference=slot->reference;kind=reference==NULL?13:logical_kind(reference);if(reference!=NULL&&kind!=(actual==14?4:actual))kind=0;}
  else if(actual!=12&&actual!=13)kind=0;
  if(kind==12){if(null_allowed)return &adamic_null;failure(expression,expected,kind);}
  if(kind==13){if(undefined_allowed)return NULL;failure(expression,expected,kind);}

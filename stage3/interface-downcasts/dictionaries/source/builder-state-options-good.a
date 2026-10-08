@@ -1,0 +1,12 @@
+interface MapLike<T> { [key: string]: T; }
+interface Plugin { readonly name: string; }
+interface Project { readonly path: string; }
+interface Source { readonly text: string; }
+type RichValue = string | number | boolean | (string | number)[] | MapLike<string[]> | Plugin[] | Project[] | Source | null | undefined;
+interface CompilerOptions { readonly [key: string]: RichValue; }
+interface Base { readonly kind: 'Dictionary'; }
+interface BuilderProgramState extends Base { readonly compilerOptions: CompilerOptions; }
+const payload = { kind: 'Dictionary' as const, compilerOptions: { unused: null, target: 'name' } };
+const base: Base = payload;
+const view = base as BuilderProgramState;
+console.log(typeof view.compilerOptions);

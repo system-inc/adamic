@@ -1,0 +1,6 @@
+// A non-callable sibling binding must not crash the callable proof traversal.
+interface Base {readonly run:unknown;}
+interface Target {readonly run:(...values:number[])=>number;}
+const {value: label} = {value:5};
+function probe(value:Base):void {const target=value as Target;console.log(`${target.run(label)}`);}
+probe({run:(...values:number[]):number=>values[0] ?? 0});

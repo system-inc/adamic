@@ -50,8 +50,12 @@ The three exit fixtures retain disableCPUProfiler's inactive else branch and
 explicitly reject the active-session case in their scaffolding. The executing
 filename and case-probe platform are controlled driver inputs.
 
-`status.json` has the requested schema and records Node stdout, stderr and exit,
-plus the exact output of `go run ./cmd/adamic build` at current main ef3d907.
+`status.json` records the unchanged Node stdout, stderr and exit oracle,
+plus compiler-dependent stage0 observations refreshed from main's compiler on
+this branch with the host headers in place. Compiler text uses the exact
+repository-relative form expected by fixtures_test.go: normalize absolute paths,
+the leading CLI label, and the trailing go-run status/newline. Messages, source
+positions and codes remain exact after that normalization.
 All 25 are Checker: current main has no declarations for these node: modules.
 Other checker findings, including upstream helper contracts outside the sound
 library, are retained verbatim. No fixture reaches native execution, so this is
@@ -64,6 +68,7 @@ After sourcing the setup environment, reproduce from the Adamic root:
 
 ```sh
 python3 stage3/fixtures/host/check.py --mutants --logs /tmp/host-fixture-check > /tmp/host-fixture-check.log 2>&1
+python3 stage3/fixtures/host/check.py --update-stage0 --logs /tmp/host-fixture-refresh > /tmp/host-fixture-refresh.log 2>&1
 NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <upstream-v6.0.3-tree> > /tmp/host-source-audit.log 2>&1
 ```
 
@@ -72,8 +77,11 @@ The first command independently invokes
 `go run ./cmd/adamic build <fixture> -o <scratch-binary>` for every row. It checks
 exact bytes and exit codes, including the nonzero success observations for
 exit_1 and exit_2. Each fixture has a semantic mutant, listed in check.py and
-validation.md, and every final mutant is caught. A changed recorded compiler
-diagnostic and a changed upstream hash implementation are also caught.
+validation.md, and every final mutant is caught. Each compiler record also has
+diagnostic-message, source-line and diagnostic-code mutants, all caught by exact
+comparison after normalization. The refresh mode requires exact Node agreement
+and changes only stage0 JSON values, preserving every byte outside those values.
+Complete before/after records are in ../../a-check-headers/HOST-RECORDS.md.
 
 Left out: watch/timers, active inspector profiling, terminal width/TTY/blocking,
 memory usage, general plugin requires, performance clocks, Windows filesystem

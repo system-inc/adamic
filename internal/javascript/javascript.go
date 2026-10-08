@@ -51,6 +51,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(fieldReadinessRuntime + mapCertificateRuntime)
+	builder.WriteString(DictionaryRuntime())
 	builder.WriteString(viewArraysRuntime)
 	builder.WriteString(viewArrayElementsRuntime)
 	builder.WriteString(viewArrayOperationsRuntime)
@@ -59,6 +60,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString(recordRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -822,6 +824,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" && expression.Of == ir.Union && !expression.Nullish {
 			return e.viewObjectPrimitive(expression)
 		}
@@ -837,7 +842,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
 			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
-			if expression.Of == ir.Object {
+			if expression.Of == ir.Object || expression.Of == ir.Array {
 				value = e.viewObjectUnion(expression, value)
 			}
 			return e.mapViewCertificate(expression, value)
@@ -897,6 +902,12 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.RecordCoalesce:
+		return "((r,k,make) => adamicRecordGet(r,k) ?? adamicRecordSet(r,k,make()))(" + e.value(expression.Record) + ", " + e.value(expression.Key) + ", () => " + e.value(expression.Value) + ")"
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		if expression.Readiness != "" {
 			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
@@ -1073,8 +1084,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
 		}
+		invoke := e.viewCallableBoxedDispatch(expression)
 		if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
-			return "adamicCall(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
+			return invoke + "(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
@@ -1083,7 +1095,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			}
 			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
 		}
-		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
+		return invoke + "(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
 		if expression.ViewRead.View != "" {
 			return "adamicViewMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"

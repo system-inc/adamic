@@ -111,7 +111,8 @@
       "column": 13
     },
     "rank": 6,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; arity, parameter and boxed-field mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -130,7 +131,8 @@
       "column": 21
     },
     "rank": 7,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 420,
@@ -244,7 +246,8 @@
       "column": 16
     },
     "rank": 13,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -320,7 +323,8 @@
       "column": 9
     },
     "rank": 17,
-    "certified": false
+    "certified": false,
+    "certification_blocker": "original destructuring binding is refused as unsupported checked-view destructuring representation conversion; method-detachment guard also remains; direct property substitution would change the original witness"
   },
   {
     "receiver_type_id": 11739,
@@ -339,7 +343,8 @@
       "column": 9
     },
     "rank": 18,
-    "certified": false
+    "certified": false,
+    "certification_blocker": "original destructuring binding is refused as unsupported checked-view destructuring representation conversion; method-detachment guard also remains; direct property substitution would change the original witness"
   },
   {
     "receiver_type_id": 420,
@@ -396,7 +401,8 @@
       "column": 13
     },
     "rank": 21,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 12312,
@@ -415,7 +421,8 @@
       "column": 13
     },
     "rank": 22,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -491,7 +498,8 @@
       "column": 53
     },
     "rank": 26,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; arity, parameter and boxed-field mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 10400,
@@ -586,7 +594,8 @@
       "column": 57
     },
     "rank": 31,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -605,7 +614,8 @@
       "column": 18
     },
     "rank": 32,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 73,
@@ -681,7 +691,8 @@
       "column": 34
     },
     "rank": 36,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 1277,
@@ -930,7 +941,8 @@
       "column": 12
     },
     "rank": 49,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -949,7 +961,8 @@
       "column": 13
     },
     "rank": 50,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; arity, parameter and boxed-field mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 10108,
@@ -968,7 +981,8 @@
       "column": 9
     },
     "rank": 51,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 10401,
@@ -987,7 +1001,8 @@
       "column": 25
     },
     "rank": 52,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -1006,7 +1021,8 @@
       "column": 89
     },
     "rank": 53,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read span; reduced adjacent carrier and enum alias; Node and both backends; optional values and four executable mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 10108,

@@ -1,0 +1,66 @@
+=== RUN   TestCheckedViewDictionarySource
+=== RUN   TestCheckedViewDictionarySource/options-good
+=== RUN   TestCheckedViewDictionarySource/options-wrong
+=== RUN   TestCheckedViewDictionarySource/nested-good
+=== RUN   TestCheckedViewDictionarySource/nested-wrong
+=== RUN   TestCheckedViewDictionarySource/array-wrong
+--- PASS: TestCheckedViewDictionarySource (4.41s)
+    --- PASS: TestCheckedViewDictionarySource/options-good (0.79s)
+    --- PASS: TestCheckedViewDictionarySource/options-wrong (0.72s)
+    --- PASS: TestCheckedViewDictionarySource/nested-good (0.85s)
+    --- PASS: TestCheckedViewDictionarySource/nested-wrong (0.99s)
+    --- PASS: TestCheckedViewDictionarySource/array-wrong (1.05s)
+=== RUN   TestCheckedViewDictionaryComponents
+=== PAUSE TestCheckedViewDictionaryComponents
+=== RUN   TestCheckedViewDictionaryComponentMutants
+=== PAUSE TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards
+=== PAUSE TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryNativeStorageGuard
+=== PAUSE TestCheckedViewDictionaryNativeStorageGuard
+=== CONT  TestCheckedViewDictionaryComponents
+=== CONT  TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/container
+=== CONT  TestCheckedViewDictionaryNativeStorageGuard
+=== CONT  TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryComponentMutants/skip-check
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/accessor
+--- PASS: TestCheckedViewDictionaryNativeStorageGuard (0.39s)
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/missing-child
+=== NAME  TestCheckedViewDictionaryComponentMutants/skip-check
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+=== RUN   TestCheckedViewDictionaryComponents/options-good
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/required-missing
+=== NAME  TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+--- PASS: TestCheckedViewDictionaryJavaScriptGuards (0.78s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/container (0.19s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/accessor (0.22s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/missing-child (0.16s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/required-missing (0.21s)
+=== RUN   TestCheckedViewDictionaryComponents/options-wrong
+=== NAME  TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryComponentMutants (0.99s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/skip-check (0.42s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/accept-wrong-shape (0.35s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/drop-transitive-contract (0.23s)
+=== RUN   TestCheckedViewDictionaryComponents/nested-good
+=== RUN   TestCheckedViewDictionaryComponents/nested-wrong
+=== RUN   TestCheckedViewDictionaryComponents/array-wrong
+--- PASS: TestCheckedViewDictionaryComponents (1.69s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-good (0.30s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-wrong (0.21s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-good (0.25s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-wrong (0.21s)
+    --- PASS: TestCheckedViewDictionaryComponents/array-wrong (0.21s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=31
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.122s

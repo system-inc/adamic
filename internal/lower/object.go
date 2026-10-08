@@ -14,6 +14,13 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if err := l.dictionaryProducerRefusal(node); err != nil {
+		return nil, err
+	}
+
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -84,11 +91,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
+			boxedCallableField := l.viewCallableBoxedRecordField(node, fieldName)
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || boxedCallableField) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && (l.objectPrimitiveBoxedField(property) || boxedCallableField)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -310,7 +318,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
-	element := l.viewArrayElementType(arrayType)
+	element := l.untaggedArrayElement(arrayType)
 	if element == nil {
 		if !l.checker.IsArrayType(arrayType) {
 			return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
@@ -338,6 +346,16 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
+	if l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		object, err := l.expression(access.Expression)
+		if err != nil {
+			return nil, err
+		}
+		if access.QuestionDotToken != nil {
+			return l.optionalDictionaryField(node, object, name)
+		}
+		return l.dictionaryRead(node, object, ir.StringConstant{Index: l.constant(name)})
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -406,6 +424,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a prototype property on a RegExp")
 		}
 	}
+
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		of, err := l.typeOf(node)
 		if err != nil {
@@ -564,8 +583,20 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewAllowed = l.viewLiterals(declared)
 		property.ViewTypeID = int(declared.Id())
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		// Untagged callable union read hook: prepare member signatures at a
+		// syntactic read, retaining unsupported metadata for lazy demand.
+		present := l.checker.GetNonNullableType(declared)
+		if present.Flags()&checker.TypeFlagsUnion != 0 && l.callableViewContract(present) {
+			if id, err := l.prepareUntaggedCallableUnionRead(node, present); err == nil {
+				property.ViewContract = id
+				l.result.ViewContractTypes[property.ViewTypeID] = id
+			}
+		}
 		l.prepareViewCallableProperty(node, declared, &property)
 		l.preparePrimitivePropertyRead(declared, &property)
+		if property.Of == ir.Object && declared.Flags()&checker.TypeFlagsUnion != 0 {
+			l.prepareUntaggedStructuralRead(node, declared, map[*checker.Type]bool{})
+		}
 		if (l.includesNull(declared) || l.includesUndefined(declared)) && !l.objectPrimitiveViewType(declared) && !l.viewBrandedStringUndefined(declared) {
 			property.Nullish = true
 			property.NullAllowed = l.includesNull(declared)
@@ -667,6 +698,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, known, err
 	}
 	if value, known, err := l.processValue(node); known {
+		return value, known, err
+	}
+	if value, handled, err := l.detachedOwnCall(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1744,6 +1778,23 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.Object && l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		if optional {
+			return nil, l.notYet(node, "an optional dictionary receiver")
+		}
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
+	}
+	if object.Type() == ir.Object && !optional && l.finiteDictionaryKeys(l.checker.GetTypeAtLocation(access.Expression), l.checker.GetTypeAtLocation(access.ArgumentExpression)) {
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
 	}
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		if index.Kind != ast.KindStringLiteral {

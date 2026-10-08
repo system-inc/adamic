@@ -172,3 +172,12 @@ The dictionary handoff subset CompilerOptions and BuildOptions is two pairs /
 eleven reads within the three / fourteen above. Exact whole-tsc reachability
 still waits for a checker-clean program. __String is delivered; October 13,
 17:00 MDT remains the mixed-primitive estimate, including shared components.
+
+Integration d718a9ff reconciliation: six conflict files resolved hunk by hunk.
+Primitive conversion, dictionary admission, untagged structural preparation and
+callable guards are retained together. Unknown fallback remains unchanged.
+Focused lower/javascript tests PASS 0.705s / 1.407s; original literal, graph and
+watch oracle PASS 143.190s (native misses 7, Node misses 50, zero hits); vet PASS.
+Broader NotYet table fails two expectations for primitive-union callable
+parameters now accepted by integration. Those failures are retained in
+logs/integration-refusal-table.log; no full gate claim and no pair count change.

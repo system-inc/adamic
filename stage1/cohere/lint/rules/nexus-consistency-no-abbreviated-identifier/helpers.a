@@ -1,0 +1,93 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { Finding } from '../../finding.ts';
+import { policyMessage } from './messages.a';
+export function parent(context: RuleContext, index: number): number {
+    return context.parents[index] ?? -1;
+}
+export function first(context: RuleContext, index: number): number {
+    return context.node(index).children[0] ?? -1;
+}
+export function last(context: RuleContext, index: number): number {
+    const children = context.node(index).children;
+    return children[children.length - 1] ?? -1;
+}
+export function name(context: RuleContext, index: number): number {
+    for(const child of context.node(index).children) {
+        if(
+            [
+                'Identifier',
+                'StringLiteral',
+                'NumericLiteral',
+                'PrivateIdentifier',
+                'ComputedPropertyName',
+                'ObjectBindingPattern',
+                'ArrayBindingPattern',
+            ].includes(context.node(child).kind)
+        ) {
+            return child;
+        }
+    }
+    return -1;
+}
+export function emit(context: RuleContext, index: number, rule: string, id: string, fields: string[]): Finding {
+    return context.report(index, rule, id, policyMessage(rule, id, fields), '', '', '');
+}
+export function betweenToken(context: RuleContext, start: number, end: number, kind: string): boolean {
+    let cursor = start;
+    while(cursor < end) {
+        context.scanAt(cursor);
+        if(context.scanStart() >= end) {
+            return false;
+        }
+        if(context.scanner.kind === kind) {
+            return true;
+        }
+        if(context.scanEnd() <= cursor) {
+            return false;
+        }
+        cursor = context.scanEnd();
+    }
+    return false;
+}
+
+export function foreign(context: RuleContext, index: number): boolean {
+    const owner = parent(context, index);
+    if(owner < 0) {
+        return false;
+    }
+    const node = context.node(owner);
+    switch(node.kind) {
+        case 'PropertyAccessExpression':
+            return last(context, owner) === index && context.node(first(context, owner)).kind !== 'ThisKeyword';
+        case 'PropertyAssignment':
+        case 'PropertySignature':
+            return first(context, owner) === index;
+        case 'BindingElement':
+            return (
+                first(context, owner) === index &&
+                node.children.length > 1 &&
+                betweenToken(
+                    context,
+                    context.node(index).end,
+                    context.start(node.children[1] ?? panic('binding child')),
+                    'ColonToken',
+                )
+            );
+        case 'JsxOpeningElement':
+        case 'JsxClosingElement':
+        case 'JsxSelfClosingElement':
+        case 'JsxAttribute':
+        case 'ImportSpecifier':
+        case 'ExportSpecifier':
+        case 'NamespaceImport':
+        case 'ImportClause':
+            return true;
+        case 'QualifiedName':
+            return last(context, owner) === index;
+        case 'TypeReference':
+            return first(context, owner) === index;
+        default:
+            return false;
+    }
+}

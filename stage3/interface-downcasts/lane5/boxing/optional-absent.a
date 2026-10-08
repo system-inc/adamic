@@ -1,0 +1,5 @@
+interface Base {readonly kind:"base";readonly run?:unknown;}
+interface Target {readonly kind:"base";readonly run?:()=>number|string;}
+const base:Base={kind:"base"};
+const viewed=base as Target;
+console.log(typeof viewed.run);

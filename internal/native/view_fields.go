@@ -18,7 +18,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Record: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
 	name, supported := names[of]
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
@@ -74,7 +74,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	if of == ir.Map {
 		e.mapViewCertificate(property, value)
 	}
-	if of == ir.Object {
+	if of == ir.Object || of == ir.Array {
 		if property.Optional || property.Absent {
 			e.line("if (%s != NULL) {", value)
 			e.viewObjectUnion(property, value)
@@ -83,7 +83,7 @@ func (e *emitter) viewField(property ir.Property) string {
 			e.viewObjectUnion(property, value)
 		}
 	}
-	if of == ir.Closure && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
+	if of == ir.Closure && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewUnion && e.program.ViewContracts[property.ViewContract-1].Of == ir.Closure || e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
 		callable := e.temporary()
 		e.line("adamic_closure *%s = (adamic_closure *)%s;", callable, value)
 		value = e.emitViewCallableCertificate(property, callable)

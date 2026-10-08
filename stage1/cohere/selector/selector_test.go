@@ -1,11 +1,13 @@
 package selector
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -505,14 +507,55 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	for _, text := range []string{"a| b", ":is(a|)", "a|@x", "*|)"} {
 		t.Run(text, func(t *testing.T) {
 			t.Parallel()
-			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-			defer cancel()
-			command := exec.CommandContext(ctx, "node", "testdata/nontermination.mjs", library, text)
-			output, err := command.CombinedOutput()
-			if ctx.Err() != context.DeadlineExceeded || err == nil || string(output) != "entering parser\n" {
-				t.Fatalf("expected the entered parser still running at deadline, got %v, context %v, output %q", err, ctx.Err(), output)
+			// The second is counted from "entering parser", not from launch, so a slow node start on a
+			// loaded box can't decide the test. Starting gets its own generous bound and fails by name.
+			command := exec.Command("node", "testdata/nontermination.mjs", library, text)
+			stdout, err := command.StdoutPipe()
+			if err != nil {
+				t.Fatal(err)
 			}
-			t.Log("entered parser, no return within 1s, killed at deadline")
+			var stderr bytes.Buffer
+			command.Stderr = &stderr
+			if err := command.Start(); err != nil {
+				t.Fatal(err)
+			}
+			reader := bufio.NewReader(stdout)
+			entered := make(chan string, 1)
+			go func() {
+				line, _ := reader.ReadString('\n')
+				entered <- line
+			}()
+			select {
+			case line := <-entered:
+				if line != "entering parser\n" {
+					_ = command.Process.Kill()
+					_ = command.Wait()
+					t.Fatalf("expected %q first, got %q, stderr %q", "entering parser\n", line, stderr.String())
+				}
+			case <-time.After(60 * time.Second):
+				_ = command.Process.Kill()
+				_ = command.Wait()
+				t.Fatalf("node never printed %q within 60s of launch, stderr %q", "entering parser\n", stderr.String())
+			}
+			type ending struct {
+				rest []byte
+				err  error
+			}
+			ended := make(chan ending, 1)
+			go func() {
+				rest, _ := io.ReadAll(reader)
+				ended <- ending{rest, command.Wait()}
+			}()
+			select {
+			case end := <-ended:
+				t.Fatalf("the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q", end.err, end.rest, stderr.String())
+			case <-time.After(time.Second):
+			}
+			_ = command.Process.Kill()
+			if end := <-ended; len(end.rest) != 0 {
+				t.Fatalf("output after entering the parser: %q", end.rest)
+			}
+			t.Log("entered parser, no return within 1s of entering, killed")
 		})
 	}
 }

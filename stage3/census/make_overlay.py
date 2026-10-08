@@ -8,9 +8,11 @@ scratch = pathlib.Path(sys.argv[1]).resolve()
 scratch.mkdir(parents=True, exist_ok=True)
 original = (repository / 'internal/load/load.go').read_text()
 if len(sys.argv) > 2 and sys.argv[2] == 'policy-probes':
-    needle = 'ErasableSyntaxOnly:         core.TSTrue,'
-    assert original.count(needle) == 1
-    (scratch / 'load.go').write_text(original.replace(needle, 'ErasableSyntaxOnly:         core.TSFalse,'))
+    enabled = 'ErasableSyntaxOnly:         core.TSTrue,'
+    disabled = 'ErasableSyntaxOnly:         core.TSFalse,'
+    assert original.count(enabled) + original.count(disabled) == 1
+    # This historical counterfactual is now the production setting too.
+    (scratch / 'load.go').write_text(original.replace(enabled, disabled))
     (scratch / 'overlay.json').write_text(json.dumps({'Replace': {str(repository / 'internal/load/load.go'): str(scratch / 'load.go')}}, indent=2) + '\n')
     sys.exit(0)
 start = original.index('func compilerOptions() *core.CompilerOptions {')

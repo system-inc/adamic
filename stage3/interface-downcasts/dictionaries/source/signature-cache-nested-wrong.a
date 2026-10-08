@@ -1,0 +1,12 @@
+interface Type { readonly flags: number; readonly unread?: null; }
+interface Signature { readonly minArgumentCount: number; }
+interface IterationTypes { readonly nextType: Type; readonly yieldType: Type; readonly returnType: Type; }
+interface Base { readonly kind: 'Cache'; }
+interface SignatureCache extends Base { readonly anchor: number; readonly inner?: Signature; readonly outer?: Signature; }
+function pick(first: boolean): 'inner' | 'outer' { return first ? 'inner' : 'outer'; }
+const payload = { kind: 'Cache' as const, anchor: 1, inner: { minArgumentCount: 'wrong' }, outer: { minArgumentCount: 1 } };
+const base: Base = payload;
+const view = base as SignatureCache;
+const key = pick(true);
+const value = view[key];
+if (value !== undefined) console.log(`${value.minArgumentCount}`);

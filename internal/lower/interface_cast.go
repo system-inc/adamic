@@ -75,7 +75,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
 
-					if (!l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean && !(of == ir.Union && (l.includesNull(l.checker.GetTypeOfSymbol(field)) || l.includesUndefined(l.checker.GetTypeOfSymbol(field)))) && !(of == ir.Closure && l.callableViewContract(l.checker.GetTypeOfSymbol(field))) && !(of == ir.Map && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(field)), "Map", "ReadonlyMap"))) && !l.objectPrimitiveViewType(l.checker.GetTypeOfSymbol(field)) && !l.viewPrimitiveUnionRead(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
+					if (!l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean && of != ir.Record && !(of == ir.Union && (l.includesNull(l.checker.GetTypeOfSymbol(field)) || l.includesUndefined(l.checker.GetTypeOfSymbol(field)))) && !(of == ir.Closure && l.callableViewContract(l.checker.GetTypeOfSymbol(field))) && !(of == ir.Map && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(field)), "Map", "ReadonlyMap"))) && !l.objectPrimitiveViewType(l.checker.GetTypeOfSymbol(field)) && !l.viewPrimitiveUnionRead(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
 						family := l.unsupportedViewFamily(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeOfSymbol(field))))
 						if family == "" {
 							family = "representation conversion"
@@ -358,6 +358,11 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		}
 		visit(contract.Key)
 		visit(contract.Element)
+		visit(contract.Payload)
+		for _, parameter := range contract.Parameters {
+			visit(parameter)
+		}
+		visit(contract.Result)
 	}
 	visit(id)
 	if ir.HasArrayViews(l.result) {

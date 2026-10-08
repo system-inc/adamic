@@ -14,6 +14,7 @@ func TestViewUnionTargetAdmission(t *testing.T) {
 		{"broad readonly source", "interface Base { readonly kind: string }; type A={readonly kind:'a';readonly n:number};type B={readonly kind:'b';readonly s:string};function f(x:Base):A|B{return x as A|B;}", true},
 		{"duplicate target tags", "interface Base { readonly kind: string }; type A={readonly kind:'a';readonly n:number};type B={readonly kind:'a';readonly s:string};function f(x:Base):A|B{return x as A|B;}", false},
 		{"mutable source tag", "interface Base { kind: string }; type A={kind:'a';readonly n:number};type B={kind:'b';readonly s:string};function f(x:Base):A|B{return x as A|B;}", false},
+		{"mutable target tag", "interface Base { readonly kind: string }; type A={kind:'a';readonly n:number};type B={kind:'b';readonly s:string};function f(x:Base):A|B{return x as A|B;}", false},
 		{"mixed target representations", "interface Base { readonly kind: string }; type A={readonly kind:'a';readonly n:number};function f(x:Base):A|string{return x as A|string;}", false},
 		{"incompatible source slot", "interface Base { readonly kind: string;readonly n:number }; type A={readonly kind:'a';readonly n:number};type B={readonly kind:'b';readonly n:string};function f(x:Base):A|B{return x as A|B;}", false},
 	} {

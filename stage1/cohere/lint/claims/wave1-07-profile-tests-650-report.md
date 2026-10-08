@@ -1,0 +1,3 @@
+Merged area 65017b318 (shared static_single_assignment integration); main remains 48c05d091. No compiler, lint rule, harness, oracle or ledger changes. Existing 48c fixture parity, full witnesses, four all-backend mutants and four unconditional standalone profile compilation results remain applicable.
+
+The stage1 corpus changed, so reran TestCompilerAndStage1Agree with ADAMIC_TYPESCRIPT_SOURCE=/tmp/wave07-typescript, -count=1 -v -timeout 20m. PASS 401.652s: 495 files and 27902766 identical bytes across Go, Node, emitted JavaScript and native. Raw log: wave1-07-profile-tests-650-evidence/corpus.log. Original wave07 production sources match this branch except standalone profile tests/validation scripts and claim reports, so this corpus proof covers both.

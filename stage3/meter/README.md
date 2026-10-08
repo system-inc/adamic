@@ -9,9 +9,29 @@ stage3/meter/twice-daily.sh > /tmp/stage3-meter.log 2>&1
 Every invocation fetches and pins `origin/main` and `origin/area/stage3`.
 It snapshots each ref's stage3 directory and runs that ref's own apply.sh and
 adaptations into a fresh tree. A single census binary built from the current
-checkout measures both trees with ordinary stage 0 options and prelude.
-The compiler SHA and both adaptation SHAs are recorded, so the comparison does
-not conflate source adaptation changes with different checker versions.
+checkout measures both trees with ordinary stage 0 options and prelude. This is
+the default (`STAGE3_METER_COMPILER=single`); fetching a newer main does not change
+the compiler built from the current checkout.
+
+Set `STAGE3_METER_COMPILER=per-ref` to build both the ordinary census and latent
+census separately from each pinned ref's own compiler. Detached scratch worktrees
+initialize each ref's recorded submodules, and each ref supplies its own latent
+overlay builder. Build, checkout and submodule logs live under `main/` and `area/`.
+Scratch worktrees are retained for inspection, including on failure.
+`compiler-mode.json` records the selected mode and both compiler commits before
+building. Paired JSON records `compiler_mode` and each tree's `adamic_commit`;
+the root `adamic_commit` remains the area's compiler for compatibility. Markdown
+names both compilers in per-ref mode. Its first two lines keep the same format.
+Per-ref mode compares both source adaptations and compiler versions, so its
+changes cannot be attributed to adaptations alone. Unknown modes fail before
+creating a run directory.
+
+```sh
+STAGE3_METER_COMPILER=per-ref bash stage3/meter/twice-daily.sh > /tmp/stage3-meter-per-ref.log 2>&1
+```
+
+The compiler SHA and both adaptation SHAs are recorded. In default mode the
+compiler version stays fixed when comparing the two sets of adaptations.
 
 The first two lines of report.md give the four source-file pass counts:
 whole program for main and area, then own file for main and area. The table has
@@ -22,6 +42,32 @@ observed when another root imports it. Repeated observations are deduplicated;
 indented elaborations are not treated as locations. Global and external findings
 are counted separately and do not belong to a src/compiler file. Input errors
 fail both measures. Non-source files are listed but excluded from denominators.
+
+The next line reports the deadline entry, independently of the compiler-file
+counts: `tsc entry: main: pass; area: fail`, followed by
+`tsc entry diagnostics: main: 0; area: N`. This is the whole-program stage 0
+check rooted only at the adapted `src/tsc/tsc.ts`, including diagnostics anywhere
+in its resolved imports and global diagnostics. Its observations never enter
+the existing per-file numerators, denominators, or own-file attribution.
+
+For each checker-clean entry, a separate guarded measurement binary enumerates
+the checker's resolved implementation source files and applies the existing
+lowering census to that reach. It excludes declaration files and unrelated
+source files. Its top ten NotYet/Refused reasons include owners and are labeled
+**measured on a checker-clean entry-root program**. A checker failure blocks this
+lowering census. Errors and panics remain separate totals; this is an observation
+ledger and does not establish successful lowering or native output.
+
+The entry measurement extends the selected compiler's existing scratch overlay;
+production compiler sources remain untouched. `LATENT_ASSERT_NO_OUTPUT=1` is
+required and ordinary Load and Lower remain disabled. The worker supplies the
+entry driver in both compiler modes, while compiler code and dependencies still
+come from the selected ref. `trees.main.tsc_entry` and `trees.area.tsc_entry`
+record checker status, full diagnostics/count, and the optional `lowering_census`.
+Each `main/tsc/` and `area/tsc/` retains census and measurement JSONL (compressed
+and ignored by Git), logs, and the resolved reach in the measurement header.
+Missing entry roots, missing reachable records, inconsistent diagnostics, or a
+lowering stream on a checker-rejected entry fail loudly.
 
 Each run creates `runs/<UTC timestamp>.<unique suffix>/` with report.json and
 report.md, fetch/build logs, and main/area subdirectories containing census.jsonl.gz,
@@ -40,8 +86,8 @@ Refused and NotYet pass the checker and fail lowering. A checker failure blocks
 lowering. Missing, duplicate or unknown census rows prevent a partial report.
 
 After each tree's ordinary checker census, the meter runs the existing latent
-census through its scratch Go overlay. The overlay is built from the same compiler
-checkout and never edits production compiler files. `LATENT_ASSERT_NO_OUTPUT=1`
+census through its scratch Go overlay. The overlay is built from the selected
+compiler checkout and never edits production compiler files. `LATENT_ASSERT_NO_OUTPUT=1`
 checks that ordinary loading cannot expose a rejected program and lowering
 cannot return usable IR. No backend is invoked.
 
@@ -85,7 +131,15 @@ go build -o /tmp/stage3-census ./stage3/census/tool > /tmp/stage3-meter-build.lo
 CENSUS_BINARY=/tmp/stage3-census python3 -m unittest discover -s stage3/meter -p '*_test.py' > /tmp/stage3-meter-tests.log 2>&1
 ```
 
-The probe starts with two checker-clean files. Changing the dependency's number
+`compiler_test.py` also runs the meter against local Git refs with real Go
+compiler witnesses. The default must build the worker checkout for both trees;
+per-ref mode must produce each pinned compiler's distinct checker and latent
+results and record its SHA. Point the test-only `METER_SCRIPT_UNDER_TEST` at a
+scratch copy of twice-daily.sh to exercise a mutant that builds the worker
+checkout in place of each ref. The per-ref probe must reject that mutant even
+when its metadata claims the correct SHAs.
+
+The imported-file probe starts with two checker-clean files. Changing the dependency's number
 initializer to a string makes both loaded programs fail, while only the
 dependency's own-file result changes. Without CENSUS_BINARY this probe is skipped.
 
@@ -96,12 +150,21 @@ extra NotYet on a checker-rejected program with existing NotYet and Refused find
 count may increase; every existing reason and the Refused total must stay fixed.
 
 Reason tables group identical reason text across NotYet and Refused and show an
-owner column. owners.json is a flat reason-to-owner map. Exact matches win,
-then the longest matching prefix. The explicit "seen as" entry also matches
-that phrase inside variance messages, whose source type precedes it.
+owner column. owners.json is a flat reason-to-owner map. The explicit "seen as" entry wins whenever that phrase occurs inside a reason.
+Other reasons use exact matches, then the longest matching prefix. Enum-read
+entries cover the enum declarations in the pinned compiler sources; ordinary
+function reads and the Error constructor are not assigned as enums.
 Unknown reasons get OWNER BLANK. The Unowned section appears immediately after
 the checker table and before owned reason tables. It lists only reasons with at least 10 unique sites on either tree, sorted by
 the larger per-tree count. A final line summarizes the number of omitted reasons
 and their total sites summed across both trees.
 Each row compares both trees; JSON retains the complete unowned_reasons list,
 and each tree's reason_rows carries its owner and counts by kind.
+
+The entry reach probe runs with `ENTRY_CENSUS_BINARY` and `CENSUS_BINARY` set.
+It imports an eligible dependency outside src/compiler, leaves an unrelated
+checker-failing file unloaded, and requires the dependency's lowering finding.
+Planting an imported type error must change the entry to fail and block lowering.
+A scratch overlay mutant that leaves Program.Files restricted to the entry root
+must fail this test's reach count (one source instead of two). Compiler-selection
+probes exercise the entry command wiring in both default and per-ref modes.

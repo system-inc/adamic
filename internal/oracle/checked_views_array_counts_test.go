@@ -16,8 +16,13 @@ func viewRankedArrayCounts(t *testing.T) []string {
 			t.Fatal(err)
 		}
 		for _, path := range paths {
-			// This fixture deliberately refuses lowering, so it has no runtime counts.
-			if filepath.Base(path) == "ranked3-mutable-array-read.a" {
+			// Named compile-refusal fixtures have no executable runtime to count.
+			// Their refusal and Node controls remain in the ranked frontier suites.
+			switch filepath.Base(path) {
+			case "ranked3-mutable-array-read.a",
+				"ranked6-jsdoc-parent-cache.a",
+				"ranked7-related-assign.a", "ranked10-resolved-arguments-assign.a",
+				"ranked14-text-name-fallback.a":
 				continue
 			}
 			relative, err := filepath.Rel(repository, path)

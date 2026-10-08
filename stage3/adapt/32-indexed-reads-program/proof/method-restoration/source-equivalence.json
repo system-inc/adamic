@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "changed_files": [
+    "types.ts",
+    "watchPublic.ts"
+  ],
+  "fresh_lane_matches_verified_tree": [
+    "corePublic.ts",
+    "performanceCore.ts",
+    "types.ts",
+    "expressionToTypeNode.ts",
+    "executeCommandLine.ts",
+    "builder.ts",
+    "builderPublic.ts",
+    "builderState.ts",
+    "builderStatePublic.ts",
+    "watch.ts",
+    "watchPublic.ts",
+    "watchUtilities.ts",
+    "resolutionCache.ts",
+    "tsbuild.ts",
+    "tsbuildPublic.ts",
+    "moduleNameResolver.ts",
+    "moduleSpecifiers.ts",
+    "sys.ts",
+    "program.ts",
+    "commandLineParser.ts",
+    "binder.ts",
+    "semver.ts",
+    "programDiagnostics.ts",
+    "tracing.ts",
+    "symbolWalker.ts",
+    "performance.ts"
+  ],
+  "public_methods_restored": 10,
+  "watch_object_literals_unchanged": true
+}
