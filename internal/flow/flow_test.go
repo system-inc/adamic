@@ -53,7 +53,7 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
-		case "library_object_replaced.a":
+		case "library_object_replaced.a", "typed_arrays_primes_large.a":
 			// The Object branch's negative replaced-binding probe has no accepted IR.
 			// Lowering tests verify refusal, and its Node mutant proves the guard.
 			return true
@@ -150,7 +150,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured {
+		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}

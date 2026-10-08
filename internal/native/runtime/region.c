@@ -26,7 +26,7 @@ struct adamic_region_block {
 #define ALIGN 16
 
 static size_t object_size(size_t count) {
-	size_t size = sizeof(adamic_object) + count * sizeof(adamic_value);
+	size_t size = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
@@ -69,6 +69,8 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->has_captured_stack = false;
 	object->captured_stack.reference = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+	memset(adamic_object_initialized(object), 1, shape->count);
+	memset(adamic_object_field_types(object), 0, shape->count);
 	region->count++;
 	ADAMIC_COUNT_ALLOCATION();
 	return object;

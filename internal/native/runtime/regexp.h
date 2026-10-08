@@ -90,4 +90,6 @@ bool adamic_regex_read(const uint16_t *, size_t, ptrdiff_t, int, bool, uint32_t 
 uint32_t adamic_regex_canonical(uint32_t, unsigned);
 bool adamic_regex_word(uint32_t, unsigned);
 bool adamic_regex_contains(const adamic_regex_instruction *, uint32_t);
+typedef struct { size_t argument; bool rest; const char *name; bool optional; } adamic_regex_replacement_group;
+adamic_string *adamic_regex_replace_callback(adamic_string *, adamic_object *, adamic_closure *, bool, const unsigned char *, size_t, unsigned, unsigned, const adamic_regex_replacement_group *, size_t, size_t);
 #endif

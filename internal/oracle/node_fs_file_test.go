@@ -16,6 +16,10 @@ import (
 
 var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
 
+// Preserve the imported runtime witnesses, but do not compile an unsound Error view.
+// Their exact diagnostics are checked by TestClosureMergeRefusals.
+var fsFileRefusedFixtures = []string{"read", "open", "write", "exists", "stat", "unlink", "utimes", "system", "buffer", "read_sync", "mkdtemp", "rm"}
+
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()
 	root := filepath.Join(shared, name)

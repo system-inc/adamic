@@ -1,13 +1,14 @@
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
 function errorCode(error: unknown): string | undefined {
     return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
 }
-import { programArguments } from 'adamic';
-const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
     console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { writeFileSync, readFileSync, openSync, closeSync } from 'node:fs';
-writeFileSync(root + '/out', 'hé🌍\uD800', {flag:'w',mode:0o640,flush:true});
+const writeOptions = {flag:'w',mode:0o640,flush:true};
+writeFileSync(root + '/out', 'hé🌍\uD800', writeOptions);
 writeFileSync(root + '/out', 'append', {flag:'a'});
 console.log(readFileSync(root + '/out','utf8'));
 writeFileSync(root + '/out', 'reset', 'utf8');

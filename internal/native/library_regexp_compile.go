@@ -21,12 +21,3 @@ func (e *emitter) dynamicRegExp(expression ir.RegExpNew) string {
 func runtimeLibraryForSource(source string, options Options) (string, error) {
 	return RuntimeLibraryForSource("", source, options)
 }
-
-// RuntimeLibraryForSource selects the same opt-in archive for callers that link
-// generated C themselves, including the test262 runner using another checkout.
-func RuntimeLibraryForSource(directory, source string, options Options) (string, error) {
-	if strings.Contains(source, "\n#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
-		return runtimeLibrary(directory, options, []string{"-DADAMIC_REGEXP_RUNTIME_OWNER=1"})
-	}
-	return RuntimeLibrary(directory, options)
-}

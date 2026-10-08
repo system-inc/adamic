@@ -104,6 +104,7 @@ func TestNodeFSFileScratchOverloadsAreNamed(t *testing.T) {
 	for _, one := range []struct{ source, member string }{
 		{`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix','buffer');`, "mkdtempSync"},
 		{`import {rmSync} from 'node:fs'; const options={maxRetries:2}; rmSync('missing',options);`, "rmSync"},
+		{`import {rmSync} from 'node:fs'; rmSync('missing',{maxRetries:2});`, "rmSync"},
 		{`import {rmSync} from 'node:fs'; function flag():boolean {console.log('effect');return true;} rmSync('missing',{force:flag()});`, "rmSync"},
 	} {
 		_, err := lowerSource(t, one.source)

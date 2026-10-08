@@ -156,8 +156,17 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		// Splitting a literal into runtime parameters must neither drop effects
 		// from unused fields nor reorder the effects of its fields.
+		literalValue := func(value ir.Expression) ir.Expression {
+			if optional, ok := value.(ir.MaybeOf); ok {
+				if optional.Value == nil {
+					return ir.Undefined{}
+				}
+				return optional.Value
+			}
+			return value
+		}
 		for _, field := range literal.Fields {
-			switch field.Value.(type) {
+			switch literalValue(field.Value).(type) {
 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
 			default:
 				return nil, l.notYet(node, memberName+": "+"fs option literals containing evaluated expressions; bind a plain options object first")
@@ -165,7 +174,11 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		for _, field := range literal.Fields {
 			if field.Name == name {
-				return field.Value, nil
+				value := literalValue(field.Value)
+				if _, absent := value.(ir.Undefined); absent {
+					return fallback, nil
+				}
+				return value, nil
 			}
 		}
 		return fallback, nil

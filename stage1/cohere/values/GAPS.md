@@ -44,7 +44,9 @@ stage 0 can't lower a field of type boolean | undefined yet        (Node prints 
 
 **Around it:** a node's flags (`inline`, `quoted`, `isHex`, `isColor`) are present on some nodes and absent on others, which is how upstream's classes leave them. The natural port is one optional field each. Instead the node carries a `shape`, which constructor made it, and the shape says which fields it has (`keysOf`, nodes.ts), with the flags as plain booleans. That is upstream's own rule, a node's fields are its class's, so it reads well enough, but it is a second way of saying what the type should.
 
-## 3. A `case` that names a constant
+## 3. A `case` that names a constant (closed by compiler's area-next, on main as 41791f72)
+
+Closed: a case that names a constant, a number or a string, now lowers, and the gap program prints natively what it prints on Node. The port's workaround (gap 3) still stands: the tokenizer's switches still write each case as its character code. A follow-up writes them as the constants' names, held to the CSS corpus.
 
 ```ts
 const newline = 0x0a;

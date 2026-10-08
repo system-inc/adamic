@@ -547,6 +547,7 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
     return first;
 }
 
+#ifdef ADAMIC_NODE_HOST
 // libc mkdtemp atomically creates a private directory with a six-byte suffix.
 adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
 #ifdef ADAMIC_TARGET_WASI
@@ -631,6 +632,8 @@ double adamic_fs_file_rm(const adamic_string *path, bool recursive, bool force) 
     if (name != NULL) { remove_path(name, recursive, force); free(name); }
     return 0;
 }
+
+#endif
 
 double adamic_fs_file_unlink(const adamic_string *path) {
     adamic_output_flush();

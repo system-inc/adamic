@@ -292,6 +292,30 @@ func (n *inference) value(expression ir.Expression) shape {
 		return shape{}
 	}
 	switch expression := expression.(type) {
+	case ir.TypedArrayNew:
+		n.value(expression.Source)
+		return shape{fresh: true}
+	case ir.TypedArraySubarray:
+		// Views share storage. Conservatively alias the parent for every mutation.
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		return array
+	case ir.TypedArrayFill:
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		n.store(array, shape{})
+		return array
+	case ir.TypedArraySet:
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		n.store(array, shape{})
+		return shape{}
 	case ir.Read:
 		declared := n.function.Program.Locals[expression.Local]
 		if !mutable(expression.Of) {
@@ -305,6 +329,16 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{}
 		}
 		return shape{same: []Place{{Identifier: value}}}
+	case ir.Void:
+		n.value(expression.Value)
+		return shape{}
+	case ir.Comma:
+		n.value(expression.Left)
+		return n.value(expression.Right)
+	case ir.Logical:
+		result := n.value(expression.Left)
+		result.merge(n.value(expression.Right))
+		return result
 	case ir.Conditional:
 		n.value(expression.Condition)
 		result := n.value(expression.WhenTrue)
@@ -430,6 +464,9 @@ func writes(expression ir.Expression) bool {
 
 // callsBack reports whether an IR node calls a function value it's handed.
 func callsBack(expression ir.Expression) bool {
+	if call, ok := expression.(ir.RegExpCall); ok {
+		return call.Replacement != nil
+	}
 	switch expression.(type) {
 	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 		return true

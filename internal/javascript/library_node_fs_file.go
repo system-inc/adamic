@@ -1,6 +1,9 @@
 package javascript
 
-import "github.com/system-inc/adamic/internal/ir"
+import (
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
 
 func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
@@ -8,6 +11,14 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_join":
+		return "adamicNodePath.join(" + strings.Join(args, ", ") + ")"
+	case "host_tmpdir":
+		return "adamicNodeOS.tmpdir()"
+	case "host_cwd":
+		return "adamicNodeProcess.cwd()"
+	case "host_chdir":
+		return "adamicNodeProcess.chdir(" + args[0] + ")"
 	case "date_new":
 		return "new Date(" + args[0] + ")"
 	case "date_time":

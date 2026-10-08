@@ -13,6 +13,9 @@ type regexpLibraryFS struct{ vfs.FS }
 
 func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	text, ok := s.FS.ReadFile(path)
+	if strings.HasSuffix(path.AsString(), "/lib.es5.d.ts") || strings.HasSuffix(path.AsString(), "/lib.es2021.string.d.ts") || strings.HasSuffix(path.AsString(), "/lib.es2015.symbol.wellknown.d.ts") {
+		text = strings.ReplaceAll(text, "replacer: (substring: string, ...args: any[]) => string", "replacer: (substring: string, ...args: any[]) => unknown")
+	}
 	if strings.HasSuffix(path.AsString(), "/lib.es5.d.ts") {
 		// ECMAScript permits an omitted pattern; the stock declaration omits
 		// these overloads although lowering already compiles the empty pattern.

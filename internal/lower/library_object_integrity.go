@@ -9,12 +9,15 @@ import (
 // Integrity queries do not read fields. Mutations require the complete plain shape so that the
 // runtime's uniform data-property metadata is the actual set of JavaScript own descriptors.
 func (l *lowering) objectIntegrityCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectIntegrityCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectIntegrityCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	switch name {
 	case "seal", "preventExtensions", "isSealed", "isExtensible", "isFrozen":
 	default:
 		return nil, false, nil
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if len(written) != 1 || hasSpread(node) {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
 	}

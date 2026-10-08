@@ -330,3 +330,41 @@ total wall=79.306s load=2.63 4.15 3.95 1/333 151094 -> 3.71 4.16 3.97 1/389 1548
 ```
 
 The explicit `--entry 07 -jobs 1` CLI check also exited 0 and selected only entry 07; output and flags are in logs/parallel-entry07-cli.log. All disposable worktrees were removed.
+
+## Closure integration refresh
+
+Prepared against d772b5c990de4304de990e723835f19ebb613641, which includes
+closure merge 273af272 and updated area merge b004da3d (2f312321).
+The pinned checker reports entries 04, 08, 09 and 11 no-longer-applies.
+Entries 01-03, 05-07 and 12 retain their recorded detecting failures.
+Prior patches and measurements for the four refreshed entries remain in history;
+the old whole-package observations are not new measurements on this target.
+
+04 removes only the array lending guard, retaining expression-assigned storage
+and closure ownership checks. 08 removes only the declared optional-field
+read/unwrap guard, retaining the boxed-union refusal. 09 retains newer readiness,
+maybe-boolean fitting and optional-own-field handling while undoing the same
+required literal representation and maybe-number read fix.
+
+11 is a stale expectation: the closure branch correctly replaces permanent
+refusal of definite assignment with readiness. Its refreshed undo removes only
+recognition of declaration ! tokens, restoring the same uninitialized-read hole.
+The null!/undefined! initializer mechanism stays. The detecting command is now
+`go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentUsesReadiness$'`:
+the mutant reports `0 checked reads, want 1`. The original refusal command and
+all old evidence are preserved under this entry's history.
+
+Commands use GOFLAGS=-p=1, GOMAXPROCS=2 and `-jobs 1` to bound memory.
+The first required check on d772b5c9 passed 01 and 02, then GitHub rejected
+submodule clones with `could not read Username for https://github.com`.
+A second run used session-local Git URL rewrites to the already pinned cohere
+and TypeScript Git repositories. It still created independent submodule
+checkouts and verified the exact gitlinks; no source file was lifted or patched.
+This run exited 1 only for the four recorded applicability failures (239.488s).
+The refreshed check is recorded in the integration validation report.
+
+The refreshed checker on 5c104a61e1156aa7a3cc14844df4f32d0fa76ee4 exited 0
+in 283.391s. All eleven active entries apply and fail as recorded, including the
+replacement readiness expectation for 11; five historical skips remain outside
+this refresh. Run manifests stay outside the checkout. This is a named-test sweep, not a new
+whole-package oracle measurement.
