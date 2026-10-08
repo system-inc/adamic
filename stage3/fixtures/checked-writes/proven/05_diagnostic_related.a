@@ -1,0 +1,26 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10349
+// Census reason: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
+
+interface SourceFile { readonly fileName: string; }
+interface DiagnosticRelatedInformation { readonly messageText: string; }
+interface Diagnostic { file: SourceFile | undefined; relatedInformation?: DiagnosticRelatedInformation[] | undefined; }
+interface DiagnosticWithLocation extends Diagnostic { file: SourceFile; }
+const emptyArray: DiagnosticRelatedInformation[] = [];
+const Debug = { assert: (condition: boolean, message: string): void => { if (!condition) throw new Error(message); } };
+export function addRelatedInfo<T extends Diagnostic>(diagnostic: T, ...relatedInformation: DiagnosticRelatedInformation[]): T {
+    if (!relatedInformation.length) {
+        return diagnostic;
+    }
+    if (!diagnostic.relatedInformation) {
+        diagnostic.relatedInformation = [];
+    }
+    Debug.assert(diagnostic.relatedInformation !== emptyArray, "Diagnostic had empty array singleton for related info, but is still being constructed!");
+    diagnostic.relatedInformation.push(...relatedInformation);
+    return diagnostic;
+}
+
+function forward(diagnostic: Diagnostic): void { addRelatedInfo(diagnostic, { messageText: "related" }); }
+const diagnostic: DiagnosticWithLocation = { file: { fileName: "input.ts" } };
+forward(diagnostic);
+forward(diagnostic);
+console.log(`${diagnostic.file.fileName} ${diagnostic.relatedInformation?.length}`);

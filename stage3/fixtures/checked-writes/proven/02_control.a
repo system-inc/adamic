@@ -1,0 +1,14 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:11691
+// Census reason: a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
+
+interface FlowNode { node: { kind: number } | undefined; }
+interface ParentAccess { readonly flowNode: FlowNode | undefined; }
+function canHaveFlowNode(parentAccess: ParentAccess): boolean { return parentAccess.flowNode !== undefined; }
+function observe(parentAccess: ParentAccess | undefined): number {
+        if (parentAccess && canHaveFlowNode(parentAccess) && parentAccess.flowNode) {
+            return 1;
+        }
+        return 0;
+}
+const flowNode = { node: { kind: 80 } };
+console.log(`${observe({ flowNode })} ${observe(undefined)} ${flowNode.node.kind}`);

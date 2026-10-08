@@ -1,0 +1,55 @@
+// From TypeScript 6.0.3, src/compiler/emitter.ts:5110
+// Census reason: a value of type NodeArray<Statement> seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+interface TextRange { pos: number; end: number; }
+interface Node extends TextRange { parent: Node | undefined; }
+interface SourceFile { text: string; }
+type ListFormat = number;
+const ListFormat = { PreserveLines: 2, PreferNewLine: 65536, MultiLine: 1, NoTrailingNewLine: 131072 };
+const preserveSourceNewlines = true;
+const currentSourceFile: SourceFile = { text: "{}" };
+function positionIsSynthesized(pos: number): boolean { return pos < 0; }
+function nodeIsSynthesized(node: Node): boolean { return positionIsSynthesized(node.pos); }
+function rangeIsOnSingleLine(node: Node, file: SourceFile): boolean { return node.end <= file.text.length; }
+function rangeEndPositionsAreOnSameLine(parent: Node, child: Node, file: SourceFile): boolean { return parent.end === child.end && file.text.length > 0; }
+function synthesizedNodeStartsOnNewLine(node: Node, format: ListFormat): boolean { return node.pos < 0 && format > 0; }
+function getEffectiveLines(getLineDifference: (includeComments: boolean) => number): number { return getLineDifference(true); }
+function getLinesBetweenPositionAndNextNonWhitespaceCharacter(end: number, parentEnd: number, file: SourceFile, includeComments: boolean): number { return parentEnd - end; }
+    function getClosingLineTerminatorCount(parentNode: Node | undefined, lastChild: Node | undefined, format: ListFormat, childrenTextRange: TextRange | undefined): number {
+        if (format & ListFormat.PreserveLines || preserveSourceNewlines) {
+            if (format & ListFormat.PreferNewLine) {
+                return 1;
+            }
+
+            if (lastChild === undefined) {
+                return !parentNode || currentSourceFile && rangeIsOnSingleLine(parentNode, currentSourceFile) ? 0 : 1;
+            }
+            if (currentSourceFile && parentNode && !positionIsSynthesized(parentNode.pos) && !nodeIsSynthesized(lastChild) && (!lastChild.parent || lastChild.parent === parentNode)) {
+                if (preserveSourceNewlines) {
+                    const end = childrenTextRange && !positionIsSynthesized(childrenTextRange.end) ? childrenTextRange.end : lastChild.end;
+                    return getEffectiveLines(
+                        includeComments =>
+                            getLinesBetweenPositionAndNextNonWhitespaceCharacter(
+                                end,
+                                parentNode.end,
+                                currentSourceFile!,
+                                includeComments,
+                            ),
+                    );
+                }
+                return rangeEndPositionsAreOnSameLine(parentNode, lastChild, currentSourceFile) ? 0 : 1;
+            }
+            if (synthesizedNodeStartsOnNewLine(lastChild, format)) {
+                return 1;
+            }
+        }
+        if (format & ListFormat.MultiLine && !(format & ListFormat.NoTrailingNewLine)) {
+            return 1;
+        }
+        return 0;
+    }
+
+const parent: Node = { pos: 0, end: 9, parent: undefined };
+const child: Node = { pos: 1, end: 5, parent };
+const children = { pos: 1 as const, end: 7 as const };
+console.log(`${getClosingLineTerminatorCount(parent, child, 2, children)} ${getClosingLineTerminatorCount(parent, child, 2, undefined)} ${children.end}`);

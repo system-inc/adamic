@@ -1,0 +1,25 @@
+{
+  "evidence_kind": "synthetic observation-consumer controls, not compiler results",
+  "controls": [
+    {
+      "mode": "complete-stand-in",
+      "exit": 0,
+      "caught_by": "complete expected record set accepted"
+    },
+    {
+      "mode": "insert-check",
+      "exit": 1,
+      "caught_by": "static proof must elide checks"
+    },
+    {
+      "mode": "refuse-site",
+      "exit": 1,
+      "caught_by": "compile required"
+    },
+    {
+      "mode": "drop-site",
+      "exit": 1,
+      "caught_by": "compiler result coverage"
+    }
+  ]
+}

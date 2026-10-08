@@ -1,0 +1,241 @@
+{
+  "typescript": "6.0.3",
+  "sites": 98,
+  "source_families": 38,
+  "proof_families": {
+    "truthiness": 82,
+    "control": 4,
+    "diagnostic-related": 2,
+    "modifiers-initialize": 1,
+    "range-reader": 2,
+    "kind-reader": 3,
+    "assert-clause": 1,
+    "property-initializer": 1,
+    "static-modifiers": 1,
+    "module-parent": 1
+  },
+  "fixtures": [
+    {
+      "file": "01_truthiness.a",
+      "classification": "a",
+      "writes": []
+    },
+    {
+      "file": "02_control.a",
+      "classification": "a",
+      "writes": []
+    },
+    {
+      "file": "02_control.a",
+      "classification": "a",
+      "writes": []
+    },
+    {
+      "file": "03_kind_reader.a",
+      "classification": "a",
+      "writes": []
+    },
+    {
+      "file": "04_range_reader.a",
+      "classification": "a",
+      "writes": []
+    },
+    {
+      "file": "05_diagnostic_related.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "05_diagnostic_related.a.ts:15:9",
+          "path": "relatedInformation",
+          "operation": "=",
+          "original_domains": [
+            "DiagnosticRelatedInformation[] | undefined"
+          ],
+          "written_type": "never[]",
+          "value": "[]",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": true,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        },
+        {
+          "where": "05_diagnostic_related.a.ts:18:5",
+          "path": "relatedInformation.[]",
+          "operation": "push",
+          "original_domains": [
+            "DiagnosticRelatedInformation"
+          ],
+          "written_type": "DiagnosticRelatedInformation",
+          "value": "...relatedInformation",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "05_diagnostic_related.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "05_diagnostic_related.a.ts:15:9",
+          "path": "relatedInformation",
+          "operation": "=",
+          "original_domains": [
+            "DiagnosticRelatedInformation[] | undefined"
+          ],
+          "written_type": "never[]",
+          "value": "[]",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": true,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        },
+        {
+          "where": "05_diagnostic_related.a.ts:18:5",
+          "path": "relatedInformation.[]",
+          "operation": "push",
+          "original_domains": [
+            "DiagnosticRelatedInformation"
+          ],
+          "written_type": "DiagnosticRelatedInformation",
+          "value": "...relatedInformation",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "06_modifiers_initialize.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "06_modifiers_initialize.a.ts:11:31",
+          "path": "modifiers",
+          "operation": "||=",
+          "original_domains": [
+            "Modifier[] | undefined"
+          ],
+          "written_type": "Modifier[]",
+          "value": "(node as Mutable<typeof node>).modifiers ||= factory.createNodeArray()",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "07_assert_clause.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "07_assert_clause.a.ts:11:13",
+          "path": "assertClause",
+          "operation": "=",
+          "original_domains": [
+            "ImportAttributes"
+          ],
+          "written_type": "ImportAttributes",
+          "value": "node.attributes",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": true,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "08_property_initializer.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "08_property_initializer.a.ts:12:53",
+          "path": "initializer",
+          "operation": "=",
+          "original_domains": [
+            "Expression | undefined"
+          ],
+          "written_type": "Expression | undefined",
+          "value": "parseInitializer()",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": true,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "09_static_modifiers.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "09_static_modifiers.a.ts:19:9",
+          "path": "modifiers",
+          "operation": "=",
+          "original_domains": [
+            "NodeArray<ModifierLike> | undefined"
+          ],
+          "written_type": "NodeArray<ModifierLike> | undefined",
+          "value": "modifiers",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    },
+    {
+      "file": "10_module_parent.a",
+      "classification": "b",
+      "writes": [
+        {
+          "where": "10_module_parent.a.ts:9:21",
+          "path": "parent",
+          "operation": "=",
+          "original_domains": [
+            "Node | undefined"
+          ],
+          "written_type": "AmbientModuleDeclaration",
+          "value": "node",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ]
+    }
+  ],
+  "mutants": [
+    {
+      "mutation": "--bad-write",
+      "exit": 1,
+      "stdout": "site 420 receiver mutant: proven -> checked; emitNode = undefined is outside EmitNode & { autoGenerate: number }\n",
+      "caught_by": "receiver audit first proves class c, then rejects the original no-write expectation; zero stock TypeScript diagnostics"
+    },
+    {
+      "mutation": "--drop-row",
+      "exit": 1,
+      "stdout": "",
+      "caught_by": "exact pinned identity comparison"
+    },
+    {
+      "mutation": "--node-output",
+      "exit": 1,
+      "stdout": "",
+      "caught_by": "source Node stdout byte comparison; driver input autoGenerate 7 -> 8"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// From TypeScript 6.0.3, src/compiler/factory/nodeFactory.ts:2645
+// Census reason: a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+interface ImportAttributes { readonly kind: number; }
+type AssertClause = ImportAttributes;
+interface ImportTypeAssertionContainer { readonly pos: number; readonly assertClause: AssertClause; }
+interface ImportTypeNode { assertions: ImportTypeAssertionContainer | undefined; attributes: ImportAttributes | undefined; }
+function update(node: ImportTypeNode): void {
+        if (node.assertions && node.assertions.assertClause && node.attributes) {
+            (node.assertions as Mutable<ImportTypeAssertionContainer>).assertClause = node.attributes;
+        }
+}
+const assertions = { pos: 0, assertClause: { kind: 301 } };
+const attributes = { kind: 300 };
+update({ assertions, attributes });
+console.log(`${assertions.pos} ${assertions.assertClause === attributes}`);
