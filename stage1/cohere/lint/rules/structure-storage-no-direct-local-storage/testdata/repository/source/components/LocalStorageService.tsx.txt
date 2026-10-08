@@ -1,0 +1,7 @@
+export function run(){
+ const storage=(window).localStorage;
+ const alias=localStorage;
+ const values={localStorage:1,storage:localStorage};
+ const shorthand={localStorage};
+ return [storage,alias,values,shorthand,window?.localStorage,localStorage['getItem']('key'),globalThis.localStorage,window['localStorage']];
+}

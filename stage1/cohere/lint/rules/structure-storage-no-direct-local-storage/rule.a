@@ -1,0 +1,41 @@
+import type {RuleContext} from '../../context.ts';
+import {structureFileContext} from '../../helpers/structure_file_context.a';
+import {directLocalStorage,windowLocalStorage} from './messages.a';
+export class Rule {
+ readonly context:RuleContext;
+ readonly exempt:boolean;
+ constructor(context:RuleContext){this.context=context;this.exempt=structureFileContext(context.parser.path).isLocalStorageServiceFile;}
+ declaredName(index:number):number {
+  const node=this.context.node(index);
+  if(node.kind==='ImportSpecifier'){return node.children[node.children.length-1] ?? -1;}
+  if(node.kind==='BindingElement'){
+   let position=0;
+   if(this.context.kind(node.children[0] ?? -1)==='DotDotDotToken'){position++;}
+   const first=node.children[position] ?? -1;
+   if(first>=0 && this.context.scanAt(this.context.node(first).end)==='ColonToken'){return node.children[position+1] ?? -1;}
+   return first;
+  }
+  return this.context.name(index);
+ }
+ visit(index:number,parent:number):void {
+  if(this.exempt || this.context.node(index).text!=='localStorage' || parent<0){return;}
+  const kind=this.context.kind(parent);
+  if(kind==='PropertyAccessExpression'){
+   if(this.context.property(parent)===index){
+    const receiver=this.context.unwrap(this.context.child(parent,0));
+    if(this.context.kind(receiver)==='Identifier' && this.context.node(receiver).text==='window'){
+     this.context.report(parent,'structure/storage-no-direct-local-storage','windowLocalStorage',windowLocalStorage,'','','');
+    }
+    return;
+   }
+  }
+  else if(kind==='PropertyAssignment'){
+   if(this.context.name(parent)===index){return;}
+  }
+  else if(['PropertyDeclaration','MethodDeclaration','PropertySignature','MethodSignature','BindingElement','Parameter','VariableDeclaration','FunctionDeclaration','ClassDeclaration','ImportSpecifier'].includes(kind)){
+   if(this.declaredName(parent)===index){return;}
+  }
+  this.context.report(index,'structure/storage-no-direct-local-storage','directLocalStorage',directLocalStorage,'','','');
+ }
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

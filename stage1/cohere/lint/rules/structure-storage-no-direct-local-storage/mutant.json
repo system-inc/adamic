@@ -1,0 +1,5 @@
+{
+  "name": "storage-window-receiver-wrong",
+  "from": "this.context.node(receiver).text==='window'",
+  "to": "this.context.node(receiver).text==='globalThis'"
+}
