@@ -1,0 +1,29 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D226
+=== RUN   TestLedgerWitnesses/D226/hole
+    witness_test.go:223: PROVEN D226 read=expressions[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D227
+=== RUN   TestLedgerWitnesses/D227/hole
+    witness_test.go:223: PROVEN D227 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D228
+=== RUN   TestLedgerWitnesses/D228/hole
+    witness_test.go:223: PROVEN D228 read=importsAndRequiresToRewriteOrShim[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D229
+=== RUN   TestLedgerWitnesses/D229/hole
+    witness_test.go:223: PROVEN D229 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D230
+=== RUN   TestLedgerWitnesses/D230/hole
+    witness_test.go:223: PROVEN D230 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (9.37s)
+    --- PASS: TestLedgerWitnesses/D226 (0.77s)
+        --- PASS: TestLedgerWitnesses/D226/hole (0.77s)
+    --- PASS: TestLedgerWitnesses/D227 (0.92s)
+        --- PASS: TestLedgerWitnesses/D227/hole (0.92s)
+    --- PASS: TestLedgerWitnesses/D228 (0.80s)
+        --- PASS: TestLedgerWitnesses/D228/hole (0.80s)
+    --- PASS: TestLedgerWitnesses/D229 (0.81s)
+        --- PASS: TestLedgerWitnesses/D229/hole (0.81s)
+    --- PASS: TestLedgerWitnesses/D230 (0.84s)
+        --- PASS: TestLedgerWitnesses/D230/hole (0.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	9.376s

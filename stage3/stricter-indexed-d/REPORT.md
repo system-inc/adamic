@@ -476,3 +476,6 @@ variants so far: 10 of 23 standalone shapes, plus the three record-chain holes.
 
 Third hole group D191, D192, D193, D194 and D225 passes (holes-group3.log,
 9.382s), including each independently erased guard. 15 standalone holes proven.
+
+Fourth hole group D226, D227, D228, D229 and D230 passes (holes-group4.log,
+9.376s). 20 standalone holes proven; each guard mutant caught.
