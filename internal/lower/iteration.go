@@ -215,7 +215,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	}
 	// Until protocol calls dispatch virtually, prove that a returned receiver cannot
 	// override next/return or introduce a close method hidden by the return annotation.
-	if l.iterationFactoryReturnsThis(entry) {
+	if l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close) {
 		members := []*ast.Symbol{next}
 		if close != nil {
 			members = append(members, close)

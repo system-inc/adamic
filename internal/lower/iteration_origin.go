@@ -424,3 +424,32 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 	}
 	return false
 }
+
+// Unknown receiver origins matter only when a declared descendant can change the
+// protocol. A factory returning a base receiver remains sound in a closed class tree.
+func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+	class := l.classNodeFor(iterator)
+	if class == nil {
+		return false
+	}
+	changed := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindClassDeclaration && node.Name() != nil && node != class {
+			shape := l.checker.GetTypeAtLocation(node.Name())
+			if l.classView(shape, class) != nil {
+				actualNext := l.checker.GetPropertyOfType(shape, "next")
+				actualClose := l.checker.GetPropertyOfType(shape, "return")
+				if actualNext == nil || !l.sameMemberOrigin(actualNext, next) || (actualClose != nil) != (close != nil) || (close != nil && !l.sameMemberOrigin(actualClose, close)) {
+					changed = true
+					return true
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return changed
+}
