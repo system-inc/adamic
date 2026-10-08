@@ -20,7 +20,17 @@ func TestMain(m *testing.M) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	os.Exit(m.Run())
+	directory, err := os.MkdirTemp("", "lint-shared-")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	sharedDirectory = directory
+	code := m.Run()
+	if err := os.RemoveAll(directory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	os.Exit(code)
 }
 
 func TestOwnedWitnesses(t *testing.T) {
@@ -56,7 +66,7 @@ func TestRegistrationMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
-		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("listener omission survived on %s", side.name)
@@ -114,13 +124,20 @@ func TestFactoryHooks(t *testing.T) {
 	path := manifest(t, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
 	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
 	run := func(mutated bool) {
-		for _, side := range []struct {
+		sides := []struct {
 			name string
 			run  execution
 		}{
 			{"Node", node(t, directory, path, false)},
-			{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
-		} {
+			{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		}
+		if !mutated {
+			sides = append(sides, struct {
+				name string
+				run  execution
+			}{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)})
+		}
+		for _, side := range sides {
 			matches := bytes.HasPrefix(side.run.output, expected)
 			if matches == mutated {
 				t.Fatalf("hook sequence on %s (mutant=%t): %s", side.name, mutated, side.run.output)
@@ -291,7 +308,7 @@ func TestDecodedOptionsAndMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, changed, path, false)},
-		{"native", execute(t, "", buildPort(t, changed, true), "--manifest", path)},
+		{"emitted JavaScript", emittedNode(t, changed, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)

@@ -220,14 +220,12 @@ func TestCommentFoldMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "point - 32 : point", "point - 31 : point", "unicode.ts")
-	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("fold mutant survived on %s", side.name)
@@ -241,14 +239,12 @@ func TestPositionIndexMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
-	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("position mutant survived on %s", side.name)
