@@ -1,0 +1,19 @@
+const numbers: number[] = [10];
+function observeLength(): number { return numbers.length; }
+console.log(numbers.push(20, observeLength()).toString());
+console.log(numbers.join(","));
+console.log(numbers.push().toString());
+const strings: string[] = [];
+console.log(strings.push("owned:" + "one", "owned:" + "two", "owned:" + "three").toString());
+console.log(strings.join(","));
+interface Box { value: string }
+const boxes: Box[] = [];
+const first = { value: "owned:" + "first" };
+console.log(boxes.push(first, { value: "owned:" + "second" }).toString());
+first.value = "changed";
+for (const box of boxes) console.log(box.value);
+let events = "";
+function receiver(): string[] { events += "r"; return strings; }
+function item(value: string): string { events += value; return "owned:" + value; }
+console.log(receiver().push(item("a"), item("b")).toString());
+console.log(events);
