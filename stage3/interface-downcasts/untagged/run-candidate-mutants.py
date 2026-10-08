@@ -17,6 +17,7 @@ changes=[
  ('candidate-wrong-literal-javascript',js,"return !contract.Allowed?.length || contract.Allowed.some(literal=>value===(literal.Of===1?literal.Number:literal.Of===2?literal.Boolean:literal.String));",'return true;','13/wrong'),
  ('candidate-drop-transitive',test,'// untagged candidate mutation anchor','if variant=="nested" {dropUntaggedNestedSourceReads(program)}','8/nested'),
  ('candidate-ignore-overlap',ir,' || seen[literal]','','ir'),
+ ('candidate-drop-index-membership',test,'// untagged candidate mutation anchor','if variant=="wrong" {dropUntaggedIndexedSourceReads(program)}','133/wrong'),
 ]
 original={p:p.read_bytes() for _,p,_,_,_ in changes}
 try:

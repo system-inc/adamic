@@ -1,3 +1,54 @@
+Built: all 36 own-kind candidate selector projections, including indexed reads, with 310 candidate reads represented.
+Commits: production hooks 1baa2640; ranked first group 4fb1c603; this second source group follows in Git history.
+Commands: exact candidate source oracle 13.136s; final filtered IR/lower/native/JavaScript/oracle passed, oracle 35.259s.
+Mutants: skipped selection native/JS, wrong scalar kind native/JS, wrong literal native/JS, dropped nested guards, ignored overlaps, dropped index membership; all nine caught and restored.
+Uncovered: 25 candidate selector pairs/124 reads remain; full unchanged compiler interface conformance and exact allocation reachability are not certified.
+
+Revised whole-family planning target: October 12, 2026, 23:00 UTC. This is a
+planning estimate, not a completion claim. No shared-hook ownership wait remains.
+
+The second ranked group adds the remaining 32 own-kind selector projections,
+144 candidate reads. Every candidate has its own .a fixture set and exact refusal
+pins. Valid member samples and permitted absence match Node in both production
+backends. Wrong kinds and nested labels refuse with exit 70, naming the actual
+field, expected type and found value category. Node positive stdout is also pinned
+to the number of member controls, preventing an empty fixture from counting.
+
+Total selector projection coverage: 36 candidate pairs/310 candidate reads out
+of 61/434 classified untagged candidates. Remaining: 25/124. This remains projection
+coverage; the unchanged full compiler-interface completion count is zero. No original
+interface implementation was copied. The classifier measured kind contracts with a
+zero-diagnostic stock checker; generator code writes independent read projections.
+The supplied broader 228/2,468 object-union candidate pool also contains shared-tag
+and other consumer families and is not this lane's exact denominator.
+
+Existing array dispatch reaches the named object-union hook. Candidate 133's indexed
+wrong-kind read is pinned. A new mutant clears that actual ArrayIndex.ViewContract:
+heap-object storage still passes, but both backends continue with true/exit 0. The
+expected exit-70 membership pin catches it. This proves array kind alone is not
+being counted as an object-union contract. Indexed nested label checks also pass.
+All previous eight semantic mutations were rerun and restored with this group.
+
+The remaining candidate obligations are field-only recursive Type/FlowNode members,
+unions of array contracts, and a callable union. They need complete member adapters;
+this checkpoint deliberately does not substitute a flags-number test for those
+contracts. Nominal targets, getter/static selection and unsupported nested families
+remain outside the own-data matcher. Instance own data is covered and getter probing
+is refused without calling the getter. All later reads retain shared checks.
+
+Validation output is committed under logs/. Only the scoped commands below were
+run for this group; no full repository gate is claimed. Setup timing remains
+214.165s, nproc 5, four-CPU quota. No lane branch was merged independently.
+
+```
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run '^TestCheckedViewUntaggedCandidatePairs$' -count=1 -v > /tmp/untagged-candidate-group2-pinned.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-candidate-mutants.py > /tmp/untagged-candidate-group2-mutants.log 2>&1
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestViewUnionDiscriminant|TestUntaggedView|TestCheckedViewUntagged(Selection|SourceDispatch|SourceFlows|CandidatePairs|OwnClassData)' -count=1 -v > /tmp/untagged-group2-shipping.log 2>&1
+```
+
+Earlier first-group checkpoint, historical:
+
 Built: classified candidate unions; added overlapping/open-kind dispatch, own class-data probes, and top-four candidate selector fixtures.
 Commits: production hooks 1baa2640; prior handoff 55b3fdef/2bb00f0f; this candidate group follows in Git history.
 Commands: stock classification has 0 diagnostics; final lane IR/lower/backend/oracle checks pass, oracle 25.111s; getter/data control 0.783s.

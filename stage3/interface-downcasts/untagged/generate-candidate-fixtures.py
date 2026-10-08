@@ -40,6 +40,6 @@ for row in inventory['ranked_candidates']:
  variants={'good':source(values),'wrong':source([wrong]),'nested':source([values[0]],nested=True)}
  if nullable and not element:variants['absent']=source([None],absent=True)
  for variant,text in variants.items():(folder/('pair-%d-%s.a'%(row['rank'],variant))).write_text(text)
- manifest.append({'rank':row['rank'],'type_id':row['type_id'],'receiver':row['type'],'field':row['field'],'declared_type':row['declared_type'],'source_alias':alias,'candidate_reads':row['read_count'],'variants':list(variants),'scope':'measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces'})
+ manifest.append({'rank':row['rank'],'type_id':row['type_id'],'receiver':row['type'],'field':row['field'],'declared_type':row['declared_type'],'source_alias':alias,'good_stdout':'true\n'*len(values),'candidate_reads':row['read_count'],'variants':list(variants),'scope':'measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces'})
 (root/'candidate-fixtures.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('generated',len(manifest),'candidate fixtures,',sum(r['candidate_reads'] for r in manifest),'candidate reads')

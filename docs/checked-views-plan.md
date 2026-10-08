@@ -1074,3 +1074,12 @@ ranks 8, 11, 13 and 19 have selector-projection fixtures with exact wrong/nested
 and eight semantic mutants; they represent 4 candidate pairs/166 candidate reads.
 Remaining unvalidated selector obligations: 57 candidate pairs/268 candidate reads.
 This does not certify every field of the unchanged compiler interfaces.
+
+Untagged candidate group 2 extends own-kind projections to all 36 eligible pairs,
+310 candidate reads, with a fixture set per pair in ranked order. Existing array
+index dispatch already reaches the named object-union hook; it now uses the registry
+name when callers omit ViewType, preserving exact expected-type diagnostics.
+Remaining selector obligations: 25 candidate pairs/124 reads. Those comprise
+field-only recursive Type/FlowNode contracts, unions of array contracts, and a
+callable union. These are not covered by the kind projection receipts and remain
+pending adapter work. No unchanged whole-tsc interface completion is claimed.

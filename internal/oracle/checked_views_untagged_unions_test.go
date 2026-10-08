@@ -296,6 +296,7 @@ func TestCheckedViewUntaggedCandidatePairs(t *testing.T) {
 	var pairs []struct {
 		Rank        int
 		SourceAlias string `json:"source_alias"`
+		GoodStdout  string `json:"good_stdout"`
 		Variants    []string
 	}
 	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/candidate-fixtures.json")
@@ -319,6 +320,13 @@ func TestCheckedViewUntaggedCandidatePairs(t *testing.T) {
 				name := "untagged/candidates/pair-" + strconv.Itoa(pair.Rank) + "-" + variant
 				program, path := interfaceFixture(t, name)
 				node := onNode(t, path)
+				expectedNode := "true\n"
+				if variant == "good" {
+					expectedNode = pair.GoodStdout
+				}
+				if difference := disagreement(run{stdout: []byte(expectedNode)}, node); difference != "" {
+					t.Fatal("Node control: " + difference)
+				}
 				t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 				// untagged candidate mutation anchor
 				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
@@ -362,4 +370,16 @@ func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 			}
 		})
 	}
+}
+
+func dropUntaggedIndexedSourceReads(program *ir.Program) {
+	mutate := func(expression ir.Expression) ir.Expression {
+		index, ok := expression.(ir.ArrayIndex)
+		if ok {
+			index.ViewContract = 0
+			return index
+		}
+		return expression
+	}
+	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 }
