@@ -1,0 +1,3 @@
+function holdFlag<IncludeTypeSpaceImports extends boolean>(value: IncludeTypeSpaceImports): IncludeTypeSpaceImports { return value; }
+console.log(`${holdFlag(true)}`);
+console.log(`${holdFlag(false)}`);
