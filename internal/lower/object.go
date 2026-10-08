@@ -1041,6 +1041,10 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 					return nil, l.notYet(clause, "a case that isn't a constant")
 				}
 			}
+			if value.Type().IsMaybe() && test.Type() == value.Type().Present() {
+				// Compare the present case as a pair; an absent scrutinee must not match.
+				test = fit(test, value.Type())
+			}
 			if test.Type() != value.Type() {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")
 			}

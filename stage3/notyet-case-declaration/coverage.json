@@ -20,5 +20,18 @@
     "src/compiler/programDiagnostics.ts": 1,
     "src/compiler/watch.ts": 1,
     "src/compiler/expressionToTypeNode.ts": 2
+  },
+  "optional_cases": {
+    "reason": "a case whose type differs from the switch's",
+    "observations": 8,
+    "unique_sites": 8,
+    "files": {
+      "src/compiler/utilities.ts": 2,
+      "src/compiler/checker.ts": 2,
+      "src/compiler/transformers/generators.ts": 1,
+      "src/compiler/transformers/module/module.ts": 1,
+      "src/compiler/program.ts": 1,
+      "src/compiler/watch.ts": 1
+    }
   }
 }

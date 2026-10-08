@@ -11,7 +11,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/" + name, false, false})
+		}{"internal/oracle/testdata/" + name, true, false})
 	}
 }
 
