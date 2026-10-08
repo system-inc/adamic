@@ -26,9 +26,29 @@ for (const pair of pairs) {
  if (!lines[pair.witness.line-1].includes(pair.field === '[dynamic index]' ? '[' : pair.field)) throw Error('read witness drift: '+JSON.stringify(pair));
 }
 
-for (const name of ['Identifier','Symbol','PrivateIdentifier','TransientSymbol','UnionType','SourceFile','SymbolLinks','WideningContext']) {
+for (const name of ['Identifier','Symbol','PrivateIdentifier','TransientSymbol','UnionType','SourceFile','SymbolLinks','WideningContext','UniqueESSymbolType','GeneratedIdentifier','GeneratedPrivateIdentifier']) {
  const symbol = exportsOfModule.find(s => s.name === name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f => f.name).sort();
+}
+// Verify duplicate receiver ids against actual original read-expression types.
+for (const pair of pairs.filter(p => [34691,55713,46232].includes(p.receiver_type_id))) {
+ const file = program.getSourceFile(path.join(root,pair.witness.file));
+ if (!file) throw Error('original read source absent');
+ const offset = file.getPositionOfLineAndCharacter(pair.witness.line-1,pair.witness.column-1);
+ let access;
+ const visit = node => {
+  if (ts.isPropertyAccessExpression(node) && node.name.text === pair.field && node.getStart(file) === offset) access = node;
+  ts.forEachChild(node,visit);
+ };
+ visit(file);
+ if (!access) throw Error('original read span absent: '+JSON.stringify(pair.witness));
+ const receiver = checker.getTypeAtLocation(access.expression);
+ const member = checker.getPropertyOfType(receiver,pair.field);
+ const declared = checker.getTypeOfSymbolAtLocation(member,member.valueDeclaration || member.declarations[0]);
+ const names = checker.getPropertiesOfType(receiver).map(f=>f.name).sort();
+ if (checker.typeToString(declared) !== '__String' || JSON.stringify(names) !== JSON.stringify(fields[pair.type])) throw Error('instantiated original receiver differs');
+ pair.original_receiver_fields = names;
+ pair.original_declared_type = checker.typeToString(declared);
 }
 const checkerSource = ts.createSourceFile('checker.ts',fs.readFileSync(path.join(root,'src/compiler/checker.ts'),'utf8'),ts.ScriptTarget.Latest,true);
 let namesDeclaration = "import type { __String } from './compiler/types';\n";

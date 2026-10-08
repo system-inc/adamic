@@ -76,3 +76,15 @@ inspecting that actual descriptor. No compiler admission was changed.
 Null-only arrays remain a named compile refusal, not runtime coverage; that
 supplementary producer gap is retained. No broader primitive array adapter or
 null-array producer support is claimed.
+
+Sixth group: five original generated/unique-symbol/nullable-receiver pairs / nine
+reads certified. Plain table twenty-three / 534 certified, seven / nine pending.
+With nullable fields, twenty-eight pairs / 543 reads certified. Uncached oracle
+passed in 57.134s, thirty cases. Both generated identifier declarations keep
+their unread EmitNode intersection obligations. Nullable Identifier and Symbol
+receivers are read with original optional-chain expressions in interface helpers.
+Five read bypass mutants are caught by named exit-70 pins in both backends.
+The adapter also verifies three repeated receiver ids at their exact upstream
+AST read positions: the full field sets match the original named interfaces and
+the declared field type is __String. They are not credited until their own
+source fixtures and mutants run in the next group.

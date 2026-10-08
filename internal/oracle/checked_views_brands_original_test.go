@@ -56,7 +56,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 	for _, pair := range []struct {
 		typ, field string
 		optional   bool
-	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}} {
+	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}, {"UniqueESSymbolType", "escapedName", false}, {"GeneratedIdentifier", "escapedText", false}, {"GeneratedPrivateIdentifier", "escapedText", false}, {"Identifier | undefined", "escapedText", false}, {"Symbol | undefined", "escapedName", false}} {
 		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
 		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
 		if union {
@@ -87,7 +87,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				roots := []string{pair.typ}
+				roots := []string{strings.TrimSuffix(pair.typ, " | undefined")}
 				if pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName" {
 					root := "Identifier"
 					if pair.typ == "MemberName" {
@@ -120,16 +120,20 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 					}
 				}
 				want := run{stdout: []byte(text)}
+				expression := "value." + pair.field
+				if strings.HasSuffix(pair.typ, " | undefined") {
+					expression = "value?." + pair.field
+				}
 				expected := "__String"
 				if pair.optional {
 					expected += " | undefined"
 				}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "number", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
 				}
 				if variant == "missing" && !pair.optional {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.field + " is not initialized; expected __String, found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not initialized; expected __String, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {
