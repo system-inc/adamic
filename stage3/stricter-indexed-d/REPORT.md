@@ -469,3 +469,7 @@ record representation is attempted here.
 First five hole variants D107, D171, D172, D173 and D174 pass with exact named
 exit-70 stderr, source Node undefined, checked explain entries and individually
 erased guards caught (holes-group1.log, 6.102s). Further hole groups follow.
+
+Second hole group D175, D184, D185, D186 and D189 passes all backend and
+sanitized mutant assertions (holes-group2.log, 6.570s). Total completed hole
+variants so far: 10 of 23 standalone shapes, plus the three record-chain holes.
