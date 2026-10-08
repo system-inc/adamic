@@ -28,7 +28,6 @@ func TestLexerGaps(t *testing.T) {
 		{"negativeCase.ts", "1\n", "a case that isn't a constant"},
 		{"multiplePush.ts", "2\n", "push with other than one value"},
 		{"stringFallback.ts", " \n", "a BinaryExpression with a string and a string"},
-		{"valuePresence.ts", "false\n", "a PrefixUnaryExpression on a value"},
 		{"valueConjunction.ts", "true\n", "a BinaryExpression with a value and a boolean"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
@@ -122,4 +121,8 @@ func closedPresenceGap(t *testing.T, file string) {
 			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
 		}
 	}
+}
+
+func TestClosedValuePresenceGap(t *testing.T) {
+	closedPresenceGap(t, "gaps/valuePresence.ts")
 }
