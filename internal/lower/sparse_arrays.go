@@ -18,7 +18,7 @@ func (l *lowering) newSparseArray(node *ast.Node) (ir.Expression, bool, error) {
 	if err != nil {
 		return nil, true, err
 	}
-	constant, known := length.(ir.NumberConstant)
+	constant, known := l.provenArrayLength(made.Arguments.Nodes[0], length)
 	if !known || constant.Value < 0 || constant.Value > 4294967295 || math.Trunc(constant.Value) != constant.Value || math.IsNaN(constant.Value) {
 		return nil, true, l.notYet(node, "new Array with a length not statically proven valid")
 	}
@@ -82,4 +82,20 @@ func (l *lowering) sparseExpression(node *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// A non-const enum member still emits its runtime field read. Validate its
+// immutable declaration value without erasing receiver effects or enum readiness.
+func (l *lowering) provenArrayLength(node *ast.Node, value ir.Expression) (ir.NumberConstant, bool) {
+	if constant, known := value.(ir.NumberConstant); known {
+		return constant, true
+	}
+	if member := l.enumMember(node); member != nil {
+		constant, err := l.enumConstant(member)
+		if err == nil {
+			number, known := constant.(ir.NumberConstant)
+			return number, known
+		}
+	}
+	return ir.NumberConstant{}, false
 }
