@@ -26,6 +26,14 @@ grep -v '^#' "$directory/areas.tsv" | while IFS=$'\t' read -r area owner oracle;
 		echo "area/$area skipped: a merge into it is running on another machine (locks/area-$area on origin)"
 		continue
 	fi
+	# An owner can ask integration to hold its area between runs (a seat chaining area-merge.sh runs,
+	# where a lock pushed by hand would block its own next run): a file named for the area in the hold
+	# directory, holding why and until when, keeps merge-back off it until integration removes it.
+	hold="${ADAMIC_MERGE_BACK_HOLDS:-$HOME/.adamic-merge-back-holds}/$area"
+	if [ -f "$hold" ]; then
+		echo "area/$area skipped: held for its owner ($(head -n 1 "$hold"))"
+		continue
+	fi
 	if ! tip=$(git rev-parse -q --verify "refs/remotes/origin/area/$area"); then
 		echo "area/$area missing"
 		continue
