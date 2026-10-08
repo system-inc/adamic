@@ -1,10 +1,10 @@
 import { panic } from 'adamic';
-import type { RuleContext } from '../../context.ts';
-import type { Parser } from '../../../../typescript/parser/parser.ts';
-import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
-import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { Diagnostic } from '../../../typeaware/diagnostic.ts';
-import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import type { RuleContext } from '../../../../lint/context.ts';
+import type { Parser } from '../../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../../../lint/suggestions.a';
 export class Rules {
     readonly shared: RuleContext;
     readonly parser: Parser;

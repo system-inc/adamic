@@ -1,7 +1,7 @@
 import type { Rules } from './context.a';
 import { Bindings } from './bindings.a';
 import { Reassign } from './reassign.a';
-import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
 interface ConditionInterface {
     readonly identifier: number;
     readonly loop: number;

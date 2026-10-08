@@ -1,5 +1,5 @@
-import type { RuleContext } from '../../context.ts';
-import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../../../lint/context.ts';
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
 import { Rules } from './context.a';
 import { UnmodifiedLoop } from './no_unmodified_loop_condition.a';
 export class Rule {

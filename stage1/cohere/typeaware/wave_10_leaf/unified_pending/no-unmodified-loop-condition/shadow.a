@@ -2,8 +2,8 @@ import { panic } from 'adamic';
 import type { Rules } from './context.a';
 import { Binding } from './binding.a';
 import { Scope } from './scope.a';
-import { Frames, header } from '../../../typeaware/frames.ts';
-import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Frames, header } from '../../../frames.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
 
 export class Shadow {
     readonly rules: Rules;

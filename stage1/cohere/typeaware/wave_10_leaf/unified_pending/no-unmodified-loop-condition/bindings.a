@@ -1,7 +1,7 @@
 import { panic } from 'adamic';
 import type { Rules } from './context.a';
 import { Shadow } from './shadow.a';
-import { Frames, header } from '../../../typeaware/frames.ts';
+import { Frames, header } from '../../../frames.ts';
 
 export class Bindings {
     readonly rules: Rules;
