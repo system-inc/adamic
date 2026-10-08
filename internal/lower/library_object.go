@@ -231,11 +231,8 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 			return 0, false
 		}
 	}
-	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if !known || (of != ir.Number && of != ir.String && of != ir.Boolean) {
-			return 0, false
-		}
-	}
+	// The intersection has one object header and shape, just like an ordinary
+	// structural object. Each field is checked where it is constructed or read;
+	// requiring scalar fields here needlessly rejects reference-bearing views.
 	return ir.Object, true
 }

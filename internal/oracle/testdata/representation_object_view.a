@@ -1,0 +1,11 @@
+function holdObject(value: object): object { return value; }
+function observe(value: object | undefined): string { return typeof value; }
+const plain = { value: 4 };
+const array = [3, 7];
+const map = new Map<string, number>();
+function callable(): number { return 9; }
+console.log(`${holdObject(plain) === plain} ${observe(plain)}`);
+console.log(`${holdObject(array) === array} ${observe(array)}`);
+console.log(`${holdObject(map) === map} ${observe(map)}`);
+console.log(`${holdObject(callable) === callable} ${observe(callable)}`);
+console.log(observe(undefined));

@@ -53,6 +53,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsNonPrimitive != 0:
+		// `object` includes arrays, maps and functions, so retain their headers
+		// instead of treating every value as a plain structural object.
+		return ir.Union, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:

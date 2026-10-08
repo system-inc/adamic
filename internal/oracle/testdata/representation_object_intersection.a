@@ -1,0 +1,9 @@
+interface ExpressionWithTypeArguments { readonly expression: { readonly text: string }; }
+type Refined = ExpressionWithTypeArguments & { readonly children: readonly number[] };
+function holdRefined(value: Refined): Refined { return value; }
+const expression = { text: 'node'.repeat(2) };
+const children = [3, 7];
+const refined: Refined = { expression, children };
+console.log(`${holdRefined(refined) === refined}`);
+console.log(`${refined.expression === expression} ${refined.children === children}`);
+console.log(`${refined.expression.text} ${refined.children[1]}`);
