@@ -38,6 +38,8 @@ gateBase() {
      mainFork=$(git -C "${here}" merge-base "${sha}" "${main}" 2> /dev/null); then
     while read -r tip name; do
       fork=$(git -C "${here}" merge-base "${sha}" "${tip}" 2> /dev/null) || continue
+      # An area that already holds the tip (merged in before a regate) would leave nothing to test.
+      [ "${fork}" = "${sha}" ] && continue
       git -C "${here}" merge-base --is-ancestor "${mainFork}" "${fork}" 2> /dev/null || continue
       count=$(git -C "${here}" rev-list --count "${mainFork}..${fork}")
       if [ "${count}" -gt "${bestCount}" ]; then best=${name#refs/heads/} bestSha=${tip} bestCount=${count}; fi
