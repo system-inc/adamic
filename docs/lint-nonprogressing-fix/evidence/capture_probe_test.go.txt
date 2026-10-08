@@ -1,0 +1,24 @@
+package lint
+import("bytes";"encoding/json";"os";"path/filepath";"strings";"testing")
+func TestPromiseCapturedRecoveryProbe(t *testing.T) {
+ directory:=mutant(t,"","")
+ source:="/workspace/nonprogressing-capture-probe/promise"
+ target:=filepath.Join(directory,"rules","prefer-promise-reject-errors")
+ err:=filepath.WalkDir(source,func(path string,entry os.DirEntry,err error)error{
+  if err!=nil{return err};rel,err:=filepath.Rel(source,path);if err!=nil{return err};dest:=filepath.Join(target,rel)
+  if entry.IsDir(){return os.MkdirAll(dest,0755)};data,err:=os.ReadFile(path);if err!=nil{return err};return os.WriteFile(dest,data,0644)
+ });if err!=nil{t.Fatal(err)}
+ oracle:=goOracleFrom(t,directory)
+ found:=false
+ for _,row:=range upstreamFrom(t,directory){
+  fields:=strings.Split(row,"\t");if fields[1]!="prefer-promise-reject-errors"{continue}
+  data,err:=os.ReadFile(fields[0]);if err!=nil{t.Fatal(err)}
+  if strings.TrimSpace(string(data))!="Promise.reject(<string>'x');"{continue};found=true
+  if fields[6]!="recovery"{t.Fatalf("capture still drops recovery metadata: %q",fields)}
+  config:=filepath.Join(t.TempDir(),"tsconfig.json");body,_:=json.Marshal(map[string]any{"compilerOptions":map[string]bool{"strict":true},"files":[]string{fields[0]}})
+  if err:=os.WriteFile(config,body,0644);err!=nil{t.Fatal(err)}
+  answer:=execute(t,"",oracle,"--manifest",manifest(t,[]string{"program "+config,row})).output
+  if !bytes.Contains(answer,[]byte("rejectAnError"))||!bytes.Contains(answer,[]byte("recovery findings only")){t.Fatalf("wrong captured recovery result: %s",answer)}
+  t.Logf("9a24f732 covers the exact input.tsx row: recovery metadata present, typed Go exits 0, finding retained:\n%s",answer)
+ };if !found{t.Fatal("exact Promise recovery row missing")}
+}
