@@ -1,0 +1,15 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151present1463301437/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet; Node "7\n"
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151absent204739673/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:130: BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151null1511685853/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet; Node "null\n"
+--- PASS: TestLedgerWitnesses (5.87s)
+    --- PASS: TestLedgerWitnesses/D151 (0.67s)
+        --- PASS: TestLedgerWitnesses/D151/present (0.24s)
+        --- PASS: TestLedgerWitnesses/D151/absent (0.22s)
+        --- PASS: TestLedgerWitnesses/D151/null (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	5.875s
