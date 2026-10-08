@@ -1,0 +1,17 @@
+{
+  "name": "@typescript-eslint/consistent-indexed-object-style",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "InterfaceDeclaration",
+    "TypeLiteral",
+    "MappedType",
+    "TypeReference"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleConsistentIndexedObjectStyle",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestConsistentIndexedObjectStyle"
+}

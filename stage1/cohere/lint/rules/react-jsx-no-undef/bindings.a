@@ -1,0 +1,26 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { ParseNode as MissingNode } from '../../../../typescript/parser/nodes.ts';
+export function waveNode(context: RuleContext, index: number): ParseNode { return index < 0 ? new MissingNode('Missing', 0, 0, []) : context.node(index); }
+export class Bindings {
+    readonly rules: RuleContext;
+
+    constructor(context: RuleContext) { this.rules = context;  }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    name(index: number): number {
+        const node = waveNode(this.rules,index);
+        for(const child of node.children) {
+            if(['Identifier','ThisKeyword','ArrayBindingPattern','ObjectBindingPattern'].includes(this.rules.kind(child))) { return child; }
+        }
+        return -1;
+    }
+    initializer(index: number): number {
+        const node = waveNode(this.rules,index);
+        const last = node.children[node.children.length-1] ?? -1;
+        if(last < 0) { return -1; }
+        let at = this.rules.node(last).pos-1;
+        while(at >= node.pos && [' ','\t','\r','\n'].includes(this.rules.source.slice(at,at+1))) { at--; }
+        return this.rules.source.slice(at,at+1) === '=' ? last : -1;
+    }
+}

@@ -1,0 +1,3 @@
+export function unnecessaryUndefinedInit(name: string): string {
+    return `\`${name}\` is initialized to \`undefined\`, which is the value it would already have. The initializer adds a token and no behaviour, and it costs the reader a moment deciding whether the author meant something by it. Drop it.`;
+}

@@ -1,0 +1,22 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+export class Rules {
+    readonly context: RuleContext;
+    readonly parser: RuleContext['parser'];
+    readonly scanner: RuleContext['scanner'];
+    readonly parents: readonly number[];
+    constructor(context: RuleContext) { this.context=context;this.parser=context.parser;this.scanner=context.scanner;this.parents=context.parents; }
+    byte(position: number): number { return position; }
+    start(node: ParseNode): number { this.scanner.pos=node.pos;this.scanner.scan();return this.scanner.start; }
+    text(node: ParseNode): string { this.scanner.pos=node.pos;this.scanner.scan();return this.context.source.slice(this.scanner.start,node.end); }
+    ask(index: number,question: string): string { const answer=this.context.checker?.ask(index,question);return answer?.value ?? panic(answer?.reason ?? 'missing checker'); }
+    skip(index: number,kind: string): number { let current=index;while(this.parser.node(current).kind === kind) { current=this.parser.node(current).children[0] ?? panic('empty parentheses'); }return current; }
+}
+export class Bindings {
+    readonly rules: Rules;
+
+    constructor(context: RuleContext) { this.rules=new Rules(context); }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    name(index: number): number { return this.rules.context.name(index); }
+}

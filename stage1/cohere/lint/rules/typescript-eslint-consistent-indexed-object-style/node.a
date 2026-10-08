@@ -1,0 +1,7 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+// Optional child slots use -1; a missing slot is a syntactic non-match.
+export function waveNode(parser: Parser, index: number): ParseNode {
+    return index < 0 ? new ParseNode('Missing', 0, 0, []) : parser.node(index);
+}

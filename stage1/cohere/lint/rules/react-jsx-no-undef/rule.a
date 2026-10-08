@@ -1,0 +1,32 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { WaveSymbol } from './symbol.a';
+import { jsxIdentifierNotDefined } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context=context; }
+    visit(node: ParseNode,index: number): void {
+        let reference=node.children[0] ?? -1;
+        if(reference < 0) { return; }
+        let tag=this.context.node(reference);
+        if(tag.kind === 'Identifier') {
+            const first=tag.text.charCodeAt(0);
+            if(tag.text === '' || tag.text.includes('-') || (first>=97 && first<=122)) { return; }
+        }
+        else if(tag.kind === 'PropertyAccessExpression') {
+            while(tag.kind === 'PropertyAccessExpression') {
+                reference=tag.children[0] ?? -1;
+                if(reference < 0) { return; }
+                tag=this.context.node(reference);
+            }
+            if(tag.kind !== 'Identifier') { return; }
+        }
+        else { return; }
+        const symbol=new WaveSymbol(this.context,reference);
+        const path=this.context.checker?.path ?? '';
+        const globals=this.context.settings.read('allowglobals','false') === 'true' || path.endsWith('.cjs');
+        if(symbol.identity !== 0 && (globals || symbol.declarations.some((declaration)=>declaration.startsWith(`${path}:`)))) { return; }
+        this.context.reportNode(reference,'react/jsx-no-undef','jsxIdentifierNotDefined',jsxIdentifierNotDefined);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

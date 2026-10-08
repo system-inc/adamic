@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/prefer-for-of",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "ForStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferForOf",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferForOf"
+}

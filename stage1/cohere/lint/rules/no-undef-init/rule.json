@@ -1,0 +1,14 @@
+{
+  "name": "no-undef-init",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUndefInit",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUndefInit"
+}

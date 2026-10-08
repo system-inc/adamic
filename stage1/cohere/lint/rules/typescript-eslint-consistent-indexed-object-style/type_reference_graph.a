@@ -1,0 +1,58 @@
+import { panic } from 'adamic';
+import type { Rules } from './bindings.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+import { ReferenceNode } from './reference_node.a';
+
+export class TypeReferenceGraph {
+    readonly nodes: ReferenceNode[] = [];
+    readonly root: number;
+    readonly visited: number[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'type-reference-graph'));
+        header(frames, 'type-reference-graph');
+        this.root = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.nodes.push(
+                new ReferenceNode(frames.field(), frames.natural(), frames.natural(), frames.ids(), frames.ids()),
+            );
+        }
+        frames.end();
+        if(this.root === 0 || this.root > count) {
+            panic('invalid type reference root');
+        }
+        for(const node of this.nodes) {
+            if(node.body > count || [...node.children, ...node.declarations].some((id) => id === 0 || id > count)) {
+                panic('invalid type reference edge');
+            }
+        }
+    }
+    reaches(id: number, anchor: number): boolean {
+        if(id === 0 || this.visited.includes(id)) {
+            return false;
+        }
+        this.visited.push(id);
+        const node = this.nodes[id - 1] ?? panic('missing type reference node');
+        if(node.kind === 'Identifier') {
+            return node.symbol === anchor || node.declarations.some((child) => this.reaches(child, anchor));
+        }
+        if(['TypeAliasDeclaration', 'IndexSignature', 'MappedType', 'ParenthesizedType'].includes(node.kind)) {
+            return this.reaches(node.body, anchor);
+        }
+        if(
+            [
+                'InterfaceDeclaration',
+                'TypeLiteral',
+                'UnionType',
+                'IntersectionType',
+                'ConditionalType',
+                'IndexedAccessType',
+                'TypeReference',
+            ].includes(node.kind)
+        ) {
+            return node.children.some((child) => this.reaches(child, anchor));
+        }
+        return false;
+    }
+}
