@@ -1,0 +1,383 @@
+{
+  "sha": "910876c737b01fce8ac4b58d6de90839aa5e0b8d",
+  "branch": "cloud/land-stage1-format",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "8d295c5a4410fbad76fb6dc9e46e23e9dab2d32c",
+  "tools_sha": "90fc862b2ea7ffa2e8b315c5e4eb19ffc5cafcde",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "reads": [
+    {
+      "line": 318,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 538,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "stage1/cohere/estree/corpus_test.go",
+        "stage1/cohere/estree/deadlines_test.go",
+        "stage1/cohere/estree/stalls_test.go",
+        "stage1/cohere/tsprinter/GAPS.md",
+        "stage1/cohere/tsprinter/README.md",
+        "stage1/cohere/tsprinter/TSC_CORPUS.md",
+        "stage1/cohere/tsprinter/corpus_test.go",
+        "stage1/cohere/tsprinter/expressions.ts",
+        "stage1/cohere/tsprinter/expressions_test.go",
+        "stage1/cohere/tsprinter/files.ts",
+        "stage1/cohere/tsprinter/helpers_test.go",
+        "stage1/cohere/tsprinter/results/tsc-corpus-before.json",
+        "stage1/cohere/tsprinter/results/tsc-expressions-coverage.json",
+        "stage1/cohere/tsprinter/results/tsc-main-merge-validation.json",
+        "stage1/cohere/tsprinter/results/tsc-smallest-upstream.json",
+        "stage1/cohere/tsprinter/results/tsc-statements-coverage.json",
+        "stage1/cohere/tsprinter/results/tsc-validation.json",
+        "stage1/cohere/tsprinter/statements_test.go",
+        "stage1/cohere/tsprinter/syntax.ts",
+        "stage1/cohere/tsprinter/testdata/embedded.mjs",
+        "stage1/cohere/tsprinter/testdata/expressions.mjs",
+        "stage1/cohere/tsprinter/testdata/expressions_side_test.go",
+        "stage1/cohere/tsprinter/testdata/run_tsc_mutants.py",
+        "stage1/cohere/tsprinter/testdata/statements_side_test.go",
+        "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json",
+        "stage1/cohere/tsprinter/tsc_corpus_test.go",
+        "stage1/cohere/tsprinter/upstream_protocol_test.go",
+        "stage1/typescript/parser/parser.ts",
+        "stage1/typescript/parser/yield_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 609,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage1/cohere/tsprinter/results/tsc-corpus-before.json",
+        "stage1/cohere/tsprinter/results/tsc-expressions-coverage.json",
+        "stage1/cohere/tsprinter/results/tsc-main-merge-validation.json",
+        "stage1/cohere/tsprinter/results/tsc-smallest-upstream.json",
+        "stage1/cohere/tsprinter/results/tsc-statements-coverage.json",
+        "stage1/cohere/tsprinter/results/tsc-validation.json",
+        "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 649,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/*.ts",
+      "paths": [
+        "stage1/cohere/tsprinter/expressions.ts",
+        "stage1/cohere/tsprinter/files.ts",
+        "stage1/cohere/tsprinter/syntax.ts",
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 674,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 743,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 804,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 849,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 911,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 973,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1035,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1153,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage1/cohere/tsprinter/GAPS.md",
+        "stage1/cohere/tsprinter/README.md",
+        "stage1/cohere/tsprinter/TSC_CORPUS.md"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1207,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "*.ts",
+      "paths": [
+        "stage1/cohere/tsprinter/expressions.ts",
+        "stage1/cohere/tsprinter/files.ts",
+        "stage1/cohere/tsprinter/syntax.ts",
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1235,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1454,
+      "package": "stage1/typescript/scanner",
+      "glob": "stage1/*.ts",
+      "paths": [
+        "stage1/cohere/tsprinter/expressions.ts",
+        "stage1/cohere/tsprinter/files.ts",
+        "stage1/cohere/tsprinter/syntax.ts",
+        "stage1/typescript/parser/parser.ts"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage1/cohere/estree/corpus_test.go",
+    "stage1/cohere/estree/deadlines_test.go",
+    "stage1/cohere/estree/stalls_test.go",
+    "stage1/cohere/tsprinter/GAPS.md",
+    "stage1/cohere/tsprinter/README.md",
+    "stage1/cohere/tsprinter/TSC_CORPUS.md",
+    "stage1/cohere/tsprinter/corpus_test.go",
+    "stage1/cohere/tsprinter/expressions.ts",
+    "stage1/cohere/tsprinter/expressions_test.go",
+    "stage1/cohere/tsprinter/files.ts",
+    "stage1/cohere/tsprinter/helpers_test.go",
+    "stage1/cohere/tsprinter/results/tsc-corpus-before.json",
+    "stage1/cohere/tsprinter/results/tsc-expressions-coverage.json",
+    "stage1/cohere/tsprinter/results/tsc-main-merge-validation.json",
+    "stage1/cohere/tsprinter/results/tsc-smallest-upstream.json",
+    "stage1/cohere/tsprinter/results/tsc-statements-coverage.json",
+    "stage1/cohere/tsprinter/results/tsc-validation.json",
+    "stage1/cohere/tsprinter/statements_test.go",
+    "stage1/cohere/tsprinter/syntax.ts",
+    "stage1/cohere/tsprinter/testdata/embedded.mjs",
+    "stage1/cohere/tsprinter/testdata/expressions.mjs",
+    "stage1/cohere/tsprinter/testdata/expressions_side_test.go",
+    "stage1/cohere/tsprinter/testdata/run_tsc_mutants.py",
+    "stage1/cohere/tsprinter/testdata/statements_side_test.go",
+    "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json",
+    "stage1/cohere/tsprinter/tsc_corpus_test.go",
+    "stage1/cohere/tsprinter/upstream_protocol_test.go",
+    "stage1/typescript/parser/parser.ts",
+    "stage1/typescript/parser/yield_test.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/stage1/typescript/scanner"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry": 4,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/internal/native": 64,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining": 1,
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments": 5,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias": 1,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle": 1,
+    "github.com/system-inc/adamic/stage1/cohere/json": 10,
+    "github.com/system-inc/adamic/stage1/cohere/estree": 47,
+    "github.com/system-inc/adamic/stage1/cohere/lint": 30,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation": 1,
+    "github.com/system-inc/adamic/stage1/typescript/parser": 25,
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter": 12,
+    "github.com/system-inc/adamic/stage1/typescript/scanner": 6
+  },
+  "deferred_to_full_gate": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 15,
+    "planned": 212,
+    "passed": 212,
+    "touched": 15
+  },
+  "wall_seconds": 1476.1,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "vet": 1.7,
+    "smoke": 19.2,
+    "build": 24.5,
+    "tests": 1475.3,
+    "census": 0.3
+  },
+  "pass": 485,
+  "fail": 0,
+  "skip": 16,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "tests": 0,
+    "census": 0
+  },
+  "finished": true
+}
