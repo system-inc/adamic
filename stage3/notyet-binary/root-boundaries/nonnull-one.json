@@ -1,0 +1,372 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/debug.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 52172,
+      "body_end": 55937,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "renderGraph",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:868:5",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:113:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:2004:38",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:2004:38: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:2004:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:2004:38: stage 0 can't lower a NonNullExpression yet",
+      "start": 70317,
+      "end": 70366
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1231:38",
+      "reason": "a value of type T",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1231:38: stage 0 can't lower a value of type T yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1131:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1231:38: stage 0 can't lower a value of type T yet",
+      "start": 52293,
+      "end": 52358
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1132:82",
+      "reason": "Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1132:82: stage 0 can't lower Array as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1132:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1132:82: stage 0 can't lower Array as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet",
+      "start": 52358,
+      "end": 52459
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1133:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1231:38: stage 0 can't lower a value of type T yet",
+      "start": 52459,
+      "end": 52558
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1137:17",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1137:17: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1137:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1137:17: stage 0 can't lower a NonNullExpression yet",
+      "start": 52634,
+      "end": 52688
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1140:35",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1140:35: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1140:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1140:35: stage 0 can't lower a NonNullExpression yet",
+      "start": 52802,
+      "end": 52851
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1142:25",
+      "reason": "reading child",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1142:25: stage 0 can't lower reading child yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1142:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1142:25: stage 0 can't lower reading child yet",
+      "start": 52918,
+      "end": 52999
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1145:21",
+      "reason": "assigning to a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1145:21: stage 0 can't lower assigning to a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1145:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1145:21: stage 0 can't lower assigning to a NonNullExpression yet",
+      "start": 53139,
+      "end": 53211
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1148:21",
+      "reason": "assigning to a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1148:21: stage 0 can't lower assigning to a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1148:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1148:21: stage 0 can't lower assigning to a NonNullExpression yet",
+      "start": 53276,
+      "end": 53359
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1152:36",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1152:36: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1152:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1152:36: stage 0 can't lower a NonNullExpression yet",
+      "start": 53489,
+      "end": 53538
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1156:21",
+      "reason": "assigning to a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1156:21: stage 0 can't lower assigning to a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1156:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1156:21: stage 0 can't lower assigning to a NonNullExpression yet",
+      "start": 53743,
+      "end": 53820
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1163:47",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1163:47: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1163:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1163:47: stage 0 can't lower a NonNullExpression yet",
+      "start": 54031,
+      "end": 54114
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1164:46",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1164:46: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1164:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1164:46: stage 0 can't lower a NonNullExpression yet",
+      "start": 54114,
+      "end": 54196
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1165:37",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1165:37: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1165:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1165:37: stage 0 can't lower a NonNullExpression yet",
+      "start": 54196,
+      "end": 54261
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1166:26",
+      "reason": "reading connector",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1166:26: stage 0 can't lower reading connector yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1166:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1166:26: stage 0 can't lower reading connector yet",
+      "start": 54261,
+      "end": 54562
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1175:43",
+      "reason": "reading lanes",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1175:43: stage 0 can't lower reading lanes yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1175:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1175:43: stage 0 can't lower reading lanes yet",
+      "start": 54666,
+      "end": 55744
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1196:25",
+      "reason": "reading lanes",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1196:25: stage 0 can't lower reading lanes yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1196:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1196:25: stage 0 can't lower reading lanes yet",
+      "start": 55759,
+      "end": 55808
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1198:13",
+      "reason": "a function inside a function (a closure)",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1198:13: stage 0 can't lower a function inside a function (a closure) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1128:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1198:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:1198:13: stage 0 can't lower a function inside a function (a closure) yet",
+      "start": 55808,
+      "end": 55926
+    }
+  ]
+}

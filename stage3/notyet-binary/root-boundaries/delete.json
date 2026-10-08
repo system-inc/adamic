@@ -1,0 +1,141 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 73878,
+      "body_end": 74710,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "onEmitNode",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1772:33",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1772:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1772:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1772:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 73981,
+      "end": 74034
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1779:17",
+      "reason": "a DeleteExpression as a statement",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1779:17: stage 0 can't lower a DeleteExpression as a statement yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1779:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1779:17: stage 0 can't lower a DeleteExpression as a statement yet",
+      "start": 74274,
+      "end": 74321
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1784:33",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1784:33: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1784:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1784:33: stage 0 can't lower a NonNullExpression yet",
+      "start": 74397,
+      "end": 74444
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1785:26",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1785:26: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1785:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1785:26: stage 0 can't lower a NonNullExpression yet",
+      "start": 74444,
+      "end": 74482
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1786:30",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1786:30: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1786:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1786:30: stage 0 can't lower a NonNullExpression yet",
+      "start": 74482,
+      "end": 74524
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1787:29",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1787:29: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1769:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1787:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/transformers/module/system.ts:1787:29: stage 0 can't lower a NonNullExpression yet",
+      "start": 74524,
+      "end": 74565
+    }
+  ]
+}

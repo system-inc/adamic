@@ -1,0 +1,39 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/core.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1043:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 37264,
+      "body_end": 37353,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "arrayReverseIterator",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1043:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1043:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1045:9",
+      "reason": "a YieldExpression as a statement",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1045:9: stage 0 can't lower a YieldExpression as a statement yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1043:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1045:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/core.ts:1045:9: stage 0 can't lower a YieldExpression as a statement yet",
+      "start": 37317,
+      "end": 37343
+    }
+  ]
+}
