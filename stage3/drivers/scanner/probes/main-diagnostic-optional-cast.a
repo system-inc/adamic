@@ -1,0 +1,4 @@
+interface Message { reports?: {} }
+function diag(reports?: {}) { return { reports }; }
+const message = diag() as Message;
+console.log(`${message.reports === undefined}`);

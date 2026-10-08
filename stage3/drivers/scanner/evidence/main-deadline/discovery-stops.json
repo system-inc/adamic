@@ -1,0 +1,135 @@
+[
+  {
+    "number": 1,
+    "file": "debug.ts",
+    "line": 14,
+    "column": 19,
+    "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+    "minimal_program": "probes/main-error-host-declaration.a",
+    "compiler": "ef3141e9",
+    "discovery_only": false,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/debug.ts",
+      "line": 14,
+      "column": 19,
+      "function": "fail",
+      "start": 276,
+      "end": 565,
+      "removed_sha256": "1f9e93797ad7346b6c178eeba44ba546d1154375b351bb0c195b1d656916bfd7",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 1\"); }"
+    }
+  },
+  {
+    "number": 2,
+    "file": "main.a",
+    "line": 4,
+    "column": 21,
+    "message": "error TS2591: Cannot find name 'node:util'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "minimal_program": "probes/main-node-type-import.a",
+    "compiler": "ef3141e9",
+    "discovery_only": true,
+    "placeholder": "Unused never-returning missingNodeTypes function replaces erased import. Initial top-level throw caused unreachable-narrowing errors; corrected and excluded as an artifact."
+  },
+  {
+    "number": 3,
+    "file": "corePublic.ts",
+    "line": 9,
+    "column": 5,
+    "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+    "minimal_program": "probes/index-signature-type-only.a",
+    "compiler": "ef3141e9",
+    "discovery_only": true,
+    "resolution": "Clean main + front3 merge retains original index-signature declaration; no placeholder needed after feature merge."
+  },
+  {
+    "number": 4,
+    "file": "diagnosticInformationMap.generated.ts",
+    "line": 13,
+    "column": 34,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "minimal_program": "probes/main-diagnostic-optional-cast.a",
+    "compiler": "ba30a484",
+    "discovery_only": true,
+    "placeholder": "Diagnostics initializer replaced with a throwing never call, preserving a type literal with its original DiagnosticMessage field names."
+  },
+  {
+    "number": 5,
+    "file": "utilities.ts",
+    "line": 67,
+    "column": 67,
+    "message": "Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+    "minimal_program": "probes/main-comma-expression.a",
+    "compiler": "ba30a484",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/utilities.ts",
+      "line": 67,
+      "column": 67,
+      "function": "parsePseudoBigInt",
+      "start": 1141,
+      "end": 4167,
+      "removed_sha256": "4b7d455dac77e0e7f15d6aeadacd773d8af433cc284dcc1e1066984819fa3a98",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 5\"); }"
+    }
+  },
+  {
+    "number": 6,
+    "file": "scanner.ts",
+    "line": 1413,
+    "column": 44,
+    "message": "Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+    "minimal_program": "probes/main-comma-expression.a",
+    "compiler": "ba30a484",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/scanner.ts",
+      "line": 1413,
+      "column": 44,
+      "function": "scan",
+      "start": 85655,
+      "end": 110690,
+      "removed_sha256": "9aa877ea3c03793820be88c87133c75b9d68d51e30b67fe268661129c013ac16",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 6\"); }"
+    }
+  },
+  {
+    "number": 7,
+    "file": "scanner.ts",
+    "line": 1393,
+    "column": 40,
+    "message": "Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+    "minimal_program": "probes/main-comma-expression.a",
+    "compiler": "ba30a484",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/scanner.ts",
+      "line": 1393,
+      "column": 40,
+      "function": "reScanGreaterToken",
+      "start": 87706,
+      "end": 88759,
+      "removed_sha256": "d80a892e465d9d74a2dd914b300b9fdeeb288f35043d492f937803367b59c51a",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 7\"); }"
+    }
+  },
+  {
+    "number": 8,
+    "file": "scanner.ts",
+    "line": 2097,
+    "column": 57,
+    "message": "Adamic 0.1 refuses ||=; write the if",
+    "minimal_program": "probes/main-logical-or-assignment.a",
+    "compiler": "ba30a484",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/scanner.ts",
+      "line": 2097,
+      "column": 57,
+      "function": "scanClassSetExpression",
+      "start": 119808,
+      "end": 127539,
+      "removed_sha256": "dd1f72ab5fe2903910130b996fbefc902ab377b733e96a34e3b8a6dd7347abcd",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 8\"); }"
+    }
+  }
+]

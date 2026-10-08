@@ -30,6 +30,37 @@ No compiler edits or full compiler gate. This is an early pushed stop;
 feature merge and up-to-fifteen throwing-placeholder discovery follow.
 Evidence: evidence/main-deadline/first-stop.json and adjacent logs.
 
+Main's missing Node loader justifies a closure-convention merge attempt; it
+conflicts only in internal/oracle/counts.md, so it was captured and aborted,
+without resolving it. Front-3 a36d1c04 carries the subsequently encountered
+records feature and merges cleanly. Scratch integration ba30a484 builds.
+Both split modes with this integration still stop at the same Node checker
+findings in the unchanged validated slice (jobs 5).
+
+Uncommitted throwing-placeholder discovery, first eight stops:
+
+| Stop | File:line:column in discovery copy | Message family | Minimal program |
+| --- | --- | --- | --- |
+| 1 | debug.ts:14:19 | TS2339 captureStackTrace declaration | main-error-host-declaration.a |
+| 2 | main.a:4:21 | TS2591 node:util declaration | main-node-type-import.a |
+| 3 | corePublic.ts:9:5 | index signature | index-signature-type-only.a |
+| 4 | diagnosticInformationMap.generated.ts:13:34 | unchecked cast | main-diagnostic-optional-cast.a |
+| 5 | utilities.ts:67:67 | comma operator | main-comma-expression.a |
+| 6 | scanner.ts:1413:44 | comma operator | main-comma-expression.a |
+| 7 | scanner.ts:1393:40 | comma operator | main-comma-expression.a |
+| 8 | scanner.ts:2097:57 | logical-or assignment | main-logical-or-assignment.a |
+
+Node probes exit 0 with empty stderr; native builds reproduce each family.
+Exact messages, compiler pins and placeholder scopes are in
+[evidence/main-deadline/discovery-stops.json](evidence/main-deadline/discovery-stops.json).
+Stop 3 closes with the admitted compiler merge. Other placeholders replace
+Debug.fail, the diagnostics initializer, parsePseudoBigInt, scan,
+reScanGreaterToken, and the affected regex implementation with throws.
+The erased Node import becomes an unused throwing function; a first top-level
+throw induced unreachable-code narrowing diagnostics, corrected and excluded.
+These changes remain only in scratch. Later line numbers shift as bodies shrink.
+No runtime equivalence is claimed for the discovery copy. More stops follow.
+
 ## October 8: reconciled closure restart stops at checked narrowing integration
 
 Fresh scratch `/workspace/scratch/scanner-proof-restart-20261008` starts directly
