@@ -1,0 +1,15 @@
+{
+  "name": "react-hooks/error-boundaries",
+  "kinds": [
+    "JsxElement",
+    "JsxSelfClosingElement",
+    "JsxFragment"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactHooksErrorBoundaries",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestErrorBoundaries"
+}

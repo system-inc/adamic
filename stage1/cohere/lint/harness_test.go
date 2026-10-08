@@ -9,8 +9,10 @@ import (
 	"testing"
 )
 
-// Not parallel: the subprocess repeats the same end-to-end comparison.
+// The probe runs in a subprocess of this test binary, so the planted mismatch can fail it without failing
+// this run.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
 		directory, err := filepath.Abs(".")
 		if err != nil {
@@ -57,6 +59,7 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 }
 
 func TestDotARename(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -106,6 +109,7 @@ func serializationPort(t *testing.T) string {
 }
 
 func TestCompleteSuggestionSerialization(t *testing.T) {
+	t.Parallel()
 	directory := serializationPort(t)
 	source := filepath.Join(t.TempDir(), "suggestions.ts")
 	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
@@ -143,6 +147,7 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
+	t.Parallel()
 	directory := serializationPort(t)
 	for _, change := range []struct{ name, from, to string }{
 		{"rule.a", "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"},
@@ -173,6 +178,7 @@ func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 }
 
 func TestWitnessScriptKind(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
 	if err := os.Rename(witness, strings.TrimSuffix(witness, ".ts.txt")+".tsx.txt"); err != nil {

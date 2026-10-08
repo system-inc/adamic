@@ -1,0 +1,10 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './nodes.a';
+export function importedNameOf(nodes: readonly HelperNode[], index: number): string {
+    if(index < 0) { return ''; }
+    const specifier = nodes[index] ?? panic('invalid AST index');
+    if(specifier.kind !== 'ImportSpecifier') { return ''; }
+    if(specifier.propertyName >= 0) { return (nodes[specifier.propertyName] ?? panic('invalid property name index')).text; }
+    if(specifier.name >= 0) { return (nodes[specifier.name] ?? panic('invalid name index')).text; }
+    return '';
+}

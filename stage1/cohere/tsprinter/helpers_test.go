@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -58,22 +58,29 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded prepares a child; execute and combinedOutput run it with progress-based guards.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	// The child guard owns hang detection, including for Go test children.
+	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
+		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
 	}
-	command.WaitDelay = 5 * time.Second
-	return command
+	return exec.Command(name, arguments...)
+}
+
+func combinedOutput(command *exec.Cmd) ([]byte, error) {
+	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	if result, ok := executeShards(t, environment, name, arguments); ok {
+		return result
+	}
+	return executeOne(t, environment, name, arguments...)
+}
+
+func executeOne(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	command := bounded(t, name, arguments...)
 	if environment != nil {
@@ -82,7 +89,15 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	options := childguard.Options{}
+	if name == "node" && len(arguments) > 0 {
+		switch filepath.Base(arguments[0]) {
+		case "expressions.mjs", "embedded.mjs":
+			// At 2x CPU load these printers paused for 184s; 20m leaves over 6x headroom.
+			options.Stall = 20 * time.Minute
+		}
+	}
+	err := childguard.Run(command, options)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -163,4 +178,19 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 type run struct {
 	stdout, stderr []byte
 	exitCode       int
+}
+
+// output keeps stdout and stderr separate for git corpus queries.
+func output(command *exec.Cmd) ([]byte, error) {
+	var stdout, stderr bytes.Buffer
+	command.Stdout = &stdout
+	captureStderr := command.Stderr == nil
+	if captureStderr {
+		command.Stderr = &stderr
+	}
+	err := childguard.Run(command, childguard.Options{})
+	if exitError, ok := err.(*exec.ExitError); ok && captureStderr {
+		exitError.Stderr = stderr.Bytes()
+	}
+	return stdout.Bytes(), err
 }

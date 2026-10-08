@@ -1,0 +1,30 @@
+import { panic } from 'adamic';
+import { hexValue } from './hex_value.a';
+import { textXhtmlEntities } from './xhtml_entities.a';
+export interface DecodedEntity { readonly replacement: string; readonly ok: boolean; }
+// item is an entity body, without its ampersand/semicolon. Go asserts nonempty.
+// Use the pinned XHTML table and the package hexValue rune decoder.
+export function decodeEntity(item: string): DecodedEntity {
+    if (item === '') { panic('decodeEntity requires a nonempty body'); }
+    if (item.charCodeAt(0) === 35) {
+        const hex = item.length > 2 && item.charCodeAt(1) === 120;
+        if (!hex && item.length < 2) { return { replacement: '', ok: false }; }
+        let value = 0;
+        for (let index = hex ? 2 : 1; index < item.length;) {
+            const character = item.codePointAt(index) ?? panic('entity character missing');
+            index += character > 0xffff ? 2 : 1;
+            const digit = hex ? hexValue(character) : character - 48;
+            if (digit < 0 || (!hex && digit > 9)) { return { replacement: '', ok: false }; }
+            value = value * (hex ? 16 : 10) + digit;
+            if (value > 0x10ffff) { value = 0x110000; }
+        }
+        if (value > 0x10ffff) { return { replacement: '&' + item + ';', ok: true }; }
+        const replacement = value >= 0xd800 && value <= 0xdfff ? '\ufffd' : String.fromCodePoint(value);
+        return { replacement, ok: true };
+    }
+    for (let index = 0; index < item.length; index++) {
+        const character = item.charCodeAt(index);
+        if (!((character >= 48 && character <= 57) || (character >= 97 && character <= 122) || (character >= 65 && character <= 90))) { return { replacement: '', ok: false }; }
+    }
+    return { replacement: textXhtmlEntities.get(item) ?? ('&' + item + ';'), ok: true };
+}

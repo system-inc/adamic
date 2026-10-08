@@ -1,0 +1,5 @@
+for ({foo: foo} of items) {}
+for ({foo: foo} in items) {}
+async function visit() { for await ({foo: foo} of items) {} }
+({foo: foo});
+const value = {foo: foo};

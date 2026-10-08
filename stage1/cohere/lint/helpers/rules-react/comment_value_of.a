@@ -1,0 +1,8 @@
+export function commentValueOf(text: string, isBlock: boolean): string {
+    if (isBlock) {
+        if (text.startsWith('/*')) { text = text.slice(2); }
+        if (text.endsWith('*/')) { text = text.slice(0, text.length - 2); }
+        return text;
+    }
+    return text.startsWith('//') ? text.slice(2) : text;
+}

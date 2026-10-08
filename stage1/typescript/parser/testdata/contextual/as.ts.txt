@@ -1,0 +1,14 @@
+{
+    as = true;
+    as();
+    as.value;
+    as
+}
+{
+    as
+    class C {}
+}
+{
+    as
+    function f() {}
+}

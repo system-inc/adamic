@@ -7,6 +7,7 @@ import (
 )
 
 func TestEveryTypeNodeKindAgrees(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	expected := execute(t, "", oracle, "--type-kinds").output
 	manifest := wholeManifest(t, wholeCases())

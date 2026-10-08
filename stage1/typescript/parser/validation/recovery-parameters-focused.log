@@ -1,0 +1,29 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-32.ts:  line 7: port "1 ReturnStatement 11 17 0 0 -1 0 0\t\t\t\t", Go "2 Block 11 11 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        diagnostic 1109 17 1 1	Expression expected.
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+        1 FunctionDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 8 10 0 0 -1 0 0		f		
+        2 Block 11 11 0 0 -1 0 0				
+        1 ReturnStatement 11 17 0 0 -1 0 0				
+        2 Identifier 17 17 0 0 -1 0 0				
+        1 Block 18 21 0 0 -1 0 0				
+        1 EndOfFile 21 21 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-32.ts:  line 7: port "1 ReturnStatement 11 17 0 0 -1 0 0\t\t\t\t", Go "2 Block 11 11 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        diagnostic 1109 17 1 1	Expression expected.
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+        1 FunctionDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 8 10 0 0 -1 0 0		f		
+        2 Block 11 11 0 0 -1 0 0				
+        1 ReturnStatement 11 17 0 0 -1 0 0				
+        2 Identifier 17 17 0 0 -1 0 0				
+        1 Block 18 21 0 0 -1 0 0				
+        1 EndOfFile 21 21 0 0 -1 0 0				
+--- FAIL: TestMethodRecoveryAgrees (23.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	23.077s
+FAIL

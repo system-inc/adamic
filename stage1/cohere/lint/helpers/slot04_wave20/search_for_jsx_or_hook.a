@@ -1,0 +1,15 @@
+import {descendsForJsxSearch} from './descends_for_jsx_search.a';
+export type SearchNode={present:boolean;jsx:boolean;call:boolean;isSwitchStatement:boolean;children:readonly number[]};
+// Classifications and child order come from the common AST adapter, without numeric kinds.
+export function searchForJsxOrHook(id:number,depth:number,nodeAt:(id:number)=>SearchNode,isHookCall:(id:number)=>boolean):boolean {
+ const node=nodeAt(id);
+ if(!node.present || depth>20) { return false; }
+ if(node.jsx) { return true; }
+ if(node.call && isHookCall(id)) { return true; }
+ for(const child of node.children) {
+  const next=nodeAt(child);
+  if(!descendsForJsxSearch(next.present,next.isSwitchStatement)) { continue; }
+  if(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall)) { return true; }
+ }
+ return false;
+}

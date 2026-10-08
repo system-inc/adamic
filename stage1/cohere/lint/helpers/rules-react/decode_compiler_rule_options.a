@@ -1,0 +1,11 @@
+import {OptionsJson} from '../options_json.ts';
+export interface CompilerRuleOptions {readonly error:string;}
+export function decodeCompilerRuleOptions(raw:string):CompilerRuleOptions {
+ if(raw.length===0){return {error:''};}
+ const reader=new OptionsJson(raw);const root=reader.parse();
+ if(root<0 || reader.node(root).kind!=='object'){return {error:`expected an options object, got ${raw}`};}
+ const keys=reader.node(root).keys.slice();if(keys.length===0){return {error:''};}
+ for(let i=1;i<keys.length;i++){const key=keys[i] ?? '';let j=i;while(j>0 && compare(keys[j-1] ?? '',key)>0){keys[j]=keys[j-1] ?? '';j--;}keys[j]=key;}
+ return {error:`takes only {}: its options object is React Compiler configuration, which cohere does not carry, so ${keys.join(', ')} would be accepted and never honoured`};
+}
+function compare(a:string,b:string):number {let i=0;let j=0;while(i<a.length && j<b.length){const x=a.codePointAt(i) ?? 0;const y=b.codePointAt(j) ?? 0;if(x!==y){return x-y;}i+=x>65535 ? 2 : 1;j+=y>65535 ? 2 : 1;}return (a.length-i)-(b.length-j);}

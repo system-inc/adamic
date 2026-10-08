@@ -1,0 +1,12 @@
+Lint whole: pass=114 fail=0 skip=1
+skip=TestCheckerBridgeRefusalPending (unconditional; awaits codex/tsgo-errors-as-values)
+wall_seconds=1793.730
+exit=0
+nproc/load-before/load-after:
+5
+3.38 2.77 1.58 1/141 80727
+1.94 2.20 2.26 1/144 142016
+TypeScript=050880ce59e30b356b686bd3144efe24f875ebc8
+WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot
+ADAMIC_LINT_BENCH=1
+Both profile variables=/tmp/adamic-gate/module-profile.LM3I6H

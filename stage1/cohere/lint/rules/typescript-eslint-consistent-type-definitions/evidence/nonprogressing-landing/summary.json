@@ -1,0 +1,113 @@
+{
+  "top": {
+    "counts": {
+      "pass": 37,
+      "fail": 0,
+      "skip": 1
+    },
+    "skips": [
+      "TestCheckerBridgeRefusalPending"
+    ]
+  },
+  "all": {
+    "counts": {
+      "pass": 120,
+      "fail": 0,
+      "skip": 1
+    },
+    "skips": [
+      "TestCheckerBridgeRefusalPending"
+    ]
+  },
+  "wall_seconds": 2070.2990870369995,
+  "nproc": 5,
+  "load_mean": [
+    2.751431819897343,
+    2.749042308272947,
+    2.54181999169686
+  ],
+  "load_max": [
+    5.42333984375,
+    4.3115234375,
+    3.322265625
+  ],
+  "failed_tests": [],
+  "caught_registered_mutants": [
+    "TestMutants/return_parentheses_option_reversed",
+    "TestMutants/debugger_fix_suppressed",
+    "TestMutants/JSDoc_replacement_text_corrupted",
+    "TestMutants/directive_prefix_ignored",
+    "TestMutants/prefer-destructuring-object-fix",
+    "TestMutants/parenthesized_alias_lost",
+    "TestMutants/bom_removes_two_marks",
+    "TestMutants/comment_self_directive_exemption_removed",
+    "TestMutants/nested_generator_owns_outer_yield",
+    "TestMutants/no-useless-catch_finally_repair_range_reversed",
+    "TestMutants/and-left-undefined-ignored",
+    "TestMutants/finally_continue_incorrectly_absorbed_by_switch",
+    "TestMutants/boolean_inverse_changed",
+    "TestMutants/with_statement_underlined_whole",
+    "TestMutants/empty_placeholder_reported",
+    "TestMutants/concat_substituted_template_ignored",
+    "TestMutants/comma_chain_reports_inner",
+    "TestMutants/ordering-relations-ignored",
+    "TestMutants/shouting_fourth_token_omitted",
+    "TestMutants/self-comparison-equality-reversed",
+    "TestMutants/constructor-property-name-ignored",
+    "TestMutants/no-script-url-case-fold",
+    "TestMutants/nexus_long_line_comment_configured_threshold_ignored",
+    "TestMutants/nexus-for-in-message",
+    "TestMutants/destructuring_hole_reported",
+    "TestMutants/enum_reported_at_its_declaration_rather_than_its_name",
+    "TestMutants/ambiguous-identifier-span",
+    "TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed",
+    "TestMutants/callback_at_the_limit_is_reported",
+    "TestMutants/one_excess_class_is_silently_allowed",
+    "TestMutants/pagination_bad_name_accepted",
+    "TestMutants/declared_BaseError_constructor_ignored",
+    "TestMutants/multiline-arrow-single-line-exemption-removed",
+    "TestMutants/console_receiver_widened",
+    "TestMutants/global_container_name_judgement_reversed",
+    "TestMutants/enum_bitwise_option_ignored",
+    "TestMutants/boolean_type_verdict_inverted",
+    "TestMutants/method_listener_lost",
+    "TestMutants/max-depth-keyword-span",
+    "TestMutants/init_declarations_always_span_includes_annotation",
+    "TestMutants/object-alias-message-changed",
+    "TestMutants/adjacent_overload_separation_ignored",
+    "TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8",
+    "TestMutants/react-no-is-mounted_mutant_from_batch_8",
+    "TestMutants/predicate_finding_widened_to_its_owner",
+    "TestMutants/react-no-find-dom-node_mutant_from_batch_8",
+    "TestMutants/wrapper_Number_ignored",
+    "TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8",
+    "TestMutants/prefer-template_mutant_from_batch_8",
+    "TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8",
+    "TestMutants/no-useless-constructor_mutant_from_batch_8",
+    "TestMutants/no-unused-private-class-members_mutant_from_batch_8",
+    "TestMutants/no-unexpected-multiline_mutant_from_batch_8",
+    "TestMutants/no-octal-escape_mutant_from_batch_8",
+    "TestMutants/duplicate_case_suppressed",
+    "TestMutants/var_declaration_suppressed",
+    "TestMutants/empty_function_body_reported",
+    "TestMutants/for_update_option_ignored",
+    "TestMutants/condition_polarity_reversed",
+    "TestMutants/no-multi-assign-option-reversed",
+    "TestMutants/suggestion_applied_as_fix",
+    "TestMutants/label_option_widened",
+    "TestMutants/no-iterator-static-key",
+    "TestMutants/miss-postfix-writes",
+    "TestMutants/proto_accessor_suppressed",
+    "TestMutants/no-empty-pattern_reports_real_bindings",
+    "TestMutants/parentheses_around_a_discarded_construction_not_seen_through",
+    "TestMutants/empty_character_class_silenced",
+    "TestMutants/regex_fix_eats_extra_byte",
+    "TestMutants/int32_hint_option_ignored",
+    "TestMutants/comment_exemption_removed",
+    "TestMutants/no-caller-property",
+    "TestMutants/interface_accepts_type_suffix",
+    "TestMutants/continue_finding_stops_before_its_semicolon",
+    "TestMutants/await_crosses_function_boundary",
+    "TestMutants/nexus-stuttering-name-equality"
+  ]
+}

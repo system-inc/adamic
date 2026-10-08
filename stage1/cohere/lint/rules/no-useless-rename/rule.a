@@ -1,0 +1,100 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { unnecessarilyRenamed } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    nameText(index: number): string {
+        return ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.context.kind(index)) ? this.context.node(index).text : '';
+    }
+    target(index: number): boolean {
+        const c = this.context;
+        let current = index;
+        for(;;) {
+            const parent = c.parent(current);
+            if(parent < 0) return false;
+            const kind = c.kind(parent);
+            if(kind === 'BinaryExpression') return c.kind(c.child(parent, 1)) === 'EqualsToken' && c.child(parent, 0) === current;
+            if(kind === 'ForInStatement' || kind === 'ForOfStatement') {
+                const first = c.child(parent, 0);
+                const initializer = c.kind(first) === 'AwaitKeyword' ? c.child(parent, 1) : first;
+                return initializer === current;
+            }
+            if(!['ParenthesizedExpression', 'PropertyAssignment', 'ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(kind)) return false;
+            current = parent;
+        }
+    }
+    count(start: number, end: number): number {
+        const c = this.context;
+        const first = utf8Length(c.source.slice(0, start));
+        const last = utf8Length(c.source.slice(0, end));
+        let count = 0;
+        for(const comment of forFile(c.parser, c.root, undefined)) {
+            if(comment.start >= first && comment.end <= last) count++;
+        }
+        return count;
+    }
+    report(index: number, start: number, end: number): void {
+        const c = this.context;
+        let repair = '';
+        let text = '';
+        if(start >= 0 && this.count(c.start(index), c.node(index).end) <= this.count(start, end)) {
+            repair = 'fix';
+            text = c.source.slice(start, end);
+        }
+        c.report(index, 'no-useless-rename', 'unnecessarilyRenamed', unnecessarilyRenamed, repair, text, '');
+    }
+    visit(index: number): void {
+        const c = this.context;
+        const kind = c.kind(index);
+        if(kind === 'ImportSpecifier' || kind === 'ExportSpecifier') {
+            if(c.settings.read(kind === 'ImportSpecifier' ? 'ignoreimport' : 'ignoreexport', 'false') === 'true') return;
+            const children = c.node(index).children;
+            if(children.length !== 2) return;
+            const first = children[0] ?? -1;
+            const second = children[1] ?? -1;
+            if(this.nameText(first) !== this.nameText(second)) return;
+            const keep = kind === 'ImportSpecifier' ? second : first;
+            this.report(index, c.start(keep), c.node(keep).end);
+            return;
+        }
+        if(c.settings.read('ignoredestructuring', 'false') === 'true') return;
+        if(kind === 'ObjectLiteralExpression' && !this.target(index)) return;
+        for(const child of c.node(index).children) {
+            if(kind === 'ObjectBindingPattern') {
+                if(c.kind(child) !== 'BindingElement') continue;
+                const parts = c.node(child).children;
+                if(parts.length < 2 || c.kind(parts[0] ?? -1) === 'DotDotDotToken') continue;
+                const property = parts[0] ?? -1;
+                const local = parts[1] ?? -1;
+                // A default on a shorthand binding is another child, not a property rename.
+                c.scanAt(c.node(property).end);
+                if(c.scanKind() !== 'ColonToken' || c.kind(local) !== 'Identifier') continue;
+                if(this.nameText(property) !== c.node(local).text) continue;
+                this.report(child, c.start(local), c.node(child).end);
+            }
+            else {
+                if(c.kind(child) !== 'PropertyAssignment') continue;
+                const property = c.child(child, 0);
+                if(c.kind(property) === 'ComputedPropertyName') continue;
+                const value = c.child(child, 1);
+                let local = c.unwrap(value);
+                if(c.kind(local) === 'BinaryExpression') {
+                    if(c.kind(c.child(local, 1)) !== 'EqualsToken') continue;
+                    local = c.unwrap(c.child(local, 0));
+                }
+                if(c.kind(local) !== 'Identifier' || this.nameText(property) !== c.node(local).text) continue;
+                if(c.kind(value) === 'BinaryExpression' && c.kind(c.child(value, 0)) === 'ParenthesizedExpression') {
+                    this.report(child, -1, -1);
+                    continue;
+                }
+                let keep = value;
+                while(c.kind(keep) === 'ParenthesizedExpression' && c.kind(c.child(keep, 0)) === 'Identifier') keep = c.child(keep, 0);
+                this.report(child, c.start(keep), c.node(keep).end);
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

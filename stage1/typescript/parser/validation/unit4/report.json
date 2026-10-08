@@ -1,0 +1,165 @@
+{
+  "branch": "codex/parser-recovery-land",
+  "merged_area": "57f1ad9d6ab3d23974cfc29b6043fdedc84bcbe9",
+  "merge_commit": "8bc02908d06a283babb06f95713d8f0a49c53166",
+  "typescript_source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "source_clean_check": "git status --porcelain --ignored returned no entries",
+  "hostname": "0adeb267a186",
+  "before": {
+    "nproc": 5,
+    "cpu_max": "400000 100000",
+    "quota_cpus": 4,
+    "package_seconds": 3396.417,
+    "load_before": null,
+    "load_after": null,
+    "reason": "Unit 3 did not record package-boundary load. Its late performance samples ranged from 1.44 4.31 6.58 to 1.34 4.01 6.41; these are not boundary readings.",
+    "top_level_paused_tests": 0,
+    "top_level_tests": 33
+  },
+  "after": {
+    "before": {
+      "utc": "2026-10-08T08:43:15Z",
+      "nproc": 5,
+      "cpu_max": "400000 100000",
+      "load": "0.12 0.47 1.95 1/217 1323093"
+    },
+    "exit": 0,
+    "after": {
+      "utc": "2026-10-08T08:58:15Z",
+      "nproc": 5,
+      "cpu_max": "400000 100000",
+      "load": "5.42 6.54 5.54 1/223 1339549"
+    },
+    "wall_seconds": 900.2705257549969
+  },
+  "parser": {
+    "result": "pass",
+    "package_seconds": 893.542,
+    "counts": {
+      "pass": 173,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "lint_rules": {
+    "result": "pass",
+    "package_seconds": 286.823,
+    "counts": {
+      "pass": 1,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "worker_count": 5,
+  "manifest_count": 466,
+  "compiler_file_count": 77,
+  "checked_case_count": 22497,
+  "byte_comparisons": 44994,
+  "max_cases_per_manifest": 64,
+  "max_input_bytes_per_manifest": 8388608,
+  "corpus_child_guard_seconds": 120,
+  "native_build_child_guard_seconds": 240,
+  "longest_children": {
+    "Go": "3.533646322s",
+    "Node": "6.75764745s",
+    "native": "27.4755455s",
+    "native_build": "3m35.65228311s"
+  },
+  "timing_method": "Top-level active time = run-to-pause + continue-to-pass. Corpus workers can execute while their parent is paused. Package and child clocks include that work.",
+  "other_tests_over_300_seconds": "TestRecoveryMutants validates nine separately named scratch mutations, one input per child command. Its elapsed time includes independent compiler builds. No other whole-corpus test exceeded 300 seconds.",
+  "target_package_seconds": 900,
+  "target_met": true,
+  "native_flags": {
+    "sanitized": "normal -O1, address and undefined-behavior sanitizers, no sanitizer recovery",
+    "release": "normal -O2",
+    "checker": "real Go c-archive, sanitized CGO flags, landed split builder with one clang worker and guarded compiler proxy"
+  },
+  "lint_cases": {
+    "count": 58,
+    "matching": 57,
+    "expected_differences": 1,
+    "unchanged_case": "stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts"
+  },
+  "scratch_mutants": [
+    {
+      "mutant": "byte",
+      "exit_code": 1,
+      "result": "CAUGHT",
+      "case": "testdata/recovery/corePublic.ts-cut-37.ts.txt",
+      "scratch_copy": true,
+      "changed_output_bytes": 1,
+      "dropped_cases": 0,
+      "source": "main.ts",
+      "change": {
+        "from": ": whole ? 'file' :",
+        "to": ": whole ? 'gile' :"
+      },
+      "runner": "testdata/batch_node.mjs then oracle/node.mjs",
+      "repeated_with_final_writer": true
+    },
+    {
+      "mutant": "drop",
+      "exit_code": 1,
+      "result": "CAUGHT",
+      "case": "testdata/recovery/corePublic.ts-cut-37.ts.txt",
+      "scratch_copy": true,
+      "changed_output_bytes": null,
+      "dropped_cases": 1,
+      "source": "main.ts",
+      "change": {
+        "from": "if(path === '') {",
+        "to": "if(caseNumber === 0) { caseNumber++; continue; } if(path === '') {"
+      },
+      "runner": "testdata/batch_node.mjs then oracle/node.mjs",
+      "repeated_with_final_writer": true
+    }
+  ],
+  "input_sha256": {
+    "oracle/adamic.mjs": "00b523549d8fc123c40d32479fabba1100ae0ba1be034ae09af37e809e58ceb6",
+    "oracle/node.mjs": "27bfbb7e256016e3de301212b7ec1e9dec7dd75d70e59cf9ba809bc936266573",
+    "stage1/typescript/parser/checker_build_shared_test.go": "5eba51d848827abd4a70a82a07dd735e6bfdf6f85fbaf131700c33b5f39b0423",
+    "stage1/typescript/parser/checker_incomplete_test.go": "24fd645b0b85dc0106db54c1045d4d9dcc69d774627545ca9d079b29f94f0074",
+    "stage1/typescript/parser/contextual_test.go": "59c481752dbd4a886c444d2ae2c336bb1b7f914d3d0f62c23e5b36d7939892a5",
+    "stage1/typescript/parser/gaps_test.go": "87c0016d58041556125c9e58c8875251f9806d80c9bce578222cc9986c725782",
+    "stage1/typescript/parser/generated_test.go": "754e159a5642ec0a1ff8a4175ba8eb02138796e7a7e92b607259f8481248423e",
+    "stage1/typescript/parser/grammar.ts": "c45dbe12869ea033a59b9759860e4e161dcf7416f04c1cf2aef52571f7c91324",
+    "stage1/typescript/parser/import_cycles_test.go": "6d3850203a27ae126bd1d12b5fe6aa3c650a0748389dae796f6a1a24b94298bd",
+    "stage1/typescript/parser/incomplete_recovery_test.go": "9e1f74e1c44a86624b92be7da2d3651084fea10a895c101ac8e76eaea94b91a9",
+    "stage1/typescript/parser/incomplete_shards_test.go": "aeb4c381950c42189e7cb7b5b5b1ab5d39d6407b85be1d2774c7bedfdfd74587",
+    "stage1/typescript/parser/incomplete_test.go": "c25fb2794be81a8935daa928b516cf717444b001a26afffc87e7a837423f974e",
+    "stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+    "stage1/typescript/parser/jsx_mutants_test.go": "2572a08dd09b3a5d05074b97f452324221ab0c9893e452ef9fcb784d02b28155",
+    "stage1/typescript/parser/jsx_rejection_test.go": "4adea6874d1c3bfbc74916bc45e8a61ac69ba21015c8ef3aa358dad7a97210b4",
+    "stage1/typescript/parser/jsx_scanner_mutants_test.go": "b931aef077d143f1c4517690ca57946d06ec9f47c04474f1f7bc895c32e925e8",
+    "stage1/typescript/parser/jsx_test.go": "b382e178ecba588f9ffa453788f0bfd71b6b605695573213fbac529cfa88f448",
+    "stage1/typescript/parser/lexical.ts": "1d5a51b9e9ca410662de261067f811079e9968b0dc2d83beafbebad22b42f52a",
+    "stage1/typescript/parser/lint_cases_test.go": "553b19e913137d6d062475353ac18d2a004dcbf248d22366ad27cac8d9ad401b",
+    "stage1/typescript/parser/lookahead.ts": "f6172245086a0470c380666a0eeb3be654b57ef79e70992162f10c2b684f28c7",
+    "stage1/typescript/parser/main.ts": "ce471a7fd21f15e7140f43baa9b49a557d73b78eed50e7994cee48e85c7a9b54",
+    "stage1/typescript/parser/nodes.ts": "48f243ed2898d016bd1dcb664551e000bfff299f575a1bb7c76917f9e30e431d",
+    "stage1/typescript/parser/parser.ts": "ed3e680818c93e8e25e0956b48e8d72a7d1d60f92be6486837d82d285a651add",
+    "stage1/typescript/parser/parser_test.go": "da4b8eb499fb81236ea29fb6492865fb93d69b8b084352bf78085f00b69cd96c",
+    "stage1/typescript/parser/performance_test.go": "188dfbe7fd065707f042e5a50a7c86aea919bf6211cc31ca8286446dd344ea54",
+    "stage1/typescript/parser/recovery.ts": "8ea9d0873ab866453878aba1c85e4fcce9d4e2ab75d54a9fa3d39e63c1bb5f8f",
+    "stage1/typescript/parser/recovery_test.go": "081b985c7af4c19f4b6bc1ef057754ab3462ec1c37c6181f78b78d347458a804",
+    "stage1/typescript/parser/shared_test.go": "4530b75dc800e974b8e4d2125134aaaeac70a2fa957d8b1521604db12bb1f501",
+    "stage1/typescript/parser/spelling.ts": "1bc9fae9dc912e77553a5e84869d3ce00476617c0e2c0bf44a0e4bc799792fac",
+    "stage1/typescript/parser/statements.ts": "bf589bf17d9ca27c15e53be20ed0c3f32373250c8574c228b5bc87c356b3cd56",
+    "stage1/typescript/parser/testdata/batch_node.mjs": "5bfbf4da87c09a0724b3a39fcd0fdbeaa66f2f643d3ac75ceba065c70467fb9e",
+    "stage1/typescript/parser/type_kinds_test.go": "1cc12a2e9f0ca3131a857bbb4bd04567885388ac5c91c595c617421a8a2cfe81",
+    "stage1/typescript/parser/whole_generated_test.go": "c9cab21552788d12da63157285dbf44940295fb1ed52e24efe8afed4400a67b7",
+    "stage1/typescript/parser/whole_mutants_test.go": "f86d2a7382f308c90b51191be63d49724bd238a791bc8744aca297084de1fd57",
+    "stage1/typescript/parser/whole_test.go": "9b5a83f78625b21a795aa9c252b605599a152e752c30315d32c2a1289d06bd59",
+    "stage1/typescript/parser/yield_test.go": "933b78411f651ee903f9a107909f379aaf0995ea52624bdd182014683690c841"
+  },
+  "lint_cases_gate": {
+    "result": "pass",
+    "package_seconds": 19.851,
+    "counts": {
+      "pass": 59,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "remaining": "Only the documented wave13_top_level_await_new.ts expected difference; no Unit 4 test failures or skips."
+}

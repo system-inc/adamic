@@ -1,0 +1,27 @@
+// The rule's Go isTreatedAsZeroByArrayAt uses strconv.ParseFloat, not JS parseFloat's prefix parsing.
+const decimal = /^[+-]?(?:[0-9](?:_?[0-9])*(?:\.(?:[0-9](?:_?[0-9])*)?)?|\.[0-9](?:_?[0-9])*)(?:[eE][+-]?[0-9](?:_?[0-9])*)?$/u;
+const hexadecimal = /^[+-]?0[xX]_?(?:[a-fA-F0-9](?:_?[a-fA-F0-9])*(?:\.(?:[a-fA-F0-9](?:_?[a-fA-F0-9])*)?)?|\.[a-fA-F0-9](?:_?[a-fA-F0-9])*)[pP][+-]?[0-9](?:_?[0-9])*$/u;
+export function treatedAsZero(value: string): boolean {
+    if(/^[+-]?inf(?:inity)?$/iu.test(value)) { return false; }
+    let parsed = 0;
+    if(decimal.test(value)) {
+        parsed = Number(value.replace(/_/gu, ''));
+    }
+    else if(hexadecimal.test(value)) {
+        let clean = value.replace(/_/gu, '').toLowerCase();
+        if(clean.startsWith('+') || clean.startsWith('-')) { clean = clean.slice(1); }
+        const delimiter = clean.indexOf('p');
+        const mantissa = clean.slice(2, delimiter);
+        const point = mantissa.indexOf('.');
+        const fractional = point < 0 ? 0 : mantissa.length - point - 1;
+        const digits = mantissa.replace('.', '').replace(/^0+/u, '');
+        if(digits.length === 0) { return true; }
+        // 56 leading bits retain the rounding boundary below 1 and the overflow boundary.
+        const leading = digits.slice(0, 14);
+        const exponent = Number(clean.slice(delimiter + 1)) + 4 * (digits.length - leading.length - fractional);
+        parsed = Number.parseInt(leading, 16) * Math.pow(2, exponent);
+    }
+    else { return true; }
+    // Overflow returns ErrRange in Go, which the rule treats as zero too.
+    return !Number.isFinite(parsed) || Math.trunc(parsed) === 0;
+}

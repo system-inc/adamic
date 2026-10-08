@@ -1,0 +1,1 @@
+{"name":"operator-assignment-reversed-fix","from":"if(!forward || !this.canFix(target)","to":"if(false || !this.canFix(target)"}
