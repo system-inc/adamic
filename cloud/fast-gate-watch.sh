@@ -68,6 +68,57 @@ voidCause() {
   grep -oE 'creating work dir|Connection reset by|kex_exchange_identification|ssh: connect to host|Connection refused|index\.lock.: File exists|No space left on device' "${log}" | head -1
 }
 
+# Notifications are best effort, once per transition; uppercase runs are normalized because
+# ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
+notifyStorm() {
+  local text=$1 recipient
+  text=$(printf '%s\n' "${text}" | awk '{
+    out = ""
+    while (match($0, /[A-Z][A-Z][A-Z]+/)) {
+      out = out substr($0, 1, RSTART - 1) tolower(substr($0, RSTART, RLENGTH))
+      $0 = substr($0, RSTART + RLENGTH)
+    }
+    print out $0
+  }')
+  for recipient in system_adamic_developer_tools system_adamic_integration; do
+    (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" &&
+      ahra os send "${recipient}" "${text}" --from system_adamic_developer_tools) || true
+  done
+}
+enterStorm() {
+  [ -f "${state}/storm" ] && return
+  printf '%s %s\n' "$(date -u +%s)" "$1" > "${state}/storm"
+  # Permit an immediate recovery probe, then at most one start every ten minutes.
+  rm -f "${state}/canary-started"
+  notifyStorm "fast gate void storm; dispatch paused. first void log: $1
+$(tail -20 "$1" 2>/dev/null)"
+}
+countVoid() {
+  local now first
+  now=$(date -u +%s)
+  touch "${state}/void-window"
+  awk -v now="${now}" '$1 > now - 600 {print}' "${state}/void-window" > "${state}/void-window.tmp"
+  printf '%s %s\n' "${now}" "$1" >> "${state}/void-window.tmp"
+  mv "${state}/void-window.tmp" "${state}/void-window"
+  if [ "$(wc -l < "${state}/void-window")" -gt 5 ]; then
+    first=$(head -1 "${state}/void-window" | cut -d ' ' -f2-)
+    enterStorm "${first}"
+  fi
+}
+# Worker and canary gates share slot selection and launch. Canary logs are separate
+# even when a queued worker has main's sha, and carry the tools version they test.
+dispatch() {
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6
+  ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
+  echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/$!"
+}
+freeSlots() {
+  cat "${state}"/running/* 2>/dev/null > "${state}/running.tmp"
+  awk 'FILENAME == ARGV[1] { total[$1 " " $2]++; if (!($1 " " $2 in order)) { order[$1 " " $2] = ++n; keys[n] = $1 " " $2 }; next }
+       { used[($4 == "" ? "threadripper" : $4) " " $3]++ }
+       END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" "${state}/running.tmp"
+}
+
 tips() {
   git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' 'refs/heads/cloud/land-*' |
     awk '{sub("refs/heads/", "", $2); print $2, $1}' | sort
@@ -78,7 +129,17 @@ touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
 mkdir -p "${state}/running" "${state}/logs"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
+toolsHead=$(git -C "${here}" rev-parse HEAD)
+canaryToken=${toolsHead}:$$
+canaryRequired=1
 while true; do
+  currentHead=$(git -C "${here}" rev-parse HEAD)
+  if [ "${currentHead}" != "${toolsHead}" ]; then
+    toolsHead=${currentHead}
+    canaryToken=${toolsHead}:$$
+    canaryRequired=1
+    rm -f "${state}/canary-started"
+  fi
   if tips > "${state}/now.tmp" && [ -s "${state}/now.tmp" ]; then
     # New or moved tips, queued by kind: workers' branches first.
     comm -13 "${state}/seen" "${state}/now.tmp" | while read -r branch sha; do
@@ -92,12 +153,28 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    read -r branch sha class box original < "${file}"
+    read -r branch sha class box original testedHead gateLog < "${file}"
     entry=$(cat "${file}")
     # A void gate goes back to the queue as the class it was queued with, not the slot it borrowed.
     class=${original:-${class}}
     rm "${file}"
-    cause=$(voidCause "${state}/logs/${sha:0:12}.log")
+    gateLog=${gateLog:-${state}/logs/${sha:0:12}.log}
+    cause=$(voidCause "${gateLog}")
+    if [ "${branch}" = canary/main ]; then
+      if [ -n "${cause}" ]; then
+        countVoid "${gateLog}"
+        enterStorm "${gateLog}"
+        echo "$(date -u +%H:%M:%S) canary void: ${cause}"
+      elif [ "${testedHead}" = "${canaryToken}" ]; then
+        canaryRequired=0
+        echo "$(date -u +%H:%M:%S) done canary: $(grep -E '^(green|red):' "${gateLog}" | tail -1)"
+        if [ -f "${state}/storm" ]; then
+          rm -f "${state}/storm" "${state}/void-window"
+          notifyStorm "fast gate storm over; main canary returned a real verdict, dispatch resumed."
+        fi
+      fi
+      continue
+    fi
     if [ -z "${cause}" ]; then
       verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
       echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
@@ -109,9 +186,16 @@ while true; do
     fi
     # A void gate (it died before a real verdict, like the 33 a WSL restart killed at 08:23Z on Oct 8)
     # isn't served: un-mark it, queue it again, at most three tries, then tell integration it's the box.
+    countVoid "${gateLog}"
+    (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_},${box:-threadripper}" > /dev/null 2>&1 &)
+    if [ -f "${state}/storm" ]; then
+      grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+      echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause}, held during storm"
+      continue
+    fi
     echo "${sha}" >> "${state}/void-tries"
     tries=$(grep -cx "${sha}" "${state}/void-tries")
-    (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_},${box:-threadripper}" > /dev/null 2>&1 &)
     if [ "${tries}" -le 3 ]; then
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
       echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
@@ -121,13 +205,29 @@ while true; do
       (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
-  while [ -s "${state}/queue" ]; do
+  # A deploy barrier persists until this tools version gets a real main verdict.
+  # A running probe is never duplicated, including across watcher restarts.
+  # An old watcher's result cannot satisfy this startup's deploy barrier.
+  if [ "${canaryRequired}" = 1 ] || [ -f "${state}/storm" ]; then
+    now=$(date -u +%s)
+    last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
+    if ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
+       { [ ! -f "${state}/storm" ] || [ "$((now - last))" -ge 600 ]; }; then
+      box=$(freeSlots | awk '$2 == "S" {print $1; exit}')
+      sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+      if [ -n "${box}" ] && [ -n "${sha}" ]; then
+        log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
+        dispatch canary/main "${sha}" S "${box}" S "${log}"
+        echo "${now}" > "${state}/canary-started"
+        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} (S on ${box}, log ${log})"
+      fi
+    fi
+  fi
+  while [ "${canaryRequired}" = 0 ] && [ ! -f "${state}/storm" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
     # Free slots per box and class: the table's count less the gates running there (an entry from
     # before the table names no box: it was Cloud's).
-    free=$(awk 'FILENAME == ARGV[1] { total[$1 " " $2]++; if (!($1 " " $2 in order)) { order[$1 " " $2] = ++n; keys[n] = $1 " " $2 }; next }
-                { used[($4 == "" ? "threadripper" : $4) " " $3]++ }
-                END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" <(cat "${state}"/running/* 2>/dev/null))
+    free=$(freeSlots)
     [ -n "${free}" ] || break
     classes=$(echo "${free}" | awk '{print $2}' | sort -u | tr '\n' ' ')
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
@@ -177,8 +277,7 @@ while true; do
       box=${borrowable}
     fi
     log=${state}/logs/${sha:0:12}.log
-    ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
-    echo "${branch} ${sha} ${slot} ${box} ${class}" > "${state}/running/$!"
+    dispatch "${branch}" "${sha}" "${slot}" "${box}" "${class}" "${log}"
     now=$(date -u +%s)
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}$([ "${slot}" = "${class}" ] || echo " in an ${slot} slot") on ${box}, waited $(( now - queued )) s, log ${log})"
     (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
