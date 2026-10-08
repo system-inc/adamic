@@ -1,0 +1,13 @@
+import { panic } from 'adamic';
+// Stable indices project parser facts; -1 is a nil edge. The rule adapter supplies these facts.
+export interface HelperNode {
+ readonly kind: string; readonly text: string; readonly name: number;
+ readonly tagName: number; readonly attributes: number;
+ readonly properties: readonly number[]; readonly propertiesPresent: boolean;
+}
+export type SourceNode = HelperNode;
+export class JsxArena {
+ readonly nodes: readonly HelperNode[];
+ constructor(nodes: readonly HelperNode[]) { this.nodes = nodes; }
+ node(index: number): HelperNode { return this.nodes[index] ?? panic('missing JSX adapter node'); }
+}
