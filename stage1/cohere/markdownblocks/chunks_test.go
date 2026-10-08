@@ -59,7 +59,7 @@ func TestMicromarkInputChunks(t *testing.T) {
 	}
 	fullInputs, fullNames := inputs, names
 	var rows []int
-	inputs, names, rows = sampledNumericInputs(inputs, names, corpus[:files], selection)
+	inputs, names, rows = sampledNumericInputs(inputs, names, corpus, selection)
 	batch := numericBatch(inputs)
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")

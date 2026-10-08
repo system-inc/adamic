@@ -536,7 +536,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 			for _, task := range []string{"", "[ ] ", "[x] ", "[X] "} {
 				for _, body := range []string{"a *b _c_* `x`", "a\n\n    b\n\n    - c", "a\n\n    > q\n    > r", "a\n<div>\nx\n</div>", "\n\n\n    code"} {
 					text := marker + spacing + task + body + "\n"
-					inputs = append(inputs, auditInput{Name: "generated/list-layout/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/list-layout/" + text, Text: text})
 				}
 			}
 		}
@@ -556,7 +556,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 		for _, prefix := range []string{">", "> ", " > ", "  >  ", "   >\t", "> > ", ">> ", "> > > ", ">\t> "} {
 			for _, body := range []string{"", "text", "a\nb", "a\n\nb", "# h\n\na", "a\n---", "- a\n- b", "1. a\n\n   - b", "- [x] a", "```js\nlet x=1;\n```", "    x\n    y", "<div>\nx\n</div>", "a\n<div>\nx", "[a]: /x\n[b]: /y", "| a | b |\n| - | - |\n| x | y |", "<!-- prettier-ignore -->\n+    a", "中😀 _a*b*_"} {
 				text := prefix + strings.ReplaceAll(body, "\n", "\n"+prefix) + "\n"
-				inputs = append(inputs, auditInput{Name: "generated/quote-layout/" + text, Text: text})
+				inputs = append(inputs, auditInput{Corpus: true, Name: "generated/quote-layout/" + text, Text: text})
 			}
 		}
 	}
@@ -574,7 +574,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 					for _, line := range lines[1:] {
 						text += continuation + line + "\n"
 					}
-					inputs = append(inputs, auditInput{Name: "generated/table-layout/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/table-layout/" + text, Text: text})
 				}
 			}
 		}
@@ -597,7 +597,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 						for _, line := range lines[1:] {
 							text += continuation + line + "\n"
 						}
-						inputs = append(inputs, auditInput{Name: "generated/code-layout/" + text, Text: text})
+						inputs = append(inputs, auditInput{Corpus: true, Name: "generated/code-layout/" + text, Text: text})
 					}
 				}
 			}
@@ -605,7 +605,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 		for _, indent := range []string{"    ", "\t", "     ", "  \t", "\t "} {
 			for _, body := range []string{"a", "a  \nb\t", "\n\nx\n", "中😀"} {
 				text := indent + strings.ReplaceAll(body, "\n", "\n"+indent) + "\n"
-				inputs = append(inputs, auditInput{Name: "generated/code-layout/indent/" + text, Text: text})
+				inputs = append(inputs, auditInput{Corpus: true, Name: "generated/code-layout/indent/" + text, Text: text})
 			}
 		}
 	}
@@ -623,7 +623,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 					for _, line := range lines[1:] {
 						text += continuation + line + "\n"
 					}
-					inputs = append(inputs, auditInput{Name: "generated/html-layout/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/html-layout/" + text, Text: text})
 				}
 			}
 		}
@@ -632,7 +632,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 		for _, cell := range []string{"中", "Ａ", "α", "é", "©", "©️", "👩🏽‍⚕️", "👨🏻‍❤️‍💋‍👨🏿", "🧑🏿‍🦽‍➡️", "🏳️‍🌈", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"} {
 			for _, align := range []string{"---", ":--", "--:", ":-:"} {
 				text := "| " + cell + " | a |\n| " + align + " | --- |\n| a | " + cell + " |\n"
-				inputs = append(inputs, auditInput{Name: "generated/native-width/table/" + text, Text: text})
+				inputs = append(inputs, auditInput{Corpus: true, Name: "generated/native-width/table/" + text, Text: text})
 			}
 		}
 	}
@@ -641,7 +641,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 			for _, body := range []string{"", "a", "*a _b_*", "中 👩🏽‍⚕️", "[a](/b)", "a #", "`a  b`"} {
 				for _, prefix := range []string{"", "> ", "- ", "> - "} {
 					text := prefix + strings.Repeat("#", depth) + " " + body + "\n"
-					inputs = append(inputs, auditInput{Name: "generated/structure/atx/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/structure/atx/" + text, Text: text})
 				}
 			}
 		}
@@ -649,7 +649,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 			for _, body := range []string{"a", "a\nb", "*a _b_*", "中\n文", "a\n\ntext", "[x](/y)"} {
 				for _, spacing := range []string{"", "  ", "\t"} {
 					text := body + "\n" + marker + spacing + "\n"
-					inputs = append(inputs, auditInput{Name: "generated/structure/setext/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/structure/setext/" + text, Text: text})
 				}
 			}
 		}
@@ -669,7 +669,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 							text += "<!--" + space + "prettier-ignore-end" + space + "-->\n\n# after\n"
 						}
 					}
-					inputs = append(inputs, auditInput{Name: "generated/root/ignore/" + marker + "/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/root/ignore/" + marker + "/" + text, Text: text})
 				}
 			}
 		}
@@ -682,7 +682,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 			for _, url := range []string{"/x", "", "<x>", "/a%20b", "https://example.test"} {
 				for _, title := range []string{"", " \"title\"", " 'a \"b\"'", " (a'b)"} {
 					text := "[" + label + "](" + url + title + ") ![" + label + "](" + url + title + ")\n\n[" + label + "]: " + url + title + "\n"
-					inputs = append(inputs, auditInput{Name: "generated/leaves/links/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/leaves/links/" + text, Text: text})
 				}
 			}
 		}
@@ -695,7 +695,7 @@ func blockCorpus(t *testing.T, root, slice string) ([]auditInput, int) {
 			for _, next := range []string{"a", "中", "한", "1.", "123)", "。", "-"} {
 				for _, space := range []string{" ", "\n", "\t"} {
 					text := previous + space + next + "\n"
-					inputs = append(inputs, auditInput{Name: "generated/whitespace/" + text, Text: text})
+					inputs = append(inputs, auditInput{Corpus: true, Name: "generated/whitespace/" + text, Text: text})
 				}
 			}
 		}

@@ -13,8 +13,9 @@ import (
 )
 
 type auditInput struct {
-	Name string `json:"name"`
-	Text string `json:"text"`
+	Corpus bool   `json:"-"`
+	Name   string `json:"name"`
+	Text   string `json:"text"`
 }
 type auditOutput struct {
 	Name      string   `json:"name"`

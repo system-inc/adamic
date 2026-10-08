@@ -57,6 +57,7 @@ func TestTokenizerEvents(t *testing.T) {
 	if os.Getenv("ADAMIC_EVENTS_SMOKE") != "" {
 		inputs = [][]uint16{{}, {65}, {9}, {65, 9, 10, 13, 10, 0, 66}, {55296}, {55296, 56320}, {13, 9, 9, 10}}
 		names = []string{"empty", "text", "tab", "mix", "surrogate", "astral", "lines"}
+		corpus = nil
 		files = 0 // Smoke mode has only fixed controls, no physical corpus files.
 	}
 	selection := selectMarkdownFiles(t, root, corpus, files, markdownCorpusStride)
@@ -65,7 +66,7 @@ func TestTokenizerEvents(t *testing.T) {
 	}
 	fullInputs, fullNames := inputs, names
 	var rows []int
-	inputs, names, rows = sampledNumericInputs(inputs, names, corpus[:files], selection)
+	inputs, names, rows = sampledNumericInputs(inputs, names, corpus, selection)
 	batch := numericBatch(inputs)
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")

@@ -26,7 +26,7 @@ func (s Selection) Log(testName string) string {
 }
 
 // Select reads the landing switches and selects from physical corpus files.
-// Generated cases and mutants must be retained separately by callers.
+// Use Generated to add an indexed generated corpus; retain mutants separately.
 // controls names physical witnesses that must be checked at every offset.
 // root locates packages for changed-path fixture inclusion; paths are relative to it.
 func Select(root string, paths []string, stride int, controls ...string) (Selection, error) {
@@ -134,3 +134,23 @@ func Validate() error {
 	}
 	return nil
 }
+
+// Generated adds a deterministic generated corpus keyed by its enumeration index.
+// controls are indices of explicit checks which run at every offset. Physical
+// changed-path inclusion has already been resolved by Select.
+func (s Selection) Generated(count int, controls ...int) Selection {
+	keep := make(map[int]bool, len(controls))
+	for _, index := range controls {
+		keep[index] = true
+	}
+	s.Total += count
+	for index := 0; index < count; index++ {
+		if !s.Sample || index%s.Stride == s.Offset || keep[index] {
+			s.Paths = append(s.Paths, GeneratedKey(index))
+		}
+	}
+	return s
+}
+
+// GeneratedKey identifies an input without depending on its contents or label.
+func GeneratedKey(index int) string { return fmt.Sprintf("generated-index/%d", index) }

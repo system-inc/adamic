@@ -179,3 +179,19 @@ func TestHexOffset(t *testing.T) {
 		}
 	}
 }
+
+func TestGeneratedSelection(t *testing.T) {
+	s := Selection{Sample: true, Stride: 3, Offset: 1}.Generated(8, 0, 7)
+	want := []string{GeneratedKey(0), GeneratedKey(1), GeneratedKey(4), GeneratedKey(7)}
+	if !reflect.DeepEqual(s.Paths, want) || s.Total != 8 {
+		t.Fatalf("indexed selection: %#v", s)
+	}
+	full := Selection{Stride: 3}.Generated(8)
+	if len(full.Paths) != 8 {
+		t.Fatal("unset dropped generated inputs")
+	}
+	rotated := Selection{Sample: true, Stride: 3, Offset: 2}.Generated(8)
+	if reflect.DeepEqual(s.Paths, rotated.Paths) {
+		t.Fatal("offset did not rotate")
+	}
+}
