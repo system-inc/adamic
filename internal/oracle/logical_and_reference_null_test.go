@@ -5,5 +5,5 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/logical_and_reference_null.a", false, false})
+	}{"internal/oracle/testdata/logical_and_reference_refused/logical_and_reference_null.a", false, false})
 }
