@@ -1,8 +1,8 @@
-Built an isolated 18-row manifest and runtime harness; nine rows proven and two hole rows refused.
-Commits: first checkpoint 5716a4ce; this second-group checkpoint follows it on codex/stricter-indexed-c.
-Commands and outputs: group 1 passed in 13.214s; group 2 passed in 7.637s; setup passed in 598.141s.
-Mutants: D157-D165 erase-panic mutants built and were caught in release and sanitized builds, 18 runs.
-Not covered yet: seven rows remain pending; D155/D156 hole construction refuses.
+Built an isolated 18-row manifest and runtime harness; fourteen rows proven and two hole rows refused.
+Commits: checkpoints 5716a4ce and ed1d9041; this third group continues codex/stricter-indexed-c.
+Commands and outputs: groups passed in 13.214s, 7.637s and 7.847s; filtered oracle passed in 3.388s; vet passed.
+Mutants: D157-D166 and D178-D181 erase-panic mutants caught in release and sanitized builds, 28 runs.
+Not covered yet: D182/D183 remain pending; D155/D156 hole construction refuses.
 
 ## Scope and provenance
 
@@ -66,10 +66,10 @@ cannot count as a caught mutant.
 | D162 | readonly numeric superPath read used as an object-array index | proven |
 | D163, D164 | readonly number array, superPathDepth | proven |
 | D165 | object array, statementOffset | proven |
-| D166 | constructor.body.statements array, statementOffset | pending |
-| D178 | node.declarations array, literal 0 | pending |
-| D179, D182, D183 | object array outerParameters, i | pending |
-| D180, D181 | node.parameters object array, i | pending |
+| D166 | constructor.body.statements array, statementOffset | proven |
+| D178 | node.declarations array, literal 0 | proven |
+| D179, D182, D183 | object array outerParameters, i | D179 proven; D182/D183 pending |
+| D180, D181 | node.parameters object array, i | proven |
 
 ## Commands
 
@@ -116,3 +116,21 @@ after erasure are an observation of the mutant, not correct JavaScript behavior.
 ```sh
 ADAMIC_WITNESS_CLI=/tmp/stricter-indexed-c-adamic go test ./stage3/stricter-indexed-c -run 'TestLedgerWitnesses/D16[1-5]' -count=1 -timeout 10m -v > /tmp/stricter-indexed-c-group2.log 2>&1
 ```
+
+## Third group
+
+D166 and D178-D181 passed present and absent witnesses, exact named stderr,
+IR location and CLI explain counts, backend Node and both native modes.
+All ten erase-check mutant builds succeeded, then exited 0 with empty stderr
+and undefined on stdout. The exact named exit-70 assertion caught every one.
+Log: /tmp/stricter-indexed-c-group3.log.
+
+```sh
+ADAMIC_WITNESS_CLI=/tmp/stricter-indexed-c-adamic go test ./stage3/stricter-indexed-c -run 'TestLedgerWitnesses/(D166|D178|D179|D180|D181)' -count=1 -timeout 10m -v > /tmp/stricter-indexed-c-group3.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/stricter-indexed-c-oracle.log 2>&1
+go vet ./stage3/stricter-indexed-c > /tmp/stricter-indexed-c-vet.log 2>&1
+```
+
+The filtered oracle passed all four existing fixtures in 3.388s with zero
+cache hits (native misses=10, Node misses=8). Vet exited 0 without diagnostics.
+The full repository gate was not run under the worker-gate exception.
