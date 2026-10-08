@@ -24,7 +24,7 @@ func (e *emitter) viewTuple(property ir.Property, value string) (string, bool) {
 }
 
 func (e *emitter) tupleViewRepresentation(contract ir.ViewContractID, of ir.Type) ir.Type {
-	if contract != 0 && e.program.ViewContracts[contract-1].FixedTuple {
+	if contract != 0 && (e.program.ViewContracts[contract-1].FixedTuple || e.program.ViewContracts[contract-1].TupleUnion) {
 		return ir.Array
 	}
 	return of

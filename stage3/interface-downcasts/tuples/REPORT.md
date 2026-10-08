@@ -1,3 +1,38 @@
+Built: original watcher tuple event position pair 95604/1, two candidate reads; unified positional path; total 7 pairs / 11 reads.
+Commits: watcher event patch follows original forEach pair 19418766cc313c0dc2d4fcb4fe26a7da248609e1.
+Checks: eight Node/JS/release/sanitized witnesses PASS 4.131s with finishing leak checks; tuple regressions PASS 25.050s; 65 owned counts PASS 35.404s; lane 2/lane 4 regressions PASS 25.898s.
+Mutants: unchecked event FAIL 0.314s (boolean instead of refusal); wrong arity FAIL 0.259s (undefined instead of refusal); lost narrowing guard FAIL 0.232s (NaN instead of refusal).
+Remaining: watcher filename and module kind/specifier pairs, three pairs / four reads; two overlapping lane 4b checks.
+
+Both Parameters aliases bind the original unchanged sys.d.ts. Completeness
+controls pin the one-position callback and all three positions of the other,
+including optional Date and its getTime projection. The initial extra assertion
+incorrectly expected Date's descriptor itself to refuse; observation showed it
+is a structural library interface descriptor. No Date behavior is certified here.
+TupleUnion is recorded only for disjoint finite tuple arity alternatives. The
+existing mixed selector and tuple predicates provide membership, while the
+existing readTupleViewElement is the sole positional read constructor for fixed,
+optional, rest and alternative tuples. No second tuple producer or certificate.
+Narrowed numeric demands preserve maybe-number storage before the existing
+unwrap guard. A callback call that removes the event returns NaN on Node; both
+compiler backends stop with the existing narrowed-away diagnostic.
+
+Commands: TestCheckedViewTupleOriginalWatchEvent -count=1 -v
+(/tmp/views-tuples-watch-completeness-final.log). Positional mutant:
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on watch-event-wrong-event
+(/tmp/views-tuples-watch-final-mutant.log). Arity mutant:
+ADAMIC_TUPLE_WATCH_MUTANT=arity on TestCheckedViewTupleOriginalWatchArityMutant
+(/tmp/views-tuples-watch-arity-mutant.log). Narrowing mutant:
+ADAMIC_TUPLE_WATCH_MUTANT=narrow on TestCheckedViewTupleWatchNarrowingMutant
+(/tmp/views-tuples-watch-narrow-mutant.log). All finish exit zero with incorrect
+behavior; no compiler failure is counted. Eight scoped affected tuple-family
+tests (/tmp/views-tuples-watch-unified-regressions.log) pass. Scoped counts
+-args -update-counts (/tmp/views-tuples-watch-final-counts.log) refreshed.
+The same ten lane 2/lane 4 array/union tests pass with 221 uncached Node
+observations (/tmp/views-tuples-watch-final-lane-regressions.log). gofmt applied.
+
+---
+
 Built: original IncrementalBuildInfoEmitSignature[] | undefined forEach pair 97931, one candidate read; total 6 pairs / 9 reads.
 Commits: pair follows rest patch 3dd953f7; no production hook changes needed.
 Checks: five original declaration Node/JS/release/sanitized witnesses PASS 2.607s, finishing cases leak checked; 57 owned counts refreshed PASS 32.143s.

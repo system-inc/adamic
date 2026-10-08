@@ -1730,3 +1730,12 @@ registers its checked read. MapCertificatePairs checks rest storage and semantic
 subtyping as well as the prefix. Zero/one/many object and Map forms, late wrong
 elements and wrong Map schemas certify this extension; spread and variadic
 rest forms remain refused. No array consumer predicate was widened.
+
+Disjoint tuple alternative hook: tupleAlternativesType proves nonoverlapping
+finite arity domains and carries TupleUnion on the IR contract. Only that flag
+lets object-union field validators reuse tuple selection; ordinary object
+unions keep their discriminants. JavaScript tuple field representation recognizes
+only the same flag. The single readTupleViewElement constructs every positional
+read, including alternative absence and narrowed maybe-number guards; descriptor
+errors propagate. Existing array dispatch predicates stay unchanged. Original
+watcher tuple alternatives retain both full parameter lists and the Date slot.

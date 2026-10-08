@@ -16,6 +16,10 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 		return value
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
+	if contract.TupleUnion {
+		return e.tupleArrayUnionCheck(property.ViewContract, property.View, value)
+	}
+
 	if contract.Intersection {
 		return e.viewObjectIntersection(property, value)
 	}

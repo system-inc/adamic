@@ -78,31 +78,67 @@ func (l *lowering) tupleViewSlot(node *ast.Node, target *checker.Type, build fun
 	return id
 }
 
-func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, name string, of ir.Type) ir.Expression {
+func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, name string, of ir.Type) (ir.Expression, error) {
 	receiver := node.AsElementAccessExpression().Expression
-	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(receiver))
+	receiverType := l.checker.GetTypeAtLocation(receiver)
 	position, err := strconv.Atoi(name)
-	tuple := l.checker.GetTypeAtLocation(receiver).TargetTupleType()
-	rest := len(elements) > 0 && tuple.ElementFlags()[len(elements)-1] == checker.ElementFlagsRest
-	declaredPosition := position
-	if rest && position >= len(elements)-1 {
-		declaredPosition = len(elements) - 1
+	if err != nil || position < 0 {
+		return ir.Property{Object: object, Name: name, Of: of}, nil
 	}
-	if err != nil || position < 0 || declaredPosition >= len(elements) {
-		return ir.Property{Object: object, Name: name, Of: of}
+	var declared *checker.Type
+	absent := false
+	alternatives := tupleAlternativesType(receiverType)
+	tail := false
+	if alternatives {
+		declared = l.concrete(l.checker.GetTypeAtLocation(node))
+		for _, member := range receiverType.Types() {
+			flags := member.TargetTupleType().ElementFlags()
+			absent = absent || position >= len(flags)
+			if position < len(flags) {
+				absent = absent || flags[position] == checker.ElementFlagsOptional
+			}
+		}
+	} else {
+		elements := l.checker.GetTypeArguments(receiverType)
+		flags := receiverType.TargetTupleType().ElementFlags()
+		rest := len(elements) > 0 && flags[len(elements)-1] == checker.ElementFlagsRest
+		declaredPosition := position
+		if rest && position >= len(elements)-1 {
+			declaredPosition = len(elements) - 1
+		}
+		if declaredPosition >= len(elements) {
+			return ir.Property{Object: object, Name: name, Of: of}, nil
+		}
+		declared = l.concrete(elements[declaredPosition])
+		tail = rest && position >= len(elements)-1
+		absent = flags[declaredPosition] == checker.ElementFlagsOptional || tail
 	}
-	if rest && position >= len(elements)-1 {
+	if alternatives || tail {
 		if l.result.CheckedFields == nil {
 			l.result.CheckedFields = map[string]bool{}
 		}
 		l.result.CheckedFields[name] = true
 	}
-	declared := l.concrete(elements[declaredPosition])
-	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(receiver).Id())}
-	property.Absent = tuple.ElementFlags()[declaredPosition] == checker.ElementFlagsOptional || rest && position >= len(elements)-1
-	property.ViewAllowed = l.viewLiterals(declared)
+	property := ir.Property{Object: object, Name: name, Of: of, Absent: absent, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(receiverType.Id()), ViewAllowed: l.viewLiterals(declared)}
 	property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-	return property
+	if alternatives {
+		property.ViewContract, err = l.viewContract(node, declared)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// A narrowed demand cannot reinterpret absence as numeric bits or a pointer.
+	if absent && of == ir.Number {
+		property.Of = ir.MaybeNumber
+		if l.acceptsUndefined(node) {
+			return property, nil
+		}
+		return ir.Unwrap{Value: property}, nil
+	}
+	if absent && of.IsReference() && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
+		return ir.Defined{Value: property, Message: "field read failed: " + property.View + " is not initialized; expected " + property.ViewType + ", found missing"}, nil
+	}
+	return property, nil
 }
 
 func (l *lowering) mapNullableTupleEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {

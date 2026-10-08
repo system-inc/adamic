@@ -1,10 +1,10 @@
 {
   "primary_candidate_pairs": 10,
   "primary_candidate_reads": 15,
-  "certified_pairs": 6,
-  "certified_reads": 9,
-  "remaining_pairs": 4,
-  "remaining_reads": 6,
+  "certified_pairs": 7,
+  "certified_reads": 11,
+  "remaining_pairs": 3,
+  "remaining_reads": 4,
   "certified": [
     {
       "type_id": 97934,
@@ -34,15 +34,16 @@
     {
       "type_id": 97931,
       "reads": 1,
-      "commit": "original signature forEach pair commit"
-    }
-  ],
-  "remaining": [
+      "commit": "19418766cc313c0dc2d4fcb4fe26a7da248609e1"
+    },
     {
       "type_id": 95604,
       "field": "1",
-      "reads": 2
-    },
+      "reads": 2,
+      "commit": "watch event pair commit"
+    }
+  ],
+  "remaining": [
     {
       "type_id": 68230,
       "field": "1",

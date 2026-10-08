@@ -82,3 +82,35 @@ func supportedTupleArity(target *checker.Type) bool {
 	}
 	return true
 }
+
+// Callback parameter tuples have disjoint arity domains. This predicate is
+// independent of array union dispatch, which retains its fixed-only policy.
+func tupleAlternativesType(target *checker.Type) bool {
+	if target == nil || target.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	intervals := [][2]int{}
+	for _, member := range target.Types() {
+		if !supportedTupleArity(member) {
+			return false
+		}
+		minimum := 0
+		flags := member.TargetTupleType().ElementFlags()
+		for _, flag := range flags {
+			if flag == checker.ElementFlagsRequired {
+				minimum++
+			}
+		}
+		maximum := len(flags)
+		if len(flags) > 0 && flags[len(flags)-1] == checker.ElementFlagsRest {
+			return false
+		}
+		for _, interval := range intervals {
+			if minimum <= interval[1] && interval[0] <= maximum {
+				return false
+			}
+		}
+		intervals = append(intervals, [2]int{minimum, maximum})
+	}
+	return len(intervals) > 1
+}

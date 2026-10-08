@@ -17,6 +17,13 @@ func (e *emitter) viewObjectUnion(property ir.Property, object string) {
 		return
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
+	if contract.TupleUnion {
+		if !e.viewTupleHeapUnion(property.ViewContract, object, property.View) {
+			panic("compiler bug: missing tuple alternatives plan")
+		}
+		return
+	}
+
 	if contract.Intersection {
 		e.viewObjectIntersection(property, object)
 		return

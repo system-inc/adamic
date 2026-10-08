@@ -62,6 +62,8 @@ func tupleOriginalProgram(t *testing.T, root, name string) (string, *ir.Program)
 	}
 	bound := strings.ReplaceAll(string(input), "'original-tsc-builder'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/builder.d.ts"))))
 	bound = strings.ReplaceAll(bound, "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/types.d.ts"))))
+	bound = strings.ReplaceAll(bound, "'original-tsc-sys'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/sys.d.ts"))))
+	bound = strings.ReplaceAll(bound, "'original-tsc-modules'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/moduleSpecifiers.d.ts"))))
 	path := filepath.Join(t.TempDir(), name+".a")
 	if err := os.WriteFile(path, []byte(bound), 0600); err != nil {
 		t.Fatal(err)

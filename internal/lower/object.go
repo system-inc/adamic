@@ -1782,7 +1782,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if optional {
 		return l.optionalTupleElement(node, object, index)
 	}
-	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !(checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) || tupleAlternativesType(l.checker.GetTypeAtLocation(access.Expression))) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
@@ -1800,7 +1800,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if slotless(of) && !(of == ir.Union && l.tupleScalarUnionType(l.checker.GetTypeAtLocation(node))) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
-	return l.readTupleViewElement(node, object, index.Text(), of), nil
+	return l.readTupleViewElement(node, object, index.Text(), of)
 }
 
 // setIndex lowers array[index] = value, as a statement.
