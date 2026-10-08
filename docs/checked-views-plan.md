@@ -2753,3 +2753,7 @@ All four original fileNames reads are certified with complete union declarations
 ### Lane 2 ranked group 23 callable arrays
 
 The full private watcher callback array is certified at four original reads. Indexed and consumer reads check producer signatures; writes preserve original source signatures. Void callbacks keep ignored extra arguments and discarded results, with value observation still a named refusal. Eight executed mutants cover stopping guards and adapters. See stage3/interface-downcasts/lane2/RANKED23-ARRAYS-REPORT.md. Lane 2 is now 184 pairs / 2903 reads certified, remaining 150 / 286. Next are the three-read ranked fields.
+
+### Lane 2 next ranked intersection boundary
+
+All three requested array joints and ranked group 23 are pushed. The next SourceFile.amdDependencies element path read refuses an unsupported intersection contract with complete original declarations; a Node control and exact compile-boundary regression pass. No pair credit is added. TypeMapper sources/targets and FlowReduceLabelData antecedents remain uncertified after compile-only discovery. See stage3/interface-downcasts/lane2/MORNING-ARRAY-JOINTS-REPORT.md.
