@@ -1,0 +1,44 @@
+[
+  {
+    "fixture": "brand-string-good",
+    "backend": "node",
+    "exit": 0,
+    "stdout": "word\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "brand-string-good",
+    "backend": "native-lowering",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/views-v2-dependencies/brand-string-good.a:4:56: stage 0 can't lower a value of type __String yet\n"
+  },
+  {
+    "fixture": "brand-string-good",
+    "backend": "javascript-lowering",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/views-v2-dependencies/brand-string-good.a:4:56: stage 0 can't lower a value of type __String yet\n"
+  },
+  {
+    "fixture": "brand-complete-good",
+    "backend": "node",
+    "exit": 0,
+    "stdout": "word\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "brand-complete-good",
+    "backend": "native-lowering",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/views-v2-dependencies/brand-complete-good.a:5:63: stage 0 can't lower a value of type __String yet\n"
+  },
+  {
+    "fixture": "brand-complete-good",
+    "backend": "javascript-lowering",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/views-v2-dependencies/brand-complete-good.a:5:63: stage 0 can't lower a value of type __String yet\n"
+  }
+]
