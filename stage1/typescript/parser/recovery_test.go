@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -33,17 +32,15 @@ func recoveryInput(t *testing.T, name string) string {
 	return string(data)
 }
 
-// Each process has its own deadline. Inputs and answers survive a failing test.
+// Each process has its own CPU budget and long wall backstop. Inputs and answers survive a failing test.
 func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
-	return recoveryRunLimit(t, 2*time.Second, artifact, name, args...)
+	return recoveryRunLimit(t, 2*time.Minute, artifact, name, args...)
 }
 
 func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	output, err := os.Create(artifact + ".stdout")
 	if err != nil {
 		t.Fatal(err)
@@ -55,10 +52,7 @@ func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, 
 	}
 	defer stderr.Close()
 	command.Stdout, command.Stderr = output, stderr
-	err = command.Run()
-	if ctx.Err() != nil {
-		err = fmt.Errorf("timeout after %s: %w", limit, ctx.Err())
-	}
+	err = parserRunGuard(command, limit)
 	data, readErr := os.ReadFile(output.Name())
 	if readErr != nil {
 		t.Fatal(readErr)
@@ -72,6 +66,7 @@ func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, 
 }
 
 func TestMethodRecoveryAgrees(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	directory, err := filepath.Abs(".")
@@ -129,6 +124,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 // The three checks are independent: diagnostic bytes, recovered child shape,
 // and termination. A build error or crash does not kill a comparison mutant.
 func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -176,12 +172,16 @@ func TestRecoveryMutants(t *testing.T) {
 				{"Node", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts")}, args...)},
 				{"native", binary, args},
 			} {
-				got, err := recoveryRun(t, path+"."+side.name, side.command, side.args...)
+				limit := 2 * time.Minute
 				if mutation.timeout {
-					if err == nil || !strings.Contains(err.Error(), "timeout after 2s") {
+					limit = 2 * time.Second
+				}
+				got, err := recoveryRunLimit(t, limit, path+"."+side.name, side.command, side.args...)
+				if mutation.timeout {
+					if err == nil || !strings.Contains(err.Error(), "stalled: CPU budget 2s exhausted") {
 						t.Fatalf("%s must be caught by the deadline, got %v", side.name, err)
 					}
-					t.Logf("%s: EOF loop caught by 2s deadline; input %s", side.name, path)
+					t.Logf("%s: EOF loop caught by 2s CPU budget; input %s", side.name, path)
 				} else {
 					if err != nil {
 						t.Fatalf("%s mutant must finish normally: %v", side.name, err)
@@ -197,6 +197,7 @@ func TestRecoveryMutants(t *testing.T) {
 }
 
 func TestRecoveredLintCasesAgree(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
