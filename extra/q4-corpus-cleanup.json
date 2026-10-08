@@ -1,0 +1,11 @@
+{
+  "time": 1791418556.2661936,
+  "before": 78,
+  "after": 77,
+  "preserved_file": "/workspace/q4-generated-diagnostics-for-ledger.ts",
+  "sha256": "0723b987e560fda262b1281223c4d842d30c70b4ff3d9430758eefa11ee3a5c3",
+  "ignored_by": ".gitignore:23:src/compiler/diagnosticInformationMap.generated.ts\t/workspace/adamic-tools/gate-inputs/typescript/src/compiler/diagnosticInformationMap.generated.ts",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "pushed_sha": "dc135a74f70de5016f3025d876bc96920dc3fb0a",
+  "reason": "Remove only the ignored diagnostic map generated for the completed cycle-ledger gate; keep official setup compiler corpus pristine before lint/typeaware solo reruns."
+}

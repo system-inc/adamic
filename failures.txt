@@ -1,0 +1,326 @@
+== github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants
+    suite_test.go:266: assignability-direction: production cohere oracle catches byte 24252; findings 187
+    suite_test.go:266: resolved-signature: production cohere oracle catches byte 61493; findings 187
+    suite_test.go:279: released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation
+    suite_test.go:288: facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow
+    suite_test.go:302: facts-empty: panic 70, invalid checker facts frame
+    suite_test.go:302: facts-integer: panic 70, invalid checker facts integer
+    suite_test.go:302: facts-length: panic 70, invalid checker facts length
+    suite_test.go:302: facts-version: panic 70, unsupported checker facts schema
+    suite_test.go:347: fact cost assignable round 1: native tsgo: load_ns=53438138 query_ns=53710847 queries=10000 first_query_ns=54692 run_ns=56092340; Go factcost: load_ns=15429510 query_ns=25133965 queries=10000 first_query_ns=44808; identical units=190000
+    suite_test.go:347: fact cost declarations round 1: native tsgo: load_ns=63866623 query_ns=102380161 queries=10000 first_query_ns=61673 run_ns=106051011; Go factcost: load_ns=18061374 query_ns=82980653 queries=10000 first_query_ns=32198; identical units=2820000
+    suite_test.go:347: fact cost signature round 1: native tsgo: load_ns=51900549 query_ns=303848665 queries=10000 first_query_ns=177188 run_ns=309071321; Go factcost: load_ns=25488252 query_ns=275410540 queries=10000 first_query_ns=189606; identical units=1370000
+    suite_test.go:347: fact cost raw-type round 1: native tsgo: load_ns=28360815 query_ns=102797270 queries=10000 first_query_ns=119601 run_ns=105630147; Go factcost: load_ns=26341460 query_ns=105473183 queries=10000 first_query_ns=724172; identical units=670000
+    suite_test.go:347: fact cost nullable round 1: native tsgo: load_ns=31731136 query_ns=360229487 queries=10000 first_query_ns=164328 run_ns=363429146; Go factcost: load_ns=21890168 query_ns=388347937 queries=10000 first_query_ns=128393; identical units=2200000
+    suite_test.go:347: fact cost union round 1: native tsgo: load_ns=52150236 query_ns=279407521 queries=10000 first_query_ns=165330 run_ns=286026372; Go factcost: load_ns=21037573 query_ns=278339082 queries=10000 first_query_ns=140712; identical units=1760000
+    suite_test.go:347: fact cost signature-shape round 1: native tsgo: load_ns=21656505 query_ns=89480780 queries=10000 first_query_ns=101763 run_ns=95904172; Go factcost: load_ns=41949759 query_ns=65431232 queries=10000 first_query_ns=93631; identical units=1180000
+    suite_test.go:347: fact cost raw-shape round 1: native tsgo: load_ns=56587887 query_ns=48495275 queries=10000 first_query_ns=71408 run_ns=75276647; Go factcost: load_ns=24627380 query_ns=63934119 queries=10000 first_query_ns=64237; identical units=650000
+    suite_test.go:347: fact cost type-shape round 1: native tsgo: load_ns=25807895 query_ns=103633112 queries=10000 first_query_ns=113822 run_ns=110051383; Go factcost: load_ns=46396686 query_ns=119360973 queries=10000 first_query_ns=131378; identical units=1890000
+    suite_test.go:347: fact cost options round 1: native tsgo: load_ns=53171385 query_ns=25039639 queries=10000 first_query_ns=13761 run_ns=31330603; Go factcost: load_ns=25490888 query_ns=33853875 queries=10000 first_query_ns=7091; identical units=150000
+    suite_test.go:374: want all 77 files, got 78
+--- FAIL: TestSixRuleAgreementAndMutants (1165.57s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread_view.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a (0.09s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_call.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a (0.03s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a (0.03s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_array.a (0.08s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_number.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_string.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.08s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (416.92s)
+
+== github.com/system-inc/adamic/internal/oracle TestSlabLaneCatchesRecycledRelease
+=== RUN   TestSlabLaneCatchesRecycledRelease
+=== PAUSE TestSlabLaneCatchesRecycledRelease
+=== CONT  TestSlabLaneCatchesRecycledRelease
+    slabs_test.go:119: mutant insertion points changed
+--- FAIL: TestSlabLaneCatchesRecycledRelease (0.18s)
+
+== github.com/system-inc/adamic/internal/oracle TestReleaseBuildConfigurationAgrees
+=== RUN   TestReleaseBuildConfigurationAgrees
+=== PAUSE TestReleaseBuildConfigurationAgrees
+=== CONT  TestReleaseBuildConfigurationAgrees
+    release_guard_test.go:119: internal/oracle.released must carry its release configuration into cachedNative: got cachedNative(t, program, releaseBuild), want argument 2 = true
+    release_guard_test.go:39: shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+    release_guard_test.go:40: oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+    release_guard_test.go:42: release configurations differ
+        shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+        oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+--- FAIL: TestReleaseBuildConfigurationAgrees (0.02s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsProtectionMutants/normalization_pairs
+=== RUN   TestRuntimeStaticsProtectionMutants/normalization_pairs
+    runtime_statics_parallel_test.go:69: SUMMARY: ThreadSanitizer: data race /workspace/adamic-gate-tmp/TestRuntimeStaticsProtectionMutantsnormalization_pairs2847137245/001/normalize.c:114:25 in composite
+    runtime_statics_parallel_test.go:69: race mutant was not caught (attempt 2): <nil>
+        adamic: counts: allocations 16387 frees 16387 retains 0 releases 16387 peak 11 regions 0
+        runtime statics clean
+--- FAIL: TestRuntimeStaticsProtectionMutants/normalization_pairs (17.07s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsProtectionMutants
+=== RUN   TestRuntimeStaticsProtectionMutants
+--- FAIL: TestRuntimeStaticsProtectionMutants (175.42s)
+
+== github.com/system-inc/adamic/cloud TestRepositoryPassesCohereBaseline
+=== RUN   TestRepositoryPassesCohereBaseline
+=== PAUSE TestRepositoryPassesCohereBaseline
+=== CONT  TestRepositoryPassesCohereBaseline
+    cohere_gate_test.go:27: cohere baseline: exit status 1
+        fatal: Needed a single revision
+        cohere gate failed: Command '['git', 'rev-parse', '--verify', 'origin/main']' returned non-zero exit status 128.
+        cohere gate coverage: 10526 repository files mirrored
+          types: 1974 files in scope
+          lint: 1974 files in scope
+          format: 436 programs checked, 5571 files left out by the ignore patterns
+          config-format: tsconfig.json and CohereSettings.json checked at their real paths
+--- FAIL: TestRepositoryPassesCohereBaseline (44.81s)
+
+== github.com/system-inc/adamic/internal/fuzz TestLivenessAndFieldShapes
+=== RUN   TestLivenessAndFieldShapes
+=== PAUSE TestLivenessAndFieldShapes
+=== CONT  TestLivenessAndFieldShapes
+    liveness_fields_test.go:56: seed 2: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 5: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 10: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 12: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 15: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 16: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:698:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 17: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 19: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 22: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0].values[]: nested Map ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 23: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 27: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:678:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 29: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:321:17: Adamic 0.1 refuses use after move: items1.length; items1 was moved into parallelMap; don't use it after the parallelMap
+    liveness_fields_test.go:56: seed 32: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 34: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 35: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:13: Adamic 0.1 refuses cannot move items1[0].child6: nested reachable ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 36: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+--- FAIL: TestLivenessAndFieldShapes (55.82s)
+
+== github.com/system-inc/adamic/internal/fuzz TestOperatorsShapes
+=== RUN   TestOperatorsShapes
+=== PAUSE TestOperatorsShapes
+=== CONT  TestOperatorsShapes
+    operators_test.go:71: seed 10: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:942:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag36.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 11: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:860:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record25 writes the global 'total24'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 16: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:826:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 25: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:868:57: Adamic 0.1 refuses task capture 'step57' is not shareable: step57 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 27: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:802:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 32: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:857:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 33: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:955:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record42 writes the global 'total41'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 36: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:884:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record34 writes the global 'total33'; keep work and everything it calls pure; write only task locals and fresh objects
+--- FAIL: TestOperatorsShapes (55.83s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsSignalAndExit/handler_buffer_mutant
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+--- FAIL: TestRuntimeStaticsSignalAndExit/handler_buffer_mutant (15.13s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsSignalAndExit
+=== RUN   TestRuntimeStaticsSignalAndExit
+--- FAIL: TestRuntimeStaticsSignalAndExit (94.02s)
+
+== github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage
+=== RUN   TestCatalogCoverage
+    probe_test.go:15: refusal catalog is incomplete: helper parallelPreflight, helper typedArrayUnsupported, helper enumRefusal, helper refuseOptionalWidening
+--- FAIL: TestCatalogCoverage (0.00s)
+
+== github.com/system-inc/adamic/internal/skipcensus TestProvidedHistoricalPlainLog
+        measurement	github.com/system-inc/adamic/internal/oracle	TestNativeMallocAgreesWithNode	TestNativeMallocAgreesWithNode:4be973d40ef3554399a7b55adc4838f67420bcdfeaba943cfec966c3f7a02827	ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane.
+        measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSThroughput	TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintReleaseAndThroughput	TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterThroughput	TestCSSPrinterThroughput:2de9a123130d9a85700e28f402ef09dab1a7ec570d865b0f14c3cf7e04f5bef1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileArtifacts	TestCSSProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapshotsAgree	TestCSSProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestThroughput	TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/selector	TestSelectorThroughput	TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestPerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestWholePerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        skips=25 required-input=0 unknown=0
+--- FAIL: TestProvidedHistoricalPlainLog (0.02s)
+
+== github.com/system-inc/adamic/internal/skipcensus TestCensus
+        undeclared skip stage1/cohere/graphql/printer/printer_test.go:TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterUpstreamPreflight:84)
+        undeclared skip stage1/cohere/graphql/printer/testdata/cohere_side_test.go:TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicPrinter:19)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/tsprinter/doc_test.go:TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestDocumentsAgainstGoAndPrettier:51)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (expressionCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestExpressionsAgainstGoAndPrettier:102)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (statementCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementsAgainstGoAndPrettier:120)
+        undeclared skip stage1/cohere/tsprinter/testdata/expressions_side_test.go:TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicExpressionBenchmark:685)
+        undeclared skip stage1/cohere/tsprinter/upstream_test.go:TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementUpstreamDifferences:58)
+        undeclared skip stage1/cohere/yaml/compose_test.go:TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestComposeMatchGo:137)
+        undeclared skip stage1/cohere/yaml/cst_test.go:TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCSTMatchesGo:82)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestBundledParserDifference:199)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestFormatterMatchesGo:141)
+        undeclared skip stage1/cohere/yaml/lexer_test.go:TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestLexerMatchesGo:225)
+        undeclared skip stage1/cohere/yaml/props_test.go:TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPropsMatchGo:109)
+        undeclared skip stage1/cohere/yaml/scalar_test.go:TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestScalarsMatchGo:136)
+        undeclared skip stage1/cohere/yaml/schema_test.go:TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestSchemaMatchesGo:106)
+        undeclared skip stage1/cohere/yaml/unist_test.go:TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestUnistMatchesGo:84)
+--- FAIL: TestCensus (0.61s)
+
+== github.com/system-inc/adamic/internal/native TestWASI
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestWASI (0.05s)
+
+== github.com/system-inc/adamic/cmd/adamic-gate TestWASICurrentSourceAudit
+        undeclared skip stage1/cohere/graphql/printer/printer_test.go:TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterUpstreamPreflight:84)
+        undeclared skip stage1/cohere/graphql/printer/testdata/cohere_side_test.go:TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicPrinter:19)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/tsprinter/doc_test.go:TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestDocumentsAgainstGoAndPrettier:51)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (expressionCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestExpressionsAgainstGoAndPrettier:102)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (statementCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementsAgainstGoAndPrettier:120)
+        undeclared skip stage1/cohere/tsprinter/testdata/expressions_side_test.go:TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicExpressionBenchmark:685)
+        undeclared skip stage1/cohere/tsprinter/upstream_test.go:TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementUpstreamDifferences:58)
+        undeclared skip stage1/cohere/yaml/compose_test.go:TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestComposeMatchGo:137)
+        undeclared skip stage1/cohere/yaml/cst_test.go:TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCSTMatchesGo:82)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestBundledParserDifference:199)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestFormatterMatchesGo:141)
+        undeclared skip stage1/cohere/yaml/lexer_test.go:TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestLexerMatchesGo:225)
+        undeclared skip stage1/cohere/yaml/props_test.go:TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPropsMatchGo:109)
+        undeclared skip stage1/cohere/yaml/scalar_test.go:TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestScalarsMatchGo:136)
+        undeclared skip stage1/cohere/yaml/schema_test.go:TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestSchemaMatchesGo:106)
+        undeclared skip stage1/cohere/yaml/unist_test.go:TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestUnistMatchesGo:84)
+--- FAIL: TestWASICurrentSourceAudit (0.92s)
+
+== github.com/system-inc/adamic/cmd/adamic-gate TestCurrentCohereGateIsRequired
+        undeclared skip stage1/cohere/graphql/printer/printer_test.go:TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterUpstreamPreflight:84)
+        undeclared skip stage1/cohere/graphql/printer/testdata/cohere_side_test.go:TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicPrinter:19)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/tsprinter/doc_test.go:TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestDocumentsAgainstGoAndPrettier:51)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (expressionCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestExpressionsAgainstGoAndPrettier:102)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (statementCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementsAgainstGoAndPrettier:120)
+        undeclared skip stage1/cohere/tsprinter/testdata/expressions_side_test.go:TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicExpressionBenchmark:685)
+        undeclared skip stage1/cohere/tsprinter/upstream_test.go:TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementUpstreamDifferences:58)
+        undeclared skip stage1/cohere/yaml/compose_test.go:TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestComposeMatchGo:137)
+        undeclared skip stage1/cohere/yaml/cst_test.go:TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCSTMatchesGo:82)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestBundledParserDifference:199)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestFormatterMatchesGo:141)
+        undeclared skip stage1/cohere/yaml/lexer_test.go:TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestLexerMatchesGo:225)
+        undeclared skip stage1/cohere/yaml/props_test.go:TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPropsMatchGo:109)
+        undeclared skip stage1/cohere/yaml/scalar_test.go:TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestScalarsMatchGo:136)
+        undeclared skip stage1/cohere/yaml/schema_test.go:TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestSchemaMatchesGo:106)
+        undeclared skip stage1/cohere/yaml/unist_test.go:TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestUnistMatchesGo:84)
+--- FAIL: TestCurrentCohereGateIsRequired (1.05s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceDiagnostics
+=== RUN   TestAcceptanceDiagnostics
+    acceptance_test.go:62: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /workspace/adamic-gate-tmp/TestAcceptanceDiagnostics2906676902/001/0003.ts]: timeout=context deadline exceeded exit=signal: killed stdout=0 stderr=adamic: panic: ESTree parser: function or constructor type must be parenthesized in a union or intersection
+--- FAIL: TestAcceptanceDiagnostics (54.43s)
+
+== github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.136s
+
