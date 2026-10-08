@@ -1,0 +1,13 @@
+github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere
+=== RUN   TestPortMatchesGoCohere
+=== PAUSE TestPortMatchesGoCohere
+=== CONT  TestPortMatchesGoCohere
+    port_test.go:200: repository groups: map[Adamic:1420 TypeScript:203 cohere:839]; generated 34; total 2496
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2496 texts in 97.082s
+        --- PASS: TestAdamicJSONAudit (104.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	104.880s
+    port_test.go:227: native ASan/UBSan exits -1: 
+--- FAIL: TestPortMatchesGoCohere (968.82s)
+
