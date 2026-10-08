@@ -1,8 +1,8 @@
-Built inline sentinel predicates, address-safe nullable Map/Set keys, null-byte backstop, JSON null classification and literal-null call fitting.
-Commits: inline predicates and migration assertion 3a69e75c; Map/Set, conversions and new Node controls in this commit; prior witness completion 71897d7e.
-Commands: all runtime-review controls and compiler packages pass; full merged witness/runtime regression results follow.
-Mutants: erased Map hash/comparison address checks and erased JSON sentinel classification both caught; prior null/undefined and indexed guard mutants retained.
-Not covered: full repository gate, whole TypeScript build and WebAssembly timing not run; mutable/cyclic record payloads stay outside the published representation.
+Built all 27 assigned row witnesses plus inline sentinel predicates, address-safe Map/Set keys, null-byte backstop and Node-held null conversions.
+Commits: inline/migration backstop 3a69e75c, runtime identity/conversions 75031fa7, nested-record merge a160f053, D119 witness 2b38e4ae; final validation evidence in this commit.
+Commands: full unit and both dependency suites, lower/IR/native packages, 68 uncached Node oracle fixtures, vet and exact 27-row census pass.
+Mutants: 57 site guard erasures caught in the final unit, including D119 release and sanitized; Map address, JSON sentinel and both existing sentinel-to-NULL mutants caught.
+Not covered: full repository gate, whole TypeScript build and WebAssembly timing; mutable/cyclic records and additional nullable reference kinds remain outside this work.
 
 ## Scope and assumptions
 
@@ -684,3 +684,65 @@ Earlier refusal descriptions in this report are historical checkpoints;
 the per-row table now marks D119 proven. Every row's current state is proven.
 The published validator still refuses mutable/cyclic record payloads and
 finite nesting beyond its conservative bound; D119 needs none of those.
+
+
+## Final runtime review and nested-record validation
+
+Final state: all 27 rows in the per-row table are proven; all 26 supported hole
+variants pass; zero blocked rows and zero remaining rows. D119 has one check,
+D129/D130/D131 each have two chained checks; all other assigned reads have one.
+All four requested runtime changes are pushed, and b150f83c is merged.
+
+Final complete unit after the nested merge: 90.128s, pass. It runs all 27 rows,
+57 erased site guard binaries (including D119 in both native modes), the two
+existing sentinel-conflation runtime mutants, the Map address-check mutant,
+the JSON sentinel-classification mutant, all nullable controls and all new
+conversion/header controls. The opt-in timing test is skipped in this ordinary
+run; its five before/after measurements are recorded above and in separate logs.
+Final dependency suites pass: stricter-options 23.115s, stricter-records 26.896s.
+They include the published hole/typed-array and nested-record controls/mutants.
+Lower after merging nested records passes in 14.932s. Native's full package
+passes in 137.050s for the final runtime/emitter changes; the later nested-record
+merge changes only lower validation and witnesses. IR passes in 14.473s.
+
+The 68 affected ordinary Node oracle fixtures pass uncached in 22.248s for the
+runtime review changes (native 0 hits/203 misses, Node 0 hits/136 misses).
+The selection covers Map/Set, JSON, string conversion, indexing, optional strings
+and legacy RegExp/null typeof shapes. This oracle run preceded the nested lower
+merge; the final lower, complete unit and dependency suites ran after that merge.
+Vet, exact ledger census (27 rows, zero missing/extra) and whitespace checks
+against 71897d7e all pass. Toolchain is unchanged; nproc 5.
+
+One in-flight dependency command straddled the user's nested-record update:
+its test binaries contained the old validator while sites.json already contained
+the new nested witnesses. It therefore refused those added shapes. That run
+(runtime-review-witnesses.log) is retained but is not claimed as verification.
+Rebuilt final dependency binaries pass all nested controls, as above. The two
+indent-only blank lines in the earlier failing conversion log were normalized
+for whitespace checking; quoted program output and all diagnostics remain.
+
+Commands (all output sent to evidence logs, never piped):
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/ir ./internal/javascript -count=1 -timeout 10m
+go test ./internal/native -count=1 -timeout 10m
+go test ./internal/lower -count=1 -timeout 10m
+go test ./stage3/stricter-indexed-d -count=1 -timeout 10m -v
+go test -p 1 ./stage3/stricter-options ./stage3/stricter-records -count=1 -timeout 10m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(json_stringify.*|map.*|set.*|library_map_set.*|library_string.*|typeof_null.*|undefined_strings|optional_strings|string_index)\.a$' -count=1 -timeout 8m -v
+go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d ./stage3/stricter-options ./stage3/stricter-records
+python3 stage3/stricter-indexed-d/census.py
+git diff 71897d7e --check
+```
+
+Evidence: runtime-review-final-witnesses.log, runtime-review-final-dependencies.log,
+runtime-review-nested-lower.log, runtime-review-native.log,
+runtime-review-oracle.log and runtime-review-final-{vet,census,diff}.log.
+No full repository gate, whole TypeScript native build or Wasm performance
+measurement is claimed. Runtime review locations: the one adamic_null_string
+definition is nullable.c, its extern and static inline predicates are adamic.h,
+nullable string key hash/comparison is map.c, and JSON classification is
+json_stringify.c. Other reference kinds keep their existing representation;
+nullReference's migration assertion prevents emission of an unmigrated default
+sentinel constructor call.
