@@ -1,0 +1,28 @@
+Built: approved lazy descendant selection, including the missing destructuring read hook; original intersection certificates restored.
+Commits: reconciled integration c9f74dc4a63918cd50f7e8f665b7569044611076 pushed first; this report accompanies the following deferred-selection commit.
+Commands and outputs: original suite PASS 125.034s; focused merged regression PASS 169.504s; five deferred fixtures PASS 2.145s; scoped counts PASS .198s verification.
+Mutants: 34 original mutants caught by all three backends; deferred selector deletion caught on four read paths in all three backends; destructuring-hook deletion caught in all three.
+Not covered: no new original pairs; 7644, 97923, 98493, 92175, 9454, 9657 and private 68704 remain; lane 4 Identifier 9477 remains.
+
+Working date: October 11, 2026. This supersedes INTEGRATION-BLOCKED.md's admission blocker. The user explicitly approved descendant presence/object-kind checks with member selection deferred until the descendant is read, and required the reconciled merge to be published first. That merge was committed and pushed before this change.
+
+The bounded classifier now admits supported untagged object-union descendants by physical kind. Root union selection remains unchanged. Direct property reads, reads through a wider helper, callback reads, and destructuring each demand the descendant's complete selector. Destructuring formerly lacked ViewContract metadata; its shared collection lowering now calls an owned intersection helper to attach the original union/intersection contract. The hook is limited to object fields of union/intersection type.
+
+Five new .a fixtures hold a descendant matching neither Left nor Right. Unread, it prints 1 and agrees with Node, including native leak checks. All four read paths stop at the named descendant read with exit 70 and the diagnostic 'matches no member of Left | Right'. Node prints 42 for these invalid-read controls. ADAMIC_INTERSECTION_DEFERRED_MUTANT=1 drops the descendant selector; all four controls then incorrectly print 42 and exit zero, caught independently by sanitized native, release native and JavaScript. A separate Go overlay removes only the destructuring hook and is caught by all three destructuring pins.
+
+Full original declarations remain pinned to upstream 050880ce59e30b356b686bd3144efe24f875ebc8. Integration's required presence checks exposed missing Symbol.constEnumOnlyModule fields in the fixtures; the fixtures now supply false, preserving the original required boolean | undefined declaration. Two expression-kind controls now supply escapedText so their only invalid obligation is the tested kind. No declaration is weakened. The full original suite passes; the two adjusted controls were rerun afterward (PASS 5.419s). Both original mutant drivers complete: 28 pair mutants plus six tracker mutants, each caught by all three backend pins.
+
+Coverage: restored 10 pairs / 56 reads certified; seven listed rows / ten reads remain, including the private excluded row. Lane 4b contributes no extra count: six pairs / 44 reads overlap these certificates; its seventh pair is 7644 / one read. Lane 4's intersected Identifier remains separate.
+
+Commands used, with output redirected to the named /tmp logs:
+- ADAMIC_INTERSECTION_ORIGINAL_DECLS=/tmp/lane7-declarations go test ./internal/oracle -run '^TestCheckedViewIntersectionOriginal' -count=1 -v: /tmp/lane7-approved-original-rerun.log, PASS 125.034s.
+- go test ./internal/lower ./internal/ir ./internal/oracle -run '^(TestViewIntersection.*|TestIntersection.*|TestBoundedIntersection.*|TestUntaggedView.*|TestCheckedView(Intersection.*|Nullish.*|MapCertificate.*|MapPhantom.*|MapEntry.*|Untagged.*))$' -count=1: /tmp/lane7-approved-regression.log, lower .437s, IR .009s, oracle 169.504s PASS.
+- go test ./internal/oracle -run '^TestCheckedViewIntersectionDeferredMember$' -count=1 -v: /tmp/lane7-deferred-final.log, PASS 2.145s.
+- ADAMIC_INTERSECTION_DEFERRED_MUTANT=1 go test ./internal/oracle -run '^TestCheckedViewIntersectionDeferredMember/(read|helper|callback|destructure)$' -count=1 -v: /tmp/lane7-deferred-final-mutant.log, expected FAIL 1.617s, twelve caught pins.
+- go test -overlay /tmp/lane7-binding-mutant/overlay.json ./internal/oracle -run '^TestCheckedViewIntersectionDeferredMember/destructure$' -count=1 -v: /tmp/lane7-binding-mutant.log, expected FAIL .496s, three caught pins.
+- python3 stage3/interface-downcasts/lane7/original/run-pair-mutants.py /tmp/lane7-declarations /tmp/lane7-approved-mutants-final: /tmp/lane7-approved-mutants-final.log, 28 mutants caught.
+- python3 stage3/interface-downcasts/lane7/original/run-mutants.py /tmp/lane7-declarations /tmp/lane7-approved-tracker-mutants: /tmp/lane7-approved-tracker-mutants.log, six mutants caught.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts: /tmp/lane7-deferred-counts.log, FAIL 55.804s on unrelated existing graph-region invalid free, process.exit lowering, and wasi build fixtures. The graph_regions_symbols.a and process_bad_code.a failures reproduce with compiler files overlaid from pushed c9f74dc4 (/tmp/lane7-counts-baseline.log).
+- go test ./internal/oracle -run '^TestCheckedViewIntersectionDeferredCounts$' -count=1 -args -update-counts: /tmp/lane7-deferred-counts-scoped.log, PASS .624s. Five new rows recorded without altering other rows. Subsequent verification PASS .198s.
+
+No full gate or whole package test was run. No cohere code copied. No protected emitter/oracle orchestration file edited. Counts refresh remains globally blocked by the independently reproduced baseline failures.

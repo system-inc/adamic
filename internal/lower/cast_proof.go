@@ -190,6 +190,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if proof, err := l.viewUnionTargetProof(node, source, target); proof != nil || err != nil {
+			if err != nil {
+				return castProof{}, err
+			}
+			return *proof, nil
+		}
 		// Shared views certify each read; mutable source slots still require
 		// the same reverse relation as the interface-downcast entry point.
 		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) {

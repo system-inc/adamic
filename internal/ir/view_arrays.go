@@ -3,6 +3,9 @@ package ir
 // Array views currently use the same conservative program-wide read policy as
 // object fields. All index reads retain their own declared element contract.
 func HasArrayViews(program *Program) bool {
+	if program.PrimitiveArrayReads {
+		return true
+	}
 	// Constructor schemas can intern arrays without introducing a checked view.
 	// Only admitted view origins enable the conservative program-wide policy.
 	if len(program.ViewOrigins) == 0 {

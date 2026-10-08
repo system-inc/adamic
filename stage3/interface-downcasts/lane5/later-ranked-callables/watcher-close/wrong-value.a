@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent helpers reduced.
+interface Base {readonly close:unknown;}
+interface Target {close(): void;}
+function probe(value:Base):void {const watcher=value as Target;watcher.close();}
+probe({close:3});

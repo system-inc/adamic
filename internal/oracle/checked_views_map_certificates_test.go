@@ -21,7 +21,11 @@ func TestCheckedViewMapCertificates(t *testing.T) {
 	}
 	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "nullish/maps/"+name)
+			if name == "entry-live-mutation" {
+				mapCallbackRefusal(t, name)
+				return
+			}
+			program, path := mapStorageFixture(t, name)
 			truth := onNode(t, path)
 			native, binary := nativelyUncached(t, program)
 			mutant := strings.Contains(name, "schema") || strings.Contains(name, "wrong") || strings.Contains(name, "opposite") || strings.Contains(name, "mutable-invariant")
@@ -138,7 +142,7 @@ func TestCheckedViewMapUnionEntryStorage(t *testing.T) {
 	for _, family := range []string{"number", "boolean", "string", "object", "array", "mixed"} {
 		for _, form := range []string{"null", "both"} {
 			t.Run(family+"-"+form, func(t *testing.T) {
-				program, path := interfaceFixture(t, "nullish/maps/entry-"+family+"-"+form)
+				program, path := mapStorageFixture(t, "entry-"+family+"-"+form)
 				truth := onNode(t, path)
 				native, binary := nativelyUncached(t, program)
 				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {

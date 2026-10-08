@@ -14,11 +14,16 @@ func TestCheckedViewIntersectionRequiredUndefinedPresence(t *testing.T) {
 		{"finite-undefined", "{count: 42, label: undefined}", ""},
 		{"recursive-missing", "{count: 42, label: undefined, next: {count: 8}}", "view.value.next.label"},
 		{"recursive-undefined", "{count: 42, label: undefined, next: {count: 8, label: undefined}}", ""},
+		{"bounded-missing", "{count: 42, label: undefined, items: [], next: {count: 8, items: []}}", "view.value.next.label"},
+		{"bounded-undefined", "{count: 42, label: undefined, items: [], next: {count: 8, label: undefined, items: []}}", ""},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
 			next := ""
-			if strings.HasPrefix(sample.name, "recursive") {
+			if strings.HasPrefix(sample.name, "recursive") || strings.HasPrefix(sample.name, "bounded") {
 				next = "; readonly next?: Link"
+			}
+			if strings.HasPrefix(sample.name, "bounded") {
+				next += "; readonly items: readonly number[]"
 			}
 			source := "interface Named {readonly label: string | undefined}\ninterface Link {readonly count: number" + next + "}\ninterface Box {readonly value: object}\ninterface Target extends Box {readonly value: Named & Link}\nconst actual=" + sample.actual + ";const box:Box={value:actual};const view=box as Target;const root=view.value;console.log(`${root===root}`);\n"
 			if next != "" {

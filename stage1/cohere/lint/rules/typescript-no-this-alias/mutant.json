@@ -1,0 +1,6 @@
+{
+  "name": "parenthesized alias lost",
+  "file": "rule.a",
+  "from": "while(wrappers.includes(context.node(target).kind))",
+  "to": "while(false)"
+}

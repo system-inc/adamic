@@ -1,0 +1,86 @@
+=== RUN   TestCheckedViewRanked5UnionCastFrontier
+=== PAUSE TestCheckedViewRanked5UnionCastFrontier
+=== RUN   TestCheckedViewRanked6Frontiers
+=== PAUSE TestCheckedViewRanked6Frontiers
+=== RUN   TestCheckedViewOriginalUnionTargets
+=== RUN   TestCheckedViewOriginalUnionTargets/function/263
+=== RUN   TestCheckedViewOriginalUnionTargets/function/175
+=== RUN   TestCheckedViewOriginalUnionTargets/function/178
+=== RUN   TestCheckedViewOriginalUnionTargets/function/179
+=== RUN   TestCheckedViewOriginalUnionTargets/function/177
+=== RUN   TestCheckedViewOriginalUnionTargets/function/219
+=== RUN   TestCheckedViewOriginalUnionTargets/function/220
+=== RUN   TestCheckedViewOriginalUnionTargets/function/wrong-tag
+=== RUN   TestCheckedViewOriginalUnionTargets/function/wrong-array
+=== RUN   TestCheckedViewOriginalUnionTargets/class/264
+    checked_views_union_targets_test.go:58: original members read remains blocked by unrelated Map descriptor
+=== RUN   TestCheckedViewOriginalUnionTargets/class/232
+    checked_views_union_targets_test.go:58: original members read remains blocked by unrelated Map descriptor
+=== RUN   TestCheckedViewOriginalUnionTargets/class/wrong-tag
+    checked_views_union_targets_test.go:58: original members read remains blocked by unrelated Map descriptor
+=== RUN   TestCheckedViewOriginalUnionTargets/class/wrong-array
+    checked_views_union_targets_test.go:58: original members read remains blocked by unrelated Map descriptor
+--- PASS: TestCheckedViewOriginalUnionTargets (9.91s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/263 (1.11s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/175 (1.02s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/178 (1.01s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/179 (1.02s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/177 (0.99s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/219 (1.00s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/220 (0.99s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/wrong-tag (0.80s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/wrong-array (0.75s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/264 (0.31s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/232 (0.30s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/wrong-tag (0.31s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/wrong-array (0.30s)
+=== RUN   TestCheckedViewOriginalUnionTargetTags
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/263
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/175
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/178
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/179
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/177
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/219
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/220
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/80
+    checked_views_union_targets_test.go:168: tag bypass mutant caught by exit-70 pin
+    checked_views_union_targets_test.go:168: tag bypass mutant caught by exit-70 pin
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/264
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/232
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/80
+    checked_views_union_targets_test.go:168: tag bypass mutant caught by exit-70 pin
+    checked_views_union_targets_test.go:168: tag bypass mutant caught by exit-70 pin
+--- PASS: TestCheckedViewOriginalUnionTargetTags (10.23s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/263 (0.93s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/175 (0.94s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/178 (0.95s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/179 (0.95s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/177 (0.96s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/219 (0.94s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/220 (0.96s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/80 (0.86s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/264 (0.94s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/232 (0.93s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/80 (0.88s)
+=== CONT  TestCheckedViewRanked5UnionCastFrontier
+=== CONT  TestCheckedViewRanked6Frontiers
+=== RUN   TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== PAUSE TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== RUN   TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== PAUSE TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== CONT  TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== CONT  TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== NAME  TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+    checked_views_ranked6_arrays_test.go:101: frontier program was admitted
+--- FAIL: TestCheckedViewRanked6Frontiers (0.00s)
+    --- PASS: TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache (0.16s)
+    --- FAIL: TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast (0.19s)
+=== NAME  TestCheckedViewRanked5UnionCastFrontier
+    checked_views_ranked5_arrays_test.go:97: cast to the FunctionLikeDeclaration union was admitted
+--- FAIL: TestCheckedViewRanked5UnionCastFrontier (0.19s)
+FAIL
+gate cache: native hits=0 misses=16
+gate cache: node hits=0 misses=49
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	20.362s
+FAIL

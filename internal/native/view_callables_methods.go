@@ -26,8 +26,11 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 			parameters := make([]ir.Type, len(function.Parameters)-1)
 			for i, local := range function.Parameters[1:] {
 				parameters[i] = e.program.Locals[local].Type
+				if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i+1] == 0 {
+					parameters[i] = 0
+				}
 			}
-			signature := e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)
+			signature := e.viewCallableSignature(parameters, e.viewCallableMethodProducerResult(property, function.Returns), function.Name)
 			thunk := e.methodThunk(index)
 			e.line("if (%s == %s) %s = %s;", method, thunk, recorded, signature)
 		}
@@ -35,4 +38,16 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 	witness := e.temporary()
 	e.line("adamic_closure %s = {.heap = {.references = 0, .kind = adamic_kind_closure, .slab = 0}, .code = NULL, .receiver = false, .count = 0};", witness)
 	e.line("(void)adamic_view_callable_shape(&%s.heap, %s, %s, %s, false);", witness, recorded, expected, cString(property.View))
+}
+
+// Method thunks do not yet use the scalar-to-union result adapter. Keep that
+// unsupported variance checked at the callable read instead of trusting the word.
+func (e *emitter) viewCallableMethodProducerResult(property ir.Property, actual ir.Type) ir.Type {
+	if property.ViewContract != 0 {
+		callable := e.program.ViewContracts[property.ViewContract-1]
+		if callable.Result != 0 && e.program.ViewContracts[callable.Result-1].Of == ir.Union && !actual.IsReference() {
+			return 0
+		}
+	}
+	return viewCallableProducerResult(actual)
 }

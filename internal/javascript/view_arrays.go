@@ -48,6 +48,11 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 `
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
+	if read.Element == ir.Union {
+		if _, primitive := ir.PrimitiveViewMembers(e.program, read.ViewContract); primitive {
+			return e.emitPrimitiveArrayIndex(read)
+		}
+	}
 	array, index := e.value(read.Array), e.value(read.Index)
 	if read.Element == ir.Union && e.nominalArrayContract(read.ViewContract) {
 		return fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.nominalViewRead(read.ViewContract, "value", read.View, false))

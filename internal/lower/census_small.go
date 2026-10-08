@@ -107,7 +107,9 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 }
 
 // Boolean fields have a tagged byte; other slotless representations remain refused.
-func censusFieldSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }
+func censusFieldSlotless(of ir.Type) bool {
+	return slotless(of) && of != ir.MaybeBoolean
+}
 
 // Only the implementation of a named overload set has executable code.
 func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
@@ -325,7 +327,7 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	return value, nil
 }
 
-// Callable slots hold tagged booleans or owned boxed union references.
+// Callable slots use the same tagged boolean representation as fields.
 func censusCallableSlotless(of ir.Type) bool {
 	return slotless(of) && of != ir.MaybeBoolean && of != ir.Union
 }

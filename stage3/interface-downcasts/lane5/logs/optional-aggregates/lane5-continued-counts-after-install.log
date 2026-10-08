@@ -1,0 +1,214 @@
+--- FAIL: TestCountsAreRecorded (29.36s)
+    --- FAIL: TestCountsAreRecorded/fixtures (29.37s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator_parenthesized.a (0.21s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 556 reachable 6 bytes 556 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator.a (0.27s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 556 reachable 6 bytes 556 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a (0.06s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/visits.a:43:83: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "(word) => word === 'mug'"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_literals.a (0.24s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 428 reachable 2 bytes 350 unreachable 1 bytes 78 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_cache.a (0.23s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 340 reachable 1 bytes 68 unreachable 1 bytes 272 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_09.a (0.28s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 612 reachable 2 bytes 544 unreachable 1 bytes 68 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_08.a (0.23s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 340 reachable 2 bytes 340 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_07.a (0.28s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 340 reachable 2 bytes 340 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_06.a (0.21s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 330 reachable 2 bytes 330 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_entries.a (0.30s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 5 bytes 544 reachable 3 bytes 208 unreachable 2 bytes 336 metadata 144\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_bad_code.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit.a (0.03s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_overload_contracts.a (0.08s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a (0.05s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_holes_callbacks.a (0.05s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/library_array_holes_callbacks.a:12:37: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "(value) => value !== undefined"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/maybe_number_slots.a:29:33: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "(value) => value === undefined"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a (0.06s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/weak_narrowed.a:15:30: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "(x) => x !== undefined"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a (0.03s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a:1:179: stage 0 can't lower a checked write without a reifiable source-slot type certificate yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/enums_names.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/enums_names.a:6:43: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "name => name === \"Zero\" || name === \"One\" || name === \"Alias\" || name === \"High\""); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/ctor_set.a (0.14s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 680 reachable 4 bytes 680 unreachable 0 bytes 0 metadata 192\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_node_perf_hooks.a (0.65s)
+panic: Unhandled case in Node.Text: *ast.BindingPattern [recovered, repanicked]
+
+goroutine 840 [running]:
+testing.tRunner.func1.2({0x1d9c538, 0x25efce0af870})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1d9c538?, 0x25efce0af870?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x1d2bce0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc2be8f70)
+	/workspace/adamic/internal/lower/view_callables.go:74 +0x1ca
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x25efc6866ae0?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc32f6b80)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0x90b99e?, 0x25efc685c830?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x7f0c87cdb4e8?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc39ed4a0)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x25efcb09e3c8?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc359c180)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*TryStatement).ForEachChild(0x25efc4cfed20, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1436 +0x34
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x48a4bf?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8728 +0x1412
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc4cfed20)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x25efc51c7c28?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc359c240)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild(0x25efc1b4be98, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:844 +0x63
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8702 +0x1092
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc1b4be98)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc32b6708)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x25efc28e4630, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x25efcc5a9468?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x25efc28e4630)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x25efc32b7888, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x25efcbd76600?, 0x25efcb09f488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses(0x25efcbd76600, 0x25efc2b85040, 0x25efd0988a80, 0x25efc51c7c28)
+	/workspace/adamic/internal/lower/view_callables.go:109 +0x1ee
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract(0x25efcbd76600, 0x25efc2b85040, 0x25efd0988a80)
+	/workspace/adamic/internal/lower/view_contracts.go:120 +0x1056
+github.com/system-inc/adamic/internal/lower.(*lowering).viewContract(0x25efcbd76600, 0x25efc2b85040, 0x25efd0988a80)
+	/workspace/adamic/internal/lower/view_lazy.go:23 +0x107
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract.func1(...)
+	/workspace/adamic/internal/lower/view_contracts.go:37
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract(0x25efcbd76600, 0x25efc2b85040, 0x25efc8a81c80)
+	/workspace/adamic/internal/lower/view_contracts.go:113 +0xfe5
+github.com/system-inc/adamic/internal/lower.(*lowering).viewContract(0x25efcbd76600, 0x25efc2b85040, 0x25efc8a81c80)
+	/workspace/adamic/internal/lower/view_lazy.go:23 +0x107
+github.com/system-inc/adamic/internal/lower.(*lowering).slotContract(0x25efcbd76600, 0x25efc2b85040, 0x25efc8a81c80)
+	/workspace/adamic/internal/lower/view_writes.go:34 +0x1ef
+github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral(0x25efcbd76600, 0x25efc2b85040)
+	/workspace/adamic/internal/lower/object.go:120 +0x160e
+github.com/system-inc/adamic/internal/lower.(*lowering).uncheckedValue(0x25efcbd76600, 0x25efc2b85040?)
+	/workspace/adamic/internal/lower/expression.go:617 +0xb3b
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x25efcbd76600, 0x25efc2b85040)
+	/workspace/adamic/internal/lower/expression.go:445 +0x6b
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x25efcbd76600, 0x25efc2b85040)
+	/workspace/adamic/internal/lower/expression.go:434 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x25efcbd76600, 0x25efc2b85040)
+	/workspace/adamic/internal/lower/expression.go:194 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement(0x25efcbd76600, 0x1f49ce0?)
+	/workspace/adamic/internal/lower/statements.go:196 +0x167
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc3430af8)
+	/workspace/adamic/internal/lower/statements.go:55 +0x2d8
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x25efcbd76600, {0x25efc32f6b50, 0x1, 0x25efcbd76600?})
+	/workspace/adamic/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc3707e60)
+	/workspace/adamic/internal/lower/statements.go:61 +0x70
+github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement(0x25efcbd76600, 0x48e326?)
+	/workspace/adamic/internal/lower/control.go:15 +0x6f
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc1b4be40)
+	/workspace/adamic/internal/lower/statements.go:67 +0x157
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x25efcbd76600, {0x25efc32f6b58, 0x2, 0x7db658?})
+	/workspace/adamic/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).tryStatement(0x25efcbd76600, 0x25efc4cfed20)
+	/workspace/adamic/internal/lower/exceptions.go:64 +0xaa
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc4cfed20)
+	/workspace/adamic/internal/lower/statements.go:101 +0x31c
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x25efcbd76600, {0x25efc32f6b68, 0x1, 0x25efcbd76600?})
+	/workspace/adamic/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc359c240)
+	/workspace/adamic/internal/lower/statements.go:61 +0x70
+github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement(0x25efcbd76600, 0x2?)
+	/workspace/adamic/internal/lower/control.go:15 +0x6f
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x25efcbd76600, 0x25efc1b4be98)
+	/workspace/adamic/internal/lower/statements.go:67 +0x157
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x25efcbd76600, {0x25efc313cb08, 0x3, 0x422be9?})
+	/workspace/adamic/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x25efcbd76600, 0x1, 0x25efc28e4630, 0xffffffffffffffff, {0x1f49ce0, 0x0, 0x25efcb0a17a8?}, {0x1f49ce0, 0x0, 0x0})
+	/workspace/adamic/internal/lower/functions.go:232 +0x1565
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x25efcbd76600, 0x1, 0x25efc28e4630, 0xffffffffffffffff)
+	/workspace/adamic/internal/lower/functions.go:55 +0x17e
+github.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0x25efcbd76600, 0x25efc28e4630)
+	/workspace/adamic/internal/lower/functions.go:12 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0x25efcbd76600, {0x25efcf50f380, 0xc, 0x25efc32b7888?})
+	/workspace/adamic/internal/lower/modules.go:174 +0xa88
+github.com/system-inc/adamic/internal/lower.Lower({0x1e5ac08?, 0x1f49ce0?}, 0x25efc46465a0)
+	/workspace/adamic/internal/lower/lower.go:52 +0x4c5
+github.com/system-inc/adamic/internal/oracle.lowered(0x25efc0ffc908, {0x25efc253e2d0, 0x44})
+	/workspace/adamic/internal/oracle/oracle_test.go:622 +0x18b
+github.com/system-inc/adamic/internal/oracle.counted(0x25efc0ffc908, {0xd7e17e, 0x32}, 0x1, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:75 +0x138
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.5(0x25efc0ffc908)
+	/workspace/adamic/internal/oracle/counts_test.go:210 +0x85
+testing.tRunner(0x25efc0ffc908, 0x25efc0fcbae0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	29.401s
+FAIL

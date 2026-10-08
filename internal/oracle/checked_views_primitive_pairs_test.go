@@ -132,8 +132,9 @@ func TestCheckedViewFiniteStringKeyComponent(t *testing.T) {
 	}
 }
 
-// Admission remains closed until the boxed array adapter passes source oracles.
-func TestCheckedViewPrimitiveArrayPairGap(t *testing.T) {
+// Certified homogeneous producers use checked primitive reads. Heterogeneous
+// array literals still require their own producer-storage adapter.
+func TestCheckedViewPrimitiveArrayPairStorage(t *testing.T) {
 	for _, variant := range []string{"string", "number", "plain-number", "plain-string", "wrong", "bounds"} {
 		t.Run(variant, func(t *testing.T) {
 			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-pairs/6849-element-" + variant + ".a")
@@ -148,9 +149,27 @@ func TestCheckedViewPrimitiveArrayPairGap(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if err == nil || !strings.HasSuffix(err.Error(), ":4:92: stage 0 can't lower an array of string | number yet") {
-				t.Fatalf("expected closed array admission, got %v", err)
+			program, err := lower.Lower(context.Background(), loaded)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{stdout: []byte(text + "\n")}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if variant == "wrong" || variant == "bounds" {
+					if got.exitCode != 70 || !strings.Contains(string(got.stderr), "values") {
+						t.Fatalf("array payload/presence mutant ran on: %#v", got)
+					}
+					continue
+				}
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if variant != "wrong" && variant != "bounds" {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
 			}
 		})
 	}

@@ -1,0 +1,11 @@
+// Independently written selector projection for candidate 223; unread compiler payloads are not copied.
+interface CandidatePayload {readonly label:string;}
+interface CandidateMember0 {readonly kind:number; readonly payload:CandidatePayload; readonly opaque0:any;}
+interface CandidateMember1 {readonly kind:number; readonly payload:CandidatePayload; readonly opaque1:any;}
+type CandidateTarget = CandidateMember0 | CandidateMember1;
+interface ReadReceiver {readonly kind:'Receiver'; readonly expression:CandidateTarget;}
+const raw0={kind:'Receiver' as const,expression:{kind:true,payload:{label:'ok'}}};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const value0=view0.expression;
+console.log(`${value0!==undefined}`);

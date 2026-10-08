@@ -1,0 +1,11 @@
+// Independent required-checker-field boundary, not full compiler interfaces.
+interface TypeChecker {readonly check:(value:Type)=>boolean;}
+interface InstantiableType {readonly flags:number;readonly id:number;readonly checker:TypeChecker;readonly symbol:{readonly name:string};}
+interface UnionOrIntersectionType {readonly flags:number;readonly id:number;readonly checker:TypeChecker;readonly symbol:{readonly name:string};readonly types:readonly Type[];}
+type Type=InstantiableType|UnionOrIntersectionType;
+interface Receiver {readonly kind:'Receiver';readonly value:Type;}
+const raw={kind:'Receiver' as const,value:{flags:0,id:1,checker:{check:(value:Type):boolean=>true},symbol:{name:'s'}}};
+const base:{readonly kind:'Receiver'}=raw;
+const view=base as Receiver;
+const value=view.value;
+console.log(`${value!==undefined}`);

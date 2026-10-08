@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface EmitHelperFactory {readonly value:number;}
+interface Base {readonly getEmitHelperFactory:unknown;}
+interface Target {getEmitHelperFactory(): EmitHelperFactory;}
+function probe(value:Base):void {const context=value as Target;console.log(`${context.getEmitHelperFactory().value}`);}
+probe({getEmitHelperFactory:():number=>0});

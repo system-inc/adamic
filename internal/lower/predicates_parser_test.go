@@ -104,8 +104,9 @@ func TestParserAssertionBackends(t *testing.T) {
 	}
 }
 
-// The universal closure slot still needs adapters for scalar/boxed callable views.
-func TestMixedUnionCallbackABIIsPending(t *testing.T) {
+// These unchanged programs now use checked producer-specific scalar/boxed adapters.
+// Full Node agreement, sanitizers and leaks are checked by the oracle companion.
+func TestMixedUnionCallbackABIAdapters(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []string{"mixed_union_callback", "mixed_union_callback_variance"} {
 		t.Run(fixture, func(t *testing.T) {
@@ -114,8 +115,8 @@ func TestMixedUnionCallbackABIIsPending(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lowerSource(t, string(source))
-			if err == nil || !strings.Contains(err.Error(), "function value") || !strings.Contains(err.Error(), "union of differently held members") {
-				t.Fatalf("want the mixed union callable ABI refusal, got %v", err)
+			if err != nil {
+				t.Fatalf("proven producer adapter refused unchanged program: %v", err)
 			}
 		})
 	}

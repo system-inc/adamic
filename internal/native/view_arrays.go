@@ -9,6 +9,11 @@ import (
 // Keep metadata at allocation, not at assertion. Wrapping dispatch here also
 // covers arrays produced inside callees, irrespective of source lowering order.
 func (e *emitter) evaluate(expression ir.Expression) string {
+	if read, ok := expression.(ir.ArrayIndex); ok && read.Element == ir.Union && read.View != "" {
+		if _, primitive := ir.PrimitiveViewMembers(e.program, read.ViewContract); primitive {
+			return e.emitPrimitiveArrayIndex(read)
+		}
+	}
 	if record, ok := expression.(ir.ArrayRecord); ok {
 		return e.emitViewArrayRecord(record)
 	}
@@ -190,7 +195,7 @@ func (e *emitter) emitViewOptionalArraySort(sort ir.ArraySort) string {
 	}
 	e.line("if (%s != NULL) {", callback)
 	e.indent++
-	e.line("%s(%s, adamic_compare_closure, %s);", sortFunction, array, callback)
+	e.line("%s(%s, %s, %s);", sortFunction, array, e.viewCallableBoxedComparator(sort.Element), callback)
 	e.closureThrown()
 	e.indent--
 	e.line("} else {")

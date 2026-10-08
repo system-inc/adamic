@@ -1,0 +1,42 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    // The registry hands this listener only NewExpression nodes.
+    visit(node: ParseNode, index: number): void {
+        const path = this.context.parser.path;
+        if(path.endsWith('/BaseError.ts') || path.endsWith('/CreateBaseErrors.ts')) { return; }
+        const calleeIndex = node.children[0] ?? -1;
+        if(calleeIndex < 0 || node.list < 2) { return; }
+        const callee = this.context.node(calleeIndex);
+        if(callee.kind !== 'Identifier' || callee.text !== 'BaseError') { return; }
+        const optionsIndex = node.children[node.children.length - node.list + 1] ?? -1;
+        if(optionsIndex < 0) { return; }
+        const options = this.context.node(optionsIndex);
+        if(options.kind !== 'ObjectLiteralExpression') { return; }
+        for(const propertyIndex of options.children) {
+            const property = this.context.node(propertyIndex);
+            if(property.kind !== 'PropertyAssignment' && property.kind !== 'ShorthandPropertyAssignment') { continue; }
+            const nameIndex = property.children[0] ?? -1;
+            if(nameIndex < 0) { continue; }
+            const name = this.context.node(nameIndex);
+            if(name.kind === 'Identifier' && name.text === 'identifier') {
+                this.context.reportRange(
+                    this.context.start(index), node.end,
+                    'base/consistency-no-hand-built-declared-error',
+                    'consistencyNoHandBuiltDeclaredError', message,
+                );
+                return;
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

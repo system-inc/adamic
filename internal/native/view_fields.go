@@ -75,7 +75,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	if of == ir.Map {
 		e.mapViewCertificate(property, value)
 	}
-	if of == ir.Object {
+	if of == ir.Object || of == ir.Array {
 		if property.Optional || property.Absent {
 			e.line("if (%s != NULL) {", value)
 			e.viewObjectUnion(property, value)
@@ -84,7 +84,7 @@ func (e *emitter) viewField(property ir.Property) string {
 			e.viewObjectUnion(property, value)
 		}
 	}
-	if of == ir.Closure && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
+	if of == ir.Closure && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewUnion && e.program.ViewContracts[property.ViewContract-1].Of == ir.Closure || e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
 		callable := e.temporary()
 		e.line("adamic_closure *%s = (adamic_closure *)%s;", callable, value)
 		value = e.emitViewCallableCertificate(property, callable)

@@ -52,7 +52,8 @@ func (e *emitter) arrayHolesMap(expression ir.ArrayMap) string {
 	if expression.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3);", answer, callback, callback, element, index, source)
+	invoke := e.viewCallableBoxedInvokeTypes([]ir.Type{expression.Element, ir.Number, ir.Array}, expression.Result, false)
+	e.line("adamic_value %s = %s(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3, false);", answer, invoke, callback, element, index, source)
 	if expression.Element.IsReference() {
 		e.closureThrown(element + ".reference")
 		e.line("adamic_release(%s.reference);", element)

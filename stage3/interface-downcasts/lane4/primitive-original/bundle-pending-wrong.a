@@ -1,0 +1,8 @@
+import type { IncrementalBundleEmitBuildInfo } from 'original-tsc-builder';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: IncrementalBundleEmitBuildInfo; }
+function helper(value: IncrementalBundleEmitBuildInfo): void { console.log(String(value.pendingEmit)); }
+const raw = {kind: 'box' as const, child: {pendingEmit: true}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

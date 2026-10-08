@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PrimitiveArrayReads requires producer metadata even without a cast.
+	PrimitiveArrayReads bool
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
 	ViewOrigins     []Expression
 	MapCertificates [][2]ViewContractID
@@ -102,6 +104,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// CallableMasks records producer signature members independently of any view.
+	CallableMasks []uint16
+
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
 
@@ -367,6 +372,8 @@ type (
 	Property struct {
 		// DictionaryKey selects an own string key; its read always validates storage.
 		DictionaryKey Expression
+		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
+		DictionaryPrimitive bool
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool
@@ -510,7 +517,7 @@ type (
 	// undefined).
 	Narrow struct {
 		Value          Expression
-		Tuple          bool // Native tuples are objects; JavaScript tuples retain array identity.
+		Tuple          bool
 		Undefined      bool
 		UndefinedWhere string
 		To             Type

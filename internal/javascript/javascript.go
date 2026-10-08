@@ -842,7 +842,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
 			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.nominalViewReceiver(expression), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
-			if expression.Of == ir.Object {
+			if expression.Of == ir.Object || expression.Of == ir.Array {
 				value = e.viewObjectUnion(expression, value)
 			}
 			return e.nominalViewRead(e.program.NominalReadContracts[expression.ViewTypeID], e.mapViewCertificate(expression, value), expression.View, expression.Absent)
@@ -1090,8 +1090,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
 		}
+		invoke := e.viewCallableBoxedDispatch(expression)
 		if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
-			return "adamicCall(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
+			return invoke + "(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
@@ -1100,7 +1101,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			}
 			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
 		}
-		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
+		return invoke + "(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
 		if expression.ViewRead.View != "" {
 			return "adamicViewMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"

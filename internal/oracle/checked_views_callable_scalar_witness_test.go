@@ -74,8 +74,17 @@ func TestCheckedViewCallableMixedResultBoundary(t *testing.T) {
 	if truth.exitCode != 0 || string(truth.stdout) != "5\n" {
 		t.Fatalf("Node: %#v", truth)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "a function value returning union of differently held members") {
-		t.Fatalf("mixed result boundary: %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sanitized, binary := nativelyUncached(t, program)
+	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

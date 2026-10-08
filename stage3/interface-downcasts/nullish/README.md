@@ -1091,3 +1091,79 @@ Touched packages (`View|Map|Contract|Generic|Class`, inherited Phantom exclusion
 passed: IR 0.016s, lower 9.696s, native 40.612s, JavaScript 1.104s. Scoped vet
 passed. The focused restored controls and payload mutants passed in 4.637s.
 The full repository gate was not run.
+
+## October 8 owner merge of integration ffe428ab
+
+Merge resolution restores the owner Map descriptor, producer, tuple and storage
+adapter dependencies while retaining integration's boxed callable dispatch and
+producer guards. The callable boxing implementation is unchanged from ffe428ab.
+Map reads return owned reference snapshots; a Map callback releases its key and
+value snapshots both normally and on throw. Set callbacks keep integration's
+borrowed-key convention. The counted map-parameter control records one additional
+owned key snapshot, with balanced allocation/free totals.
+
+Conservative assumption: the old slotless Map value and unsupported key refusals stay at every
+Map.forEach call, even where another callback convention could eventually prove
+it safe. Constructors, get and iterators retain the owner's storage support.
+entry-live-mutation.a is unchanged and refuses at 5:69 with
+"a Map forEach callback with a slotless value representation"; Node prints
+"number\n7\n0\n". Forty-seven callback sites have explicit refusal assertions.
+Forty-six iterator companions separately retain Node-held storage controls and
+payload mutants, rather than counting compile failures as storage proof.
+
+The conservative demand inventory remains 2,018 pairs / 9,101 reads. Exact
+remaining production pairs and reads remain unmeasured. The fixture gap table
+adds the slotless Map callback boundary without subtracting fixture cases from
+production totals. Recursive nominal witness work is unfinished and excluded
+from this merge. Required primitive brands retain the existing language refusal.
+
+The required primitive brand refusal remains in
+internal/lower/phantom_brands.go:133, (*lowering).phantomRefusal:
+"a primitive brand member brand whose type is not void" (fix:
+"make brand void (or optional and typed undefined) so the brand is phantom").
+
+The 39 existing Map/Set callback runtime controls pass against Node (8.956s),
+including object, array and closure keys, named callbacks, delete/clear/growth,
+reassignment, retained values and throws. Removing key snapshot retention in an
+isolated copy causes real AddressSanitizer heap-use-after-free in
+map_foreach_keys.a and map_foreach_named_keys.a. Restoring the retain makes the
+same controls pass (0.662s). No build failure is counted as mutant evidence.
+Original mixed callback ABI and wider-helper never-refusal controls pass using
+complete declarations emitted from pinned, unmodified TypeScript (3.292s).
+
+Scoped compiler packages pass: IR 0.014s, lower 13.148s, native 55.921s and
+JavaScript 1.357s (View|Map|Contract|Callable|Tuple|Nullish|Nullable, excluding
+Phantom); lowering passes again after the final key refusal (4.773s). Vet passes.
+Extra Phantom tests have four failures; an isolated unmodified ffe428ab run
+reproduces all four: three erased-IR metadata comparisons and the cycle refusal.
+These are inherited and are not hidden by a full package/gate pass claim.
+Evidence and reproduction details are in evidence/merge-ffe428ab*.
+
+The filtered ordinary Map callback count measurement remeasures 39 selected
+fixtures and updates only those rows; its whole-table comparison fails because
+the selection omits other fixtures. That run is measurement evidence, not a
+counts-gate pass. Allocations equal frees in every selected callback row. The
+extra retained key snapshots and integration's boxed dispatch remain visible in
+the reference-count changes. No whole counts or repository gate is claimed.
+
+The full fresh oracle also located two nonconflicting rollback removals. Restore
+MaybeBoolean unpacking in native/maybe.go and the tuple marker in
+lower/expression.go; packed-boolean and nullable-tuple controls then pass in
+1.682s. The old primitive-array producer-gap expectation is replaced by actual
+storage controls: four valid scalar-array reads match Node, and wrong payload
+and missing-index mutants stop with exit 70 at the read (2.658s). These changes
+restore storage support without changing callable dispatch or its refusals.
+
+After those restorations, the scoped compiler gate passes with -failfast:
+IR 0.016s, lower 7.156s, native 38.225s, JavaScript 1.065s; vet passes.
+
+Final requested oracle selection is green (1066.495s):
+`ADAMIC_GATE_UNCACHED=0 go test ./internal/oracle -run
+'Map|Nullish|NullableSelection|CheckedView' -v -count=1 -timeout 45m`.
+Native executions were all fresh: 0 result-cache hits / 1,375 misses. Node had
+88 hits / 4,449 misses; no probe result was cached. The fresh preceding full
+selection exposed only the two restored storage dependencies and the outdated
+primitive-array gap expectation; their targeted controls and mutants pass.
+The definitive complete green log is evidence/merge-ffe428ab-final-green.log.gz.
+This finished merge unit is committed and pushed once under the standing rule;
+no additional worker branch was merged.

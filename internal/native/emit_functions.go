@@ -249,7 +249,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
+	invoke := "adamic_node_performance_invoke"
+	if closure != "" && expression.Direct == 0 {
+		invoke = e.viewCallableBoxedInvoke(expression, false)
+	}
+	call := fmt.Sprintf("%s(%s, %s, %d, %t)", invoke, closure, packed, len(arguments), expression.Returns == 0)
 	if expression.Direct > 0 {
 		call = fmt.Sprintf("%s(%s, %s, %d)", e.functionName(expression.Direct-1), closure, packed, len(arguments))
 	}
@@ -262,7 +266,8 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				received += ", " + strings.Join(arguments, ", ")
 			}
 			received += "}"
-			call = fmt.Sprintf("(%s != NULL ? adamic_node_performance_invoke(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0), %t) : %s(%s, %s, %d))", closure, closure, closure, received, packed, len(arguments), closure, expression.Returns == 0, method, receiver, packed, len(arguments))
+			receivedInvoke := e.viewCallableBoxedInvoke(expression, true)
+			call = fmt.Sprintf("(%s != NULL ? (%s->receiver ? %s(%s, %s, %d, %t) : %s(%s, %s, %d, %t)) : %s(%s, %s, %d))", closure, closure, receivedInvoke, closure, received, len(arguments)+1, expression.Returns == 0, invoke, closure, packed, len(arguments), expression.Returns == 0, method, receiver, packed, len(arguments))
 		}
 	}
 	if expression.Returns == 0 {

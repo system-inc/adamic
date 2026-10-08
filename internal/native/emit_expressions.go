@@ -351,7 +351,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.ViewRead.View != "" {
 			argument = e.viewArrayElementSlot(expression.ViewRead, source, index, owner)
 		}
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, argument, index, source)
+		invoke := e.viewCallableBoxedInvokeTypes([]ir.Type{expression.Element, ir.Number, ir.Array}, expression.Result, false)
+		e.line("adamic_value %s = %s(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3, false);", element, invoke, callback, argument, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
@@ -476,7 +477,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.
 		if expression.Callback != nil {
-			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
+			e.line("%s(%s, %s, %s);", sort, array, e.viewCallableBoxedComparator(expression.Element), e.value(expression.Callback))
 			e.closureThrown()
 			return array
 		}
@@ -559,7 +560,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}
-		// The read adapter owns its reference before a later set can release the entry.
+		// The read adapter owns its reference before a later set releases the entry.
 		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : %s->%s", slot, slot, member(expression.ValueType)))
 	case ir.MapSet:
 		object := e.value(expression.Map)

@@ -1,0 +1,9 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface QuestionToken {readonly value:number;}
+interface ColonToken {readonly value:number;}
+interface ConditionalExpression {readonly value:number;}
+interface Base {readonly createConditionalExpression:unknown;}
+interface Target {createConditionalExpression(condition: Expression, questionToken: QuestionToken | undefined, whenTrue: Expression, colonToken: ColonToken | undefined, whenFalse: Expression): ConditionalExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createConditionalExpression({value:3},undefined,{value:4},undefined,{value:5}).value}`);}
+probe({createConditionalExpression:(condition:number,questionToken:QuestionToken|undefined,whenTrue:Expression,colonToken:ColonToken|undefined,whenFalse:Expression):ConditionalExpression=>({value:12})});

@@ -26,6 +26,14 @@
       "read": "nullable class source value at entry.child write",
       "outcome": "named compile refusal before ambiguous reference is stored",
       "coordination": "broader callable conventions remain with lane 5"
+    },
+    {
+      "family": "slotless value or boxed/packed key Map forEach callback boundary",
+      "read": "the Map.forEach call",
+      "outcome": "named compile refusal; integration boxed callback dispatch and producer refusals remain unchanged",
+      "fixture_refusal_sites": 47,
+      "storage_evidence": "46 separate iterator companions exercise storage without extending the callable ABI",
+      "production_reaching_view_counts": "unmeasured"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -95,5 +103,6 @@
       "scope": "direct and nested readonly class fields widen to null, undefined, and both; class/undefined sources widen to boxed both with later source-alias class and undefined writes; independent nullable field reads reject class lookalikes",
       "production_reaching_view_counts": "unmeasured"
     }
-  ]
+  ],
+  "integration_base": "ffe428ab26eefb73154adbf570ad99e9c1b4f872"
 }

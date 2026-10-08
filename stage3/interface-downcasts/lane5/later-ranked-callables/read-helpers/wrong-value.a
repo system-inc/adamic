@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface EmitHelper {readonly value:number;}
+interface Base {readonly readEmitHelpers:unknown;}
+interface Target {readEmitHelpers(): EmitHelper[] | undefined;}
+function probe(value:Base):void {const context=value as Target;const helpers=context.readEmitHelpers();const helper=helpers===undefined?undefined:helpers[0];console.log(`${helper===undefined?0:helper.value}`);}
+probe({readEmitHelpers:3});

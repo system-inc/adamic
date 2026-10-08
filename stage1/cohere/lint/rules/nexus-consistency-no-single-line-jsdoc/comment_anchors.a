@@ -1,0 +1,185 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { isLineBreak, isSpace } from '../../../../typescript/scanner/characters.ts';
+
+function isParameterListKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+        case 'FunctionType':
+        case 'ConstructorType':
+        case 'CallSignature':
+        case 'ConstructSignature':
+        case 'MethodSignature':
+        case 'IndexSignature':
+            return true;
+        default:
+            return false;
+    }
+}
+function isBracedListKind(kind: string): boolean {
+    switch(kind) {
+        case 'ClassDeclaration':
+        case 'ClassExpression':
+        case 'Block':
+        case 'CaseBlock':
+        case 'ModuleBlock':
+        case 'InterfaceDeclaration':
+        case 'EnumDeclaration':
+        case 'TypeLiteral':
+        case 'ObjectLiteralExpression':
+        case 'ObjectBindingPattern':
+        case 'NamedImports':
+        case 'NamedExports':
+            return true;
+        default:
+            return false;
+    }
+}
+
+export class CommentAnchors {
+    readonly context: RuleContext;
+    readonly anchors: boolean[];
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.anchors = new Array<boolean>(context.source.length + 1).fill(false);
+    }
+    collect(node: ParseNode): boolean[] {
+        this.anchors[node.pos] = true;
+        this.anchors[node.end] = true;
+        for(const child of node.children) {
+            this.commentAnchors(child);
+        }
+        this.anchors[0] = true;
+        return this.reachableComments(this.anchors);
+    }
+    commentAnchors(index: number): void {
+        const node = this.context.node(index);
+        this.anchors[node.pos] = true;
+        this.anchors[node.end] = true;
+        const parameterList = isParameterListKind(node.kind);
+        const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
+        const bracedList = isBracedListKind(node.kind);
+        const arrayList = node.kind === 'ArrayLiteralExpression' || node.kind === 'ArrayBindingPattern';
+        const caseList = node.kind === 'CaseClause' || node.kind === 'DefaultClause';
+        if(parameterList || argumentsList || bracedList || arrayList || caseList) {
+            const children = new Map<number, number>();
+            const start = this.context.start(index);
+            for(const child of node.children) {
+                const childStart = Math.max(start, this.context.node(child).pos);
+                children.set(childStart, Math.max(children.get(childStart) ?? 0, this.context.node(child).end));
+            }
+            let depth = 0;
+            for(let position = start; position < node.end; position++) {
+                const childEnd = children.get(position);
+                if(childEnd !== undefined && childEnd > position) {
+                    position = childEnd - 1;
+                    continue;
+                }
+                const code = this.context.source.charCodeAt(position);
+                if(code === 47) {
+                    const next = this.context.source.charCodeAt(position + 1);
+                    if(next === 47) {
+                        while(position < node.end && !isLineBreak(this.context.source.charCodeAt(position))) {
+                            position++;
+                        }
+                        continue;
+                    }
+                    if(next === 42) {
+                        const close = this.context.source.indexOf('*/', position + 2);
+                        position = close < 0 ? node.end : close + 1;
+                        continue;
+                    }
+                }
+                const opening =
+                    parameterList || argumentsList ? (node.kind === 'IndexSignature' ? 91 : 40) : arrayList ? 91 : 123;
+                const closing = opening === 40 ? 41 : opening === 91 ? 93 : 125;
+                if(code === opening) {
+                    depth++;
+                    if(depth === 1) {
+                        this.anchors[position + 1] = true;
+                    }
+                }
+                if(code === closing) {
+                    depth--;
+                }
+                if(code === 44 && depth === 1) {
+                    this.anchors[position + 1] = true;
+                }
+                if(caseList && code === 58) {
+                    this.anchors[position + 1] = true;
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.commentAnchors(child);
+        }
+    }
+    reachableComments(anchors: readonly boolean[]): boolean[] {
+        const reachable = new Array<boolean>(this.context.source.length + 1).fill(false);
+        for(let anchor = 0; anchor < anchors.length; anchor++) {
+            if(anchors[anchor] !== true) {
+                continue;
+            }
+            let position = anchor;
+            while(
+                position < this.context.source.length &&
+                (this.context.source.charCodeAt(position) === 32 ||
+                    (this.context.source.charCodeAt(position) >= 9 && this.context.source.charCodeAt(position) <= 13))
+            ) {
+                position++;
+            }
+            if(anchor === 0 && this.context.source.startsWith('#!')) {
+                while(position < this.context.source.length && !isLineBreak(this.context.source.charCodeAt(position))) {
+                    position++;
+                }
+                // A shebang ends before its line break. Only this path bypasses Go's ASCII anchor guard.
+                while(
+                    position < this.context.source.length &&
+                    (isSpace(this.context.source.charCodeAt(position)) ||
+                        isLineBreak(this.context.source.charCodeAt(position)))
+                ) {
+                    position++;
+                }
+            }
+            if(this.context.source.charCodeAt(position) !== 47) {
+                continue;
+            }
+            for(;;) {
+                while(
+                    position < this.context.source.length &&
+                    (isSpace(this.context.source.charCodeAt(position)) ||
+                        isLineBreak(this.context.source.charCodeAt(position)))
+                ) {
+                    position++;
+                }
+                const opening =
+                    this.context.source.charCodeAt(position) === 47
+                        ? this.context.source.slice(position, position + 2)
+                        : '';
+                if(opening !== '//' && opening !== '/*') {
+                    break;
+                }
+                reachable[position] = true;
+                if(opening === '//') {
+                    while(
+                        position < this.context.source.length &&
+                        !isLineBreak(this.context.source.charCodeAt(position))
+                    ) {
+                        position++;
+                    }
+                }
+                else {
+                    const close = this.context.source.indexOf('*/', position + 2);
+                    position = close < 0 ? this.context.source.length : close + 2;
+                }
+            }
+        }
+        return reachable;
+    }
+}

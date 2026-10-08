@@ -55,7 +55,8 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
     }
     if (array->references) {
         const adamic_heap *reference = slot->reference;
-        if (reference == NULL) { if (!undefined_allowed) { array_view_failure(expression, expected, "nullish"); } return NULL; }
+        // A present NULL reference is undefined; null is the adamic_null object. The JavaScript backend names it the same way.
+        if (reference == NULL) { if (!undefined_allowed) { array_view_failure(expression, expected, "undefined"); } return NULL; }
         if (reference->kind == adamic_kind_number) { actual = 1; snapshot->number = ((const adamic_number_box *)reference)->number; }
         else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
         else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }

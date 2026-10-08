@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface SourceFile {readonly value:number;}
+type ModuleKind=number;
+interface Base {readonly getEmitModuleFormatOfFile:unknown;}
+interface Target {getEmitModuleFormatOfFile(sourceFile: SourceFile): ModuleKind;}
+function probe(value:Base):void {const host=value as Target;const file:SourceFile={value:3};console.log(`${host.getEmitModuleFormatOfFile(file)}`);}
+probe({getEmitModuleFormatOfFile:3});

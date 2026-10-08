@@ -1,0 +1,21 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (6.30s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/good (0.03s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/optional-values (0.03s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/optional-values.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/wrong-value (0.03s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/wrong-value.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/wrong-arity (0.02s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/wrong-arity.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/wrong-result (0.02s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/wrong-result.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/wrong-members (0.02s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/wrong-members.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/if-statement/wrong-parameter-payload (0.03s)
+        checked_views_callable_later_ranked_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/wrong-parameter-payload.a:7:71: Adamic 0.1 refuses checked view read of field createIfStatement with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=30
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.320s
+FAIL
