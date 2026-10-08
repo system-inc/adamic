@@ -1,0 +1,162 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -905,9 +905,32 @@
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+-		if err != nil {
+-			return nil, err
++		switch value.Type() {
++		case ir.Number:
++			value = ir.NumberToString{Value: value}
++		case ir.Boolean:
++			value = ir.BooleanToString{Value: value}
++		case ir.MaybeNumber, ir.MaybeBoolean:
++			value = ir.MaybeToString{Value: value}
++		case ir.Union:
++			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
++				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
++			}
++			value = ir.UnionToString{Value: value}
++		case ir.String:
++			value = l.spelled(span.AsTemplateSpan().Expression, value)
++		default:
++			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
++			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
++				value = l.spelled(span.AsTemplateSpan().Expression, value)
++				break
++			}
++			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
++			// its source; 0.1 has no use for any of it.
++			value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
++			if err != nil {
++				return nil, err
++			}
+ 		}
+ 		parts = append(parts, value)
+ 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
+--- a/internal/ir/library_errors.go
++++ b/internal/ir/library_errors.go
+@@ -7,6 +7,8 @@
+ 		return true
+ 	case StringCall:
+ 		return n.Method == "repeat" || n.Method == "padStart" || n.Method == "padEnd" || n.Method == "normalize"
++	case ObjectLiteral:
++		return n.Spread != nil
+ 	case ObjectCall:
+ 		return n.Method == "assign"
+ 	}
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -135,6 +135,7 @@
+ 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+ 		}
+ 		object := e.own(ir.Object, e.spreadCopy(literal, source))
++		e.checkThrown()
+ 		e.emptySpread(literal, source, object)
+ 		values := make([]string, 0, len(literal.Fields))
+ 		for _, field := range literal.Fields {
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -27,6 +27,7 @@
+ 		adamic_slot_cache cache = {0};
+ 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+ 		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
++ if (accessor != NULL && adamic_thrown != NULL) { adamic_release(object); return NULL; }
+ 		if (shape->references[index] && accessor == NULL) {
+ 			adamic_retain(object->slots[index].reference);
+ 		}
+--- a/internal/lower/class_accessors.go
++++ b/internal/lower/class_accessors.go
+@@ -363,7 +363,8 @@
+ 	return false
+ }
+ 
+-// Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
++// Spread callbacks have an explicit LibraryMayThrow edge. Static and setter-only
++// layouts still need separate presence and value representation proofs.
+ func (l *lowering) checkAccessorSpreads() error {
+ 	setterOnly := false
+ 	for _, class := range l.result.Classes {
+@@ -371,15 +372,7 @@
+ 			setterOnly = setterOnly || (class.Literal && accessor.Getter < 0)
+ 		}
+ 	}
+-	throwing := false
+-	for _, class := range l.result.Classes {
+-		for _, accessor := range class.Accessors {
+-			if class.Literal && accessor.Getter >= 0 && (l.result.Functions[accessor.Getter].MayThrow || l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
+-				throwing = true
+-			}
+-		}
+-	}
+-	if !throwing && !setterOnly && len(l.staticGlobals) == 0 {
++	if !setterOnly && len(l.staticGlobals) == 0 {
+ 		return nil
+ 	}
+ 	spread := false
+@@ -398,9 +391,6 @@
+ 	}
+ 	if spread && setterOnly {
+ 		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}
+-	}
+-	if spread {
+-		return &NotYet{Where: l.result.Source, What: "spreading an accessor literal whose getter may throw"}
+ 	}
+ 	return nil
+ }
+--- a/internal/lower/library_string.go
++++ b/internal/lower/library_string.go
+@@ -639,10 +639,7 @@
+ 		message = "String.prototype." + method + " requires that 'this' be a String"
+ 	}
+ 	l.result.Functions[function].Returns = returns
+-	l.result.Functions[function].Body = []ir.Statement{ir.Throw{Value: ir.ObjectLiteral{Fields: []ir.Field{
+-		{Name: "name", Value: ir.StringConstant{Index: l.constant("TypeError")}},
+-		{Name: "message", Value: ir.StringConstant{Index: l.constant(message)}},
+-	}}}}
++	l.result.Functions[function].Body = []ir.Statement{ir.Throw{Value: ir.MakeError{Name: ir.StringConstant{Index: l.constant("TypeError")}, Message: ir.StringConstant{Index: l.constant(message)}}}}
+ 	return ir.Call{Function: function, Arguments: values, Returns: returns}, true, nil
+ }
+ 
+--- a/internal/oracle/scout_22_slice2_test.go
++++ b/internal/oracle/scout_22_slice2_test.go
+@@ -10,7 +10,7 @@
+ 	"testing"
+ )
+ 
+-var scout22Slice2Fixtures = []string{"scout22_conversion_hints", "scout22_conversion_errors", "scout22_range_errors", "scout22_property_errors", "scout22_tsc_to_string"}
++var scout22Slice2Fixtures = []string{"scout22_conversion_hints", "scout22_conversion_errors", "scout22_range_errors", "scout22_property_errors", "scout22_tsc_to_string", "scout22_spread_errors"}
+ 
+ func init() {
+ 	for _, name := range scout22Slice2Fixtures {
+@@ -54,7 +54,7 @@
+ // Mutations remain well typed and terminate without diagnostics or leaks. The
+ // source Node execution is the independent witness of the semantic difference.
+ func TestScout22Slice2Mutants(t *testing.T) {
+-	for _, family := range []string{"conversion_hints", "conversion_errors", "property_errors", "range_errors", "padStart", "normalize", "toFixed", "toExponential", "toPrecision", "toString", "error_identity"} {
++	for _, family := range []string{"conversion_hints", "conversion_errors", "property_errors", "range_errors", "padStart", "normalize", "toFixed", "toExponential", "toPrecision", "toString", "error_identity", "spread_errors"} {
+ 		t.Run(family, func(t *testing.T) {
+ 			fixture := family
+ 			switch family {
+@@ -137,7 +137,7 @@
+ 						changed++
+ 						return call
+ 					}
+-				case "range_errors":
++				case "range_errors", "spread_errors":
+ 					if call, ok := value.(ir.StringCall); ok && call.Method == "repeat" && len(call.Arguments) > 0 {
+ 						// Skipping the negative-count error exercises the catch continuation.
+ 						if count, constant := call.Arguments[0].(ir.NumberConstant); !constant || count.Value < 0 {
+--- /dev/null
++++ b/internal/oracle/testdata/scout22_spread_errors.a
+@@ -0,0 +1,8 @@
++const source = {
++ label: 'owned'.repeat(2),
++ get text(): string {return 'value'.repeat(-1);},
++};
++try {const copy={...source}; console.log(copy.text);}
++catch(error) {if(error instanceof Error) console.log(`${error.name}: ${error.message}`);}
++console.log(source.label);
++console.log('after spread');
