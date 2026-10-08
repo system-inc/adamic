@@ -50,6 +50,9 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		return value
 	case *ast.StarExpr:
 		if name, ok := t.X.(*ast.Ident); ok {
+			if alias, ok := g.types[name.Name].(*ast.SelectorExpr); ok {
+				return g.copy(&ast.StarExpr{X: alias}, value)
+			}
 			if _, ok := g.types[name.Name].(*ast.StructType); ok {
 				g.needed[name.Name] = true
 				return "latentCopyPointer_" + name.Name + "(" + value + ", seen)"
