@@ -95,6 +95,22 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 				}
 				return
 			}
+			if probe.name == "incremental-bundle-each-frontier" || probe.name == "incremental-union-each-frontier" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				want := run{stdout: []byte(probe.source)}
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(want, got); diff != "" {
+						t.Errorf("%s; got %#v", diff, got)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			switch failure := err.(type) {
 			case *lower.Refused:
 				if failure.What != expected[probe.name] {
