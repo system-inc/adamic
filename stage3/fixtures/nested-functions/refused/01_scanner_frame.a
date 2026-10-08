@@ -46,7 +46,7 @@ type ErrorCallback = (message: number, length: number, arg0: unknown) => void;
 const Debug = { assert: (condition: boolean, message?: string): void => { if (!condition) throw new Error(message ?? 'assertion'); } };
 function codePointAt(s: string, i: number): number {
     // TODO(jakebailey): this is wrong and should have ?? 0; but all users are okay with it
-    return s.codePointAt(i)!;
+    const point = s.codePointAt(i); if (point === undefined) { throw new Error('codePointAt is only called within the string'); } return point;
 }
 function isDigit(ch: number): boolean {
     return ch >= CharacterCodes._0 && ch <= CharacterCodes._9;
@@ -66,7 +66,7 @@ function createScanner(
     // Why var? It avoids TDZ checks in the runtime which can be costly.
     // See: https://github.com/microsoft/TypeScript/issues/52924
     /* eslint-disable no-var */
-    var text = textInitial!;
+    var text = textInitial ?? '';
 
     // Current position (end position of text of current token)
     var pos: number;
@@ -279,7 +279,7 @@ function createScanner(
 
     function setText(newText: string | undefined, start: number | undefined, length: number | undefined) {
         text = newText || "";
-        end = length === undefined ? text.length : start! + length;
+        end = length === undefined ? text.length : (start === undefined ? NaN : start) + length;
         resetTokenState(start || 0);
     }
 
@@ -309,7 +309,7 @@ function createScanner(
         fullStartPos = position;
         tokenStart = position;
         token = SyntaxKind.Unknown;
-        tokenValue = undefined!;
+        tokenValue = '';
         tokenFlags = TokenFlags.None;
     }
 
