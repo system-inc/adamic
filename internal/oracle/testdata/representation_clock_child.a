@@ -1,0 +1,3 @@
+interface NodeView { readonly kind: number; readonly text: string; }
+function render<Child extends NodeView>(child: Child): string { return `${child.kind}:${child.text}`; }
+console.log(render({ kind: 1, text: 'leaf' }));
