@@ -1,0 +1,40 @@
+{
+  "exit": 1,
+  "wallSeconds": 2014.7604621949977,
+  "nproc": "5",
+  "loadStart": [
+    0.28271484375,
+    2.01123046875,
+    2.38134765625
+  ],
+  "loadEnd": [
+    1.587890625,
+    1.93798828125,
+    2.24560546875
+  ],
+  "loadMedian1m": 1.18408203125,
+  "log": "/workspace/wave15-facts-final.jsonl",
+  "testCounts": {
+    "pass": 118,
+    "skip": 1,
+    "fail": 1
+  },
+  "topLevelCounts": {
+    "pass": 33,
+    "skip": 1,
+    "fail": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": [
+    "TestRulesAgree"
+  ],
+  "fullPackage": "FAIL: required TestRulesAgree stopped on shared fix parse-refusal",
+  "capturedArrowCases": 83,
+  "matchedArrowCasesBeforeStop": 14,
+  "capturedThrowCases": 48,
+  "matchedThrowCasesBeforeStop": 5,
+  "compilerAndRepositoryFiles": 883,
+  "typedCompilerCorpus": false
+}

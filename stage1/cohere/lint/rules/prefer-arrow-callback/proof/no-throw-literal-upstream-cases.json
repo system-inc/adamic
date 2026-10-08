@@ -1,0 +1,480 @@
+[
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "async function foo() { throw await bar; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "class C { #field; foo() { throw foo.#field; } }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare const foo: unknown;\nthrow 'a' ?? 'b';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 1,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare const foo: unknown;\nthrow new Error() ?? 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare let foo: unknown;\nthrow foo ??= 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function f() { throw; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function foo() { throw undefined; }\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 18,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "undef",
+        "message": "This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function foo(undefined) { throw undefined; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function* foo() { var index = 0; throw yield index++; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'a' + 'b';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'error';",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'literal' && 'not an Error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'literal' && new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 0;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 1, 2, new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw Error('error');\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw `${err}`;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 16,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw a;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw false;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo && 'literal'\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo &&= 'literal'\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo &= new Error();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo += new Error();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo = 'error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo = new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? 'literal' : new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? 'not an Error' : 'literal';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? new Error() : 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo.bar ||= 'literal'\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo.bar;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo[bar] ??= 'literal'\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo[bar];\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error('error');\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error() || 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error(), 1, 2, 3;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 28,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new foo();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw null;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 12,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw obj?.foo\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw obj?.foo()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw tag `${foo}`;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw undefined;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "undef",
+        "message": "This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw {};\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 10,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "try {throw new Error();} catch (e) {throw e;};\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "var b = new Error(); throw 'a' + b;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 22,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "var e = new Error(); throw e;\n",
+    "outcome": "Clean"
+  }
+]

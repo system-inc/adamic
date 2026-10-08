@@ -1,0 +1,17 @@
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh
+# Setup ready 195.824s; nproc 5; CPU quota 4. No setup failure.
+go run ./cmd/lint-registry
+gofmt -l stage1/cohere/lint/rules/prefer-arrow-callback/oracle.go
+go vet ./stage1/cohere/lint ./cmd/lint-registry
+# Failed focused diagnostic run (then no-throw-literal parked):
+go test -json -count=1 -timeout=3h ./stage1/cohere/lint -run 'TestOwnedWitnesses|TestRulesAgree|TestMutants/(no-throw-literal|prefer-arrow-callback)'
+# Complete package, all inputs:
+GOCACHE=/workspace/scratch/wave15-go-cache GOMAXPROCS=4 GOFLAGS=-buildvcs=false ADAMIC_LINT_BENCH=1 ADAMIC_TYPESCRIPT_SOURCE=/tmp/wave15-checker-typescript ADAMIC_LINT_PROFILE_DIR=/workspace/scratch/wave15-facts-final-profiles ADAMIC_LINT_PROFILE_SNAPSHOTS=/workspace/scratch/wave15-facts-final-profiles go test -json -count=1 -timeout=3h ./stage1/cohere/lint
+# TypeScript compiler corpus pin: 050880ce59e30b356b686bd3144efe24f875ebc8.
+# All outputs went to files; no test-output pipelines.
+# Minimal refusal reproducer uses the existing shared scanner and oracle:
+# /workspace/scratch/wave15-arrow-repro/{source.ts,tsconfig.json,manifest.txt}
+# scanner --manifest manifest.txt --record facts
+# node oracle/node.mjs stage1/cohere/lint/main.ts --manifest manifest.txt --replay facts
+# oracle --manifest manifest.txt

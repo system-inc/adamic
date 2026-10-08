@@ -1,0 +1,6 @@
+foo(function() {});
+foo(function named() { named(); });
+foo(function named() { const named = 1; named; });
+foo(function() { arguments; });
+foo(function(arguments) { arguments; });
+foo(function() { return this; }.bind(this));

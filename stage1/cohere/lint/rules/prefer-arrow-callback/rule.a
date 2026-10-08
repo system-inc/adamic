@@ -1,0 +1,329 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { SuggestionEdit } from '../../suggestions.a';
+import { message } from './messages.a';
+export class ArrowCallbackFrame {
+    usesThis = false;
+    usesSuper = false;
+    usesNewTarget = false;
+    usesArguments = false;
+}
+export class ArrowCallbackInfo {
+    callback = false;
+    lexical = false;
+    member = -1;
+    call = -1;
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowNamed: boolean;
+    readonly allowUnbound: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.allowNamed = context.settings.read('allownamedfunctions', 'false') === 'true';
+        this.allowUnbound = context.settings.read('allowunboundthis', 'true') === 'true';
+    }
+    callback(index: number): ArrowCallbackInfo {
+        const info = new ArrowCallbackInfo();
+        let current = index;
+        let bound = false;
+        while(current >= 0) {
+            const parent = this.context.parents[current] ?? -1;
+            if(parent < 0) {
+                return info;
+            }
+            const node = this.context.node(parent);
+            if(['ConditionalExpression', 'ParenthesizedExpression'].includes(node.kind)) {
+                current = parent;
+                continue;
+            }
+            if(node.kind === 'BinaryExpression') {
+                if(
+                    !['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                        this.context.node(node.children[1] ?? -1).kind,
+                    )
+                ) {
+                    return info;
+                }
+                current = parent;
+                continue;
+            }
+            if(node.kind === 'PropertyAccessExpression') {
+                const name = this.context.node(node.children[node.children.length - 1] ?? -1);
+                if(node.children[0] !== current || name.kind !== 'Identifier' || name.text !== 'bind') {
+                    return info;
+                }
+                let callee = parent;
+                while(
+                    (this.context.parents[callee] ?? -1) >= 0 &&
+                    this.context.node(this.context.parents[callee] ?? -1).kind === 'ParenthesizedExpression'
+                ) {
+                    callee = this.context.parents[callee] ?? -1;
+                }
+                const call = this.context.parents[callee] ?? -1;
+                if(call < 0) {
+                    return info;
+                }
+                const application = this.context.node(call);
+                if(application.kind !== 'CallExpression' || application.children[0] !== callee) {
+                    return info;
+                }
+                if(!bound) {
+                    bound = true;
+                    const args = application.children.slice(application.children.length - application.list);
+                    info.lexical = args.length === 1 && this.context.node(args[0] ?? -1).kind === 'ThisKeyword';
+                    info.member = parent;
+                    info.call = call;
+                }
+                current = call;
+                continue;
+            }
+            if(['CallExpression', 'NewExpression'].includes(node.kind)) {
+                info.callback = node.children[0] !== current;
+                return info;
+            }
+            return info;
+        }
+        return info;
+    }
+    symbol(index: number): SymbolDetails | undefined {
+        const checker = this.context.checker;
+        if(checker === undefined) { return undefined; }
+        const answer = checker.ask(index, 'node-symbol-details');
+        return answer.value === undefined ? undefined : new SymbolDetails(answer.value);
+    }
+    references(index: number, name: number, spelling: string, identity: number): boolean {
+        const node = this.context.node(index);
+        if(index !== name && node.kind === 'Identifier' && node.text === spelling && this.symbol(index)?.symbolId === identity) { return true; }
+        for(const child of node.children) {
+            if(this.references(child, name, spelling, identity)) { return true; }
+        }
+        return false;
+    }
+    selfReference(index: number): boolean {
+        const name = this.context.name(index);
+        if(name < 0) { return false; }
+        const declared = this.symbol(name);
+        if(declared === undefined || !declared.present) { return false; }
+        return this.references(index, name, this.context.node(name).text, declared.symbolId);
+    }
+    hasDeclarations(index: number): boolean {
+        const symbol = this.symbol(index);
+        return symbol !== undefined && symbol.declarations.length > 0;
+    }
+    declarationName(index: number): boolean {
+        const parent = this.context.parents[index] ?? -1;
+        if(parent < 0) {
+            return false;
+        }
+        return (
+            [
+                'VariableDeclaration',
+                'Parameter',
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ClassDeclaration',
+                'BindingElement',
+            ].includes(this.context.node(parent).kind) && this.context.name(parent) === index
+        );
+    }
+    walk(index: number, owner: ArrowCallbackFrame): void {
+        const node = this.context.node(index);
+        if(node.kind === 'ThisKeyword') {
+            owner.usesThis = true;
+        }
+        if(node.kind === 'SuperKeyword') {
+            owner.usesSuper = true;
+        }
+        if(node.kind === 'MetaProperty' && this.context.raw(index).startsWith('new')) {
+            owner.usesNewTarget = true;
+        }
+        if(
+            node.kind === 'Identifier' &&
+            node.text === 'arguments' &&
+            !this.declarationName(index) &&
+            !this.hasDeclarations(index)
+        ) {
+            owner.usesArguments = true;
+        }
+        const opens = [
+            'FunctionDeclaration',
+            'FunctionExpression',
+            'MethodDeclaration',
+            'GetAccessor',
+            'SetAccessor',
+            'Constructor',
+            'ClassStaticBlockDeclaration',
+        ].includes(node.kind);
+        const next = opens ? new ArrowCallbackFrame() : owner;
+        for(const child of node.children) {
+            this.walk(child, next);
+        }
+    }
+    judge(index: number, frame: ArrowCallbackFrame): void {
+        const node = this.context.node(index);
+        if(this.allowNamed && this.context.name(index) >= 0) {
+            return;
+        }
+        if(
+            node.children.some((child) => this.context.node(child).kind === 'AsteriskToken') ||
+            this.selfReference(index) ||
+            frame.usesArguments
+        ) {
+            return;
+        }
+        const info = this.callback(index);
+        if(
+            !info.callback ||
+            (this.allowUnbound && frame.usesThis && !info.lexical) ||
+            frame.usesSuper ||
+            frame.usesNewTarget
+        ) {
+            return;
+        }
+        this.context.reportNode(index, 'prefer-arrow-callback', 'preferArrowCallback', message, this.fix(index, frame, info));
+    }
+    comment(start: number, end: number): boolean {
+        const text = this.context.source;
+        if(start < 0 || end > text.length || start >= end) {
+            return false;
+        }
+        for(let at = start; at < end - 1; at++) {
+            const quote = text[at] ?? '';
+            if(["'", '"', '`'].includes(quote)) {
+                at++;
+                while(at < end && text[at] !== quote) {
+                    if(text.charCodeAt(at) === 92) {
+                        at++;
+                    }
+                    at++;
+                }
+            }
+            else if(quote === '/' && (text[at + 1] === '/' || text[at + 1] === '*')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    repair(start: number, end: number, text: string): SuggestionEdit {
+        return new SuggestionEdit(start, end, text);
+    }
+    wrapped(index: number): boolean {
+        const node = this.context.node(index);
+        const parent = this.context.parents[index] ?? -1;
+        if(parent >= 0 && this.context.node(parent).kind === 'ParenthesizedExpression') {
+            return true;
+        }
+        const text = this.context.source;
+        let before = node.pos - 1;
+        while(before >= 0 && [' ', '\t', '\n', '\r'].includes(text[before] ?? '')) {
+            before--;
+        }
+        let after = node.end;
+        while(after < text.length && [' ', '\t', '\n', '\r'].includes(text[after] ?? '')) {
+            after++;
+        }
+        return before >= 0 && after < text.length && text[before] === '(' && text[after] === ')';
+    }
+    fix(index: number, frame: ArrowCallbackFrame, info: ArrowCallbackInfo): SuggestionEdit[] {
+        const empty: SuggestionEdit[] = [];
+        if(!info.lexical && frame.usesThis) {
+            return empty;
+        }
+        const node = this.context.node(index);
+        const parameters = node.children.filter((child) => this.context.node(child).kind === 'Parameter');
+        const seen: string[] = [];
+        let identifiers = true;
+        let duplicate = false;
+        for(const parameter of parameters) {
+            const name = this.context.name(parameter);
+            if(name < 0 || this.context.node(name).kind !== 'Identifier') {
+                identifiers = false;
+                break;
+            }
+            const text = this.context.node(name).text;
+            if(seen.includes(text)) {
+                duplicate = true;
+            }
+            seen.push(text);
+        }
+        if(identifiers && duplicate) {
+            return empty;
+        }
+        const first = parameters[0] ?? -1;
+        if(first >= 0 && this.context.node(this.context.name(first)).text === 'this') {
+            return empty;
+        }
+        const text = this.context.source;
+        const keyword = text.indexOf('function', node.pos);
+        const body = node.children[node.children.length - 1] ?? -1;
+        if(keyword < 0 || keyword + 8 > node.end || body < 0) {
+            return empty;
+        }
+        const block = this.context.node(body);
+        const paren = text.indexOf('(', node.pos);
+        if(paren < keyword + 8 || paren >= block.pos) {
+            return empty;
+        }
+        const async = node.children.some((child) => this.context.node(child).kind === 'AsyncKeyword');
+        if(async && text.slice(keyword + 8, paren).includes('\n')) {
+            return empty;
+        }
+        const repairs: SuggestionEdit[] = [];
+        if(info.lexical) {
+            if(
+                info.member < 0 ||
+                info.call < 0 ||
+                this.context.parents[index] !== info.member ||
+                this.context.parents[info.member] !== info.call
+            ) {
+                return empty;
+            }
+            const member = this.context.node(info.member);
+            const start = this.context.node(member.children[0] ?? -1).end;
+            const end = this.context.node(info.call).end;
+            if(end <= start || this.comment(start, end)) {
+                return empty;
+            }
+            repairs.push(this.repair(start, end, ''));
+        }
+        if(this.comment(keyword + 8, paren)) {
+            repairs.push(this.repair(keyword, keyword + 8, ''));
+            const name = this.context.name(index);
+            if(name >= 0) {
+                const named = this.context.node(name);
+                repairs.push(this.repair(this.context.start(name), named.end, ''));
+            }
+        }
+        else {
+            repairs.push(this.repair(keyword, paren, ''));
+        }
+        let insertion = block.pos;
+        while(insertion > 0 && [' ', '\t', '\n', '\r'].includes(text[insertion - 1] ?? '')) {
+            insertion--;
+        }
+        repairs.push(this.repair(insertion, insertion, ' =>'));
+        const replaced = info.lexical && info.call >= 0 ? info.call : index;
+        const parent = this.context.parents[replaced] ?? -1;
+        const kind = parent >= 0 ? this.context.node(parent).kind : '';
+        if(
+            parent >= 0 &&
+            !['CallExpression', 'NewExpression', 'ConditionalExpression'].includes(kind) &&
+            !this.wrapped(replaced) &&
+            !this.wrapped(index)
+        ) {
+            const span = this.context.node(replaced);
+            repairs.push(this.repair(this.context.start(replaced), this.context.start(replaced), '('));
+            repairs.push(this.repair(span.end, span.end, ')'));
+        }
+        return repairs;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(this.context.checker === undefined) { return; }
+        const frame = new ArrowCallbackFrame();
+        for(const child of node.children) { this.walk(child, frame); }
+        this.judge(index, frame);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

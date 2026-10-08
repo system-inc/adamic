@@ -1,0 +1,1199 @@
+[
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "(function foo() {})();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "const x = new Promise(function(resolve) { resolve(); });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "const x = new Promise((resolve) => { resolve(); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((a:string) => a);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((bar || function() {}).bind(this))\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 13,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() { return this; }?.bind)(this));\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 6,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() { this.bar(); }).bind(obj).bind(this))\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() {}).bind.bar)\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(a => a);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(a => { (function() {}); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function\n () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function /*\n*/ () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function /* c */ () { return 1; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(async  /* c */ () => { return 1; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function // c\n () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(bar ? function() {} : function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 11,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(bar ? () => {} : () => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(bar || function() { this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 12,
+        "endLine": 1,
+        "endColumn": 32,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(bar || (() => { this; }));\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { arguments; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { arguments; }.bind(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { bar(); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { bar; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { baz(); });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { const bar = 1; bar; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { function bar() {} bar(); });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { new.target; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { new.target; }.bind(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { this; }.bind(this, somethingElse));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((a) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a:string) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((a:string) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a:string) {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => { (() => this); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (function() { this; }); });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => { (function() { this; }); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { arguments; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { function inner() { arguments; } });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 51,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { return this; }?.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 32,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => { return this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.bind(obj));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => { this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.call(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {}.bind(this).bind(obj))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((() => {}).bind(obj))\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {}.bind(this, somethingElse))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((() => {}).bind(this, somethingElse))\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function():string { return 'foo' });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(():string => { return 'foo' });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((a) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:any) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((a:any) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:string) { this; });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:string) {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((a:string) => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(arguments) { arguments; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((arguments) => { arguments; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(arguments:any) { arguments; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo((arguments:any) => { arguments; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function*() {});\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(nativeCb || function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo(nativeCb || (() => {}));\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo?.(function() { return this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 7,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo?.(() => { return this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo?.(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 7,
+        "endLine": 1,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "foo?.(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new (function() {})();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new Foo(function() { this; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new Foo(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "new Foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "obj.test('clean', function (foo) { this.foo = 'Cleaned!'; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return baz; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 63,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(async (foo = 1, bar = 2, baz = 3) => { return baz; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return this; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 64,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(async (foo = 1, bar = 2, baz = 3) => { return this; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return baz; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 84,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(async (foo:number = 1, bar:number = 2, baz:number = 3) => { return baz; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return this; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 85,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(async (foo:number = 1, bar:number = 2, baz:number = 3) => { return this; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) { return foo; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 96,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) => { return foo; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) { return foo; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 117,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) => { return foo; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* no params */ ) { })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux(( /* no params */ ) => { })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(baz, baz) { })\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(baz:string, baz:string) { })\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 41,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) { return foo + bar; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 91,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) => { return foo + bar; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * 2; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo, bar, baz) => { return foo * 2; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * bar; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo, bar, baz) => { return foo * bar; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * this.qux; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo, bar, baz) => { return foo * this.qux; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:any, bar:any, baz:any) { return foo * this.qux; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 67,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo:any, bar:any, baz:any) => { return foo * this.qux; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:number, bar:number, baz:number) { return foo * bar; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 71,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo:number, bar:number, baz:number) => { return foo * bar; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:string, bar:number, baz:string) { return foo * 2; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 69,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "qux((foo:string, bar:number, baz:string) => { return foo * 2; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test(\n                function (\n                    ...args\n                ) /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 7,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "test(\n                (\n                    ...args\n                ) => /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test(\n                function ()\n                { }\n            );\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 3,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedsource": "test(\n                () =>\n                { }\n            );\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test('clean', function (this: any) { this.foo = 'Cleaned!';});\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test('foo', function (this: any) {});\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 13,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "var foo = function foo() {};\n",
+    "outcome": "Clean"
+  }
+]

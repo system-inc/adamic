@@ -1,0 +1,2 @@
+foo(function() { return this; });
+foo(function named() {});

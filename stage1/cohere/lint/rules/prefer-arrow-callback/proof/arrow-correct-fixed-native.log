@@ -1,0 +1,8 @@
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped no-class-assign no program
+skipped no-new-native-nonconstructor no program
+skipped no-new-wrappers no program
+skipped prefer-arrow-callback no program
+skipped symbol-description no program
+skipped valid-typeof no program
+fixed	foo(bar || (() => { this; }));\u000a

@@ -1,0 +1,15 @@
+{
+  "name": "prefer-arrow-callback",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "FunctionExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave15PreferArrowCallback",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferArrowCallback"
+}
