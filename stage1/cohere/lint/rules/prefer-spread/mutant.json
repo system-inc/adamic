@@ -1,0 +1,5 @@
+{
+  "name": "prefer-spread-null-receiver-reversed",
+  "from": "if(!isNullOrUndefined(arena, thisArgument))",
+  "to": "if(isNullOrUndefined(arena, thisArgument))"
+}
