@@ -305,13 +305,20 @@ recordOnly() {
   ! printf '%s\n' "${changed}" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep -q .
 }
 # A commit's newest finished whole gate: green, red or void; running while one is unfinished; none without a record.
+# Whose records: box (a whole gate on a box, the default), pool (Loom's pool, full.json "runner": "pool"), or any.
 recordState() {
-  local sha=$1 ref status finished
-  ref=$(git -C "${here}" ls-remote origin "refs/heads/gate-logs/${sha:0:12}/*" | awk '$2 ~ /\/full-main$/ {print $2}' | sort | tail -1) || true
-  [ -n "${ref}" ] || { echo none; return; }
-  git -C "${here}" fetch -q origin "${ref}" || { echo none; return; }
-  status=$(git -C "${here}" show FETCH_HEAD:status.txt 2> /dev/null | head -1)
-  finished=$(git -C "${here}" show FETCH_HEAD:full.json 2> /dev/null | grep -c '"finished": true' || true)
+  local sha=$1 which=${2:-box} ref refs status finished runner
+  refs=$(git -C "${here}" ls-remote origin "refs/heads/gate-logs/${sha:0:12}/*" | awk '$2 ~ /\/full-main$/ {print $2}' | sort -r) || true
+  for ref in ${refs}; do
+    git -C "${here}" fetch -q origin "${ref}" || continue
+    runner=box
+    git -C "${here}" show FETCH_HEAD:full.json 2> /dev/null | grep -q '"runner": "pool"' && runner=pool
+    [ "${which}" = any ] || [ "${which}" = "${runner}" ] || continue
+    status=$(git -C "${here}" show FETCH_HEAD:status.txt 2> /dev/null | head -1)
+    finished=$(git -C "${here}" show FETCH_HEAD:full.json 2> /dev/null | grep -c '"finished": true' || true)
+    break
+  done
+  [ -n "${status:-}" ] || { echo none; return; }
   case ${status} in
     void:*) echo void ;;
     green:*) [ "${finished}" -gt 0 ] && echo green || echo running ;;
@@ -326,7 +333,7 @@ confirmedBy() {
   for candidate in $(git -C "${here}" rev-list -n 20 "${main}"); do
     [ "${candidate}" = "${main}" ] && continue
     recordOnly "${candidate}" "${main}" || continue
-    [ "$(recordState "${candidate}")" = green ] && { echo "${candidate}"; return 0; }
+    [ "$(recordState "${candidate}" "$(poolPromoted && echo any || echo box)")" = green ] && { echo "${candidate}"; return 0; }
   done
   return 1
 }
@@ -366,15 +373,32 @@ pregateAllows() {
   verdict=$(head -1 "${pregates}/$1")
   [ "${verdict%% *}" = green ]
 }
+# Loom's pool as a landing gate (@system_adamic, Oct 8 23:51Z). Until the parent rules parity proven
+# (${state}/pool-promoted, written by hand then), every request also runs on a box, whatever the pool did, so the two
+# can be compared test for test. Once promoted, a request the pool finished takes a box only as the spot-check: about
+# one in five, chosen by its sha so every loop agrees.
+poolPromoted() {
+  [ -f "$(dirname "${requests}")/pool-promoted" ]
+}
+spotCheck() {
+  [ $(( 16#${1:0:8} % 5 )) -eq 0 ]
+}
 nextRequest() {
   local sha
   [ -s "${requests}" ] || return 1
   while read -r sha; do
     [ -n "${sha}" ] || continue
     pregateAllows "${sha}" || continue
-    case $(recordState "${sha}") in
-      none | void) claim "${sha}" && { echo "${sha}"; return 0; } ;;
+    case $(recordState "${sha}" box) in
+      none | void) ;;
+      *) continue ;;
     esac
+    if poolPromoted && ! spotCheck "${sha}"; then
+      case $(recordState "${sha}" pool) in
+        green | red) continue ;;
+      esac
+    fi
+    claim "${sha}" && { echo "${sha}"; return 0; }
   done < "${requests}"
   return 1
 }

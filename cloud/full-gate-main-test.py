@@ -44,12 +44,15 @@ class FullGateLoopTests(unittest.TestCase):
         git(self.work, '-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-qm', 'c')
         return git(self.work, 'rev-parse', 'HEAD')
 
-    def record(self, sha, status, finished=True, stamp='20261008T220000Z'):
+    def record(self, sha, status, finished=True, stamp='20261008T220000Z', runner=None):
         """A published whole-gate record of sha, as publish() leaves it."""
         tree = Path(self.tmp.name) / ('record-' + sha[:12] + stamp)
         tree.mkdir()
         (tree / 'status.txt').write_text(status + '\n')
-        (tree / 'full.json').write_text(json.dumps({'finished': True} if finished else {}, indent=2) + '\n')
+        content = {'finished': True} if finished else {}
+        if runner:
+            content['runner'] = runner
+        (tree / 'full.json').write_text(json.dumps(content, indent=2) + '\n')
         index = str(tree) + '.index'
         environment = dict(os.environ, GIT_INDEX_FILE=index)
         gitDirectory = git(self.work, 'rev-parse', '--absolute-git-dir')
@@ -149,6 +152,28 @@ class FullGateLoopTests(unittest.TestCase):
         (self.state / 'pregate' / red).unlink()
         self.call('release %s' % green)
         self.assertEqual(self.call('nextRequest'), (0, red))
+
+    def test_the_pool_s_record_counts_only_after_promotion_and_then_a_fifth_still_take_a_box(self):
+        shas = [self.code, self.records, self.changed]
+        due = [sha for sha in shas if int(sha[:8], 16) % 5 == 0]
+        undue = [sha for sha in shas if int(sha[:8], 16) % 5 != 0]
+        if not undue:
+            self.skipTest('no commit here falls outside the spot-check')
+        sha = undue[0]
+        self.record(sha, 'green: %s full gate on the pool' % sha, runner='pool')
+        (self.state / 'requests').write_text(sha + '\n')
+        self.assertEqual(self.call('recordState %s box' % sha), (0, 'none'))
+        self.assertEqual(self.call('recordState %s pool' % sha), (0, 'green'))
+        # Parity phase: the box runs it beside the pool.
+        self.assertEqual(self.call('nextRequest'), (0, sha))
+        self.call('release %s' % sha)
+        # Promoted: the pool's record stands, unless the sha is due a spot-check.
+        (self.state / 'pool-promoted').write_text('parity proven\n')
+        self.assertEqual(self.call('nextRequest')[0], 1)
+        if due:
+            self.record(due[0], 'green: %s full gate on the pool' % due[0], runner='pool', stamp='20261008T221000Z')
+            (self.state / 'requests').write_text(due[0] + '\n')
+            self.assertEqual(self.call('nextRequest'), (0, due[0]))
 
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
