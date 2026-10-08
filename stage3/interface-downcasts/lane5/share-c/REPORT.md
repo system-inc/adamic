@@ -1,3 +1,11 @@
+Built: 17 further Map pairs / 22 ranked candidate reads; cumulative share c 324 pairs / 931 reads. Fixtures, tests, evidence and own counts only.
+Commits: continues f4d80337 on codex/views-callables-c; delivery SHA is reported after push.
+Commands and outputs: focused oracle PASS 15.585s; verifier PASS 324 pairs / 648 fixtures; changed mutant harness and boundary suite PASS 8.831s; scoped counts update PASS 12.602s and verification PASS 12.052s.
+Mutants: seventeen new Map receiver-certificate omissions caught in native and JavaScript, 34 executed comparisons; all 47 Map pairs rechecked after the test selector gained generic Target support.
+Uncovered: no whole-tsc lowering or arbitrary generic-instantiation claim; three new Map source-schema boundaries remain excluded; delegated families and remaining ranked contexts stay listed; no compiler/runtime changes.
+
+Latest batch: continuation/batch03/REPORT.md. Prior evidence follows.
+
 Built: 20 further Map pairs / 136 ranked candidate reads; cumulative share c 307 pairs / 909 reads. Fixtures, tests, evidence and own counts only.
 Commits: continues 85381238 on codex/views-callables-c; delivery SHA is reported after push.
 Commands and outputs: focused Map oracle PASS 15.771s; alias/enum Map oracle PASS 3.750s; verifier PASS 307 pairs / 614 fixtures; scoped counts update and verification PASS.

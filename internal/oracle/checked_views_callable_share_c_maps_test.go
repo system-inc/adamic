@@ -61,7 +61,7 @@ func TestCheckedViewCallableShareCMapMutants(t *testing.T) {
 			changed := 0
 			omit := func(x ir.Expression) ir.Expression {
 				field, ok := x.(ir.Property)
-				if ok && field.View == "(value as Target).items" && field.ViewContract != 0 {
+				if ok && field.Name == "items" && field.View != "" && field.ViewContract != 0 {
 					field.ViewContract = 0
 					changed++
 					return field

@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+interface MutableFileSystemEntries {readonly value:number;}
+interface OriginalMember<K,V> {delete(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, false | MutableFileSystemEntries>;}
+function probe(value:Base):void {const cachedReadDirectoryResult=(value as Target).items;cachedReadDirectoryResult.delete("missing");console.log("completed");}
+const sourceMap:Map<string,false | MutableFileSystemEntries>=new Map<string,false | MutableFileSystemEntries>();probe({items:sourceMap});

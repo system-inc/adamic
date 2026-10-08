@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+interface Type {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, Type[]>;}
+function probe(value:Base):void {const subtypeReductionCache=(value as Target).items;subtypeReductionCache.get("missing");console.log("completed");}
+const sourceMap:Map<string,Type[]>=new Map<string,Type[]>();probe({items:sourceMap});

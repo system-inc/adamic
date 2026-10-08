@@ -1,0 +1,9 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+const enum InternalSymbolName {Call="__call",Constructor="__constructor",New="__new",Index="__index",ExportStar="__export",Global="__global",Missing="__missing",Type="__type",Object="__object",JSXAttributes="__jsxAttributes",Class="__class",Function="__function",Computed="__computed",Resolving="__resolving__",ExportEquals="export=",Default="default",This="this",InstantiationExpression="__instantiationExpression",ImportAttributes="__importAttributes"}
+interface TransientSymbol {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<__String, TransientSymbol>;}
+function probe(value:Base):void {const lateSymbols=(value as Target).items;lateSymbols.get(InternalSymbolName.Call);console.log("completed");}
+const sourceMap:Map<__String,TransientSymbol>=new Map<__String,TransientSymbol>();probe({items:sourceMap});

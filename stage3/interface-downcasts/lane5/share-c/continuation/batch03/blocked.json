@@ -1,0 +1,108 @@
+[
+  {
+    "rank": 1706,
+    "reads": 1,
+    "type": "Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>",
+    "read": "indexSignatureMap.get",
+    "declaration": "get(key: K): V | undefined;",
+    "observations": [
+      {
+        "variant": "good",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>, found Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>\n"
+      },
+      {
+        "variant": "wrong-map",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>, found Map<number, boolean>\n"
+      }
+    ],
+    "additional_observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "js",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>, found Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>\n"
+      }
+    ],
+    "change_needed": "Emit compatible immutable source schemas for the original nested object/array payload."
+  },
+  {
+    "rank": 1763,
+    "reads": 1,
+    "type": "Map<string, Map<string, ImportSpecifier>>",
+    "read": "currentFileState.utilizedImplicitRuntimeImports.get",
+    "declaration": "get(key: K): V | undefined;",
+    "observations": [
+      {
+        "variant": "good",
+        "build_exit": 1,
+        "stop": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-1763/good.a:6:89: Adamic 0.1 refuses checked view read of field items with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field\n"
+      },
+      {
+        "variant": "wrong-map",
+        "build_exit": 1,
+        "stop": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-1763/wrong-map.a:6:89: Adamic 0.1 refuses checked view read of field items with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field\n"
+      }
+    ],
+    "additional_observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-1763/good.a:6:89: Adamic 0.1 refuses checked view read of field items with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field\n"
+      }
+    ],
+    "change_needed": "Implement compatible nested Map value schemas and retain their child certificates."
+  },
+  {
+    "rank": 1769,
+    "reads": 1,
+    "type": "Map<string, RegExp>",
+    "read": "namedArgRegExCache.has",
+    "declaration": "has(key: K): boolean;",
+    "observations": [
+      {
+        "variant": "good",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, RegExp>, found Map<string, RegExp>\n"
+      },
+      {
+        "variant": "wrong-map",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, RegExp>, found Map<string, boolean>\n"
+      }
+    ],
+    "additional_observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "js",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, RegExp>, found Map<string, RegExp>\n"
+      }
+    ],
+    "change_needed": "Emit and match a source-certified RegExp value schema in Map producers."
+  }
+]

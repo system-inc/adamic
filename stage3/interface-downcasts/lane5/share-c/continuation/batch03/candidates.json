@@ -1,0 +1,142 @@
+[
+  {
+    "rank": 419,
+    "reads": 4,
+    "type": "Map<__String, DeclarationMeaning>",
+    "read": "names.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 851,
+    "reads": 2,
+    "type": "Map<__String, Symbol>",
+    "read": "resolvedExports.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 854,
+    "reads": 2,
+    "type": "Map<__String, TransientSymbol>",
+    "read": "lateSymbols.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1637,
+    "reads": 1,
+    "type": "Map<RegularExpressionFlags, ScriptTarget>",
+    "read": "regExpFlagToFirstAvailableLanguageVersion.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1664,
+    "reads": 1,
+    "type": "Map<__String, InheritanceInfoMap>",
+    "read": "seen.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1667,
+    "reads": 1,
+    "type": "Map<__String, Node>",
+    "read": "currentScopeFirstDeclarationsOfName.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1673,
+    "reads": 1,
+    "type": "Map<__String, boolean>",
+    "read": "seen.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1697,
+    "reads": 1,
+    "type": "Map<number, Symbol[]>",
+    "read": "links.extendedContainersByFile.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1706,
+    "reads": 1,
+    "type": "Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>",
+    "read": "indexSignatureMap.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1724,
+    "reads": 1,
+    "type": "Map<string, CommandLineOption[]>",
+    "read": "categoryMap.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1763,
+    "reads": 1,
+    "type": "Map<string, Map<string, ImportSpecifier>>",
+    "read": "currentFileState.utilizedImplicitRuntimeImports.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1769,
+    "reads": 1,
+    "type": "Map<string, RegExp>",
+    "read": "namedArgRegExCache.has",
+    "declaration": "has(key: K): boolean;"
+  },
+  {
+    "rank": 1796,
+    "reads": 1,
+    "type": "Map<string, TempFlags>",
+    "read": "formattedNameTempFlags.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1805,
+    "reads": 1,
+    "type": "Map<string, Type[]>",
+    "read": "subtypeReductionCache.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1823,
+    "reads": 1,
+    "type": "Map<string, false | MutableFileSystemEntries>",
+    "read": "cachedReadDirectoryResult.delete",
+    "declaration": "delete(key: K): boolean;"
+  },
+  {
+    "rank": 1835,
+    "reads": 1,
+    "type": "Map<string, true>",
+    "read": "visited.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1508,
+    "reads": 1,
+    "type": "Map<K, V>",
+    "read": "map.get",
+    "declaration": "get(key: K): V | undefined;"
+  },
+  {
+    "rank": 1511,
+    "reads": 1,
+    "type": "Map<K, V>",
+    "read": "map.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1514,
+    "reads": 1,
+    "type": "Map<K2, V2>",
+    "read": "result.set",
+    "declaration": "set(key: K, value: V): this;"
+  },
+  {
+    "rank": 1793,
+    "reads": 1,
+    "type": "Map<string, T>",
+    "read": "map.get",
+    "declaration": "get(key: K): V | undefined;"
+  }
+]

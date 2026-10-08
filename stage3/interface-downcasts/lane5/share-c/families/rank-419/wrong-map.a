@@ -1,0 +1,9 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+const enum InternalSymbolName {Call="__call",Constructor="__constructor",New="__new",Index="__index",ExportStar="__export",Global="__global",Missing="__missing",Type="__type",Object="__object",JSXAttributes="__jsxAttributes",Class="__class",Function="__function",Computed="__computed",Resolving="__resolving__",ExportEquals="export=",Default="default",This="this",InstantiationExpression="__instantiationExpression",ImportAttributes="__importAttributes"}
+const enum DeclarationMeaning {GetAccessor=1,SetAccessor=2,PropertyAssignment=4,Method=8,PrivateStatic=16,GetOrSetAccessor=3,PropertyAssignmentOrMethod=12}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<__String, DeclarationMeaning>;}
+function probe(value:Base):void {const names=(value as Target).items;names.set(InternalSymbolName.Call,DeclarationMeaning.GetAccessor);console.log("completed");}
+const sourceMap:Map<__String,boolean>=new Map<__String,boolean>();probe({items:sourceMap});

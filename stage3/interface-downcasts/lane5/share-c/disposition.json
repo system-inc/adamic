@@ -689,7 +689,7 @@
     "type": "Map<__String, DeclarationMeaning>",
     "field": "set",
     "read": "names.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 422,
@@ -1846,7 +1846,7 @@
     "type": "Map<__String, Symbol>",
     "field": "get",
     "read": "resolvedExports.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 854,
@@ -1854,7 +1854,7 @@
     "type": "Map<__String, TransientSymbol>",
     "field": "get",
     "read": "lateSymbols.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 857,
@@ -3602,7 +3602,7 @@
     "type": "Map<K, V>",
     "field": "get",
     "read": "map.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1511,
@@ -3610,7 +3610,7 @@
     "type": "Map<K, V>",
     "field": "set",
     "read": "map.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1514,
@@ -3618,7 +3618,7 @@
     "type": "Map<K2, V2>",
     "field": "set",
     "read": "result.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1517,
@@ -3948,7 +3948,7 @@
     "type": "Map<RegularExpressionFlags, ScriptTarget>",
     "field": "get",
     "read": "regExpFlagToFirstAvailableLanguageVersion.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1640,
@@ -4020,7 +4020,7 @@
     "type": "Map<__String, InheritanceInfoMap>",
     "field": "get",
     "read": "seen.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1667,
@@ -4028,7 +4028,7 @@
     "type": "Map<__String, Node>",
     "field": "set",
     "read": "currentScopeFirstDeclarationsOfName.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1670,
@@ -4044,7 +4044,7 @@
     "type": "Map<__String, boolean>",
     "field": "set",
     "read": "seen.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1676,
@@ -4108,7 +4108,7 @@
     "type": "Map<number, Symbol[]>",
     "field": "get",
     "read": "links.extendedContainersByFile.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1700,
@@ -4132,7 +4132,7 @@
     "type": "Map<number, { type: Type; declarations: IndexSignatureDeclaration[]; }>",
     "field": "get",
     "read": "indexSignatureMap.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see continuation/batch03/blocked.json"
   },
   {
     "rank": 1709,
@@ -4180,7 +4180,7 @@
     "type": "Map<string, CommandLineOption[]>",
     "field": "set",
     "read": "categoryMap.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1727,
@@ -4284,7 +4284,7 @@
     "type": "Map<string, Map<string, ImportSpecifier>>",
     "field": "get",
     "read": "currentFileState.utilizedImplicitRuntimeImports.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see continuation/batch03/blocked.json"
   },
   {
     "rank": 1766,
@@ -4300,7 +4300,7 @@
     "type": "Map<string, RegExp>",
     "field": "has",
     "read": "namedArgRegExCache.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see continuation/batch03/blocked.json"
   },
   {
     "rank": 1772,
@@ -4364,7 +4364,7 @@
     "type": "Map<string, T>",
     "field": "get",
     "read": "map.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1796,
@@ -4372,7 +4372,7 @@
     "type": "Map<string, TempFlags>",
     "field": "set",
     "read": "formattedNameTempFlags.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1799,
@@ -4396,7 +4396,7 @@
     "type": "Map<string, Type[]>",
     "field": "get",
     "read": "subtypeReductionCache.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1808,
@@ -4444,7 +4444,7 @@
     "type": "Map<string, false | MutableFileSystemEntries>",
     "field": "delete",
     "read": "cachedReadDirectoryResult.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1826,
@@ -4476,7 +4476,7 @@
     "type": "Map<string, true>",
     "field": "set",
     "read": "visited.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver (explicit specialization where generic)"
   },
   {
     "rank": 1838,

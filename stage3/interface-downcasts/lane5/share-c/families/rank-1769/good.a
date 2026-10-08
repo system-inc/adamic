@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+
+interface OriginalMember<K,V> {has(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, RegExp>;}
+function probe(value:Base):void {const namedArgRegExCache=(value as Target).items;namedArgRegExCache.has("missing");console.log("completed");}
+const sourceMap:Map<string,RegExp>=new Map<string,RegExp>();probe({items:sourceMap});

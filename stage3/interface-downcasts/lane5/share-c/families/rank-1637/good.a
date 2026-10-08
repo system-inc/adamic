@@ -1,0 +1,8 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+const enum RegularExpressionFlags {None=0,HasIndices=1,Global=2,IgnoreCase=4,Multiline=8,DotAll=16,Unicode=32,UnicodeSets=64,Sticky=128,AnyUnicodeMode=96,Modifiers=28}
+const enum ScriptTarget {ES3=0,ES5=1,ES2015=2,ES2016=3,ES2017=4,ES2018=5,ES2019=6,ES2020=7,ES2021=8,ES2022=9,ES2023=10,ES2024=11,ES2025=12,ESNext=99,JSON=100,Latest=99,LatestStandard=12}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<RegularExpressionFlags, ScriptTarget>;}
+function probe(value:Base):void {const regExpFlagToFirstAvailableLanguageVersion=(value as Target).items;regExpFlagToFirstAvailableLanguageVersion.get(RegularExpressionFlags.None);console.log("completed");}
+const sourceMap:Map<RegularExpressionFlags,ScriptTarget>=new Map<RegularExpressionFlags,ScriptTarget>();probe({items:sourceMap});

@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target<T> {readonly items:Map<string, T>;}
+function probe<T>(value:Base,key:string,incoming:T):void {const map=(value as Target<T>).items;map.get("missing");console.log("completed");}
+const sourceMap:Map<string,number>=new Map<string,number>();probe<number>({items:sourceMap},"missing",2);

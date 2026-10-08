@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+const enum TempFlags {Auto=0,CountMask=268435455,_i=268435456}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, TempFlags>;}
+function probe(value:Base):void {const formattedNameTempFlags=(value as Target).items;formattedNameTempFlags.set("missing",TempFlags.Auto);console.log("completed");}
+const sourceMap:Map<string,TempFlags>=new Map<string,TempFlags>();probe({items:sourceMap});

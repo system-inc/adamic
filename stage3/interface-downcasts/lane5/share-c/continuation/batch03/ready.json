@@ -1,0 +1,138 @@
+[
+  {
+    "rank": 419,
+    "reads": 4,
+    "type": "Map<__String, DeclarationMeaning>",
+    "read": "names.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, DeclarationMeaning>, found Map<__String, boolean>\n"
+  },
+  {
+    "rank": 851,
+    "reads": 2,
+    "type": "Map<__String, Symbol>",
+    "read": "resolvedExports.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, Symbol>, found Map<__String, boolean>\n"
+  },
+  {
+    "rank": 854,
+    "reads": 2,
+    "type": "Map<__String, TransientSymbol>",
+    "read": "lateSymbols.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, TransientSymbol>, found Map<__String, boolean>\n"
+  },
+  {
+    "rank": 1637,
+    "reads": 1,
+    "type": "Map<RegularExpressionFlags, ScriptTarget>",
+    "read": "regExpFlagToFirstAvailableLanguageVersion.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<RegularExpressionFlags, ScriptTarget>, found Map<RegularExpressionFlags, boolean>\n"
+  },
+  {
+    "rank": 1664,
+    "reads": 1,
+    "type": "Map<__String, InheritanceInfoMap>",
+    "read": "seen.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, InheritanceInfoMap>, found Map<__String, boolean>\n"
+  },
+  {
+    "rank": 1667,
+    "reads": 1,
+    "type": "Map<__String, Node>",
+    "read": "currentScopeFirstDeclarationsOfName.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, Node>, found Map<__String, boolean>\n"
+  },
+  {
+    "rank": 1673,
+    "reads": 1,
+    "type": "Map<__String, boolean>",
+    "read": "seen.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<__String, boolean>, found Map<__String, number>\n"
+  },
+  {
+    "rank": 1697,
+    "reads": 1,
+    "type": "Map<number, Symbol[]>",
+    "read": "links.extendedContainersByFile.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<number, Symbol[]>, found Map<number, boolean>\n"
+  },
+  {
+    "rank": 1724,
+    "reads": 1,
+    "type": "Map<string, CommandLineOption[]>",
+    "read": "categoryMap.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, CommandLineOption[]>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1796,
+    "reads": 1,
+    "type": "Map<string, TempFlags>",
+    "read": "formattedNameTempFlags.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, TempFlags>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1805,
+    "reads": 1,
+    "type": "Map<string, Type[]>",
+    "read": "subtypeReductionCache.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, Type[]>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1823,
+    "reads": 1,
+    "type": "Map<string, false | MutableFileSystemEntries>",
+    "read": "cachedReadDirectoryResult.delete",
+    "declaration": "delete(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, false | MutableFileSystemEntries>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1835,
+    "reads": 1,
+    "type": "Map<string, true>",
+    "read": "visited.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, true>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1508,
+    "reads": 1,
+    "type": "Map<K, V>",
+    "read": "map.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target<K,V>).items; expected Map<string, number>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1511,
+    "reads": 1,
+    "type": "Map<K, V>",
+    "read": "map.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target<K,V>).items; expected Map<string, number>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1514,
+    "reads": 1,
+    "type": "Map<K2, V2>",
+    "read": "result.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target<K2,V2>).items; expected Map<string, number>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1793,
+    "reads": 1,
+    "type": "Map<string, T>",
+    "read": "map.get",
+    "declaration": "get(key: K): V | undefined;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target<T>).items; expected Map<string, number>, found Map<string, boolean>\n"
+  }
+]

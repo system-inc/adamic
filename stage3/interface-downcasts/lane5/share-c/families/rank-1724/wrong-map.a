@@ -1,0 +1,13 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+type CommandLineOption = CommandLineOptionOfCustomType | CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBooleanType | TsConfigOnlyOption | CommandLineOptionOfListType;
+interface CommandLineOptionOfCustomType {readonly value:number;}
+interface CommandLineOptionOfStringType {readonly value:number;}
+interface CommandLineOptionOfNumberType {readonly value:number;}
+interface CommandLineOptionOfBooleanType {readonly value:number;}
+interface TsConfigOnlyOption {readonly value:number;}
+interface CommandLineOptionOfListType {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, CommandLineOption[]>;}
+function probe(value:Base):void {const categoryMap=(value as Target).items;categoryMap.set("missing",[]);console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

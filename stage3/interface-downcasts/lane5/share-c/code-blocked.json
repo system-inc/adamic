@@ -205,37 +205,43 @@
   {
     "rank": 11,
     "read": "factory.createNodeArray",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-11/good.a:6:64: Adamic 0.1 refuses checked view read of field createNodeArray with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "refusal": "Adamic 0.1 refuses checked view read of field createNodeArray with unsupported callable contract; prove or implement the callable contract before reading this field",
     "variant": "good"
   },
   {
     "rank": 47,
     "read": "Math.min",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-47/good.a:5:69: Adamic 0.1 refuses inherited library member min read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "refusal": "Adamic 0.1 refuses inherited library member min read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
     "variant": "good"
   },
   {
     "rank": 23,
     "read": "factory.createTempVariable",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-23/good.a:7:64: Adamic 0.1 refuses checked view read of field createTempVariable with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "refusal": "Adamic 0.1 refuses checked view read of field createTempVariable with unsupported callable contract; prove or implement the callable contract before reading this field",
     "variant": "good"
   },
   {
     "rank": 224,
     "read": "suggestionDiagnostics.getDiagnostics",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-224/good.a:7:78: Adamic 0.1 refuses checked view read of field getDiagnostics with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "refusal": "Adamic 0.1 refuses checked view read of field getDiagnostics with unsupported callable contract; prove or implement the callable contract before reading this field",
     "variant": "good"
   },
   {
     "rank": 233,
     "read": "Math.floor",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-233/good.a:5:69: Adamic 0.1 refuses inherited library member floor read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "refusal": "Adamic 0.1 refuses inherited library member floor read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
     "variant": "good"
   },
   {
     "rank": 425,
     "read": "Math.abs",
-    "refusal": "/workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-425/good.a:5:69: Adamic 0.1 refuses inherited library member abs read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "refusal": "Adamic 0.1 refuses inherited library member abs read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "variant": "good"
+  },
+  {
+    "rank": 1763,
+    "read": "currentFileState.utilizedImplicitRuntimeImports.get",
+    "refusal": "Adamic 0.1 refuses checked view read of field items with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field",
     "variant": "good"
   }
 ]
