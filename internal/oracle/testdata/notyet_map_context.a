@@ -1,0 +1,11 @@
+const strings = new Map() as Map<string, number>;
+strings.set(["con", "text"].join(""), 17);
+console.log(`${strings.get("context")} ${strings.has("context")} ${strings.size}`);
+const numbers = new Map() as Map<number, string>;
+numbers.set(7, ["num", "ber"].join(""));
+console.log(`${numbers.get(7)} ${numbers.has(7)} ${numbers.size}`);
+
+interface NumericMap extends Map<string, number> {}
+const inherited: Map<string, number> = new Map() as NumericMap;
+inherited.set(["in", "herited"].join(""), 23);
+console.log(`${inherited.get("inherited")} ${inherited.size}`);

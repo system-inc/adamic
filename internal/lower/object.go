@@ -1334,11 +1334,24 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
-	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.mapTypeArguments(node)
 	if len(arguments) != 2 {
 		return 0, 0, l.notYet(node, "a Map whose key and value types aren't known")
 	}
-	key, keyKnown := l.representation(arguments[0])
+	if l.concrete(arguments[0]).Flags()&checker.TypeFlagsAny != 0 && node.Kind == ast.KindNewExpression {
+		written := node.AsNewExpression().TypeArguments
+		if written != nil && len(written.Nodes) != 0 {
+			return 0, 0, &Refused{Where: l.program.Where(node), What: "an explicit any Map key", Fix: "adapt the key type to a proven concrete type; any is an adaptation"}
+		}
+	}
+	key, keyKnown := l.mapKeyRepresentation(arguments[0])
+	if l.concrete(arguments[0]).Flags()&checker.TypeFlagsNever != 0 {
+		// No key inhabits never. Empty maps use the existing string lane.
+		key, keyKnown = ir.String, true
+		if l.concrete(arguments[1]).Flags()&checker.TypeFlagsNever != 0 {
+			return key, ir.String, nil
+		}
+	}
 	value, valueKnown := l.kept(arguments[1])
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")

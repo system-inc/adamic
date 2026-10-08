@@ -1,0 +1,17 @@
+function keyed<K>(key: K, value: number): Map<K, number> {
+    const result = new Map<K, number>();
+    result.set(key, value);
+    return result;
+}
+function empty<K, V>(): Map<K, V> { return new Map<K, V>(); }
+function copy<K>(source: ReadonlyMap<K, number>, target: Map<K, number>): void {
+    source.forEach((value, key) => { target.set(key, value); });
+}
+const text = keyed(["run", "time"].join(""), 11);
+const count = keyed(5, 13);
+const bool = keyed(true, 17);
+const identity = { name: "object" };
+const objects = keyed(identity, 19);
+const copied = empty<string, number>();
+copy(text, copied);
+console.log(`${text.get("runtime")} ${count.get(5)} ${bool.get(true)} ${objects.get(identity)} ${copied.get("runtime")}`);
