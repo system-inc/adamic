@@ -4,6 +4,41 @@ Focused final-family oracle passes in 9.028s; load/lower/commands in 3.796s, 0.7
 29 run mutants: guards catch bad writes, undefined results and bad storage; Node catches representation mismatches; leaks and counts catch outer cleanup.
 Not covered: whole-program emitted checks, the 90 declaration contracts, the other worker's 104 flag contracts, and the full repository gate.
 
+Comparison with the ID-keyed census at 51eab0da (2026-10-08): the ruling's
+whole-program census is 168 scheduled contracts, five catch errors and zero
+ordinary errors on its explicit 79-root manifest, not this branch's older
+67-scheduled / 194-error production observation. Neither count claims emitted
+whole-program checks. My command supplied 40 top-level compiler files; the
+composite project retains its configured roots and imports the nested compiler
+files. The comparator explicitly supplies all 79 implementation roots. Comparing
+its recorded SHA-256 manifest with my retained adapted tree finds three source
+differences: core.ts, debug.ts and sys.ts; these are not identical-input runs.
+
+Both loaders discover src/compiler/tsconfig.json extending src/tsconfig-base.json:
+ES2020 target/lib, NodeNext module/resolution, strict and composite enabled,
+strictBindCallApply and useUnknownInCatchVariables disabled, indexed/exact options
+unset, and compiler types=[node]. Both use the embedded TypeScript library selected
+by that project, not standalone Adamic's ES2024 defaults; the audit strengthens
+options separately to identify sites. My production loader additionally injected
+MapIterator/SetIterator next() overloads and ES2025 Set methods into that library
+surface, creating the declaration mismatches catalogued below. 51eab0da removes
+those overloads and keeps extra Set methods outside project checking, while
+preserving runtime iterator representation facts. Its loader also attributes the
+two truthful JSON.stringify result contracts separately and schedules them rather
+than leaving them among ordinary diagnostics.
+
+Thus my 90 are loader/prelude-dependent production diagnostics, not 90 errors in
+the project's own baseline (the recorded own-project audit had zero). My 104
+remaining flag sites are 99 indexed reads plus five catches; the integrated
+census schedules the 99 indexed, all 67 optional and two JSON contracts (168),
+leaving only the five catches. The explicit roots, original ledger IDs, recorded
+source hashes and shared production admission decision make 51eab0da the ruling's
+measurement. This comparison updates the interpretation and routing of the older
+evidence, without changing compiler code or claiming a controlled rerun on equal
+source hashes. Verified by reading both probes, configurations, loader/prelude
+diffs, source hashes, states.csv and production.json.gz; no tests rerun for this
+report-only change.
+
 Historical reports below retain the earlier batch observations; the latest production evidence and remaining.json supersede their counts.
 
 Built direct-write and fresh-construction presence guards and a recorded implements representation relation.
