@@ -18,6 +18,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
@@ -166,12 +167,27 @@ func askedCases(t *testing.T) (string, string) {
 	corpus := filepath.Join(directory, "corpus.txt")
 	testTexts := filepath.Join(directory, "test-texts.json")
 	request := map[string]any{"seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath, "corpus": corpus, "testTexts": testTexts}
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The root also contains the Go test constants the generator extracts.
+	// Validate it before running that generator, even without the npm oracle.
+	files := corpusfiles.Upstream(t, root, corpusfiles.CohereCommit,
+		[]string{"internal/format/css", "internal/lint/rules/tailwind"}, []string{"*.css"})
 	cohereSide(t, request)
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library != "" {
 		script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-		root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
-		result := execute(t, nil, "node", script, library, "corpus", root, corpus, testTexts)
+		fileList := filepath.Join(directory, "css-files.json")
+		encoded, err := json.Marshal(files)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(fileList, encoded, 0644); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, nil, "node", script, library, "corpus", root, corpus, testTexts, fileList)
 		if result.exitCode != 0 {
 			t.Fatalf("corpus: %s", result.stderr)
 		}
@@ -464,7 +480,20 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 		t.Fatal(err)
 	}
 	corpus := filepath.Join(t.TempDir(), "corpus.txt")
-	result := execute(t, nil, "node", script, library, "corpus", root, corpus)
+	// These are explicit generated controls, not an enumerated repository corpus.
+	files := []string{filepath.Join(root, "_errors_/valid.css"), filepath.Join(root, excluded), filepath.Join(root, "valid.css")}
+	fileList := filepath.Join(t.TempDir(), "css-files.json")
+	writeList := func() {
+		data, err := json.Marshal(files)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(fileList, data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	writeList()
+	result := execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode != 0 {
 		t.Fatalf("corpus: %s", result.stderr)
 	}
@@ -478,10 +507,18 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	if !strings.Contains(string(result.stdout), "3 CSS files, 1 expected CSS errors, 2 selectors") {
 		t.Fatalf("expected CSS error was not counted: %s", result.stdout)
 	}
+	// A file not named by the Git manifest cannot silently join the corpus.
+	if err := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	unchanged := execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
+	if unchanged.exitCode != 0 || string(unchanged.stdout) != string(result.stdout) {
+		t.Fatalf("unlisted file changed corpus: exit %d, %s", unchanged.exitCode, unchanged.stderr)
+	}
 	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
 		t.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}
@@ -491,7 +528,9 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(root, "unexpected.css"), []byte("a {.bordered();}"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	files = append(files, filepath.Join(root, "unexpected.css"))
+	writeList()
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "unexpected.css") {
 		t.Fatalf("unexpected CSS error was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}

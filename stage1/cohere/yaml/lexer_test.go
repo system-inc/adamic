@@ -5,16 +5,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/fs"
 	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
-	"time"
 	"unicode/utf8"
 
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -25,14 +26,15 @@ const repository = "../../.."
 
 func run(t *testing.T, directory string, environment []string, name string, args ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	// Silent builds and buffered children use the shared first-output window.
+	// With ten CPU burners, the longest output gap was 3.93s; the default
+	// two-minute Stall leaves more than three times that gap as headroom.
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	var out, errOut bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errOut
-	if err := command.Run(); err != nil {
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
 		t.Fatalf("%s: %v\n%s", name, err, errOut.Bytes())
 	}
 	if errOut.Len() != 0 {
@@ -49,33 +51,20 @@ func lexCases(t *testing.T) (string, int, int) {
 	}
 	var texts []string
 	files := 0
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.Name() == ".git" && entry.IsDir() {
-			return filepath.SkipDir
-		}
-		if entry.IsDir() {
-			return nil
-		}
-		ext := strings.ToLower(filepath.Ext(path))
-		if ext != ".yaml" && ext != ".yml" {
-			return nil
-		}
+	patterns := []string{"*.yaml", "*.yml"}
+	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{".github/workflows"}, patterns)
+	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}, patterns)...)
+	sort.Strings(paths)
+	for _, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			return err
+			t.Fatal(err)
 		}
 		if !utf8.Valid(data) {
-			return fmt.Errorf("invalid UTF-8: %s", path)
+			t.Fatalf("invalid UTF-8: %s", path)
 		}
 		texts = append(texts, string(data))
 		files++
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
 	}
 	// Each lexical state, separators, directives, tags, markers, chomping and Unicode boundaries.
 	texts = append(texts, "", "\ufeff", "\ufeffa: b\n", "%YAML 1.1 # c\n---\na: b\n...\n", "a: |+\n  b\n\n\n", "a: |-\n  b\n\n", "a: >2-\n  b\n", "{a: [1, 2], b: \"q\\\"r\"}\n", "a: 'q''r'\n", "a: !<tag:example.org,%E2%82%AC> &ref b\nc: *ref\n", "a: x\n y\nz: x\n", "a: [x\nq: y\n", "a: |\n\tb\n", "a: \"x\ny\"\n", "---x\n...\n", "😀: café\n中: x\n", "a:\tx\r\n# b\r\n", "\x00\n")

@@ -21,6 +21,12 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 		t.Fatal(err)
 	}
 	corpus, files := blockCorpus(t, root, "whitespace")
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, corpus, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	corpus, files = selectedMarkdownInputs(corpus, files, selection)
 	type input struct {
 		Name, Text string
 		Mode       string
@@ -69,7 +75,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-ast")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go preprocess %v %s", err, output)
 	}
 	nativeCases := filepath.Join(dir, "native.txt")

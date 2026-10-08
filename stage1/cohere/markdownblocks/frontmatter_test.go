@@ -20,6 +20,12 @@ func TestFrontMatterStage(t *testing.T) {
 		t.Fatal(err)
 	}
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	original := len(inputs)
 	for _, start := range []string{"---", "+++"} {
 		for _, language := range []string{"", "yaml", "toml", "json", "YAML", " yaml ", "\t yaml\t", "\ufeffyaml\ufeff", "\u0085yaml\u0085", "😀", "\u2000\u3000", "\r"} {
@@ -75,7 +81,7 @@ func TestFrontMatterStage(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-parser")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go build: %v\n%s", err, output)
 	}
 	want := execute(t, nil, goBinary, cases)

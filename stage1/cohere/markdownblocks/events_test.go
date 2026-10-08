@@ -57,24 +57,25 @@ func TestTokenizerEvents(t *testing.T) {
 	if os.Getenv("ADAMIC_EVENTS_SMOKE") != "" {
 		inputs = [][]uint16{{}, {65}, {9}, {65, 9, 10, 13, 10, 0, 66}, {55296}, {55296, 56320}, {13, 9, 9, 10}}
 		names = []string{"empty", "text", "tab", "mix", "surrogate", "astral", "lines"}
+		corpus = nil
+		files = 0 // Smoke mode has only fixed controls, no physical corpus files.
 	}
-	var batch strings.Builder
-	for _, units := range inputs {
-		if len(units) == 0 {
-			batch.WriteString("-")
-		} else {
-			for i, unit := range units {
-				if i > 0 {
-					batch.WriteByte(',')
-				}
-				fmt.Fprint(&batch, unit)
-			}
-		}
-		batch.WriteByte('\n')
+	selection := selectMarkdownFiles(t, root, corpus, files, markdownCorpusStride)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
 	}
+	fullInputs, fullNames := inputs, names
+	var rows []int
+	inputs, names, rows = sampledNumericInputs(inputs, names, corpus, selection)
+	batch := numericBatch(inputs)
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(batch.String()))
+	write(t, cases, batch)
+	fullCases := cases
+	if selection.Sample {
+		fullCases = filepath.Join(dir, "mutant-cases.txt")
+		write(t, fullCases, numericBatch(fullInputs))
+	}
 	cohere := filepath.Join(root, "cohere")
 	mainPath := filepath.Join(cohere, "cmd/adamic_chunks/main.go")
 	driver, err := filepath.Abs("testdata/events_go.go")
@@ -98,10 +99,15 @@ func TestTokenizerEvents(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-chunks")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	build.Dir = cohere
-	if output, err := build.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(build); err != nil {
 		t.Fatalf("Go events %v %s", err, output)
 	}
-	want := execute(t, nil, goBinary, cases)
+	fullWant := execute(t, nil, goBinary, fullCases)
+	clean(t, "full Go mutant oracle", fullWant)
+	want := fullWant
+	if selection.Sample {
+		want = selectedNumericAnswers(t, fullWant, rows, len(fullInputs))
+	}
 	clean(t, "Go events", want)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -141,6 +147,7 @@ func TestTokenizerEvents(t *testing.T) {
 		{"restored construct", "this.construct = info.construct;", "this.construct = 8;"},
 	} {
 		t.Run(m.name, func(t *testing.T) {
+			cases, want, names := fullCases, fullWant, fullNames
 			scratch := t.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
 				t.Fatal(err)
@@ -194,5 +201,5 @@ func TestTokenizerEvents(t *testing.T) {
 		}
 		t.Logf("%s %.1f texts/s; three runs, startup and identical numeric UTF-16/event transport included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
-	t.Logf("%d cases: %d physical documents; 4943 layout documents; all 65536 UTF-16 units, including lone surrogates; special-code sequences through length five; event/rollback/skip/fields/slice/CRLF/tab edges", len(inputs), files)
+	t.Logf("%d cases: %d physical documents; 4943 layout documents; all 65536 UTF-16 units, including lone surrogates; special-code sequences through length five; event/rollback/skip/fields/slice/CRLF/tab edges", len(inputs), len(selection.Paths))
 }

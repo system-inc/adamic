@@ -38,6 +38,12 @@ func TestNativeMdastConstruction(t *testing.T) {
 		inputs = append(inputs[smokeStart:smokeStart+11], inputs[len(inputs)-6:]...)
 		files = 0
 	}
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	dir := t.TempDir()
 	var b bytes.Buffer
 	enc := json.NewEncoder(&b)
@@ -67,7 +73,7 @@ func TestNativeMdastConstruction(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-mdast")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	build.Dir = cohere
-	if output, e := build.CombinedOutput(); e != nil {
+	if output, e := combinedOutput(build); e != nil {
 		t.Fatalf("Go mdast %v %s", e, output)
 	}
 	transport := filepath.Join(dir, "events.txt")

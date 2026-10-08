@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,6 +14,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -30,12 +31,10 @@ type execution struct {
 	duration time.Duration
 }
 
-// Output is a file, never a pipe: the large corpus must also work on Node's writev path.
+// Guarded output is captured in a file so the large corpus need not stay in memory while running.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
@@ -46,7 +45,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	err = childguard.Run(command, childguard.Options{})
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
@@ -178,27 +177,14 @@ func compilerSource(t *testing.T) string {
 
 func sourceFiles(t *testing.T, directory string) []string {
 	t.Helper()
-	var paths []string
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				return err
-			}
-			paths = append(paths, absolute)
-		}
-		return nil
-	})
+	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(paths) == 0 {
-		t.Fatalf("empty corpus: %s", directory)
+	if filepath.Clean(directory) == filepath.Join(root, "stage1") || filepath.Clean(directory) == filepath.Clean(filepath.Join(repository, "stage1")) {
+		return corpusfiles.Repository(t, root, []string{"stage1"}, []string{"*.ts"})
 	}
-	return paths
+	return corpusfiles.Upstream(t, filepath.Dir(filepath.Dir(directory)), compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 }
 
 type corpus struct {
