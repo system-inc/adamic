@@ -1,0 +1,14 @@
+function compare(a: string | undefined, b: string | undefined): number;
+function compare(a: number | undefined, b: number | undefined): number;
+function compare(a: string | number | undefined, b: string | number | undefined): number {
+    return a === b ? 0 : a === undefined ? -1 : b === undefined ? 1 : a < b ? -1 : 1;
+}
+console.log(compare("10", "2").toString());
+console.log(compare("owned:" + "😀", "owned:" + "\uE000").toString());
+console.log(compare(10,2).toString());
+console.log(compare(2,10).toString());
+console.log(compare(-0,0).toString());
+console.log(compare(NaN,1).toString());
+console.log(compare(undefined,"text").toString());
+console.log(compare("text",undefined).toString());
+console.log(compare(undefined,undefined).toString());

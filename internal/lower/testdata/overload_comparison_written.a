@@ -1,0 +1,4 @@
+function replacement(): string | number {return "10";}
+function compare(a: number,b: number): boolean;
+function compare(a: string | number,b: string | number): boolean {a = replacement(); return a < b;}
+console.log(compare(2,3).toString());

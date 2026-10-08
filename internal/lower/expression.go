@@ -980,6 +980,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	if lowered, isBitwise := bitwise[operator]; isBitwise && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
+	if lowered, isComparison := comparisons[operator]; isComparison && both(ir.Union) && l.overloadComparisonPair(node) {
+		return l.overloadUnionComparison(node, lowered, left, right), nil
+	}
 	if lowered, isComparison := comparisons[operator]; isComparison && (both(ir.Number) || both(ir.String)) {
 		// Strings compare in UTF-16 code unit order, as JavaScript's do.
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
