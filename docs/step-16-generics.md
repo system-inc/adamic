@@ -234,6 +234,8 @@ These exact reasons contain a spelling also used as a type parameter. Their spel
 
 ## Reproduction
 
+Run the setup, adaptation, overlay build and census commands in a checkout of compiler base `8cb5e7c1`. Run the checked-in report scripts from this delivery branch, where the historical ranking object must also be available. Rebuilding the census on a newer compiler is a different measurement.
+
 ```sh
 export GOPROXY='https://proxy.golang.org|direct'
 bash cloud/setup.sh > /tmp/scout-setup.log 2>&1
@@ -341,3 +343,20 @@ The following are distinct obligations; merely reaching C emission verifies none
 - Evaluation: side effects in arguments, class constructors, callback calls and optional branches execute once in source order. A specialization may not fold runtime generic operations just because a test uses literal inputs.
 - Failure and limits: an unread binder, exhausted budget or unsupported member must produce Refused/NotYet, never reuse an unread-key body with an incompatible signature or leave a partially lowered function reachable.
 - Census claims: a generic declaration attempted without arguments cannot be made concrete by the meter. Replayed roots, checker eligibility, first exposed reasons and hidden bytes require separate before/after evidence. No full tsc compilation follows from retiring one blocker.
+
+## Reduced acceptance fixtures and baseline outcomes
+
+The TypeScript reductions come from pristine upstream `050880ce59e30b356b686bd3144efe24f875ebc8`, verified against its own source, rather than from cohere. Every new Adamic source is `.a`. [fixture-baseline.json](step-16-generics/fixture-baseline.json) pins each source hash, exact reduction, independent Node stdout and the outcome on `8cb5e7c1`. All eight sources exit 0 with empty stderr on Node. An innocent invocation does not make an arbitrary cast, a writable view or unbounded static monomorphization safe.
+
+| Fixture in stage3/fixtures/generics | Pristine origin | Base outcome |
+| --- | --- | --- |
+| 01_identity.a | core.ts:1828 identity; direct body plus enclosing relay | Lowered; both backends match Node, sanitizer and leak checks pass |
+| 02_optional_return.a | core.ts:67 firstDefined; computed callback result becomes input | NotYet: a function returning U \| undefined |
+| 03_callback_return.a | core.ts:67 firstDefined; one element replaces iteration | NotYet: a function returning U \| undefined |
+| 04_function_value.a | core.ts:220 contains; core.ts:1937 equateValues | NotYet: a generic function as a value |
+| 05_nested_class.a | Supplemental bxpmash Arena/ArenaIndex regression, rather than a tsc class reduction | Lowered; both backends match Node, sanitizer and leak checks pass |
+| 06_polymorphic_recursion.a | Supplemental 0.1 growing-type recursion boundary | Refused: polymorphic recursion |
+| 07_generic_cast.a | core.ts:1778 tryCast; arbitrary target cast replaces its unproved predicate contract | Refused: a cast the runtime can't check |
+| 08_readonly_view.a | utilities.ts:10644 setTextRangePos | Refused: readonly field pos becomes writable |
+
+The oracle registry and `TestStep16GenericOutcomes` record the distinction between capability gaps and policy refusals. The numeric identity mutant changes the valid IR return from its argument to 17. It finishes normally with valid C, no sanitizer findings and no leaks, then fails Node stdout comparison in both backends. This prevents an emission-only regression test from passing a wrong generic result. Optional fixtures preserve zero, false and empty text as present values, exercise explicit undefined at two type arguments, dynamically allocate returned text, and route an enclosing type parameter through a callback result.

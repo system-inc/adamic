@@ -188,7 +188,7 @@ def build(census, parameters):
               '| Exact reason | Roots | Witnesses |', '| --- | ---: | --- |']
     for r in result['collision_rows']:
         lines.append('| ' + r['kind'] + ': ' + r['reason'].replace('|', chr(92) + '|') + ' | ' + str(r['roots']) + ' | ' + '<br>'.join(r['witnesses']) + ' |')
-    lines += ['', '## Reproduction', '', '```sh',
+    lines += ['', '## Reproduction', '', 'Run the setup, adaptation, overlay build and census commands in a checkout of compiler base `8cb5e7c1`. Run the checked-in report scripts from this delivery branch, where the historical ranking object must also be available. Rebuilding the census on a newer compiler is a different measurement.', '', '```sh',
               "export GOPROXY='https://proxy.golang.org|direct'", 'bash cloud/setup.sh > /tmp/scout-setup.log 2>&1',
               'source /workspace/adamic-tools/env.sh', 'bash stage3/apply.sh /tmp/scout-adapted > /tmp/scout-adapt.log 2>&1',
               'python3 stage3/census/latent/make_overlay.py "$PWD" /tmp/scout-overlay > /tmp/scout-overlay.log 2>&1',
@@ -202,7 +202,14 @@ def build(census, parameters):
               'python3 docs/step-16-generics/audit.py --mutant > /tmp/scout-audit-mutant.log 2>&1',
               'python3 docs/step-16-generics/audit.py --mutant-selection > /tmp/scout-selection-mutant.log 2>&1', '```', '',
               'The parameters file is the sorted unique names of every TypeParameterDeclaration in the pinned compiler AST, parsed with TypeScript 6.0.3. The complete name list is retained in baseline.json.gz. The census SHA-256 pins the complete scratch measurement; selected findings remain reviewable without that scratch file.', '']
-    (dest.parent / 'step-16-generics.md').write_text('\n'.join(lines))
+    document = dest.parent / 'step-16-generics.md'
+    suffix = ''
+    if document.exists():
+        previous = document.read_text()
+        marker = '## Design and disposition'
+        if marker in previous:
+            suffix = '\n' + previous[previous.index(marker):]
+    document.write_text('\n'.join(lines) + suffix)
     print(f"{len(result['rows'])} exact reasons; {len(findings)} selected observations; {len(result['collision_rows'])} collision reasons")
 
 if __name__ == '__main__':

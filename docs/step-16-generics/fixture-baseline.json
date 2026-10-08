@@ -1,0 +1,86 @@
+{
+  "compiler": "8cb5e7c189fc431ab3cab7e0be2c0530e722a598",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "fixtures": [
+    {
+      "path": "stage3/fixtures/generics/01_identity.a",
+      "exit": 0,
+      "stdout": "0 false genericgeneric true\n",
+      "stderr": "",
+      "kind": "Lowered",
+      "source_sha256": "b16e2c9b45d645d1a7869932eea63d5a6ac19f0c19176987fa8e03b19ba16455",
+      "origin": "core.ts:1828",
+      "reduction": "identity body retained; relay adds an enclosing binder call"
+    },
+    {
+      "path": "stage3/fixtures/generics/02_optional_return.a",
+      "exit": 0,
+      "stdout": "0 false \nownedownedowned absent 77\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "source_sha256": "16584ffa00f4f24e61d185dc55df9276df6c435181d3dc33f1ec2ba4f1f36d67",
+      "origin": "core.ts:67",
+      "reduction": "firstDefined callback result becomes an input; array, loop and callback removed"
+    },
+    {
+      "path": "stage3/fixtures/generics/03_callback_return.a",
+      "exit": 0,
+      "stdout": "0 texttexttext\n77\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "source_sha256": "7f60071f2dfeac3d2b5e2812596e068b4f93882a95067e3c7ed0dae8dd4df081",
+      "origin": "core.ts:67",
+      "reduction": "firstDefined receives one element; array, loop, index and non-null assertion removed"
+    },
+    {
+      "path": "stage3/fixtures/generics/04_function_value.a",
+      "exit": 0,
+      "stdout": "true false\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "source_sha256": "fecbfe88cfa3baa6d979b299bbbb4fa5f851beedeb8e22e7e4ce70efa360a22f",
+      "origin": "core.ts:220; core.ts:1937",
+      "reduction": "contains comparator becomes a concrete callable slot; equateValues body retained"
+    },
+    {
+      "path": "stage3/fixtures/generics/05_nested_class.a",
+      "exit": 0,
+      "stdout": "arenaarenaarena true\n0\n",
+      "stderr": "",
+      "kind": "Lowered",
+      "source_sha256": "ab88a95f5b53d411fa2eaf8c10637087892de334baecf7240e9ef10fa77c541a",
+      "origin": null,
+      "reduction": "supplemental bxpmash ArenaIndex<Tag> inside Arena<Tag>.push"
+    },
+    {
+      "path": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": "",
+      "kind": "Refused",
+      "source_sha256": "18cac621986a6c9edfce1e743f91811f91f75506731de2e89ef424220534ffb2",
+      "origin": null,
+      "reduction": "supplemental approved 0.1 growing-instantiation boundary"
+    },
+    {
+      "path": "stage3/fixtures/generics/07_generic_cast.a",
+      "exit": 0,
+      "stdout": "4\n",
+      "stderr": "",
+      "kind": "Refused",
+      "source_sha256": "42d6814eb10752c0030070474693f2c848cf1dcfa450d9064a4480b242248b41",
+      "origin": "core.ts:1778",
+      "reduction": "tryCast stripped of predicate, default any and overloads; arbitrary target cast exposed"
+    },
+    {
+      "path": "stage3/fixtures/generics/08_readonly_view.a",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "kind": "Refused",
+      "source_sha256": "41f484aef444f8fbe414f561c43884c0637bb5e1bb37442e864b93af982a9e17",
+      "origin": "utilities.ts:10644",
+      "reduction": "setTextRangePos retains generic readonly constraint and writable cast; other range fields removed"
+    }
+  ]
+}

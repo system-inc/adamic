@@ -1,0 +1,6 @@
+// Supplemental 0.1 monomorphization boundary; not a tsc reduction.
+function grow<T>(value: T, depth: number): number {
+    if (depth === 0) return 0;
+    return grow([value], depth - 1);
+}
+console.log(`${grow(1, 1)}`);
