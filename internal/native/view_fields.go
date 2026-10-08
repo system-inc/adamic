@@ -18,7 +18,13 @@ func (e *emitter) viewField(property ir.Property) string {
 			return value
 		}
 	}
-	object := e.value(property.Object)
+	if property.Unset {
+		return e.placeholderViewField(property)
+	}
+	return e.viewFieldObject(property, e.value(property.Object))
+}
+
+func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
 	name, supported := names[property.Of]

@@ -18,7 +18,7 @@ func sourceExpression(node *ast.Node) string {
 // Literal placeholder initializers reserve the existing uninitialized slot.
 // An outer type annotation, as in scanner.ts Script_Extensions, carries no value.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil || l.checkedAssertionSource(node) {
+	if node == nil {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -168,7 +168,7 @@ func readiness(program *ir.Program) {
 		}
 		entry := make([]bool, count)
 		for i, local := range program.Locals {
-			entry[i] = !local.Uninitialized
+			entry[i] = !local.Uninitialized && local.Placeholder == ""
 		}
 		changed := true
 		for changed {
@@ -255,6 +255,14 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		if assign, ok := (*instruction.At).(ir.Assign); ok {
 			ready = !assign.Uninitialized
 		}
+		if ready && program.Locals[local].Placeholder != "" {
+			switch statement := (*instruction.At).(type) {
+			case ir.Declare:
+				ready = placeholderProven(statement.Value, program, state, fields)
+			case ir.Assign:
+				ready = placeholderProven(statement.Value, program, state, fields)
+			}
+		}
 		state[local] = ready
 		for field, slot := range fields {
 			if field.local == local {
@@ -263,9 +271,17 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		}
 	}
 	if set, ok := (*instruction.At).(ir.SetProperty); ok {
+		assignedReady := !set.Uninitialized && placeholderProven(set.Value, program, state, fields)
+		// Another binding may alias this receiver. Invalidate every matching field
+		// before restoring only the receiver whose write this instruction proves.
+		for field, slot := range fields {
+			if field.name == set.Name {
+				state[slot] = false
+			}
+		}
 		if local, ok := readinessObject(set.Object); ok {
 			if slot, found := fields[fieldReadiness{local, set.Name}]; found {
-				state[slot] = !set.Uninitialized
+				state[slot] = assignedReady
 			}
 		}
 	}
@@ -282,8 +298,13 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 			mapped := transform(value.Elem())
 			node := mapped.Interface()
 			switch expression := node.(type) {
+			case ir.PlaceholderUse:
+				node = placeholderUseValue(expression, program, ready, fieldSlots)
 			case ir.Read:
-				if program.Locals[expression.Local].Uninitialized && !ready[expression.Local] {
+				if expression.Unset {
+					expression.Readiness = ""
+					expression.Checked = expression.Checked && program.Locals[expression.Local].Ready != 0
+				} else if program.Locals[expression.Local].Uninitialized && !ready[expression.Local] {
 					if expression.Readiness == "" {
 						expression.Readiness = program.Locals[expression.Local].Name
 					}
@@ -309,7 +330,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] || expression.Method {
+				if !expression.Unset && (!program.CheckedFields[expression.Name] || expression.Method) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
@@ -323,7 +344,9 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 						proven = ready[slot]
 					}
 				}
-				if fields[expression.Name] && !proven {
+				if expression.Unset {
+					expression.Readiness = ""
+				} else if fields[expression.Name] && !proven {
 					if expression.Readiness == "" {
 						expression.Readiness = expression.Name
 					}
