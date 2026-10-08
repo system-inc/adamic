@@ -1,0 +1,8 @@
+namespace Debug {
+ export function checkDefined<T>(value:T):T {
+  const stackCrawlMark=checkDefined;
+  console.log(`${stackCrawlMark===checkDefined}`);
+  return value;
+ }
+}
+console.log(Debug.checkDefined('okay'));

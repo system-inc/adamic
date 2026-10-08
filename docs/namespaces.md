@@ -390,3 +390,10 @@ callable declaration probe and expanded calls, properties, identity and
 receiver fixture match Node in both backends. The normalized Debug.log shape
 now lowers; Debug's complete normalized shape still reaches bodyless overloads.
 See `debug-groups/CALLABLE.md`.
+
+Debug's generic self-reference used as stackCrawlMark (debug.ts:251:45) still
+needs a polymorphic first-class callable representation, or a proved opaque
+identity-only metadata use. Monomorphized direct calls cannot silently stand
+in for that value. `debug-groups/generic_function_value.*` records an isolated
+self-reference, Node output, changed-identity source mutant and the explicit
+production NotYet. No native acceptance is claimed for that boundary.

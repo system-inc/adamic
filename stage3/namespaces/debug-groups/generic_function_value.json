@@ -1,0 +1,13 @@
+{
+  "sites": [
+    "debug.ts:251:45"
+  ],
+  "mutations": [
+    [
+      "const stackCrawlMark=checkDefined;",
+      "const stackCrawlMark=()=>0;"
+    ]
+  ],
+  "boundary": "a generic function as a value",
+  "judgment": "A generic self function value needs a polymorphic calling convention or a proven opaque identity-only use. Existing monomorphized direct calls cannot silently substitute a single first-class specialization. The real stack mark is passed into unsupported AnyFunction/Error metadata, so no new escape ABI is assumed."
+}

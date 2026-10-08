@@ -236,3 +236,15 @@ func TestCallableNamespaceBoundaries(t *testing.T) {
 		}
 	}
 }
+
+func TestDebugGenericFunctionValueBoundary(t *testing.T) {
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/generic_function_value.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var ny *NotYet
+	if !errors.As(err, &ny) || !strings.Contains(err.Error(), "generic function as a value") {
+		t.Fatalf("polymorphic function boundary lost: %v", err)
+	}
+}
