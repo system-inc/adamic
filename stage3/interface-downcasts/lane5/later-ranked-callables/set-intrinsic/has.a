@@ -1,0 +1,5 @@
+// Original Set producer and has member read; adjacent containers reduced.
+interface Base {readonly has:unknown;}
+interface Target {has(value:string):boolean;}
+function probe(value:Base):void {const valuesOfNonBinaryUnicodeProperties:readonly Base[]=[value];const propertyName=0;const holder=valuesOfNonBinaryUnicodeProperties[propertyName];if(holder!==undefined) {const viewed=holder as Target;const propertyValue="x";console.log(`${viewed.has(propertyValue)}`);}}
+probe(new Set<string>(["x"]));

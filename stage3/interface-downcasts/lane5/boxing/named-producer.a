@@ -1,0 +1,3 @@
+function source():number {return 5;}
+const f:()=>number|string = source;
+console.log(`${f()}`);

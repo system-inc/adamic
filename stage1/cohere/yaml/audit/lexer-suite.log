@@ -1,0 +1,30 @@
+=== RUN   TestLexerGaps
+=== RUN   TestLexerGaps/prefixIncrement.ts
+    gaps_test.go:42: /workspace/adamic/stage1/cohere/yaml/gaps/prefixIncrement.ts:2:16: stage 0 can't lower a PrefixUnaryExpression on a number yet
+=== RUN   TestLexerGaps/assignmentValue.ts
+    gaps_test.go:42: /workspace/adamic/stage1/cohere/yaml/gaps/assignmentValue.ts:2:16: stage 0 can't lower a BinaryExpression with a number and a number yet
+=== RUN   TestLexerGaps/stringPresence.ts
+    gaps_test.go:42: /workspace/adamic/stage1/cohere/yaml/gaps/stringPresence.ts:2:16: stage 0 can't lower a PrefixUnaryExpression on a string yet
+--- PASS: TestLexerGaps (0.31s)
+    --- PASS: TestLexerGaps/prefixIncrement.ts (0.11s)
+    --- PASS: TestLexerGaps/assignmentValue.ts (0.10s)
+    --- PASS: TestLexerGaps/stringPresence.ts (0.10s)
+=== RUN   TestLexerMatchesGo
+    lexer_test.go:231: 36 repository files; 8732 complete/chunked cases; 4181796 answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical
+--- PASS: TestLexerMatchesGo (10.27s)
+=== RUN   TestLexerMutants
+=== RUN   TestLexerMutants/keep_chomping_lost
+    lexer_test.go:272: native successful execution, wrong bytes caught: byte 859077: got "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a\n=000a\n=000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000", want "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a000a000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=0020002000"
+    lexer_test.go:272: Node successful execution, wrong bytes caught: byte 859077: got "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a\n=000a\n=000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000", want "0a\ncase 52\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=002000200062000a000a000a\ncase 53\n=0002\n=001f\n=0061\n=003a\n=0020\n=007c002b\n=000a\n=001f\n=0020002000"
+=== RUN   TestLexerMutants/tab_not_whitespace
+    lexer_test.go:272: native successful execution, wrong bytes caught: byte 864210: got "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061003a00090078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n=0061003a000", want "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061\n=003a\n=0009\n=001f\n=0078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n"
+    lexer_test.go:272: Node successful execution, wrong bytes caught: byte 864210: got "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061003a00090078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n=0061003a000", want "600e9\n=000a\n=001f\n=4e2d\n=003a\n=0020\n=001f\n=0078\n=000a\ncase 100\n=0002\n=001f\n=0061\n=003a\n=0009\n=001f\n=0078\n=000d000a\n=002300200062\n=000d000a\ncase 101\n=0002\n=001f\n"
+=== RUN   TestLexerMutants/BOM_not_split
+    lexer_test.go:272: native successful execution, wrong bytes caught: byte 858065: got "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=0002\n=001f\n=feff\ncase 41\n=0002\n=001f\n=feff\ncase 42\n=0002\n=001f\n=feff\ncase 43\n=00", want "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=feff\ncase 41\n=feff\ncase 42\n=feff\ncase 43\n=feff\ncase 44\n=feff\n=0002\n=001f\n=0061\n="
+    lexer_test.go:272: Node successful execution, wrong bytes caught: byte 858065: got "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=0002\n=001f\n=feff\ncase 41\n=0002\n=001f\n=feff\ncase 42\n=0002\n=001f\n=feff\ncase 43\n=00", want "0048005f0054004f004b0045004e0029\n=000a\ncase 36\ncase 37\ncase 38\ncase 39\ncase 40\n=feff\ncase 41\n=feff\ncase 42\n=feff\ncase 43\n=feff\ncase 44\n=feff\n=0002\n=001f\n=0061\n="
+--- PASS: TestLexerMutants (8.44s)
+    --- PASS: TestLexerMutants/keep_chomping_lost (2.63s)
+    --- PASS: TestLexerMutants/tab_not_whitespace (2.61s)
+    --- PASS: TestLexerMutants/BOM_not_split (2.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	19.029s

@@ -1,0 +1,8 @@
+import type { __String } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: __String[]; }
+function helper(values: __String[], index: number): void { console.log(String(values[index])); }
+const raw = {kind: 'box' as const, child: ['__importAttributes']};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child, 0);

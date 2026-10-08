@@ -48,6 +48,9 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 `
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
+	if !read.TupleUnion && read.Element == ir.Union {
+		return e.emitPrimitiveArrayIndex(read)
+	}
 	array, index := e.value(read.Array), e.value(read.Index)
 	if read.TupleUnion {
 		checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.tupleArrayUnionCheck(read.ViewContract, read.View, "value"))

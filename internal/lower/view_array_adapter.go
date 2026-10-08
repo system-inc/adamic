@@ -70,6 +70,8 @@ func (l *lowering) viewOptionalArrayContract(node *ast.Node, target *checker.Typ
 		return 0, true, err
 	}
 	contract := l.result.ViewContracts[present-1]
+	// Keep the canonical array ID when a recursive element is still reserved.
+	contract.ObjectPresent = present
 	contract.Undefined = true
 	contract.Name = l.checker.TypeToString(target)
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)

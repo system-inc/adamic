@@ -1,0 +1,14 @@
+// Original tsc member and read witness; adjacent helpers and data carriers reduced.
+interface Expression {readonly kind:"expression";readonly value:number;}
+interface ExpressionStatement {readonly kind:"statement";readonly expression:Expression;}
+interface VoidExpression {readonly kind:"void";readonly expression:Expression;}
+interface ThisExpression {readonly kind:"this";readonly value:number;}
+interface Diagnostic {readonly messageText:string;}
+interface EmitHelper {readonly name:string;}
+interface Node {readonly flags:number;}
+type LazyNodeCheckFlags = number;
+const NodeCheckFlags = {ContainsConstructorReference:1};
+interface Base {readonly hasNodeCheckFlag:unknown;}
+interface Target {hasNodeCheckFlag(node: Node, flags: LazyNodeCheckFlags): boolean; }
+function probe(value:Base):void {const resolver=value as Target;const member:Node={flags:1};console.log(`${resolver.hasNodeCheckFlag(member, NodeCheckFlags.ContainsConstructorReference)}`);}
+probe({hasNodeCheckFlag:(node:{readonly flags:string},flags:LazyNodeCheckFlags):boolean=>node.flags==="1"});

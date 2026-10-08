@@ -1,0 +1,11 @@
+const actual: { x: number; value: boolean | undefined } = { x: 1, value: false };
+const narrow: { x: number } = actual;
+const write: { x: number; value?: boolean | undefined } = narrow;
+const read: { x: number; readonly value?: boolean | null | undefined } = narrow;
+console.log(`${actual.value} ${typeof read.value}`);
+write.value = undefined;
+console.log(`${actual.value} ${typeof read.value}`);
+actual.value = false;
+console.log(`${actual.value} ${typeof read.value}`);
+actual.value = true;
+console.log(`${actual.value} ${typeof read.value}`);

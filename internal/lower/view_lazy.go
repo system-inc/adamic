@@ -21,6 +21,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if l.isLibraryType(target, "Map", "ReadonlyMap") {
 		return l.mapViewContract(node, target)
 	}
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
@@ -51,6 +54,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	}
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
+	}
+	if l.objectPrimitiveTupleMember(target) {
+		return "tuple union member"
 	}
 	if l.viewMutableArrayUnion(target) {
 		return "mutable array union"
@@ -92,9 +98,16 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
 func (l *lowering) checkLazyViewReads() error {
+	// Finish producer and descendant certificates before bounded admission.
+	l.certifyUntaggedCallableProducers()
+	l.completeUntaggedRecursiveContracts()
+	l.finishBoundedIntersections()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return nil
+	}
+	if err := l.prepareViewCallableAggregateSchemas(); err != nil {
+		return err
 	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
@@ -114,9 +127,12 @@ func (l *lowering) checkLazyViewReads() error {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
+	callResults := viewCallableAggregateResults(program)
+	l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 	for len(queue) != 0 {
 		site := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
+		l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 		if literal, ok := index.records[site]; ok {
 			for _, field := range literal.Fields {
 				if viewAggregate(field.Value) {
@@ -153,6 +169,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	scopedFields, untrackedScope := l.scopedViewFieldFamilies(graph)
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
@@ -160,11 +177,29 @@ func (l *lowering) checkLazyViewReads() error {
 		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
+		var selectedContract ir.ViewContractID
 		var field, where string
+		operationFamily := ""
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
 		}
 		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
+				selectedContract = read.DictionaryRead.ViewContract
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
 		case ir.Property:
 			if !program.CheckedFields[read.Name] {
 				return true
@@ -191,15 +226,34 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		if selectedContract != 0 {
+			contract = selectedContract
+		}
+		family := operationFamily
 		if contract != 0 {
-			family = program.ViewContracts[contract-1].Unsupported
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) {
-			family = unsupportedFields[field]
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
+			reaches := graph.ReachingAllocations(receiver)
+			if untrackedScope || unknown || reaches.Unknown {
+				family = unsupportedFields[field]
+			} else {
+				for _, site := range reaches.Sites {
+					if scopedFields[site]["*"] != "" {
+						family = scopedFields[site]["*"]
+						break
+					}
+					if scopedFields[site][field] != "" {
+						family = scopedFields[site][field]
+						break
+					}
+				}
+			}
 		}
 		if family == "" {
 			return true
@@ -225,8 +279,14 @@ func viewAggregate(value ir.Expression) bool {
 	if value == nil {
 		return false
 	}
+	// A nullish constant has reference-shaped storage but no object allocation.
+	// Following it as an aggregate falsely introduces an unknown producer.
+	switch value.(type) {
+	case ir.Null, ir.Undefined:
+		return false
+	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map, ir.Union, ir.Closure:
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
 		return true
 	}
 	return false

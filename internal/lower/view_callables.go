@@ -71,7 +71,9 @@ func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, p
 			called = true
 		}
 		var value *ast.Node
-		if part.Name() != nil && part.Name().Text() == property.Name {
+		name, named := viewCallableImplementationName(part)
+		proven = proven && named
+		if name != nil && name.Text() == property.Name {
 			switch part.Kind {
 			case ast.KindPropertyAssignment:
 				value = part.AsPropertyAssignment().Initializer
@@ -112,6 +114,22 @@ func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, p
 		return nil
 	}
 	return l.viewCallableCall(node, l.checker.TypeToString(target)+"."+property.Name, proven && implementations > 0)
+}
+
+// Only implementation properties have a name this proof may compare. Variable
+// and parameter names may be binding patterns; computed property names remain
+// opaque rather than certifying an implementation the proof cannot identify.
+func viewCallableImplementationName(node *ast.Node) (*ast.Node, bool) {
+	switch node.Kind {
+	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindMethodDeclaration:
+		name := node.Name()
+		if name == nil || !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral && name.Kind != ast.KindNumericLiteral && name.Kind != ast.KindPrivateIdentifier {
+			return nil, false
+		}
+		return name, true
+	default:
+		return nil, true
+	}
 }
 
 func (l *lowering) viewCallableBody(node *ast.Node, seen map[*ast.Symbol]bool) bool {
@@ -214,4 +232,13 @@ func (l *lowering) viewProvenClassCast(node *ast.Node, value ir.Expression, sour
 		return ir.CheckedCast{Value: value, Field: property.Name, FieldType: of, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
 	return nil, nil
+}
+
+// Only these declarations have a scalar property name. Binding patterns are not names.
+func callableDataDeclaration(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindMethodDeclaration:
+		return true
+	}
+	return false
 }

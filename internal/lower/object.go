@@ -14,6 +14,13 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if err := l.dictionaryProducerRefusal(node); err != nil {
+		return nil, err
+	}
+
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -84,11 +91,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
+			boxedCallableField := l.viewCallableBoxedRecordField(node, fieldName)
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || boxedCallableField) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && (l.objectPrimitiveBoxedField(property) || boxedCallableField)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -310,7 +318,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
-	element := l.viewArrayElementType(arrayType)
+	element := l.untaggedArrayElement(arrayType)
 	if element == nil {
 		if !l.checker.IsArrayType(arrayType) {
 			return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
@@ -338,6 +346,16 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
+	if l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		object, err := l.expression(access.Expression)
+		if err != nil {
+			return nil, err
+		}
+		if access.QuestionDotToken != nil {
+			return l.optionalDictionaryField(node, object, name)
+		}
+		return l.dictionaryRead(node, object, ir.StringConstant{Index: l.constant(name)})
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -406,6 +424,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a prototype property on a RegExp")
 		}
 	}
+
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		of, err := l.typeOf(node)
 		if err != nil {
@@ -525,7 +544,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) {
+		if of == ir.Union {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && interfaceScalar(l.concrete(l.checker.GetTypeOfSymbol(field))) {
+				if _, err := l.viewContract(node, l.concrete(l.checker.GetTypeOfSymbol(field))); err != nil {
+					return nil, err
+				}
+			}
+		}
+		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) && !l.viewPrimitiveUnionRead(l.checker.GetTypeAtLocation(node)) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
@@ -557,7 +583,21 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewAllowed = l.viewLiterals(declared)
 		property.ViewTypeID = int(declared.Id())
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		l.viewIntersectionFieldRead(node, declared, &property)
+		// Untagged callable union read hook: prepare member signatures at a
+		// syntactic read, retaining unsupported metadata for lazy demand.
+		present := l.checker.GetNonNullableType(declared)
+		if present.Flags()&checker.TypeFlagsUnion != 0 && l.callableViewContract(present) {
+			if id, err := l.prepareUntaggedCallableUnionRead(node, present); err == nil {
+				property.ViewContract = id
+				l.result.ViewContractTypes[property.ViewTypeID] = id
+			}
+		}
 		l.prepareViewCallableProperty(node, declared, &property)
+		l.preparePrimitivePropertyRead(declared, &property)
+		if property.Of == ir.Object && declared.Flags()&checker.TypeFlagsUnion != 0 {
+			l.prepareUntaggedStructuralRead(node, declared, map[*checker.Type]bool{})
+		}
 		if (l.includesNull(declared) || l.includesUndefined(declared)) && !l.objectPrimitiveViewType(declared) && !l.viewBrandedStringUndefined(declared) {
 			property.Nullish = true
 			property.NullAllowed = l.includesNull(declared)
@@ -659,6 +699,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, known, err
 	}
 	if value, known, err := l.processValue(node); known {
+		return value, known, err
+	}
+	if value, handled, err := l.detachedOwnCall(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1422,7 +1465,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown {
+	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1488,7 +1531,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
 		entryKey = fit(entryKey, key)
-		entryValue = l.fitMapEntry(elements[1], entryValue, value)
+		entryValue = fit(entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
@@ -1543,7 +1586,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 		want = 2
 	}
 	if name == "set" && len(arguments) == 2 {
-		arguments[1] = l.fitMapEntry(node.AsCallExpression().Arguments.Nodes[1], arguments[1], value)
+		arguments[1] = fit(arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")
@@ -1552,7 +1595,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver), ValueContract: l.mapEntrySlot(node, l.concrete(l.typeArguments(l.checker.GetTypeAtLocation(receiver))[1])), ValueWhere: sourceExpression(node)}, true, nil
+		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}
@@ -1737,6 +1780,23 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Object && l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		if optional {
+			return nil, l.notYet(node, "an optional dictionary receiver")
+		}
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
+	}
+	if object.Type() == ir.Object && !optional && l.finiteDictionaryKeys(l.checker.GetTypeAtLocation(access.Expression), l.checker.GetTypeAtLocation(access.ArgumentExpression)) {
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
+	}
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		if index.Kind != ast.KindStringLiteral {
 			return nil, l.notYet(node, "a computed named-group key")
@@ -1765,6 +1825,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return ir.StringIndex{Value: object, Index: position}, nil
 	}
 	if object.Type() == ir.Array {
+		if read, handled, err := l.primitiveArrayIndexRead(node, object); handled {
+			return read, err
+		}
 		element, err := l.elementType(access.Expression)
 		if err != nil {
 			return nil, err

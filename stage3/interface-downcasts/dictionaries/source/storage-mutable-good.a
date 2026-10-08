@@ -1,0 +1,7 @@
+interface MapLike<T>{[key:string]:T}
+interface Base{readonly kind:'Storage'}
+interface Holder extends Base{readonly table:MapLike<string[]>}
+const table:MapLike<string[]>={item:['name']};
+const payload={kind:'Storage' as const,table};
+const base:Base=payload; const view=base as Holder;
+const entry=view.table['item']; if(entry!==undefined) console.log(`${entry[0]}`); console.log(`${view.table['missing']}`);

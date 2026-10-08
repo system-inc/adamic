@@ -54,8 +54,9 @@ func (l *lowering) viewArrayFields(node *ast.Node, target *checker.Type, fields 
 // final pass enables it only in a program containing an admitted array view.
 func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.ArrayIndex {
 	array := node.AsElementAccessExpression().Expression
-	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
+	element := l.untaggedArrayElement(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(array)))
 	if element != nil {
+		l.prepareUntaggedStructuralRead(node, element, map[*checker.Type]bool{})
 		read.View = sourceExpression(node)
 		read.ViewType = l.checker.TypeToString(element)
 		read.ViewTypeID = int(element.Id())
@@ -81,7 +82,7 @@ func markProgramViewArrayRead(program *ir.Program, read ir.ArrayIndex) ir.ArrayI
 }
 
 func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool) ir.ArrayViewRead {
-	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
+	element := l.untaggedArrayElement(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(array)))
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}

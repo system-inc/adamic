@@ -259,7 +259,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if err := json.Unmarshal(manifestBytes, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 34 {
+	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 42 {
 		t.Fatal("original declaration provenance changed")
 	}
 	for file, expected := range manifest.Declarations {

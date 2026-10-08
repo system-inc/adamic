@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface NullLiteral {readonly value:number;}
+interface Base {readonly createNull:unknown;}
+interface Target {createNull(): NullLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createNull().value}`);}
+probe({createNull:():number=>9});

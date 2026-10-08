@@ -1,0 +1,8 @@
+import type { UnionType } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: UnionType; }
+function helper(value: UnionType): void { console.log(String(value.keyPropertyName)); }
+const raw = {kind: 'box' as const, child: {keyPropertyName: null}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

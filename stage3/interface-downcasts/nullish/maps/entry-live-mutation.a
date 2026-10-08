@@ -1,6 +1,0 @@
-interface Base{readonly kind:string}
-interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,number|string|null>|null}
-const owned=new Map<string,number|string|null>([['first',7],['second','seven'],['null',null]]);
-const raw={kind:'box',value:owned};const base:Base=raw;
-function read(node:Target):void{const map=node.value;if(map!==null){map.forEach((value)=>{console.log(typeof value);owned.clear();if(typeof value==='number'){console.log(String(value));}});console.log(String(map.size));}}
-read(base as Target);

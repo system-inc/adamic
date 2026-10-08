@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.39s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-specifier/wrong-arity (0.50s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 0 stdout "9\n" stderr "" want "createExportSpecifier" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportSpecifier expected (isTypeOnly: boolean, propertyName: string | ModuleExportName | undefined, name: string | ModuleExportName) => ExportSpecifier, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-signature/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 0 stdout "9\n" stderr "" want "createPropertySignature" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPropertySignature expected (modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, type: TypeNode | undefined) => PropertySignature, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-check/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 0 stdout "9\n" stderr "" want "createTypeCheck" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeCheck expected (value: Expression, tag: TypeOfTag) => Expression, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.398s
+FAIL

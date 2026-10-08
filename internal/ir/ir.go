@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PrimitiveArrayReads requires producer metadata even without a cast.
+	PrimitiveArrayReads bool
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
 	ViewOrigins     []Expression
 	MapCertificates [][2]ViewContractID
@@ -100,6 +102,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// CallableMasks records producer signature members independently of any view.
+	CallableMasks []uint16
+
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
 
@@ -171,6 +176,10 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	// 12 and 13 are reserved runtime slot tags for null and undefined.
+	Record Type = 14
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -203,7 +212,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -359,6 +368,10 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// DictionaryKey selects an own string key; its read always validates storage.
+		DictionaryKey Expression
+		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
+		DictionaryPrimitive bool
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool
@@ -501,11 +514,9 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value          Expression
-		Tuple          bool // Native tuples are objects; JavaScript tuples retain array identity.
-		Undefined      bool
-		UndefinedWhere string
-		To             Type
+		Tuple bool // Native tuples are objects; JavaScript tuples retain array identity.
+		Value Expression
+		To    Type
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -795,9 +806,7 @@ type (
 		ValueType       Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site          int
-		ValueContract ViewContractID
-		ValueWhere    string
+		Site int
 	}
 
 	// MapHas is map.has(Key), and MapDelete map.delete(Key).

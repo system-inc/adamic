@@ -1,0 +1,15 @@
+// Original tsc member and read witness; adjacent helpers and data carriers reduced.
+interface Expression {readonly kind:"expression";readonly value:number;}
+interface ExpressionStatement {readonly kind:"statement";readonly expression:Expression;}
+interface VoidExpression {readonly kind:"void";readonly expression:Expression;}
+interface ThisExpression {readonly kind:"this";readonly value:number;}
+interface Diagnostic {readonly messageText:string;}
+interface EmitHelper {readonly name:string;}
+interface Node {readonly flags:number;}
+type LazyNodeCheckFlags = number;
+const NodeCheckFlags = {ContainsConstructorReference:1};
+interface Base {readonly createExpressionStatement:unknown;readonly createAssignment:(left:Expression,right:Expression)=>Expression;readonly createIdentifier:(text:string)=>Expression;}
+interface Target {createExpressionStatement(expression: Expression): ExpressionStatement; createAssignment(left:Expression,right:Expression):Expression; createIdentifier(text:string):Expression;}
+function inspect(statement:ExpressionStatement):void {console.log(`${statement.expression.value}`);}
+function probe(value:Base):void {const factory=value as Target;const accessor:Expression={kind:"expression",value:5};inspect(factory.createExpressionStatement(factory.createAssignment(accessor, factory.createIdentifier("value"))));}
+probe({createExpressionStatement:():ExpressionStatement=>({kind:"statement",expression:{kind:"expression",value:9}}),createAssignment:(left:Expression,right:Expression):Expression=>left,createIdentifier:(text:string):Expression=>({kind:"expression",value:0})});

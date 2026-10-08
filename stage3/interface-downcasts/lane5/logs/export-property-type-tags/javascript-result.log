@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.24s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-specifier/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createExportSpecifier(isTypeOnly,propertyName,name).value is not initialized; expected number, found missing\n" want "createExportSpecifier" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportSpecifier expected (isTypeOnly: boolean, propertyName: string | ModuleExportName | undefined, name: string | ModuleExportName) => ExportSpecifier, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-signature/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createPropertySignature(modifiers,name,questionToken,type).value is not initialized; expected number, found missing\n" want "createPropertySignature" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPropertySignature expected (modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, type: TypeNode | undefined) => PropertySignature, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-check/wrong-result (0.38s)
+        checked_views_callable_later_ranked_test.go:64: gate cache node hit
+        checked_views_callable_later_ranked_test.go:84: gate cache node miss
+        checked_views_callable_later_ranked_test.go:104: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createTypeCheck(temp,\"symbol\").value is not initialized; expected number, found missing\n" want "createTypeCheck" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeCheck expected (value: Expression, tag: TypeOfTag) => Expression, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.245s
+FAIL

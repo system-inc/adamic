@@ -1,0 +1,8 @@
+import type { FilePresentOnHost, FilePresenceUnknownOnHost } from 'original-tsc-private';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: FilePresentOnHost; }
+function helper(value: FilePresentOnHost | FilePresenceUnknownOnHost): void { console.log(String(value.version)); }
+const raw = {kind: 'box' as const, child: {version: 42}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

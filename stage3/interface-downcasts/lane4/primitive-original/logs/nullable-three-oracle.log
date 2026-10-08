@@ -1,0 +1,61 @@
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/string
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/number
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/undefined
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/wrong
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/null
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/missing
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/number
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/false
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/undefined
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong-string
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/null
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/missing
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/string
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/true
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/undefined
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:211: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/wrong
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/wrong-number
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:227: member/literal-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/null
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/resolved/missing
+--- PASS: TestCheckedViewOriginalFinitePrimitiveFields (34.53s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/string (2.07s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/number (1.92s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/undefined (2.28s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/wrong (2.85s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/null (1.72s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/diagnostic/missing (1.91s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/number (1.90s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/false (2.19s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/undefined (2.52s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong (2.01s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong-string (1.78s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/null (1.60s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/missing (1.70s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/string (1.14s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/true (1.19s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/undefined (1.47s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/wrong (1.06s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/wrong-number (1.14s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/null (0.79s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/resolved/missing (1.28s)
+PASS
+gate cache: native hits=0 misses=11
+gate cache: node hits=0 misses=47
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	34.555s

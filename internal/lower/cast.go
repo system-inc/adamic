@@ -72,7 +72,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	cast.CheckedFields = true
-	return cast, nil
+	return l.certifiedCheckedCast(node, cast, target)
 }
 
 // fieldLiteral is a member's type for a field when it's a single literal ('Circle', 1, true), the

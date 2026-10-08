@@ -61,7 +61,7 @@ static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], N
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {
-	return type != 1 && type != 2 && type != 7 && type != 9;
+	return type != 1 && type != 2 && type != 7;
 }
 
 static adamic_value collection_next(adamic_closure *self, adamic_value *arguments, size_t argument_count) {
@@ -82,16 +82,11 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	adamic_object_field_types(result)[1] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
 	if (!present) {
 		if (!reference) {
-			if ((part == 1 || set ? key_type : value_type) == 2 || (part == 1 || set ? key_type : value_type) == 9) {
-				result->slots[1].maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false, false});
-				adamic_object_field_types(result)[1] = 9;
-			} else {result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});}
+			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
 		}
 		return (adamic_value){.reference = result};
 	}
-	if (!reference && (part == 1 || set ? key_type : value_type) == 9) {adamic_object_field_types(result)[1] = 9;}
 	if (set) { value = key; value_type = key_type; }
-	else if (part != 1) { value = adamic_map_read_value(iterator->map, value, (unsigned char)value_type); }
 	if (part == 3) {
 		int shape = (collection_reference(key_type) ? 2 : 0) + (collection_reference(value_type) ? 1 : 0);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
@@ -100,12 +95,12 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object_field_types(pair)[0] = (unsigned char)key_type;
 		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
-		if (set && collection_reference(value_type)) { adamic_retain(value.reference); }
+		if (collection_reference(value_type)) { adamic_retain(value.reference); }
 		result->slots[1].reference = pair;
 	} else {
 		int type = part == 1 || set ? key_type : value_type;
 		adamic_value element = part == 1 || set ? key : value;
-		if (reference && (part == 1 || set)) { adamic_retain(element.reference); }
+		if (reference) { adamic_retain(element.reference); }
 		if (type == 1) {
 			// IteratorResult<number, undefined>.value reads the same packed word until narrowed.
 			element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number});

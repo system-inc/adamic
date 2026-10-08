@@ -346,13 +346,28 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
+		if of == ir.Union {
+			if _, err := l.viewContract(binding, l.concrete(fieldType)); err != nil {
+				return nil, err
+			}
+		}
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) && !l.viewPrimitiveUnionRead(fieldType) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewTypeID = int(fieldType.Id())
+		value.ViewReceiverTypeID = int(destructured.Id())
+		value.ViewWhere = l.program.Where(binding)
+		l.prepareViewCallableProperty(binding, fieldType, &value)
 		value.ViewAllowed = l.viewLiterals(fieldType)
+		l.preparePrimitiveDestructuredRead(binding, destructured, fieldType, &value)
+		if !tuple {
+			if err := l.viewIntersectionBindingRead(binding, destructured, fieldType, &value); err != nil {
+				return nil, err
+			}
+		}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

@@ -1,0 +1,34 @@
+[
+  {
+    "sites": 143,
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit."
+  },
+  {
+    "sites": 80,
+    "reason": "No complete construction, alias and writer proof for this source owner in this wave. Declined without changing source or weakening checker options."
+  },
+  {
+    "sites": 57,
+    "reason": "TextRange/node fallback is a different shape from SourceMapRange. The scratch TextRange.source candidate enlarged the inventory from 399 to 859; a universal source declaration is not justified. Declined pending narrower owner proof."
+  },
+  {
+    "sites": 46,
+    "reason": "General Type and its other variants are not TypeParameter shapes. Declaring constraint alone exposes the next missing TypeParameter field; target/mapper contracts require separate subtype proof."
+  },
+  {
+    "sites": 39,
+    "reason": "Compiler-only interface omits a method required by the services augmentation. A direct optional member conflicts with that merge; a heritage change would require API proof beyond the permitted optional additions."
+  },
+  {
+    "sites": 18,
+    "reason": "CompilerOptions is a distinct shape from the source options/Pick/indexed record. Adding only all would expose more target option fields; no truthful universal declaration proved."
+  },
+  {
+    "sites": 7,
+    "reason": "Raw parsed JSON can hold a non-string version; readPackageJsonField checks its runtime type. Adding version?: string is not truthful."
+  },
+  {
+    "sites": 1,
+    "reason": "SourceFile is passed through a SourceMapSource view. A truthful universal skipTrivia writer/alias contract is not proved; declined separately from the services method augmentation."
+  }
+]

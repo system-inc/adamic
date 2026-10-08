@@ -1,0 +1,8 @@
+import type { StringLiteralType, NumberLiteralType } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: NumberLiteralType; }
+function helper(value: StringLiteralType | NumberLiteralType): void { console.log(String(value.value)); }
+const raw = {kind: 'box' as const, child: {flags: 256, value: 42}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

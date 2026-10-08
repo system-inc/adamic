@@ -1,0 +1,10 @@
+interface MapLike<T> { [key: string]: T; }
+interface Base { readonly kind: 'Table'; }
+interface Holder extends Base { readonly table: MapLike<string>; }
+const table: Record<string, string> = { item: 'name' };
+const payload = { kind: 'Table' as const, table };
+const base: Base = payload;
+const view = base as Holder;
+function read<T>(table: MapLike<T>): T | undefined { return table['item']; }
+const value = read(view.table);
+console.log(`${value}`);

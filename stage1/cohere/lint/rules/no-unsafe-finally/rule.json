@@ -1,0 +1,16 @@
+{
+  "name": "no-unsafe-finally",
+  "kinds": [
+    "ReturnStatement",
+    "ThrowStatement",
+    "BreakStatement",
+    "ContinueStatement"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnsafeFinally",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnsafeFinally"
+}

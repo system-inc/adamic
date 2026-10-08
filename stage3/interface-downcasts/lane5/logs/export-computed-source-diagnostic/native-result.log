@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.59s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-declaration/wrong-result (0.55s)
+        checked_views_callable_later_ranked_test.go:41: gate cache node miss
+        checked_views_callable_later_ranked_test.go:61: gate cache node miss
+        checked_views_callable_later_ranked_test.go:81: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createExportDeclaration(undefined,false,exportClause,undefined).value is not initialized; expected number, found missing\n" want "createExportDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportDeclaration(undefined,false,exportClause,undefined).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/computed-name/wrong-result (0.55s)
+        checked_views_callable_later_ranked_test.go:41: gate cache node miss
+        checked_views_callable_later_ranked_test.go:61: gate cache node miss
+        checked_views_callable_later_ranked_test.go:81: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateComputedPropertyName(node,Debug.checkDefined(nodeVisitor(node.expression,visitor,isExpression))).value is not initialized; expected number, found missing\n" want "updateComputedPropertyName" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateComputedPropertyName(node,Debug.checkDefined(nodeVisitor(node.expression,visitor,isExpression))).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/source-file-update/wrong-result (0.49s)
+        checked_views_callable_later_ranked_test.go:41: gate cache node miss
+        checked_views_callable_later_ranked_test.go:61: gate cache node miss
+        checked_views_callable_later_ranked_test.go:81: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updateSourceFile(sourceFile,setTextRange(factoryCreateNodeArray(statements),sourceFile.statements)).value is not initialized; expected number, found missing\n" want "updateSourceFile" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateSourceFile(sourceFile,setTextRange(factoryCreateNodeArray(statements),sourceFile.statements)).value is not initialized; expected number, found missing\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.598s
+FAIL

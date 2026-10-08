@@ -1,0 +1,22 @@
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/0
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/1
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/2
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/3
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/4
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/5
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/6
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/7
+=== NAME  TestPrimitiveArraySnapshotStorageAndLifetime
+    view_array_primitives_test.go:87: forged producer metadata mutant caught by named unknown-storage refusal
+--- PASS: TestPrimitiveArraySnapshotStorageAndLifetime (1.13s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/0 (0.02s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/1 (0.03s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/2 (0.03s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/3 (0.03s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/4 (0.05s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/5 (0.01s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/6 (0.01s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/7 (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.144s

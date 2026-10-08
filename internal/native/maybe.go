@@ -20,7 +20,7 @@ func maybe(of ir.Type, value string) string {
 func maybeSlot(element ir.Type, slot string) string {
 	of := ir.Maybe(element)
 	held := slot + "->" + member(element)
-	if element == ir.MaybeNumber || element == ir.MaybeBoolean {
+	if element == ir.MaybeNumber {
 		held = unslotted(element, held)
 	} else {
 		held = maybe(of, held)

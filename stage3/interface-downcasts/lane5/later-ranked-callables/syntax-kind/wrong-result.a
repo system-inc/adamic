@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type SyntaxKind=number;
+interface Base {readonly formatSyntaxKind:unknown;}
+interface Target {formatSyntaxKind(kind: SyntaxKind | undefined): string;}
+function probe(value:Base):void {const Debug=value as Target;const kind:SyntaxKind=80;console.log(Debug.formatSyntaxKind(kind));}
+probe({formatSyntaxKind:(kind:SyntaxKind|undefined):number=>3});

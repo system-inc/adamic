@@ -28,6 +28,9 @@ const adamicViewIntersectionRequire = (snapshot, members, match, expression, dec
 
 // Retain one evaluated receiver and one snapshot per combined field.
 func (e *emitter) viewObjectIntersection(property ir.Property, value string) string {
+	if e.program.ViewContracts[property.ViewContract-1].IntersectionBounded {
+		return e.viewBoundedIntersection(property, value)
+	}
 	if e.program.ViewContracts[property.ViewContract-1].IntersectionRecursive {
 		return e.viewRecursiveIntersection(property, value)
 	}
@@ -78,6 +81,9 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 
 func (e *emitter) viewIntersectionUnion(property ir.Property, value string) string {
 	root := e.program.ViewContracts[property.ViewContract-1]
+	if root.IntersectionBounded {
+		return e.viewBoundedIntersection(property, value)
+	}
 	var tag ir.ViewContract
 	for _, field := range root.Fields {
 		if field.Name == root.IntersectionTag {

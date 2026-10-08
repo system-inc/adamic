@@ -85,6 +85,9 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 		if from == 0 || to == 0 {
 			return false
 		}
+		if program.ViewContracts[from-1].Of != program.ViewContracts[to-1].Of {
+			return false
+		}
 		// Readonly arrays permit element covariance; writable arrays require both
 		// directions. Every recursive step also preserves physical storage.
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
@@ -186,7 +189,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 					return false
 				}
 			}
-			return sameStorage(source.Element, target.Element) && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
+			return accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
 			if id == to {
@@ -197,15 +200,9 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	}
 	for _, pair := range program.MapCertificates {
 		key, value := pair[0], pair[1]
-		if sameStorage(key, c.Key) && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
+		if accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
 			pairs = append(pairs, pair)
 		}
 	}
 	return pairs
-}
-
-// Only top-level readonly entries use these adapters. Keys and nested arrays keep
-// their original calling and storage conventions.
-func MapReadStorageCompatible(source, target Type) bool {
-	return source == target || target == Union && (source == Number || source == Boolean || source == MaybeNumber || source == MaybeBoolean || source.IsReference() && source != Weak) || target == MaybeNumber && source == Number || target == MaybeBoolean && source == Boolean
 }

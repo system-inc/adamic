@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked8ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked8ArrayContracts/ranked8-generic-missing (1.06s)
+        checked_views_ranked8_arrays_test.go:67: exit codes differ; stderr ""; stdout "none\n"; exit 0
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.128s
+FAIL

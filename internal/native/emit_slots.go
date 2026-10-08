@@ -9,6 +9,12 @@ import (
 // A lookup's slot distinguishes a missing element or entry from a present null reference. Keep
 // that presence until typeof has classified it, while sharing the ordinary value read's lookup.
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
+	if !expression.TupleUnion && expression.Element == ir.Union && expression.View != "" {
+		value := e.emitPrimitiveArrayIndex(expression)
+		snapshot := e.temporary()
+		e.line("adamic_value %s = {.reference = %s};", snapshot, value)
+		return "(&" + snapshot + ")"
+	}
 	array := e.value(expression.Array)
 	index := e.value(expression.Index)
 	if expression.View != "" {
@@ -33,10 +39,6 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 	key := e.value(expression.Key)
 	slot := e.temporary()
 	e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
-	converted := e.temporary()
-	e.line("adamic_value %s = {.reference = NULL};", converted)
-	e.line("if (%s != NULL) %s = adamic_map_read_value(%s,*%s,%d);", slot, converted, object, slot, expression.ValueType)
-	e.line("%s = %s == NULL ? NULL : &%s;", slot, slot, converted)
 	return slot
 }
 
@@ -51,7 +53,7 @@ func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
 		case ir.ArrayIndex:
 			slot, of = e.arrayIndexSlot(value), value.Element
 		case ir.MapGet:
-			slot, of, retain = e.mapGetSlot(value), value.ValueType, false
+			slot, of = e.mapGetSlot(value), value.ValueType
 		case ir.ArrayPop:
 			array := e.snapshot(ir.Array, e.value(value.Array))
 			slot, of, retain = e.temporary(), value.Element, false
