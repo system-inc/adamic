@@ -41,4 +41,4 @@ for (const member of blocked) {
  visit(source);
  if (normalized(declarations.join('\n')) !== normalized(member.declaration) || !read) throw Error(files[member.rank] + ': original blocker declaration/read changed');
 }
-console.log('Verified  + families.length + ' pairs / ' + families.reduce((n,f)=>n+f.candidateReads,0) + ' candidate reads in ' + count + ' original-member fixtures.');
+console.log('Verified ' + families.length + ' pairs / ' + families.reduce((n,f)=>n+f.candidateReads,0) + ' candidate reads in ' + count + ' original-member fixtures.');

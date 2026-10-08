@@ -1,0 +1,34 @@
+[
+  {
+    "rank": 1,
+    "pair": "typeof Debug.assert",
+    "reads": 439,
+    "read": "Debug.assert",
+    "stop": "adamic/no-type-predicate at the assertion signature",
+    "needed": "proven original assertion-predicate callable admission"
+  },
+  {
+    "rank": 4,
+    "pair": "NodeFactory.createAssignment",
+    "reads": 143,
+    "read": "factory.createAssignment",
+    "stop": "unsupported callable contract at the read",
+    "needed": "overloaded callable signature certification"
+  },
+  {
+    "rank": 10,
+    "pair": "string[].push",
+    "reads": 94,
+    "read": "keys.push",
+    "stop": "unsupported callable contract at the read",
+    "needed": "rest-parameter intrinsic contract and actual array receiver certification"
+  },
+  {
+    "rank": 37,
+    "pair": "string[].join",
+    "reads": 42,
+    "read": "result.join",
+    "stop": "native array-to-object argument conversion clang error; JavaScript unknown intrinsic signature exit 70",
+    "needed": "array receiver conversion and immutable intrinsic signature metadata"
+  }
+]

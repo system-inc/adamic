@@ -1,0 +1,68 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-331/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "answer3\n" stderr "" want "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-334/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "" stderr "" want "adamic: panic: field read failed: writer.writeComment expected (text: string) => void, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-349/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createDecorator expected (expression: Expression) => Decorator, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-352/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createFunctionApplyCall expected (target: Expression, thisArg: Expression, argumentsExpression: Expression) => CallExpression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-355/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createLogicalOr expected (left: Expression, right: Expression) => BinaryExpression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-358/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createStrictEquality expected (left: Expression, right: Expression) => BinaryExpression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-361/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: context.factory.updateHeritageClause expected (node: HeritageClause, types: readonly ExpressionWithTypeArguments[]) => HeritageClause, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-364/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: context.factory.updatePartiallyEmittedExpression expected (node: PartiallyEmittedExpression, expression: Expression) => PartiallyEmittedExpression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-367/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: context.factory.updateVariableStatement expected (node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList) => VariableStatement, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-376/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "true\n" stderr "" want "adamic: panic: field read failed: oldProgram.isSourceFileDefaultLibrary expected (file: SourceFile) => boolean, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-379/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "true\n" stderr "" want "adamic: panic: field read failed: scanner.hasExtendedUnicodeEscape expected () => boolean, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-394/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "answer3\n" stderr "" want "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-397/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "answer3\n" stderr "" want "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-400/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: emitHelpers().createMetadataHelper expected (metadataKey: string, metadataValue: Expression) => Expression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-412/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: resolver.getGlobalIterableIteratorType expected (reportErrors: boolean) => GenericType, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-481/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "answer3\n" stderr "" want "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-622/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "answer3\n" stderr "" want "adamic: panic: field read failed: (host as Program).getCommonSourceDirectory expected () => string, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-634/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "true\n" stderr "" want "adamic: panic: field read failed: rawTextScanner.isUnterminated expected () => boolean, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-748/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "" stderr "" want "adamic: panic: field read failed: host.log expected (text: string) => void, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-778/wrong-arity
+    checked_views_callable_share_b_test.go:88: backend 0: exit 0 stdout "" stderr "" want "adamic: panic: field read failed: writer.writeProperty expected (text: string) => void, found function with arity 0\n"
+--- FAIL: TestCheckedViewCallableShareBFamilies (9.34s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-331/wrong-arity (0.53s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-334/wrong-arity (0.43s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-349/wrong-arity (0.45s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-352/wrong-arity (0.49s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-355/wrong-arity (0.48s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-358/wrong-arity (0.46s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-361/wrong-arity (0.51s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-364/wrong-arity (0.56s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-367/wrong-arity (0.51s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-376/wrong-arity (0.46s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-379/wrong-arity (0.43s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-394/wrong-arity (0.46s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-397/wrong-arity (0.46s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-400/wrong-arity (0.45s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-412/wrong-arity (0.44s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-481/wrong-arity (0.47s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-622/wrong-arity (0.44s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-634/wrong-arity (0.44s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-748/wrong-arity (0.45s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-778/wrong-arity (0.42s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=40
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	9.353s
+FAIL

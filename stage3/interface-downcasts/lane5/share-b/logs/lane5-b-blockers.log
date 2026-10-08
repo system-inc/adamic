@@ -1,0 +1,27 @@
+=== RUN   TestCheckedViewCallableShareBBlockers
+=== RUN   TestCheckedViewCallableShareBBlockers/debug-assert-contract.a
+    checked_views_callable_share_b_test.go:198: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/gaps/debug-assert-contract.a:6:136: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-assignment.a
+    checked_views_callable_share_b_test.go:198: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/blocked-assignment.a:15:17: Adamic 0.1 refuses checked view read of field createAssignment with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-push.a
+    checked_views_callable_share_b_test.go:198: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/blocked-push.a:7:17: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-join.a
+    checked_views_callable_share_b_test.go:188: JavaScript array receiver observation: exit 70 stdout "" stderr "adamic: panic: field read failed: result.join expected (separator?: string | undefined) => string, found function with unknown signature\n"
+    checked_views_callable_share_b_test.go:189: native array receiver observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-152409428/main.c:53:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           53 |         adamic_function_0_probe(adamic_temporary_15);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-152409428/main.c:24:53: note: passing argument to parameter 'adamic_local_0_value' here
+           24 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+--- PASS: TestCheckedViewCallableShareBBlockers (0.70s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/debug-assert-contract.a (0.19s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-assignment.a (0.14s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-push.a (0.14s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-join.a (0.22s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.708s

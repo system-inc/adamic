@@ -1,5 +1,5 @@
 Built: first share b checkpoint, 20 original-member callable pairs / 85 candidate reads, 90 isolated .a fixtures and scoped oracle/counts/mutant tests.
-Commits: based only on codex/views-callables 926a1d39d1a0d6b4cf49bbccf521a4cc02d10f56; this report accompanies the share b certification commit.
+Commits: based only on codex/views-callables 926a1d39d1a0d6b4cf49bbccf521a4cc02d10f56; first checkpoint 473904f4, followed by the verifier/log correction accompanying this report.
 Commands: original fixture verification PASS; restored scoped oracle PASS 56.989s; scoped count refresh PASS 10.582s; oracle vet and diff check PASS; global counts refresh has 60 inherited failed fixture rows.
 Mutants: all 20 per-pair expected-arity mutations fail the pinned exit/message assertions; independent release-native and JavaScript controls execute the same malformed producers successfully.
 Uncovered: full original tsc call graphs and exact reaching-view counts; 864 initially uncertified share pairs / 2772 candidate reads remain, including the skipped families and four observed code dependencies below.
@@ -92,3 +92,14 @@ updated only main, so the named lane ref was fetched explicitly. An initial
 unsourced gofmt command was unavailable and was corrected after sourcing the
 printed environment. Initial blocker tests used relative Node paths and were
 corrected to absolute paths before the passing recorded run.
+
+Evidence correction: 473904f4 contained a syntax error in the newly extended
+blocker section of verify.cjs. The earlier 20-family verifier and final runtime
+oracle had passed; the syntax error was found during post-push evidence review
+and is corrected here. The restored verifier now checks all 90 member fixtures
+and the three new original blocker declarations. A mutation narrowing the
+rank-334 original parameter declaration from string to the literal "value3"
+fails the original-declaration pin; the fixture is restored. The reproducible
+run-mutants.py command also passes, catching all 20 arity mutations. No runtime
+or compiler source changes are involved. Raw logs are explicitly tracked here
+despite the repository's general logs ignore rule.
