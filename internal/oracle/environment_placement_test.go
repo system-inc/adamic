@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large", "captured_parameters", "async"} {
+	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large", "captured_parameters", "captured_reassigned", "captured_early_return", "async"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -144,4 +144,41 @@ func TestEnvironmentCapturedParameterBorrowMutant(t *testing.T) {
 		t.Logf("borrow mutant caught by owned-cell store assertion: %v", failure)
 	}()
 	native.C(program)
+}
+
+// Removing the cell's retain instead of the redundant parameter owner leaves
+// the caller holding a reference that cell destruction has already released.
+func TestCapturedParameterCellRetainMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_captured_early_return.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	initialization := regexp.MustCompile(`(adamic_local_[0-9]+_text_cell->value.reference = )adamic_retain\((adamic_local_[0-9]+_text)\);`)
+	if matches := initialization.FindAllString(source, -1); len(matches) != 1 {
+		t.Fatalf("want one captured text initialization, got %d", len(matches))
+	}
+	parameter := initialization.FindStringSubmatch(source)[2]
+	extraOwner := regexp.MustCompile(`(?m)^\s*adamic_(?:retain|release)\(` + regexp.QuoteMeta(parameter) + `\);`)
+	if extraOwner.MatchString(source) {
+		t.Fatal("captured parameter still has an owner outside its cell")
+	}
+	source = initialization.ReplaceAllString(source, "${1}${2};")
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	report := leakChecked(t, source, binary)
+	if report == "" {
+		t.Fatal("oracle leak check accepted the missing cell retain")
+	}
+	if runtime.GOOS == "linux" && !strings.Contains(report, "AddressSanitizer: heap-use-after-free") {
+		t.Fatalf("want under-retained cell caught by ASan in leak check, got %s", report)
+	}
+	t.Logf("missing cell retain rejected by oracle leak check:\n%s", report)
 }

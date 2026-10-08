@@ -38,8 +38,8 @@ func (e *emitter) signature(function int) string {
 	return fmt.Sprintf("%s %s(%s)", returns, name, strings.Join(parameters, ", "))
 }
 
-// functionBody emits a function's body. A string parameter is retained on entry and released on
-// every way out, like any local, so a function may reassign it without touching its caller's.
+// functionBody emits a function's body. Reference parameters own a count, directly or
+// through their capture cell, so reassignment never releases the caller's count.
 func (e *emitter) functionBody(function ir.Function) {
 	e.function = &function
 	e.functionDepth = len(e.scopes)
@@ -66,8 +66,16 @@ func (e *emitter) functionBody(function ir.Function) {
 	for _, parameter := range function.Parameters {
 		local := e.program.Locals[parameter]
 		if local.Captured && local.Type.IsReference() && local.Borrowed {
-			// Captured parameters own an entry reference independent of the cell.
+			// Captured parameters must own the value stored in their cell.
 			panic(fmt.Sprintf("native: a store into the borrowed parameter %s", local.Name))
+		}
+		if local.Captured {
+			// The cell owns every subsequent read and assignment. Transfer a consumed
+			// argument, or retain the caller's value in the cell, without a second
+			// owner of the original C parameter. Reads that outlive cleanup retain
+			// their own snapshot (emit_locals.go).
+			e.makeCell(parameter, e.localName(parameter), e.reuse.consumed[parameter])
+			continue
 		}
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -77,10 +85,6 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
-		}
-		if e.program.Locals[parameter].Captured {
-			// A closure captured this parameter: from here on it lives in a cell.
-			e.makeCell(parameter, e.localName(parameter), false)
 		}
 	}
 	for index := range function.Body {
