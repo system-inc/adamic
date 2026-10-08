@@ -1,0 +1,4 @@
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestCorpusNativeRefusals	TestCorpusNativeRefusals:extra	The estree corpus audit lane: needs the completed frozen corpus that audit produces, not provisioned by the gate.
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestRepositoryAgreement	TestRepositoryAgreement:extra	The estree corpus audit lane: runs against a completed Go/Node corpus audit directory (ADAMIC_ESTREE_CORPUS) produced by that audit, not provisioned by the gate, like the GCC and release-flags lanes.
+measurement	github.com/system-inc/adamic/stage1/cohere/estree	TestThroughput	TestThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+skips=3 required-input=0 unknown=0
