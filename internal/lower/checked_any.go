@@ -19,7 +19,7 @@ func (l *lowering) checkedAnyContext(node *ast.Node, value ir.Expression) (ir.Ex
 	if target == nil || target.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
 		return value, nil
 	}
-	if value.Type() == ir.Object || value.Type() == ir.Array || value.Type() == ir.Map || value.Type() == ir.Closure {
+	if value.Type() == ir.Map || value.Type() == ir.Closure {
 		if to, known := l.representation(target); known && to == value.Type() {
 			return value, nil
 		}
@@ -40,7 +40,7 @@ func (l *lowering) checkedAnyType(node *ast.Node, value ir.Expression, target *c
 	case target.Flags()&checker.TypeFlagsBoolean != 0 && target.Flags()&checker.TypeFlagsBooleanLiteral == 0:
 		to = ir.Boolean
 	default:
-		return nil, l.notYet(node, "checked any used as "+l.checker.TypeToString(target)+" (a scalar tag does not establish this contract)")
+		return l.checkedJSONType(node, value, target)
 	}
 	if value.Type() == to {
 		return value, nil

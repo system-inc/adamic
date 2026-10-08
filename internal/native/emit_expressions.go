@@ -12,6 +12,8 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.CheckedJSON:
+		return e.checkedJSON(expression)
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
 	case ir.HasProperty:
@@ -144,6 +146,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if e.program.JSONCheckedFields[expression.Name] && expression.View == "" && expression.Readiness == "" && ir.JSONReadType(expression.Type()) {
+			return e.checkedJSONProperty(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -440,6 +445,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if e.program.JSONCheckedArrays && !expression.Array.Type().IsTypedArray() && ir.JSONReadType(expression.Type()) {
+			return e.checkedJSONArrayIndex(expression)
+		}
 		if expression.Array.Type().IsTypedArray() {
 			array := e.value(expression.Array)
 			index := e.value(expression.Index)
@@ -618,6 +626,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
 			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			e.line("%s->element_type = %d;", array, expression.Element)
 			for index, element := range expression.Elements {
 				value := e.value(element)
 				switch {
@@ -636,6 +645,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			elements = append(elements, e.value(element))
 		}
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		e.line("%s->element_type = %d;", array, expression.Element)
 		for _, element := range elements {
 			if expression.Element.IsReference() {
 				element = retained(element)

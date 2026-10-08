@@ -132,7 +132,7 @@ func checkedAnyProgram(t *testing.T, name string) (*ir.Program, string) {
 func checkedAnyCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, name := range checkedAnyFixtures {
+	for _, name := range append(append([]string{}, checkedAnyFixtures...), checkedJSONFixtures...) {
 		program, _ := checkedAnyProgram(t, name)
 		binary := filepath.Join(t.TempDir(), "counted")
 		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
@@ -157,7 +157,7 @@ func checkedAnyCounts(t *testing.T) []string {
 }
 
 func TestCheckedAnyUnsupportedContracts(t *testing.T) {
-	for _, name := range []string{"structural", "callable", "prototype", "literal_result", "array_view", "field_view", "staged_field"} {
+	for _, name := range []string{"callable", "prototype", "array_view", "field_view", "staged_field", "json_alias_write", "json_alias_update", "json_iteration", "json_reflection", "json_array_method", "json_unprepared"} {
 		t.Run(name, func(t *testing.T) {
 			path := filepath.Join(repository, "internal/load/testdata/0.1/refuse/checked_any", name+".a")
 			source, err := os.ReadFile(path)

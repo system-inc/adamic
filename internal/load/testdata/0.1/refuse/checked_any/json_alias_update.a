@@ -1,0 +1,6 @@
+interface Config { readonly value: number; }
+function convert(raw: any): Config { return raw; }
+const alias = {value: 14};
+const config = convert(alias);
+alias.value++;
+console.log(String(config.value));

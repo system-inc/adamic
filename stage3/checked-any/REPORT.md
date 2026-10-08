@@ -1,3 +1,5 @@
+Historical scalar slice report. The structural follow-on and independent site observations are in STRUCTURAL_REPORT.md; the whole-entry observation is preserved in evidence/coverage-entry-before.json.
+
 Built tagged .ts any transport, scalar use checks and safe dynamic property reads toward roadmap step 09.
 Delivery is on codex/checked-unknown-any, based on area tip 4885cec50290686df487b62aac47c85d871ed40c; the delivery SHA is reported with the push.
 Focused oracle fixtures, lower regressions, eight compatibility witnesses and the counts refresh pass.

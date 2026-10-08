@@ -29,5 +29,5 @@ record = {'source_commit': source_pin, 'inventory_commit': 'ea1b2359', 'ledger_c
           'first_project_stop': first, 'records': []}
 for site in sites:
     record['records'].append(dict(site, status='project_checker_stopped_before_lowering'))
-(output / 'coverage.json').write_text(json.dumps(record, indent=2) + '\n')
+(output / 'coverage-entry-before.json').write_text(json.dumps(record, indent=2) + '\n')
 print(json.dumps({key: value for key, value in record.items() if key != 'records'}, indent=2))

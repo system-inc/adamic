@@ -1,0 +1,11 @@
+=== RUN   TestVolumeAgreementAndMutants
+    volume_test.go:108: volume: exit status 1
+        
+        adamic: /workspace/adamic/stage1/typescript/parser/nodes.ts:50:5: stage 0 can't lower iteration of checked JSON arrays (requires dynamic element reads) yet
+--- FAIL: TestVolumeAgreementAndMutants (185.85s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	185.861s
+FAIL
+
+wall_seconds=186.972
+exit=1

@@ -21,6 +21,10 @@ type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
 
+	JSONCheckedFields  map[string]bool
+	JSONCheckedArrays  bool
+	JSONChecksPrepared bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 

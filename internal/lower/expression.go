@@ -105,6 +105,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.jsonRecoveryUnion(proven) {
+			return ir.Union, true
+		}
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
 			if l.includesUndefined(proven) {

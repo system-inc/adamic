@@ -38,6 +38,7 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.prepareJSONChecks()
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -89,6 +90,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = l.notYet(node.Name(), "a value of type any (an evolving unannotated .a binding; declare unknown)")
 				return true
 			}
+		}
+		if reason := l.jsonViewHazard(node); reason != "" {
+			found = l.notYet(node, reason)
+			return true
 		}
 		if node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
 			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}

@@ -1,0 +1,7 @@
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/json_array_method
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_array_method4254484916/001/boundary.ts:3:20: stage 0 can't lower a method on a checked JSON array (requires dynamic element reads) yet
+--- PASS: TestCheckedAnyUnsupportedContracts (0.05s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_array_method (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.059s

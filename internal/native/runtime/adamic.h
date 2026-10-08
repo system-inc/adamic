@@ -402,6 +402,8 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	// Scalar element representation, or zero when no dynamic view was established.
+	uint8_t element_type;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
