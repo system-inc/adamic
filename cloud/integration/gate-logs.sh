@@ -46,10 +46,14 @@ export GATE_LOGS_SIGNALS=$signals
 # A test whose required input is unset skips in 0 s, and main took a stage 1 test that way. The skip
 # census (internal/skipcensus) classifies every skip in the tree; its table judges the skips here, so
 # a required-input or unclassified skip is marked in every publish. The tree's own table is used when
-# it has the census, otherwise the one on origin/devtools/census-main.
+# it has the census, otherwise the one on origin/devtools/census-main. Since census-annotations each
+# skip declares its class in a comment and the census command prints the table from them (-table,
+# the same JSON shape); a tree that still keeps skips.json is read from that file.
 skipTable="$work/skips.json"
 skipSource=""
-if [ -f internal/skipcensus/testdata/skips.json ]; then
+if [ -d internal/skipcensus/cmd ] && go run ./internal/skipcensus/cmd -table >"$skipTable" 2>"$work/skip-table.log" && python3 -c 'import json, sys; table = json.load(open(sys.argv[1])); sys.exit(0 if isinstance(table, list) and table else 1)' "$skipTable"; then
+	skipSource="the gated tree's annotations"
+elif [ -f internal/skipcensus/testdata/skips.json ]; then
 	cp internal/skipcensus/testdata/skips.json "$skipTable"
 	skipSource="the gated tree"
 elif git fetch -q origin devtools/census-main 2>/dev/null && git show FETCH_HEAD:internal/skipcensus/testdata/skips.json >"$skipTable" 2>/dev/null; then
