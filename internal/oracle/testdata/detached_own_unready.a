@@ -1,0 +1,5 @@
+function check(): boolean {
+    return own.call({value: 1}, "value");
+}
+console.log(String(check()));
+const own = Object.prototype.hasOwnProperty;
