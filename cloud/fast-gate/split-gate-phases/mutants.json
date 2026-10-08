@@ -1,0 +1,182 @@
+[
+  {
+    "name": "missing-full-fast-json",
+    "test": "FailClosed.test_all_pass_is_green",
+    "caught": true,
+    "output": "E\n======================================================================\nERROR: test_all_pass_is_green (suite.FailClosed.test_all_pass_is_green)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 145, in test_all_pass_is_green\n    with open(os.path.join(gate.arguments.out, \"fast.json\")) as handle:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/tmp/adamic-gate/tmp0by5y4zh/tmpk7y34l26/fast.json'\n\n----------------------------------------------------------------------\nRan 1 test in 0.105s\n\nFAILED (errors=1)\n"
+  },
+  {
+    "name": "wrong-gate-kind",
+    "test": "FailClosed.test_all_pass_is_green",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_all_pass_is_green (suite.FailClosed.test_all_pass_is_green)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 143, in test_all_pass_is_green\n    self.assertEqual(result[\"gate_kind\"], \"full\" if full else \"fast\")\nAssertionError: 'fast' != 'full'\n- fast\n+ full\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.078s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "round-away-overrun",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1047, in test_units_coverage_failure_scratch_and_budget\n    self.assertTrue(gate.result[\"wasi_units\"][0][\"over_budget\"])\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.023s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "catalog-all-skipped-green",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 953, in test_catalog_verdicts_are_per_entry\n    self.assertIn(\"catalog\", gate.failures)\nAssertionError: 'catalog' not found in ['catalog/04 case3', 'catalog/06 case5', 'catalog/05 case4', 'catalog/07 case6', 'catalog/04 case3', 'catalog/05 case4', 'catalog/07 case6', 'catalog/06 case5']\n\n----------------------------------------------------------------------\nRan 1 test in 0.013s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "omit-request-unit",
+    "test": "PhaseUnitTests.test_inventory_and_patterns",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_inventory_and_patterns (suite.PhaseUnitTests.test_inventory_and_patterns)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 904, in test_inventory_and_patterns\n    self.assertEqual(len(names), 36)\nAssertionError: 35 != 36\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "unanchored-fixtures",
+    "test": "PhaseUnitTests.test_inventory_and_patterns",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_inventory_and_patterns (suite.PhaseUnitTests.test_inventory_and_patterns)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 910, in test_inventory_and_patterns\n    self.assertTrue(all(part.startswith(\"^(\") and part.endswith(\")$\") for part in pattern.split(\"/\")))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "accept-dynamic-registration",
+    "test": "PhaseUnitTests.test_inventory_refuses_unknown_registration",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_inventory_refuses_unknown_registration (suite.PhaseUnitTests.test_inventory_refuses_unknown_registration)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 917, in test_inventory_refuses_unknown_registration\n    with self.assertRaises(ValueError):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "ignore-cpu-quota",
+    "test": "PhaseUnitTests.test_slot_cpu_quota",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_slot_cpu_quota (suite.PhaseUnitTests.test_slot_cpu_quota)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1019, in test_slot_cpu_quota\n    self.assertEqual(run.slotCPUs(), 4)\nAssertionError: 8 != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "unbounded-workers",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1042, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(maximum[0], 2)\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.014s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "shared-scratch",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1041, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(len(set(r[\"scratch\"] for r in rows)), 3)\nAssertionError: 1 != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.021s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "drop-last-unit",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1039, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual([r[\"name\"] for r in rows], [\"good\", \"bad\", \"last\"])\nAssertionError: Lists differ: ['good', 'bad'] != ['good', 'bad', 'last']\n\nSecond list contains 1 additional elements.\nFirst extra element 2:\n'last'\n\n- ['good', 'bad']\n+ ['good', 'bad', 'last']\n?               ++++++++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.011s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "wrong-unit-count",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1040, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(gate.result[\"catalog_unit_count\"], 3)\nAssertionError: 0 != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.021s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "ignore-budget",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1047, in test_units_coverage_failure_scratch_and_budget\n    self.assertTrue(gate.result[\"wasi_units\"][0][\"over_budget\"])\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.022s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "ignore-unit-failure",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1043, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(failures, [\"catalog/bad\"])\nAssertionError: Lists differ: [] != ['catalog/bad']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'catalog/bad'\n\n- []\n+ ['catalog/bad']\n\n----------------------------------------------------------------------\nRan 1 test in 0.022s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "unnamed-unit-failure",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1043, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(failures, [\"catalog/bad\"])\nAssertionError: Lists differ: ['catalog'] != ['catalog/bad']\n\nFirst differing element 0:\n'catalog'\n'catalog/bad'\n\n- ['catalog']\n+ ['catalog/bad']\n?          ++++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.022s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "aggregate-always-green",
+    "test": "PhaseUnitTests.test_units_coverage_failure_scratch_and_budget",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_units_coverage_failure_scratch_and_budget (suite.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 1044, in test_units_coverage_failure_scratch_and_budget\n    self.assertEqual(gate.exits[\"catalog\"], 1)\nAssertionError: 0 != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.023s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "catalog-wrong-entry",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [True, False, False, False, False, False, False] != [True, True, True, False, False, False, False]\n\nFirst differing element 1:\nFalse\nTrue\n\n- [True, False, False, False, False, False, False]\n+ [True, True, True, False, False, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "catalog-nested-parallel",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [False, False, False, False, False, False, False] != [True, True, True, False, False, False, False]\n\nFirst differing element 0:\nFalse\nTrue\n\n- [False, False, False, False, False, False, False]\n+ [True, True, True, False, False, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.010s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "catalog-unbounded-go",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [False, False, False, False, False, False, False] != [True, True, True, False, False, False, False]\n\nFirst differing element 0:\nFalse\nTrue\n\n- [False, False, False, False, False, False, False]\n+ [True, True, True, False, False, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.006s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "accept-catalog-error",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [True, True, True, True, True, True, True] != [True, True, True, False, False, False, False]\n\nFirst differing element 3:\nTrue\nFalse\n\n- [True, True, True, True, True, True, True]\n+ [True, True, True, False, False, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "accept-caught-with-error",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [True, True, True, False, False, False, True] != [True, True, True, False, False, False, False]\n\nFirst differing element 6:\nTrue\nFalse\n\n- [True, True, True, False, False, False, True]\n?                                         ^^^\n\n+ [True, True, True, False, False, False, False]\n?                                         ^^^^\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "reject-stale-upkeep",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [True, False, True, False, False, False, False] != [True, True, True, False, False, False, False]\n\nFirst differing element 1:\nFalse\nTrue\n\n- [True, False, True, False, False, False, False]\n+ [True, True, True, False, False, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "reject-skipped-entry",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 948, in test_catalog_verdicts_are_per_entry\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"catalog_units\"]], [case[2] for case in cases])\nAssertionError: Lists differ: [True, True, False, False, False, False, False] != [True, True, True, False, False, False, False]\n\nFirst differing element 2:\nFalse\nTrue\n\n- [True, True, False, False, False, False, False]\n?                                   -------\n\n+ [True, True, True, False, False, False, False]\n?             ++++++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "duplicate-catalog-number",
+    "test": "PhaseUnitTests.test_catalog_verdicts_are_per_entry",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_catalog_verdicts_are_per_entry (suite.PhaseUnitTests.test_catalog_verdicts_are_per_entry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 956, in test_catalog_verdicts_are_per_entry\n    with self.assertRaises(ValueError):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 1 test in 0.010s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "missing-wasi-pass-green",
+    "test": "PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_wasi_requires_named_pass_and_exact_selection (suite.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 977, in test_wasi_requires_named_pass_and_exact_selection\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"wasi_units\"]], [True,False,False])\nAssertionError: Lists differ: [True, True, False] != [True, False, False]\n\nFirst differing element 1:\nTrue\nFalse\n\n- [True, True, False]\n?        ^^^\n\n+ [True, False, False]\n?        ^^^^\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "broadened-wasi-green",
+    "test": "PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_wasi_requires_named_pass_and_exact_selection (suite.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 977, in test_wasi_requires_named_pass_and_exact_selection\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"wasi_units\"]], [True,False,False])\nAssertionError: Lists differ: [True, False, True] != [True, False, False]\n\nFirst differing element 2:\nTrue\nFalse\n\n- [True, False, True]\n?               ^^^\n\n+ [True, False, False]\n?               ^^^^\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "wasi-unbounded-build",
+    "test": "PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_wasi_requires_named_pass_and_exact_selection (suite.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 977, in test_wasi_requires_named_pass_and_exact_selection\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"wasi_units\"]], [True,False,False])\nAssertionError: Lists differ: [False, False, False] != [True, False, False]\n\nFirst differing element 0:\nFalse\nTrue\n\n- [False, False, False]\n+ [True, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "wasi-nested-unbounded-go",
+    "test": "PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_wasi_requires_named_pass_and_exact_selection (suite.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 977, in test_wasi_requires_named_pass_and_exact_selection\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"wasi_units\"]], [True,False,False])\nAssertionError: Lists differ: [False, False, False] != [True, False, False]\n\nFirst differing element 0:\nFalse\nTrue\n\n- [False, False, False]\n+ [True, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "wasi-native-clang",
+    "test": "PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection",
+    "caught": true,
+    "output": "F\n======================================================================\nFAIL: test_wasi_requires_named_pass_and_exact_selection (suite.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 977, in test_wasi_requires_named_pass_and_exact_selection\n    self.assertEqual([row[\"ok\"] for row in gate.result[\"wasi_units\"]], [True,False,False])\nAssertionError: Lists differ: [False, False, False] != [True, False, False]\n\nFirst differing element 0:\nFalse\nTrue\n\n- [False, False, False]\n+ [True, False, False]\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n"
+  },
+  {
+    "name": "full-phase-unsplit",
+    "test": "FailClosed.test_all_pass_is_green",
+    "caught": true,
+    "output": "E\n======================================================================\nERROR: test_all_pass_is_green (suite.FailClosed.test_all_pass_is_green)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/cloud/fast-gate/run_test.py\", line 147, in test_all_pass_is_green\n    self.assertEqual(result[\"wasi_unit_count\"], 2)\n                     ~~~~~~^^^^^^^^^^^^^^^^^^^\nKeyError: 'wasi_unit_count'\n\n----------------------------------------------------------------------\nRan 1 test in 0.062s\n\nFAILED (errors=1)\n"
+  }
+]

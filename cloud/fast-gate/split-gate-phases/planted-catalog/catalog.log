@@ -1,0 +1,18 @@
+01 shared-slice-append wall=17.334s
+target 89cbe74a5009047b0fb2fd31c323794d00dbcc12
+logs /tmp/split-evidence/planted-catalog/catalog-units/00-1wbd3uf2/adamic-catalog-logs-3ssfm_l5
+build flags: commit=89cbe74a5009047b0fb2fd31c323794d00dbcc12; nproc=4; cpu.max=400000 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: baseline-fails-or-test-missing (needs investigation)
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=17.228s setup=14.954s check=0.011s cleanup=0.532s load=1.55 2.18 5.63 3/667 38450 -> 1.27 2.07 5.52 2/680 38818
+total wall=17.265s load=1.55 2.18 5.63 3/665 38432 -> 1.27 2.07 5.52 2/679 38818
+02 liveness-throw wall=23.367s
+target 89cbe74a5009047b0fb2fd31c323794d00dbcc12
+logs /tmp/split-evidence/planted-catalog/catalog-units/01-q9d_x8s3/adamic-catalog-logs-r96e72rw
+build flags: commit=89cbe74a5009047b0fb2fd31c323794d00dbcc12; nproc=4; cpu.max=400000 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+02 liveness-throw: applies-and-fails-as-recorded
+02 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+02 wall=23.272s setup=15.652s check=6.451s cleanup=0.373s load=1.55 2.18 5.63 2/666 38447 -> 1.25 2.05 5.50 1/672 38975
+total wall=23.305s load=1.55 2.18 5.63 2/664 38431 -> 1.25 2.05 5.50 1/671 38975

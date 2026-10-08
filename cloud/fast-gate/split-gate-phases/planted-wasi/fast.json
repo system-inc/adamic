@@ -1,0 +1,118 @@
+{
+  "sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "branch": "devtools/split-gate-phases",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "base_name": "main",
+  "tools_sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "machine": {
+    "hostname": "95dd530494ea",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "wasi_units": [
+    {
+      "name": "internal/load/testdata/0.1/compile/01_hello.ts",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout",
+        "3h",
+        "-p",
+        "1",
+        "-parallel",
+        "1",
+        "-run",
+        "^(TestWASI)$/^(internal)$/^(load)$/^(testdata)$/^(0\\.1)$/^(compile)$/^(01_hello\\.ts)$",
+        "./internal/native"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/planted-wasi/wasi-units/00-gyp1a_e_",
+      "exit": 1,
+      "ok": false,
+      "test": "TestWASI/internal/load/testdata/0.1/compile/01_hello.ts",
+      "unexpected": [],
+      "passed": false,
+      "wall_seconds": 12.770871,
+      "over_budget": false
+    },
+    {
+      "name": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout",
+        "3h",
+        "-p",
+        "1",
+        "-parallel",
+        "1",
+        "-run",
+        "^(TestWASI)$/^(internal)$/^(load)$/^(testdata)$/^(0\\.1)$/^(compile)$/^(02_fizzbuzz\\.ts)$",
+        "./internal/native"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/planted-wasi/wasi-units/01-e6l7m878",
+      "exit": 0,
+      "ok": true,
+      "test": "TestWASI/internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+      "unexpected": [],
+      "passed": true,
+      "wall_seconds": 12.866957,
+      "over_budget": false
+    }
+  ],
+  "wasi_unit_count": 2,
+  "wasi_unit_budget_seconds": 30,
+  "wasi_slowest_unit_seconds": 12.866957,
+  "failure_probe": {
+    "phase": "wasi",
+    "injection": "Node exits 17 only for 01_hello.ts source oracle",
+    "real_candidate_tests": true,
+    "warm_compiler_cache": true,
+    "exactly_one_semantic_failure": true
+  },
+  "wall_seconds": 12.9,
+  "steps_seconds": {
+    "wasi": 12.869
+  },
+  "pass": 2,
+  "fail": 2,
+  "failed_tests": [
+    "github.com/system-inc/adamic/internal/native TestWASI/internal/load/testdata/0.1/compile/01_hello.ts",
+    "github.com/system-inc/adamic/internal/native TestWASI"
+  ],
+  "complete": true,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "wasi/internal/load/testdata/0.1/compile/01_hello.ts",
+    "detail": "github.com/system-inc/adamic/internal/native TestWASI/internal/load/testdata/0.1/compile/01_hello.ts\n=== RUN   TestWASI/internal/load/testdata/0.1/compile/01_hello.ts\n    wasm_test.go:136: Node exit=17 stdout=\"\" stderr=\"\"; WASI exit=0 stdout=\"In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra\\n\" stderr=\"\"\n--- FAIL: TestWASI/internal/load/testdata/0.1/compile/01_hello.ts (0.21s)\n",
+    "after_seconds": 12.8
+  },
+  "planned_stages": [
+    "wasi"
+  ],
+  "stages_exit": {
+    "wasi": 1
+  },
+  "finished": true,
+  "long_test_threshold_seconds": 10,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  }
+}

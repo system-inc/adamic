@@ -35,7 +35,7 @@ def stage(command):
     if command[:2] == ["go", "run"]:
         return "census"
     if command[:2] == ["go", "test"] and "-c" not in command:
-        return "wasi" if "^TestWASI$" in command and "-run" in command else ("smoke" if any(run.smokeTest in part for part in command) else "tests")
+        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else ("smoke" if any(run.smokeTest in part for part in command) else "tests")
     return "tests"
 
 
@@ -50,7 +50,10 @@ class FakeProcess:
         elif "-test.list" in command:
             lines = ["TestOne\n"]
         elif "test2json" in command or command[:2] == ["go", "test"]:
-            lines = [json.dumps({"Action": "pass", "Package": "p", "Test": "TestOne"}) + "\n"]
+            name = "TestOne"
+            if "-run" in command and "TestWASI" in command[command.index("-run") + 1]:
+                name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
+            lines = [json.dumps({"Action": "pass", "Package": "p", "Test": name}) + "\n"]
         self.lines = lines
         self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
 
@@ -82,6 +85,9 @@ class FailClosed(unittest.TestCase):
         for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        os.makedirs(os.path.join(self.tree, "internal/native"), exist_ok=True)
+        with open(os.path.join(self.tree, "internal/native/wasm_test.go"), "w") as handle:
+            handle.write('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
 
     def gate(self, full=False, broken=None, silent=None, unowned=(), base=None):
         out = tempfile.mkdtemp(dir=self.directory)
@@ -134,6 +140,12 @@ class FailClosed(unittest.TestCase):
             gate, status, result = self.gate(full=full)
             self.assertTrue(status.startswith("green:"), status)
             self.assertIsNone(gate.failure)
+            self.assertEqual(result["gate_kind"], "full" if full else "fast")
+            if full:
+                with open(os.path.join(gate.arguments.out, "fast.json")) as handle:
+                    self.assertEqual(json.load(handle), result)
+                self.assertEqual(result["wasi_unit_count"], 2)
+                self.assertEqual([row["name"] for row in result["wasi_units"]], ["a.a", "requests"])
             self.assertEqual(set(result["stages_exit"]), set(result["planned_stages"]))
             # Every verdict carries its long-test ledger, empty or not.
             self.assertEqual((result["long_tests"], result["long_test_threshold_seconds"]), (0, run.longTestSeconds))
@@ -884,6 +896,157 @@ esac
             with open(os.path.join(root, "pushed")) as handle:
                 self.assertIn("refs/heads/gate-logs/" + "b"*12, handle.read())
 
+
+class PhaseUnitTests(unittest.TestCase):
+    def test_inventory_and_patterns(self):
+        tree = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        names = run.wasiFixtures(tree)
+        self.assertEqual(len(names), 36)
+        self.assertEqual(names[-1], "requests")
+        self.assertIn("internal/native/wasm/io.a", names)
+        for name in names:
+            pattern = run.fixturePattern(["TestWASI"], [name])
+            self.assertEqual(len(pattern.split("/")), len(name.split("/")) + 1)
+            self.assertTrue(all(part.startswith("^(") and part.endswith(")$") for part in pattern.split("/")))
+
+    def test_inventory_refuses_unknown_registration(self):
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "internal/native"))
+            with open(os.path.join(tree, "internal/native/wasm_test.go"), "w") as handle:
+                handle.write('func TestWASI(t *testing.T) {\nfixtures := []string{\n"a",\n\t}\nt.Run(fixture, f)\nt.Run(dynamic, f)\n}')
+            with self.assertRaises(ValueError):
+                run.wasiFixtures(tree)
+
+    def bare_gate(self, tree, out):
+        gate = object.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=tree, out=out, parallel=2, sha="abc")
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        gate.failures = []
+        gate.fail = lambda name, detail: gate.failures.append(name)
+        return gate
+
+    def test_catalog_verdicts_are_per_entry(self):
+        cases = [(0, "applies-and-fails-as-recorded", True), (1, "no-longer-applies", True),
+                 (0, "skipped (reason)", True), (1, "applies-but-failure-not-as-recorded", False),
+                 (1, "error", False), (0, "", False), (1, "applies-and-fails-as-recorded", False)]
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            open(os.path.join(tree, "verify/catalog/check.sh"), "w").close()
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": i+1, "name": "case"+str(i)} for i in range(len(cases))], handle)
+            gate = self.bare_gate(tree, tree)
+            def spawn(command, output, environment):
+                i = int(command[command.index("--entry")+1])-1
+                self.assertEqual(command[command.index("--jobs")+1], "1")
+                self.assertEqual(environment["GOMAXPROCS"], "1")
+                self.assertEqual(environment["GOFLAGS"], "-p=1")
+                self.assertTrue(os.path.isdir(environment["TMPDIR"]))
+                output.write("%02d case%d: %s\n" % (i+1, i, cases[i][1]))
+                return types.SimpleNamespace(wait=lambda: cases[i][0])
+            gate.spawn = spawn
+            gate.catalogFull()
+            self.assertEqual([row["ok"] for row in gate.result["catalog_units"]], [case[2] for case in cases])
+            self.assertEqual(set(gate.failures), {"catalog/04 case3", "catalog/05 case4", "catalog/06 case5", "catalog/07 case6"})
+            cases[0] = (0, "skipped (reason)", True)
+            gate.catalogFull()
+            self.assertEqual(gate.exits["catalog"], 1)
+            self.assertIn("catalog", gate.failures)
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": 1,"name":"a"},{"number":1,"name":"b"}],handle)
+            with self.assertRaises(ValueError):
+                gate.catalogFull()
+
+    def test_wasi_requires_named_pass_and_exact_selection(self):
+        with tempfile.TemporaryDirectory() as tree:
+            gate = self.bare_gate(tree, tree)
+            def stream(name, command, log, environment):
+                pattern = command[command.index("-run")+1]
+                self.assertEqual(command[command.index("-p")+1], "1")
+                self.assertEqual(environment["PATH"], "sdk-first")
+                self.assertEqual(environment["GOFLAGS"], "-p=1")
+                self.assertEqual(environment["GOMAXPROCS"], "1")
+                if "good" in pattern:
+                    log.write(json.dumps({"Test":"TestWASI/good","Action":"pass"}))
+                if "broad" in pattern:
+                    log.write(json.dumps({"Test":"TestWASI/broad","Action":"pass"}))
+                    log.write(json.dumps({"Test":"TestWASI/extra","Action":"run"}))
+                return 0
+            gate.stream = stream
+            with mock.patch.object(run, "wasiFixtures", return_value=["good","missing","broad"]):
+                gate.wasiSplit(io.StringIO(), {"PATH":"sdk-first"})
+            self.assertEqual([row["ok"] for row in gate.result["wasi_units"]], [True,False,False])
+            self.assertEqual(set(gate.failures), {"wasi/missing","wasi/broad"})
+
+    def test_real_subprocess_planted_failures_are_named(self):
+        tools = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number":1,"name":"good"},{"number":2,"name":"planted"}], handle)
+            with open(os.path.join(tree, "verify/catalog/check.sh"), "w") as handle:
+                handle.write('if [ "$2" = 1 ]; then echo "01 good: applies-and-fails-as-recorded"; else echo "02 planted: applies-but-failure-not-as-recorded"; exit 1; fi\n')
+            os.makedirs(os.path.join(tree, "internal/native"))
+            with open(os.path.join(tree, "go.mod"), "w") as handle:
+                handle.write("module example.com/phase-probe\n\ngo 1.25\n")
+            with open(os.path.join(tree, "internal/native/wasm_test.go"), "w") as handle:
+                handle.write('package native\nimport "testing"\nfunc TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"good", "planted",\n\t}\nfor _, fixture := range fixtures { t.Run(fixture, func(t *testing.T) { if fixture == "planted" { t.Fatal("planted unit failure") } }) }\n}\n')
+            for phase in ("catalog", "wasi"):
+                out = tempfile.mkdtemp(dir=tree)
+                arguments = types.SimpleNamespace(tree=tree, tools=tools, sha="probe", base="probe",
+                    out=out, parallel=2, full=True, complete=True, branch="", branch_source="",
+                    session="", session_source="")
+                gate = run.Gate(arguments)
+                gate.planned, gate.kind = [phase], "fast"
+                with open(os.path.join(out,"test.jsonl"),"w") as log:
+                    if phase == "catalog":
+                        gate.catalogFull()
+                    else:
+                        gate.wasiSplit(log, {"PATH":os.environ["PATH"]})
+                gate.finish()
+                with open(os.path.join(out,"fast.json")) as handle:
+                    result = json.load(handle)
+                self.assertEqual(result[phase+"_unit_count"],2)
+                self.assertEqual(result["failure"]["step"], "catalog/02 planted" if phase=="catalog" else "wasi/planted")
+                self.assertEqual([row["name"] for row in result[phase+"_units"] if row["status"]=="failed"],
+                                 ["02 planted"] if phase=="catalog" else ["planted"])
+                if phase == "wasi":
+                    self.assertIn("TestWASI/planted", result["failure"]["detail"])
+                    self.assertIn("example.com/phase-probe/internal/native TestWASI/planted",result["failed_tests"])
+
+    def test_slot_cpu_quota(self):
+        with mock.patch.object(run.os, "sched_getaffinity", return_value=set(range(8))), \
+                mock.patch("builtins.open", mock.mock_open(read_data="400000 100000")):
+            self.assertEqual(run.slotCPUs(), 4)
+
+    def test_units_coverage_failure_scratch_and_budget(self):
+        with tempfile.TemporaryDirectory() as out:
+            gate = object.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(out=out, parallel=2)
+            gate.result, gate.steps, gate.exits = {}, {}, {}
+            failures = []
+            gate.fail = lambda name, detail: failures.append(name)
+            active, maximum, lock = [0], [0], threading.Lock()
+            def execute(name, command, scratch):
+                with lock:
+                    active[0] += 1
+                    maximum[0] = max(maximum[0], active[0])
+                time.sleep(0.01)
+                with lock:
+                    active[0] -= 1
+                return {"ok": name != "bad", "exit": int(name == "bad")}
+            gate.phaseUnits("catalog", ["good", "bad", "last"], [["x"]] * 3, execute)
+            rows = gate.result["catalog_units"]
+            self.assertEqual([r["name"] for r in rows], ["good", "bad", "last"])
+            self.assertEqual(gate.result["catalog_unit_count"], 3)
+            self.assertEqual(len(set(r["scratch"] for r in rows)), 3)
+            self.assertEqual(maximum[0], 2)
+            self.assertEqual(failures, ["catalog/bad"])
+            self.assertEqual(gate.exits["catalog"], 1)
+            with mock.patch.object(run.time, "monotonic", side_effect=[0, 0, 30.0004, 32]):
+                gate.phaseUnits("wasi", ["slow"], [["x"]], lambda *args: {"ok": True})
+            self.assertTrue(gate.result["wasi_units"][0]["over_budget"])
+            self.assertEqual(gate.exits["wasi"], 1)
+            self.assertIn("wasi/slow", failures)
 
 if __name__ == "__main__":
     unittest.main()

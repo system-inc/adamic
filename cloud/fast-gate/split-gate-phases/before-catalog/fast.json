@@ -1,0 +1,71 @@
+{
+  "sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "branch": "devtools/split-gate-phases",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "base_name": "main",
+  "tools_sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "machine": {
+    "hostname": "95dd530494ea",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "measurement": {
+    "instrument": "Python time.monotonic (including process startup, compilation, setup and cleanup)",
+    "cold": "fresh empty GOCACHE per phase; -count=1, ADAMIC_GATE_UNCACHED=1; no warmup",
+    "affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_max": "400000 100000",
+    "hostname": "95dd530494ea",
+    "mode": "before",
+    "unit_workers": "catalog default: 4",
+    "catalog_jobs_override": 2,
+    "wall_seconds": 707.911618482
+  },
+  "catalog": {
+    "exit": 1,
+    "caught": 8,
+    "stale": [
+      "08 narrowed-number-field",
+      "11 refuse-definite-assignment",
+      "12 refuse-suppression-directives"
+    ],
+    "uncaught": []
+  },
+  "wall_seconds": 707.9,
+  "steps_seconds": {
+    "catalog": 707.9
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": true,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "catalog"
+  ],
+  "stages_exit": {
+    "catalog": 0
+  },
+  "finished": true,
+  "long_test_threshold_seconds": 10,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  }
+}

@@ -1,0 +1,479 @@
+{
+  "sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "branch": "devtools/split-gate-phases",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "base_name": "main",
+  "tools_sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "machine": {
+    "hostname": "95dd530494ea",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "measurement": {
+    "instrument": "Python time.monotonic (including process startup, compilation, setup and cleanup)",
+    "cold": "fresh empty shared GOCACHE at each phase start; compiler artifacts reused within the phase; -count=1, ADAMIC_GATE_UNCACHED=1; no warmup; does not prove independently cold time for later units",
+    "affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_max": "400000 100000",
+    "hostname": "95dd530494ea",
+    "mode": "after",
+    "unit_workers": 2,
+    "wall_seconds": 892.9433881929999
+  },
+  "catalog_units": [
+    {
+      "name": "01 shared-slice-append",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "1",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/00-psif4cli",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "01 shared-slice-append: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/00-psif4cli/catalog.log",
+      "wall_seconds": 750.966,
+      "over_budget": true
+    },
+    {
+      "name": "02 liveness-throw",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "2",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/01-f09d7xhn",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "02 liveness-throw: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/01-f09d7xhn/catalog.log",
+      "wall_seconds": 757.906,
+      "over_budget": true
+    },
+    {
+      "name": "03 defined-lent",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "3",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/02-u15n92hm",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "03 defined-lent: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/02-u15n92hm/catalog.log",
+      "wall_seconds": 38.292,
+      "over_budget": true
+    },
+    {
+      "name": "04 borrowed-array-move",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "4",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/03-82li7nav",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "04 borrowed-array-move: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/03-82li7nav/catalog.log",
+      "wall_seconds": 35.497,
+      "over_budget": true
+    },
+    {
+      "name": "05 spread-method-reuse",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "5",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/04-h3ozg8s0",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "05 spread-method-reuse: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/04-h3ozg8s0/catalog.log",
+      "wall_seconds": 37.6,
+      "over_budget": true
+    },
+    {
+      "name": "06 constructor-capture-region",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "6",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/05-xqeer8io",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "06 constructor-capture-region: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/05-xqeer8io/catalog.log",
+      "wall_seconds": 35.819,
+      "over_budget": true
+    },
+    {
+      "name": "07 borrowed-element-reads",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "7",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/06-t1tto5qp",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "07 borrowed-element-reads: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/06-t1tto5qp/catalog.log",
+      "wall_seconds": 30.865,
+      "over_budget": true
+    },
+    {
+      "name": "08 narrowed-number-field",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "8",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/07-3at5pqpa",
+      "exit": 1,
+      "ok": true,
+      "caught": false,
+      "stale": true,
+      "skipped": false,
+      "verdicts": [
+        "08 narrowed-number-field: no-longer-applies (needs a refresh)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/07-3at5pqpa/catalog.log",
+      "wall_seconds": 16.914,
+      "over_budget": false
+    },
+    {
+      "name": "09 literal-undefined-field",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "9",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "failed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/08-l83wwr89",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "09 literal-undefined-field: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/08-l83wwr89/catalog.log",
+      "wall_seconds": 42.758,
+      "over_budget": true
+    },
+    {
+      "name": "10 override-representation",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "10",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/09-b1a2vhwa",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/09-b1a2vhwa/catalog.log",
+      "wall_seconds": 0.09,
+      "over_budget": false
+    },
+    {
+      "name": "11 refuse-definite-assignment",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "11",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/10-2v38wd9s",
+      "exit": 1,
+      "ok": true,
+      "caught": false,
+      "stale": true,
+      "skipped": false,
+      "verdicts": [
+        "11 refuse-definite-assignment: no-longer-applies (needs a refresh)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/10-2v38wd9s/catalog.log",
+      "wall_seconds": 18.393,
+      "over_budget": false
+    },
+    {
+      "name": "12 refuse-suppression-directives",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "12",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/11-nxniqnbz",
+      "exit": 1,
+      "ok": true,
+      "caught": false,
+      "stale": true,
+      "skipped": false,
+      "verdicts": [
+        "12 refuse-suppression-directives: no-longer-applies (needs a refresh)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/11-nxniqnbz/catalog.log",
+      "wall_seconds": 16.729,
+      "over_budget": false
+    },
+    {
+      "name": "13 typeof-null",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "13",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/12-uocrvxfb",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/12-uocrvxfb/catalog.log",
+      "wall_seconds": 0.086,
+      "over_budget": false
+    },
+    {
+      "name": "14 constructor-arrow-this",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "14",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/13-n_xowcb_",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/13-n_xowcb_/catalog.log",
+      "wall_seconds": 0.083,
+      "over_budget": false
+    },
+    {
+      "name": "15 class-instance-key",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "15",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/14-11vwlkvc",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/14-11vwlkvc/catalog.log",
+      "wall_seconds": 0.088,
+      "over_budget": false
+    },
+    {
+      "name": "16 proven-guards-relations",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "16",
+        "--jobs",
+        "1",
+        "89cbe74a5009047b0fb2fd31c323794d00dbcc12"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/split-evidence/after-catalog/catalog-units/15-4dgov83v",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)"
+      ],
+      "log": "/tmp/split-evidence/after-catalog/catalog-units/15-4dgov83v/catalog.log",
+      "wall_seconds": 0.08,
+      "over_budget": false
+    }
+  ],
+  "catalog_unit_count": 16,
+  "catalog_unit_budget_seconds": 30,
+  "catalog_slowest_unit_seconds": 757.906,
+  "catalog": {
+    "exit": 1,
+    "caught": 8,
+    "stale": [
+      "08 narrowed-number-field",
+      "11 refuse-definite-assignment",
+      "12 refuse-suppression-directives"
+    ],
+    "uncaught": []
+  },
+  "wall_seconds": 893.0,
+  "steps_seconds": {
+    "catalog": 892.94
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": true,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "catalog/01 shared-slice-append",
+    "detail": "{\"name\": \"01 shared-slice-append\", \"command\": [\"bash\", \"verify/catalog/check.sh\", \"--entry\", \"1\", \"--jobs\", \"1\", \"89cbe74a5009047b0fb2fd31c323794d00dbcc12\"], \"status\": \"failed\", \"scratch\": \"/tmp/split-evidence/after-catalog/catalog-units/00-psif4cli\", \"exit\": 0, \"ok\": true, \"caught\": true, \"stale\": false, \"skipped\": false, \"verdicts\": [\"01 shared-slice-append: applies-and-fails-as-recorded\"], \"log\": \"/tmp/split-evidence/after-catalog/catalog-units/00-psif4cli/catalog.log\", \"wall_seconds\": 750.966, \"over_budget\": true}",
+    "after_seconds": 751.0
+  },
+  "planned_stages": [
+    "catalog"
+  ],
+  "stages_exit": {
+    "catalog": 1
+  },
+  "finished": true,
+  "long_test_threshold_seconds": 10,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  }
+}

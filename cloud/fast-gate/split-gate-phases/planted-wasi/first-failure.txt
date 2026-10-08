@@ -1,0 +1,4 @@
+github.com/system-inc/adamic/internal/native TestWASI/internal/load/testdata/0.1/compile/01_hello.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/01_hello.ts
+    wasm_test.go:136: Node exit=17 stdout="" stderr=""; WASI exit=0 stdout="In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra\n" stderr=""
+--- FAIL: TestWASI/internal/load/testdata/0.1/compile/01_hello.ts (0.21s)
