@@ -1462,6 +1462,19 @@ needed no new hook. Push, pop and searches on a mutable `number[]` go through th
 view's element contract. Fixtures are `lane2/ranked9-*.a`, held by
 TestCheckedViewRanked9ArrayContracts; the report is `lane2/RANKED9_ARRAYS_REPORT.md`.
 
+### Lane 2 tenth ranked arrays
+
+The tenth ranked group (fifteen pairs: ArrowFunction.typeParameters, accessor
+modifiers, NamedExports.elements, SourceFile reference arrays, binding pattern
+elements, CallExpression.typeArguments, ClassExpression heritage and members,
+JSDocTemplateTag and InterfaceType type parameters,
+TypeReference.resolvedTypeArguments, Symbol.declarations through `Symbol |
+undefined`) needed no new hook. Assigning an array to an optional array field
+through a view is refused before lowering because `slotContract`
+(internal/lower/view_writes.go) has no array certificate; it is pinned. Fixtures
+are `lane2/ranked10-*.a`, held by TestCheckedViewRanked10ArrayContracts and
+TestCheckedViewRanked10Frontiers; the report is `lane2/RANKED10_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
