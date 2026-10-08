@@ -8,7 +8,8 @@ import "github.com/system-inc/adamic/internal/ir"
 // keeps a reference past its statement takes a count of its own. So a parameter needs its own count
 // only when something writes it, since a write releases the old value and that one is the caller's,
 // or when it belongs to a closure: map's loop hands a callback its element unretained, and the
-// callback may overwrite that element. Everything else is borrowed: a named function's or a
+// callback may overwrite that element. Captured parameters also own their entry
+// reference independently of their cell. Everything else is borrowed: a named function's or a
 // method's reference parameters, this included, that no ir.Assign anywhere in the program writes.
 //
 // ir.Assign is the only statement that writes a local that already exists, and locals are numbered
@@ -25,7 +26,7 @@ func borrow(program *ir.Program) {
 		}
 		for _, parameter := range function.Parameters {
 			local := &program.Locals[parameter]
-			local.Borrowed = local.Type.IsReference() && !assigned[parameter]
+			local.Borrowed = local.Type.IsReference() && !local.Captured && !assigned[parameter]
 		}
 	}
 }

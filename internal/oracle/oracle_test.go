@@ -37,6 +37,21 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/environment_coverage_returned_values.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_collections.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_initializer_throw.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_bounded_call.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callback_exits.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_alias_join.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_boundary64.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callback_result.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_callbacks_extra.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_captured_parameter.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_closure_self.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_local_containers.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_primitives.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_region_values.a", true, false},
+	{"internal/oracle/testdata/environment_coverage_values_exits.a", true, false},
 	{"internal/oracle/testdata/release_fma.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},

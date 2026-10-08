@@ -220,18 +220,37 @@ func (e *emitter) cellReference(local int) string {
 }
 
 // allocateEnvironment emits the one IR frame site; slot names borrow its storage.
-func (e *emitter) allocateEnvironment(cells []int) {
+func (e *emitter) allocateEnvironment(site *ir.Statement) {
+	cells := (*site).(ir.AllocateEnvironment).Cells
 	if len(cells) == 0 {
 		return
 	}
 	environment := e.temporary()
-	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
-	graph := false
-	for _, local := range cells {
-		graph = graph || e.program.Locals[local].GraphCell
+	switch e.regions.environments[site] {
+	case environmentStack:
+		// A fixed C aggregate owns both the header and its complete slot vector.
+		// The pointer keeps one slot representation across all placements.
+		storage := e.temporary()
+		e.line("struct { adamic_environment record; adamic_cell cells[%d]; } %s;", len(cells), storage)
+		e.line("adamic_environment *%s = &%s.record;", environment, storage)
+		e.line("adamic_environment_init(%s, %s.cells, %d);", environment, storage, len(cells))
+		e.regions.cleanups[environment] = "adamic_environment_end(" + environment + ");"
+		e.hold(environment)
+	case environmentRegion:
+		region := e.temporary()
+		e.line("adamic_region %s = ADAMIC_REGION;", region)
+		e.line("adamic_environment *%s = adamic_environment_new_in(&%s, %d);", environment, region, len(cells))
+		e.regions.cleanups[region] = "adamic_region_end(&" + region + ");"
+		e.hold(region)
+	default:
+		e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+		graph := false
+		for _, local := range cells {
+			graph = graph || e.program.Locals[local].GraphCell
+		}
+		e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
+		e.hold(environment)
 	}
-	e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
-	e.hold(environment)
 	for position, local := range cells {
 		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
 		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
