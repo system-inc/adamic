@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "production_refusals": {
+    "async-declaration": {
+      "exit": 1,
+      "stderr": "adamic: /tmp/shape-suspended-production/async-declaration.a:1:1: Adamic 0.1 refuses an async function; 0.1 has no async; it arrives with the concurrency model\n",
+      "stdout_bytes": 0
+    },
+    "async-arrow": {
+      "exit": 1,
+      "stderr": "adamic: /tmp/shape-suspended-production/async-arrow.a:1:13: Adamic 0.1 refuses an async function; 0.1 has no async; it arrives with the concurrency model\n",
+      "stdout_bytes": 0
+    },
+    "generator-declaration": {
+      "exit": 1,
+      "stderr": "adamic: /tmp/shape-suspended-production/generator-declaration.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n",
+      "stdout_bytes": 0
+    },
+    "generator-expression": {
+      "exit": 1,
+      "stderr": "adamic: /tmp/shape-suspended-production/generator-expression.a:1:13: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n",
+      "stdout_bytes": 0
+    }
+  }
+}

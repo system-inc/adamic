@@ -1,0 +1,158 @@
+{
+  "status": "PASS",
+  "node": {
+    "synchronousAsyncNameRead": {
+      "tag": "[object Object]",
+      "readyMissing": false
+    },
+    "asyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "asyncArrowRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "asyncExpressionRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "ordinaryAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "generatorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "generatorExpressionRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "ordinaryGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "directAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "directGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "diagnosedAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "diagnosedGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    }
+  },
+  "controls": [
+    {
+      "owner": "asyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "asyncArrowRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:8:18"
+      ]
+    },
+    {
+      "owner": "asyncExpressionRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:10:23"
+      ]
+    },
+    {
+      "owner": "ordinaryAsyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:12:1"
+      ]
+    },
+    {
+      "owner": "generatorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:15:1"
+      ]
+    },
+    {
+      "owner": "generatorExpressionRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:18:27"
+      ]
+    },
+    {
+      "owner": "ordinaryGeneratorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:20:1"
+      ]
+    },
+    {
+      "owner": "directAsyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:24:88"
+      ]
+    },
+    {
+      "owner": "directGeneratorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:26:92"
+      ]
+    },
+    {
+      "owner": "diagnosedAsyncRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:27:1"
+      ]
+    },
+    {
+      "owner": "diagnosedGeneratorRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:30:1"
+      ]
+    },
+    {
+      "owner": "synchronousAsyncNameRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    }
+  ]
+}

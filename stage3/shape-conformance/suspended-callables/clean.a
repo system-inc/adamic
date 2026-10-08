@@ -1,0 +1,41 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+async function asyncDeclaration<T>(value:T):Promise<T> {return value;}
+const asyncAlias=asyncDeclaration;
+function asyncRead():Ready {const raw={kind:'ok' as const,ready:true};const node=asyncAlias(raw) as unknown as Base;return node as Ready;}
+const asyncArrow=async<T>(value:T):Promise<T>=>value;
+function asyncArrowRead():Ready {const raw={kind:'ok' as const,ready:true};const node=asyncArrow(raw) as unknown as Base;return node as Ready;}
+const asyncExpression=async function<T>(value:T):Promise<T> {return value;};
+function asyncExpressionRead():Ready {const raw={kind:'ok' as const,ready:true};const node=asyncExpression(raw) as unknown as Base;return node as Ready;}
+async function ordinaryAsync(value:Base):Promise<Base> {return value;}
+const ordinaryAsyncAlias=ordinaryAsync;
+function ordinaryAsyncRead():Ready {const raw={kind:'ok' as const,ready:true};const node=ordinaryAsyncAlias(raw) as unknown as Base;return node as Ready;}
+function* generatorDeclaration<T>(value:T):Generator<never,T,unknown> {return value;}
+const generatorAlias=generatorDeclaration;
+function generatorRead():Ready {const raw={kind:'ok' as const,ready:true};const node=generatorAlias(raw) as unknown as Base;return node as Ready;}
+const generatorExpression=function*<T>(value:T):Generator<never,T,unknown> {return value;};
+function generatorExpressionRead():Ready {const raw={kind:'ok' as const,ready:true};const node=generatorExpression(raw) as unknown as Base;return node as Ready;}
+function* ordinaryGenerator(value:Base):Generator<never,Base,unknown> {return value;}
+const ordinaryGeneratorAlias=ordinaryGenerator;
+function ordinaryGeneratorRead():Ready {const raw={kind:'ok' as const,ready:true};const node=ordinaryGeneratorAlias(raw) as unknown as Base;return node as Ready;}
+async function directAsync<T>(value:T):Promise<T> {return value;}
+function directAsyncRead():Ready {const raw={kind:'ok' as const,ready:true};const node=directAsync(raw) as unknown as Base;return node as Ready;}
+function* directGenerator<T>(value:T):Generator<never,T,unknown> {return value;}
+function directGeneratorRead():Ready {const raw={kind:'ok' as const,ready:true};const node=directGenerator(raw) as unknown as Base;return node as Ready;}
+async function diagnosedAsync<T>(value:T):Promise<T> {const bad:number='bad';return value;}
+const diagnosedAsyncAlias=diagnosedAsync;
+function diagnosedAsyncRead():Ready {const raw={kind:'ok' as const,ready:true};const node=diagnosedAsyncAlias(raw) as unknown as Base;return node as Ready;}
+function* diagnosedGenerator<T>(value:T):Generator<never,T,unknown> {const bad:number='bad';return value;}
+const diagnosedGeneratorAlias=diagnosedGenerator;
+function diagnosedGeneratorRead():Ready {const raw={kind:'ok' as const,ready:true};const node=diagnosedGeneratorAlias(raw) as unknown as Base;return node as Ready;}
+function async<T>(value:T):T {return value;}
+function synchronousAsyncNameRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=async(raw);return node as Ready;}
+const observations={
+ synchronousAsyncNameRead:synchronousAsyncNameRead(),
+ asyncRead:asyncRead(),asyncArrowRead:asyncArrowRead(),asyncExpressionRead:asyncExpressionRead(),ordinaryAsyncRead:ordinaryAsyncRead(),
+ generatorRead:generatorRead(),generatorExpressionRead:generatorExpressionRead(),ordinaryGeneratorRead:ordinaryGeneratorRead(),
+ directAsyncRead:directAsyncRead(),directGeneratorRead:directGeneratorRead(),diagnosedAsyncRead:diagnosedAsyncRead(),diagnosedGeneratorRead:diagnosedGeneratorRead(),
+};
+console.log(JSON.stringify(Object.fromEntries(Object.entries(observations).map(([name,value])=>[name,{tag:Object.prototype.toString.call(value),readyMissing:value.ready===undefined}]))));

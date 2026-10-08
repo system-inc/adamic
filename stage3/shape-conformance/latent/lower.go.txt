@@ -920,7 +920,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		hosts = append(hosts, name)
 	}
 	sort.Strings(hosts)
-	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Opaque callback protocols, generic callable identities, constructor and whole-array contracts remain unknown; dynamic key producers join slots with membership and mutation obligations. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Closed synchronous generic callable bodies use runtime identities. Opaque callback protocols, unbounded callable identities, Promise/iterator results, constructor and whole-array contracts remain unknown; dynamic key producers join slots with membership and mutation obligations. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
 }
 
 // Only syntax represented by this source adapter closes a callback reference.
@@ -998,6 +998,9 @@ func normalizeLatentShapeSite(site *LatentShapeSite) {
 // Type arguments do not select a different runtime body. Join all actual values
 // at the known implementation; generic field schemas still need certificates.
 func (m *latentShapeMeter) directAllocationCall(node *ast.Node, function latentShapeFunction) ir.Expression {
+    if reason := allocationCallableProtocol(function.Node); reason != "" {
+        return m.opaqueAllocationCall(node, function, reason)
+    }
     for _, parameter := range function.Node.Parameters() {
         if parameter.AsParameterDeclaration().DotDotDotToken != nil {
             return m.opaqueAllocationCall(node, function, "rest call arguments require an array allocation")
@@ -1029,10 +1032,34 @@ func (m *latentShapeMeter) opaqueAllocationCall(node *ast.Node, function latentS
 func (m *latentShapeMeter) allocationCallbackIdentity(function latentShapeFunction) ir.Expression {
     node := function.Node
     if function.Skipped { return latentShapeUnknown{Category:"diagnosed body", Reason:"callback implementation skipped at "+m.Loaded.Where(node), Diagnostics:m.diagnosticCauses(node)} }
+    if reason := allocationCallableProtocol(node); reason != "" {
+        return latentShapeUnknown{Category:"flow the graph can't see", Reason:reason+" at "+m.Loaded.Where(node)}
+    }
     for _, parameter := range node.Parameters() {
         if parameter.AsParameterDeclaration().DotDotDotToken != nil {
             return latentShapeUnknown{Category:"flow the graph can't see", Reason:"callback rest arguments require an array allocation at "+m.Loaded.Where(node)}
         }
     }
     return ir.MakeClosure{Function:function.Index}
+}
+
+// A suspended body's return value is not the allocation produced by its call.
+// Promise and iterator protocols need their own allocation/initialization proof.
+func allocationCallableProtocol(node *ast.Node) string {
+    if ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+        return "async function result requires a Promise allocation"
+    }
+    generator := false
+    switch node.Kind {
+    case ast.KindFunctionDeclaration:
+        generator = node.AsFunctionDeclaration().AsteriskToken != nil
+    case ast.KindFunctionExpression:
+        generator = node.AsFunctionExpression().AsteriskToken != nil
+    case ast.KindMethodDeclaration:
+        generator = node.AsMethodDeclaration().AsteriskToken != nil
+    }
+    if generator {
+        return "generator function result requires an iterator allocation"
+    }
+    return ""
 }

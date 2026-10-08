@@ -1,0 +1,329 @@
+{
+  "tools_sha": "1247da58f065ba1a29737bf010cdd1e43090d519",
+  "normal": {
+    "stage3/shape-conformance/callback-joins/clean.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/callback-joins/clean.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/callback-joins/opaque.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/callback-joins/opaque.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/callback-joins/spread.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/callback-joins/spread.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/constructor-frontiers/clean.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/constructor-frontiers/clean.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/constructor-frontiers/diagnosed.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/constructor-frontiers/diagnosed.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/constructor-frontiers/host.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/constructor-frontiers/host.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/dynamic-keys/fixtures/clean.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/dynamic-keys/fixtures/clean.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/dynamic-keys/fixtures/host.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/dynamic-keys/fixtures/host.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/generic-callables/clean.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/generic-callables/clean.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/generic-callables/host.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/generic-callables/host.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/latent/fixtures/main.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/latent/fixtures/main.a:12:44: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    "stage3/shape-conformance/suspended-callables/clean.a": {
+      "outcome": "type error",
+      "expected": "type error TS2322",
+      "first": "stage3/shape-conformance/suspended-callables/clean.a:27:61: error TS2322: Type 'string' is not assignable to type 'number'."
+    }
+  },
+  "mutants": [
+    {
+      "file": "stage3/shape-conformance/callback-joins/clean.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-0.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/callback-joins/clean.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-0.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/callback-joins/opaque.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-1.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/callback-joins/opaque.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-1.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/callback-joins/spread.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-2.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/callback-joins/spread.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-2.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/clean.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-3.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/clean.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-3.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/diagnosed.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-4.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/diagnosed.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-4.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/host.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-5.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/constructor-frontiers/host.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-5.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/clean.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-6.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/clean.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-6.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-7.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-7.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/host.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-8.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/host.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-8.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-9.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-9.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/generic-callables/clean.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-10.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/generic-callables/clean.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-10.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/generic-callables/host.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-11.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/generic-callables/host.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-11.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/latent/fixtures/main.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-12.a:12:44: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/latent/fixtures/main.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-12.a:11:44: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/suspended-callables/clean.a",
+      "mutation": "wrong-code",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "type error TS999999",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-13.a:27:61: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    },
+    {
+      "file": "stage3/shape-conformance/suspended-callables/clean.a",
+      "mutation": "missing-header",
+      "catcher": {
+        "outcome": "type error",
+        "expected": "checked",
+        "first": "/tmp/adamic-gate/shape-header-mutants-y6rxk6mm/fixture-13.a:26:61: error TS2322: Type 'string' is not assignable to type 'number'."
+      }
+    }
+  ]
+}

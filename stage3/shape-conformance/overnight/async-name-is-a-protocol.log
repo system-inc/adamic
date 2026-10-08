@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-suspended-mutants-jkixi1hz/async-name-is-a-protocol/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/suspended-callables/controls.py", line 22, in <module>
+    assert row['outcome']=='conforms and ready (free)',(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('synchronousAsyncNameRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 3175, 'end': 3188, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 3175, 'end': 3188, 'owner': 'synchronousAsyncNameRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:34:102'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

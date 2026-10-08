@@ -1,0 +1,655 @@
+{
+  "allocation_schemas": [
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -13,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:34:54"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -12,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:32:52"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -11,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:29:48"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -10,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:26:49"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -9,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:24:45"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -8,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:22:51"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -7,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:19:53"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -6,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:17:43"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -5,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:14:47"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -4,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:11:49"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -3,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:9:44"
+    },
+    {
+      "fields": {
+        "kind": {
+          "declared_type": "\"ok\"",
+          "initialized": true
+        },
+        "ready": {
+          "declared_type": "boolean",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -2,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:7:39"
+    },
+    {
+      "fields": {
+        "asyncArrowRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "asyncExpressionRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "asyncRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "diagnosedAsyncRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "diagnosedGeneratorRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "directAsyncRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "directGeneratorRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "generatorExpressionRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "generatorRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "ordinaryAsyncRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "ordinaryGeneratorRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        },
+        "synchronousAsyncNameRead": {
+          "declared_type": "Ready",
+          "initialized": true
+        }
+      },
+      "kind": "record",
+      "measurement": "measured on a checker-rejected program",
+      "site": -1,
+      "where": "/tmp/shape-suspended-controls/src/compiler/main.a:35:20"
+    }
+  ],
+  "allocation_shapes": 13,
+  "analysis_only": true,
+  "checker_rejected": true,
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 1,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 11
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 0
+    }
+  },
+  "diagnostic_sites": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/shape-suspended-controls/src/compiler/main.a",
+      "start": 155,
+      "end": 169,
+      "text": "/tmp/shape-suspended-controls/src/compiler/main.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/shape-suspended-controls/src/compiler/main.a",
+      "start": 2458,
+      "end": 2461,
+      "text": "/tmp/shape-suspended-controls/src/compiler/main.a:27:61: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/shape-suspended-controls/src/compiler/main.a",
+      "start": 2764,
+      "end": 2767,
+      "text": "/tmp/shape-suspended-controls/src/compiler/main.a:30:76: error TS2322: Type 'string' is not assignable to type 'number'."
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/shape-suspended-controls/src/compiler/main.a",
+      "start": 3711,
+      "end": 3884,
+      "text": "/tmp/shape-suspended-controls/src/compiler/main.a:41:13: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  ],
+  "diagnostics": [
+    "/tmp/shape-suspended-controls/src/compiler/main.a:27:61: error TS2322: Type 'string' is not assignable to type 'number'.",
+    "/tmp/shape-suspended-controls/src/compiler/main.a:30:76: error TS2322: Type 'string' is not assignable to type 'number'.",
+    "/tmp/shape-suspended-controls/src/compiler/main.a:41:13: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "/tmp/shape-suspended-controls/src/compiler/main.a:4:7: error TS2322: Type 'string' is not assignable to type 'number'."
+  ],
+  "host_names": [],
+  "host_values": {},
+  "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Closed synchronous generic callable bodies use runtime identities. Opaque callback protocols, unbounded callable identities, Promise/iterator results, constructor and whole-array contracts remain unknown; dynamic key producers join slots with membership and mutation obligations. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed.",
+  "measurement": "measured on a checker-rejected program",
+  "sites": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 413,
+      "end": 426,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 413,
+        "end": 426,
+        "owner": "asyncRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:5:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 611,
+      "end": 624,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 611,
+        "end": 624,
+        "owner": "asyncArrowRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:8:18"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 842,
+      "end": 855,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 842,
+        "end": 855,
+        "owner": "asyncExpressionRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:10:23"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1108,
+      "end": 1121,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1108,
+        "end": 1121,
+        "owner": "ordinaryAsyncRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:12:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1384,
+      "end": 1397,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1384,
+        "end": 1397,
+        "owner": "generatorRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:15:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1638,
+      "end": 1651,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1638,
+        "end": 1651,
+        "owner": "generatorExpressionRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:18:27"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1935,
+      "end": 1948,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1935,
+        "end": 1948,
+        "owner": "ordinaryGeneratorRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:20:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 2147,
+      "end": 2160,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 2147,
+        "end": 2160,
+        "owner": "directAsyncRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:24:88"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 2382,
+      "end": 2395,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 2382,
+        "end": 2395,
+        "owner": "directGeneratorRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:26:92"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 2673,
+      "end": 2686,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 2673,
+        "end": 2686,
+        "owner": "diagnosedAsyncRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:27:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": [
+        {
+          "scope": "dependency",
+          "origin": "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:27:1",
+          "diagnostics": [
+            "/tmp/shape-suspended-controls/src/compiler/main.a:27:61: error TS2322: Type 'string' is not assignable to type 'number'."
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 2995,
+      "end": 3008,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 2995,
+        "end": 3008,
+        "owner": "diagnosedGeneratorRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:30:1"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": [
+        {
+          "scope": "dependency",
+          "origin": "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:30:1",
+          "diagnostics": [
+            "/tmp/shape-suspended-controls/src/compiler/main.a:30:76: error TS2322: Type 'string' is not assignable to type 'number'."
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 3175,
+      "end": 3188,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 3175,
+        "end": 3188,
+        "owner": "synchronousAsyncNameRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -13
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ],
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 2,
+      "flow the graph can't see": 9
+    },
+    "untagged": {}
+  }
+}

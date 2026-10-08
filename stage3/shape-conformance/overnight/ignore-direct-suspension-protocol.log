@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-suspended-mutants-jkixi1hz/ignore-direct-suspension-protocol/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/suspended-callables/controls.py", line 24, in <module>
+    assert row['outcome']=='unknown',(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('directAsyncRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 2147, 'end': 2160, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 2147, 'end': 2160, 'owner': 'directAsyncRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'conforms and ready (free)', 'reason': 'declared allocation field certificates', 'detail': [], 'allocation_sites': [-9], 'fields': [], 'host_values': [], 'diagnostic_causes': []})
