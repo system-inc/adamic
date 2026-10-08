@@ -8,7 +8,7 @@ function failure(error: Error): void {
 }
 import { statSync, utimesSync } from 'node:fs';
 utimesSync(root + '/file', 1000.125, 1700000000.123456);
-const options = {throwIfNoEntry:false};
+const options = (({throwIfNoEntry:false}) as const);
 const absent=statSync(root + '/missing',options); console.log(`shared=${absent === undefined}`);
 const file=statSync(root + '/file');
 console.log(`${file.isFile()} ${file.isDirectory()} ${file.isSymbolicLink()} ${file.size} ${file.mtimeMs} ${file.mtime.getTime()}`);
