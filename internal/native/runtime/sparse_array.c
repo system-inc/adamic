@@ -21,12 +21,4 @@ void adamic_array_mark_index(adamic_array *array, size_t index) {
  adamic_map_set(presence, (adamic_value){.number = (double)index}, (adamic_value){.number = 1});
 }
 
-adamic_array *adamic_array_holes(double length, bool references) {
- if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) adamic_panic("RangeError: Invalid array length", sizeof "RangeError: Invalid array length" - 1);
- adamic_array *array = adamic_array_new((size_t)length, references);
- if (length > 0) memset(array->elements, 0, (size_t)length * sizeof *array->elements);
- array->length = (size_t)length;
- array->properties = adamic_object_new(&sparse_shape);
- array->properties->slots[0].reference = adamic_map_new(false, false);
- return array;
-}
+// The host array_holes.c owns sparse construction in this scratch proof.

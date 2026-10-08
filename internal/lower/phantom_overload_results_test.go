@@ -92,3 +92,14 @@ func TestPhantomOverloadArrayResult(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestPhantomArrayElementOverloadLiteralRefused(t *testing.T) {
+	_, err := lowerSource(t, `type Element = 'only' & { marker: void }; type Result = Element[] & { arrayBrand: void };
+ function bad(value: string): Result;
+ function bad(value: string): string[] { return [value]; }
+ const result = bad('other');`)
+	var refused *Refused
+	if !errors.As(err, &refused) || refused.What != "overload 1 of bad result Result cannot be served by implementation result string[]" || refused.Fix != overloadResultFix {
+		t.Fatalf("want literal element refusal, got %v", err)
+	}
+}

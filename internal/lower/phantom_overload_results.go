@@ -34,6 +34,19 @@ func (l *lowering) phantomOverloadResult(where, implementation *ast.Node, from, 
 		return false
 	}
 	baseFrom, baseTo := l.phantomArrayView(from), l.phantomArrayView(to)
+	if l.checker.IsArrayType(baseFrom) && l.checker.IsArrayType(baseTo) &&
+		l.isLibraryType(baseFrom, "ReadonlyArray") == l.isLibraryType(baseTo, "ReadonlyArray") {
+		left, right := l.checker.GetElementTypeOfArrayType(baseFrom), l.checker.GetElementTypeOfArrayType(baseTo)
+		// An accepted primitive phantom brand adds only absent void fields.
+		// Preserve the element's literal constraints in both directions, just
+		// as for the same scalar overload result. The array's ownership and
+		// mutable slots still undergo the ordinary relation checks.
+		if l.phantomAssignable(left, right) && l.phantomAssignable(right, left) &&
+			l.sameKeeping(baseFrom, baseTo, map[[2]*checker.Type]bool{}) &&
+			l.widened(baseFrom, baseTo, map[[2]*checker.Type]bool{}) == nil {
+			return true
+		}
+	}
 	if !l.checker.IsTypeAssignableTo(baseFrom, baseTo) || !l.checker.IsTypeAssignableTo(baseTo, baseFrom) {
 		return false
 	}

@@ -1,0 +1,10 @@
+type Path = string & { pathBrand: void };
+type Components = Path[] & { componentsBrand: void };
+function parts(value: Path): Components;
+function parts(value: string): string[];
+function parts(value: string): string[] { return [value]; }
+function built(n: number): Path { return ("owned:" + n.toString()) as Path; }
+const result = parts(built(1));
+result.push(built(2));
+console.log(result.join(","));
+console.log(parts("plain").join(","));

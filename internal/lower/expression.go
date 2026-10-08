@@ -299,7 +299,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if err == nil {
 			value = l.checkedJSONStringifyUse(node, value)
 		}
-		value = l.graphAllocation(value, node)
+		if err == nil {
+			value = l.graphAllocation(value, node)
+		}
 	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
