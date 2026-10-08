@@ -1,0 +1,24 @@
+{
+  "handoff_commit": "8abb52a1518b9d8c3f0dbde993551d4f01ba10e2",
+  "schedule": "after existing queue",
+  "primary_counts_unchanged": true,
+  "reason": "Both handoff rows already occur in the primary candidate census; these are additional frontier certifications, not distinct production reads.",
+  "obligations": [
+    {
+      "type_id": 97898,
+      "candidate_reads": 4,
+      "dependency": "tuple cast admission and positional contract",
+      "probe": "incremental-tuple-element-frontier",
+      "status": "queued",
+      "overlaps_primary": true
+    },
+    {
+      "type_id": 97934,
+      "candidate_reads": 1,
+      "dependency": "tuple alternatives in object-plus-primitive unions",
+      "probe": "incremental-out-signature-frontier",
+      "status": "queued",
+      "overlaps_primary": true
+    }
+  ]
+}

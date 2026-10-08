@@ -1667,3 +1667,14 @@ retain the void-only refusal rule. Mixed-union classification recognizes the
 same proven scalar carrier; no numeric alias replaces an original declaration.
 TestPhantomPrimitiveNames checks the inventory against Node, and the original
 brand-read control pins Node's undefined and Adamic's any-read refusal.
+
+Tuple continuation staged hooks: adamic_tuple_matches extracts the existing
+fixed tuple identity/length predicate; adamic_tuple_array_union_at is an
+uncalled owned normalizer built over adamic_view_array_at. TupleViewMembers
+plans only scalar/undefined/fixed-tuple alternatives. Disconnected native
+viewTupleHeapUnion and JavaScript tupleArrayUnionCheck reuse mixed-union
+selection. Their probes pass, including shape mutants; production array-union
+dispatch is not admitted. The review patch and approval-review blocker are in
+stage3/interface-downcasts/tuples/REPORT.md. Optional/rest metadata observations
+remain separate from runtime certification. Lane 4b frontier checks are queued
+after this unit and overlap its existing production census.

@@ -1,3 +1,57 @@
+Built: staged tuple-array normalization and selectors with semantic probes; certified total remains 3 pairs / 3 reads.
+Commits: certified tip 0a6edef2d89f5241f7dbeb392b607fec9fc4acff; probe checkpoint recorded in git history.
+Checks: combined original oracles and normalizer PASS 25.226s; selector probes PASS; optional/rest layout probe PASS 0.307s.
+Mutants: native and JavaScript selector shape mutants both admit a record and fail their exit-70 oracle; prior six mutants remain recorded below.
+Remaining: 7 primary pairs / 12 reads, optional/rest forms, and two overlapping lane 4b frontier checks; shared dispatch needs approval.
+
+The two added lane 4b obligations are queued after the existing unit in
+lane4b-handoff.json, from 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2.
+They overlap primary IDs 97898 and 97934, so they do not add production reads.
+Neither added frontier is claimed certified here.
+
+The staged normalizer is not called by production dispatch. It retains a
+reference slot or boxes a selected scalar, reusing the existing array reader
+for bounds, holes, undefined and storage checks. Its standalone C probe frees
+the source array before consuming the normalized reference, then releases it.
+Node, native release, ASan/UBSan and the shared leak checker pass. The tuple
+predicate extraction preserves the existing fixed tuple certificate. The
+native and JavaScript selectors reuse the mixed-union selector and existing
+tuple identity and length predicate; source admission remains unchanged.
+
+Commands (source /workspace/adamic-tools/env.sh first), output only in logs:
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTuple(OriginalOutSignature|OriginalTrackedSymbols|OriginalReferencedMap|OriginalNumericBrandReadRefuses|ArrayNormalizerProbe)$'
+-count=1 -v -timeout 3m > /tmp/views-tuples-stage-final.log 2>&1
+The run passes in 25.226s with 51 uncached Node observations.
+go test ./internal/ir ./internal/native ./internal/javascript -run
+'^(TestTupleViewMembers.*|TestTupleHeapUnionSelectionProbe)$' -count=1 -v
+> /tmp/views-tuples-selector-final.log 2>&1
+IR PASS 0.011s; native PASS 0.300s; JavaScript PASS 0.163s.
+ADAMIC_TUPLE_SELECTOR_MUTANT=shape with the native and JavaScript selector
+probe fails both semantic exit assertions: wrong record accepted, exit 0
+instead of 70 (/tmp/views-tuples-selector-mutant.log).
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+go test ./internal/lower -run '^TestTupleOptionalRestOriginalLayoutProbe$'
+-count=1 -v > /tmp/views-tuples-optional-rest-layout.log 2>&1
+PASS 0.307s. This checker observation proves no runtime admission: optional
+positions carry undefined; a trailing rest position carries its scalar element
+type. Existing unsupported forms still return no tuple certificate.
+
+Automatic approval review rejected shared array-union source/backend dispatch,
+then index-only dispatch, then backend-only staging. The stated concern was
+unvalidated ownership-sensitive shared changes risking memory errors or silent
+miscompilation beyond the isolated probes. None of those patches was applied.
+review/array-union-index-dispatch.patch is a concrete review artifact, checked
+with git apply --check, not an implemented or validated source path. It proposes
+index ownership through existing statement cleanup, leaving callback and loop
+transfer refused. Approval is needed to wire that boundary and certify the
+next pair. Own fixture counts are unchanged; TestCheckedViewTupleOriginalCounts passes
+in 23.487s (/tmp/views-tuples-stage-counts.log), without update-counts. The unrelated integrator failures
+below are not the blocker.
+
+---
+
 Built: certified original referenced-map tuple consumers; total 3 pairs / 3 candidate reads.
 Commits: prior 49647618880c8953cbb0328044247a0d28f53345; referenced-map commit recorded in git history.
 Checks: referenced-map oracle PASS 2.630s; numeric controls PASS 0.216s/0.421s; tuple counts refreshed PASS 25.401s.
