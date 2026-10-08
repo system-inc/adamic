@@ -1,0 +1,3 @@
+export function adjacentSignature(display: string): string {
+    return `This signature for ${display} is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for ${display} together, in the order the compiler resolves them, so the whole set can be read at once.`;
+}

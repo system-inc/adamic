@@ -161,9 +161,6 @@ export class RuleContext {
         edits: readonly SuggestionEdit[] = noEdits,
         suggestions: readonly Suggestion[] = noSuggestions,
     ): Finding {
-        if(edits.length > 1) {
-            panic('a finding carries at most one automatic edit');
-        }
         const edit = edits[0];
         const finding = new Finding(
             rule,
@@ -178,6 +175,9 @@ export class RuleContext {
         if(edit !== undefined) {
             finding.editStart = edit.start;
             finding.editEnd = edit.end;
+        }
+        for(const extra of edits.slice(1)) {
+            finding.extraFixes.push(extra);
         }
         for(const suggestion of suggestions) {
             finding.suggestions.push(suggestion);
