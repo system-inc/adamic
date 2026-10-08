@@ -10,8 +10,6 @@ import (
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type nativeChunk struct {
