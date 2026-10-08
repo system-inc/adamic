@@ -1,0 +1,18 @@
+// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read
+// Survey FlowNode: 26 class-d sites; representative ID 1, src/compiler/binder.ts:1034:95.
+// TypeScript 6.0.3: types.ts:4182-4253.
+// Two upstream flow variants are reduced to the node field; writer is a boundary driver. FlowArrayMutation is the actual member in both union fixtures.
+interface BinaryExpression { readonly kind: "BinaryExpression"; }
+interface BindingElement { readonly kind: "BindingElement"; }
+interface FlowNodeBase { node: BinaryExpression | BindingElement; }
+interface FlowArrayMutation { node: BinaryExpression; }
+function writeNode(flow: FlowNodeBase, node: BinaryExpression | BindingElement): void {
+    flow.node = node;
+}
+
+const binary: BinaryExpression = { kind: "BinaryExpression" };
+const binding: BindingElement = { kind: "BindingElement" };
+const flow: FlowArrayMutation = { node: binary };
+console.log("before write");
+writeNode(flow, binding);
+console.log(`stored ${flow.node.kind}`);

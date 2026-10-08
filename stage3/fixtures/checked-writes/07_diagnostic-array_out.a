@@ -1,0 +1,18 @@
+// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read
+// Survey DiagnosticWithLocation[]: 9 class-d sites; representative ID 340, src/compiler/checker.ts:49736:24.
+// TypeScript 6.0.3: utilities.ts:6133, types.ts:7290-7311.
+// Real array mutator extracted into a reduced consumer. This exercises container-element writes, not only named object fields.
+interface SourceFile { readonly fileName: string; }
+interface Diagnostic { file: SourceFile | undefined; }
+interface DiagnosticWithLocation { file: SourceFile; }
+function collect(array: Diagnostic[], diagnostic: Diagnostic): void {
+    array.unshift(diagnostic);
+}
+
+const located: DiagnosticWithLocation = { file: { fileName: "main.a" } };
+const detached: Diagnostic = { file: undefined };
+const array: DiagnosticWithLocation[] = [located];
+console.log("before write");
+collect(array, detached);
+const first = array[0];
+console.log(`stored ${first === undefined || first.file === undefined ? "undefined" : first.file.fileName}`);
