@@ -517,10 +517,10 @@ func TestCheckedViewNominalFieldWidenReadMutants(t *testing.T) {
 }
 
 func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
-	for _, site := range []string{"producer", "read", "null", "shared-schema", "cycle", "array-producer", "array-read", "array-cycle", "array-storage"} {
+	for _, site := range []string{"producer", "read", "null", "shared-schema", "cycle", "array-producer", "array-read", "array-cycle", "array-storage", "mutable-producer", "mutable-read"} {
 		t.Run(site, func(t *testing.T) {
 			fixture := site
-			stage := strings.TrimPrefix(site, "array-")
+			stage := strings.TrimPrefix(strings.TrimPrefix(site, "array-"), "mutable-")
 			if site == "array-cycle" || site == "array-storage" {
 				fixture = "array-producer"
 			}
@@ -647,7 +647,7 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 func recursiveNominalCounts(t *testing.T) []string {
 	t.Helper()
 	rows := []string{}
-	for _, name := range []string{"recursive-array-control", "recursive-array-producer", "recursive-array-read", "recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
+	for _, name := range []string{"recursive-mutable-control", "recursive-mutable-producer", "recursive-mutable-read", "recursive-mutable-write", "recursive-array-control", "recursive-array-producer", "recursive-array-read", "recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
 		row := counted(t, "stage3/interface-downcasts/nullish/maps/entry-nominal-"+name+".a", false, nil, false, false)
 		rows = append(rows, row)
 	}
@@ -658,4 +658,65 @@ func TestCheckedViewRecursiveNominalCounts(t *testing.T) {
 	for _, row := range recursiveNominalCounts(t) {
 		t.Log(row)
 	}
+}
+
+func TestCheckedViewRecursiveMutableClassWriteMutants(t *testing.T) {
+	for _, helper := range []bool{false, true} {
+		t.Run(map[bool]string{false: "direct", true: "helper"}[helper], func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-recursive-mutable-write")
+			truth := onNode(t, path)
+			changed := false
+			mutate := func(body []ir.Statement) {
+				for i, statement := range body {
+					write, ok := statement.(ir.SetProperty)
+					if !ok || write.Name != "child" || write.Define {
+						continue
+					}
+					if write.WriteContract == 0 {
+						t.Fatal("source write lost its nominal certificate")
+					}
+					write.Value = ir.ObjectLiteral{Fields: []ir.Field{{Name: "count", Value: ir.NumberConstant{Value: 7}}}}
+					body[i] = write
+					changed = true
+					break
+				}
+			}
+			if helper {
+				for _, function := range program.Functions {
+					if function.Name == "replace" {
+						mutate(function.Body)
+					}
+				}
+			} else {
+				mutate(program.Main)
+			}
+			if !changed {
+				t.Fatal("mutation missed class write")
+			}
+			native, _ := nativelyUncached(t, program)
+			for backend, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				t.Logf("%s exit=%d stdout=%q stderr=%q", []string{"native", "released", "JavaScript"}[backend], got.exitCode, got.stdout, got.stderr)
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map nominal producer failed:") || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("source class write ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; class write rejected lookalike", truth.stdout)
+		})
+	}
+}
+
+func TestCheckedViewRecursiveMutableLinkWriteRefusal(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-link-write.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 {
+		t.Fatalf("Node=%#v", truth)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "storing Entry | null in a field") {
+		t.Fatalf("nullable aggregate write lost its refusal: %v", err)
+	}
+	t.Logf("Node=%q; named storage refusal=%v", truth.stdout, err)
 }

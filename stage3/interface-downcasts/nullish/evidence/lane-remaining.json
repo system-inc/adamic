@@ -31,10 +31,17 @@
       "production_reaching_view_counts": "unmeasured"
     },
     {
-      "family": "mutable recursive aggregates and recursive class declarations",
+      "family": "mutable recursive arrays and recursive class declarations",
       "read": "node.value",
       "outcome": "producer witness coverage not implemented; existing named refusals retained",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nullable aggregate source-link write",
+      "read": "entry.next source write",
+      "site": "entry-nominal-recursive-mutable-link-write.a:9:1",
+      "outcome": "named compile refusal: storing Entry | null in a field",
+      "implementation": "internal/lower/class.go, (*lowering).setProperty"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -112,6 +119,11 @@
     {
       "family": "nominal class beneath recursive readonly reference arrays",
       "scope": "readonly object/array cycles with nonnullable structural entry elements; iterative owned snapshots check reference storage before slot reads, preserve holes, and recheck escaped class reads; three Node controls, producer/read/scalar-storage payload mutants and a valid object-array back edge",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nominal class beneath mutable recursive object schemas",
+      "scope": "nonoptional structural object edges; constructor and escaped-read identity checks; direct and helper source class writes retain certificates before later views activate; nullable aggregate link writes remain refused",
       "production_reaching_view_counts": "unmeasured"
     }
   ],

@@ -1,0 +1,31 @@
+{
+  "base": "1466ea708",
+  "controls": 4,
+  "mutants": [
+    "nested class producer",
+    "escaped class read",
+    "direct class write",
+    "helper class write before view activation"
+  ],
+  "execution_modes": [
+    "native",
+    "released native",
+    "JavaScript"
+  ],
+  "counterfactual": "all four identical payloads run on when nominal checks alone are omitted",
+  "remaining_source_write": "entry-nominal-recursive-mutable-link-write.a:9:1: storing Entry | null in a field",
+  "regression_seconds": 37.089,
+  "remaining_inventory": {
+    "pairs": 2018,
+    "reads": 9101,
+    "certified_remaining": "unmeasured"
+  },
+  "logs": [
+    "proof-and-counts",
+    "counterfactual",
+    "compiler",
+    "vet",
+    "refusals",
+    "regression"
+  ]
+}

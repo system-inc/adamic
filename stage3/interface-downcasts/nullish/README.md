@@ -1228,3 +1228,27 @@ own producer/storage proofs. Callable families remain lane 5 dependencies,
 optional/rest tuples remain lane 4c, and required primitive brands keep the
 existing language refusal. The 2,018-pair / 9,101-read inventory and unmeasured
 production discharge remain unchanged. Evidence: recursive-array.json and logs.
+
+
+October 8: mutable recursive object schemas
+
+Nonoptional mutable structural object edges now use the visited producer
+witness. Four controls match Node, including direct and helper class writes
+before a later view activates. Four actual lookalike payload mutants stop at
+the producer, escaped read, direct write or helper write in all three execution
+modes. Removing nominal checks alone lets all four payloads run on; no bypass
+is committed. Allocations equal frees in the four new counted rows.
+
+The unit oracle passes in 10.162s, nominal regression in 37.089s, and the exact
+remaining source-write/callback refusals in 0.704s. Compiler packages pass:
+IR 0.018s, lower 11.686s, native 54.237s, JavaScript 1.779s; scoped vet passes.
+The inherited phantom failures remain excluded; no full gate is claimed.
+
+Nullable aggregate link writes stay refused by internal/lower/class.go,
+(*lowering).setProperty: "storing Entry | null in a field", pinned at
+entry-nominal-recursive-mutable-link-write.a:9:1. Mutable recursive arrays and
+recursive data-class schemas remain on the table. Callable boundaries and
+optional/rest tuples retain their lane ownership; required primitive brands
+retain their language refusal. The inventory remains 2,018 pairs / 9,101 reads,
+with exact production reaching-view discharge unmeasured. Evidence is in
+recursive-mutable.json and its compressed logs.

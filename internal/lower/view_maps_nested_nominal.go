@@ -182,8 +182,8 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 	return id
 }
 
-// The visited-witness adapter covers recursive readonly object and array paths.
-// Mutable aggregate edges and recursive class declarations
+// The visited-witness adapter covers recursive data objects and readonly arrays.
+// Mutable recursive arrays and recursive class declarations
 // retain their existing refusals until their storage producers have this proof.
 func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*checker.Type]bool) bool {
 	target = l.concrete(target)
@@ -212,9 +212,6 @@ func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*ch
 		return false
 	}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
-		if !nominal && !l.checker.IsReadonlySymbol(field) {
-			return false
-		}
 		child := l.concrete(l.checker.GetTypeOfSymbol(field))
 		if !l.recursiveNominalObjectPath(child, seen) {
 			return false

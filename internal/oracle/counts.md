@@ -2059,6 +2059,10 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-control.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-producer.a | 7 | 7 | 15 | 22 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-read.a | 11 | 11 | 24 | 34 | 10 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-write.a | 17 | 17 | 38 | 53 | 10 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-control.a | 14 | 14 | 28 | 39 | 13 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-producer.a | 9 | 9 | 19 | 26 | 9 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-read.a | 14 | 14 | 28 | 39 | 13 | 0 | 0 | 0 |
