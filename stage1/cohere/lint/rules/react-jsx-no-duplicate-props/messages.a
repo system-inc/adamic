@@ -1,0 +1,1 @@
+export const message = "This prop is written more than once on the same element. React builds the props object by assigning each attribute in order, so every earlier copy is overwritten and only the last one survives. The discarded values look like they are being passed and are not. Remove one of them, or rename them so each prop is distinct.";

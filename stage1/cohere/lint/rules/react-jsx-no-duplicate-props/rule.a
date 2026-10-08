@@ -1,0 +1,20 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) {this.context=context;}
+ visit(index: number): void {
+  const ctx=this.context;let attrs=-1;
+  for(const child of ctx.node(index).children) {if(ctx.node(child).kind==='JsxAttributes') {attrs=child;}}
+  if(attrs<0) {return;}const names: string[]=[];const seen: number[]=[];
+  for(const property of ctx.node(attrs).children) {
+   const prop=ctx.node(property);const ni=prop.children[0] ?? -1;
+   if(prop.kind!=='JsxAttribute' || ni<0 || ctx.node(ni).kind!=='Identifier') {continue;}
+   let name=ctx.node(ni).text;if(ctx.settings.read('ignorecase','false')==='true') {name=name.toLowerCase();}
+   const position=names.indexOf(name);
+   if(position>=0) {const earlier=seen[position] ?? -1;if(earlier>=0) {ctx.report(earlier,'react/jsx-no-duplicate-props','jsxNoDuplicateProps',message,'','','');}seen[position]=ni;}
+   else {names.push(name);seen.push(ni);}
+  }
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

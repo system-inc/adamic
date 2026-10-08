@@ -1,0 +1,5 @@
+{
+  "name": "duplicate-props-earlier-inverted",
+  "from": "ctx.report(earlier,'react/jsx-no-duplicate-props'",
+  "to": "ctx.report(ni,'react/jsx-no-duplicate-props'"
+}

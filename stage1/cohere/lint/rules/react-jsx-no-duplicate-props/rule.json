@@ -1,0 +1,13 @@
+{
+  "name": "react/jsx-no-duplicate-props",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxNoDuplicateProps",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxNoDuplicateProps"
+}
