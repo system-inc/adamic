@@ -1,0 +1,6 @@
+=== RUN   TestHiddenBoundaryBlockOverloadResultRefusal
+    hidden_boundary_block_overload_result_test.go:34: Expression cannot satisfy the Block-only promise: want "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody", got <nil>
+--- FAIL: TestHiddenBoundaryBlockOverloadResultRefusal (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.034s
+FAIL

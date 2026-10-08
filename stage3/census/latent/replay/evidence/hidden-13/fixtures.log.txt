@@ -1,0 +1,12 @@
+=== RUN   TestHiddenBoundaryBlockOverloadResultNodeWitness
+    hidden_boundary_block_overload_result_test.go:18: gate cache node miss
+    hidden_boundary_block_overload_result_test.go:19: source Node: exit 0, stdout "7\n", stderr ""
+--- PASS: TestHiddenBoundaryBlockOverloadResultNodeWitness (0.14s)
+=== RUN   TestHiddenBoundaryBlockOverloadResultRefusal
+    hidden_boundary_block_overload_result_test.go:36: unsafe implementation: /workspace/adamic/internal/oracle/testdata/refusals/hidden_boundary_block_overload_result.a:3:1: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result
+--- PASS: TestHiddenBoundaryBlockOverloadResultRefusal (0.03s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.172s

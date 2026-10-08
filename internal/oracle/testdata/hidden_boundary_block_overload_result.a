@@ -1,0 +1,5 @@
+type Block = { readonly kind: 'Block'; readonly value: number };
+type ConciseBody = Block | { readonly kind: 'Expression'; readonly value: number };
+function transformAsyncFunctionBody(body: Block): Block;
+function transformAsyncFunctionBody(body: ConciseBody): ConciseBody { return body; }
+console.log(`${transformAsyncFunctionBody({ kind: 'Block', value: 7 }).value}`);
