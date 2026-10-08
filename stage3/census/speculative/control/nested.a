@@ -1,0 +1,8 @@
+export function nested(): void {
+    with ({}) {
+        with ({}) {
+            debugger;
+        }
+    }
+    debugger;
+}

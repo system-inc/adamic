@@ -1,0 +1,4 @@
+export function target<T>(value: T): T {
+    with ({}) { debugger; }
+    return value;
+}

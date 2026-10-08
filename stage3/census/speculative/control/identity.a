@@ -1,0 +1,3 @@
+export async function asyncGuard<T>(value: T): T {
+    return await value;
+}

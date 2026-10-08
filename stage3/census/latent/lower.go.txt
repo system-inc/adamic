@@ -19,15 +19,22 @@ func (e *LatentDependencySkipped) Error() string {
 }
 
 type LatentFinding struct {
-	Measurement string `json:"measurement"`
-	Unit        string `json:"unit"`
-	Phase       string `json:"phase"`
-	Kind        string `json:"kind"`
-	Where       string `json:"where"`
-	Reason      string `json:"reason"`
-	Text        string `json:"text"`
-	Start       int    `json:"start,omitempty"`
-	End         int    `json:"end,omitempty"`
+	SiteWhere     string `json:"site_where,omitempty"`
+	SiteKind      string `json:"site_kind,omitempty"`
+	SiteStart     int    `json:"site_start,omitempty"`
+	SiteEnd       int    `json:"site_end,omitempty"`
+	RootKind      string `json:"root_kind"`
+	Depth         int    `json:"depth"`
+	BoundaryWhere string `json:"boundary_where,omitempty"`
+	Measurement   string `json:"measurement"`
+	Unit          string `json:"unit"`
+	Phase         string `json:"phase"`
+	Kind          string `json:"kind"`
+	Where         string `json:"where"`
+	Reason        string `json:"reason"`
+	Text          string `json:"text"`
+	Start         int    `json:"start,omitempty"`
+	End           int    `json:"end,omitempty"`
 }
 
 // The measurement driver is sequential. Nothing returns usable IR.
@@ -104,11 +111,12 @@ func latentDeclarations(program *load.Program, file *ast.SourceFile) []LatentDec
 }
 
 type LatentFile struct {
-	Measurement  string              `json:"measurement"`
-	File         string              `json:"file"`
-	Declarations []LatentDeclaration `json:"declarations"`
-	Units        []LatentUnit        `json:"units"`
-	Findings     []LatentFinding     `json:"findings"`
+	SpeculativeCoverage *LatentSpeculativeCoverage `json:"speculative_coverage,omitempty"`
+	Measurement         string                     `json:"measurement"`
+	File                string                     `json:"file"`
+	Declarations        []LatentDeclaration        `json:"declarations"`
+	Units               []LatentUnit               `json:"units"`
+	Findings            []LatentFinding            `json:"findings"`
 }
 
 func (l *lowering) latentSignature(index int) error {
@@ -198,6 +206,10 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 // Latent attempts each eligible top-level unit independently. A returned error never
 // stops the next unit. No function with a checker diagnostic in its body is lowered.
 func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+	if latentSpeculativeEnabled() {
+		latentSpeculative(ctx, program, emit)
+		return
+	}
 	if latentFullEnabled() {
 		latentFull(ctx, program, emit)
 		return

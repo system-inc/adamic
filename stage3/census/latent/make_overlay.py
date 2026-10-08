@@ -40,6 +40,14 @@ refusal_output = scratch / 'internal_lower_refusals.go'
 subprocess.run(['go', 'run', str(territory / 'refusalrewrite/cmd'),
                 '-input', str(repository / 'internal/lower/refusals.go'),
                 '-output', str(refusal_output)], check=True, cwd=territory)
+# Capture the exact syntax visitor node, rather than guessing from a shared token.
+refusal_source = refusal_output.read_text()
+for binding in ('found', 'contractError'):
+    old = '\t\t\tlatentRecord(' + binding + ')\n'
+    new = '\t\t\tlatentRecordNode(' + binding + ', node)\n'
+    assert refusal_source.count(old) == 1, ('refusal visitor identity', binding)
+    refusal_source = refusal_source.replace(old, new)
+refusal_output.write_text(refusal_source)
 replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
 # Keep all checker diagnostics and populated roots, but expose them only to measurement.
 loader = (repository / 'internal/load/load.go').read_text()
@@ -69,7 +77,7 @@ assert needle in functions
 functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.latentReady = map[int]bool{} }; l.latentReady[index] = true')
 # Generic dependency instantiations must also obey body skip policy.
 needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
-functions = functions.replace(needle, needle + '\n if len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled() && len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
 overlay('internal/lower/functions.go', functions)
 locals_source = (repository / 'internal/lower/locals.go').read_text()
 needle = 'local, isLocal := l.locals[symbol]'
@@ -89,5 +97,24 @@ if (repository / 'internal/lower/enums.go').exists():
 overlay('internal/lower/latent_hook.go', hook)
 overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
 overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
+# Speculative wrappers are emitted only into the existing guarded overlay.
+for name, signature, renamed in [
+    ('internal/lower/locals.go', 'func (l *lowering) declareLocal(name *ast.Node) (int, error) {', 'latentDeclareLocalRaw'),
+    ('internal/lower/expression.go', 'func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {', 'latentExpressionRaw'),
+    ('internal/lower/functions.go', 'func (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error {', 'latentSignatureReturnRaw'),
+]:
+    output = pathlib.Path(replace[str(repository / name)])
+    source = output.read_text()
+    assert source.count(signature) == 1, signature
+    source = source.replace(signature, signature.replace(' expression(', ' latentExpressionRaw(').replace(' signatureReturn(', ' latentSignatureReturnRaw(').replace(' declareLocal(', ' latentDeclareLocalRaw('))
+    if renamed == 'latentDeclareLocalRaw':
+        source += '\nfunc (l *lowering) declareLocal(name *ast.Node) (int,error) { return l.latentSpecDeclareLocal(name) }\n'
+    elif renamed == 'latentExpressionRaw':
+        source += '\nfunc (l *lowering) expression(node *ast.Node) (ir.Expression,error) { return l.latentSpecExpression(node) }\n'
+    else:
+        source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentSpecSignatureReturn(index,declaration,this,returns) }\n'
+    output.write_text(source)
+overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
+
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')

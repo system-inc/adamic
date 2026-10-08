@@ -1,0 +1,454 @@
+// Census-only recovery. This file never participates in a production build.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"reflect"
+	"strings"
+)
+
+func latentSpeculativeEnabled() bool {
+	return os.Getenv("LATENT_SPECULATIVE") == "1" && os.Getenv("LATENT_MUTANT_NO_STUBS") != "1"
+}
+
+// An opaque census value retains its checked type name even when that type has
+// no native representation. It must never reach either backend.
+type latentPlaceholder struct {
+	Of          ir.Type
+	CheckedType string
+}
+
+func (v latentPlaceholder) Type() ir.Type { return v.Of }
+
+type latentBoundaryKey struct {
+	Where      string
+	Start, End int
+}
+
+type latentSpeculation struct {
+	attempted  map[*ast.Node]bool
+	failed     map[*ast.Node]bool
+	nodes      map[string]*ast.Node
+	active     map[*ast.Node]bool
+	visited    map[*ast.Node]bool
+	bodies     map[*ast.Node]bool
+	boundaries map[latentBoundaryKey]*ast.Node
+	sites      map[string]*ast.Node
+}
+
+var latentSpec *latentSpeculation
+
+func (l *lowering) latentPlaceholder(node *ast.Node) (value ir.Expression) {
+	value = latentPlaceholder{Of: ir.Union, CheckedType: "unrepresented"}
+	defer func() { _ = recover() }()
+	checked := l.concrete(l.checker.GetTypeAtLocation(node))
+	name := l.checker.TypeToString(checked)
+	representation, known := l.representation(checked)
+	if !known {
+		representation = ir.Union
+	}
+	return latentPlaceholder{Of: representation, CheckedType: name}
+}
+
+// Preserve the visitor's AST identity: several nodes can begin at one token,
+// so a displayed line/column alone cannot determine the enclosing boundaries.
+func latentFindingKey(finding LatentFinding) string {
+	return strings.Join([]string{finding.Kind, finding.Where, finding.Reason, finding.Text}, "\x00")
+}
+func latentRecordNode(failure error, node *ast.Node) {
+	if failure == nil {
+		return
+	}
+	latentRecord(failure)
+	if latentSpec == nil || !latentSpeculativeEnabled() {
+		return
+	}
+	finding := &latentFindings[len(latentFindings)-1]
+	finding.SiteWhere = latentSpecProgram.Where(node)
+	finding.SiteKind = node.Kind.String()
+	finding.SiteStart, finding.SiteEnd = node.Pos(), node.End()
+	latentSpec.sites[latentFindingKey(*finding)] = node
+}
+
+var latentSpecProgram *load.Program
+
+func (l *lowering) latentSpecFailure(node *ast.Node, failure error) {
+	latentRecordNode(failure, node)
+	finding := &latentFindings[len(latentFindings)-1]
+	finding.Start, finding.End = node.Pos(), node.End()
+	finding.BoundaryWhere = l.program.Where(node)
+	latentSpec.failed[node] = true
+	latentSpec.boundaries[latentBoundaryKey{finding.BoundaryWhere, finding.Start, finding.End}] = node
+}
+
+func (l *lowering) latentSpecExpression(node *ast.Node) (value ir.Expression, failure error) {
+	if !latentSpeculativeEnabled() || latentSpec == nil {
+		return l.latentExpressionRaw(node)
+	}
+	latentSpec.attempted[node] = true
+	defer func() {
+		if crash := recover(); crash != nil {
+			failure = fmt.Errorf("expression panic: %v", crash)
+		}
+		if failure == nil && l.unlowerable != nil {
+			failure = l.unlowerable
+		}
+		if failure != nil {
+			l.latentSpecFailure(node, failure)
+			l.unlowerable = nil
+			l.latentSpecChildren(node)
+			value, failure = l.latentPlaceholder(node), nil
+		}
+	}()
+	return l.latentExpressionRaw(node)
+}
+
+func (l *lowering) latentSpecStatement(node *ast.Node) (result []ir.Statement, failure error) {
+	latentSpec.attempted[node] = true
+	var checkpoint *lowering
+	defer func() {
+		if crash := recover(); crash != nil {
+			failure = fmt.Errorf("statement panic: %v", crash)
+		}
+		if failure == nil && l.unlowerable != nil {
+			failure = l.unlowerable
+		}
+		if failure != nil {
+			l.latentSpecFailure(node, failure)
+			if checkpoint != nil {
+				*l = *checkpoint
+			}
+			l.unlowerable = nil
+			l.latentSpecChildren(node)
+			result, failure = []ir.Statement{ir.Block{}}, nil
+		}
+	}()
+	checkpoint = l.latentSnapshot()
+	return l.latentStatementRaw(node)
+}
+
+func (l *lowering) latentSpecSignatureReturn(index int, node *ast.Node, this int, returns *checker.Type) (failure error) {
+	if !latentSpeculativeEnabled() || latentSpec == nil {
+		return l.latentSignatureReturnRaw(index, node, this, returns)
+	}
+	latentSpec.attempted[node] = true
+	checkpoint := l.latentSnapshot()
+	defer func() {
+		if crash := recover(); crash != nil {
+			failure = fmt.Errorf("signature panic: %v", crash)
+		}
+		if failure != nil {
+			l.latentSpecFailure(node, failure)
+			*l = *checkpoint
+			l.unlowerable = nil
+			if l.signed == nil {
+				l.signed = map[int]signed{}
+			}
+			if l.latentReady == nil {
+				l.latentReady = map[int]bool{}
+			}
+			l.signed[index] = signed{this: this}
+			l.latentReady[index] = true
+			function := &l.result.Functions[index]
+			function.Parameters = nil
+			if returns == nil {
+				returns = l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(node)))
+			}
+			function.Returns = 0
+			if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+				var known bool
+				function.Returns, known = l.representation(returns)
+				if !known {
+					function.Returns = ir.Union
+				}
+			}
+			if this >= 0 && node.Kind != ast.KindConstructor {
+				function.Parameters = append(function.Parameters, this)
+				function.Receiver = true
+			}
+			for _, parameter := range node.Parameters() {
+				name := parameter.Name()
+				if name == nil {
+					continue
+				}
+				spelling := "pattern"
+				if ast.IsIdentifier(name) {
+					spelling = name.Text()
+				}
+				local := len(l.result.Locals)
+				if ast.IsIdentifier(name) {
+					local, _ = l.declareLocal(name)
+					l.result.Locals[local].Function = index
+				} else {
+					l.result.Locals = append(l.result.Locals, ir.Local{Name: spelling, Type: l.latentPlaceholder(parameter).Type(), Function: index})
+				}
+				if l.locals == nil {
+					l.locals = map[*ast.Symbol]int{}
+				}
+				if ast.IsIdentifier(name) {
+					l.locals[l.symbol(name)] = local
+				}
+				function.Parameters = append(function.Parameters, local)
+			}
+			failure = nil
+		}
+	}()
+	return l.latentSignatureReturnRaw(index, node, this, returns)
+}
+
+// Traverse structural and type nodes without inventing value-position reads of
+// binding names, property names, labels, imports, or identifiers in type syntax.
+func latentSpecValue(node *ast.Node) bool {
+	if !ast.IsExpression(node) {
+		return false
+	}
+	if node.Kind != ast.KindIdentifier && node.Kind != ast.KindStringLiteral && node.Kind != ast.KindNumericLiteral {
+		return true
+	}
+	parent := node.Parent
+	if parent == nil {
+		return false
+	}
+	if parent.Name() == node {
+		return false
+	}
+	if parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
+		return false
+	}
+	for p := parent; p != nil; p = p.Parent {
+		if ast.IsTypeNode(p) || p.Kind == ast.KindImportDeclaration || p.Kind == ast.KindExportDeclaration {
+			return false
+		}
+		if ast.IsStatement(p) || ast.IsExpression(p) {
+			break
+		}
+	}
+	return true
+}
+
+func (l *lowering) latentSpecWalk(node *ast.Node) {
+	if node == nil || latentSpec.active[node] {
+		return
+	}
+	latentSpec.visited[node] = true
+	if node.Kind == ast.KindParameter || node.Kind == ast.KindVariableDeclaration {
+		if name := node.Name(); name != nil && ast.IsIdentifier(name) && !latentSpec.attempted[name] {
+			_, _ = l.declareLocal(name)
+		}
+	}
+	latentSpec.active[node] = true
+	defer delete(latentSpec.active, node)
+	if !latentSpec.attempted[node] || (ast.IsFunctionLikeDeclaration(node) && node.Body() != nil && !latentSpec.bodies[node]) {
+		if ast.IsFunctionLikeDeclaration(node) && node.Body() != nil {
+			latentSpec.bodies[node] = true
+			index := len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: "speculative"})
+			outerFunction, outerIndex := l.function, l.functionIndex
+			defer func() { l.function, l.functionIndex = outerFunction, outerIndex }()
+			func() {
+				defer func() {
+					if crash := recover(); crash != nil {
+						l.latentSpecFailure(node, fmt.Errorf("body panic: %v", crash))
+					}
+				}()
+				if failure := l.lowerFunction(index, node, -1); failure != nil {
+					l.latentSpecFailure(node, failure)
+				}
+			}()
+			l.function, l.functionIndex = &l.result.Functions[index], index
+		} else if ast.IsStatement(node) {
+			_, _ = l.statement(node)
+		} else if latentSpecValue(node) {
+			_, _ = l.expression(node)
+		}
+	}
+	l.latentSpecChildren(node)
+}
+func (l *lowering) latentSpecChildren(node *ast.Node) {
+	node.ForEachChild(func(child *ast.Node) bool { l.latentSpecWalk(child); return false })
+}
+
+func latentSpeculative(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+	records := []LatentFile{}
+	latentSpecProgram = program
+	sites := map[string]*ast.Node{}
+	failed := map[*ast.Node]bool{}
+	boundaries := map[latentBoundaryKey]*ast.Node{}
+	nodes := map[string]*ast.Node{}
+	for _, file := range program.Files() {
+		latentFindings = nil
+		latentSpec = &latentSpeculation{attempted: map[*ast.Node]bool{}, failed: failed, nodes: nodes, active: map[*ast.Node]bool{}, visited: map[*ast.Node]bool{}, bodies: map[*ast.Node]bool{}, boundaries: boundaries, sites: sites}
+		var catalogue ast.Visitor
+		catalogue = func(node *ast.Node) bool {
+			latentSpec.nodes[program.Where(node)] = node
+			node.ForEachChild(catalogue)
+			return false
+		}
+		catalogue(file.AsNode())
+		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
+		checker, release := program.Checker(ctx, file)
+		l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		// The existing syntax scanner supplies its real reasons and never stubs types.
+		func() {
+			defer func() {
+				if crash := recover(); crash != nil {
+					latentRecord(fmt.Errorf("refusal scan panic: %v", crash))
+				}
+			}()
+			latentRecord(l.latentRefuse(file))
+		}()
+		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
+		l.noteInheritance(program.Files())
+		l.noteAccessorNames(program.Files())
+		l.latentRegister(program.Files())
+		l.latentRegisterNested(program.Files())
+		for _, node := range file.Statements.Nodes {
+			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
+			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "speculative", CheckerDiagnostics: []string{}}
+			if node.Name() != nil {
+				unit.Name = node.Name().Text()
+			}
+			copy := l.latentSnapshot()
+			copy.latentSpecWalk(node)
+			record.Units = append(record.Units, unit)
+		}
+		l.latentSpecWalk(file.AsNode())
+		record.Findings = append([]LatentFinding{}, latentFindings...)
+		record.SpeculativeCoverage = &LatentSpeculativeCoverage{SourceBytes: len(file.Text()), VisitedNodes: len(latentSpec.visited), AttemptedNodes: len(latentSpec.attempted)}
+		var verify ast.Visitor
+		verify = func(node *ast.Node) bool {
+			record.SpeculativeCoverage.TotalNodes++
+			if !latentSpec.visited[node] {
+				record.SpeculativeCoverage.UnvisitedNodes++
+			}
+			node.ForEachChild(verify)
+			return false
+		}
+		verify(file.AsNode())
+		release()
+		fmt.Fprintf(os.Stderr, "speculative walk: %s nodes=%d findings=%d unvisited=%d\n", record.File, record.SpeculativeCoverage.TotalNodes, len(record.Findings), record.SpeculativeCoverage.UnvisitedNodes)
+		records = append(records, record)
+	}
+	// Depth is resolved after the entire project: dependencies can expose a failed
+	// boundary before or after the boundary's own file is attempted.
+	for _, record := range records {
+		seen := map[string]bool{}
+		findings := record.Findings
+		record.Findings = []LatentFinding{}
+		for _, finding := range findings {
+			finding.RootKind = finding.Reason
+			node := sites[latentFindingKey(finding)]
+			if node == nil {
+				node = nodes[finding.Where]
+			}
+			if finding.BoundaryWhere != "" {
+				node = boundaries[latentBoundaryKey{finding.BoundaryWhere, finding.Start, finding.End}]
+			}
+			if node != nil {
+				for parent := node.Parent; parent != nil; parent = parent.Parent {
+					if failed[parent] {
+						finding.Depth++
+					}
+				}
+			}
+			if os.Getenv("LATENT_MUTANT_DEPTH_ZERO") == "1" {
+				finding.Depth = 0
+			}
+			key := latentFindingKey(finding)
+			if !seen[key] {
+				seen[key] = true
+				record.Findings = append(record.Findings, finding)
+			}
+		}
+		emit(record)
+	}
+	latentSpec = nil
+	latentSpecProgram = nil
+}
+
+// Coverage distinguishes AST examination from direct lowering attempts. Structural
+// and type-only nodes are visited but are never passed to a value lowerer.
+type LatentSpeculativeCoverage struct {
+	SourceBytes    int `json:"source_bytes"`
+	TotalNodes     int `json:"total_nodes"`
+	VisitedNodes   int `json:"visited_nodes"`
+	AttemptedNodes int `json:"attempted_nodes"`
+	UnvisitedNodes int `json:"unvisited_nodes"`
+}
+
+// Immutable scalar aggregates can be copied by value. Mutable graphs still use
+// the existing deep copier, including its private-field and foreign-pointer guards.
+var latentSpecImmutableTypes = map[reflect.Type]bool{}
+
+func latentSpecImmutable(t reflect.Type) bool {
+	if value, known := latentSpecImmutableTypes[t]; known {
+		return value
+	}
+	immutable := false
+	switch t.Kind() {
+	case reflect.Bool, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr, reflect.Float32, reflect.Float64, reflect.Complex64, reflect.Complex128, reflect.String:
+		immutable = true
+	case reflect.Array:
+		immutable = latentSpecImmutable(t.Elem())
+	case reflect.Struct:
+		immutable = true
+		for i := 0; i < t.NumField(); i++ {
+			field := t.Field(i)
+			if field.PkgPath != "" || !latentSpecImmutable(field.Type) {
+				immutable = false
+				break
+			}
+		}
+	}
+	latentSpecImmutableTypes[t] = immutable
+	return immutable
+}
+
+var latentSpecMutableFieldCache = map[reflect.Type][]int{}
+
+func latentSpecMutableFields(t reflect.Type) []int {
+	if fields, known := latentSpecMutableFieldCache[t]; known {
+		return fields
+	}
+	fields := []int{}
+	for index := 0; index < t.NumField(); index++ {
+		field := t.Field(index)
+		if field.PkgPath != "" || !latentSpecImmutable(field.Type) {
+			fields = append(fields, index)
+		}
+	}
+	latentSpecMutableFieldCache[t] = fields
+	return fields
+}
+
+// Binding positions must also be attempted when a parent signature or statement
+// failed before reaching them. A failed checked local receives only a census slot.
+func (l *lowering) latentSpecDeclareLocal(name *ast.Node) (local int, failure error) {
+	if !latentSpeculativeEnabled() || latentSpec == nil {
+		return l.latentDeclareLocalRaw(name)
+	}
+	latentSpec.attempted[name] = true
+	defer func() {
+		if crash := recover(); crash != nil {
+			failure = fmt.Errorf("local panic: %v", crash)
+		}
+		if failure != nil {
+			l.latentSpecFailure(name, failure)
+			l.unlowerable = nil
+			local = len(l.result.Locals)
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: l.latentPlaceholder(name).Type(), Function: l.functionIndex})
+			if l.locals == nil {
+				l.locals = map[*ast.Symbol]int{}
+			}
+			l.locals[l.symbol(name)] = local
+			failure = nil
+		}
+	}()
+	return l.latentDeclareLocalRaw(name)
+}

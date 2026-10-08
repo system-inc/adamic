@@ -1,0 +1,2 @@
+import { target } from "./target.a";
+export function main(): number { return target(1); }

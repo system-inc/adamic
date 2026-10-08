@@ -1,0 +1,66 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "nproc": 5,
+  "cpu_quota": 4,
+  "binaries": {
+    "speculative_and_no_stubs": {
+      "sha256": "1b4a7dd84e40a2a8b954add1dc27c3f3ba7764571de7def18268b114278da21e",
+      "bytes": 32515134
+    },
+    "full_baseline": {
+      "sha256": "97c728c57efacb1430ed6132714d8d398e4b7975a8490b815fda36953decd099",
+      "bytes": 32508033
+    },
+    "baseline_resume": {
+      "sha256": "d7d0c119d8bebd780574b4f50c2dd80612272c432a40b58a4919c2e39be4671b",
+      "bytes": 32514542
+    }
+  },
+  "normal_output": {
+    "c": {
+      "bytes": 6907,
+      "sha256": "169abd45ca4c225362f18da3c6c8bd8171a9939f51e329b2686e7152c77479ab"
+    },
+    "js": {
+      "bytes": 9670,
+      "sha256": "fb06081ce51570e78214b36cb780bfbceaa3e59bc40182530a4fb211a18c206e"
+    }
+  },
+  "baseline_resume": {
+    "retained_files": 67,
+    "resumed_files": 12,
+    "after": "transformers/taggedTemplate.ts",
+    "filter": "if after := os.Getenv(\"LATENT_RESUME_AFTER\"); after != \"\" && program.FileName(file) <= after { continue }",
+    "production_sources_changed": false
+  },
+  "baseline_counts": {
+    "NotYet": 10482,
+    "Refused": 8686,
+    "total": 19168,
+    "no_stubs_byte_identical": true
+  },
+  "speculative_memory": {
+    "initial_limit_bytes": 3221225472,
+    "raised_limit_bytes": 6442450944,
+    "live_heap_sample_bytes": 1973138352,
+    "raised_at_utc": "2026-10-08 18:38 UTC"
+  },
+  "status": "partial: traversal complete, depth audit failed",
+  "raw_speculative_counts": {
+    "NotYet": 52596,
+    "Refused": 13650
+  },
+  "raw_speculative_total": 66246,
+  "raw_observations": {
+    "speculative": {
+      "bytes": 68287092,
+      "sha256": "d368acfca3f7e5aacbbe52cc6141ee080502d4bfb52bd39da7161335a5593d10"
+    },
+    "stock": {
+      "bytes": 195958266,
+      "sha256": "540a83be8e49414851cfeff2130ece8b1170da7123fbea6234fd1b9c1eb99fb5"
+    }
+  }
+}

@@ -53,7 +53,7 @@ func main() {
 	if diagnostics == nil {
 		diagnostics = []string{}
 	}
-	if err := encoder.Encode(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": map[bool]string{true: "full", false: "first-error"}[os.Getenv("LATENT_FULL") == "1"], "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
+	if err := encoder.Encode(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
 		panic(err)
 	}
 	lower.Latent(context.Background(), program, func(record lower.LatentFile) {
@@ -63,4 +63,14 @@ func main() {
 		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
 	})
 
+}
+
+func censusMode() string {
+	if os.Getenv("LATENT_SPECULATIVE") == "1" && os.Getenv("LATENT_MUTANT_NO_STUBS") != "1" {
+		return "speculative"
+	}
+	if os.Getenv("LATENT_FULL") == "1" {
+		return "full"
+	}
+	return "first-error"
 }

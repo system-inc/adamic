@@ -1,0 +1,46 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"reflect"
+	"testing"
+)
+
+func TestLatentSpecSnapshotScalarCopy(t *testing.T) {
+	t.Setenv("LATENT_SPECULATIVE", "1")
+	source := ir.Program{CheckedFields: map[string]bool{"x": true}, Locals: []ir.Local{{Name: "x"}}, Functions: []ir.Function{{Name: "f", OptionalParameters: map[int]bool{0: true}, Parameters: []int{0}, Environment: []int{1}, Body: []ir.Statement{ir.Block{Body: []ir.Statement{ir.Block{}}}}}}}
+	mapper := new(checker.TypeMapper)
+	state := &lowering{result: &source, typeMapper: mapper, function: &source.Functions[0]}
+	snapshot := state.latentSnapshot()
+	if snapshot.typeMapper != mapper {
+		t.Fatal("checker mapper identity changed")
+	}
+	if snapshot.function != &snapshot.result.Functions[0] {
+		t.Fatal("snapshot function cursor not rebound")
+	}
+	fast := latentCopyIR(source, map[any]any{})
+	t.Setenv("LATENT_SPECULATIVE", "0")
+	slow := latentCopyIR(source, map[any]any{})
+	if !reflect.DeepEqual(fast, slow) {
+		t.Fatal("optimized snapshot differs from legacy copy")
+	}
+	t.Setenv("LATENT_SPECULATIVE", "1")
+	fast.CheckedFields["x"] = false
+	fast.Functions[0].OptionalParameters[0] = false
+	fast.Locals[0].Name = "changed"
+	fast.Functions[0].Parameters[0] = 10
+	fast.Functions[0].Environment[0] = 20
+	fast.Functions[0].Body[0].(ir.Block).Body[0] = ir.Block{Body: []ir.Statement{ir.Block{}}}
+	if !source.CheckedFields["x"] || !source.Functions[0].OptionalParameters[0] || source.Locals[0].Name != "x" || source.Functions[0].Parameters[0] != 0 || source.Functions[0].Environment[0] != 1 || len(source.Functions[0].Body[0].(ir.Block).Body[0].(ir.Block).Body) != 0 {
+		t.Fatal("snapshot aliases mutable source state")
+	}
+	t.Run("private-field-guard", func(t *testing.T) {
+		defer func() {
+			if recover() == nil {
+				t.Fatal("private field copied silently")
+			}
+		}()
+		latentCopyIR(struct{ hidden int }{1}, map[any]any{})
+	})
+}
