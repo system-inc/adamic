@@ -2,31 +2,38 @@
 === PAUSE TestUnit4Census
 === RUN   TestArrayNeverGap
 === PAUSE TestArrayNeverGap
+=== RUN   TestRecursiveInitializerGap
+=== PAUSE TestRecursiveInitializerGap
+=== RUN   TestRetainedWitnesses
+=== PAUSE TestRetainedWitnesses
 === CONT  TestUnit4Census
+=== CONT  TestRecursiveInitializerGap
 === CONT  TestArrayNeverGap
-    gaps_test.go:32: array-never.a build: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never.a:2:58: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never.a js: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never.a:2:58: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never-coalesce.a build: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never-coalesce.a:2:35: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never-coalesce.a js: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never-coalesce.a:2:35: stage 0 can't lower an array of never yet
-        exit status 1
---- PASS: TestArrayNeverGap (0.86s)
+=== CONT  TestRetainedWitnesses
+--- PASS: TestArrayNeverGap (0.47s)
+--- PASS: TestRetainedWitnesses (1.28s)
+--- PASS: TestRecursiveInitializerGap (3.13s)
 === NAME  TestUnit4Census
     comparison_test.go:131: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
     comparison_test.go:166: primitive Node: 1465/1465
     comparison_test.go:167: primitive semantic mutant caught by Go byte comparison on Node: 001e942a4a411b593d5221cacb8b969ffd5f97a053340b10a1630aa3bb02e6b6
+    comparison_test.go:167: primitive semantic mutant caught by Go byte comparison on emitted JavaScript
     comparison_test.go:167: primitive semantic mutant caught by Go byte comparison on sanitized native
-    comparison_test.go:169: primitive emitted JavaScript: 1465/1465
-    comparison_test.go:169: primitive sanitized native: 1465/1465
+    comparison_test.go:168: primitive emitted JavaScript: 1465/1465
+    comparison_test.go:168: primitive sanitized native: 1465/1465
     comparison_test.go:166: reactive Node: 1465/1465
     comparison_test.go:167: reactive semantic mutant caught by Go byte comparison on Node: 001e942a4a411b593d5221cacb8b969ffd5f97a053340b10a1630aa3bb02e6b6
+    comparison_test.go:167: reactive semantic mutant caught by Go byte comparison on emitted JavaScript
+    comparison_test.go:167: reactive semantic mutant caught by Go byte comparison on sanitized native
+    comparison_test.go:168: reactive emitted JavaScript: 1465/1465
+    comparison_test.go:168: reactive sanitized native: 1465/1465
     comparison_test.go:166: effects Node: 1465/1465
     comparison_test.go:167: effects semantic mutant caught by Go byte comparison on Node: 01a2bb62caf7f3588eeb0f7d54565d0c8bfc0f0aae3f1efdadefc8332c9cf34f
     comparison_test.go:167: custom-hook frozen-result mutant caught by Go byte comparison on Node
+    comparison_test.go:168: effects compiled backends stopped: effects.a recursive initializer gap; no certificate claimed
     comparison_test.go:166: effects-nested Node: 1465/1465
     comparison_test.go:167: effects-nested semantic mutant caught by Go byte comparison on Node: 03673d30271430c0f32e282622a41440c7506e4f9528d1abe7d37caebc65c364
---- PASS: TestUnit4Census (183.20s)
+    comparison_test.go:168: effects-nested compiled backends stopped: effects.a recursive initializer gap; no certificate claimed
+--- PASS: TestUnit4Census (425.56s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	183.204s
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	425.573s

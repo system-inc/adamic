@@ -6,6 +6,8 @@ import { reactiveFrontiers } from './frontiers.a';
 import { instructionPlaces, valuePlaces, terminalPlaces } from './places.a';
 import { isHookName } from './hooks.a';
 export { isHookName } from './hooks.a';
+// Gap 5 in values/GAPS.md: stage 0 does not lower an empty array literal as a default yet.
+const noControllers: BlockIndex[] = [];
 function stableHook(name: string): boolean { return ['useState','useReducer','useTransition','useOptimistic','useActionState'].includes(name); }
 export class ReactiveState {
  private readonly graph: ConstructedHIR;
@@ -58,7 +60,7 @@ export class ReactiveState {
   for(const param of this.fn.params) { this.mark(param.identifier); } this.useRefResults(); const frontiers = reactiveFrontiers(this.fn); const controlled = new Set<BlockIndex>();
   for(let rounds = 1; ; rounds++) {
    if(rounds > 10000) { return; } this.changed = false;
-   for(const id of frontiers.keys()) { if(controlled.has(id)) { continue; } for(const controller of frontiers.get(id) ?? []) { if(this.terminalReactive(controller)) { controlled.add(id); break; } } }
+   for(const id of frontiers.keys()) { if(controlled.has(id)) { continue; } for(const controller of frontiers.get(id) ?? noControllers /* gap 5 */) { if(this.terminalReactive(controller)) { controlled.add(id); break; } } }
    for(const id of this.fn.blockOrder) {
     const block = this.fn.block(id);
     for(const phi of block.phis) { if(this.reactive.has(phi.place.identifier)) { continue; }

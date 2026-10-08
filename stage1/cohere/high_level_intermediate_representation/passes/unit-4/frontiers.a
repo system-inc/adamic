@@ -4,20 +4,23 @@ import { panic } from 'adamic';
 import { BlockIndex } from '../../replay/index.ts';
 import type { HIRFunction } from '../../core.ts';
 type Vertex = BlockIndex | undefined;
+// Gap 5 in values/GAPS.md: stage 0 does not lower an empty array literal as a default yet.
+const noVertices: Vertex[] = [];
+const noBlocks: BlockIndex[] = [];
 interface Frame { readonly block: Vertex; next: number; }
 export function reactiveFrontiers(fn: HIRFunction): Map<BlockIndex,BlockIndex[]> {
  const successors = new Map<Vertex,Vertex[]>();
- const add = (from: Vertex,to: Vertex): void => { let list = successors.get(from); if(list === undefined) { list = []; successors.set(from,list); } list.push(to); };
+ const add = (from: Vertex,to: Vertex): void => { let list = successors.get(from); if(list === undefined) { /* Gap 5: give the empty array its element type. */ const empty: Vertex[] = []; list = empty; successors.set(from,list); } list.push(to); };
  for(const id of fn.blockOrder) { const block = fn.block(id); if(block.terminal.kind === 'Return') { add(undefined,id); } for(const pred of block.predecessors) { add(id,pred); } }
  const visited = new Set<Vertex>(); const order: Vertex[] = []; const stack: Frame[] = [{block: undefined,next: 0}]; visited.add(undefined);
  while(stack.length > 0) {
-  const frame = stack[stack.length - 1] ?? panic('missing frame'); const children = successors.get(frame.block) ?? [];
+  const frame = stack[stack.length - 1] ?? panic('missing frame'); const children = successors.get(frame.block) ?? noVertices /* gap 5 */;
   if(frame.next < children.length) { const child = children[frame.next]; frame.next++; if(!visited.has(child)) { visited.add(child); stack.push({block: child,next: 0}); } }
   else { order.push(frame.block); stack.pop(); }
  } order.reverse();
  const positions = new Map<Vertex,number>(); for(let i = 0; i < order.length; i++) { positions.set(order[i],i); }
  const predecessors = new Map<Vertex,Vertex[]>();
- for(const from of successors.keys()) { for(const to of successors.get(from) ?? []) { let list = predecessors.get(to); if(list === undefined) { list = []; predecessors.set(to,list); } list.push(from); } }
+ for(const from of successors.keys()) { for(const to of successors.get(from) ?? noVertices /* gap 5 */) { let list = predecessors.get(to); if(list === undefined) { /* Gap 5: give the empty array its element type. */ const empty: Vertex[] = []; list = empty; predecessors.set(to,list); } list.push(from); } }
  const immediate = new Map<Vertex,Vertex>(); immediate.set(undefined,undefined);
  const intersect = (left: Vertex,right: Vertex): Vertex => {
   while(left !== right) {
@@ -28,18 +31,18 @@ export function reactiveFrontiers(fn: HIRFunction): Map<BlockIndex,BlockIndex[]>
  let changed = true; while(changed) {
   changed = false;
   for(let i = 1; i < order.length; i++) { const id = order[i]; let found = false; let parent: Vertex = undefined;
-   for(const pred of predecessors.get(id) ?? []) { if(!positions.has(pred) || !immediate.has(pred)) { continue; } parent = found ? intersect(pred,parent) : pred; found = true; }
+   for(const pred of predecessors.get(id) ?? noVertices /* gap 5 */) { if(!positions.has(pred) || !immediate.has(pred)) { continue; } parent = found ? intersect(pred,parent) : pred; found = true; }
    if(found && (!immediate.has(id) || immediate.get(id) !== parent)) { immediate.set(id,parent); changed = true; }
   }
  }
  const children = new Map<Vertex,BlockIndex[]>();
- for(const id of immediate.keys()) { const parent = immediate.get(id); if(id === undefined || parent === id) { continue; } let list = children.get(parent); if(list === undefined) { list = []; children.set(parent,list); } list.push(id); }
+ for(const id of immediate.keys()) { const parent = immediate.get(id); if(id === undefined || parent === id) { continue; } let list = children.get(parent); if(list === undefined) { /* Gap 5: give the empty array its element type. */ const empty: BlockIndex[] = []; list = empty; children.set(parent,list); } list.push(id); }
  const result = new Map<BlockIndex,BlockIndex[]>();
  for(const target of fn.blockOrder) {
   const subtree = new Set<BlockIndex>(); const pending: BlockIndex[] = [target];
   for(let steps = 0; pending.length > 0 && steps <= immediate.size + 1; steps++) {
    const id = pending.pop() ?? panic('missing subtree block'); if(fn.blockOrder.includes(id)) { if(subtree.has(id)) { continue; } subtree.add(id); }
-   for(const child of children.get(id) ?? []) { pending.push(child); }
+   for(const child of children.get(id) ?? noBlocks /* gap 5 */) { pending.push(child); }
   }
   const frontier: BlockIndex[] = []; const seen = new Set<BlockIndex>();
   for(const candidate of fn.blockOrder) { if(!subtree.has(candidate)) { continue; }

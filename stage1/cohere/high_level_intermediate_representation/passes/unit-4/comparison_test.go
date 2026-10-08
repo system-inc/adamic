@@ -165,9 +165,7 @@ func TestUnit4Census(t *testing.T) {
 		unit4Compare(t, output, manifest.String())
 		t.Logf("%s Node: %d/1465", pass, counts)
 		unit4SemanticMutants(t, root, pass, manifest.String(), manifestPath)
-		if pass == "primitive" {
-			unit4PrimitiveBackends(t, root, manifest.String(), manifestPath)
-		}
+		unit4Backends(t, root, pass, entry, manifest.String(), manifestPath)
 	}
 }
 func unit4Compare(t *testing.T, output []byte, manifest string) {

@@ -96,15 +96,10 @@ func unit4SemanticMutants(t *testing.T, root, pass, manifest, manifestPath strin
 		t.Fatalf("%s semantic mutant survived", pass)
 	}
 	t.Logf("%s semantic mutant caught by Go byte comparison on Node: %s", pass, first)
-	if pass == "primitive" {
-		binary := filepath.Join(t.TempDir(), "mutant")
-		unit4Run(t, root, "go", "run", "./cmd/adamic", "build", filepath.Join(directory, entry), "-o", binary, "--sanitize")
-		output = unit4Run(t, root, binary, manifestPath)
-		if unit4Mismatch(t, output, manifest) == "" {
-			t.Fatal("primitive native mutant survived")
-		}
-		t.Log("primitive semantic mutant caught by Go byte comparison on sanitized native")
+	if !strings.HasPrefix(pass, "effects") {
+		unit4MutantBackends(t, root, pass, filepath.Join(directory, entry), manifest, manifestPath)
 	}
+
 	if pass == "effects" {
 		directory = unit4MutantFiles(t, root, "effects.a", ": signature('read',[],'freeze',true,'frozen')", ": signature('read',[],'freeze',true,'mutable')")
 		output = unit4Run(t, root, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(directory, entry), manifestPath)
@@ -114,18 +109,42 @@ func unit4SemanticMutants(t *testing.T, root, pass, manifest, manifestPath strin
 		t.Log("custom-hook frozen-result mutant caught by Go byte comparison on Node")
 	}
 }
-func unit4PrimitiveBackends(t *testing.T, root, manifest, manifestPath string) {
+func unit4Backends(t *testing.T, root, pass, entry, manifest, manifestPath string) {
 	t.Helper()
-	entry := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-4/primitive_main.a")
+	if strings.HasPrefix(pass, "effects") {
+		t.Logf("%s compiled backends stopped: effects.a recursive initializer gap; no certificate claimed", pass)
+		return
+	}
 	javascript := unit4Run(t, root, "go", "run", "./cmd/adamic", "js", entry)
 	js := filepath.Join(t.TempDir(), "primitive.js")
 	if err := os.WriteFile(js, javascript, 0600); err != nil {
 		t.Fatal(err)
 	}
 	unit4Compare(t, unit4Run(t, root, "node", "--no-warnings", "oracle/node.mjs", js, manifestPath), manifest)
-	t.Log("primitive emitted JavaScript: 1465/1465")
+	t.Logf("%s emitted JavaScript: 1465/1465", pass)
 	binary := filepath.Join(t.TempDir(), "primitive")
 	unit4Run(t, root, "go", "run", "./cmd/adamic", "build", entry, "-o", binary, "--sanitize")
 	unit4Compare(t, unit4Run(t, root, binary, manifestPath), manifest)
-	t.Log("primitive sanitized native: 1465/1465")
+	t.Logf("%s sanitized native: 1465/1465", pass)
+}
+
+func unit4MutantBackends(t *testing.T, root, pass, entry, manifest, manifestPath string) {
+	t.Helper()
+	javascript := unit4Run(t, root, "go", "run", "./cmd/adamic", "js", entry)
+	js := filepath.Join(t.TempDir(), "mutant.js")
+	if err := os.WriteFile(js, javascript, 0600); err != nil {
+		t.Fatal(err)
+	}
+	output := unit4Run(t, root, "node", "--no-warnings", "oracle/node.mjs", js, manifestPath)
+	if unit4Mismatch(t, output, manifest) == "" {
+		t.Fatalf("%s emitted JavaScript mutant survived", pass)
+	}
+	t.Logf("%s semantic mutant caught by Go byte comparison on emitted JavaScript", pass)
+	binary := filepath.Join(t.TempDir(), "mutant")
+	unit4Run(t, root, "go", "run", "./cmd/adamic", "build", entry, "-o", binary, "--sanitize")
+	output = unit4Run(t, root, binary, manifestPath)
+	if unit4Mismatch(t, output, manifest) == "" {
+		t.Fatalf("%s native mutant survived", pass)
+	}
+	t.Logf("%s semantic mutant caught by Go byte comparison on sanitized native", pass)
 }

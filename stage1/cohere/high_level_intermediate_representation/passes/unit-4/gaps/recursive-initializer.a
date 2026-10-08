@@ -1,0 +1,5 @@
+function run(): number {
+ const recurse = (n: number): number => n === 0 ? 0 : recurse(n - 1);
+ return recurse(1);
+}
+console.log(String(run()));

@@ -4,13 +4,15 @@ import type { SidecarRow, FunctionIndex, InstructionIndex } from '../../replay/i
 import type { AliasingEffect } from './effect_types.a';
 import { placeText } from '../../dump.ts';
 import { EffectsPass } from './effects.a';
+// Gap 5 in values/GAPS.md: stage 0 does not lower an empty array literal as a default yet.
+const noEffects: AliasingEffect[] = [];
 const args = programArguments(); const manifest = readTextFile(args[0] ?? panic('missing manifest')); if(manifest.kind === 'Error') { panic(manifest.message); }
 for(const line of manifest.text.split('\n')) {
  if(line === '') { continue; } const fields = line.split('\t'); const key = fields[0] ?? panic('missing key'); const input = readTextFile(fields[1] ?? panic('missing input')); if(input.kind === 'Error') { panic(input.message); }
  const checkpoint = readCheckpoint(input.text); if(checkpoint.key !== key) { panic('census key differs'); } const graph = decodeCheckpoint(checkpoint); const facts = new InputFacts(checkpoint); const pass = new EffectsPass(graph,facts); const rows: SidecarRow[] = [];
  const record = (index: FunctionIndex,path: string,effects: Map<InstructionIndex,AliasingEffect[]>): void => {
   const fn = graph.arena.read(index);
-  for(const instruction of fn.instructions) { const list = effects.get(instruction.id) ?? []; for(let i = 0; i < list.length; i++) { const e = list[i] ?? panic('missing effect'); rows.push({namespace: 'unit4.effects',functionPath: path,anchorKind: 'instruction',anchorId: instruction.id.slot,key: String(i).padStart(6,'0'),payload: `${e.kind}\t${e.from === undefined ? '0:<unknown>:0:0:0' : placeText(e.from)}\t${placeText(e.into)}\t${e.value}`}); } }
+  for(const instruction of fn.instructions) { const list = effects.get(instruction.id) ?? noEffects /* gap 5 */; for(let i = 0; i < list.length; i++) { const e = list[i] ?? panic('missing effect'); rows.push({namespace: 'unit4.effects',functionPath: path,anchorKind: 'instruction',anchorId: instruction.id.slot,key: String(i).padStart(6,'0'),payload: `${e.kind}\t${e.from === undefined ? '0:<unknown>:0:0:0' : placeText(e.from)}\t${placeText(e.into)}\t${e.value}`}); } }
  };
  if(checkpoint.pass === 'unit4.effects') { record(graph.root,'$',pass.infer(graph.root)); }
  else if(checkpoint.pass === 'unit4.effects-nested') { const fn = graph.arena.read(graph.root); for(let i = 0; i < fn.functions.length; i++) { const index = fn.functions[i] ?? panic('missing nested function'); record(index,`$/${i}`,pass.infer(index)); } }

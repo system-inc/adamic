@@ -2,11 +2,13 @@
 import { panic } from 'adamic';
 import { InputFacts, Payload, IdentifierIndex } from '../../replay/index.ts';
 import type { InstructionIndex } from '../../replay/index.ts';
-import type { ConstructedHIR, HIRFunction, FunctionIndex, PlaceInterface, Instruction, ValueType, ArgumentInterface, PatternIndex } from '../../core.ts';
+import type { ConstructedHIR, HIRFunction, FunctionIndex, PlaceInterface, Instruction, ValueType, ArgumentInterface, PatternIndex, ManualMemoDependencyInterface } from '../../core.ts';
 import type { AliasingEffect, AliasingKind, ValueKind, Signature } from './effect_types.a';
 import { PrimitiveConstraints } from './primitive.a';
 import { isHookName } from './hooks.a';
 import { signature, methods, functions, qualified } from './signatures.a';
+// Gap 5 in values/GAPS.md: stage 0 does not lower an empty array literal as a default yet.
+const noEffects: AliasingEffect[] = [];
 function create(into: PlaceInterface,value: ValueKind): AliasingEffect { return {kind: 'create',from: undefined,into,value}; }
 function flow(kind: AliasingKind,from: PlaceInterface,into: PlaceInterface): AliasingEffect { return {kind,from,into,value: 'mutable'}; }
 function mutation(kind: AliasingKind,into: PlaceInterface): AliasingEffect { return {kind,from: undefined,into,value: 'mutable'}; }
@@ -64,7 +66,7 @@ export class EffectsPass {
  private mutates(index: FunctionIndex,parameter: boolean): boolean {
   const fn = this.graph.arena.read(index); const seeds = parameter ? fn.params : fn.context; if(seeds.length === 0) { return false; }
   const effects = this.infer(index); if(effects.size === 0) { return false; } const reaches = new Set<IdentifierIndex>(); for(const seed of seeds) { reaches.add(seed.identifier); } const mutated: IdentifierIndex[] = [];
-  for(const b of fn.blockOrder) { for(const i of fn.block(b).instructions) { for(const effect of effects.get(i) ?? []) {
+  for(const b of fn.blockOrder) { for(const i of fn.block(b).instructions) { for(const effect of effects.get(i) ?? noEffects /* gap 5 */) {
    if(effect.kind === 'assign' || effect.kind === 'alias' || effect.kind === 'create-from' || effect.kind === 'capture' || (!parameter && effect.kind === 'maybe-alias')) { if(effect.from !== undefined && reaches.has(effect.from.identifier)) { reaches.add(effect.into.identifier); } }
    else if(['mutate','mutate-conditionally','mutate-transitive','mutate-transitive-conditionally'].includes(effect.kind)) { mutated.push(effect.into.identifier); }
   } } } return mutated.some((id) => reaches.has(id));
@@ -146,7 +148,7 @@ export class EffectsPass {
    case 'NextPropertyOf': return [create(l,'primitive'),flow('immutable-capture',v.value,l)];
    case 'JsxExpression': { const out = [create(l,'frozen')]; if(v.tag.place !== undefined) { out.push(mutation('freeze',v.tag.place)); } for(const prop of v.props) { out.push(mutation('freeze',prop.value)); out.push(flow('capture',prop.value,l)); } for(const child of v.children) { out.push(mutation('freeze',child)); out.push(flow('capture',child,l)); } return out; }
    case 'JsxFragment': { const out = [create(l,'frozen')]; for(const child of v.children) { out.push(mutation('freeze',child)); out.push(flow('capture',child,l)); } return out; }
-   case 'StartMemoize': { const out = [create(l,'primitive')]; if(!(this.facts.source().split('\n')[0] ?? '').includes('@enablePreserveExistingMemoizationGuarantees:false')) { for(const dep of v.deps ?? []) { if(!dep.root.isGlobal) { out.push(mutation('freeze',dep.root.place)); } } } return out; }
+   case 'StartMemoize': { /* Gap 5: give the empty default its element type. */ const noDeps: ManualMemoDependencyInterface[] = []; const out = [create(l,'primitive')]; if(!(this.facts.source().split('\n')[0] ?? '').includes('@enablePreserveExistingMemoizationGuarantees:false')) { for(const dep of v.deps ?? noDeps /* gap 5 */) { if(!dep.root.isGlobal) { out.push(mutation('freeze',dep.root.place)); } } } return out; }
    case 'FinishMemoize': { const out = [create(l,'primitive')]; if(!(this.facts.source().split('\n')[0] ?? '').includes('@enablePreserveExistingMemoizationGuarantees:false')) { out.push(mutation('freeze',v.value)); } return out; }
    case 'TypeCastExpression': return [flow('assign',v.value,l)];
    case 'Destructure': { const out: AliasingEffect[] = []; this.bindings(fn,v.lvaluePattern,(p,rest) => { if(rest) { out.push(create(p,'mutable')); out.push(flow('capture',v.value,p)); } else { out.push(flow('create-from',v.value,p)); } }); out.push(flow('assign',v.value,l)); return out; }

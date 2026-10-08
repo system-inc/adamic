@@ -1,14 +1,14 @@
 === RUN   TestArrayNeverGap
 === PAUSE TestArrayNeverGap
+=== RUN   TestRecursiveInitializerGap
+=== PAUSE TestRecursiveInitializerGap
+=== RUN   TestRetainedWitnesses
+=== PAUSE TestRetainedWitnesses
 === CONT  TestArrayNeverGap
-    gaps_test.go:32: array-never.a build: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never.a:2:58: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never.a js: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never.a:2:58: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never-coalesce.a build: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never-coalesce.a:2:35: stage 0 can't lower an array of never yet
-        exit status 1
-    gaps_test.go:32: array-never-coalesce.a js: adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/gaps/array-never-coalesce.a:2:35: stage 0 can't lower an array of never yet
-        exit status 1
---- PASS: TestArrayNeverGap (0.75s)
+=== CONT  TestRetainedWitnesses
+=== CONT  TestRecursiveInitializerGap
+--- PASS: TestArrayNeverGap (0.39s)
+--- PASS: TestRetainedWitnesses (0.99s)
+--- PASS: TestRecursiveInitializerGap (3.37s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	0.755s
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	3.390s

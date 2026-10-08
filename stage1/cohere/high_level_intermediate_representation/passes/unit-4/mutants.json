@@ -3,13 +3,13 @@
     "file": "primitive.a",
     "old": "this.kind(this.root(this.key(index,instruction.lvalue.identifier))) === 1",
     "new": "this.kind(this.root(this.key(index,instruction.lvalue.identifier))) === 2",
-    "caught": "source Node and sanitized native Go comparison"
+    "caught": "source Node, emitted JavaScript and sanitized native Go comparison"
   },
   {
     "file": "reactive.a",
     "old": "for(const param of this.fn.params) { this.mark(param.identifier); }",
     "new": "for(const param of this.fn.params) { this.fn.identifier(param.identifier); }",
-    "caught": "source Node Go comparison"
+    "caught": "source Node, emitted JavaScript and sanitized native Go comparison"
   },
   {
     "file": "effects.a",
