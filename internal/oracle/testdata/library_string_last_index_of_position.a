@@ -1,0 +1,6 @@
+const text = 'héllo, héllo';
+const positions = [-5, 0, 1, 2, 7, 8, 11, 12, 99, NaN, Infinity, -Infinity, 2.9];
+for (const position of positions) {
+	console.log(`${position} ${text.lastIndexOf('héllo', position)} ${text.lastIndexOf('', position)} ${text.lastIndexOf('l', position)}`);
+}
+console.log(`${'abcabc'.lastIndexOf('c', 4)} ${'abcabc'.lastIndexOf('abc', 2)} ${'abc'.lastIndexOf('abcd', 9)} ${'😀x😀'.lastIndexOf('😀', 2)}`);

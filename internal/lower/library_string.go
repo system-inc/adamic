@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"math"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -203,6 +204,10 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 		arguments = append(arguments, lowered)
 	}
 	switch name {
+	case "lastIndexOf":
+		if len(arguments) == 2 {
+			return l.stringLastIndexOf(value, arguments), true, nil
+		}
 	case "trim":
 		return ir.Trim{Value: value}, true, nil
 	case "charCodeAt":
@@ -247,6 +252,21 @@ func (l *lowering) stringHelper(name string, values []ir.Expression) (int, []ir.
 
 func stringInteger(value ir.Expression) ir.Expression {
 	return ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}}, WhenTrue: ir.NumberConstant{Value: 0}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}}}
+}
+
+// lastIndexOf treats NaN as an omitted position, and includes matches ending after the position.
+func (l *lowering) stringLastIndexOf(value ir.Expression, arguments []ir.Expression) ir.Expression {
+	values := append([]ir.Expression{value}, arguments...)
+	function, reads := l.stringHelper("lastIndexOf", values)
+	position := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{reads[2]}}, WhenTrue: ir.NumberConstant{Value: math.Inf(1)}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{reads[2]}}}
+	length := ir.StringLength{Value: reads[0]}
+	clamped := ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.MathCall{Function: "max", Arguments: []ir.Expression{position, ir.NumberConstant{Value: 0}}}, length}}
+	end := ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.Binary{Operator: ir.Add, Left: clamped, Right: ir.StringLength{Value: reads[1]}}, length}}
+	prefix := ir.StringCall{Method: "slice", Value: reads[0], Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end}}
+	result := ir.StringCall{Method: "lastIndexOf", Value: prefix, Arguments: []ir.Expression{reads[1]}}
+	l.result.Functions[function].Returns = ir.Number
+	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
+	return ir.Call{Function: function, Arguments: values, Returns: ir.Number}
 }
 
 func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments []ir.Expression) ir.Expression {
