@@ -1,4 +1,3 @@
-FIRST FAILURE (wasi, at 263.7 s):
 github.com/system-inc/adamic/internal/native TestWASI/internal/oracle/testdata/regions.a
 === RUN   TestWASI/internal/oracle/testdata/regions.a
     wasm_test.go:136: Node exit=70 stdout="" stderr="adamic: panic: CompileError: WebAssembly.Module(): Compiling function #481 failed: not enough arguments on the stack for block (need 5, got 0) @+1472652\n"; WASI exit=0 stdout="counted 45\n1 7 node2\n2 3 node1\n7 node2\n3 7 node2\n4 4 kept1\n4 3 node1\n8 3 node1\n3 node1\n" stderr=""
