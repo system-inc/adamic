@@ -35,6 +35,8 @@ func (p *predicateProof) refused(node *ast.Node, reason string) error {
 	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
 }
 
+var _ = registerRefusalHelper("provePredicate", "unproven-predicate")
+
 func (l *lowering) provePredicate(node *ast.Node) error {
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent

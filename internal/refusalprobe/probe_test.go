@@ -128,3 +128,20 @@ func refuse() error { return &Refused{What: "a new direct refusal"} }
 		t.Fatal("new direct refusal escaped the catalog")
 	}
 }
+
+// A registration removed from internal/lower, or naming an entry the catalog lacks, must fail
+// and name its helper. The real registrations are copied, so this runs against the real pass.
+func TestHelperRegistrationAuditCanFail(t *testing.T) {
+	for helper := range lower.RefusalHelpers() {
+		helpers := lower.RefusalHelpers()
+		delete(helpers, helper)
+		if err := validateCatalog("../..", helpers); err == nil || !strings.Contains(err.Error(), "helper "+helper+" (no registerRefusalHelper") {
+			t.Errorf("unregistered %s was not caught: %v", helper, err)
+		}
+		helpers = lower.RefusalHelpers()
+		helpers[helper] = "no-such-entry"
+		if err := validateCatalog("../..", helpers); err == nil || !strings.Contains(err.Error(), "helper "+helper+" (registered to unknown entry no-such-entry)") {
+			t.Errorf("%s registered to an unknown entry was not caught: %v", helper, err)
+		}
+	}
+}

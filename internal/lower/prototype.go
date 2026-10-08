@@ -67,6 +67,8 @@ func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	return true
 }
 
+var _ = registerRefusalHelper("prototypeRead", "prototype-read")
+
 func (l *lowering) prototypeRead(node *ast.Node, name string) error {
 	if name == "isPrototypeOf" {
 		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}

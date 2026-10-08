@@ -39,6 +39,15 @@ in refusals.go, plus its error-returning helper calls. A new map entry, direct r
 or helper without a catalog owner fails loudly. The delegated helpers' internal
 refusals are not exhaustively enumerated by this audit.
 
+A helper names its owner beside its definition in internal/lower, as
+`var _ = registerRefusalHelper("enumRefusal", "enum-object-write")`; there is no
+helper table here. `RefusalHelperCalls` finds the helpers the pass calls (in an `if`
+initializer, or assigned to `found`), and internal/lower's
+`TestRefusalHelpersRegistered` requires each to be registered in the file that
+defines it and to name an entry this catalog has, so a helper added without its
+registration fails in its own area. `castProof`, whose result is not assigned in
+either form, is not scanned; its refusals belong to the `cast` entry.
+
 The diagnostic test is held by an actual mutant: replacing the match with acceptance
 of any Refused diagnostic must fail `TestWrongDiagnosticIsAFinding/wrong` and
 `TestStrictDiagnosticWithRealLowering`. This tool measures compiler policy, including

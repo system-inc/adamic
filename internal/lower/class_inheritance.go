@@ -34,6 +34,8 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 	return nil, nil
 }
 
+var _ = registerRefusalHelper("checkOverrides", "method-override")
+
 // TypeScript compares methods bivariantly and mutable properties covariantly. Neither is safe
 // through a base reference: arguments flow into the override, and fields can be written through it.
 func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
@@ -495,6 +497,8 @@ func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
 		module.AsNode().ForEachChild(visit)
 	}
 }
+
+var _ = registerRefusalHelper("classViewRefusal", "nominal-class")
 
 // A class view needs nominal ancestry, even when TypeScript's structural relation accepts two
 // unrelated classes or a plain object. Otherwise a virtual call would trust a table that isn't there.
