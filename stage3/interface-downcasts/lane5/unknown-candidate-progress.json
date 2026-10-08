@@ -1898,6 +1898,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "tagged-parameter-property-updates",
+      "pairs": 2,
+      "candidateReads": 22,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateParameterDeclaration",
+          "declared_types": [
+            "(node: ParameterDeclaration, modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken: QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => ParameterDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 471,
+            "column": 12
+          },
+          "rank": 159,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updatePropertyDeclaration",
+          "declared_types": [
+            "(node: PropertyDeclaration, modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: QuestionToken | ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 1612,
+            "column": 12
+          },
+          "rank": 160,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

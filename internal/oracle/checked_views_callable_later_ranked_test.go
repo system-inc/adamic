@@ -8,6 +8,8 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"parameter-update", "updateParameterDeclaration", "28\n", "5\n5\n5\n4\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"property-update", "updatePropertyDeclaration", "25\n", "5\n5\n5\n5\n5\n5\n5\n4\n9\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"resolution-settings", "getCompilationSettings", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"scanner-scan", "scan", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"lexical-start", "startLexicalEnvironment", "3\n", "", "1", "", "", "", "good,wrong-value,wrong-arity"},

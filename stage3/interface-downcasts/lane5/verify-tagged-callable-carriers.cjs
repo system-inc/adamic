@@ -21,6 +21,8 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [159, {directory:'parameter-update', aliases:['BindingName','BindingPattern'], carriers:['Identifier','ObjectBindingPattern','ArrayBindingPattern'], tokens:['DotDotDotToken','QuestionToken']}],
+ [160, {directory:'property-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral'], tokens:['QuestionToken','ExclamationToken']}],
  [122, {directory:'variable-update-tagged', aliases:['BindingName','BindingPattern'], carriers:['Identifier','ObjectBindingPattern','ArrayBindingPattern']}],
  [141, {directory:'export-specifier', aliases:['ModuleExportName'], carriers:['Identifier','StringLiteral']}],
  [144, {directory:'property-signature', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
@@ -42,6 +44,13 @@ for (const rank of process.argv[3].split(',').map(Number)) {
    const fixtureKind = fixture.get(carrier)?.members.find(member => member.name?.getText(source) === 'kind');
    const expected = checker.getTypeAtLocation(originalKind.type).value;
    if (typeof expected !== 'number' || !fixtureKind || !ts.isLiteralTypeNode(fixtureKind.type) || !ts.isNumericLiteral(fixtureKind.type.literal) || Number(fixtureKind.type.literal.text) !== expected || !fixtureKind.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ReadonlyKeyword)) throw Error(name+': original discriminator changed '+carrier);
+  }
+  for (const token of family.tokens || []) {
+   const originalToken = originalNodes.get(token);
+   const kind = checker.getTypeAtLocation(originalToken).getProperty('kind');
+   const expected = checker.getTypeOfSymbolAtLocation(kind, originalToken).value;
+   const actual = fixture.get(token)?.members.find(member => member.name?.getText(source) === 'kind');
+   if (typeof expected !== 'number' || !actual || !ts.isLiteralTypeNode(actual.type) || !ts.isNumericLiteral(actual.type.literal) || Number(actual.type.literal.text) !== expected) throw Error(name+': original token discriminator changed '+token);
   }
   count++;
  }

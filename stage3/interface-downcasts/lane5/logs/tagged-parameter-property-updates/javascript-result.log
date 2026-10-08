@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.91s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/parameter-update/wrong-result (0.47s)
+        checked_views_callable_later_ranked_test.go:78: gate cache node hit
+        checked_views_callable_later_ranked_test.go:98: gate cache node miss
+        checked_views_callable_later_ranked_test.go:118: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updateParameterDeclaration({value:1},[{value:2}],{kind:26,value:3},{kind:80,value:4},{kind:58,value:5},{value:6},{value:7}).value is not initialized; expected number, found missing\n" want "updateParameterDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateParameterDeclaration expected (node: ParameterDeclaration, modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken: QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => ParameterDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-update/wrong-result (0.43s)
+        checked_views_callable_later_ranked_test.go:78: gate cache node hit
+        checked_views_callable_later_ranked_test.go:98: gate cache node miss
+        checked_views_callable_later_ranked_test.go:118: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updatePropertyDeclaration({value:1},[{value:2}],{kind:80,value:4},{kind:58,value:5},{value:6},{value:7}).value is not initialized; expected number, found missing\n" want "updatePropertyDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updatePropertyDeclaration expected (node: PropertyDeclaration, modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: ExclamationToken | QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.918s
+FAIL
