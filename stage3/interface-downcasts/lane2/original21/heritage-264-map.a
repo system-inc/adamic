@@ -1,0 +1,10 @@
+import type { ClassLikeDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as ClassLikeDeclaration;
+ const items = viewed.heritageClauses;
+ if (items === undefined) return;
+ console.log(items.map(item => `${item.pos}`).join(';'));
+}
+const raw = { kind: 264, heritageClauses: [{kind: 299, pos: 7}] };
+read(raw);

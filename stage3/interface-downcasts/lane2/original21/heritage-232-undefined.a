@@ -1,0 +1,9 @@
+import type { ClassLikeDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as ClassLikeDeclaration;
+ const items = viewed.heritageClauses;
+ console.log(items === undefined ? 'absent' : 'present');
+}
+const raw = { kind: 232, heritageClauses: undefined };
+read(raw);

@@ -1,0 +1,859 @@
+[
+  {
+    "name": "heritage-264-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-lazy",
+    "source": "264\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "heritage-264-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.heritageClauses matches no member of NodeArray<HeritageClause> | undefined; expected NodeArray<HeritageClause> | undefined, found number",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "heritage-264-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected HeritageClause, found number",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-264-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "heritage-264-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "heritage-232-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "HeritageClause"
+    ]
+  },
+  {
+    "name": "heritage-232-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "heritage-232-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "type-parameters-264-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-lazy",
+    "source": "264\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found number",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected TypeParameterDeclaration, found number",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ClassDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-264-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-232-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-232-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "type-parameters-232-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression"
+    ]
+  },
+  {
+    "name": "type-parameters-180-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-180-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-180-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-181-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-181-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-181-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-174-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodSignature",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-174-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodSignature"
+    ]
+  },
+  {
+    "name": "type-parameters-174-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodSignature"
+    ]
+  },
+  {
+    "name": "type-parameters-182-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "IndexSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-182-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "IndexSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-182-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "IndexSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-185-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionTypeNode",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-185-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionTypeNode"
+    ]
+  },
+  {
+    "name": "type-parameters-185-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionTypeNode"
+    ]
+  },
+  {
+    "name": "type-parameters-186-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorTypeNode",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-186-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorTypeNode"
+    ]
+  },
+  {
+    "name": "type-parameters-186-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorTypeNode"
+    ]
+  },
+  {
+    "name": "type-parameters-318-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-318-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType"
+    ]
+  },
+  {
+    "name": "type-parameters-318-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType"
+    ]
+  },
+  {
+    "name": "type-parameters-263-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-263-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-263-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-175-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-175-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-175-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-177-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-177-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-177-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-178-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-178-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-179-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-179-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-219-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-219-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "type-parameters-219-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "type-parameters-220-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-220-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "type-parameters-220-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "type-parameters-265-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-265-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-265-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-266-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "TypeAliasDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-266-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "TypeAliasDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-266-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "TypeAliasDeclaration"
+    ]
+  },
+  {
+    "name": "type-parameters-346-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTemplateTag",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "jsx-types-286-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-lazy",
+    "source": "286\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement"
+    ]
+  },
+  {
+    "name": "jsx-types-286-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number",
+    "contracts": [
+      "JsxSelfClosingElement"
+    ]
+  },
+  {
+    "name": "jsx-types-286-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected TypeNode, found number",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "JsxSelfClosingElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-286-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement"
+    ]
+  },
+  {
+    "name": "jsx-types-286-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxSelfClosingElement"
+    ]
+  },
+  {
+    "name": "jsx-types-287-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxOpeningElement",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "jsx-types-287-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxOpeningElement"
+    ]
+  },
+  {
+    "name": "jsx-types-287-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxOpeningElement"
+    ]
+  },
+  {
+    "name": "statements-297-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-lazy",
+    "source": "297\n",
+    "diagnostic": "",
+    "contracts": [
+      "CaseClause"
+    ]
+  },
+  {
+    "name": "statements-297-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.statements is not a NodeArray<Statement>; expected NodeArray<Statement>, found number",
+    "contracts": [
+      "CaseClause"
+    ]
+  },
+  {
+    "name": "statements-297-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected Statement, found number",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-297-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CaseClause",
+      "Statement"
+    ]
+  },
+  {
+    "name": "statements-298-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "DefaultClause",
+      "Statement"
+    ]
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "targets": [
+    [
+      "ClassLikeDeclaration",
+      "heritageClauses",
+      6
+    ],
+    [
+      "DeclarationWithTypeParameterChildren",
+      "typeParameters",
+      6
+    ],
+    [
+      "JsxOpeningLikeElement",
+      "typeArguments",
+      6
+    ],
+    [
+      "CaseOrDefaultClause",
+      "statements",
+      5
+    ]
+  ],
+  "fields": [
+    "ArrowFunction",
+    "CallSignatureDeclaration",
+    "CaseClause",
+    "ClassDeclaration",
+    "ClassExpression",
+    "ConstructSignatureDeclaration",
+    "ConstructorDeclaration",
+    "ConstructorTypeNode",
+    "DefaultClause",
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "FunctionTypeNode",
+    "GetAccessorDeclaration",
+    "HeritageClause",
+    "IndexSignatureDeclaration",
+    "InterfaceDeclaration",
+    "JSDocFunctionType",
+    "JSDocTemplateTag",
+    "JsxOpeningElement",
+    "JsxSelfClosingElement",
+    "MethodDeclaration",
+    "MethodSignature",
+    "SetAccessorDeclaration",
+    "Statement",
+    "TypeAliasDeclaration",
+    "TypeNode",
+    "TypeParameterDeclaration"
+  ]
+}

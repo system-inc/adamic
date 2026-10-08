@@ -1,0 +1,9 @@
+import type { JsxOpeningLikeElement } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as JsxOpeningLikeElement;
+ const items = viewed.typeArguments;
+ console.log(String(items!.length));
+}
+const raw = { kind: 286, typeArguments: 7 };
+read(raw);

@@ -1,0 +1,9 @@
+import type { DeclarationWithTypeParameterChildren } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as DeclarationWithTypeParameterChildren;
+ const items = viewed.typeParameters;
+ console.log(items === undefined ? 'absent' : 'present');
+}
+const raw = { kind: 181, typeParameters: undefined };
+read(raw);

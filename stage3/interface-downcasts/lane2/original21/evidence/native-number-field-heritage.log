@@ -1,0 +1,12 @@
+=== RUN   TestCheckedViewRanked21OriginalArrays
+=== RUN   TestCheckedViewRanked21OriginalArrays/heritage-264-wrong-pos
+    checked_views_original_ranked_arrays_test.go:123: exit codes differ; stderr ""; stdout "4.6502198007263e-310\n"; exit 0
+    checked_views_original_ranked_arrays_test.go:123: exit codes differ; stderr ""; stdout "4.6439219432558e-310\n"; exit 0
+--- FAIL: TestCheckedViewRanked21OriginalArrays (1.20s)
+    --- FAIL: TestCheckedViewRanked21OriginalArrays/heritage-264-wrong-pos (1.19s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.213s
+FAIL

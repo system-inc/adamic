@@ -1,0 +1,9 @@
+import type { CaseOrDefaultClause } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as CaseOrDefaultClause;
+ const items = viewed.statements;
+ console.log(String(items!.length));
+}
+const raw = { kind: 297, statements: 7 };
+read(raw);

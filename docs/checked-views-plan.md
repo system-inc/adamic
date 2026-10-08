@@ -2700,3 +2700,14 @@ finishing leak checks, 39 measured count rows and six executed descendant-check
 mutants. No compiler change. Fixture obligations held: 174 / 2864; remaining
 160 / 325. IncrementalBuildInfo.fileNames remains a noted lane 4c skip, not
 credit. See stage3/interface-downcasts/lane2/RANKED20-ARRAYS-REPORT.md.
+
+## Lane 2 group 21: tagged receiver aliases
+
+Complete original ClassLikeDeclaration.heritageClauses (6 reads),
+DeclarationWithTypeParameterChildren.typeParameters (6),
+JsxOpeningLikeElement.typeArguments (6) and CaseOrDefaultClause.statements (5)
+are certified across all 25 receiver arms. 101 Node/backend probes pass,
+81 finishing leak checks pass, 101 restored-source count rows are measured,
+and eight executed descendant-check mutants fail. No compiler change.
+Fixture obligations held: 178 / 2887; remaining: 156 / 302. Lane 4c skips and
+tuples earn no credit. See stage3/interface-downcasts/lane2/RANKED21-ARRAYS-REPORT.md.
