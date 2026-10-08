@@ -1,0 +1,108 @@
+=== RUN   TestAbbreviationGateHasNoFalseNegatives
+=== PAUSE TestAbbreviationGateHasNoFalseNegatives
+=== RUN   TestAbbreviationGateStaysSelective
+=== PAUSE TestAbbreviationGateStaysSelective
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost
+=== CONT  TestAbbreviationGateHasNoFalseNegatives
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMs
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMs
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/timeoutMs
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/timeoutMs
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/delayMs
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/delayMs
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMsTotal
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMsTotal
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/workingCwd
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/workingCwd
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/outputDir
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/outputDir
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/processEnv
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/processEnv
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/outputDirName
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/outputDirName
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/maxLen
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/maxLen
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/nextSeq
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/nextSeq
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/props
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/props
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/params
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/params
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/ctx
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/ctx
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/opts
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/opts
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/queryFn
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/queryFn
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/ctxValue
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/ctxValue
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/optsBag
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/optsBag
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/idxOf
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/idxOf
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/configName
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/configName
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/eventProps
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/eventProps
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/routeParams
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/routeParams
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/elementRef
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/elementRef
+=== RUN   TestAbbreviationGateCoversTheArmsThatWereLost/handlerFn
+=== PAUSE TestAbbreviationGateCoversTheArmsThatWereLost/handlerFn
+=== CONT  TestAbbreviationGateStaysSelective
+--- PASS: TestAbbreviationGateHasNoFalseNegatives (0.98s)
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMs
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/ctx
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/handlerFn
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/elementRef
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/routeParams
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/eventProps
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/configName
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/idxOf
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/optsBag
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/ctxValue
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/queryFn
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/opts
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/processEnv
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/params
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/props
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/nextSeq
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/maxLen
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/outputDirName
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMsTotal
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/outputDir
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/workingCwd
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/delayMs
+=== CONT  TestAbbreviationGateCoversTheArmsThatWereLost/timeoutMs
+--- PASS: TestAbbreviationGateCoversTheArmsThatWereLost (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMs (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/ctx (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/handlerFn (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/elementRef (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/routeParams (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/eventProps (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/configName (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/idxOf (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/optsBag (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/ctxValue (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/queryFn (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/opts (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/processEnv (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/params (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/props (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/nextSeq (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/maxLen (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/outputDirName (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/elapsedMsTotal (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/outputDir (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/workingCwd (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/delayMs (0.00s)
+    --- PASS: TestAbbreviationGateCoversTheArmsThatWereLost/timeoutMs (0.00s)
+=== NAME  TestAbbreviationGateStaysSelective
+    abbreviation_gate_test.go:77: corpus 82368, vocabulary reports 472, gate admits 481
+--- PASS: TestAbbreviationGateStaysSelective (1.04s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	1.051s

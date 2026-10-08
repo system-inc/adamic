@@ -1,0 +1,22 @@
+{
+  "flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-DADAMIC_TSGO",
+    "-g",
+    "-O2"
+  ],
+  "native_sample_interval_ns": 1000000,
+  "scope_clock_every": 64,
+  "manifest": "/workspace/scratch/perf-scout/run/fused/manifest.txt"
+}

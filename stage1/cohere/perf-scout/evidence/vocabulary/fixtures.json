@@ -1,0 +1,1801 @@
+{
+  "files": [
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "bytes": 111,
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts",
+      "bytes": 101,
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts",
+      "bytes": 3288,
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/binder.ts",
+      "bytes": 194463,
+      "sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/binder.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/builder.ts",
+      "bytes": 116984,
+      "sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/builder.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts",
+      "bytes": 11523,
+      "sha256": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts",
+      "bytes": 26090,
+      "sha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts",
+      "bytes": 382,
+      "sha256": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/checker.ts",
+      "bytes": 3151774,
+      "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/checker.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts",
+      "bytes": 183461,
+      "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/core.ts",
+      "bytes": 92419,
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/core.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts",
+      "bytes": 1318,
+      "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/debug.ts",
+      "bytes": 56593,
+      "sha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/debug.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts",
+      "bytes": 273338,
+      "sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts",
+      "bytes": 54026,
+      "sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts",
+      "bytes": 70053,
+      "sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts",
+      "bytes": 2677,
+      "sha256": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts",
+      "bytes": 69094,
+      "sha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts",
+      "bytes": 12719,
+      "sha256": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts",
+      "bytes": 2237,
+      "sha256": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts",
+      "bytes": 7205,
+      "sha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts",
+      "bytes": 334930,
+      "sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts",
+      "bytes": 36796,
+      "sha256": "47cc22cce04a5fa143e8182bd0f6e5aea2b1b34d58539701a0785fb0b60cf14f",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts",
+      "bytes": 34012,
+      "sha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts",
+      "bytes": 76114,
+      "sha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts",
+      "bytes": 2101,
+      "sha256": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts",
+      "bytes": 181609,
+      "sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts",
+      "bytes": 79619,
+      "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/parser.ts",
+      "bytes": 539685,
+      "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/parser.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/path.ts",
+      "bytes": 44162,
+      "sha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/path.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/performance.ts",
+      "bytes": 6146,
+      "sha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/performance.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts",
+      "bytes": 3255,
+      "sha256": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/program.ts",
+      "bytes": 270697,
+      "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/program.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts",
+      "bytes": 21298,
+      "sha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts",
+      "bytes": 82036,
+      "sha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts",
+      "bytes": 219162,
+      "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/semver.ts",
+      "bytes": 17933,
+      "sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/semver.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts",
+      "bytes": 32104,
+      "sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts",
+      "bytes": 8177,
+      "sha256": "6aec8fecf7d57abd557bdbd4a9744ba2a1f3d8fcc9e9b84721158bd4f284300a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/sys.ts",
+      "bytes": 86142,
+      "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/sys.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts",
+      "bytes": 15028,
+      "sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts",
+      "bytes": 29755,
+      "sha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts",
+      "bytes": 156326,
+      "sha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts",
+      "bytes": 5504,
+      "sha256": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts",
+      "bytes": 46162,
+      "sha256": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts",
+      "bytes": 99437,
+      "sha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts",
+      "bytes": 30755,
+      "sha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts",
+      "bytes": 231365,
+      "sha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts",
+      "bytes": 4484,
+      "sha256": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts",
+      "bytes": 49966,
+      "sha256": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts",
+      "bytes": 69751,
+      "sha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts",
+      "bytes": 1533,
+      "sha256": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts",
+      "bytes": 13066,
+      "sha256": "763fb25fb5c40acf6d2482631c79709c9eddd299303292750a57216e392ae1dd",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts",
+      "bytes": 4104,
+      "sha256": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts",
+      "bytes": 126995,
+      "sha256": "bcef2e876468210c48941dad975a492f49eab7abeb4f75ca603e76ffd5e06c7c",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts",
+      "bytes": 32554,
+      "sha256": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts",
+      "bytes": 123796,
+      "sha256": "93e6814b36032fd49fbc2f9ff7fa60695430431f3c11a3f03207827fe44c07f5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts",
+      "bytes": 36065,
+      "sha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts",
+      "bytes": 36625,
+      "sha256": "8321e776d83fe3892df9331baa9c1b837736ba5e4130d379a75ef9bfe34d86e8",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts",
+      "bytes": 18606,
+      "sha256": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "bytes": 3725,
+      "sha256": "9170b66a9feaa1b340e0723e0a0b10c085385c42ff25d39e9a24dd44e2d84a45",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts",
+      "bytes": 111460,
+      "sha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts",
+      "bytes": 85159,
+      "sha256": "89f55cac43736092d29266dbe77b6e3a94c8ff5684bb7d41306a1e544b2caef7",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts",
+      "bytes": 22186,
+      "sha256": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts",
+      "bytes": 5424,
+      "sha256": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts",
+      "bytes": 116394,
+      "sha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts",
+      "bytes": 28796,
+      "sha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts",
+      "bytes": 35618,
+      "sha256": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts",
+      "bytes": 5322,
+      "sha256": "fb3789e399c0c7e1548d3949eab83a47da545cc88fe0ba2eee356926be607b78",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts",
+      "bytes": 114409,
+      "sha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/types.ts",
+      "bytes": 487846,
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/types.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts",
+      "bytes": 512951,
+      "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts",
+      "bytes": 103769,
+      "sha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts",
+      "bytes": 88048,
+      "sha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/watch.ts",
+      "bytes": 45654,
+      "sha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/watch.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts",
+      "bytes": 60845,
+      "sha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts\tall"
+    },
+    {
+      "path": "/workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts",
+      "bytes": 34758,
+      "sha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "manifest_row": "/workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts\tall"
+    }
+  ],
+  "rules": [
+    {
+      "name": "adamic/no-type-predicate",
+      "kinds": [
+        "TypePredicate"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoTypePredicate",
+      "upstreamPackage": "adamic",
+      "upstreamTest": "TestNoTypePredicate",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "base/boundary-no-global-container",
+      "kinds": [
+        "Identifier"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleBaseBoundaryNoGlobalContainer",
+      "upstreamPackage": "base",
+      "upstreamTest": "TestNoGlobalContainer",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "base/consistency-no-console",
+      "kinds": [
+        "ElementAccessExpression",
+        "PropertyAccessExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleConsistencyNoConsole",
+      "upstreamPackage": "base",
+      "upstreamTest": "TestNoConsole",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "base/consistency-no-hand-built-declared-error",
+      "kinds": [
+        "NewExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleConsistencyNoHandBuiltDeclaredError",
+      "upstreamPackage": "base",
+      "upstreamTest": "TestNoHandBuiltDeclaredError"
+    },
+    {
+      "name": "base/consistency-require-pagination-argument-name",
+      "kinds": [
+        "Decorator"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleRequirePaginationArgumentName",
+      "upstreamPackage": "base",
+      "upstreamTest": "TestPaginationDecorator"
+    },
+    {
+      "name": "eqeqeq",
+      "order": 3,
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleEqeqeq",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestEqeqeq",
+      "factory": "create",
+      "class": "Rule",
+      "parent": false
+    },
+    {
+      "name": "max-classes-per-file",
+      "kinds": [
+        "ClassDeclaration",
+        "ClassExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "parent": true,
+      "finish": "finish",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleMaxClassesPerFile",
+      "upstreamPackage": "core",
+      "upstreamTest": "Test"
+    },
+    {
+      "name": "max-depth",
+      "kinds": [
+        "IfStatement",
+        "SwitchStatement",
+        "TryStatement",
+        "DoStatement",
+        "WhileStatement",
+        "WithStatement",
+        "ForStatement",
+        "ForInStatement",
+        "ForOfStatement"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleMaxDepth",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestMaxDepth"
+    },
+    {
+      "name": "max-nested-callbacks",
+      "kinds": [
+        "FunctionExpression",
+        "ArrowFunction"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleMaxNestedCallbacks",
+      "upstreamPackage": "core",
+      "upstreamTest": "Test"
+    },
+    {
+      "name": "@next/next/no-sync-scripts",
+      "kinds": [
+        "JsxOpeningElement",
+        "JsxSelfClosingElement"
+      ],
+      "visit": "visit",
+      "prepare": "prepare",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNextNoSyncScripts",
+      "upstreamPackage": "next",
+      "upstreamTest": "TestNoSyncScripts"
+    },
+    {
+      "name": "@next/next/no-typos",
+      "kinds": [
+        "FunctionDeclaration",
+        "VariableStatement"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNextNoTypos",
+      "upstreamPackage": "next",
+      "upstreamTest": "TestNoTypos",
+      "parent": false,
+      "node": true
+    },
+    {
+      "name": "nexus/consistency-no-abbreviated-identifier",
+      "kinds": [
+        "Identifier"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleConsistencyNoAbbreviatedIdentifier",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoAbbreviatedIdentifier"
+    },
+    {
+      "name": "nexus/consistency-no-ambiguous-identifier",
+      "kinds": [
+        "Identifier"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusConsistencyNoAmbiguousIdentifier",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoAmbiguousIdentifier"
+    },
+    {
+      "name": "nexus/consistency-no-enum",
+      "kinds": [
+        "EnumDeclaration"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleConsistencyNoEnum",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoEnum",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "nexus/consistency-no-for-in",
+      "kinds": [
+        "ForInStatement"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusConsistencyNoForIn",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoForIn"
+    },
+    {
+      "name": "nexus/consistency-no-long-line-comment",
+      "kinds": [
+        "SourceFile"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusConsistencyNoLongLineComment",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoLongLineComment"
+    },
+    {
+      "name": "nexus/consistency-no-multiline-arrow-function",
+      "kinds": [
+        "CallExpression",
+        "ArrowFunction"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleConsistencyNoMultilineArrowFunction",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoMultilineArrowFunction"
+    },
+    {
+      "name": "nexus/consistency-no-shouting",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusConsistencyNoShouting",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoShouting",
+      "node": true
+    },
+    {
+      "name": "nexus/consistency-no-single-line-jsdoc",
+      "kinds": [
+        "SourceFile"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusConsistencyNoSingleLineJsdoc",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoSingleLineJsDoc"
+    },
+    {
+      "name": "nexus/consistency-no-stuttering-name",
+      "kinds": [
+        "PropertyAccessExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNexusNoStutteringName",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyNoStutteringName"
+    },
+    {
+      "name": "nexus/consistency-require-type-suffix",
+      "kinds": [
+        "InterfaceDeclaration",
+        "TypeAliasDeclaration",
+        "VariableDeclaration"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleConsistencyRequireTypeSuffix",
+      "upstreamPackage": "nexus",
+      "upstreamTest": "TestConsistencyRequireTypeSuffix",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-await-in-loop",
+      "kinds": [
+        "AwaitExpression",
+        "ForOfStatement",
+        "VariableDeclarationList"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoAwaitInLoop",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoAwaitInLoop",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    },
+    {
+      "name": "no-bitwise",
+      "kinds": [
+        "BinaryExpression",
+        "PrefixUnaryExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoBitwise",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoBitwise",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-caller",
+      "kinds": [
+        "PropertyAccessExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoCaller",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoCaller"
+    },
+    {
+      "name": "no-continue",
+      "kinds": [
+        "ContinueStatement"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoContinue",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoContinue",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-debugger",
+      "order": 1,
+      "kinds": [
+        "DebuggerStatement"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoDebugger",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoDebugger",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    },
+    {
+      "name": "no-div-regex",
+      "kinds": [
+        "RegularExpressionLiteral"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoDivRegex",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoDivRegex",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-dupe-else-if",
+      "kinds": [
+        "IfStatement"
+      ],
+      "node": true,
+      "visit": "visit",
+      "prepare": "prepare",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoDupeElseIf",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoDupeElseIf"
+    },
+    {
+      "name": "no-duplicate-case",
+      "order": 5,
+      "kinds": [
+        "SwitchStatement"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoDuplicateCase",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoDuplicateCase",
+      "factory": "create",
+      "class": "Rule",
+      "parent": false
+    },
+    {
+      "name": "no-empty",
+      "order": 2,
+      "kinds": [
+        "Block",
+        "SwitchStatement"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoEmpty",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoEmpty",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    },
+    {
+      "name": "no-empty-character-class",
+      "kinds": [
+        "RegularExpressionLiteral"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoEmptyCharacterClass",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoEmptyCharacterClass"
+    },
+    {
+      "name": "no-empty-pattern",
+      "kinds": [
+        "ObjectBindingPattern",
+        "ArrayBindingPattern"
+      ],
+      "visit": "visit",
+      "node": true,
+      "parent": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoEmptyPattern",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoEmptyPattern"
+    },
+    {
+      "name": "no-empty-static-block",
+      "kinds": [
+        "ClassStaticBlockDeclaration"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoEmptyStaticBlock",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoEmptyStaticBlock"
+    },
+    {
+      "name": "no-ex-assign",
+      "kinds": [
+        "CatchClause"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoExAssign",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoExAssign"
+    },
+    {
+      "name": "no-iterator",
+      "kinds": [
+        "PropertyAccessExpression",
+        "ElementAccessExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoIterator",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoIterator"
+    },
+    {
+      "name": "no-labels",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoLabels",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoLabels",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-multi-assign",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoMultiAssign",
+      "upstreamPackage": "core",
+      "upstreamTest": "Test",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-negated-condition",
+      "kinds": [
+        "ConditionalExpression",
+        "IfStatement"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoNegatedCondition",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoNegatedCondition",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-new",
+      "kinds": [
+        "ExpressionStatement"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoNew",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoNew",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-octal-escape",
+      "order": 6,
+      "kinds": [
+        "StringLiteral"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoOctalEscape",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoOctalEscape",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-plusplus",
+      "kinds": [
+        "PostfixUnaryExpression",
+        "PrefixUnaryExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoPlusplus",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoPlusplus",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-proto",
+      "kinds": [
+        "PropertyAccessExpression",
+        "ElementAccessExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoProto",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoProto",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-prototype-builtins",
+      "kinds": [
+        "CallExpression"
+      ],
+      "visit": "visit",
+      "prepare": "prepare",
+      "oracle": "oracleNoPrototypeBuiltins",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoPrototypeBuiltins",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/no-redundant-type-constituents",
+      "typed": true,
+      "node": true,
+      "kinds": [
+        "UnionType",
+        "IntersectionType"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoRedundantTypeConstituents",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoRedundantTypeConstituents"
+    },
+    {
+      "name": "no-return-assign",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoReturnAssign",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoReturnAssign",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-script-url",
+      "kinds": [
+        "StringLiteral",
+        "NoSubstitutionTemplateLiteral"
+      ],
+      "node": true,
+      "parent": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoScriptUrl",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoScriptUrl"
+    },
+    {
+      "name": "no-self-compare",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoSelfCompare",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoSelfCompare"
+    },
+    {
+      "name": "no-sequences",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoSequences",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoSequences",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    },
+    {
+      "name": "no-sparse-arrays",
+      "kinds": [
+        "ArrayLiteralExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoSparseArrays",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoSparseArrays",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-template-curly-in-string",
+      "kinds": [
+        "StringLiteral"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoTemplateCurlyInString",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoTemplateCurlyInString",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-underscore-dangle",
+      "kinds": [
+        "FunctionDeclaration",
+        "FunctionExpression",
+        "ArrowFunction",
+        "VariableDeclaration",
+        "PropertyAccessExpression",
+        "MethodDeclaration",
+        "PropertyDeclaration"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnderscoreDangle",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnderscoreDangle",
+      "parent": false,
+      "node": true
+    },
+    {
+      "name": "no-unexpected-multiline",
+      "order": 7,
+      "kinds": [
+        "BinaryExpression",
+        "CallExpression",
+        "ElementAccessExpression",
+        "TaggedTemplateExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoUnexpectedMultiline",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnexpectedMultiline",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+      "typed": true,
+      "programReads": [
+        "ReadsCompilerOptions"
+      ],
+      "node": true,
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "prepare": "prepare",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnnecessaryBooleanLiteralCompare",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoUnnecessaryBooleanLiteralCompare"
+    },
+    {
+      "name": "no-unneeded-ternary",
+      "kinds": [
+        "ConditionalExpression"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoUnneededTernary",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnneededTernary",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-unsafe-finally",
+      "kinds": [
+        "ReturnStatement",
+        "ThrowStatement",
+        "BreakStatement",
+        "ContinueStatement"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnsafeFinally",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnsafeFinally"
+    },
+    {
+      "name": "no-unsafe-negation",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnsafeNegation",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnsafeNegation",
+      "parent": false,
+      "node": true
+    },
+    {
+      "name": "no-unsafe-optional-chaining",
+      "kinds": [
+        "PropertyAccessExpression",
+        "ElementAccessExpression",
+        "CallExpression",
+        "NewExpression",
+        "TaggedTemplateExpression",
+        "ForOfStatement",
+        "WithStatement",
+        "ClassDeclaration",
+        "ClassExpression",
+        "VariableDeclaration",
+        "Parameter",
+        "BindingElement",
+        "SpreadElement",
+        "BinaryExpression",
+        "PrefixUnaryExpression"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnsafeOptionalChaining",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnsafeOptionalChaining",
+      "parent": false,
+      "node": true
+    },
+    {
+      "name": "no-unused-labels",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUnusedLabels",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnusedLabels"
+    },
+    {
+      "name": "no-unused-private-class-members",
+      "order": 8,
+      "kinds": [
+        "ClassDeclaration",
+        "ClassExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoUnusedPrivateClassMembers",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUnusedPrivateClassMembers",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-useless-catch",
+      "kinds": [
+        "CatchClause"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUselessCatch",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUselessCatch"
+    },
+    {
+      "name": "no-useless-concat",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUselessConcat",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUselessConcat"
+    },
+    {
+      "name": "no-useless-constructor",
+      "order": 9,
+      "kinds": [
+        "Constructor",
+        "MethodDeclaration"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoUselessConstructor",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUselessConstructor",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-useless-rename",
+      "kinds": [
+        "ObjectBindingPattern",
+        "ObjectLiteralExpression",
+        "ImportSpecifier",
+        "ExportSpecifier"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUselessRename",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoUselessRename"
+    },
+    {
+      "name": "no-var",
+      "order": 4,
+      "kinds": [
+        "VariableStatement",
+        "ForStatement",
+        "ForInStatement",
+        "ForOfStatement"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoVar",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoVar",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    },
+    {
+      "name": "no-warning-comments",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoWarningComments",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoWarningComments",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "no-with",
+      "kinds": [
+        "WithStatement"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleNoWith",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestNoWith",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "operator-assignment",
+      "kinds": [
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleOperatorAssignment",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestOperatorAssignment",
+      "parent": false
+    },
+    {
+      "name": "prefer-destructuring",
+      "kinds": [
+        "VariableDeclaration",
+        "BinaryExpression"
+      ],
+      "node": true,
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oraclePreferDestructuring",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestPreferDestructuring"
+    },
+    {
+      "name": "@typescript-eslint/prefer-find",
+      "typed": true,
+      "node": true,
+      "kinds": [
+        "CallExpression",
+        "ElementAccessExpression"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oraclePreferFind",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestPreferFind"
+    },
+    {
+      "name": "prefer-template",
+      "order": 10,
+      "kinds": [
+        "BigIntLiteral",
+        "FalseKeyword",
+        "NoSubstitutionTemplateLiteral",
+        "NullKeyword",
+        "NumericLiteral",
+        "RegularExpressionLiteral",
+        "StringLiteral",
+        "TemplateExpression",
+        "TrueKeyword"
+      ],
+      "visit": "visit",
+      "oracle": "oraclePreferTemplate",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestPreferTemplate",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react/forward-ref-uses-ref",
+      "order": 11,
+      "kinds": [
+        "CallExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleForwardRefUsesRef",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestForwardRefUsesRef",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react-hooks/error-boundaries",
+      "kinds": [
+        "JsxElement",
+        "JsxSelfClosingElement",
+        "JsxFragment"
+      ],
+      "visit": "visit",
+      "parent": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleReactHooksErrorBoundaries",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestErrorBoundaries"
+    },
+    {
+      "name": "react/jsx-curly-brace-presence",
+      "kinds": [
+        "JsxExpression",
+        "JsxText",
+        "StringLiteral",
+        "JsxSelfClosingElement",
+        "JsxElement"
+      ],
+      "visit": "visit",
+      "parent": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleJsxCurlyBracePresence",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestJsxCurlyBracePresence"
+    },
+    {
+      "name": "react/jsx-no-comment-textnodes",
+      "order": 12,
+      "kinds": [
+        "JsxText"
+      ],
+      "visit": "visit",
+      "oracle": "oracleJsxNoCommentTextnodes",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestJsxNoCommentTextnodes",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react/no-find-dom-node",
+      "order": 13,
+      "kinds": [
+        "CallExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoFindDOMNode",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestNoFindDOMNode",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react/no-is-mounted",
+      "order": 14,
+      "kinds": [
+        "CallExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoIsMounted",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestNoIsMounted",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react/no-redundant-should-component-update",
+      "order": 15,
+      "kinds": [
+        "ClassDeclaration",
+        "ClassExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleNoRedundantShouldComponentUpdate",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestNoRedundantShouldComponentUpdate",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "react/require-optimization",
+      "kinds": [
+        "ClassDeclaration",
+        "CallExpression"
+      ],
+      "parent": true,
+      "visit": "visit",
+      "prepare": "prepare",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleReactRequireOptimization",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestRequireOptimization",
+      "finish": "finish"
+    },
+    {
+      "name": "react/state-in-constructor",
+      "kinds": [
+        "PropertyDeclaration",
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "prepare": "prepare",
+      "parent": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleReactStateInConstructor",
+      "upstreamPackage": "react",
+      "upstreamTest": "TestStateInConstructor"
+    },
+    {
+      "name": "require-yield",
+      "kinds": [
+        "FunctionDeclaration",
+        "FunctionExpression",
+        "MethodDeclaration"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleRequireYield",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestRequireYield",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "structure/network-no-direct-fetch",
+      "kinds": [
+        "CallExpression"
+      ],
+      "visit": "visit",
+      "oracle": "oracleStructureNetworkNoDirectFetch",
+      "upstreamPackage": "structure",
+      "upstreamTest": "TestNetworkNoDirectFetch",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/adjacent-overload-signatures",
+      "kinds": [
+        "ClassDeclaration",
+        "ClassExpression",
+        "InterfaceDeclaration",
+        "TypeLiteral",
+        "SourceFile",
+        "Block",
+        "ModuleBlock"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleAdjacentOverloadSignatures",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestAdjacentOverloadSignatures",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/consistent-type-definitions",
+      "kinds": [
+        "TypeAliasDeclaration",
+        "InterfaceDeclaration"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleConsistentTypeDefinitions",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestConsistentTypeDefinitions",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/no-inferrable-types",
+      "kinds": [
+        "VariableDeclaration",
+        "PropertyDeclaration",
+        "Parameter"
+      ],
+      "node": true,
+      "visit": "visit",
+      "class": "Rule",
+      "factory": "create",
+      "oracle": "oracleNoInferrableTypes",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoInferrableTypes"
+    },
+    {
+      "name": "@typescript-eslint/init-declarations",
+      "kinds": [
+        "VariableDeclarationList"
+      ],
+      "visit": "visit",
+      "node": true,
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleInitDeclarations",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestInitDeclarations"
+    },
+    {
+      "name": "@typescript-eslint/method-signature-style",
+      "kinds": [
+        "MethodSignature",
+        "PropertySignature"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleMethodSignatureStyle",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestMethodSignatureStyle",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/no-import-type-side-effects",
+      "kinds": [
+        "ImportDeclaration"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoImportTypeSideEffects",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoImportTypeSideEffects"
+    },
+    {
+      "name": "@typescript-eslint/no-this-alias",
+      "kinds": [
+        "VariableDeclaration",
+        "BinaryExpression"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoThisAlias",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoThisAlias",
+      "parent": false,
+      "node": true
+    },
+    {
+      "name": "@typescript-eslint/no-useless-empty-export",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "factory": "create",
+      "class": "Rule",
+      "oracle": "oracleNoUselessEmptyExport",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoUselessEmptyExport"
+    },
+    {
+      "name": "@typescript-eslint/no-wrapper-object-types",
+      "kinds": [
+        "TypeReference"
+      ],
+      "visit": "visit",
+      "node": true,
+      "prepare": "prepare",
+      "oracle": "oracleNoWrapperObjectTypes",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestNoWrapperObjectTypes",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "@typescript-eslint/prefer-literal-enum-member",
+      "kinds": [
+        "EnumMember"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oraclePreferLiteralEnumMember",
+      "upstreamPackage": "typescript",
+      "upstreamTest": "TestPreferLiteralEnumMember",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "unicode-bom",
+      "kinds": [
+        "SourceFile"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleUnicodeBom",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestUnicodeBom",
+      "factory": "create",
+      "class": "Rule"
+    },
+    {
+      "name": "vars-on-top",
+      "kinds": [
+        "VariableDeclarationList"
+      ],
+      "visit": "visit",
+      "node": true,
+      "oracle": "oracleVarsOnTop",
+      "upstreamPackage": "core",
+      "upstreamTest": "TestVarsOnTop",
+      "factory": "create",
+      "class": "Rule",
+      "parent": true
+    }
+  ],
+  "source_count": 77,
+  "manifest_sha256": "95b8ae2d64d8f165ffe614d12e622f7364d68e4660635aa0cdedf021efece3b3",
+  "program_config": "/workspace/scratch/perf-scout/run/fused/tsconfig.json",
+  "program_config_sha256": "8f9403f8bc17e54a2301588cd22ef8d7d9c01c6ddddbb4aefa758f36dced9298",
+  "TypeScript_source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "Go_gate_guard_corpus": "cohere/internal/lint/rules/nexus/testdata/identifiers.txt",
+  "Go_gate_guard_corpus_sha256": "d7fd405406f14712a2082b116e93e3cf1f2de3819999a17752560dccad5e858e"
+}

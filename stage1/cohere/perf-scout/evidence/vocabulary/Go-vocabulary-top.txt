@@ -1,0 +1,33 @@
+File: Go-wall
+Build ID: e2dedd4de5e8bb4e67fbc168da1b1129b02e7c61
+Type: cpu
+Time: 2026-10-08 18:56:47 UTC
+Duration: 7.17s, Total samples = 9.95s (138.71%)
+Active filters:
+   focus=scoutOriginalFind
+Showing nodes accounting for 0.01s, 0.1% of 9.95s total
+      flat  flat%   sum%        cum   cum%
+     0.01s   0.1%   0.1%      0.01s   0.1%  strings.ToUpper
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/edit.FixText (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/edit.fixText
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/lint/rules/nexus.(*abbreviationVocabulary).find
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/lint/rules/nexus.(*abbreviationVocabulary).scoutOriginalFind
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/lint/rules/nexus.capitalizeAbbreviation (inline)
+         0     0%   0.1%      0.01s   0.1%  github.com/system-inc/cohere/internal/lint/rules/nexus.init.func6.1
+         0     0%   0.1%      0.01s   0.1%  main.collect
+         0     0%   0.1%      0.01s   0.1%  main.collect.func2
+         0     0%   0.1%      0.01s   0.1%  main.collect.func2.1
+         0     0%   0.1%      0.01s   0.1%  main.main
+         0     0%   0.1%      0.01s   0.1%  main.run
+         0     0%   0.1%      0.01s   0.1%  main.run.func1
+         0     0%   0.1%      0.01s   0.1%  runtime.main

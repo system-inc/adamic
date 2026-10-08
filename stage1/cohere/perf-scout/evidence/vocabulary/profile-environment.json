@@ -1,0 +1,109 @@
+{
+  "observation": "during full Callgrind collection; initial load was not captured",
+  "load_1m": "1.98",
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "quota": "400000 100000",
+  "valgrind": "3.24.0",
+  "profile_environment": {
+    "VALGRIND_LIB": "/workspace/scratch/perf-scout/valgrind/usr/libexec/valgrind",
+    "GOMAXPROCS": "1",
+    "GODEBUG": "asyncpreemptoff=1"
+  },
+  "arguments": [
+    "--tool=callgrind",
+    "--cache-sim=yes",
+    "--collect-atstart=no"
+  ],
+  "native_toggle": "adamic_function_164_abbreviation",
+  "Go_toggle": "github.com/system-inc/cohere/internal/lint/rules/nexus.(*abbreviationVocabulary).find",
+  "hardware_events": "perf_event_open CPU cycles returned ENOENT",
+  "commands": {
+    "native": [
+      "/workspace/scratch/perf-scout/valgrind/usr/bin/valgrind",
+      "--tool=callgrind",
+      "--cache-sim=yes",
+      "--collect-atstart=no",
+      "--toggle-collect=adamic_function_164_abbreviation",
+      "--callgrind-out-file=/workspace/scratch/perf-vocabulary/run/native-checkpoints.callgrind.out",
+      "/workspace/scratch/perf-vocabulary/run/native-checkpoints",
+      "--manifest",
+      "/workspace/scratch/perf-scout/run/fused/manifest.txt"
+    ],
+    "Go": [
+      "/workspace/scratch/perf-scout/valgrind/usr/bin/valgrind",
+      "--tool=callgrind",
+      "--cache-sim=yes",
+      "--collect-atstart=no",
+      "--toggle-collect=github.com/system-inc/cohere/internal/lint/rules/nexus.(*abbreviationVocabulary).find",
+      "--callgrind-out-file=/workspace/scratch/perf-vocabulary/run/Go.callgrind.out",
+      "/workspace/scratch/perf-scout/run/lint/oracle",
+      "--manifest",
+      "/workspace/scratch/perf-scout/run/fused/manifest.txt"
+    ]
+  },
+  "interrupted_native_attempt": {
+    "case_last_begun": 70,
+    "profile_bytes": 0,
+    "excluded": true,
+    "reason": "environment restart"
+  },
+  "native_checkpoint_interval": 65536,
+  "native_during": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.00"
+  },
+  "machine_after": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "0.58"
+  },
+  "native_completed": {
+    "calls": 1083820,
+    "parts": 17,
+    "bytes": 24318733,
+    "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+    "ownership_calls": {
+      "adamic_retain": 980189039,
+      "adamic_release": 975750750
+    }
+  }
+}

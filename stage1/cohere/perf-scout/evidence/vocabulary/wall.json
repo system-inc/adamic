@@ -1,0 +1,277 @@
+{
+  "machine_before": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "2.00"
+  },
+  "rounds": 3,
+  "release": {
+    "native": [
+      {
+        "seconds": 34.114373615999284,
+        "max_rss_kib": 1059904,
+        "user": 33.53502,
+        "system": 1.184229,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 34.438244009999835,
+        "max_rss_kib": 1061376,
+        "user": 34.135512,
+        "system": 0.903394,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 32.27007167600004,
+        "max_rss_kib": 1061808,
+        "user": 32.179516,
+        "system": 0.784381,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ],
+    "Go": [
+      {
+        "seconds": 7.505033380999521,
+        "max_rss_kib": 640848,
+        "user": 9.992936,
+        "system": 0.508023,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 7.438175130999298,
+        "max_rss_kib": 644112,
+        "user": 9.850103,
+        "system": 0.521525,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 6.9547312800004875,
+        "max_rss_kib": 627092,
+        "user": 9.505466,
+        "system": 0.449353,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ]
+  },
+  "scope": {
+    "native-wall": {
+      "calls": 1083820,
+      "sampled_ns": 101064862,
+      "timed_calls": 16935,
+      "pc_samples": 6564,
+      "overflow": 0,
+      "entries": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "estimated_ns": 6468031811.800413,
+      "process": {
+        "seconds": 33.978536550999706,
+        "max_rss_kib": 1061900,
+        "user": 33.35084,
+        "system": 1.267582,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    },
+    "native-entries": {
+      "calls": 1083820,
+      "sampled_ns": 105241694,
+      "timed_calls": 16935,
+      "pc_samples": 0,
+      "overflow": 0,
+      "entries": [
+        42067126,
+        42011003,
+        41883819,
+        41688974,
+        41622747
+      ],
+      "estimated_ns": 6735344127.019781,
+      "process": {
+        "seconds": 33.024854581,
+        "max_rss_kib": 1056272,
+        "user": 32.806318,
+        "system": 0.776912,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    },
+    "Go-wall": {
+      "calls": 15846,
+      "sampled_ns": 777401,
+      "timed_calls": 248,
+      "entries": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "estimated_ns": 49672162.28225807,
+      "process": {
+        "seconds": 7.2173252619995765,
+        "max_rss_kib": 622304,
+        "user": 9.705822,
+        "system": 0.454154,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    },
+    "Go-entries": {
+      "calls": 15846,
+      "sampled_ns": 784761,
+      "timed_calls": 248,
+      "entries": [
+        66672,
+        155703,
+        61366,
+        3900
+      ],
+      "estimated_ns": 50142430.66935484,
+      "process": {
+        "seconds": 7.146377199000199,
+        "max_rss_kib": 631728,
+        "user": 9.611643,
+        "system": 0.459404,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    }
+  },
+  "native_pc": {
+    "samples": 6564,
+    "categories": {
+      "other strings/regex": 1102,
+      "other": 2779,
+      "allocation/free": 28,
+      "unresolved:native-wall": 6,
+      "retain": 836,
+      "release": 452,
+      "string comparison": 1361
+    },
+    "symbols": {
+      "units_next": 642,
+      "adamic_string_index_of": 8,
+      "adamic_string_index_of_at": 142,
+      "adamic_string_starts_with": 173,
+      "adamic_string_ends_with": 103,
+      "adamic_string_units_before": 1,
+      "libc IFUNC memcpy": 4,
+      "adamic_weak_forget": 1,
+      "malloc@@GLIBC_2.2.5": 5,
+      "free@@GLIBC_2.2.5": 2,
+      "unresolved:native-wall": 6,
+      "adamic_function_185_noAbbreviatedIdentifier": 4,
+      "adamic_function_164_abbreviation_body": 2746,
+      "adamic_function_868_Abbreviation_new": 3,
+      "adamic_array_new": 1,
+      "adamic_array_push": 4,
+      "adamic_array_index_of": 2,
+      "adamic_object_free_children": 1,
+      "adamic_allocate": 18,
+      "adamic_retain": 836,
+      "adamic_release": 423,
+      "release_last": 29,
+      "adamic_array_search_from": 19,
+      "adamic_object_new": 1,
+      "adamic_regex_new": 1,
+      "regex_execute": 6,
+      "adamic_regex_test": 2,
+      "libc IFUNC memcmp": 644,
+      "adamic_regex_replace": 1,
+      "regex_run": 17,
+      "adamic_string_equal": 717,
+      "adamic_string_slice": 2
+    },
+    "libc_ifunc_ranges": [
+      {
+        "function": "libc IFUNC memcmp",
+        "start": 1516736,
+        "end": 1517502
+      },
+      {
+        "function": "libc IFUNC memcpy",
+        "start": 1555136,
+        "end": 1557088
+      },
+      {
+        "function": "libc IFUNC memmove",
+        "start": 1555136,
+        "end": 1557088
+      },
+      {
+        "function": "libc IFUNC memchr",
+        "start": 1516096,
+        "end": 1516687
+      },
+      {
+        "function": "libc IFUNC strlen",
+        "start": 1530624,
+        "end": 1530973
+      },
+      {
+        "function": "libc IFUNC strcmp",
+        "start": 1528576,
+        "end": 1529920
+      },
+      {
+        "function": "libc IFUNC strchr",
+        "start": 1527552,
+        "end": 1528063
+      },
+      {
+        "function": "libc IFUNC memset",
+        "start": 1557312,
+        "end": 1557723
+      }
+    ],
+    "libc_path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+  },
+  "machine_after": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.09"
+  },
+  "bytes": 24318733
+}

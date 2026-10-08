@@ -1,0 +1,27 @@
+{
+  "original_function_sha256": "4da2c6e5355b7152cfee1975816d16ba626cbfb48c33b7760cada75c5e68a94d",
+  "checkpoint_function_sha256": "4da2c6e5355b7152cfee1975816d16ba626cbfb48c33b7760cada75c5e68a94d",
+  "machine_during": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.00"
+  },
+  "normal_guard_bytes": 24318733,
+  "interval": 65536
+}

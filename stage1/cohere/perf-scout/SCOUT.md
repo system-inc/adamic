@@ -1,10 +1,10 @@
-# Step 44: cold-process profiles and a byte-preserving lint encoder
+# Step 44: vocabulary wall profile and compiler borrow handoff
 
-1. The full abbreviation walk costs 978,781,510 retains; its membership primitive costs zero retains/releases.
-2. 562 hand-borrowable static node lookup sites remove exactly 68,639,633 retain/release pairs over compiler77.
-3. Allocations and peak live allocations are unchanged; Go, Node and native output remains byte-identical.
-4. Full cold median regresses 33.219 → 33.541 s; this is a borrow acceptance result, not a demonstrated speed win.
-5. use-isnan provenance is recovered at 850d851d4: its 5.599/1.742 s timing covers 554 files/1,108 option rows, distinct from 316 upstream cases.
+1. Same 1,083,820 identifier calls: Go's candidate gate rejects 98.37%; the port walks vocabulary first.
+2. Native visits 209,273,669 entries versus Go's 287,641; sampled walk wall is 6.468 s versus 0.050 s.
+3. Native wall samples: retain/release 19.62%, equality 20.73%, other strings/regex 16.79%, allocation/free 0.43%.
+4. All 77 files / 93 rules remain byte-identical; cold medians are native 34.114 s and Go 7.438 s.
+5. Container/field borrowing is ruled; COMPILER-HANDOFF.md contains both per-site ranks and exact 68,639,633-pair compiler77 targets.
 
 ## Start with the use-isnan gap
 
@@ -209,10 +209,89 @@ ADAMIC_SCOUT_BOUNDARY=/workspace/scratch/perf-boundary/run ADAMIC_SCOUT_RESULTS=
 
 Read the scripts' --help for the vocabulary command (its interface differs). Rebuild the existing bridge archive with `go build -buildmode=c-archive -o ... ./bridge/tsgo/archive`; no shared files need editing. All package inputs are mandatory and all new top-level Go tests call t.Parallel. Escape/return/slot mutants prove the hand selection can reject unsafe uses; the unmatched-release mutant proves native lifetime failure. Existing answer/drop/reorder/truncation, instruction-count and encoder mutants continue to run.
 
-## Open questions for @system_adamic
+## Ruling from @system_adamic, step 44
 
-No new language ruling is needed for the delivered measurement or the ruled non-escaping node borrows. If the next scout extends inference to immutable vocabulary table entries and string fields, the open question is: does the step-41 ruling cover those indexed child references under a proved owner lifetime, and which stores/returns require an owned retain? This scout does not choose that extension or remove escaping-result ownership.
+The vocabulary/container/field question is closed. Ruling on scout/44-boundary-sites f9a54c16: a value read from an array element, map entry or field (including a string field) is borrowed with no retain/release only when the compiler proves all three conditions: (1) the owner outlives the read, (2) nothing in the borrow span overwrites/removes the slot, including calls that might do so unless proven not to, and (3) the value is not stored, returned or captured. If any condition cannot be proved, the read remains counted. Compiler borrow inference supplies the proof; there are no hand annotations and no borrowing on faith. The earlier 68,639,633-pair hand experiment is acceptance evidence, not the production pass. This follow-up profiles the existing vocabulary walk before any further hand-borrowing.
+
+No language question remains open for this measurement. The single compiler handoff is [COMPILER-HANDOFF.md](COMPILER-HANDOFF.md), containing every static boundary site's identity, rankings and exact three-workload count targets.
+
+## Vocabulary wall profile, same 77 files and 93 rules
+
+This follow-up measures the unchanged counted vocabulary, with no new hand-borrowing. `vocabulary_wall.py` builds private generated-C probes and private Go overlays in scratch. It never edits a shared rule, compiler, parser, runtime, bridge or harness. Native and Go run the exact original strict 77-root manifest, all 93 registered rules and the same repair/output contract. Every release and probe answer matches all 24,318,733 bytes (SHA 2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9). Source fingerprints, program config and registered inventory are in the new fixtures.json. No installs or source scripts are used for the 23 accepted public pins; this profile uses the existing compiler77 subset.
+
+Release cold process medians over three rotating rounds: native 34.114374 s, Go 7.438175 s; amortized wall/file 443.044 ms and 96.600 ms. The profiles are separate from those rounds, and the two Callgrind jobs are SIGSTOP-paused during release/probe measurement. Native vocabulary is sampled every 64 calls with CLOCK_MONOTONIC; Go uses time.Now/Since at the same stride. These estimates include clock/wrapper overhead and are not exact elapsed sums. Native additionally samples the active walk PC every millisecond with a Linux SIGEV_THREAD_ID timer directed at the native main thread: 6,564 samples, no overflow. No signal, logging or entry counter runs in the untouched release binaries.
+
+| Actual workload | Native | Go |
+|---|---:|---:|
+| Identifier calls seen by rule / gate | 1,083,820 | 1,083,820 |
+| Calls reaching vocabulary | 1,083,820 | 15,846 |
+| Measured vocabulary entry visits | 209,273,669 | 287,641 |
+| Sampled total walk wall | 6.468032 s | 0.049672 s |
+| Amortized ns per visited entry | 30.907 | 172.688 |
+| Amortized ns per vocabulary call | 5,967.810 | 3,134.681 |
+
+The per-entry numbers divide whole walk time by visits, including membership, maps, message construction and return costs; they are not individual entry latency measurements. Native visits are whole/early/suffix/late/segment: 42,067,126 / 42,011,003 / 41,883,819 / 41,688,974 / 41,622,747. Go visits in four filtered lists are 66,672 / 155,703 / 61,366 / 3,900; whole-word lookup is a map query, not an entry visit. This difference is part of the algorithm, not a claim of equivalent per-entry work.
+
+The Go gate at `cohere/internal/lint/rules/nexus/consistency_no_abbreviated_identifier.go:138` runs before foreign/import and framework skips. Its derived lookups are `abbreviation_gate.go:83`. Of 1,083,820 calls it admits 17,651 (1.63%); subsequent skips leave 15,846 vocabulary calls. The separate gate timer estimates 0.262 s; CPU pprof sees 0.12 s in gate stacks. This sampling difference is retained, not averaged away. Go `abbreviation_vocabulary.go:289` starts with allowed-name/whole-word maps, then ordered filtered lists at :298, :307, :326 and :337. Native `rule.a:291` calls abbreviation before skips. `abbreviation_vocabulary.a:40` scans every word, and :59–63 repeatedly scans the entire table for all four phases. Gate placement plus phase-specific lists is the principal observed difference in work volume. An equivalent gate must admit every vocabulary finding: false positives cost work, false negatives silently lose findings. Do not equate these observations with a measured native gate speedup.
+
+Native sampled wall shares are exclusive PCs: retain 12.74%, release (including release_last) 6.89%, string comparison 20.73%, other string/regex 16.79%, allocation/free 0.43%, other 42.34%. The walk body alone has 2,746 of 6,564 samples (41.83%), covering loop control, repeated indexed loads, phase tests and call setup. The libc samples were resolved from the loaded IFUNC entries and their exact ELF .eh_frame ranges: 644 in memcmp, four in memcpy. Six samples (0.09%) remain unresolved in the native ELF. Function-size bounds and exact unwind ranges prevent substituting a nearby exported libc symbol for an optimized implementation. The resolved ranges are preserved in wall.json. Native has no observed hash/map samples in this walk. The ~978.8 million retains are counted calls, including immortal-literal reads that runtime skips, not proof of that many reference-count writes (`internal/native/runtime/heap.c:218,334`).
+
+Go's full CPU profile contains only one 10 ms sample in vocabulary-find stacks; it is too sparse for wall percentages by subcategory. It is preserved with its focus output. Scoped timers and exact call/entry counts are the usable time evidence for that small region; instruction/category shares are reported separately below. No CPU profile percentage is presented as a wall fraction.
+
+### Instruction and cache evidence
+
+The first native attempt was interrupted by the environment restart at case 70 (71 files begun), before its final dump; it supplies no usable native counters and is excluded. The rerun uses a private checkpoint wrapper, dumping after each 65,536 completed vocabulary calls, outside the collection scope. The vocabulary function body is byte-for-byte identical; the normal checkpoint-copy run matches all output bytes. No retain/release changes occur. Checkpoints reset event counters, not simulated caches, and their exclusive sums plus the final dump cover the complete workload. The extra scalar counter and dump client request are outside the walk's counters; they perturb surrounding cache context slightly and are disclosed rather than treated as production code.
+
+Full-manifest Callgrind collection uses `--cache-sim=yes --collect-atstart=no --toggle-collect=FUNCTION`. Collection is on only inside the actual vocabulary function and its descendants, while the full program remains instrumented so simulated cache context includes the surrounding rules. No record/replay or altered-rule execution is used for these profiles. GOMAXPROCS=1 and GODEBUG=asyncpreemptoff=1 are set on both profile processes; release/probes use GOMAXPROCS=4. Exclusive self event sums must equal the profile summary for every event; recursive inclusive costs are never summed. `vocabulary_accounting.py` enforces this and a doubled-edge mutant must fail. All 1,083,820 native and 15,846 Go vocabulary calls are accounted for. The prior counted-runtime probe measures 978,781,510 scoped retains and 975,463,417 scoped releases. Callgrind call edges sum to 980,189,039 retains and 975,750,750 releases, exceeding that probe by 1,407,529 and 287,333 respectively. Event collection toggles do not establish equivalently scoped call-edge counters in runtime helpers; preserve this discrepancy rather than using graph calls as semantic borrow-removal targets. A new counted-runtime copy of the exact current source reproduces 978,781,510 / 975,463,417 and every output byte, confirming the discrepancy is in graph accounting rather than a changed input or ownership path. The helper-edge discrepancy remains an instrumentation limitation, not a language question. All event sums, direct vocabulary call totals and bytes are verified. Optimized debug line zero accounts for 753,833,425 release edges and 10,255 retain edges; the handoff labels them unresolved and does not invent a source-site pairing. Exact semantic vocabulary site-pair targets require a separate counter probe before compiler acceptance. Returned ownership also means retains and releases are not interchangeable pair counts.
+
+
+| Scoped event | Native | Go |
+|---|---:|---:|
+| Instructions (Ir) | 59,448,034,858 | 479,102,554 |
+| L1 instruction misses (I1mr) | 32,222,311 | 4,131,646 |
+| L1 data misses (D1mr + D1mw) | 109,368,875 | 3,806,674 |
+| LL instruction misses (ILmr) | 5,593 | 2,540 |
+| LL data misses (DLmr + DLmw) | 290,857 | 225,460 |
+| Instructions per visited entry (amortized) | 284.068 | 1,665.627 |
+
+| Exclusive instruction share | Native | Go |
+|---|---:|---:|
+| retain | 12.875% | 0.000% |
+| release | 12.131% | 0.000% |
+| hash/map | 0.000% | 8.828% |
+| string comparison | 16.462% | 3.144% |
+| other strings/regex | 19.382% | 55.580% |
+| allocation/free | 0.393% | 9.824% |
+| Go GC/barrier | 0.000% | 9.922% |
+| other | 38.757% | 12.703% |
+
+Instruction fractions and wall fractions answer different questions. In particular immortal-string retain fast paths execute instructions without updating a reference count. Go hashing is a subset of its map work, not an extra category. Raw native checkpoint parts, exclusive accounting and per-line instruction costs are preserved; every part and the summed full run pass all-event self/summary checks. The full profiled answer is also byte-identical.
+
+Hardware counters are unavailable: perf_event_open for CPU cycles returns ENOENT. These are simulated misses, not measured hardware misses. The Callgrind 3.24.0 model is I1/D1 32 KiB, 64-byte lines, eight-way; LL 256 MiB, 64-byte lines, direct-mapped. The automatically detected aggregate L3 was rounded by the simulator, with warnings preserved. This is a reproducible model, not a claim about EPYC's per-core physical cache topology or a proof that a hardware miss limits wall time.
+
+Machine: AMD EPYC 9V74, Linux 6.18.44, affinity CPUs 0–4, quota 400000/100000 (four effective cores), no explicit core pinning. One-minute load release/probes 2.00 → 1.09 (lagging after profiler pause); during Callgrind observation 1.98. Initial Callgrind load was not captured; native checkpoint observation load was 1.00 and completed-profile one-minute load was 0.77. Tool versions: clang 20.1.8, Go 1.27.1, Node 24.19.0. Native uses existing C11/O2/-g/-ffp-contract=off/-fno-optimize-sibling-calls and warnings-as-errors flags, linked to the unchanged Go checker archive. No LTO, -march tuning or ownership rewrite is introduced. Go uses normal release defaults. Exact build and profile environments are preserved.
+
+### Fixtures, guards and reproduction
+
+All 77 files and all 93 rules are required. Entry counters run separately from PC samples to avoid including 209 million counter increments in the wall distribution; the native entry-count probe estimates 6.735 s versus the wall-only 6.468 s, a visible instrumentation difference. The Go entry probe reports 0.050142 s versus wall-only 0.049672 s. All probe outputs remain identical. Go's own gate tests also pass on the checked-in 82,368 distinct real ahra identifier spellings: 472 vocabulary reports and 481 gate admissions. This is a spelling fixture, not access to ahra's source tree or a measurement against its 1.944 s cold target. The lost-arm tests preserve elapsedMs, Cwd-style segments, prefixes, suffixes and whole-word names. Existing full-answer mutations and encoder/native lifetime mutants remain in the package. New guards reject missing profiles, changed entry-loop fixtures, edge double-counting, mismatched answers, and wrong compiler-handoff totals. Every new top-level Go test calls t.Parallel; all measurement environments are mandatory.
+
+After the earlier baseline and boundary preparation:
+
+```sh
+export GOMAXPROCS=4
+python3 -B vocabulary_wall.py prepare /workspace/scratch/perf-vocabulary/run --baseline /workspace/scratch/perf-scout/run --original /workspace/scratch/perf-boundary/run --archive /workspace/scratch/perf-boundary/checker.a
+python3 -B vocabulary_wall.py measure /workspace/scratch/perf-vocabulary/run --baseline /workspace/scratch/perf-scout/run --original /workspace/scratch/perf-boundary/run --rounds 3
+python3 -B vocabulary_wall.py gate /workspace/scratch/perf-vocabulary/run --baseline /workspace/scratch/perf-scout/run --original /workspace/scratch/perf-boundary/run
+python3 -B vocabulary_wall.py checkpoint-prepare /workspace/scratch/perf-vocabulary/run --baseline /workspace/scratch/perf-scout/run --original /workspace/scratch/perf-boundary/run --archive /workspace/scratch/perf-boundary/checker.a --valgrind /workspace/scratch/perf-scout/valgrind/usr/bin/valgrind
+VALGRIND_LIB=/workspace/scratch/perf-scout/valgrind/usr/libexec/valgrind python3 -B vocabulary_wall.py profile /workspace/scratch/perf-vocabulary/run --baseline /workspace/scratch/perf-scout/run --original /workspace/scratch/perf-boundary/run --valgrind /workspace/scratch/perf-scout/valgrind/usr/bin/valgrind
+```
+
+Use the exact Valgrind commands in profile-environment.json, the baseline lint/oracle and boundary before executable, and the baseline fused/manifest.txt. Native toggle is adamic_function_164_abbreviation; Go toggle is github.com/system-inc/cohere/internal/lint/rules/nexus.(*abbreviationVocabulary).find. Set VALGRIND_LIB to the extracted distribution's usr/libexec/valgrind. Profile output is checked against the same saved Go bytes. All package checks set ADAMIC_SCOUT_RESULTS, ADAMIC_SCOUT_COMPILER, ADAMIC_SCOUT_BOUNDARY and ADAMIC_SCOUT_VOCABULARY; no test skips.
 
 ## Next scout
 
-Give the compiler owner the 562 selected sites and the exact three workload reductions, especially 68,639,633 pairs on compiler77, as step-41 inference acceptance targets. Preserve the original owned-return API for escaping callers, and prove parser-owner lifetime through callbacks. Give the vocabulary owner the full-walk evidence: membership is already borrowed; examine entry/field ownership at abbreviation_vocabulary.a:40 and :56–62 instead. Preserve finding-result ownership. Keep the encoder import handoff scoped to lint/main.ts:2 and disclose the non-repeatable full-rule wall result. Fetch the facts-branch scratch manifest before attributing its specific 3.21× use-isnan gap. The 23 pins are accepted corpus; ahra's 1.944 s target remains a separate unmeasured workload. No shared file is changed on this branch.
+Give [COMPILER-HANDOFF.md](COMPILER-HANDOFF.md) directly to the compiler owner: both ranks, all 643 static identities, 562 selected sites and exact three-workload borrow-count targets fit in that single file. Prove all three ruled conditions before removing container/field ownership; preserve ordinary counted reads whenever proof fails. The node acceptance target remains 68,639,633 pairs, with no claimed cold-wall improvement.
+
+Give the vocabulary owner the gate and phase-volume evidence before any further hand-borrowing. The shared boundary needing a change is rules/nexus-consistency-no-abbreviated-identifier/rule.a:291 (candidate gate before lookup), with its derived vocabulary helpers, ordered forms, superset tests and existing full-byte oracle guards. This branch measures and stops at that boundary. Retains/releases are about one fifth of sampled walk time; allocation is small, and the majority is loop/string work repeated for names Go rejects before walking. Carry the same 77-source manifest, all 93 rules, and the lost-arm real fixtures forward. Shared parser, bridge, runtime, compiler and lint harness remain untouched.
+
+Validation for this follow-up: all eight package tests pass with all four input environments set and no skips; go vet is clean, gofmt reports no files. Full release, sampled, entry, gate, checkpoint and counted cross-check outputs match the Go oracle. Validation output is preserved in evidence/vocabulary/package-tests.txt.

@@ -1,0 +1,54 @@
+File: Go-wall
+Build ID: e2dedd4de5e8bb4e67fbc168da1b1129b02e7c61
+Type: cpu
+Time: 2026-10-08 18:56:47 UTC
+Duration: 7.17s, Total samples = 9.95s (138.71%)
+Active filters:
+   focus=isAbbreviationCandidate
+Showing nodes accounting for 0.12s, 1.21% of 9.95s total
+      flat  flat%   sum%        cum   cum%
+     0.04s   0.4%   0.4%      0.04s   0.4%  internal/runtime/maps.memHashAES
+     0.03s   0.3%   0.7%      0.10s  1.01%  runtime.mapaccess2_faststr
+     0.01s   0.1%   0.8%      0.12s  1.21%  github.com/system-inc/cohere/internal/lint/rules/nexus.isAbbreviationCandidate
+     0.01s   0.1%   0.9%      0.01s   0.1%  github.com/system-inc/cohere/internal/lint/rules/nexus.isUppercaseAsciiLetter (inline)
+     0.01s   0.1%  1.01%      0.01s   0.1%  internal/runtime/maps.(*Map).directoryAt (inline)
+     0.01s   0.1%  1.11%      0.01s   0.1%  internal/runtime/maps.ctrlGroup.matchEmpty (inline)
+     0.01s   0.1%  1.21%      0.01s   0.1%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+         0     0%  1.21%      0.02s   0.2%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ArrowFunction).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*AsExpression).ForEachChild (inline)
+         0     0%  1.21%      0.05s   0.5%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+         0     0%  1.21%      0.09s   0.9%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%  1.21%      0.07s   0.7%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+         0     0%  1.21%      0.02s   0.2%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)
+         0     0%  1.21%      0.07s   0.7%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionExpression).ForEachChild
+         0     0%  1.21%      0.06s   0.6%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+         0     0%  1.21%      0.02s   0.2%  github.com/microsoft/TypeScript/tsc/internal/ast.(*InterfaceDeclaration).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ModuleBlock).ForEachChild (inline)
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ModuleDeclaration).ForEachChild
+         0     0%  1.21%      0.12s  1.21%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild (inline)
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ParameterDeclaration).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ParenthesizedExpression).ForEachChild (inline)
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PrefixUnaryExpression).ForEachChild (inline)
+         0     0%  1.21%      0.03s   0.3%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAccessExpression).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertySignatureDeclaration).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*QualifiedName).ForEachChild (inline)
+         0     0%  1.21%      0.04s   0.4%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ShorthandPropertyAssignment).ForEachChild
+         0     0%  1.21%      0.07s   0.7%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0%  1.21%      0.01s   0.1%  github.com/microsoft/TypeScript/tsc/internal/ast.(*TypeReferenceNode).ForEachChild
+         0     0%  1.21%      0.12s  1.21%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%  1.21%      0.12s  1.21%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%  1.21%      0.12s  1.21%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%  1.21%      0.03s   0.3%  github.com/system-inc/cohere/internal/edit.FixText (inline)
+         0     0%  1.21%      0.03s   0.3%  github.com/system-inc/cohere/internal/edit.fixText
+         0     0%  1.21%      0.12s  1.21%  github.com/system-inc/cohere/internal/lint/rules/nexus.init.func6.1
+         0     0%  1.21%      0.07s   0.7%  main.collect
+         0     0%  1.21%      0.12s  1.21%  main.collect.func2
+         0     0%  1.21%      0.12s  1.21%  main.collect.func2.1
+         0     0%  1.21%      0.06s   0.6%  main.main
+         0     0%  1.21%      0.06s   0.6%  main.run
+         0     0%  1.21%      0.03s   0.3%  main.run.func1
+         0     0%  1.21%      0.05s   0.5%  runtime.main
+         0     0%  1.21%      0.10s  1.01%  runtime.mapaccess1_faststr

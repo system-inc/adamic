@@ -1,0 +1,21 @@
+{
+  "flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-DADAMIC_TSGO",
+    "-g",
+    "-O2"
+  ],
+  "interval_calls": 65536,
+  "ownership_changes": 0
+}
