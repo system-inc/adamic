@@ -148,7 +148,11 @@ func (l *lowering) checkMove(node *ast.Node) error {
 		}
 		return child.ForEachChild(visit)
 	}
-	ast.GetSourceFileOfNode(node).AsNode().ForEachChild(visit)
+	// The private agreement harness independently asks the IR query about
+	// source ownership; production always runs this existing source proof.
+	if !l.moveAgreement {
+		ast.GetSourceFileOfNode(node).AsNode().ForEachChild(visit)
+	}
 	if found != nil {
 		return found
 	}

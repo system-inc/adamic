@@ -12,13 +12,26 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 	"path/filepath"
 )
 
+// Options gates the ownership query until its validation gate is complete.
+type Options struct {
+	OwnershipQuery     bool
+	ownershipAgreement bool
+}
+
 // Lower lowers a checked program from one entry, in ESM evaluation order.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+	return LowerWithOptions(ctx, program, Options{OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+}
+
+// LowerWithOptions selects optional analyses explicitly.
+func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
@@ -28,7 +41,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, moveAgreement: options.ownershipAgreement}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -80,15 +93,25 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if options.OwnershipQuery {
+		for _, transfer := range fresh.OwnershipTransfers(lowering.result) {
+			if transfer.Answer.Verdict != fresh.Proven {
+				where := lowering.moveSites[transfer.Site-1]
+				return nil, lowering.moveRefused(where, "cannot move "+movePath(where.AsCallExpression().Arguments.Nodes[0])+": whole reachable ownership is not proven (ownership query "+transfer.Answer.Verdict.String()+": "+fmt.Sprint(transfer.Answer.Evidence)+")")
+			}
+		}
+	}
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil
 }
 
 type lowering struct {
-	program *load.Program
-	checker *checker.Checker
-	result  *ir.Program
+	moveSites     []*ast.Node
+	moveAgreement bool
+	program       *load.Program
+	checker       *checker.Checker
+	result        *ir.Program
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool

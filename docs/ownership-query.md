@@ -1,6 +1,6 @@
 # Ownership query for inferred moves
 
-Status: design and test-only prototype. No new move is enabled. The production
+Status: default-off query implementation behind the existing move check. No new move is enabled. The production
 flat-literal proof in `internal/lower/moves.go`, task/result restrictions, native
 ABI and graph-region refusals stay as they are. This extends the future-work
 question in [concurrency-moves.md](concurrency-moves.md), not its approved slice.
@@ -63,8 +63,9 @@ Extend `internal/fresh`'s abstract interpretation, rather than creating a second
 heap model. It already has locals, strong/weak heap edges, escaped/leaked sets,
 newest/older allocation recency, joins and call summaries over flow graphs.
 `fresh.ProveWrites` currently exports write verdicts, not call-site heaps or
-ownership roots. Add a read-only snapshot/query facility in future work; retain
-all roots and storage ownership endings, including compiler temporaries. Confinement
+ownership roots. The read-only snapshot/query slice below begins this facility; complete dynamic
+region export remains future work. Retain all roots and storage ownership endings,
+including compiler temporaries. Confinement
 and a Proven write are supporting facts, never certificates of uniqueness.
 A locally constructed ring's closing write is not acyclic, yet its external
 ownership may be unique; rejecting that write is not the ownership answer.
@@ -149,101 +150,128 @@ A precise alias message requires an actual may-reach witness. Unknown frontiers
 must not invent an alias or imply a proved use. Even a positive input query cannot
 waive callback capture/effect/result proofs or graph runtime restrictions.
 
-## Test-only prototype and answers
+## Implementation and gate
 
-[ownership_query_test.go](../internal/lower/ownership_query_test.go) consumes an
-explicit normalized snapshot of objects, labelled strong edges, region IDs and
-surviving roots with after-call flags. It closes over whole regions and descendants,
-then searches every root for an ingress witness. Snapshots are hand-built proof
-inputs, not extracted from source or production fresh states; flags assume the
-future continuation analysis. Missing candidate objects and opaque outside roots yield Unknown. Complete
-root/edge inventories and exact region IDs are preconditions, not proved here.
+`internal/fresh/ownership.go` exports `QueryOwnership`, a read-only query over an
+explicit complete snapshot, and `OwnershipTransfers`, which extracts call-site
+snapshots from the existing fresh interpreter. Answers are **Proven**, **Refused**
+or **Unknown**, with the retained finite may-reach graph, closure members,
+deterministic shortest ingress witnesses and evidence. Root strength and edge
+strength distinguish strong ownership from weak observation. A second surviving
+owner refuses even if never read again. A missing inventory, opaque frontier,
+escaped or older allocation, summary fallback or exhausted budget cannot prove
+exclusivity. Proven ownership endings are represented by reaching-state assignment,
+not declaration liveness. Continuation witnesses follow CFG edges and stop at
+successful redefinitions; throwing definitions retain the handler's old value.
 
-| Shape | Closure | External paths (used after?) | Unique |
+`lower.Options.OwnershipQuery` or `ADAMIC_OWNERSHIP_QUERY=1` enables the additional
+check. It runs after typed IR and graph classification and before borrow/reuse.
+Production still runs `moves.go` first, including its callback and result checks;
+no query answer bypasses those or enables a graph-region transfer. Preparation is
+demanded only when an actual admitted move exists. Every query boundary retains
+its CFG, IR instruction, statement and source site; known allocations retain their
+producer instructions and statements.
+
+The extraction slice is intentionally conservative: fresh does not yet export a
+complete dynamic region inventory, so candidate-reachable graph allocations make
+the extracted answer Unknown. The general snapshot query does close over complete
+region inventories supplied to it, including disconnected members and their counted
+descendants. Type SCCs are never used as dynamic region IDs. The existing flat
+construction proof still supplies task disjointness and the administrative input
+shell accounting; this patch adds no general per-item partition or transfer protocol.
+Nested and cyclic inputs retain their existing production refusals. The normalized
+ring proofs are evidence for the future protocol, not authorization to move rings.
+
+`TestOwnershipQueryMoveAgreement` runs every existing concurrency and moves fixture
+in accepted/refused directories with the old proof and an independent query path.
+Its private harness bypasses only the old source-reference scan; all construction,
+callback and runtime admission restrictions remain prerequisites. Any acceptance
+disagreement fails. Production never uses that bypass. The test also independently
+queries every admitted IR transfer and requires Proven. There are 74 fixtures,
+one existing applicable admitted transfer and four independently queried refusals. A real disagreement found during this
+work was fixed in extraction: fieldless descendants must be inventoried from heap
+edge targets, even though they have no entries of their own in fresh's heap map.
+There is no tie-break between proofs.
+
+| Shape | Complete snapshot query | Node witness | Runtime move admission |
 | --- | --- | --- | --- |
-| Flat literal | 1 | item (no) | yes |
-| Nested object | 1, 2 | item (no) | yes |
-| Array of distinct objects | 1, 2, 3 | items (no) | yes |
-| Locally built cyclic ring | 1, 2, 3 | ring (no) | yes |
-| Ring with second outside reference | 1, 2 | ring (no), other.saved (yes) | no |
+| Flat literal | Proven | `2` | Admitted; TSan checked |
+| Array of distinct objects | Proven | `2`, `3`, `4` | Admitted; TSan checked |
+| Nested object | Proven | `2` | Existing refusal retained |
+| Local cyclic ring | Proven | `2 2` | Existing refusal retained |
+| Ring with a second outside reference | Refused, via `other.saved`, even without a later read | `2 2` | Existing refusal retained |
 
-The flat row isolates one of today's flat items; the array row models the current
-whole-input construction proof. Ring-building locals other than ring must already
-have ended ownership in that snapshot. Leaving any one alive refuses. The fifth
-row reports `cannot move ring: another variable, field or closure may reach the
-graph via other.saved`. Additional tests refuse dead aliases, Weak, borrowed owners,
-later source use, unknown objects, opaque outside roots and aliases to disconnected region members.
-Prototype refusal text is deliberately minimal; the table above specifies future
-boundary diagnostics. It does not implement per-item partitions or full path graph
-export: snapshot edges already supply the finite representation, while Paths are
-shortest ingress witnesses only.
+The source fixtures live in `internal/oracle/testdata/ownership-query`. All five
+are checked against Node v24.19.0. Every admitted move, including the existing
+2,048-object fixture, runs the existing ASan, release, slab and ThreadSanitizer
+variants with one thread and the default pool. TSan variants run three times per
+pool choice. The snapshot shape tests additionally check closure membership and
+witnesses. Extracted-state tests cover fieldless descendants, dead-but-owned aliases,
+proven earlier ownership endings, Weak and continuation access. Additional tests
+cover missing/opaque inventories, borrowed roots and disconnected region members.
 
-Reproduce answers with the setup env sourced and Node v24.19.0:
+`prove-mutant.py` deletes the second-owner check temporarily, requires the ownership
+regression to fail for the intended reason, and restores the exact original source
+in a finally block. It kills the mutant that incorrectly returns Proven for an
+unused surviving alias.
+
+Reproduce with the setup environment sourced and Node v24.19.0:
 
 ```sh
-go test ./internal/lower -run '^TestOwnershipQuery' -v -count=1
+go test ./internal/fresh -run '^TestOwnershipQuery' -v -count=1
+go test ./internal/lower -run '^TestOwnershipQueryMoveAgreement$' -v -count=1
+go test ./internal/oracle -run '^TestOwnershipQueryNodeShapes$' -v -count=1 -timeout 20m
+python3 internal/oracle/testdata/ownership-query/prove-mutant.py
 ```
 
-## Cost and limits
+## Preparation cost
 
-Reuse flow graphs, fresh fixed-point states, call summaries and type classification
-once per compilation rather than re-running ProveWrites for each task. For a
-snapshot with V objects, E heap edges, R roots and M region membership entries,
-indexed forward/reverse traversal and region expansion cost O(V+E+R+M) time and
-space per boundary; disjointness can use a member-to-task index. Shortest witnesses
-need predecessor links, not copied full strings. Do not enumerate all path strings.
-The small prototype instead scans region membership repeatedly and does BFS per
-root: worst-case O(V² + R(V+E)), with path-string copying overhead. It is a semantic
-sketch, not the intended production data structure.
+`BenchmarkOwnershipQueryLowering` measures actual lowering with and without the
+flag on the three largest available stage-1 ports. Loading/checking through
+`load.Load`, registry generation and selecting TSGo are outside the timer; each
+sample uses a freshly loaded input. Type queries performed by lowering, typed IR,
+cycle classification, the optional demand scan and borrow/counters are inside.
+Best of three single-lowering samples, milliseconds:
 
-Whole-program preparation has additional CFG iteration, heap-state joins and
-interprocedural summary convergence costs; no linear bound is claimed for it.
-Use recency/site bounds, sparse query demand, bounded summaries and explicit
-Unknown on work-budget exhaustion. Do not cap work by silently omitting roots.
+| Port | Functions / locals | Flag off samples (ms) | Flag on samples (ms) | Best off (ms) | Best on (ms) | Difference (ms) |
+| --- | --- | --- | --- | ---: | ---: | ---: |
+| parser/main.ts | 183 / 856 | 423.719, 414.416, 416.132 | 422.047, 425.699, 425.990 | 414.416 | 422.047 | +7.630 |
+| lint/main.ts | 760 / 3,215 | 2520.704, 2462.877, 3097.172 | 2923.960, 3029.188, 2823.242 | 2462.877 | 2823.242 | +360.365 |
+| typeaware/volume_suite.ts | 387 / 1,931 | 1339.138, 1102.131, 1079.171 | 1076.490, 978.388, 972.379 | 1079.171 | 972.379 | -106.792 |
 
-The prior graph-walk report selected the 9-file parser (155 functions/784
-locals), 17-file lint entry (257/1,358) and 31-file checker volume suite (359/1,859)
-as the largest available stage-1 ports. The current generated lint registry
-can select more rule implementations; benchmark logs record current IR sizes.
-The original 78-file tsc corpus is absent. Their manifests and prior site-walk
-costs are in [the graph walk report](../internal/lower/performance/graph-walk/REPORT.md).
-That report's 9.29/15.08/16.54ms walks are not ownership-query timings.
+Machine: Linux/amd64, Intel Xeon Platinum 8573C, five visible CPUs,
+four-CPU cgroup quota, 16 GiB memory limit, Go 1.27.1, GOMAXPROCS 5,
+Node v24.19.0, clang 20.1.8. No other task test/build was intentionally running
+during measurements. Shared-machine 1/5/15-minute load before/after: parser
+`0.27/1.58/2.31` → `0.38/1.56/2.29`; lint `0.38/1.56/2.29` →
+`0.64/1.54/2.27`; checker `0.64/1.54/2.27` → `0.70/1.52/2.26`.
 
-`BenchmarkOwnershipQueryPreparation` measures actual flow.Build plus LiveOut for
-all functions and main in those lowered ports. Loading/checking/lowering are outside
-the timer. It rebuilds rather than reuses graphs, so it describes preparation when
-uncached. It excludes snapshot extraction, type graph work, fresh summary/state
-retention and the final ownership query. Those costs remain unmeasured until the
-facility exists; no full-query overhead claim follows from these measurements.
+These ports have no admitted move boundaries, so the flag performs demand detection
+and avoids heap preparation entirely. The table measures that actual lowering path,
+not the cost of region extraction or of a demanded whole-program heap analysis.
+Negative differences are sample variability, not a claimed speedup. Full demanded
+preparation inherits fresh's CFG and interprocedural fixed-point costs; no linear
+bound is claimed for it. The snapshot query indexes regions and reverse heap edges,
+expands each region once and tracks two reverse-reachability states per object.
+Witnesses use predecessor links. Sorting ensures deterministic output, and materializing
+witness strings adds their output length to traversal cost. No cyclic walks are
+enumerated. The snapshot budget returns Unknown rather than dropping roots.
 
-Measured on base `ae57b2d84bc8ee572830a49f4e9a7f78737f7205` with this test-only
-benchmark: Go 1.27.1 linux/amd64, Node v24.19.0, AMD EPYC 9V74, GOMAXPROCS 5,
-four-CPU quota. Three samples of ten preparations, milliseconds per preparation:
-
-| Entry | Current functions / locals | All ms samples | Median ms | Go bytes/op range | Go allocs/op |
-| --- | --- | --- | ---: | --- | --- |
-| parser/main.ts | 183 / 856 | 16.351, 45.254, 12.706 | 16.351 | 3,266,025–3,266,056 | 50,981 |
-| lint/main.ts | 760 / 3,215 | 64.671, 37.872, 30.056 | 37.872 | 10,244,792–10,244,819 | 155,602 |
-| typeaware/volume_suite.ts | 387 / 1,931 | 18.169, 21.371, 20.397 | 20.397 | 5,838,504–5,838,561 | 92,048–92,049 |
-
-These are shared-machine observations with wide ranges, not speedup claims or
-peak RSS. Setup had finished; a final focused test/vet invocation overlapped the
-start of the parser run. The older report's type/file totals describe its own
-revision, not this expanded registry or today's IR. Initial benchmark attempts
-without the generated registry and TSGo option failed at load/lower and supplied
-no lint/checker measurements. Earlier parser samples during cold setup are excluded.
+Raw samples, machine/load data and gate logs are in
+[the ownership-query evidence](../cloud/reports/ownership-query/).
 
 ```sh
 source /workspace/adamic-tools/env.sh
-go run ./cmd/lint-registry > /tmp/ownership-query-registry.log
+go run ./cmd/lint-registry
 for input in ../../stage1/typescript/parser/main.ts ../../stage1/cohere/lint/main.ts ../../stage1/cohere/typeaware/volume_suite.ts; do
-  ADAMIC_OWNERSHIP_BENCH_SOURCE="$input" ADAMIC_OWNERSHIP_BENCH_TSGO=1 \
-    go test ./internal/lower -run '^$' -bench '^BenchmarkOwnershipQueryPreparation$' -benchtime=10x -count=3
+  ADAMIC_OWNERSHIP_BENCH_SOURCE="$input" go test ./internal/lower -run '^$' \
+    -bench '^BenchmarkOwnershipQueryLowering$' -benchtime=1x -count=3
 done
 ```
 
-Validation: all `internal/lower` tests passed (49.492s); final focused ownership
-checks passed, including the opaque-root refusal and exact second-owner message;
-`go vet ./internal/lower`, gofmt and `git diff --check` passed. Setup's repository
-build passed. The whole repository gate, native transfer experiments and Darwin
-were not run for this design-only patch.
+Validation: all tests in `internal/ir`, `internal/flow`, `internal/fresh` and
+`internal/lower` passed; the independent 74-fixture agreement gate passed; all
+five Node witnesses and all admitted move sanitizer variants passed; the
+second-owner mutant was killed in both normalized and extracted-state tests.
+`go vet` on the affected analysis/lowering/oracle packages, gofmt and
+`git diff --check` passed. The full repository gate and Darwin were not run.

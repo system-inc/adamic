@@ -64,7 +64,8 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 		}
 		shared = append(shared, value)
 	}
-	return ir.ParallelMap{Items: items, Work: work, Shared: shared, Result: result, Moved: moved}, nil
+	l.moveSites = append(l.moveSites, node)
+	return ir.ParallelMap{Site: len(l.moveSites), Items: items, Work: work, Shared: shared, Result: result, Moved: moved}, nil
 }
 
 // Run before general refusals, so async work gets its concurrency diagnostic even
