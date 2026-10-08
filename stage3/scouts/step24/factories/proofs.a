@@ -1,0 +1,46 @@
+// a-check: refused a cast the runtime can't check
+// Only the TypeScript-API scanner interprets these adversarial proof boundaries.
+interface ProofNode { kind: string; pos: number; end: number; value: number; }
+function observe(node: ProofNode): void { console.log(`${node.value}`); }
+function createComplete(value: number): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    node.value = value;
+    return node;
+}
+function createConditional(condition: boolean): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    if (condition) node.value = 1;
+    return node;
+}
+function createBothBranches(condition: boolean): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    if (condition) node.value = 1;
+    else node.value = 2;
+    return node;
+}
+function createPassed(): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    observe(node);
+    node.value = 1;
+    return node;
+}
+function createAlias(): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    const alias = node;
+    alias.value = 4;
+    return node;
+}
+function createLoop(condition: boolean): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    while (condition) { node.value = 5; condition = false; }
+    return node;
+}
+function createCompound(): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1 } as ProofNode;
+    node.value |= 1;
+    return node;
+}
+function createUndefined(): ProofNode {
+    const node = { kind: 'Proof', pos: 0, end: 1, value: undefined! } as ProofNode;
+    return node;
+}

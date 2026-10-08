@@ -1,0 +1,428 @@
+{
+  "typescript": "6.0.3",
+  "sourceFileBeforeParser": {
+    "bindDiagnostics": "undefined",
+    "parent": "undefined"
+  },
+  "sourceFileAfterParser": {
+    "bindDiagnostics": [],
+    "text": "let answer = 42;",
+    "statementParentIsSource": true
+  },
+  "numericFlags": {
+    "plain": 0,
+    "conditional": 1024
+  },
+  "observations": [
+    {
+      "factory": "createBinaryExpression",
+      "kind": "BinaryExpression",
+      "requiredFields": [
+        {
+          "field": "end",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "flags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "kind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "left",
+          "own": true,
+          "value": "object"
+        },
+        {
+          "field": "modifierFlagsCache",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "operatorToken",
+          "own": true,
+          "value": "object"
+        },
+        {
+          "field": "parent",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "pos",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "right",
+          "own": true,
+          "value": "object"
+        },
+        {
+          "field": "symbol",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "transformFlags",
+          "own": true,
+          "value": "number"
+        }
+      ]
+    },
+    {
+      "factory": "createVariableDeclaration",
+      "kind": "VariableDeclaration",
+      "requiredFields": [
+        {
+          "field": "end",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "flags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "kind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "modifierFlagsCache",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "name",
+          "own": true,
+          "value": "object"
+        },
+        {
+          "field": "parent",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "pos",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "symbol",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "transformFlags",
+          "own": true,
+          "value": "number"
+        }
+      ]
+    },
+    {
+      "factory": "createNumericLiteral",
+      "kind": "FirstLiteralToken",
+      "requiredFields": [
+        {
+          "field": "end",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "flags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "kind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "modifierFlagsCache",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "numericLiteralFlags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "parent",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "pos",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "symbol",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "text",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "transformFlags",
+          "own": true,
+          "value": "number"
+        }
+      ]
+    },
+    {
+      "factory": "createNumericLiteral",
+      "kind": "FirstLiteralToken",
+      "requiredFields": [
+        {
+          "field": "end",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "flags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "kind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "modifierFlagsCache",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "numericLiteralFlags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "parent",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "pos",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "symbol",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "text",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "transformFlags",
+          "own": true,
+          "value": "number"
+        }
+      ]
+    },
+    {
+      "factory": "createSourceFile",
+      "kind": "SourceFile",
+      "requiredFields": [
+        {
+          "field": "ambientModuleNames",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "amdDependencies",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "bindDiagnostics",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "end",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "endOfFileToken",
+          "own": true,
+          "value": "object"
+        },
+        {
+          "field": "fileName",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "flags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "hasNoDefaultLib",
+          "own": true,
+          "value": "boolean"
+        },
+        {
+          "field": "identifierCount",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "identifiers",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "imports",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "isDeclarationFile",
+          "own": true,
+          "value": "boolean"
+        },
+        {
+          "field": "kind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "languageVariant",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "languageVersion",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "libReferenceDirectives",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "lineMap",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "modifierFlagsCache",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "moduleAugmentations",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "nodeCount",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "originalFileName",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "parent",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "parseDiagnostics",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "path",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "pos",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "pragmas",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "referencedFiles",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "resolvedPath",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "scriptKind",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "statements",
+          "own": true,
+          "value": "array"
+        },
+        {
+          "field": "symbol",
+          "own": false,
+          "value": "undefined"
+        },
+        {
+          "field": "symbolCount",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "text",
+          "own": true,
+          "value": "string"
+        },
+        {
+          "field": "transformFlags",
+          "own": true,
+          "value": "number"
+        },
+        {
+          "field": "typeReferenceDirectives",
+          "own": true,
+          "value": "undefined"
+        },
+        {
+          "field": "version",
+          "own": false,
+          "value": "undefined"
+        }
+      ]
+    }
+  ]
+}

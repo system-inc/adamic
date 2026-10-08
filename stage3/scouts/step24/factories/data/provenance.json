@@ -1,0 +1,14 @@
+{
+  "adamic_base_commit": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "typescript_tag": "v6.0.3",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_api": "6.0.3",
+  "cohere_commit": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "source_root": "/workspace/cache/tsc-census/typescript",
+  "prepared_root": "/workspace/cache/tsc-census/prepared",
+  "generated_input": "src/compiler/diagnosticInformationMap.generated.ts, official processDiagnosticMessages.mjs",
+  "source_modifications": "None in factory/, parser.ts, types.ts or utilities.ts; byte pins in source_manifest.json",
+  "node_version": "v24.19.0",
+  "nproc": 5,
+  "cpu_quota": 4
+}

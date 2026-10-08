@@ -1,0 +1,13 @@
+// a-check: clean
+// TypeScript v6.0.3 parser.ts:2600-2616. setTextRangePosEnd inlined; flags simplified.
+interface ParserNode { kind: string; pos: number; end: number; flags: number; }
+function finishNode(node: ParserNode, pos: number, end: number, contextFlags: number, parseError: boolean): ParserNode {
+    node.pos = pos;
+    // mutant: omit end completion
+    if (contextFlags !== 0) node.flags |= contextFlags;
+    if (parseError) node.flags |= 8;
+    return node;
+}
+const node: ParserNode = { kind: 'Identifier', pos: -1, end: -1, flags: 0 };
+const finished = finishNode(node, 2, 7, 4, true);
+console.log(`${finished === node}:${finished.pos}:${finished.end}:${finished.flags}`);

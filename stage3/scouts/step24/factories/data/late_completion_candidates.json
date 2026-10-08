@@ -1,0 +1,362 @@
+[
+  {
+    "field": "parent",
+    "location": {
+      "file": "src/compiler/utilities.ts",
+      "line": 10705,
+      "column": 9
+    },
+    "receiverType": "Mutable<T>",
+    "expression": "(child as Mutable<T>).parent = parent",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6111,
+      "column": 21
+    },
+    "receiverType": "SourceFile",
+    "expression": "this.redirectInfo!.redirectTarget.symbol = value",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "referencedFiles",
+    "location": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6168,
+      "column": 9
+    },
+    "receiverType": "Mutable<SourceFile>",
+    "expression": "node.referencedFiles = referencedFiles",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "typeReferenceDirectives",
+    "location": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6169,
+      "column": 9
+    },
+    "receiverType": "Mutable<SourceFile>",
+    "expression": "node.typeReferenceDirectives = typeReferences",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "libReferenceDirectives",
+    "location": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6171,
+      "column": 9
+    },
+    "receiverType": "Mutable<SourceFile>",
+    "expression": "node.libReferenceDirectives = libReferences",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6340,
+      "column": 9
+    },
+    "receiverType": "Mutable<Identifier>",
+    "expression": "clone.symbol = node.symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "referencedFiles",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1617,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "result.referencedFiles = emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "typeReferenceDirectives",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1618,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "result.typeReferenceDirectives = emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "libReferenceDirectives",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1619,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "result.libReferenceDirectives = emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "amdDependencies",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1620,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "result.amdDependencies = emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "pragmas",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1622,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "result.pragmas = emptyMap as ReadonlyPragmaMap",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "identifiers",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1724,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "sourceFile.identifiers = identifiers",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "parseDiagnostics",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1725,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "sourceFile.parseDiagnostics = attachFileToDiagnostics(parseDiagnostics, sourceFile)",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "identifiers",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1828,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "sourceFile.identifiers = identifiers",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "parseDiagnostics",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 1829,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "sourceFile.parseDiagnostics = attachFileToDiagnostics(parseDiagnostics, sourceFile)",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "bindDiagnostics",
+    "location": {
+      "file": "src/compiler/parser.ts",
+      "line": 2005,
+      "column": 13
+    },
+    "receiverType": "SourceFile",
+    "expression": "sourceFile.bindDiagnostics = []",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 8808,
+      "column": 17
+    },
+    "receiverType": "Identifier",
+    "expression": "identifier.symbol = symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 8900,
+      "column": 17
+    },
+    "receiverType": "Identifier",
+    "expression": "identifier.symbol = symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 8932,
+      "column": 21
+    },
+    "receiverType": "Identifier",
+    "expression": "identifier.symbol = symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 8954,
+      "column": 25
+    },
+    "receiverType": "Identifier",
+    "expression": "identifier.symbol = symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 9268,
+      "column": 21
+    },
+    "receiverType": "Identifier",
+    "expression": "name.symbol = sym!",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 10212,
+      "column": 21
+    },
+    "receiverType": "ModuleDeclaration",
+    "expression": "fakespace.symbol = props[0].parent!",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/checker.ts",
+      "line": 33929,
+      "column": 17
+    },
+    "receiverType": "Declaration",
+    "expression": "childrenPropSymbol.valueDeclaration.symbol = childrenPropSymbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 1465,
+      "column": 21
+    },
+    "receiverType": "ModuleDeclaration",
+    "expression": "fakespace.symbol = props[0].parent!",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "imports",
+    "location": {
+      "file": "src/compiler/program.ts",
+      "line": 3359,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "file.imports = imports || emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "moduleAugmentations",
+    "location": {
+      "file": "src/compiler/program.ts",
+      "line": 3360,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "file.moduleAugmentations = moduleAugmentations || emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "ambientModuleNames",
+    "location": {
+      "file": "src/compiler/program.ts",
+      "line": 3361,
+      "column": 9
+    },
+    "receiverType": "SourceFile",
+    "expression": "file.ambientModuleNames = ambientModules || emptyArray",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "parent",
+    "location": {
+      "file": "src/compiler/program.ts",
+      "line": 3388,
+      "column": 21
+    },
+    "receiverType": "Mutable<Node>",
+    "expression": "(node.name as Mutable<Node>).parent = node",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/binder.ts",
+      "line": 638,
+      "column": 9
+    },
+    "receiverType": "Declaration",
+    "expression": "node.symbol = symbol",
+    "undefined": false,
+    "plainAssignment": true
+  },
+  {
+    "field": "symbol",
+    "location": {
+      "file": "src/compiler/binder.ts",
+      "line": 3118,
+      "column": 13
+    },
+    "receiverType": "JsonSourceFile",
+    "expression": "file.symbol = originalSymbol",
+    "undefined": false,
+    "plainAssignment": true
+  }
+]

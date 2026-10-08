@@ -1,0 +1,4436 @@
+[
+  {
+    "factory": "src/compiler/factory/baseNodeFactory.ts:41:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/baseNodeFactory.ts:45:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/baseNodeFactory.ts:49:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/baseNodeFactory.ts:53:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/baseNodeFactory.ts:57:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1209:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1213:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1213:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 1215,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1233:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1233:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1244:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1251:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1251:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1259:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1259:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1267:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1267:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1274:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1281:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1304:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1304:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 1309,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1313:5",
+    "field": "emitNode",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1726,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1313:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1313:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1326:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1326:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1349:5",
+    "field": "emitNode",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1726,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1349:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1349:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1361:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1361:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1369:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1369:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1388:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1396:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1401:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1415:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1436:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1580:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1600:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1798,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1621:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1829,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1621:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1645:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1896,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1645:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1700:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1823,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1722:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1921,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1722:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1765:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1934,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1765:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1813:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2094,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1813:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1858:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2110,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1858:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1946:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2174,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1946:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1981:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2121,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:1981:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2035:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2140,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2035:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2099:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2153,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2099:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2160:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2160:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2193:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2193:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2226:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2167,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2226:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2259:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2384,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2285:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2253,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2304:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2321:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2321:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2363:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2363:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2369:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2369:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2390:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2390:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2431:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2448:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2448:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2463:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2478:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2493:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2493:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2516:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2531:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2545:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2559:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2569:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2579:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2603:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2618:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2635:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2674:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2689:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2696:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2714:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2731:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2731:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2759:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2778:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2041,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2799:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2047,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2816:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1908,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2816:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2848:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2869:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2869:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2886:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2886:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2903:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2903:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2930:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2930:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2953:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2953:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2968:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2968:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2995:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:2995:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3018:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3018:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3038:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3038:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3064:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3064:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3088:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3088:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3113:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3141:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3160:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3177:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3177:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3246:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3246:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3305:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3320:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3335:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3350:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3368:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3394:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3419:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3419:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3473:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3509:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3561:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3570:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3570:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3580:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3588:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2878,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3594:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2885,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3600:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2892,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3606:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3606:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3612:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3634:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2944,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3651:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3651:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3695:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3700:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3719:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3738:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3757:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3776:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3826:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2920,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3845:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2133,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3856:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3876:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3900:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3907:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3925:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3949:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3970:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:3991:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4020:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4046:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4077:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4096:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4115:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4136:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4157:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4179:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4200:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4218:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4242:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4251:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1877,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4251:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4276:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1889,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4300:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4300:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4383:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4383:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4436:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4436:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4474:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4474:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4510:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4510:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4544:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3633,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4544:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4587:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3659,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4604:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3477,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4622:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4622:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4649:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3674,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4649:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4691:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3696,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4727:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3721,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4727:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4758:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3752,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4776:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3744,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4793:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2200,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4811:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3752,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4829:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3744,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4846:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3759,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4846:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4862:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3765,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4862:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4879:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3792,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4895:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3806,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4895:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4916:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3854,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4916:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4947:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3779,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4947:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:4998:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3798,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5014:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3814,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5037:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5037:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5049:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3686,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5071:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5078:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5091:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5117:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5117:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5140:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5140:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5156:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5170:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5170:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5199:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5206:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5206:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5214:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5232:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4073,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5232:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5254:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4106,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5254:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5276:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4106,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5276:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5298:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4081,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5298:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5320:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4089,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5336:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5352:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5359:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5375:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5389:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5407:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5422:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5437:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5468:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5494:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5515:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3959,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5529:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4041,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5529:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5548:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4141,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5568:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5582:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3953,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5602:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5624:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5649:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3240,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5674:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3297,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5690:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5712:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3310,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5729:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3265,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5736:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3271,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5743:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3276,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5743:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5762:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3228,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5762:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5778:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3291,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5794:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3303,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5812:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5835:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3483,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5855:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3491,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5896:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3520,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5923:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1995,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5923:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5957:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2007,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5957:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5993:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2022,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:5993:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6016:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3604,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6016:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "ambientModuleNames",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4444,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6089,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "amdDependencies",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4354,
+      "column": 5
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6082,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "bindDiagnostics",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4425,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6072,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "identifiers",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4415,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6084,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "imports",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4440,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6087,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "libReferenceDirectives",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4358,
+      "column": 5
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6081,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "lineMap",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4436,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6074,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "moduleAugmentations",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4442,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6088,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "parseDiagnostics",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4422,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6071,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "pragmas",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4447,
+      "column": 22
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6077,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "referencedFiles",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4356,
+      "column": 5
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6079,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6041:5",
+    "field": "typeReferenceDirectives",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 4357,
+      "column": 5
+    },
+    "writes": [
+      {
+        "location": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6080,
+          "column": 9
+        },
+        "afterEscape": false,
+        "definiteAssignment": true,
+        "expression": "undefined!"
+      }
+    ]
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6197:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6218:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6227:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6244:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6259:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6277:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6294:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6309:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6413:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6413:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6431:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6431:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6446:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6450:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3854,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6450:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6458:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3779,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6458:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6484:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6484:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6501:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6501:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6505:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6505:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6509:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6509:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6513:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6513:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6517:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6517:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6521:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6521:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6525:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6525:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6529:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6529:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6533:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6533:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6537:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6537:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6549:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6549:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6725:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/nodeFactory.ts:6725:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:208:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:208:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:228:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:228:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:257:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:257:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:267:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1995,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:267:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:289:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1995,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:289:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:325:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1995,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:325:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:351:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:351:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:359:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:359:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:371:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:371:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:376:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:376:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:392:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:392:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:402:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:402:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:414:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:414:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:419:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:419:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:437:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:437:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:447:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:447:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:503:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:503:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:533:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:533:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:542:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:542:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:551:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:551:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:560:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:560:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:569:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:580:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:580:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:589:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:589:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:602:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:602:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:613:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:613:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:627:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:627:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:636:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:636:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:648:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:648:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:660:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:660:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:672:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:672:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:677:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:686:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:686:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:691:5",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/emitHelpers.ts:691:5",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:183:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 3779,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:183:1",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:204:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:204:1",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:215:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:228:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:237:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 948,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:1627:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2140,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:1627:1",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:1649:1",
+    "field": "parent",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 2153,
+      "column": 5
+    },
+    "writes": []
+  },
+  {
+    "factory": "src/compiler/factory/utilities.ts:1649:1",
+    "field": "symbol",
+    "declaration": {
+      "file": "src/compiler/types.ts",
+      "line": 1758,
+      "column": 22
+    },
+    "writes": []
+  }
+]

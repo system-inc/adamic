@@ -1,0 +1,11 @@
+// a-check: refused a cast the runtime can't check
+// TypeScript v6.0.3 factory/nodeFactory.ts:1234-1241; utilities.ts:8512.
+interface NumericNode { kind: string; text: string; transformFlags: number; }
+function createNumericLiteral(text: string, binaryOrOctal: boolean): NumericNode {
+    const node = { kind: 'NumericLiteral' } as NumericNode;
+    // mutant: no default before conditional write
+    node.text = text;
+    if (binaryOrOctal) node.transformFlags |= 1;
+    return node;
+}
+console.log(`${createNumericLiteral('7', false).transformFlags}:${createNumericLiteral('0b1', true).transformFlags}`);
