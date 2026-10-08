@@ -1,0 +1,250 @@
+YAML split evidence, 2026-10-08 UTC
+Branch: stage1-split/yaml
+Base origin/main: 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8
+Latest fetched origin/main: 031a1259bc7973934792dc6cb1bd4074fc2204b9
+Machine: nproc=5; cgroup cpu.max=400000 100000 (4 CPUs); GOMAXPROCS=4.
+Load: first baseline 0.06/0.02/0.00; protocol individual runs 0.55/1.01/1.07 then 0.85/1.00/1.06; earlier full run 1.07/1.12/1.07 to 1.26/1.36/1.20. Cold harness compilation peaked near load 5.0. These are host load averages, not cgroup utilization.
+Tools: Go 1.27.1; clang 20.1.8; Node 24.19.0.
+Inputs: cohere 7945d102a6c18dd36adf9114a758ce646e8b2359; TypeScript d92d9bfee114c80be2c375d72edae966176e3a4f.
+ADAMIC_YAML_LIBRARY=/workspace/scratch/yaml-oracle: yaml@2.9.0 prettier@3.9.6 yaml-unist-parser@3.2.0.
+All named tests measured with go test -json -run ^TestName$ -count=1; no sampling or input omissions.
+Final package: go test -json ./stage1/cohere/yaml -count=1 -timeout 3h.
+
+LIMIT: internal/buildcache is absent on base and latest fetched main. Builders run once per invocation, shared across shards, as explicitly permitted fallback. No package cache was added. FormatterMutants setup exceeds 30 s and awaits developer-tools internal/buildcache; these units are not yet fully gate eligible. Go oracle empty-cache products also exceed 30 s for formatter tests; they are build inputs, not logic.
+
+Test | before wall s | after longest shard / unchanged own wall s | shards | setup s
+TestComposeMatchGo | 28.27 | 17.14 (unchanged) | 1 | not split
+TestFormatterMutants | 102.14 | 1.40 | 6 | 94.58
+TestFormatterMatchesGo | 31.19 | 2.09 | 20 | 25.02
+TestUnistMatchesGo | 19.47 | 19.79 (unchanged) | 1 | not split
+TestFileDriver | 32.63 | 0.53 | 50 | 24.49
+TestWidthsMatchGo | 9.39 | 9.11 (unchanged) | 1 | not split
+TestComposeMutants | 19.72 | 20.40 (unchanged) | 1 | not split
+TestUnistMutants | 27.89 | 28.81 (unchanged) | 1 | not split
+TestCSTMatchesGo | 6.64 | 6.55 (unchanged) | 1 | not split
+TestScalarsMatchGo | 8.83 | 8.15 (unchanged) | 1 | not split
+TestCSTMutants | 6.31 | 6.32 (unchanged) | 1 | not split
+
+Build timings, each product on its own line. Fresh output directories; normal compiler/runtime dependency caches unless explicitly empty-cache below. Lowered products include C and JavaScript emission where logged. Mutants use original release native flags, unchanged. Formatter and file-driver native products use ASan/UBSan with leak detection on every shard.
+TestComposeMatchGo:
+  go-oracle 0.467567s
+  lowered 4.159532s
+  native 5.338093s
+  emitted-javascript 0.005824s
+TestFormatterMutants:
+  go-format 0.926173s
+  shard-000-sources 0.000391s
+  shard-000-lowered 12.032569s
+  shard-000-native 3.293132s
+  shard-001-sources 0.000451s
+  shard-001-lowered 11.788776s
+  shard-001-native 3.374766s
+  shard-002-sources 0.000617s
+  shard-002-lowered 11.969342s
+  shard-002-native 3.502674s
+  shard-003-sources 0.000519s
+  shard-003-lowered 12.177449s
+  shard-003-native 3.530471s
+  shard-004-sources 0.000912s
+  shard-004-lowered 12.106941s
+  shard-004-native 3.404685s
+  shard-005-sources 0.000595s
+  shard-005-lowered 11.996049s
+  shard-005-native 3.477794s
+TestFormatterMatchesGo:
+  go-format 0.720394s
+  format-lowered 12.240680s
+  format-sanitized 11.397018s
+TestUnistMatchesGo:
+  go-oracle 0.496319s
+  lowered 6.706762s
+  native 7.324778s
+  emitted-javascript 0.011784s
+TestFileDriver:
+  go-format 0.773099s
+  format-lowered 12.048850s
+  format-sanitized 11.319587s
+TestWidthsMatchGo:
+  go-oracle 0.492792s
+  lowered 0.215098s
+  native 2.452437s
+  emitted-javascript 0.001282s
+TestComposeMutants:
+  go-oracle 0.577960s
+  lowered 4.272126s
+  native 1.179241s
+  lowered 4.169022s
+  native 1.175729s
+  lowered 4.156933s
+  native 1.168090s
+TestUnistMutants:
+  go-oracle 0.519622s
+  lowered 6.725030s
+  native 1.627423s
+  lowered 6.792029s
+  native 1.612240s
+  lowered 6.728215s
+  native 1.561035s
+TestCSTMatchesGo:
+  go-oracle 0.455022s
+  lowered 0.624078s
+  native 1.472458s
+  emitted-javascript 0.002249s
+TestScalarsMatchGo:
+  go-oracle 0.541036s
+  lowered 1.025948s
+  native 1.928831s
+  emitted-javascript 0.002805s
+TestCSTMutants:
+  go-oracle 0.492940s
+  lowered 0.647056s
+  native 0.411136s
+  lowered 0.638938s
+  native 0.403773s
+  lowered 0.627185s
+  native 0.411822s
+
+Unchanged-test phase profiles (separate complete invocation from baseline; residual includes enumeration, oracle execution and all comparisons):
+TestComposeMatchGo: wall=17.01 s, builds=9.97 s, residual logic=7.04 s
+TestUnistMatchesGo: wall=19.28 s, builds=14.54 s, residual logic=4.74 s
+TestWidthsMatchGo: wall=9.43 s, builds=3.16 s, residual logic=6.27 s
+TestComposeMutants: wall=20.37 s, builds=16.70 s, residual logic=3.67 s
+TestUnistMutants: wall=28.65 s, builds=25.57 s, residual logic=3.08 s
+TestCSTMatchesGo: wall=6.85 s, builds=2.55 s, residual logic=4.30 s
+TestScalarsMatchGo: wall=8.23 s, builds=3.50 s, residual logic=4.73 s
+TestCSTMutants: wall=6.27 s, builds=3.63 s, residual logic=2.64 s
+
+Truly cold Go oracle builds (empty GOCACHE per distinct oracle product):
+TestCSTMatchesGo: lexer_test.go:43: empty-cache Go oracle cold build: 5.384216s
+TestComposeMatchGo: lexer_test.go:43: empty-cache Go oracle cold build: 6.848703s
+TestFormatterMutants: format_test.go:318: build cold: go-format 53.582412s (toolchain=go version go1.27.1 linux/amd64 flags=["build" "-overlay" "./command/formatter_comparison"] input-files=72557)
+TestScalarsMatchGo: lexer_test.go:43: empty-cache Go oracle cold build: 6.929329s
+TestUnistMatchesGo: lexer_test.go:43: empty-cache Go oracle cold build: 7.280478s
+TestWidthsMatchGo: lexer_test.go:43: empty-cache Go oracle cold build: 5.887117s
+
+Cold runtime prerequisites (empty XDG_CACHE_HOME per named test; archive hash retained in evidence):
+TestCSTMatchesGo: cst_test.go:61: cold prerequisite: runtime-archive 3.722365s /workspace/scratch/yaml-cold-runtime/TestCSTMatchesGo/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestCSTMatchesGo: cst_test.go:61: cold program: native 1.412629s
+TestComposeMatchGo: compose_test.go:124: cold prerequisite: runtime-archive 3.822636s /workspace/scratch/yaml-cold-runtime/TestComposeMatchGo/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestComposeMatchGo: compose_test.go:124: cold program: native 5.048232s
+TestScalarsMatchGo: scalar_test.go:123: cold prerequisite: runtime-archive 3.784583s /workspace/scratch/yaml-cold-runtime/TestScalarsMatchGo/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestScalarsMatchGo: scalar_test.go:123: cold program: native 1.996378s
+TestUnistMatchesGo: unist_test.go:61: cold prerequisite: runtime-archive 3.731612s /workspace/scratch/yaml-cold-runtime/TestUnistMatchesGo/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestUnistMatchesGo: unist_test.go:61: cold program: native 7.162922s
+TestWidthsMatchGo: width_test.go:90: cold prerequisite: runtime-archive 3.787804s /workspace/scratch/yaml-cold-runtime/TestWidthsMatchGo/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestWidthsMatchGo: width_test.go:90: cold program: native 2.411070s
+Formatter/driver runtime product: cold_probe_test.go:9: runtime archive cold: sanitize=false 2.341485s /tmp/TestYAMLColdRuntimeProbe2869813250/001/adamic/runtime/d2b798f6ffdd2c86bf51d077504e6ec3b19e662a69c04eece5e9a0f797baade1/runtime.a
+Formatter/driver runtime product: cold_probe_test.go:9: runtime archive cold: sanitize=true 3.903516s /tmp/TestYAMLColdRuntimeProbe2869813250/002/adamic/runtime/b9afbae9b0621778cb4898db0b912ea3716ba50d04351db6a43fbea949efd165/runtime.a
+TestFormatterMutants empty-runtime first native product (includes cold release runtime archive):
+format_test.go:398: build cold: mutant-00-root-final-newline-lost-native 5.609377s
+format_test.go:398: build cold: mutant-01-colon-separation-lost-native 3.338245s
+format_test.go:398: build cold: mutant-02-flow-trailing-comma-lost-native 3.415651s
+format_test.go:398: build cold: mutant-03-batch-backslash-scan-misses-escapes-native 3.412220s
+format_test.go:398: build cold: mutant-04-emoji-first-unit-range-loses-endpoint-native 3.339963s
+format_test.go:398: build cold: mutant-05-emoji-surrogate-slot-shifted-native 3.691544s
+Outer Go test harness/checker dependency compilation on first cold invocation: 122.23 s. YAML uses the Go checker linked into the harness; no distinct native checker archive.
+
+Union proofs executed before selection: FormatterMatchesGo 10026 unique cases across 20 shards; FileDriver 50 unique cases (36 corpus files +14 controls) across 50 shards; FormatterMutants 60156 unique mutant/case IDs =6 x10026 across 6 shards. Missing, repeated and unexpected IDs fail, as do repeated shard names. Constants match full enumeration before local selection.
+Unchanged input counts: Compose/Unist 9216; CST 8732; Scalars 9272; Widths 1112320 Unicode/context cases. Mutants retain full respective corpus on every mutant.
+
+Planted proof fixtures use the production partition and comparison/rejection helpers. They inject synthetic one-case outputs, not a rebuilt deliberately broken executable:
+units_test.go:205: planted survivor case-0 caught by shard-003 (native): shard-003: native missed mutant
+units_test.go:205: planted survivor case-0 caught by shard-003 (Node): shard-003: Node missed mutant
+units_test.go:343: planted case-00517 caught by shard-001 (native ASan/UBSan/LSan)
+units_test.go:343: planted case-00517 caught by shard-001 (Node)
+units_test.go:343: planted case-00517 caught by shard-001 (emitted JavaScript)
+units_test.go:343: planted case-00005 caught by shard-005 (native ASan/UBSan/LSan)
+units_test.go:343: planted case-00005 caught by shard-005 (Node)
+units_test.go:343: planted case-00005 caught by shard-005 (emitted JavaScript)
+
+Gate regex proof with ADAMIC_TEST_SHARD unset:
+go test -run '^TestFormatterMutants$/^shard-003$' -count=1 -timeout 3h: exactly TestFormatterMutants/shard-003 passed (0.54 s).
+go test -run '^TestFormatterMatchesGo$/^shard-003$' -count=1 -timeout 3h: exactly TestFormatterMatchesGo/shard-003 passed (0.53 s).
+go test -run '^TestFileDriver$/^shard-003$' -count=1 -timeout 3h: exactly TestFileDriver/shard-003 passed (0.16 s).
+Final host load after gate regex checks: 1.03 1.20 1.17 1/147 53624
+
+Final census (subtest own Go elapsed; parent excludes parallel subtests and is setup):
+yaml TestFormatterMatchesGo/shard-019: 0.85 s
+yaml TestFormatterMatchesGo/shard-017: 1.16 s
+yaml TestFormatterMatchesGo/shard-018: 1.62 s
+yaml TestFormatterMatchesGo/shard-016: 0.99 s
+yaml TestFormatterMatchesGo/shard-015: 0.92 s
+yaml TestFormatterMatchesGo/shard-000: 2.45 s
+yaml TestFormatterMatchesGo/shard-014: 1.07 s
+yaml TestFormatterMatchesGo/shard-013: 0.98 s
+yaml TestFormatterMatchesGo/shard-012: 1.15 s
+yaml TestFormatterMatchesGo/shard-011: 0.95 s
+yaml TestFormatterMatchesGo/shard-010: 0.89 s
+yaml TestFormatterMatchesGo/shard-009: 0.94 s
+yaml TestFormatterMatchesGo/shard-008: 0.91 s
+yaml TestFormatterMatchesGo/shard-007: 0.94 s
+yaml TestFormatterMatchesGo/shard-006: 0.86 s
+yaml TestFormatterMatchesGo/shard-005: 0.99 s
+yaml TestFormatterMatchesGo/shard-004: 1.02 s
+yaml TestFormatterMatchesGo/shard-003: 0.89 s
+yaml TestFormatterMatchesGo/shard-002: 0.87 s
+yaml TestFormatterMatchesGo/shard-001: 0.78 s
+yaml TestFormatterMatchesGo (setup): 24.45 s
+yaml TestFileDriver/shard-038: 0.29 s
+yaml TestFileDriver/shard-032: 0.33 s
+yaml TestFileDriver/shard-025: 0.34 s
+yaml TestFileDriver/shard-000: 0.46 s
+yaml TestFileDriver/shard-049: 0.33 s
+yaml TestFileDriver/shard-048: 0.29 s
+yaml TestFileDriver/shard-047: 0.28 s
+yaml TestFileDriver/shard-046: 0.32 s
+yaml TestFileDriver/shard-044: 0.28 s
+yaml TestFileDriver/shard-043: 0.27 s
+yaml TestFileDriver/shard-045: 0.30 s
+yaml TestFileDriver/shard-042: 0.30 s
+yaml TestFileDriver/shard-041: 0.26 s
+yaml TestFileDriver/shard-040: 0.26 s
+yaml TestFileDriver/shard-039: 0.27 s
+yaml TestFileDriver/shard-037: 0.33 s
+yaml TestFileDriver/shard-036: 0.29 s
+yaml TestFileDriver/shard-034: 0.33 s
+yaml TestFileDriver/shard-035: 0.35 s
+yaml TestFileDriver/shard-028: 0.35 s
+yaml TestFileDriver/shard-033: 0.43 s
+yaml TestFileDriver/shard-031: 0.34 s
+yaml TestFileDriver/shard-030: 0.33 s
+yaml TestFileDriver/shard-029: 0.29 s
+yaml TestFileDriver/shard-012: 0.31 s
+yaml TestFileDriver/shard-026: 0.33 s
+yaml TestFileDriver/shard-027: 0.35 s
+yaml TestFileDriver/shard-019: 0.39 s
+yaml TestFileDriver/shard-018: 0.34 s
+yaml TestFileDriver/shard-024: 0.37 s
+yaml TestFileDriver/shard-023: 0.35 s
+yaml TestFileDriver/shard-017: 0.28 s
+yaml TestFileDriver/shard-022: 0.37 s
+yaml TestFileDriver/shard-020: 0.35 s
+yaml TestFileDriver/shard-021: 0.41 s
+yaml TestFileDriver/shard-016: 0.29 s
+yaml TestFileDriver/shard-015: 0.36 s
+yaml TestFileDriver/shard-013: 0.34 s
+yaml TestFileDriver/shard-005: 0.32 s
+yaml TestFileDriver/shard-014: 0.58 s
+yaml TestFileDriver/shard-011: 0.28 s
+yaml TestFileDriver/shard-010: 0.30 s
+yaml TestFileDriver/shard-009: 0.28 s
+yaml TestFileDriver/shard-007: 0.31 s
+yaml TestFileDriver/shard-006: 0.36 s
+yaml TestFileDriver/shard-008: 0.31 s
+yaml TestFileDriver/shard-002: 0.30 s
+yaml TestFileDriver/shard-004: 0.32 s
+yaml TestFileDriver/shard-003: 0.22 s
+yaml TestFileDriver/shard-001: 0.23 s
+yaml TestFileDriver (setup): 24.78 s
+yaml TestFormatterMutants/shard-003: 1.02 s
+yaml TestFormatterMutants/shard-001: 1.22 s
+yaml TestFormatterMutants/shard-002: 1.23 s
+yaml TestFormatterMutants/shard-000: 1.30 s
+yaml TestFormatterMutants/shard-005: 0.85 s
+yaml TestFormatterMutants/shard-004: 0.77 s
+yaml TestFormatterMutants (setup): 93.72 s
+
+Package yaml: PASS 310.759 s; top-level pass=29 fail=0 skip=0; including subtests pass=144 fail=0 skip=0.
+gofmt, go vet ./stage1/cohere/yaml and git diff --check passed.
+
+Eight listed tests were already below 30 s here and remain unsplit; no inputs removed. Outstanding: replace fallback with developer-tools internal/buildcache when it lands, then remeasure fetched-product setup cold.

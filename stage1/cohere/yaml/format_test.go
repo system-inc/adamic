@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -25,16 +25,21 @@ func goFormat(t *testing.T, cases string) []byte {
 	if err != nil {
 		t.Fatal(err)
 	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	goBinary := filepath.Join(t.TempDir(), "go-format")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	goBinary := yamlProduct(t, yamlProductInputs{
+		Name: "go-format", Files: []string{source, filepath.Join(root, "cohere")},
+		Flags: []string{"build", "-overlay", "./command/formatter_comparison"}, Toolchain: "go",
+	}, func(dir string) error {
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		return yamlBuildCommand(filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", filepath.Join(dir, "go-format"), "./command/formatter_comparison")
+	})
+	goBinary = filepath.Join(goBinary, "go-format")
 	expected := run(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
@@ -95,62 +100,105 @@ func formatCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
+const testFormatterMatchesGoShards = 20
+const testFileDriverShards = 50
+const testFormatterMutantsShards = 6
+
+// TestFormatterMatchesGo runs deterministic ranges of 512 complete corpus
+// cases in parallel. ADAMIC_TEST_SHARD=i/n (zero-based i) selects stable unit
+// indices modulo n; unset runs all. All four comparison sides run on every unit.
 func TestFormatterMatchesGo(t *testing.T) {
 	cases, files, count := formatCases(t)
 	expected := goFormat(t, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	entry, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "format")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, "--cases", cases)
-	runner := filepath.Join(root, "oracle/node.mjs")
-	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases)
-	emitted := filepath.Join(t.TempDir(), "format.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, "--cases", cases)
-	for _, side := range []struct {
-		name string
-		out  []byte
-	}{{"native ASan/UBSan/LSan", nativeOut}, {"Node", node}, {"emitted JavaScript", backend}} {
-		if !bytes.Equal(side.out, expected) {
-			os.WriteFile("/tmp/stage1-yaml-format-expected.txt", expected, 0644)
-			os.WriteFile("/tmp/stage1-yaml-format-actual.txt", side.out, 0644)
-			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
-		}
-	}
+	binary, emitted, entry, runner := yamlFormatterProducts(t)
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		t.Skip("set ADAMIC_YAML_LIBRARY to yaml@2.9.0 and prettier@3.9.6")
 	}
-	external := run(t, "", nil, "node", "testdata/format_library.mjs", library, "--cases", cases)
-	expectedLines := bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))
-	actualLines := bytes.Split(bytes.TrimSuffix(external, []byte("\n")), []byte("\n"))
 	inputs, err := os.ReadFile(cases)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputLines := strings.Split(strings.TrimSuffix(string(inputs), "\n"), "\n")
-	if len(actualLines) != len(expectedLines) {
-		t.Fatalf("library answered %d cases, Go %d", len(actualLines), len(expectedLines))
+	expectedLines := bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))
+	if len(inputLines) != count || len(expectedLines) != count {
+		t.Fatalf("case enumeration=%d, inputs=%d, Go answers=%d", count, len(inputLines), len(expectedLines))
 	}
+	units, err := yamlCaseUnits(count, yamlFormatterCaseUnitSize)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(units) != testFormatterMatchesGoShards {
+		t.Fatalf("enumerated %d shards, declared testFormatterMatchesGoShards=%d", len(units), testFormatterMatchesGoShards)
+	}
+	selected := yamlSelectedUnits(t, len(units))
+	binaryInputs, prototypeInputs := yamlFormatterLibraryExceptions()
+	totalKnown := 0
+	for _, input := range inputLines {
+		text := unescapeCase(input)
+		if binaryInputs[text] || prototypeInputs[text] {
+			totalKnown++
+		}
+	}
+	if totalKnown != 42 {
+		t.Fatalf("expected exactly 42 independently proved library difference cases, enumerated %d", totalKnown)
+	}
+	t.Logf("union: %d unique case ids across %d units; %d repository files; 42 proved library difference cases", count, len(units), files)
+	var prepared []struct {
+		unit   yamlCaseUnit
+		path   string
+		wanted []byte
+		known  int
+	}
+	for index, unit := range units {
+		if !selected[index] {
+			continue
+		}
+		shardInputs := inputLines[unit.start:unit.end]
+		path := filepath.Join(t.TempDir(), "cases.txt")
+		if err := os.WriteFile(path, []byte(strings.Join(shardInputs, "\n")+"\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		wanted := append(bytes.Join(expectedLines[unit.start:unit.end], []byte("\n")), '\n')
+		known := 0
+		for _, input := range shardInputs {
+			text := unescapeCase(input)
+			if binaryInputs[text] || prototypeInputs[text] {
+				known++
+			}
+		}
+		prepared = append(prepared, struct {
+			unit   yamlCaseUnit
+			path   string
+			wanted []byte
+			known  int
+		}{unit, path, wanted, known})
+	}
+	for _, product := range prepared {
+		unit, path, wanted, known := product.unit, product.path, product.wanted, product.known
+		t.Run(unit.name, func(t *testing.T) {
+			t.Parallel()
+			defer yamlUnitClock(t)()
+			t.Logf("content: case ids %d..%d (%d cases)", unit.start, unit.end-1, unit.end-unit.start)
+			for _, side := range []struct {
+				name string
+				out  []byte
+			}{
+				{"native ASan/UBSan/LSan", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, "--cases", path)},
+				{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, "--cases", path)},
+				{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, "--cases", path)},
+			} {
+				if err := yamlCompareCaseOutputs(unit.name, side.name, side.out, wanted); err != nil {
+					t.Fatal(err)
+				}
+			}
+			external := run(t, "", nil, "node", "testdata/format_library.mjs", library, "--cases", path)
+			yamlCheckFormatterLibrary(t, wanted, external, inputLines[unit.start:unit.end], unit.start, known)
+		})
+	}
+}
+
+func yamlFormatterLibraryExceptions() (map[string]bool, map[string]bool) {
 	binaryInputs := map[string]bool{}
 	prototypeInputs := map[string]bool{}
 	for _, version := range []string{"", "%YAML 1.1\n---\n", "%YAML 1.2\n---\n"} {
@@ -163,13 +211,25 @@ func TestFormatterMatchesGo(t *testing.T) {
 			}
 		}
 	}
+	return binaryInputs, prototypeInputs
+}
+
+func yamlCheckFormatterLibrary(t *testing.T, expected, external []byte, inputLines []string, offset, wantDifferences int) {
+	t.Helper()
+	expectedLines := bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))
+	actualLines := bytes.Split(bytes.TrimSuffix(external, []byte("\n")), []byte("\n"))
+	if len(actualLines) != len(expectedLines) {
+		t.Fatalf("library answered %d cases, Go %d", len(actualLines), len(expectedLines))
+	}
+	binaryInputs, prototypeInputs := yamlFormatterLibraryExceptions()
 	differences := 0
-	for index, actual := range actualLines {
-		wanted := expectedLines[index]
+	for localIndex, actual := range actualLines {
+		index := offset + localIndex
+		wanted := expectedLines[localIndex]
 		if bytes.Equal(actual, wanted) {
 			continue
 		}
-		input := unescapeCase(inputLines[index])
+		input := unescapeCase(inputLines[localIndex])
 		knownBinary := binaryInputs[input]
 		knownMinification := prototypeInputs[input] && string(actual) == "error\tc.resolve is not a function" && string(wanted) == "error\ttag.resolve is not a function"
 		if !(knownBinary && string(actual) == "error\tInvalid character" && bytes.HasPrefix(wanted, []byte("ok\t"))) && !knownMinification {
@@ -180,12 +240,10 @@ func TestFormatterMatchesGo(t *testing.T) {
 		differences++
 		t.Logf("recorded original Prettier difference, case %d: %q versus Go %q", index, actual, wanted)
 	}
-	if differences != 42 {
-		t.Fatalf("expected exactly 42 independently proved bundled-library differences, got %d", differences)
+	if differences != wantDifferences {
+		t.Fatalf("expected exactly %d independently proved bundled-library differences, got %d", wantDifferences, differences)
 	}
-	t.Logf("original Prettier: %d matching cases, %d proved binary/minification differences", count-differences, differences)
-
-	t.Logf("%d repository files, %d cases, %d format answer bytes identical on Go/native/Node/emitted JavaScript", files, count, len(expected))
+	t.Logf("original Prettier: %d matching cases, %d proved binary/minification differences", len(inputLines)-differences, differences)
 }
 
 func unescapeCase(line string) string {
@@ -206,6 +264,9 @@ func TestBundledParserDifference(t *testing.T) {
 	t.Logf("%s", actual)
 }
 
+// TestFileDriver runs one parallel unit per corpus file/control, preserving all
+// native sanitizer/leak and both JavaScript stdout comparisons on every unit.
+// ADAMIC_TEST_SHARD=i/n (zero-based i) selects stable indices modulo n; unset runs all.
 func TestFileDriver(t *testing.T) {
 	cases, files, _ := formatCases(t)
 	data, err := os.ReadFile(cases)
@@ -222,110 +283,181 @@ func TestFileDriver(t *testing.T) {
 		t.Fatal(err)
 	}
 	expected := bytes.Split(bytes.TrimSuffix(goFormat(t, path), []byte("\n")), []byte("\n"))
-	root, err := filepath.Abs(repository)
+	binary, emitted, entry, runner := yamlFormatterProducts(t)
+	units, err := yamlCaseUnits(len(inputs), yamlFileDriverCaseUnitSize)
 	if err != nil {
 		t.Fatal(err)
 	}
-	entry, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
+	if len(expected) != len(inputs) {
+		t.Fatalf("Go answered %d driver cases, want %d", len(expected), len(inputs))
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
+	if len(units) != testFileDriverShards {
+		t.Fatalf("enumerated %d shards, declared testFileDriverShards=%d", len(units), testFileDriverShards)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "format")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	emitted := filepath.Join(t.TempDir(), "format.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	runner := filepath.Join(root, "oracle/node.mjs")
-	for index, input := range inputs {
-		answer := string(expected[index])
-		if !strings.HasPrefix(answer, "ok\t") {
-			t.Fatalf("driver control %d invalid: %s", index, answer)
+	selected := yamlSelectedUnits(t, len(units))
+	t.Logf("union: %d unique driver case ids across %d units (%d repository files, %d controls)", len(inputs), len(units), files, len(inputs)-files)
+	for unitIndex, unit := range units {
+		if !selected[unitIndex] {
+			continue
 		}
-		wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
-		file := filepath.Join(t.TempDir(), "input.yaml")
-		if err := os.WriteFile(file, []byte(unescapeCase(input)), 0644); err != nil {
-			t.Fatal(err)
-		}
-		for _, side := range []struct {
-			name string
-			out  []byte
-		}{{"native", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, file)}, {"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, file)}, {"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, file)}} {
-			if !bytes.Equal(side.out, wanted) {
-				t.Fatalf("%s file %d: %s", side.name, index, firstDifference(side.out, wanted))
+		index := unit.start
+		input := inputs[index]
+		t.Run(unit.name, func(t *testing.T) {
+			t.Parallel()
+			defer yamlUnitClock(t)()
+			t.Logf("content: file/control case id %d", index)
+
+			answer := string(expected[index])
+			if !strings.HasPrefix(answer, "ok\t") {
+				t.Fatalf("driver control %d invalid: %s", index, answer)
 			}
-		}
+			wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
+			file := filepath.Join(t.TempDir(), "input.yaml")
+			if err := os.WriteFile(file, []byte(unescapeCase(input)), 0644); err != nil {
+				t.Fatal(err)
+			}
+			for _, side := range []struct {
+				name string
+				out  []byte
+			}{{"native", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, file)}, {"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, file)}, {"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, file)}} {
+				if err := yamlCompareCaseOutputs(unit.name, side.name, side.out, wanted); err != nil {
+					t.Fatal(err)
+				}
+			}
+		})
 	}
-	t.Logf("%d repository files and %d direct stdout controls byte-identical to Go on all three port executions", files, len(inputs)-files)
 }
 
+var formatterMutants = []struct{ name, file, from, to string }{
+	{"root final newline lost", "printer.ts", "const hard = !(", "const hard = false && !("},
+	{"colon separation lost", "printer.ts", "this.layout.text(': '), printedValue", "this.layout.text(':'), printedValue"},
+	{"flow trailing comma lost", "printer.ts", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
+	{"batch backslash scan misses escapes", "main.ts", "text.charCodeAt(index) !== 92", "text.charCodeAt(index) !== 13"},
+	{"emoji first unit range loses endpoint", "width.ts", "code <= last", "code < last"},
+	{"emoji surrogate slot shifted", "width.ts", "code - 0x100000 + 0xd800", "code - 0x100000 + 0xd900"},
+}
+
+// TestFormatterMutants runs one parallel unit per mutant. ADAMIC_TEST_SHARD=i/n
+// (zero-based i) selects units whose stable index modulo n is i; unset runs all.
+// Build products are prepared once before any parallel test logic starts.
 func TestFormatterMutants(t *testing.T) {
-	cases, _, _ := formatCases(t)
+	cases, _, count := formatCases(t)
 	expected := goFormat(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, file, from, to string }{
-		{"root final newline lost", "printer.ts", "const hard = !(", "const hard = false && !("},
-		{"colon separation lost", "printer.ts", "this.layout.text(': '), printedValue", "this.layout.text(':'), printedValue"},
-		{"flow trailing comma lost", "printer.ts", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
-		{"batch backslash scan misses escapes", "main.ts", "text.charCodeAt(index) !== 92", "text.charCodeAt(index) !== 13"},
-		{"emoji first unit range loses endpoint", "width.ts", "code <= last", "code < last"},
-		{"emoji surrogate slot shifted", "width.ts", "code - 0x100000 + 0xd800", "code - 0x100000 + 0xd900"},
-	} {
-		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			entries, err := filepath.Glob("*.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
+	mutants := formatterMutants
+	if len(mutants) != testFormatterMutantsShards {
+		t.Fatalf("enumerated %d shards, declared testFormatterMutantsShards=%d", len(mutants), testFormatterMutantsShards)
+	}
+	// Enumerate the unsplit Cartesian product independently of the unit plan.
+	var enumeration []string
+	for _, mutant := range mutants {
+		for index := 0; index < count; index++ {
+			enumeration = append(enumeration, fmt.Sprintf("%s/case-%05d", mutant.name, index))
+		}
+	}
+	units := make([]yamlUnit, len(mutants))
+	for index, mutant := range mutants {
+		units[index].name = yamlShardName(index, len(mutants))
+		for caseIndex := 0; caseIndex < count; caseIndex++ {
+			units[index].ids = append(units[index].ids, fmt.Sprintf("%s/case-%05d", mutant.name, caseIndex))
+		}
+	}
+	if err := yamlValidateUnion(enumeration, units); err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(cases)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rows := len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")); rows != count {
+		t.Fatalf("enumerated %d cases but input has %d rows", count, rows)
+	}
+	t.Logf("union: %d unique mutant/case ids, %d mutants x %d complete corpus cases", len(enumeration), len(mutants), count)
+	selected := yamlSelectedUnits(t, len(units))
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	entries, err := filepath.Glob("*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var prepared []struct {
+		unit                  yamlUnit
+		mutant, entry, binary string
+	}
+	for index, mutant := range mutants {
+		if !selected[index] {
+			continue
+		}
+		unit := units[index]
+		sources := yamlProduct(t, yamlProductInputs{
+			Name: unit.name + "-sources", Files: entries, Flags: []string{mutant.file, mutant.from, mutant.to}, Toolchain: "source-overlay",
+		}, func(dir string) error {
 			for _, file := range entries {
 				source, err := os.ReadFile(file)
 				if err != nil {
-					t.Fatal(err)
+					return err
 				}
 				if file == mutant.file {
 					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
+						return fmt.Errorf("mutation site must occur once")
 					}
 					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
 				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
+				if err := os.WriteFile(filepath.Join(dir, file), source, 0644); err != nil {
+					return err
 				}
 			}
-			entry := filepath.Join(directory, "main.ts")
+			return nil
+		})
+		entry := filepath.Join(sources, "main.ts")
+		lowered := yamlProduct(t, yamlProductInputs{
+			Name: unit.name + "-lowered", Files: []string{sources, filepath.Join(root, "internal"), filepath.Join(root, "cohere"), filepath.Join(root, "go.mod")}, Flags: []string{"main.ts", "C"}, Toolchain: "adamic",
+		}, func(dir string) error {
 			program, err := load.Load([]string{entry})
 			if err != nil {
-				t.Fatal(err)
+				return err
 			}
 			lowered, err := lower.Lower(context.Background(), program)
 			if err != nil {
-				t.Fatal(err)
+				return err
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
+			return os.WriteFile(filepath.Join(dir, "mutant.c"), []byte(native.C(lowered)), 0644)
+		})
+		options := native.Options{}
+		product := yamlProduct(t, yamlProductInputs{
+			Name: unit.name + "-native", Files: []string{filepath.Join(lowered, "mutant.c"), filepath.Join(root, "internal/native")}, Flags: native.Flags(options), Toolchain: "clang",
+		}, func(dir string) error {
+			code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
+			if err != nil {
+				return err
 			}
+			return native.Build(string(code), filepath.Join(dir, "mutant"), options)
+		})
+		binary := filepath.Join(product, "mutant")
+		prepared = append(prepared, struct {
+			unit                  yamlUnit
+			mutant, entry, binary string
+		}{unit, mutant.name, entry, binary})
+	}
+	for _, product := range prepared {
+		unit, entry, binary := product.unit, product.entry, product.binary
+		t.Run(unit.name, func(t *testing.T) {
+			t.Parallel()
+			defer yamlUnitClock(t)()
+			t.Logf("content: mutant %q, case ids 0..%d (%d cases)", product.mutant, count-1, count)
 			nativeOut := run(t, "", nil, binary, "--cases", cases)
 			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases)
 			for _, side := range []struct {
 				name string
 				out  []byte
 			}{{"native", nativeOut}, {"Node", node}} {
-				if bytes.Equal(side.out, expected) {
-					t.Fatalf("%s missed mutant", side.name)
+				if err := yamlRejectSurvivor(unit.name, side.name, side.out, expected); err != nil {
+					t.Fatal(err)
 				}
 				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
 			}
