@@ -1760,8 +1760,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		// The rest of a chain after a ?., which short-circuits with it.
-		return nil, l.notYet(node, "an optional chain longer than one step")
+		return l.optionalIndexContinuation(node)
 	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
@@ -1780,8 +1779,10 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
-	if optional && object.Type() != ir.Object && object.Type() != ir.Array {
-		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
+	if optional && (object.Type() == ir.Array || object.Type() == ir.String || object.Type().IsTypedArray()) {
+		return l.optionalIndex(node, object)
+	}
+	if optional && object.Type() != ir.Object {
 		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
 	}
 	if object.Type() == ir.String {
