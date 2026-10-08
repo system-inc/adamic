@@ -28,6 +28,7 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_foreign,
 };
 
 typedef struct adamic_heap {
@@ -179,6 +180,18 @@ typedef struct adamic_object {
 	bool frozen;
 	adamic_value slots[];
 } adamic_object;
+
+// adamic_foreign is a value another runtime made, held by Adamic: an Objective-C object, so far
+// (foreign.c, docs/apple.md). It's an object of no fields to everything that looks at objects, so
+// nothing can read it as one by accident, and its last release lets go of what it holds, through its
+// kind's release.
+typedef struct adamic_foreign_kind {
+	const char *name;
+	void (*release)(void *pointer);
+} adamic_foreign_kind;
+adamic_object *adamic_foreign_new(void *pointer, const adamic_foreign_kind *kind);
+void *adamic_foreign_pointer(const adamic_object *object);
+void adamic_foreign_dropped(adamic_object *object);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);

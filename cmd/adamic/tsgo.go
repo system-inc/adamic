@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -9,8 +10,15 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildWithExports(path, output, arguments, false)
+}
+
+func buildWithExports(path, output string, arguments []string, entryFunctions bool) int {
 	options := native.Options{}
 	archive := ""
+	reactor := false
+	abiPath := ""
+	names := []string{}
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -20,6 +28,21 @@ func build(path, output string, arguments []string) int {
 				return 2
 			}
 			options.Target = arguments[index]
+		case "--reactor":
+			reactor = true
+		case "--export", "--abi-json":
+			flag := arguments[index]
+			index++
+			if index >= len(arguments) {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			if flag == "--export" {
+				names = append(names, arguments[index])
+				reactor = true
+			} else {
+				abiPath = arguments[index]
+			}
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -36,6 +59,10 @@ func build(path, output string, arguments []string) int {
 			return 2
 		}
 	}
+	if (reactor || abiPath != "") && options.Target != "wasm32-wasi" {
+		fmt.Fprintln(os.Stderr, "adamic: export ABI requires wasm32-wasi")
+		return 1
+	}
 	if err := native.ValidateOptions(options); err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1
@@ -47,9 +74,11 @@ func build(path, output string, arguments []string) int {
 	var program *ir.Program
 	var code int
 	handler := -1
+	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, handler, code = compileWASI(path)
-		options.Request = handler >= 0
+		program, exports, code = compileExportsWith(path, names, entryFunctions)
+		reactor = reactor || len(exports) > 0
+		options.Request = reactor
 	} else {
 		program, code = compileLibrary(path, archive != "")
 	}
@@ -68,10 +97,16 @@ func build(path, output string, arguments []string) int {
 		} else {
 			err = native.BuildTSGo(source, output, archive, options)
 		}
+	} else if native.UsesApple(program) {
+		err = native.BuildApple(native.C(program), output, options)
 	} else {
 		var source string
 		if options.Target == "wasm32-wasi" {
-			source, err = native.WASI(program, handler)
+			if reactor {
+				source, err = native.WASIExports(program, exports)
+			} else {
+				source, err = native.WASI(program, handler)
+			}
 		} else {
 			source = native.C(program)
 		}
@@ -82,6 +117,16 @@ func build(path, output string, arguments []string) int {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1
+	}
+	if abiPath != "" {
+		bytes, err := json.MarshalIndent(native.ABITable{Version: 1, Exports: exports}, "", "  ")
+		if err == nil {
+			err = os.WriteFile(abiPath, append(bytes, '\n'), 0644)
+		}
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "adamic: ABI JSON: %v\n", err)
+			return 1
+		}
 	}
 	return 0
 }

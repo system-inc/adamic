@@ -1,0 +1,17 @@
+Box_new javascript signature: constructor not crossable
+data wasm entry
+tooDeep javascript signature: parameter 1 not crossable
+classParameter javascript signature: parameter 1 not crossable
+returnsClosure javascript signature: return not crossable
+closure javascript too small to cross
+unionParameter javascript signature: parameter 1 not crossable
+tupleParameter javascript signature: parameter 1 not crossable
+throughAlias wasm
+closure wasm
+mutationInCallee javascript writes parameter 1
+writeItems javascript writes parameter 1
+copiedArray wasm
+passthrough javascript too small to cross
+mutationThroughReturn javascript writes parameter 1
+glue javascript impure: console
+Box_new_initialize javascript signature: return not crossable

@@ -1,0 +1,6 @@
+import { decodeJson } from 'adamic';
+for (const text of ['[1,"two",false]', '[1,"two",null]', '[]']) {
+ const r = decodeJson<readonly (number | string | boolean)[]>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else for (const v of r.value) console.log(`${typeof v} ${v}`);
+}

@@ -1,0 +1,11 @@
+import { decodeJson, encodeJson, panic } from 'adamic';
+interface Item { readonly name: string; readonly score: number; readonly note?: string; }
+interface Nested { readonly items: readonly Item[]; readonly enabled: boolean; readonly title?: string; }
+type Tagged = { readonly kind: 'Text'; readonly text: string; readonly note?: string } | { readonly kind: 'Count'; readonly count: number };
+type Tuple = readonly [string, number, boolean];
+export function evaluate(which: number, text: string): string {
+	if (which === 0) { const r = decodeJson<Nested>(text); if (r.kind === 'Error') return panic(r.message); return encodeJson<Nested>(r.value); }
+	if (which === 1) { const r = decodeJson<readonly number[]>(text); if (r.kind === 'Error') return panic(r.message); return encodeJson<readonly number[]>(r.value); }
+	if (which === 2) { const r = decodeJson<Tagged>(text); if (r.kind === 'Error') return panic(r.message); return encodeJson<Tagged>(r.value); }
+	const r = decodeJson<Tuple>(text); if (r.kind === 'Error') return panic(r.message); return encodeJson<Tuple>(r.value);
+}

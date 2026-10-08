@@ -1,0 +1,6 @@
+{"method":"GET","path":"/health"}
+{"method":"GET","path":"/catalog"}
+{"method":"POST","path":"/orders","body":{"customer":"世界 🌍","items":[{"sku":"tea","quantity":2},{"sku":"bread","quantity":3},{"sku":"梨","quantity":4}]}}
+{"method":"POST","path":"/summary","body":{"text":"世界 🌍 tea tea 梨 🌍 tea"}}
+{"method":"POST","path":"/listing","body":{"names":["世界","🌍","梨","a","a","10","2","\ud800","\uffff","e\u0301"]}}
+{"method":"POST","path":"/quote","body":{"amount":125.005}}

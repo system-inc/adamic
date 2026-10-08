@@ -1,0 +1,38 @@
+// counter.a: a SwiftUI counter written in Adamic. Its body is a stack of a text and a button; the
+// button's closure sets a State, and setting it renders the body again. The test presses the button
+// by running the block its Button holds (SwiftUI's accessibility tree is empty without an assistive
+// client) and reads the size of what was rendered: ten presses make the text a digit wider. counter.swift is the same view
+// written as plain SwiftUI: the two must agree (witness_test.go).
+
+import { Window } from 'apple/appkit/window';
+import { Host } from 'apple/swiftui/host';
+import { State, renderWhenStateChanges } from 'apple/swiftui/state';
+import { button, text, verticalStack, type View } from 'apple/swiftui/views';
+
+const count = new State<number>(0);
+
+function body(): View {
+	return verticalStack({ spacing: 12 }, [
+		text(`Count: ${count.value}`).font('Title'),
+		button('Add one', () => {
+			count.set(count.value + 1);
+		}),
+	]).padding(20);
+}
+
+const host = new Host(body());
+renderWhenStateChanges(() => {
+	host.render(body());
+});
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 300, height: 200 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
+window.contentView = host.view();
+
+console.log(`size: ${host.fittingWidth()} by ${host.fittingHeight()}`);
+console.log(`pressed: ${host.press('Add one')}, count: ${count.value}`);
+console.log(`pressed: ${host.press('Add one')}, count: ${count.value}`);
+console.log(`missing: ${host.press('Subtract one')}, count: ${count.value}`);
+for (let index = 0; index < 8; index++) {
+	host.press('Add one');
+}
+console.log(`count: ${count.value}, size: ${host.fittingWidth()} by ${host.fittingHeight()}`);
+window.close();

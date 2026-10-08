@@ -73,6 +73,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if l.isJSONSchemaCall(node) {
+			_, found = l.jsonSchemaCallType(node)
+			if found != nil {
+				return true
+			}
+		}
 		if node.Kind == ast.KindTypePredicate {
 			if err := l.provePredicate(node); err != nil {
 				found = err

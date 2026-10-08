@@ -1,0 +1,2 @@
+import { decodeJson } from 'adamic';
+const r = decodeJson<number | string>('1'); if (r.kind === 'Ok') console.log(`${r.value}`);

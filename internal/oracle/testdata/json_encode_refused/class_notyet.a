@@ -1,0 +1,4 @@
+import {encodeJson} from 'adamic';
+// Class types are explicitly NotYet. Describe JSON data with an interface.
+class Point { readonly x = 1; readonly y = 2; }
+encodeJson<Point>(new Point());

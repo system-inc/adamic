@@ -1,0 +1,28 @@
+import { panic } from 'adamic';
+
+interface Inner {
+  readonly flag: boolean;
+  readonly score: number;
+  readonly text: string;
+  readonly numbers: readonly number[];
+  readonly words: readonly string[];
+}
+interface RecordValue {
+  readonly lead: string;
+  readonly inner: Inner;
+  readonly end: number;
+}
+
+export function numberValue(value: number): number { return value; }
+export function booleanValue(value: boolean): boolean { return value; }
+export function stringValue(value: string): string { return value; }
+export function numbers(value: readonly number[]): readonly number[] { return value; }
+export function strings(value: readonly string[]): readonly string[] { return value; }
+export function recordValue(value: RecordValue): RecordValue { return value; }
+export function nothing(value: string): void { if (value === 'panic') panic('crossing panic'); }
+export function mixed(first: string, values: readonly number[], second: string): string {
+  return `${first}:${values.length}:${second}`;
+}
+export function grow(value: string, size: number): string { return value.repeat(size); }
+
+export function emptyRecord(value: Readonly<{}>): Readonly<{}> { return value; }

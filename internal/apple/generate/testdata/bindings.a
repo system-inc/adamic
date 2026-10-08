@@ -1,0 +1,42 @@
+import { FixturePanel } from 'apple/appkit/fixture-panel';
+import { FixtureRecord } from 'apple/foundation/fixture-record';
+import type { FixtureReadable } from 'apple/foundation/fixture-readable';
+import type { FixtureTableSource } from 'apple/foundation/fixture-table-source';
+import { fixtureAdd } from 'apple/foundation/fixture-add';
+import { fixtureCreateText } from 'apple/foundation/fixture-create-text';
+
+const record = new FixtureRecord({ count: 3 });
+const panel = new FixturePanel(record);
+panel.setFrame({ x: 1, y: 2, width: 40, height: 50 }, { display: true, animate: false });
+panel.configureMode('Loud', { style: ['Bright', 'Quiet'] });
+record.takeText(record.optionalText);
+panel.take(undefined);
+record.text = 'fixture';
+record.label = 'paired getter';
+record.takeProtocol(record);
+const readable: FixtureReadable = record;
+console.log(readable.readText());
+panel.paint();
+panel.show('overloaded text');
+panel.show(4);
+new FixturePanel({ title: 'titled' }).paint();
+console.log(`${panel.scale()}`);
+console.log(`${fixtureAdd(1, 2)}`);
+console.log(fixtureCreateText());
+const optional = record.optionalText;
+if (optional !== undefined) {
+	console.log(optional);
+}
+
+// An object of the program's own class, handed to Apple as the protocol it implements.
+class Source implements FixtureTableSource {
+	numberOfRows(table: FixtureRecord): number {
+		return table.text.length;
+	}
+
+	fixtureTableTextForRow(table: FixtureRecord, row: number): string | undefined {
+		return row > 0 ? table.text : undefined;
+	}
+}
+record.source = new Source();
+record.source = undefined;

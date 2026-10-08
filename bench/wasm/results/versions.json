@@ -1,0 +1,51 @@
+{
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "clang": "clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nTarget: wasm32-unknown-wasi\nThread model: posix\nInstalledDir: /workspace/adamic-tools/wasi-sdk/bin\nConfiguration file: /workspace/adamic-tools/wasi-sdk/bin/clang.cfg",
+  "strip": "llvm-strip, compatible with GNU strip\nLLVM (http://llvm.org/):\n  LLVM version 20.1.8-wasi-sdk\n  Optimized build.",
+  "binaryen": "wasm-opt version 126 (version_126)",
+  "esbuild": "0.25.12",
+  "gzip": "gzip 1.13\nCopyright (C) 2023 Free Software Foundation, Inc.\nCopyright (C) 1993 Jean-loup Gailly.\nThis is free software.  You may redistribute copies of it under the terms of\nthe GNU General Public License <https://www.gnu.org/licenses/gpl.html>.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by Jean-loup Gailly.",
+  "brotli": "brotli 1.1.0",
+  "hyperfine": null,
+  "revision": "997b5c5c3fcbc611679af2941006d3c026c15008",
+  "configurations": {
+    "O2": {},
+    "Oz": {
+      "optimization": "-Oz"
+    },
+    "gc": {
+      "link_flags": [
+        "-Wl,--gc-sections"
+      ]
+    },
+    "sections": {
+      "compile_flags": [
+        "-ffunction-sections",
+        "-fdata-sections"
+      ]
+    },
+    "lto": {
+      "compile_flags": [
+        "-flto"
+      ]
+    },
+    "no-whole": {
+      "drop_archive": true
+    },
+    "Oz-opt": {
+      "optimization": "-Oz",
+      "wasm_opt": "/workspace/wasm-size-tools/binaryen-version_126/bin/wasm-opt"
+    },
+    "O2-opt": {
+      "wasm_opt": "/workspace/wasm-size-tools/binaryen-version_126/bin/wasm-opt"
+    },
+    "Oz-strip-opt": {
+      "optimization": "-Oz",
+      "llvm_strip": "/workspace/adamic-tools/wasi-sdk/bin/llvm-strip",
+      "wasm_opt": "/workspace/wasm-size-tools/binaryen-version_126/bin/wasm-opt"
+    }
+  },
+  "python": "Python 3.12.14",
+  "brotli_build_compiler": "cc (Debian 14.2.0-19) 14.2.0"
+}

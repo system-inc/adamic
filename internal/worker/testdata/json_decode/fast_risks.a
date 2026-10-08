@@ -1,0 +1,49 @@
+import { decodeJson, encodeJson } from 'adamic';
+interface Value { readonly value: string; }
+interface Nested { readonly inner: Value; readonly rows: readonly Value[]; }
+interface Keys { readonly '\ud800': string; readonly '\udc00': string; readonly '🌍': string; }
+function units(text: string): string {
+	let out = `${text.length}`;
+	for (let index = 0; index < text.length; index++) out += `,${text.charCodeAt(index)}`;
+	return out;
+}
+for (const text of [
+	'{"value":1,"value":"last"}',
+	'{"value":[],"value":"last"}',
+	'{"value":"first","value":1}',
+	'{"value":"\\ud800"}', '{"value":"\\udc00"}', '{"value":"\\ud83c\\udf0d"}',
+	'{"value":"\\ud800\\ud800\\udc00\\udc00"}',
+	'{"value":"\\uD8xx"}', '{"value":"\\x"}', '{"value":"\\u123"}',
+	'{"\\uD8xx":0,"value":"ok"}', '{"\\x":0,"value":"ok"}', '{"\\u123":0,"value":"ok"}',
+	'{"\\ud800":0,"\\udc00":0,"\\ud83c\\udf0d":0,"value":"ok"}',
+]) {
+	const r = decodeJson<Value>(text);
+	console.log(r.kind === 'Error' ? `Error:${units(r.message)}` : `Ok:${units(r.value.value)}`);
+}
+for (const depth of [127, 128, 129]) {
+	// Root plus depth-1 arrays, including overwritten duplicates in dropped data.
+	const arrays = '['.repeat(depth - 1) + '0' + ']'.repeat(depth - 1);
+	const nestedDuplicate = '['.repeat(depth - 2) + '{"value":1,"value":"last"}' + ']'.repeat(depth - 2);
+	for (const extra of [arrays, nestedDuplicate]) {
+		const r = decodeJson<Value>('{"value":[],"value":"last","drop":' + extra + ',"drop":0}');
+		console.log(r.kind === 'Error' ? `Error:${units(r.message)}` : `Ok:${units(r.value.value)}`);
+	}
+}
+for (const text of [
+	'{"inner":0,"inner":{"value":1,"value":"\\ud800"},"rows":[{"value":false,"value":"\\udc00"}]}',
+	'{"inner":{"value":"first"},"inner":{"value":"last"},"rows":[{"value":{},"value":"🌍"}]}',
+]) {
+	const r = decodeJson<Nested>(text);
+	if (r.kind === 'Error') console.log(`Error:${units(r.message)}`);
+	else { let out = `Ok:${units(r.value.inner.value)}`; for (const row of r.value.rows) out += `|${units(row.value)}`; console.log(out); }
+}
+for (const text of [
+	'{"\\ud800":0,"\\ud800":"\\ud800","\\udc00":false,"\\udc00":"\\udc00","\\ud83c\\udf0d":"\\ud83c\\udf0d"}',
+	'{"\\ud800":"a","\\udc00":"b","🌍":"c"}',
+	'{"\\ud800":"\\uD8xx","\\udc00":"b","🌍":"c"}',
+	'{"\\ud800":"a","\\udc00":"\\x","🌍":"c"}',
+]) {
+	const r = decodeJson<Keys>(text);
+	if (r.kind === 'Error') console.log(`Error:${units(r.message)}`);
+	else { let out = 'Ok'; for (const key of Object.keys(r.value)) out += `|${units(key)}`; console.log(out + `|${units(encodeJson<Keys>(r.value))}`); }
+}

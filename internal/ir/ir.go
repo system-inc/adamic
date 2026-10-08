@@ -16,6 +16,9 @@ type Program struct {
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
+	// BoundaryStrings belong only to declaration metadata, never codegen.
+	BoundaryStrings BoundaryStringTable
+
 	// Regexps contain immutable C bytecode compiled during lowering.
 	Regexps []RegExpProgram
 
@@ -24,6 +27,9 @@ type Program struct {
 
 	// Functions are the module's function declarations, callable from anywhere in it.
 	Functions []Function
+
+	// Exports names the entry module's exported functions by their source names.
+	Exports []Export
 
 	// Classes carry nominal identity, prefix field layouts and method slots. IDs are one-based.
 	Classes       []Class
@@ -38,6 +44,13 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// Export is an entry function, or a function value held in a global (Function is -1).
+type Export struct {
+	Name     string
+	Function int
+	Local    int
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -65,7 +78,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name     string
+	Position SourcePosition
+	Boundary FunctionBoundary
 
 	// Parameters are locals, in order.
 	Parameters []int
@@ -83,6 +98,9 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+
+	// Foreign, when set, is the native call this function's body stands for (foreign.go).
+	Foreign *Foreign
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of

@@ -1,0 +1,13 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+export function danger(text: string): string {
+    if(text === 'panic') {
+        panic('wasm exploded');
+    }
+    return `ok:${text}`;
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    return { status: 200, headers: [], body: danger(request.body) };
+}

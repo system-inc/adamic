@@ -1,0 +1,11 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+export function handle(request: HttpRequest): HttpResponse {
+    if(request.path !== '/hello') {
+        return { status: 404, headers: [], body: 'not found' };
+    }
+    if(request.method !== 'GET') {
+        return { status: 405, headers: [{ name: 'allow', value: 'GET' }], body: 'method not allowed' };
+    }
+    return { status: 200, headers: [], body: 'hello' };
+}

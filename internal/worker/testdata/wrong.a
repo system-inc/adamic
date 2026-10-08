@@ -1,0 +1,4 @@
+import type { HttpRequest } from 'adamic/http';
+export function handle(request: HttpRequest): string {
+    return request.path;
+}

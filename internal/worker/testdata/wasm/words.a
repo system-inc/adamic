@@ -1,0 +1,19 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+export function words(text: string): readonly string[] {
+    const counts = new Map<string, number>();
+    for(const word of text.split(' ')) {
+        if(word !== '') {
+            counts.set(word, (counts.get(word) ?? 0) + 1);
+        }
+    }
+    const result: string[] = [];
+    for(const [word, count] of counts) {
+        result.push(`${word}:${count}`);
+    }
+    return result;
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    return { status: 200, headers: [], body: JSON.stringify(words(request.body)) ?? '' };
+}

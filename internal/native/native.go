@@ -103,6 +103,9 @@ func Flags(options Options) []string {
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
+	if options.Target == "wasm32-wasi" {
+		return append(flags, "-Oz")
+	}
 	return append(flags, "-O2")
 }
 

@@ -1,0 +1,20 @@
+sum wasm
+sieve wasm entry
+handler javascript impure: console
+logger javascript impure: console
+callsLogger javascript impure: calls logger
+readsMutable javascript impure: mutable global changing
+takesMap javascript signature: parameter 1 not crossable
+takesClosure javascript impure: unknown callee
+recursive wasm
+tiny javascript too small to cross
+mutualPure javascript impure: calls mutualImpure
+mutualImpure javascript impure: console
+throughClosure wasm
+closure wasm
+mutate javascript writes parameter 1
+aliasesParameter javascript writes parameter 1
+readOnlyMutableDeclaration wasm
+writesGlobal javascript impure: writes global changing
+mixed wasm
+closure javascript too small to cross

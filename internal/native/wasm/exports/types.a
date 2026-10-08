@@ -1,0 +1,25 @@
+export function numberValue(value: number): number { return value; }
+export function booleanValue(value: boolean): boolean { return !value; }
+export function stringValue(value: string): string { return value + '!'; }
+export function numbers(value: readonly number[]): readonly number[] { return value.slice(); }
+export function strings(value: readonly string[]): readonly string[] { return value.map((text) => text + '!'); }
+interface Inner { readonly enabled: boolean; readonly score: number; readonly words: readonly string[]; }
+interface RecordValue { readonly title: string; readonly values: readonly number[]; readonly inner: Inner; }
+export function recordValue(value: RecordValue): RecordValue {
+ return { inner: { words: value.inner.words.slice(), score: value.inner.score, enabled: !value.inner.enabled }, values: value.values.slice(), title: value.title + '!' };
+}
+export function noResult(value: string): void { const text = value + '!'; }
+interface Tree { readonly left: Tree | undefined; readonly right: Tree | undefined; }
+function tree(depth: number): Tree { if (depth === 0) { return { left: undefined, right: undefined }; } return { left: tree(depth - 1), right: tree(depth - 1) }; }
+function size(value: Tree): number { return 1 + (value.left === undefined ? 0 : size(value.left)) + (value.right === undefined ? 0 : size(value.right)); }
+export function heavy(value: number): number { const count = size(tree(5)); return count + value; }
+export function surrogate(): string { return String.fromCharCode(0xd800); }
+export function handleRequest(request: string): string { return request + '!'; }
+export function unsupported(value: number | string): string { return `${value}`; }
+export function emptyRecord(value: Readonly<{}>): Readonly<{}> { return value; }
+export function many(first: string, values: readonly number[], second: string, enabled: boolean, score: number): string {
+ return first + second + `:${values.length}:${enabled}:${score}`;
+}
+export function bumpRecord(value: RecordValue): RecordValue { return { ...value, title: value.title + '!' }; }
+let calls = 0;
+export function counter(): number { calls += 1; return calls; }

@@ -1,0 +1,19 @@
+import { decodeJson } from 'adamic';
+interface Branch { readonly children: readonly Branch[]; }
+for (const depth of [0, 1, 63, 64, 65]) {
+ const text = '{"children":['.repeat(depth) + '{"children":[]}' + ']}'.repeat(depth);
+ const result = decodeJson<Branch>(text);
+ console.log(result.kind === 'Ok' ? `ok ${depth}` : result.message);
+}
+// These unused fields still count toward the grammar depth limit.
+for (const depth of [127, 128, 129]) {
+ const text = '['.repeat(depth) + '0' + ']'.repeat(depth);
+ const result = decodeJson<number>(text);
+ console.log(result.kind === 'Error' ? result.message : 'unexpected Ok');
+}
+
+type Nest = readonly Nest[];
+for (const depth of [127, 128, 129]) {
+ const result = decodeJson<Nest>('['.repeat(depth) + ']'.repeat(depth));
+ console.log(result.kind === 'Ok' ? `array ok ${depth}` : result.message);
+}

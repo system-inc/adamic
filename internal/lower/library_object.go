@@ -60,7 +60,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
 		// Reflection cannot use a widened view: a hidden field can have another representation.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if !l.exactObject(written[0], 0) && !(name == "keys" && l.decodedResultValue(written[0])) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -85,6 +85,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		case "freeze":
 			call.Returns = ir.Object
 		case "keys":
+			if l.decodedResultValue(written[0]) {
+				return ir.ObjectKeys{Object: value}, true, nil
+			}
 			call.Returns = ir.Array
 		case "values", "entries":
 			result := l.checker.GetTypeAtLocation(node)

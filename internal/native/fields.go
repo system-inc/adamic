@@ -28,7 +28,7 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// Named regex groups create layouts outside ObjectLiteral. Until their names and
 	// offsets participate in this proof, regex programs retain checked shape lookup.
-	if len(program.Regexps) != 0 {
+	if len(program.Regexps) != 0 || hasJsonDecode(program) {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),

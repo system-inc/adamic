@@ -1,0 +1,60 @@
+import { programArguments } from 'adamic';
+import type { Weak } from 'adamic';
+
+interface Item {
+	readonly value: number;
+}
+function takesSet(value: Set<number>): number {
+	let result = 0;
+	for (const item of value) {
+		result += item;
+	}
+	return result;
+}
+function takesWeak(_value: Weak<Item>): number {
+	let result = 0;
+	for (let i = 0; i < 2; i++) {
+		result += 1;
+	}
+	return result;
+}
+function argumentCount(): number {
+	let result = 0;
+	for (const argument of programArguments()) {
+		result += argument.length;
+	}
+	return result;
+}
+function callsClosureLogger(value: number): number {
+	const callback = (n: number): number => {
+		console.log(`closure ${n}`);
+		return n;
+	};
+	for (let i = 0; i < 1; i++) {
+		value = callback(value);
+	}
+	return value;
+}
+function returnsData(value: number): { readonly value: number; readonly label?: string } {
+	for (let i = 0; i < 1; i++) {
+		value += 1;
+	}
+	return { value };
+}
+function returnsArray(value: number): readonly boolean[] {
+	const result: boolean[] = [];
+	for (let i = 0; i < value; i++) {
+		result.push(i % 2 === 0);
+	}
+	return result;
+}
+function capturesValue(value: number): number {
+	const callback = (): number => value;
+	for (let i = 0; i < 1; i++) {
+		value += callback();
+	}
+	return value;
+}
+const item: Item = { value: 3 };
+console.log(`${takesSet(new Set([1, 2]))} ${takesWeak(item)} ${argumentCount()}`);
+console.log(`${callsClosureLogger(2)} ${returnsData(3).value} ${returnsArray(3).length} ${capturesValue(2)}`);

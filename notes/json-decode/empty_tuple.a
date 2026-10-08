@@ -1,0 +1,3 @@
+import { decodeJson } from 'adamic';
+const result = decodeJson<readonly []>('[]');
+console.log(result.kind);

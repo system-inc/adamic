@@ -1,0 +1,17 @@
+// Test driver: the Node harness supplies HttpRequests normalized by Request/URL.
+import { decodeJson, encodeJson, panic, programArguments, readTextFile } from 'adamic';
+import type { HttpRequest } from 'adamic/http';
+import { handle } from './handler.a';
+interface Observation { readonly status: number; readonly body: string; }
+const file = readTextFile(programArguments()[0] ?? panic('missing HttpRequest corpus path'));
+if (file.kind === 'Error') panic(file.message);
+else {
+	const corpus = decodeJson<readonly HttpRequest[]>(file.text);
+	if (corpus.kind === 'Error') panic(corpus.message);
+	else {
+		for (const request of corpus.value) {
+			const response = handle(request);
+			console.log(encodeJson<Observation>({ status: response.status, body: response.body }));
+		}
+	}
+}

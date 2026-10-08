@@ -54,13 +54,13 @@ func archiverName(compiler string) string {
 
 // WASILinkFlags selects commands unless the driver emitted a request handler.
 func WASILinkFlags(options Options) []string {
-	flags := []string{"-Wl,-z,stack-size=131072"}
+	flags := []string{"-Wl,-z,stack-size=131072", "-Wl,--strip-debug"}
 	if !options.Request {
 		return append(flags, "-mexec-model=command")
 	}
 	flags = append(flags, "-mexec-model=reactor", "-Wl,--export-memory")
 	for _, name := range []string{"adamic_request", "adamic_response_bytes", "adamic_response_length", "malloc", "free", "adamic_release"} {
-		flags = append(flags, "-Wl,--export="+name)
+		flags = append(flags, "-Wl,--export-if-defined="+name)
 	}
 	if options.Count {
 		flags = append(flags, "-Wl,--export=adamic_live", "-Wl,--export=adamic_regions")

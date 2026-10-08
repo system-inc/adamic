@@ -406,6 +406,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if statements, handled, err := l.foreignSetProperty(target, valueNode); handled {
+		return statements, err
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -448,6 +451,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 // read twice, since nothing runs between the two reads, and anything else is held in a local of its
 // own for the statement, so make().count++ makes one object.
 func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if err := l.foreignUpdateProperty(target); err != nil {
+		return nil, err
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err

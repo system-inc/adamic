@@ -10,7 +10,7 @@ import (
 func TestWASITargetFlags(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	flags := strings.Join(Flags(Options{Target: "wasm32-wasi"}), " ")
-	for _, flag := range []string{"--target=wasm32-wasi", "--sysroot=" + os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-O2", "-mno-atomics", "-ffp-contract=off"} {
+	for _, flag := range []string{"--target=wasm32-wasi", "--sysroot=" + os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-Oz", "-mno-atomics", "-ffp-contract=off"} {
 		if !strings.Contains(flags, flag) {
 			t.Errorf("missing %s in %s", flag, flags)
 		}

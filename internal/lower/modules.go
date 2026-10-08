@@ -2,6 +2,8 @@
 package lower
 
 import (
+	"sort"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -165,6 +167,28 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// recordExports preserves the entry's public names after module flattening. Aliases and
+// reexports resolve through the checker, never by matching a function's spelling.
+func (l *lowering) recordExports(entry *ast.SourceFile) {
+	exports := l.checker.GetExportsOfModule(entry.AsNode().Symbol())
+	sort.Slice(exports, func(left, right int) bool { return exports[left].Name < exports[right].Name })
+	for _, exported := range exports {
+		if l.checker.GetTypeOnlyAliasDeclaration(exported) != nil {
+			continue
+		}
+		target := exported
+		if target.Flags&ast.SymbolFlagsAlias != 0 {
+			target = l.checker.GetAliasedSymbol(target)
+		}
+		target = l.checker.GetExportSymbolOfSymbol(target)
+		if function, ok := l.functions[target]; ok {
+			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: function})
+		} else if local, ok := l.locals[target]; ok && l.result.Locals[local].Type == ir.Closure {
+			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: -1, Local: local})
+		}
+	}
 }
 
 // Explicit type imports and exports have no ESM evaluation edge. With verbatimModuleSyntax,

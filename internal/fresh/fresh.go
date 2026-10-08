@@ -1062,6 +1062,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return value{}
+	case ir.JSONEncode:
+		a.value(expression.Value)
+		return value{}
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
 		a.value(expression.Value)
@@ -1206,6 +1209,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(elementKey, value{})
 	case ir.ProgramArguments:
 		return a.fresh(elementKey, value{})
+	case ir.JSONDecode:
+		a.value(expression.Text)
+		// The decoded graph is fresh, but nesting is conservatively treated as outside.
+		return outsideValue()
 	case ir.ReadTextFile:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})

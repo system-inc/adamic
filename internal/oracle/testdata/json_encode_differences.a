@@ -1,0 +1,20 @@
+import { encodeJson, decodeJson, panic } from 'adamic';
+interface Pair { readonly first: string; readonly second: number; }
+const reordered: Pair = { second: 2, first: 'one' };
+const full = { first: 'one', second: 2, hidden: 'secret'.repeat(2) };
+const hidden: Pair = full;
+for (const value of [reordered, hidden]) {
+ const text = encodeJson<Pair>(value);
+ console.log(text);
+ if (text !== '{"first":"one","second":2}') panic('declared fields differ');
+ const decoded = decodeJson<Pair>(text);
+ if (decoded.kind !== 'Ok') panic('difference round trip failed');
+ if (encodeJson<Pair>(decoded.value) !== text) panic('difference re-encode differs');
+}
+// Numeric keys remain in declared order, even though JS insertion order prioritizes them.
+interface Numeric { readonly '2': number; readonly '1': number; readonly z: number; }
+const numeric = encodeJson<Numeric>({ '2': 2, '1': 1, z: 3 });
+console.log(numeric);
+const decodedNumeric = decodeJson<Numeric>(numeric);
+if (decodedNumeric.kind !== 'Ok') panic('numeric keys round trip failed');
+if (encodeJson<Numeric>(decodedNumeric.value) !== numeric) panic('numeric keys re-encode differs');

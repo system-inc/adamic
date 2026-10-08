@@ -48,7 +48,8 @@ func planRegions(program *ir.Program) *regionPlan {
 		plan.escapes[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
 			local := program.Locals[parameter]
-			plan.escapes[index][position] = function.Closure || local.Captured || local.Type != ir.Object
+			// What a foreign function does with its arguments is out of sight: everything escapes.
+			plan.escapes[index][position] = function.Closure || local.Captured || local.Type != ir.Object || function.Foreign != nil
 		}
 	}
 	for changed := true; changed; {
@@ -65,7 +66,8 @@ func planRegions(program *ir.Program) *regionPlan {
 	// Fresh: start from every named function returning an object, and take away any that returns
 	// something else, until none changes.
 	for index, function := range program.Functions {
-		if !function.Closure && function.Returns == ir.Object {
+		// A foreign function's object is a box around Apple's, never one a region holds.
+		if !function.Closure && function.Returns == ir.Object && function.Foreign == nil {
 			plan.fresh[index] = true
 		}
 	}

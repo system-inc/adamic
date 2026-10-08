@@ -1,0 +1,6 @@
+import { decodeJson } from 'adamic';
+for (const text of ['[]', '[1]', '{}', 'null', '[']) {
+ const decoded = decodeJson<readonly []>(text);
+ if (decoded.kind === 'Ok') console.log('empty tuple Ok');
+ else console.log(decoded.message);
+}

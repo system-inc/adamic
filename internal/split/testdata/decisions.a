@@ -1,0 +1,123 @@
+let changing = 1;
+const fixed = 2;
+function sum(values: readonly number[]): number {
+	let result = 0;
+	for (const value of values) {
+		result += value;
+	}
+	return result;
+}
+function sieve(limit: number): number {
+	const primes: number[] = [];
+	for (let candidate = 2; candidate <= limit; candidate++) {
+		let prime = true;
+		for (let divisor = 2; divisor < candidate; divisor++) {
+			if (candidate % divisor === 0) {
+				prime = false;
+			}
+		}
+		if (prime) {
+			primes.push(candidate);
+		}
+	}
+	return sum(primes);
+}
+function handler(limit: number): number {
+	console.log('handler');
+	return sieve(limit);
+}
+function logger(value: number): number {
+	console.log(`${value}`);
+	return value;
+}
+function callsLogger(value: number): number {
+	for (let i = 0; i < 1; i++) {
+		value = logger(value);
+	}
+	return value;
+}
+function readsMutable(value: number): number {
+	for (let i = 0; i < changing; i++) {
+		value += 1;
+	}
+	return value;
+}
+function takesMap(values: Map<string, number>): number {
+	let result = 0;
+	for (const value of values.values()) {
+		result += value;
+	}
+	return result;
+}
+function takesClosure(callback: () => number): number {
+	let result = 0;
+	for (let i = 0; i < 2; i++) {
+		result += callback();
+	}
+	return result;
+}
+function recursive(value: number): number {
+	if (value <= 1) {
+		return 1;
+	}
+	return value * recursive(value - 1);
+}
+function tiny(value: number): number {
+	return value + fixed;
+}
+function mutualPure(value: number): number {
+	if (value <= 0) {
+		return 0;
+	}
+	return mutualImpure(value - 1);
+}
+function mutualImpure(value: number): number {
+	console.log('mutual');
+	if (value <= 0) {
+		return 0;
+	}
+	return mutualPure(value - 1);
+}
+function throughClosure(value: number): number {
+	const callback = (n: number): number => {
+		let result = 0;
+		for (let i = 0; i < n; i++) {
+			result += 1;
+		}
+		return result;
+	};
+	return callback(value);
+}
+function mutate(values: number[]): number {
+	for (let i = 0; i < 1; i++) {
+		values.push(i);
+	}
+	return values.length;
+}
+function aliasesParameter(values: number[]): number {
+	const alias = values;
+	return mutate(alias);
+}
+function readOnlyMutableDeclaration(values: number[]): number {
+	let result = 0;
+	for (const value of values) {
+		result += value;
+	}
+	return result;
+}
+function writesGlobal(): number {
+	changing += 1;
+	return changing;
+}
+function mixed(first: number, second: string, third: readonly number[]): number {
+	let result = first + second.length;
+	for (const value of third) {
+		result += value;
+	}
+	return result;
+}
+console.log(`${handler(10)} ${callsLogger(3)} ${readsMutable(0)}`);
+console.log(`${takesMap(new Map([['a', 4]]))} ${takesClosure(() => 2)}`);
+console.log(`${recursive(5)} ${tiny(1)} ${mutualPure(2)} ${throughClosure(3)}`);
+console.log(`${aliasesParameter([])} ${readOnlyMutableDeclaration([1, 2])} ${writesGlobal()}`);
+console.log(`${mixed(1, 'ab', [3, 4])}`);

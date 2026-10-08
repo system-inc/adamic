@@ -1,0 +1,22 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+function sieve(limit: number): number {
+    const composite: boolean[] = [];
+    for(let index = 0; index < limit; index += 1) {
+        composite.push(false);
+    }
+    let count = 0;
+    for(let candidate = 2; candidate < limit; candidate += 1) {
+        if(!(composite[candidate] ?? false)) {
+            count += 1;
+            for(let multiple = candidate * candidate; multiple < limit; multiple += candidate) {
+                composite[multiple] = true;
+            }
+        }
+    }
+    return count;
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    return { status: 200, headers: [], body: `${sieve(Number(request.body))}` };
+}

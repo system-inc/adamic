@@ -20,6 +20,8 @@ declare module 'adamic' {
 	export function panic(message: string): never;
 
 	// Input, opened in 0.2 (docs/0.1.md). A failure is a value: 0.2 has no exceptions yet.
+	export function encodeJson<T>(value: T): string;
+	export function decodeJson<T>(text: string): { readonly kind: 'Ok'; readonly value: T } | { readonly kind: 'Error'; readonly message: string };
 	export function readTextFile(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
 	export function programArguments(): readonly string[];
 	export function writeTextFile(path: string, text: string): { readonly kind: 'Ok' } | { readonly kind: 'Error'; readonly message: string };
@@ -36,6 +38,23 @@ declare module 'adamic' {
 		readonly adamicWeak?: never;
 	}
 	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
+}
+
+declare module 'adamic/http' {
+	export interface HttpField { readonly name: string; readonly value: string }
+	export interface HttpRequest {
+		readonly method: string;
+		readonly url: string;
+		readonly path: string;
+		readonly query: readonly HttpField[];
+		readonly headers: readonly HttpField[];
+		readonly body: string;
+	}
+	export interface HttpResponse {
+		readonly status: number;
+		readonly headers: readonly HttpField[];
+		readonly body: string;
+	}
 }
 
 // ES2025 Set operations. Stage 0 accepts concrete library Sets with matching representations.

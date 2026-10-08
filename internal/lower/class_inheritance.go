@@ -28,6 +28,9 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
+		if err := l.extendsApple(clause, symbol); err != nil {
+			return nil, err
+		}
 		base := symbol.Declarations[0]
 		return l.instantiate(base, baseType, clause)
 	}
@@ -210,8 +213,10 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			return err
 		}
 		l.result.Functions[initializer].Parameters = append([]int{this}, l.result.Functions[initializer].Parameters...)
+		l.result.Functions[initializer].Boundary.Parameters = append([]*ir.JSONDecodeSchema{nil}, l.result.Functions[initializer].Boundary.Parameters...)
 	} else {
 		l.result.Functions[initializer].Parameters = []int{this}
+		l.result.Functions[initializer].Boundary.Parameters = []*ir.JSONDecodeSchema{nil}
 		if instance.base != nil {
 			for _, parameter := range l.result.Functions[instance.base.initializer].Parameters[1:] {
 				local := len(l.result.Locals)
@@ -219,6 +224,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 				incoming.Function, incoming.Captured, incoming.Borrowed = initializer, false, false
 				l.result.Locals = append(l.result.Locals, incoming)
 				l.result.Functions[initializer].Parameters = append(l.result.Functions[initializer].Parameters, local)
+				l.result.Functions[initializer].Boundary.Parameters = append(l.result.Functions[initializer].Boundary.Parameters, nil)
 			}
 		}
 	}

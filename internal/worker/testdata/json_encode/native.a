@@ -1,0 +1,9 @@
+import { decodeJson, readTextFile, programArguments, panic } from 'adamic';
+import { evaluate } from './cases.a';
+const file = readTextFile(programArguments()[0] ?? '');
+if (file.kind === 'Error') panic(file.message);
+else {
+	const input = decodeJson<readonly string[]>(file.text);
+	if (input.kind === 'Error') panic(input.message);
+	else { let index = 0; for (const text of input.value) { console.log(evaluate(Math.floor(index / 10000), text)); index += 1; } }
+}
