@@ -73,7 +73,7 @@ func (l *lowering) viewDataType(target *checker.Type) bool {
 		}
 		return true
 	}
-	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
+	return target.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
 }
 
 func viewInterfaceType(target *checker.Type) bool {

@@ -22,6 +22,12 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if target.Flags()&checker.TypeFlagsNull != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Union})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
 	if target.Flags()&checker.TypeFlagsUndefined != 0 {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})

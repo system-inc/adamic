@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-27 explicit implementation/component mutants were caught and restored, alongside the fixture payload mutants.
+58 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -239,3 +239,111 @@ changes or replacement of prior reconciliation. Presence operators and broader
 nullish source dispatch remain explicitly incomplete. No new production check
 is added, and no additional mutant claim is made for this evidence-only merge.
 The usual focused package, full IR, filtered Node oracle and vet gates follow.
+
+## Dictionary read components follow-up, October 8
+
+Tip e9a06829 merges cleanly on the priority owner merge 566c1ec03. There are no
+conflicted hunks and no bulk/whole-file choices. The plan records the user's
+new permission for lanes to add their named minimal shared hooks. This tip
+declares viewDictionaryContractHook, but shared source classification/indexed
+dispatch and record producers remain unwired. Its descriptor stays Unsupported
+dictionary source dispatch; no scalar table is reinterpreted from a target cast.
+
+Native reads only source-certified boxed records and retains child contracts;
+JavaScript uses own data descriptors and refuses accessors without invoking them.
+Five options/nested/array component source controls compare with Node, including
+sanitized native. Eleven executable component mutants run in the oracle gate:
+skip-check, accept-wrong-shape and drop-transitive-contract each in native/JS;
+native uncertified storage; JavaScript container, accessor, missing-child and
+required-missing guards. Mutations are in-process harness copies, never changes
+to production files. Nested mutants prove the adapter seam, not compiler flow.
+The candidate ranking reproduces exactly: 29 pairs / 228 reads still pending,
+with exact runtime reachability unmeasured. Formatting and source diff checks
+pass. Focused compiler packages (including records against Node), full IR,
+uncached filtered Node oracle and vet are the integration gates. The previously
+reproduced array-callback predicate fixture is still the sole oracle exclusion.
+
+Dictionary component gates pass: lower 10.935s, native 44.416s, JavaScript
+1.303s, full IR 24.167s, uncached filtered oracle 78.664s, vet exit 0.
+All eleven new component mutations execute valid code and lose the expected
+refusal, as pinned by the passing mutant tests. No source pair is completed.
+
+## Lane 4b production hook follow-up, October 8
+
+Tip dc5e5f26 merges cleanly after dictionary 422e80502. Four minimal shared
+hooks in lower/interface_cast.go, lower/object.go, native/view_fields.go and
+javascript/javascript.go preserve existing guards while selecting the lane's
+one-object-plus-scalar adapter. No conflict hunk required resolution.
+
+Additional integration controls found a real optional regression: the new reader
+dropped Property.Absent and Property.Optional. Native exited 70 for valid absent
+optional fields and missing optional-chain receivers, against Node exit 0.
+The lane helper now passes both existing flags to its native runtime and shared
+JavaScript read helper. Optional receiver short-circuiting evaluates the receiver
+once; required missing fields and reserved uninitialized slots still refuse.
+This repairs metadata plumbing without another presence/readiness state.
+
+Permanent .a controls optional-absent and optional-receiver match Node in both
+backends; required-missing pins the original named refusal. Four valid-code IR
+rollback mutants clear the optional flags independently in native/JavaScript and
+are caught by the positive Node pins. The incoming twelve backend IR mutants
+pin outer selection/literal and nested type/read checks. An initial test-control
+excess-property annotation was fixed; the new required-missing control was
+excluded from the incoming mutation selector which has no applicable nested
+read. Both initial failures are logged; neither is counted as a passing gate.
+All 42 original candidate pairs / 181 reads remain pending original witnesses;
+reduced shapes do not establish full tsc declarations or exact reachability.
+
+Lane 4b gates pass: lower 13.612s, native 34.968s, JavaScript 1.896s,
+full IR 27.981s, uncached filtered oracle 82.549s, vet exit 0. All sixteen
+backend mutants are verified in the final log (12 incoming, 4 optional-policy
+rollbacks); all eleven source controls pass. The same sole parent predicate
+fixture exclusion remains. Full repository/census reruns are not claimed.
+
+## Lazy owner nullish and callable follow-up, October 8
+
+Priority tip 36de78996 is integrated before lane 4b f4e5993e. Two conflicted
+hunks are reconciled individually, with no whole-file or strategy selection.
+The interface_cast.go read guard retains both nullable/callable exemptions and
+objectPrimitiveViewType while preserving accessor refusal and owner family
+naming. The object.go slotless guard retains both null-containing unions and
+object-plus-primitive unions. Nullable Map reads remain named collection refusals.
+
+Overlapping auto-merged dispatch needed explicit reconciliation: JavaScript's
+object-primitive dispatcher excludes Nullish reads; readObjectField marks
+nullish metadata only when the object-primitive adapter is not the matching
+contract. This prevents the broad nullish mask from replacing finite primitive
+membership selection for true|Node|undefined. Owner nullish matrix and callable
+signature controls prove the new path; lane4b node-indicator-false,
+optional-absent, optional-receiver and required-missing prove retained behavior.
+Source producers, readiness, narrowed-kind checks and distinct null/undefined
+identities remain owner behavior. No asserted type supplies a producer fact.
+
+Validation uses the standard focused lower/native/JavaScript filter (plus
+TestRecordsAgainstNode), full internal/ir, uncached filtered Node oracle and
+full vet. The sole exclusion remains library_array_holes_callbacks.a, reproduced
+on the parent as recorded above. No complete repository or census rerun is claimed.
+
+Owner nullish gates pass: lower 11.092s, native 40.954s, JavaScript 1.298s,
+full IR 21.062s, uncached filtered oracle 115.168s, vet exit 0. Four independent
+implementation mutations were executed and restored: collapse-null is caught
+by number-both Node output, allow-forbidden-undefined by number-null-opposite's
+exit-70 pin, skip-kind by string-both-wrong's named field refusal, and
+skip-callable-proof by the callable-signature-mutant read refusal. Every mutant
+fails an executed oracle assertion, with no build failure; individual logs and
+the runner summary are preserved. Source wrong/missing/opposite/nested fixtures
+also run in the standard oracle, distinct from these implementation mutants.
+
+## Newest lazy owner finite literals follow-up
+
+Tip d115cfd5abc8274164b5ea29fbe26f9a25b78ce3 merges cleanly on f56c432e1.
+No conflicted hunk or compiler change is present. Nullable finite string members
+now have explicit dynamic-string source controls: literal-both agrees with Node
+for present/null/undefined; literal-both-wrong constructs not-allowed at runtime
+and must exit 70 at node.value naming the finite declared type in both backends.
+The owner reports 57 source mutations across the nullable matrix, callable proof,
+nested reads and this literal control; these are distinct from the four restored
+implementation mutations rerun above. All source tests run in the filtered gate.
+
+Finite-literal owner gates pass: lower 9.476s, native 14.583s, JavaScript
+2.377s, full IR 3.172s, uncached filtered oracle 85.780s, vet exit 0.

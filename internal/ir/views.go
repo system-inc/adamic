@@ -14,6 +14,7 @@ const (
 	ViewCallable
 	ViewNull
 	ViewUndefined
+	ViewNullable
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
@@ -30,6 +31,7 @@ type ViewContract struct {
 	NominalBases []string
 	Nominal      string
 	Undefined    bool
+	Null         bool
 	Kind         ViewKind
 	Name         string
 	Of           Type

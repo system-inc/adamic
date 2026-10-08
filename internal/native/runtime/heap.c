@@ -338,6 +338,7 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	}
 	case adamic_kind_number:
 	case adamic_kind_boolean:
+	case adamic_kind_null:
 		break;
 	case adamic_kind_weak:
 		adamic_weak_dropped(value);

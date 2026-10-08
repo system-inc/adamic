@@ -821,7 +821,13 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.View != "" && expression.Of == ir.Union && !expression.Nullish {
+			return e.viewObjectPrimitive(expression)
+		}
 		if expression.View != "" {
+			if expression.Nullish {
+				return e.nullishViewField(expression)
+			}
 			if expression.Of == ir.Closure {
 				return e.emitViewCallableProperty(expression)
 			}
@@ -942,7 +948,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
-		return e.value(expression.Value)
+		return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), expression.To)
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:

@@ -62,6 +62,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsNull != 0:
+		return ir.Union, true
+	case flags&checker.TypeFlagsUndefined != 0:
+		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:
@@ -80,14 +84,19 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// Nullable values need distinct null and undefined identities. Keep the
+			// existing RegExp-only NULL representation for its specialized adapters.
+			regexOnly := !l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
-					return 0, false
+				if member.Flags()&checker.TypeFlagsNull == 0 {
+					regexOnly = regexOnly && l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray")
+					if _, known := l.representation(member); member.Flags()&checker.TypeFlagsUndefined == 0 && !known {
+						return 0, false
+					}
 				}
+			}
+			if !regexOnly {
+				return ir.Union, true
 			}
 		}
 		var shared ir.Type
@@ -520,6 +529,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 						members = declared.Types()
 					}
 					for _, member := range members {
+						if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+							continue
+						}
 						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 						}
@@ -563,7 +575,7 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
-		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+		if null && operand.Type() != ir.Union && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
@@ -782,9 +794,6 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				value = right
 			}
-			if !value.Type().IsReference() {
-				return nil, l.notYet(node, "null comparison with a scalar")
-			}
 			operand := node.AsBinaryExpression().Left
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
@@ -816,7 +825,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if l.includesNull(l.checker.GetTypeAtLocation(operand)) && !l.includesUndefined(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
