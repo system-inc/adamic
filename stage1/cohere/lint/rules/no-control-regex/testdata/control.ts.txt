@@ -1,0 +1,5 @@
+const bad = /\x01\u001f/;
+const named = /\t\n\0/;
+const boundary = /\x20/;
+const ranged = /[\x00-\x1f]/;
+const unicode = /\u{1F}/u;

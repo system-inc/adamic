@@ -1,0 +1,11 @@
+import { braceQuantifierEnd, QuantifierEnd } from './brace_quantifier_end.a';
+export function quantifierAt(pattern: number[], index: number): QuantifierEnd {
+ if(index >= pattern.length) { return new QuantifierEnd(index, false); }
+ switch((pattern[index] ?? 0)) {
+ case 42: case 43: case 63: index++; break;
+ case 123: { const result = braceQuantifierEnd(pattern, index); if(!result.ok) { return new QuantifierEnd(index, false); } index = result.end; break; }
+ default: return new QuantifierEnd(index, false);
+ }
+ if(index < pattern.length && (pattern[index] ?? 0) === 63) { index++; }
+ return new QuantifierEnd(index, true);
+}

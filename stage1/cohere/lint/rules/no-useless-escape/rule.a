@@ -1,0 +1,119 @@
+import { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { message } from './messages.a';
+import { Bytes, decode } from '../../helpers/regexsyntax/utf8.a';
+import { patternAndFlags } from '../../helpers/regexsyntax/pattern_and_flags.a';
+import { parseRegexFlags } from '../../helpers/regexsyntax/parse_regex_flags.a';
+import { skipPatternEscape } from '../../helpers/regexsyntax/skip_pattern_escape.a';
+import { classEnd } from '../../helpers/regexsyntax/class_end.a';
+import type { RegexFlags } from '../../helpers/regexsyntax/flags.a';
+const validString = '\\nrvtbfux\n\r\u2028\u2029';
+const general = '\\bcdDfnpPrsStvwWxu0123456789]';
+const nonClass = '\\bcdDfnpPrsStvwWxu0123456789]^/.$*+?[{}|()Bk';
+const classSet = '\\bcdDfnpPrsStvwWxu0123456789]q/[{}|()-';
+const reserved = '!#$%&*+,.:;<=>?@^`~';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ visit(index: number, parent: number): void {
+  const ctx = this.context; const node = ctx.node(index); const kind = node.kind;
+  const start = ctx.start(index); const raw = ctx.source.slice(start,node.end);
+  if(kind === 'RegularExpressionLiteral') {
+   const projection = new Bytes(raw); const parts = patternAndFlags(projection.values);
+   if(parts.pattern.length === 0) { return; }
+   const flags = parseRegexFlags(parts.flags); const offsets: number[] = [];
+   this.scan(parts.pattern,flags,-1,-1,false,offsets);
+   const allowed = ctx.settings.list('allowregexcharacters', []);
+   for(const offset of offsets) {
+    const rune = decode(parts.pattern,offset+1); const size = rune[1] ?? 0;
+    const begin = projection.positions[offset+1] ?? 0;
+    const charStart = projection.positions[offset+2] ?? 0;
+    const finish = projection.positions[offset+2+size] ?? raw.length;
+    const escaped = raw.slice(charStart,finish);
+    if(allowed.includes(escaped)) { continue; }
+    this.report(start+begin,start+finish,escaped);
+   }
+   return;
+  }
+  if(kind === 'StringLiteral') {
+   if(parent >= 0 && ctx.node(parent).kind === 'JsxAttribute') { return; }
+   const bytes = new Bytes(raw); const quote = raw[0] ?? ''; let i = 1;
+   while(i < bytes.values.length-1) {
+    if(bytes.values[i] !== 92) { i++; continue; }
+    if(i+1 >= bytes.values.length-1) { break; }
+    const rune = decode(bytes.values,i+1); const size = rune[1] ?? 0;
+    const a = bytes.positions[i+1] ?? 0; const b = bytes.positions[i+1+size] ?? raw.length;
+    const escaped = raw.slice(a,b); const cp = rune[0] ?? 0;
+    if(escaped !== quote && !(cp >= 48 && cp <= 57) && !validString.includes(escaped)) { this.report(start+(bytes.positions[i] ?? 0),start+b,escaped); }
+    i += 1+size;
+   }
+   return;
+  }
+  let template = index;
+  if(kind === 'TemplateHead') { template = parent; }
+  else if(kind === 'TemplateMiddle' || kind === 'TemplateTail') { template = parent < 0 ? -1 : (ctx.parents[parent] ?? -1); }
+  if(template < 0) { return; }
+  const enclosing = ctx.parents[template] ?? -1;
+  if(enclosing >= 0 && ctx.node(enclosing).kind === 'TaggedTemplateExpression') {
+   const children = ctx.node(enclosing).children;
+   if(children[children.length-1] === template) { return; }
+  }
+  // Template type chunks have no runtime string surface.
+  if(kind !== 'NoSubstitutionTemplateLiteral' && ctx.node(template).kind !== 'TemplateExpression') { return; }
+  const bytes = new Bytes(raw); let previous = 96; let i = 1;
+  while(i < bytes.values.length-1) {
+   const rune = decode(bytes.values,i); const cp = rune[0] ?? 0; const size = rune[1] ?? 0;
+   if(cp !== 92) { previous = cp; i += size; continue; }
+   if(i+size >= bytes.values.length-1) { break; }
+   const next = decode(bytes.values,i+size); const escapedCp = next[0] ?? 0; const escapedSize = next[1] ?? 0;
+   const a = bytes.positions[i+size] ?? 0; const b = bytes.positions[i+size+escapedSize] ?? raw.length;
+   const escaped = raw.slice(a,b); let useless = false;
+   if(escapedCp >= 48 && escapedCp <= 57 || escapedCp === 96) { }
+   else if(escapedCp === 123) { useless = previous !== 36; }
+   else if(escapedCp === 36) { useless = (decode(bytes.values,i+size+escapedSize)[0] ?? 0) !== 123; }
+   else { useless = !validString.includes(escaped); }
+   if(useless) { this.report(start+(bytes.positions[i] ?? 0),start+b,escaped); }
+   previous = escapedCp; i += size+escapedSize;
+  }
+ }
+ report(start: number, end: number, escaped: string): void {
+  this.context.reportRange(start,end,'no-useless-escape','noUselessEscape',message(escaped),[new SuggestionEdit(start,end,escaped)]);
+ }
+ scan(bytes: readonly number[], flags: RegexFlags, classStart: number, classFinish: number, negative: boolean, offsets: number[]): void {
+  let i = classStart < 0 ? 0 : classStart+1+(negative ? 1 : 0); const end = classStart < 0 ? bytes.length : classFinish-1;
+  while(i < end) {
+   if(bytes[i] === 92) {
+    const step = skipPatternEscape(bytes,i,flags,(at: number): number => decode(bytes,at)[1] ?? 0);
+    if(!step.ok) { return; }
+    if(this.useless(bytes,i,flags,classStart,classFinish,negative)) { offsets.push(i); }
+    i += step.value;
+   }
+   else if(bytes[i] === 91) {
+    const finish = classEnd(bytes,i,flags,(at: number): number => decode(bytes,at)[1] ?? 0);
+    if(!finish.ok) { return; }
+    this.scan(bytes,flags,i,finish.value,i+1 < finish.value && bytes[i+1] === 94,offsets); i = finish.value;
+   }
+   else { const width = decode(bytes,i)[1] ?? 0; i += width === 0 ? 1 : width; }
+  }
+ }
+ useless(bytes: readonly number[], i: number, flags: RegexFlags, classStart: number, classFinish: number, negative: boolean): boolean {
+  if(i+1 >= bytes.length) { return false; }
+  const rune = decode(bytes,i+1); const cp = rune[0] ?? 0; const size = rune[1] ?? 0;
+  const character = cp < 128 ? String.fromCharCode(cp) : '';
+  const needed = classStart < 0 ? nonClass : flags.unicodeSets ? classSet : general;
+  if(character !== '' && needed.includes(character)) { return false; }
+  if(classStart < 0) { return true; }
+  if(cp === 94 && classStart+1 === i) { return false; }
+  if(flags.unicodeSets) {
+   if(character === '' || !reserved.includes(character)) { return true; }
+   if((decode(bytes,i+1+size)[0] ?? 0) === cp) { return false; }
+   // Reserved punctuators are ASCII, hence their preceding twin has width one.
+   if(i === 0 || bytes[i-1] !== cp) { return true; }
+   if(cp !== 94 || !negative) { return false; }
+   return !(classStart+1 < i-1);
+  }
+  if(cp === 45 && classStart+1 !== i && i+1+size !== classFinish-1) { return false; }
+  return true;
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

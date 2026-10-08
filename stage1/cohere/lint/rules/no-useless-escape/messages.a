@@ -1,0 +1,3 @@
+export function message(escaped: string): string {
+ return `The backslash before ${escaped} does nothing here: the language reads this as the plain character either way. An escape that is not needed says the character is special at this position when it is not, which is the signal a reader follows when deciding whether something subtle is happening. Write ${escaped}.`;
+}

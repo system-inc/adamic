@@ -1,0 +1,42 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isHexDigit } from './is_hex_digit.a';
+import { allHexDigits } from './all_hex_digits.a';
+import { hexValue } from './hex_value.a';
+import { parseHexUint } from './parse_hex_uint.a';
+import { parseRegexFlags } from './parse_regex_flags.a';
+import { patternAndFlags } from './pattern_and_flags.a';
+import { regexFlagsUV } from './regex_flags_uv.a';
+import { skipPatternEscape } from './skip_pattern_escape.a';
+import { classEnd } from './class_end.a';
+import { readClassEscape } from './read_class_escape.a';
+import { readRawClassChar } from './read_raw_class_char.a';
+import { parseRegexCharacterClass } from './parse_regex_character_class.a';
+import { parseRegexCharacterClassWithEnd } from './parse_regex_character_class_with_end.a';
+import { decode } from './utf8.a';
+import type { Element, ClassResult } from './types.a';
+function element(e: Element): string { return `[${e.Kind},${e.Value},${e.IsUBrace},${e.IsLoneSurrogate},${e.Max},${e.MaxIsUBrace},${e.Start},${e.End}]`; }
+function elements(r: ClassResult): string { const es: string[] = []; for(const e of r.elements) { es.push(element(e)); } return `[${r.nil ? 'null' : '['+es.join(',')+']'},${r.end},${r.ok}]`; }
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if(root < 0) { panic(json.error); }
+function at(row: number, i: number): number { return json.node(row).children[i] ?? panic('missing field'); }
+function num(row: number, i: number): number { return Number(json.node(at(row,i)).text); }
+for(const row of json.node(root).children) {
+ const name = json.node(at(row,0)).text;
+ const bytes: number[] = []; for(const node of json.node(at(row,1)).children) { bytes.push(Number(json.node(node).text)); }
+ const i = num(row,2); const end = num(row,3); const capacity = num(row,4);
+ const flags = {unicode:json.node(at(row,5)).text === 'true',unicodeSets:json.node(at(row,6)).text === 'true'};
+ if(name === 'IsHexDigit') { console.log(`[${isHexDigit(bytes[0] ?? 0)}]`); }
+ else if(name === 'AllHexDigits') { console.log(`[${allHexDigits(bytes)}]`); }
+ else if(name === 'hexValue') { console.log(`[${hexValue(bytes[0] ?? 0)}]`); }
+ else if(name === 'ParseHexUint') { console.log(`[${parseHexUint(bytes)}]`); }
+ else if(name === 'UV') { console.log(`[${regexFlagsUV(flags)}]`); }
+ else if(name === 'ParseRegexFlags') { const f = parseRegexFlags(bytes); console.log(`[${f.unicode},${f.unicodeSets}]`); }
+ else if(name === 'PatternAndFlags') { const r = patternAndFlags(bytes); console.log(`[[${r.pattern.join(',')}],[${r.flags.join(',')}]]`); }
+ else if(name === 'SkipPatternEscape' || name === 'ClassEnd') { const r = name === 'ClassEnd' ? classEnd(bytes,i,flags,(at: number): number => decode(bytes,at)[1] ?? 0) : skipPatternEscape(bytes,i,flags,(at: number): number => decode(bytes,at)[1] ?? 0); console.log(`[${r.value},${r.ok}]`); }
+ else if(name === 'readClassEscape' || name === 'readRawClassChar') { const r = name === 'readClassEscape' ? readClassEscape(bytes,i,flags) : readRawClassChar(bytes,i,flags); console.log(`[${element(r.element)},${r.step},${r.ok}]`); }
+ else if(name === 'parseRegexCharacterClass') { console.log(elements(parseRegexCharacterClass(bytes,i,flags,capacity))); }
+ else if(name === 'ParseRegexCharacterClassWithEnd') { console.log(elements(parseRegexCharacterClassWithEnd(bytes,i,end,flags))); }
+ else { panic('unknown helper'); }
+}
