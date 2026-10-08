@@ -1,0 +1,446 @@
+[
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/any.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/any.a:3:124: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported dictionary element any contract; prove or implement the dictionary element any contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/any.a:3:124: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported dictionary element any contract; prove or implement the dictionary element any contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "number\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-array.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-boolean.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "boolean\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "boolean\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "boolean\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-map.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-null.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-number.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "number\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "number\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "number\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-source.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-string.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "string\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "string\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "string\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-array.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-boolean.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "boolean\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "boolean\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "boolean\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-map.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-null.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-number.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "number\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "number\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "number\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-source.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "object\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-string.a",
+    "backends": {
+      "c": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "string\n",
+        "stderr": ""
+      },
+      "js": {
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "string\n",
+        "stderr": ""
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "string\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/entries.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/entries.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/entries.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/finite.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/finite.a:3:125: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported optional finite dictionary element contract; prove or implement the optional finite dictionary element contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/finite.a:3:125: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported optional finite dictionary element contract; prove or implement the optional finite dictionary element contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "string\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/numeric.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/numeric.a:3:128: Adamic 0.1 refuses checked view read of field table with unsupported dictionary contract; prove or implement the dictionary contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/numeric.a:3:128: Adamic 0.1 refuses checked view read of field table with unsupported dictionary contract; prove or implement the dictionary contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/symbol.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/symbol.a:3:128: Adamic 0.1 refuses checked view read of field table with unsupported dictionary contract; prove or implement the dictionary contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/symbol.a:3:128: Adamic 0.1 refuses checked view read of field table with unsupported dictionary contract; prove or implement the dictionary contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "stage3/interface-downcasts/dictionaries/recheck/values.a",
+    "backends": {
+      "c": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/values.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+      },
+      "js": {
+        "compile_exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/values.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+      }
+    },
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  }
+]

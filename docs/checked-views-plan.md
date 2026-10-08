@@ -2459,3 +2459,15 @@ New lane file `internal/oracle/checked_view_dictionary_recheck_test.go` and orig
 `dictionaries/source/{string-index,path-index}-*.a` controls certify numeric string
 indexing after checked field extraction. No shared production hook is needed.
 The cancelled non-null area port is excluded entirely.
+
+### Dictionary group 10: actual-source key enumeration
+
+New lane files `lower/view_dictionary_enumeration.go` and
+`oracle/checked_view_dictionary_enumeration_test.go`, with keys source witnesses.
+Named shared hooks: `dictionaryKeysCall` before recordObjectCall;
+`ir.RecordCall.DictionaryKeys`; `native.recordCall` routes key-only reads to
+`adamic_view_dictionary_source_keys` in existing view_dictionaries.c/.h.
+That helper uses record_keys for actual record producers and object_keys for
+fixed/class objects, validating heap kind without reading values or certifying
+element representation. JS retains Object.keys. Values/entries remain demanded
+refusals until their per-element adapters are certified.
