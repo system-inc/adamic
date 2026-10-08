@@ -1,0 +1,18 @@
+// The encoder boundary is exercised by json_encoder_contract.c with test-only runtime providers.
+console.log(JSON.stringify([7, 'built'.repeat(2), false, null, [2], {x: true}, undefined, NaN]));
+for (const value of [null, undefined, false, 3, 'built'.repeat(2), [2], {x: true}]) {
+ console.log(JSON.stringify({toJSON: () => value}) ?? 'undefined');
+ console.log(JSON.stringify({field: {toJSON: () => value}}));
+ console.log(JSON.stringify([{toJSON: () => value}]));
+}
+for (const value of [7, false, 'built'.repeat(2), null, undefined, [2], {x: true}]) {
+ console.log(JSON.stringify(value) ?? 'undefined');
+}
+const returnedHook = {x: true, toJSON: () => 'must not run'};
+console.log(JSON.stringify({toJSON: () => returnedHook}));
+console.log(JSON.stringify({field: {toJSON: () => returnedHook}}));
+console.log(JSON.stringify([{toJSON: () => returnedHook}]));
+const throwingHook = {toJSON: () => {throw new Error('probe');}};
+for (const value of [throwingHook, {field: throwingHook}, [throwingHook]]) {
+ try {console.log(JSON.stringify(value));} catch {console.log('thrown');}
+}
