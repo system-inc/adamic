@@ -38,6 +38,7 @@ class Inputs(unittest.TestCase):
             self.assertEqual(exports['ADAMIC_TS_PRETTIER'], str(root / 'css-printer'))
             self.assertEqual(exports['ADAMIC_TS_PRETTIER'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
             self.assertEqual(exports['ADAMIC_TYPESCRIPT_SOURCE'], str(root / 'typescript'))
+            self.assertEqual(exports['ADAMIC_GITIGNORE_LARGEST'], '1')
             self.assertEqual(gate.TS_COMMIT, '050880ce59e30b356b686bd3144efe24f875ebc8')
 
     def test_shared_formatter_pins_and_integrity(self):

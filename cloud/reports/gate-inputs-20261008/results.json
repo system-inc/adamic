@@ -1,0 +1,709 @@
+[
+  {
+    "variables": "ADAMIC_TYPESCRIPT_SOURCE",
+    "package": "stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees",
+    "mode": "without",
+    "command": "go test ./stage1/typescript/parser -run ^TestWholeCompilerAgrees$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 583.38,
+    "runs": [
+      "=== RUN   TestWholeCompilerAgrees"
+    ],
+    "verdicts": [
+      "--- SKIP: TestWholeCompilerAgrees (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-typescript-parser-TestWholeCompilerAgrees-without.log"
+  },
+  {
+    "variables": "ADAMIC_TYPESCRIPT_SOURCE",
+    "package": "stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees",
+    "mode": "with",
+    "command": "go test ./stage1/typescript/parser -run ^TestWholeCompilerAgrees$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 65.85,
+    "runs": [
+      "=== RUN   TestWholeCompilerAgrees"
+    ],
+    "verdicts": [
+      "--- PASS: TestWholeCompilerAgrees (59.70s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-typescript-parser-TestWholeCompilerAgrees-with.log"
+  },
+  {
+    "variables": "ADAMIC_CSS_LIBRARY ADAMIC_CSS_FIXTURES",
+    "package": "stage1/cohere/css",
+    "test": "TestThePortParsesAsGoCohereDoes/PostCSS",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/css -run ^TestThePortParsesAsGoCohereDoes$/^PostCSS$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 605.38,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicPortCases (14.20s)",
+      "--- PASS: TestThePortParsesAsGoCohereDoes (24.43s)",
+      "    --- SKIP: TestThePortParsesAsGoCohereDoes/PostCSS (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-css-TestThePortParsesAsGoCohereDoes-PostCSS-without.log"
+  },
+  {
+    "variables": "ADAMIC_CSS_LIBRARY ADAMIC_CSS_FIXTURES",
+    "package": "stage1/cohere/css",
+    "test": "TestThePortParsesAsGoCohereDoes/PostCSS",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/css -run ^TestThePortParsesAsGoCohereDoes$/^PostCSS$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 15.58,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicPortCases (8.96s)",
+      "--- PASS: TestThePortParsesAsGoCohereDoes (13.03s)",
+      "    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (2.73s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-css-TestThePortParsesAsGoCohereDoes-PostCSS-with.log"
+  },
+  {
+    "variables": "ADAMIC_CSS_PRINTER_LIBRARY",
+    "package": "stage1/cohere/css",
+    "test": "TestCSSPrinterBoundaryProofs",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/css -run ^TestCSSPrinterBoundaryProofs$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 22.75,
+    "runs": [
+      "=== RUN   TestCSSPrinterBoundaryProofs"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicPrinterCases (0.00s)",
+      "--- SKIP: TestCSSPrinterBoundaryProofs (19.67s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-css-TestCSSPrinterBoundaryProofs-without.log"
+  },
+  {
+    "variables": "ADAMIC_CSS_PRINTER_LIBRARY",
+    "package": "stage1/cohere/css",
+    "test": "TestCSSPrinterBoundaryProofs",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/css -run ^TestCSSPrinterBoundaryProofs$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 5.03,
+    "runs": [
+      "=== RUN   TestCSSPrinterBoundaryProofs"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicPrinterCases (0.00s)",
+      "--- PASS: TestCSSPrinterBoundaryProofs (1.85s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-css-TestCSSPrinterBoundaryProofs-with.log"
+  },
+  {
+    "variables": "ADAMIC_JSON_PRETTIER",
+    "package": "stage1/cohere/json",
+    "test": "TestUpstreamNumericSeparatorGap",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/json -run ^TestUpstreamNumericSeparatorGap$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 11.39,
+    "runs": [
+      "=== RUN   TestUpstreamNumericSeparatorGap"
+    ],
+    "verdicts": [
+      "--- SKIP: TestUpstreamNumericSeparatorGap (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-json-TestUpstreamNumericSeparatorGap-without.log"
+  },
+  {
+    "variables": "ADAMIC_JSON_PRETTIER",
+    "package": "stage1/cohere/json",
+    "test": "TestUpstreamNumericSeparatorGap",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/json -run ^TestUpstreamNumericSeparatorGap$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 18.36,
+    "runs": [
+      "=== RUN   TestUpstreamNumericSeparatorGap"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicJSONAudit (0.00s)",
+      "--- PASS: TestUpstreamNumericSeparatorGap (13.60s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-json-TestUpstreamNumericSeparatorGap-with.log"
+  },
+  {
+    "variables": "ADAMIC_GRAPHQL_LIBRARY",
+    "package": "stage1/cohere/graphql",
+    "test": "TestThePortParsesAsGoCohereDoes/as_graphql-js",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/graphql -run ^TestThePortParsesAsGoCohereDoes$/^as_graphql\\-js$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 16.59,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (5.41s)",
+      "    --- SKIP: TestThePortParsesAsGoCohereDoes/as_graphql-js (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-graphql-TestThePortParsesAsGoCohereDoes-as_graphql-js-without.log"
+  },
+  {
+    "variables": "ADAMIC_GRAPHQL_LIBRARY",
+    "package": "stage1/cohere/graphql",
+    "test": "TestThePortParsesAsGoCohereDoes/as_graphql-js",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/graphql -run ^TestThePortParsesAsGoCohereDoes$/^as_graphql\\-js$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 10.35,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (4.06s)",
+      "    --- PASS: TestThePortParsesAsGoCohereDoes/as_graphql-js (0.80s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-graphql-TestThePortParsesAsGoCohereDoes-as_graphql-js-with.log"
+  },
+  {
+    "variables": "ADAMIC_MEDIA_QUERY_LIBRARY",
+    "package": "stage1/cohere/mediaquery",
+    "test": "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/mediaquery -run ^TestThePortParsesAsGoCohereDoes$/^as_postcss\\-media\\-query\\-parser$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 13.32,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (1.37s)",
+      "    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-mediaquery-TestThePortParsesAsGoCohereDoes-as_postcss-media-query-parser-without.log"
+  },
+  {
+    "variables": "ADAMIC_MEDIA_QUERY_LIBRARY",
+    "package": "stage1/cohere/mediaquery",
+    "test": "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/mediaquery -run ^TestThePortParsesAsGoCohereDoes$/^as_postcss\\-media\\-query\\-parser$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 5.42,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (1.59s)",
+      "    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.68s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-mediaquery-TestThePortParsesAsGoCohereDoes-as_postcss-media-query-parser-with.log"
+  },
+  {
+    "variables": "ADAMIC_SELECTOR_LIBRARY",
+    "package": "stage1/cohere/selector",
+    "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/selector -run ^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 11.98,
+    "runs": [
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    ],
+    "verdicts": [
+      "--- SKIP: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-selector-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-without.log"
+  },
+  {
+    "variables": "ADAMIC_SELECTOR_LIBRARY",
+    "package": "stage1/cohere/selector",
+    "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/selector -run ^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 4.06,
+    "runs": [
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b",
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)",
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x",
+      "=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)"
+    ],
+    "verdicts": [
+      "--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)",
+      "    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|) (1.05s)",
+      "    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b (1.08s)",
+      "    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.11s)",
+      "    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|) (1.11s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-selector-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-with.log"
+  },
+  {
+    "variables": "ADAMIC_VALUES_LIBRARY",
+    "package": "stage1/cohere/values",
+    "test": "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/values -run ^TestThePortParsesAsGoCohereDoes$/^as_postcss\\-values\\-parser$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 13.56,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (2.43s)",
+      "    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-values-TestThePortParsesAsGoCohereDoes-as_postcss-values-parser-without.log"
+  },
+  {
+    "variables": "ADAMIC_VALUES_LIBRARY",
+    "package": "stage1/cohere/values",
+    "test": "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/values -run ^TestThePortParsesAsGoCohereDoes$/^as_postcss\\-values\\-parser$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 6.01,
+    "runs": [
+      "=== RUN   TestThePortParsesAsGoCohereDoes",
+      "=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortParsesAsGoCohereDoes (1.92s)",
+      "    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (1.15s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-values-TestThePortParsesAsGoCohereDoes-as_postcss-values-parser-with.log"
+  },
+  {
+    "variables": "ADAMIC_GITIGNORE_LARGEST",
+    "package": "stage1/cohere/gitignore",
+    "test": "TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/gitignore -run ^TestThePortAnswersAsGoCohereAndGitDo$/^catches_R2_the_size_limit_one_byte_lower$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 13.58,
+    "runs": [
+      "=== RUN   TestThePortAnswersAsGoCohereAndGitDo",
+      "=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortAnswersAsGoCohereAndGitDo (2.78s)",
+      "    --- SKIP: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-gitignore-TestThePortAnswersAsGoCohereAndGitDo-catches_R2_the_size_limit_one_byte_lower-without.log"
+  },
+  {
+    "variables": "ADAMIC_GITIGNORE_LARGEST",
+    "package": "stage1/cohere/gitignore",
+    "test": "TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/gitignore -run ^TestThePortAnswersAsGoCohereAndGitDo$/^catches_R2_the_size_limit_one_byte_lower$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 38.89,
+    "runs": [
+      "=== RUN   TestThePortAnswersAsGoCohereAndGitDo",
+      "=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower"
+    ],
+    "verdicts": [
+      "--- PASS: TestThePortAnswersAsGoCohereAndGitDo (12.78s)",
+      "    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (23.37s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-gitignore-TestThePortAnswersAsGoCohereAndGitDo-catches_R2_the_size_limit_one_byte_lower-with.log"
+  },
+  {
+    "variables": "ADAMIC_CLANG_TSGO_ARCHIVE",
+    "package": "internal/native",
+    "test": "TestSplitTSGoAgrees",
+    "mode": "without",
+    "command": "go test ./internal/native -run ^TestSplitTSGoAgrees$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 19.83,
+    "runs": [
+      "=== RUN   TestSplitTSGoAgrees"
+    ],
+    "verdicts": [
+      "--- SKIP: TestSplitTSGoAgrees (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "internal-native-TestSplitTSGoAgrees-without.log"
+  },
+  {
+    "variables": "ADAMIC_CLANG_TSGO_ARCHIVE",
+    "package": "internal/native",
+    "test": "TestSplitTSGoAgrees",
+    "mode": "with",
+    "command": "go test ./internal/native -run ^TestSplitTSGoAgrees$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 50.12,
+    "runs": [
+      "=== RUN   TestSplitTSGoAgrees"
+    ],
+    "verdicts": [
+      "--- PASS: TestSplitTSGoAgrees (46.55s)"
+    ],
+    "first_failure": null,
+    "log": "internal-native-TestSplitTSGoAgrees-with.log"
+  },
+  {
+    "variables": "ADAMIC_GRAPHQL_PRETTIER",
+    "package": "stage1/cohere/graphql/printer",
+    "test": "TestPrinterUpstreamPreflight",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/graphql/printer -run ^TestPrinterUpstreamPreflight$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 6.31,
+    "runs": [
+      "=== RUN   TestPrinterUpstreamPreflight"
+    ],
+    "verdicts": [
+      "--- SKIP: TestPrinterUpstreamPreflight (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-graphql-printer-TestPrinterUpstreamPreflight-without.log"
+  },
+  {
+    "variables": "ADAMIC_GRAPHQL_PRETTIER",
+    "package": "stage1/cohere/graphql/printer",
+    "test": "TestPrinterUpstreamPreflight",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/graphql/printer -run ^TestPrinterUpstreamPreflight$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 31.3,
+    "runs": [
+      "=== RUN   TestPrinterUpstreamPreflight",
+      "=== RUN   TestPrinterUpstreamPreflight/defaults",
+      "=== RUN   TestPrinterUpstreamPreflight/defaults/npm_Prettier",
+      "=== RUN   TestPrinterUpstreamPreflight/defaults/embedded_fork",
+      "=== RUN   TestPrinterUpstreamPreflight/narrow",
+      "=== RUN   TestPrinterUpstreamPreflight/narrow/npm_Prettier",
+      "=== RUN   TestPrinterUpstreamPreflight/narrow/embedded_fork",
+      "=== RUN   TestPrinterUpstreamPreflight/tight",
+      "=== RUN   TestPrinterUpstreamPreflight/tight/npm_Prettier",
+      "=== RUN   TestPrinterUpstreamPreflight/tight/embedded_fork",
+      "=== RUN   TestPrinterUpstreamPreflight/tabs",
+      "=== RUN   TestPrinterUpstreamPreflight/tabs/npm_Prettier",
+      "=== RUN   TestPrinterUpstreamPreflight/tabs/embedded_fork"
+    ],
+    "verdicts": [
+      "--- PASS: TestPrinterUpstreamPreflight (29.33s)",
+      "    --- PASS: TestPrinterUpstreamPreflight/defaults (6.68s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/defaults/npm_Prettier (2.56s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/defaults/embedded_fork (1.64s)",
+      "    --- PASS: TestPrinterUpstreamPreflight/narrow (6.35s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/narrow/npm_Prettier (3.25s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/narrow/embedded_fork (1.41s)",
+      "    --- PASS: TestPrinterUpstreamPreflight/tight (8.58s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/tight/npm_Prettier (2.13s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/tight/embedded_fork (2.14s)",
+      "    --- PASS: TestPrinterUpstreamPreflight/tabs (7.73s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/tabs/npm_Prettier (2.18s)",
+      "        --- PASS: TestPrinterUpstreamPreflight/tabs/embedded_fork (1.74s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-graphql-printer-TestPrinterUpstreamPreflight-with.log"
+  },
+  {
+    "variables": "ADAMIC_ESTREE_LIBRARY",
+    "package": "stage1/cohere/estree",
+    "test": "TestOriginalLibraries",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/estree -run ^TestOriginalLibraries$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 8.26,
+    "runs": [
+      "=== RUN   TestOriginalLibraries"
+    ],
+    "verdicts": [
+      "--- SKIP: TestOriginalLibraries (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-estree-TestOriginalLibraries-without.log"
+  },
+  {
+    "variables": "ADAMIC_ESTREE_LIBRARY",
+    "package": "stage1/cohere/estree",
+    "test": "TestOriginalLibraries",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/estree -run ^TestOriginalLibraries$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 8.08,
+    "runs": [
+      "=== RUN   TestOriginalLibraries"
+    ],
+    "verdicts": [
+      "--- PASS: TestOriginalLibraries (6.12s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-estree-TestOriginalLibraries-with.log"
+  },
+  {
+    "variables": "ADAMIC_YAML_LIBRARY",
+    "package": "stage1/cohere/yaml",
+    "test": "TestBundledParserDifference",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/yaml -run ^TestBundledParserDifference$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 7.97,
+    "runs": [
+      "=== RUN   TestBundledParserDifference"
+    ],
+    "verdicts": [
+      "--- SKIP: TestBundledParserDifference (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-yaml-TestBundledParserDifference-without.log"
+  },
+  {
+    "variables": "ADAMIC_YAML_LIBRARY",
+    "package": "stage1/cohere/yaml",
+    "test": "TestBundledParserDifference",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/yaml -run ^TestBundledParserDifference$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 2.18,
+    "runs": [
+      "=== RUN   TestBundledParserDifference"
+    ],
+    "verdicts": [
+      "--- PASS: TestBundledParserDifference (0.15s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-yaml-TestBundledParserDifference-with.log"
+  },
+  {
+    "variables": "ADAMIC_TS_PRETTIER",
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestStatementUpstreamDifferences",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/tsprinter -run ^TestStatementUpstreamDifferences$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 22.36,
+    "runs": [
+      "=== RUN   TestStatementUpstreamDifferences"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicStatementUpstreamDifferences (0.00s)",
+      "--- SKIP: TestStatementUpstreamDifferences (14.24s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-tsprinter-TestStatementUpstreamDifferences-without.log"
+  },
+  {
+    "variables": "ADAMIC_TS_PRETTIER",
+    "package": "stage1/cohere/tsprinter",
+    "test": "TestStatementUpstreamDifferences",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/tsprinter -run ^TestStatementUpstreamDifferences$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 5.32,
+    "runs": [
+      "=== RUN   TestStatementUpstreamDifferences"
+    ],
+    "verdicts": [
+      "        --- PASS: TestAdamicStatementUpstreamDifferences (0.00s)",
+      "--- PASS: TestStatementUpstreamDifferences (1.98s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-tsprinter-TestStatementUpstreamDifferences-with.log"
+  },
+  {
+    "variables": "ADAMIC_CYCLE_LEDGER_ROOT ADAMIC_CYCLE_LEDGER_OUTPUT",
+    "package": "internal/lower",
+    "test": "TestOriginalCycleLedger",
+    "mode": "without",
+    "command": "go test ./internal/lower -run ^TestOriginalCycleLedger$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 15.87,
+    "runs": [
+      "=== RUN   TestOriginalCycleLedger"
+    ],
+    "verdicts": [
+      "--- SKIP: TestOriginalCycleLedger (0.00s)"
+    ],
+    "first_failure": null,
+    "log": "internal-lower-TestOriginalCycleLedger-without.log"
+  },
+  {
+    "variables": "ADAMIC_CYCLE_LEDGER_ROOT ADAMIC_CYCLE_LEDGER_OUTPUT",
+    "package": "internal/lower",
+    "test": "TestOriginalCycleLedger",
+    "mode": "with",
+    "command": "go test ./internal/lower -run ^TestOriginalCycleLedger$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 7.29,
+    "runs": [
+      "=== RUN   TestOriginalCycleLedger"
+    ],
+    "verdicts": [
+      "--- PASS: TestOriginalCycleLedger (4.07s)"
+    ],
+    "first_failure": null,
+    "log": "internal-lower-TestOriginalCycleLedger-with.log"
+  },
+  {
+    "variables": "ADAMIC_CSSNUMBERS_LIBRARY",
+    "package": "stage1/cohere/cssnumbers",
+    "test": "TestCSSNumbers",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/cssnumbers -run ^TestCSSNumbers$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 142.3,
+    "runs": [
+      "=== RUN   TestCSSNumbers",
+      "=== RUN   TestCSSNumbers/quoted_numbers",
+      "=== RUN   TestCSSNumbers/unknown_unit",
+      "=== RUN   TestCSSNumbers/word_prefix"
+    ],
+    "verdicts": [
+      "--- PASS: TestCSSNumbers (132.55s)",
+      "    --- PASS: TestCSSNumbers/quoted_numbers (16.85s)",
+      "    --- PASS: TestCSSNumbers/unknown_unit (3.64s)",
+      "    --- PASS: TestCSSNumbers/word_prefix (2.87s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-cssnumbers-TestCSSNumbers-without.log"
+  },
+  {
+    "variables": "ADAMIC_CSSNUMBERS_LIBRARY",
+    "package": "stage1/cohere/cssnumbers",
+    "test": "TestCSSNumbers",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/cssnumbers -run ^TestCSSNumbers$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 128.08,
+    "runs": [
+      "=== RUN   TestCSSNumbers",
+      "=== RUN   TestCSSNumbers/quoted_numbers",
+      "=== RUN   TestCSSNumbers/unknown_unit",
+      "=== RUN   TestCSSNumbers/word_prefix"
+    ],
+    "verdicts": [
+      "--- PASS: TestCSSNumbers (125.19s)",
+      "    --- PASS: TestCSSNumbers/quoted_numbers (14.01s)",
+      "    --- PASS: TestCSSNumbers/unknown_unit (2.60s)",
+      "    --- PASS: TestCSSNumbers/word_prefix (3.58s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-cssnumbers-TestCSSNumbers-with.log"
+  },
+  {
+    "variables": "ADAMIC_CSSSTRINGS_LIBRARY",
+    "package": "stage1/cohere/cssstrings",
+    "test": "TestCSSStrings",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/cssstrings -run ^TestCSSStrings$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 119.25,
+    "runs": [
+      "=== RUN   TestCSSStrings",
+      "=== RUN   TestCSSStrings/quote_tie",
+      "=== RUN   TestCSSStrings/escaped_closing_quote",
+      "=== RUN   TestCSSStrings/preserve_original_escape"
+    ],
+    "verdicts": [
+      "--- PASS: TestCSSStrings (108.21s)",
+      "    --- PASS: TestCSSStrings/quote_tie (1.46s)",
+      "    --- PASS: TestCSSStrings/escaped_closing_quote (1.35s)",
+      "    --- PASS: TestCSSStrings/preserve_original_escape (1.72s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-cssstrings-TestCSSStrings-without.log"
+  },
+  {
+    "variables": "ADAMIC_CSSSTRINGS_LIBRARY",
+    "package": "stage1/cohere/cssstrings",
+    "test": "TestCSSStrings",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/cssstrings -run ^TestCSSStrings$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 100.51,
+    "runs": [
+      "=== RUN   TestCSSStrings",
+      "=== RUN   TestCSSStrings/quote_tie",
+      "=== RUN   TestCSSStrings/escaped_closing_quote",
+      "=== RUN   TestCSSStrings/preserve_original_escape"
+    ],
+    "verdicts": [
+      "--- PASS: TestCSSStrings (98.22s)",
+      "    --- PASS: TestCSSStrings/quote_tie (1.07s)",
+      "    --- PASS: TestCSSStrings/escaped_closing_quote (1.11s)",
+      "    --- PASS: TestCSSStrings/preserve_original_escape (1.11s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-cssstrings-TestCSSStrings-with.log"
+  },
+  {
+    "variables": "ADAMIC_MARKDOWNINLINE_LIBRARY",
+    "package": "stage1/cohere/markdowninline",
+    "test": "TestMarkdownInline",
+    "mode": "without",
+    "command": "go test ./stage1/cohere/markdowninline -run ^TestMarkdownInline$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 630.62,
+    "runs": [
+      "=== RUN   TestMarkdownInline",
+      "=== RUN   TestMarkdownInline/escaped_delimiter_parity",
+      "=== RUN   TestMarkdownInline/table_pipe_escaping",
+      "=== RUN   TestMarkdownInline/minimum_absent_fence"
+    ],
+    "verdicts": [
+      "--- PASS: TestMarkdownInline (623.90s)",
+      "    --- PASS: TestMarkdownInline/escaped_delimiter_parity (65.19s)",
+      "    --- PASS: TestMarkdownInline/table_pipe_escaping (63.09s)",
+      "    --- PASS: TestMarkdownInline/minimum_absent_fence (72.09s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-markdowninline-TestMarkdownInline-without.log"
+  },
+  {
+    "variables": "ADAMIC_MARKDOWNINLINE_LIBRARY",
+    "package": "stage1/cohere/markdowninline",
+    "test": "TestMarkdownInline",
+    "mode": "with",
+    "command": "go test ./stage1/cohere/markdowninline -run ^TestMarkdownInline$ -v -count=1 -timeout=20m",
+    "exit": 0,
+    "seconds": 656.78,
+    "runs": [
+      "=== RUN   TestMarkdownInline",
+      "=== RUN   TestMarkdownInline/escaped_delimiter_parity",
+      "=== RUN   TestMarkdownInline/table_pipe_escaping",
+      "=== RUN   TestMarkdownInline/minimum_absent_fence"
+    ],
+    "verdicts": [
+      "--- PASS: TestMarkdownInline (651.80s)",
+      "    --- PASS: TestMarkdownInline/escaped_delimiter_parity (66.53s)",
+      "    --- PASS: TestMarkdownInline/table_pipe_escaping (63.44s)",
+      "    --- PASS: TestMarkdownInline/minimum_absent_fence (64.94s)"
+    ],
+    "first_failure": null,
+    "log": "stage1-cohere-markdowninline-TestMarkdownInline-with.log"
+  }
+]

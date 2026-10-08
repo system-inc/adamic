@@ -1,0 +1,6 @@
+Command: PATH=/tmp/gate-inputs-offline-bin:$PATH strace -f -e trace=connect -o /tmp/gate-inputs-warm-connect.trace bash cloud/setup.sh --gate-inputs
+Exit: 0
+connect syscalls: 0 (all descendants traced)
+Curl: wrapper exits 97 and records any invocation; zero invocations
+Git trace of prior warm setup: zero fetch, clone, remote-https or fetch-pack operations
+Full trace retained locally at /tmp/gate-inputs-warm-connect.trace; exit/signal-only lines omitted from this report.
