@@ -24,6 +24,51 @@ fi
 source "$repository/internal/boundedrun/shell.sh"
 # A clean main worktree can use this installer without copying source into it.
 repository=${ADAMIC_SETUP_REPOSITORY:-$repository}
+# Restore workspace sums on success and failure, before returning setup's original status.
+restoreWorkSums() {
+ local directory=$1 tracked untracked temporary
+ tracked=$(timeout 30 git -C "$directory" ls-files -- go.work.sum) || return $?
+ if [ "$tracked" = go.work.sum ]; then
+  # diff returns 1 for changes, but other statuses are Git errors, not permission to overwrite.
+  local difference=0
+  timeout 30 git -C "$directory" diff --quiet -- go.work.sum || difference=$?
+  [ "$difference" -le 1 ] || return "$difference"
+  if [ "$difference" = 1 ]; then
+   temporary=$(command mktemp "$directory/.setup-work-sum.XXXXXX") || return $?
+   if ! timeout 30 git -C "$directory" show HEAD:go.work.sum > "$temporary"; then
+    command rm -f "${temporary:?}"
+    return 1
+   fi
+   command mv "$temporary" "$directory/go.work.sum" || return $?
+  fi
+  return 0
+ fi
+ untracked=$(timeout 30 git -C "$directory" ls-files --others --exclude-standard -- go.work.sum) || return $?
+ if [ "$untracked" = go.work.sum ]; then
+  command rm -f "${directory:?}/go.work.sum" || return $?
+ fi
+}
+restoreAllWorkSums() {
+ local submodules submodule
+ submodules=$(timeout 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"') || return $?
+ restoreWorkSums "$repository" || return $?
+ while IFS= read -r submodule; do
+  if [ -n "$submodule" ]; then
+   restoreWorkSums "$repository/$submodule" || return $?
+  fi
+ done <<< "$submodules"
+}
+restoreOnExit() {
+ local status=$?
+ trap - EXIT
+ if ! restoreAllWorkSums; then
+  echo "setup: workspace sum restoration failed; preserving setup exit status $status" >&2
+ fi
+ exit "$status"
+}
+trap restoreOnExit EXIT
+# End workspace sum exit handler.
+
 # Even local utility children get a bound; a network filesystem can stall them.
 for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
  eval "$boundedTool() { bounded 30 $boundedTool \"\$@\"; }"
@@ -213,6 +258,11 @@ for process in "${prepareProcesses[@]}"; do
 	wait "$process" || failed=1
 done
 [ "$failed" = 0 ] || exit 1
+# Test-only failure after all preparation children have finished.
+if [ "${ADAMIC_SETUP_TEST_FAIL_AFTER_MODULES:-0}" = 1 ]; then
+ echo "setup: injected test failure after module download" >&2
+ exit 73
+fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 
 # Optional WASI SDK 27: native clang remains the default in PATH.
@@ -295,36 +345,6 @@ else
 fi
 "$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
-
-# Go commands in workspace mode (downloads, builds) add sums to go.work.sum. A gate tests the commit
-# exactly, and the shard runner refuses a dirty submodule, so setup leaves every go.work.sum as the
-# commit has it: a tracked one is written back from HEAD, an untracked one setup created is removed.
-# It fails closed: a file is removed only when git lists it as untracked and not ignored, a tracked
-# one is replaced only by a complete copy of HEAD's, and any git failure stops setup. Go adds
-# missing sums again as it needs them.
-restoreWorkSums() {
-	local directory=$1 tracked untracked
-	tracked=$(timeout 30 git -C "$directory" ls-files -- go.work.sum)
-	if [ "$tracked" = go.work.sum ]; then
-		if ! timeout 30 git -C "$directory" diff --quiet -- go.work.sum; then
-			timeout 30 git -C "$directory" show HEAD:go.work.sum > "$directory/go.work.sum.setup"
-			mv "$directory/go.work.sum.setup" "$directory/go.work.sum"
-		fi
-		return 0
-	fi
-	untracked=$(timeout 30 git -C "$directory" ls-files --others --exclude-standard -- go.work.sum)
-	if [ "$untracked" = go.work.sum ]; then
-		rm -f "${directory:?}/go.work.sum"
-	fi
-}
-submodules=$(timeout 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"')
-restoreWorkSums "$repository"
-while IFS= read -r submodule; do
-	if [ -n "$submodule" ]; then
-		restoreWorkSums "$repository/$submodule"
-	fi
-done <<< "$submodules"
-step "workspace sums restored to the commit"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
