@@ -1,0 +1,2 @@
+import { outside } from "../outside.a";
+export function entry(): number { return outside(); }
