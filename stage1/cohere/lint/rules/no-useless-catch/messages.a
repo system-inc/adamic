@@ -1,0 +1,4 @@
+export const messageUnnecessaryCatch =
+    'This `catch` does nothing but rethrow what it caught, so the whole `try` has no effect: the error propagates exactly as it would with no `try` at all. It reads as if the error is being handled, which is the harm, since the next reader has to check. Delete the `try` and `catch` and keep the body, or handle the error here.';
+export const messageUnnecessaryCatchClause =
+    'This `catch` does nothing but rethrow what it caught, so it changes nothing: the error propagates as it would without it, and the `finally` still runs either way. Delete the `catch` clause and keep `try`/`finally`, or handle the error here.';
