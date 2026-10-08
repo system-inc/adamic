@@ -69,6 +69,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body()) && !l.isProcessExit(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if function.Closure && l.regexReplacementArgument(declaration) {
+				if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+					valueType, isKnown = ir.String, true
+				}
+				if returns.Flags()&checker.TypeFlagsNull != 0 {
+					valueType, isKnown = ir.Object, true
+				}
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
@@ -98,7 +106,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue
 		}
-		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil {
+		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil && !l.regexReplacementRest(declaration, parameter) {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
 		local, err := l.declareLocal(parameter.Name())
@@ -109,7 +117,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			// A function value is called with the arguments its caller has, and no more.
 			return l.notYet(parameter, "a function value with an optional parameter")
 		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && slotless(l.result.Locals[local].Type) && !(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -129,7 +137,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && slotless(function.Returns) {
+	if function.Closure && slotless(function.Returns) && !(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
