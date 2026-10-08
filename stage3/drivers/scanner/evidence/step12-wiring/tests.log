@@ -1,0 +1,20 @@
+test_failed_binary_and_empty_output_cannot_claim_milestone (test_scratch_evidence.ScratchEvidenceTests.test_failed_binary_and_empty_output_cannot_claim_milestone) ... ok
+test_matching_binary_writes_complete_evidence_and_kills_native_mutant (test_scratch_evidence.ScratchEvidenceTests.test_matching_binary_writes_complete_evidence_and_kills_native_mutant) ... ok
+test_one_byte_off_fails_with_exact_first_difference (test_scratch_evidence.ScratchEvidenceTests.test_one_byte_off_fails_with_exact_first_difference) ... ok
+test_missing_mode_cannot_pass (test_scratch_runner.ScratchSummaryTests.test_missing_mode_cannot_pass) ... ok
+test_no_compilation_after_conflict (test_scratch_runner.ScratchSummaryTests.test_no_compilation_after_conflict) ... ok
+test_original_ref_has_the_prior_44_conflicts (test_scratch_runner.ScratchSummaryTests.test_original_ref_has_the_prior_44_conflicts) ... ok
+test_pass_without_evidence_is_caught (test_scratch_runner.ScratchSummaryTests.test_pass_without_evidence_is_caught) ... ok
+test_real_conflict_pass_mutant_is_caught_only_by_merge_rules (test_scratch_runner.ScratchSummaryTests.test_real_conflict_pass_mutant_is_caught_only_by_merge_rules) ... ok
+test_success_requires_both_verified_modes (test_scratch_runner.ScratchSummaryTests.test_success_requires_both_verified_modes) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.782s
+
+OK
+failed exit 1 stand-in binary failed
+empty exit 1 empty native output cannot provide a one-byte mutant
+matching exit 0 stand-in comparison passed; not native scanner milestone evidence
+evidence fields complete; one-byte native mutant caught at offset 0
+one-byte-off exit 1 native output differs: {"offset": 16, "line": 2, "column": 2, "left": 79, "right": 78}
+one-byte stand-in mutant caught: {'offset': 16, 'line': 2, 'column': 2, 'left': 79, 'right': 78}
