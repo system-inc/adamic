@@ -139,8 +139,17 @@ extern char adamic_literal_mark;
 // Nullable references keep undefined as NULL and null as a kind-specific immortal sentinel.
 // Declarations are shared by runtime translation units; sentinel storage lives only in nullable.c.
 void *adamic_reference_null(enum adamic_kind kind);
-bool adamic_reference_is_null(const void *value, enum adamic_kind kind, bool undefined);
-bool adamic_reference_is_sentinel(const void *value);
+extern adamic_string adamic_null_string;
+static inline bool adamic_reference_is_null(const void *value, enum adamic_kind kind, bool undefined) {
+	if (undefined && value == NULL) { return true; }
+	switch (kind) {
+	case adamic_kind_string: return value == &adamic_null_string;
+	default: return value == NULL; // Unmigrated kinds retain their existing null representation.
+	}
+}
+static inline bool adamic_reference_is_sentinel(const void *value) {
+	return value == &adamic_null_string;
+}
 adamic_string *adamic_reference_null_text(void);
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
