@@ -1,0 +1,50 @@
+== github.com/system-inc/adamic/stage1/cohere/json TestCachedWidthMutantIsCaught
+          165 |         signal(SIGPIPE, SIG_IGN);
+              |         ^
+        /home/agent/.cache/adamic/runtime/.build-1981845432/adamic.c:165:9: error: use of undeclared identifier 'SIGPIPE'
+          165 |         signal(SIGPIPE, SIG_IGN);
+              |                ^
+        /home/agent/.cache/adamic/runtime/.build-1981845432/adamic.c:165:18: error: use of undeclared identifier 'SIG_IGN'
+          165 |         signal(SIGPIPE, SIG_IGN);
+              |                         ^
+        /home/agent/.cache/adamic/runtime/.build-1981845432/adamic.c:166:12: error: use of undeclared identifier 'SIGTERM'
+          166 |         stop_with(SIGTERM);
+              |                   ^
+        /home/agent/.cache/adamic/runtime/.build-1981845432/adamic.c:167:12: error: use of undeclared identifier 'SIGINT'
+          167 |         stop_with(SIGINT);
+              |                   ^
+        /home/agent/.cache/adamic/runtime/.build-1981845432/adamic.c:168:12: error: use of undeclared identifier 'SIGHUP'
+          168 |         stop_with(SIGHUP);
+              |                   ^
+        18 errors generated.
+        
+--- FAIL: TestCachedWidthMutantIsCaught (20.02s)
+
+== github.com/system-inc/adamic/stage1/cohere/json TestAdditionalJSONBoundaries
+=== RUN   TestAdditionalJSONBoundaries
+=== PAUSE TestAdditionalJSONBoundaries
+=== CONT  TestAdditionalJSONBoundaries
+    port_test.go:336: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 72 texts in 0.003s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.011s
+    port_test.go:358: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestAdditionalJSONBoundaries (6.01s)
+
+== github.com/system-inc/adamic/stage1/cohere/json TestSingleFileStdoutDriver
+=== RUN   TestSingleFileStdoutDriver
+=== PAUSE TestSingleFileStdoutDriver
+=== CONT  TestSingleFileStdoutDriver
+    port_test.go:390: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2 texts in 0.001s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.014s
+    port_test.go:396: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestSingleFileStdoutDriver (5.33s)
+
