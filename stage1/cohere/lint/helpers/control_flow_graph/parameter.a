@@ -1,0 +1,12 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function parameter(b: Builder, node: AstNode | undefined): void {
+    let parameter = node;
+    if ((parameter === undefined)) {
+        return;
+    }
+    b.expr(b.ast.maybe(needNode(parameter).Type));
+    b.bindWithDefault(b.ast.maybe(needNode(parameter).Name), b.ast.maybe(needNode(parameter).Initializer));
+}

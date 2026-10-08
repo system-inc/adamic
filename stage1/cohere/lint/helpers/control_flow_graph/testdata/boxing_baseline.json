@@ -1,0 +1,12 @@
+{
+  "implementation": "75e1d014e7fb4f389383f8054aabecb0a6d60eec",
+  "workload": "allocate 1000 blocks, print length, dispose arena",
+  "native_counts": {
+    "allocations": 4005,
+    "frees": 4005,
+    "retains": 2001,
+    "releases": 2006,
+    "peak": 4004,
+    "regions": 0
+  }
+}

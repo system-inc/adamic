@@ -1,0 +1,154 @@
+import { RootOf } from './root_of.a';
+import { IsRoot } from './is_root.a';
+import { isAlwaysTruthyTest } from './is_always_truthy_test.a';
+import { isDestructuringTarget } from './is_destructuring_target.a';
+import { isThrowableIdentifier } from './is_throwable_identifier.a';
+import { labelsOf } from './labels_of.a';
+import { normalizeBigIntLiteral } from './normalize_big_int_literal.a';
+import { Current } from './current.a';
+import { Index } from './index.a';
+import { BlockArena } from './arena.a';
+import { Graph } from './builder.a';
+import { AnalyzePaths } from './analyze_paths.a';
+import { IsCyclic } from './is_cyclic.a';
+import { IsOnEveryFinalPath } from './is_on_every_final_path.a';
+import { IsExit } from './is_exit.a';
+import { HasSingleFinalPath } from './has_single_final_path.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+const emptyBlocks: BlockIndex[]=[];
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { AstArena } from './ast.a';
+import { CfgNodeIndex as NodeIndex } from '../../../arena/arena_index.a';
+import type { AstNode } from './ast.a';
+import { Build } from './build.a';
+import { IndexRoots } from './index_roots.a';
+import type { Builder, Hooks } from './builder.a';
+const input = readTextFile(programArguments()[0] ?? panic('CFG cases path'));
+if(input.kind === 'Error') panic(input.message);
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0) panic(json.error);
+function field(row: number,key: string): number { return json.field(row,key); }
+function num(row: number,key: string): number {const f=field(row,key);return f<0?-1:json.node(f).number;}
+function text(row: number,key: string): string {const f=field(row,key);return f<0?'':json.node(f).text;}
+function flag(row: number,key: string): boolean {return text(row,key)==='true';}
+function list(row: number,key: string): readonly number[] {const f=field(row,key);const empty: number[]=[];return f<0?empty:json.node(f).children;}
+function items(row: number): readonly number[] {return json.node(row).children;}
+function get(row: number,i: number): number {return items(row)[i] ?? panic('missing CFG field');}
+function blockSlot(index: BlockIndex | undefined): number {return index===undefined?-1:index.slot;}
+function blockHandle(arena: BlockArena,slot: number): BlockIndex | undefined {return slot===-1?undefined:arena.indexAtSlot(slot);}
+function bit(value: boolean): string {return value?'true':'false';}
+function numbers(row: number): string {let out='';for(const child of items(row)){if(out!=='')out+=',';out+=`${json.node(child).number}`;}return out;}
+class Decoder {
+ readonly rows: readonly number[];readonly ast=new AstArena();
+ constructor(rows: readonly number[]) {this.rows=rows;for(const row of rows)this.ast.allocate();}
+ child(row: number,key: string): NodeIndex | undefined {return this.ast.optionalIndexAtSlot(num(row,key));}
+ children(row: number,key: string): readonly NodeIndex[] | undefined {const f=field(row,key);if(f<0)return undefined;const result: NodeIndex[]=[];for(const index of items(f))result.push(this.ast.indexAtSlot(json.node(index).number));return result;}
+ read(index: number): AstNode {
+ const node=this.ast.read(this.ast.indexAtSlot(index));const row=this.rows[index] ?? panic('AST row');
+ node.Parent=this.ast.optionalIndexAtSlot(num(row,'Parent'));
+ node.Kind=text(row,'Kind');node.Text=text(row,'Text');node.Operator=text(row,'Operator');
+ node.isStatement=flag(row,'isStatement');node.optionalChain=flag(row,'optionalChain');node.outermostChain=flag(row,'outermostChain');node.optionalRoot=flag(row,'optionalRoot');node.functionLike=flag(row,'functionLike');node.jsxTag=flag(row,'jsxTag');
+ node.Left=this.child(row,'Left');
+ node.Right=this.child(row,'Right');
+ node.Expression=this.child(row,'Expression');
+ node.Operand=this.child(row,'Operand');
+ node.Name=this.child(row,'Name');
+ node.Body=this.child(row,'Body');
+ node.Type=this.child(row,'Type');
+ node.Initializer=this.child(row,'Initializer');
+ node.Condition=this.child(row,'Condition');
+ node.Incrementor=this.child(row,'Incrementor');
+ node.Statement=this.child(row,'Statement');
+ node.ThenStatement=this.child(row,'ThenStatement');
+ node.ElseStatement=this.child(row,'ElseStatement');
+ node.TryBlock=this.child(row,'TryBlock');
+ node.FinallyBlock=this.child(row,'FinallyBlock');
+ node.CatchClause=this.child(row,'CatchClause');
+ node.VariableDeclaration=this.child(row,'VariableDeclaration');
+ node.Block=this.child(row,'Block');
+ node.Label=this.child(row,'Label');
+ node.CaseBlock=this.child(row,'CaseBlock');
+ node.DeclarationList=this.child(row,'DeclarationList');
+ node.WhenTrue=this.child(row,'WhenTrue');
+ node.WhenFalse=this.child(row,'WhenFalse');
+ node.ArgumentExpression=this.child(row,'ArgumentExpression');
+ node.Tag=this.child(row,'Tag');
+ node.Template=this.child(row,'Template');
+ node.Constraint=this.child(row,'Constraint');
+ node.DefaultType=this.child(row,'DefaultType');
+ node.PropertyName=this.child(row,'PropertyName');
+ node.ObjectAssignmentInitializer=this.child(row,'ObjectAssignmentInitializer');
+ node.DotDotDotToken=this.child(row,'DotDotDotToken');
+ node.OperatorToken=this.child(row,'OperatorToken');
+ node.Statements=this.children(row,'Statements');
+ node.Parameters=this.children(row,'Parameters');
+ node.Arguments=this.children(row,'Arguments');
+ node.Declarations=this.children(row,'Declarations');
+ node.Elements=this.children(row,'Elements');
+ node.Properties=this.children(row,'Properties');
+ node.Clauses=this.children(row,'Clauses');
+ node.Members=this.children(row,'Members');
+ node.Types=this.children(row,'Types');
+ node.HeritageClauses=this.children(row,'HeritageClauses');
+ node.TypeArguments=this.children(row,'TypeArguments');
+ node.TypeParameters=this.children(row,'TypeParameters');
+ node.Decorators=this.children(row,'Decorators');
+ node.children=this.children(row,'children');
+ return node;
+ }
+ arena(): AstArena {for(let i=0;i<this.rows.length;i++)this.read(i);return this.ast;}
+}
+class Recorder {
+ readonly trace: readonly number[];position=0;
+ constructor(trace: readonly number[]) {this.trace=trace;}
+ hook(kind: string,b: Builder,node: AstNode | undefined): void {
+ const expected=this.trace[this.position];this.position++;
+ const emptyIds: number[]=[];const ids=expected===undefined?-1:get(expected,4);
+ console.log(`trace:${kind}:${node===undefined?-1:node.index.slot}:${Current(b).slot}:${bit(b.block(Current(b)).Reachable)}:${ids<0?'':numbers(ids)}`);
+ for(const event of ids<0?emptyIds:items(ids)) {const location=b.Emit(json.node(event).number);console.log(`emit:${location.block.slot}:${location.index}`);}
+ }
+}
+function encoded(text: string): string {let out='';for(let i=0;i<text.length;i++){if(i>0)out+=',';out+=`${text.charCodeAt(i)}`;}return out;}
+let caseIndex=0;
+for(const row of items(root)) {
+ console.log(`case:${caseIndex}:${text(row,'op')}`);caseIndex++;
+ if(text(row,'op')==='paths') {
+ const arena=new BlockArena();const blocks=list(row,'blocks');for(const block of blocks)arena.allocate();
+ const finals: (BlockIndex | undefined)[]=[];const thrown: (BlockIndex | undefined)[]=[];
+ for(const index of list(row,'finals'))finals.push(blockHandle(arena,json.node(index).number));
+ for(const index of list(row,'thrown'))thrown.push(blockHandle(arena,json.node(index).number));
+ for(let i=0;i<blocks.length;i++){
+ const input=blocks[i] ?? panic('path block');const block=arena.read(arena.indexAtSlot(i));
+ if(json.node(get(input,0)).number!==i)panic('noncanonical Go block index');
+ block.Reachable=json.node(get(input,1)).text==='true';
+ for(const successor of items(get(input,2)))block.Successors.push(blockHandle(arena,json.node(successor).number));
+ const barriers=get(input,3);if(json.node(barriers).kind!=='null'){const values: boolean[]=[];for(const value of items(barriers))values.push(json.node(value).text==='true');block.cycleBarrier=values;}
+ }
+ const graph=new Graph(arena,finals,thrown,false);const a=AnalyzePaths(graph);
+ for(let i=0;i<arena.length;i++){const cyclic=IsCyclic(a,arena.indexAtSlot(i));const every=IsOnEveryFinalPath(a,arena.indexAtSlot(i));const exit=IsExit(a,arena.indexAtSlot(i));const distance=a.shortest[i] ?? panic('shortest');console.log(`path:${bit(cyclic)}:${bit(every)}:${bit(exit)}:${distance}:${bit(distance!==0)}`);}
+ console.log(`exit:${a.shortestExit}:${bit(a.hasExit)}:${bit(HasSingleFinalPath(a))}`);
+ arena.dispose();continue;
+ }
+ const decoder=new Decoder(list(row,'nodes'));const ast=decoder.arena();const node=ast.read(ast.indexAtSlot(num(row,'root')));
+ for(const current of ast.nodes){const owner=RootOf(ast,current);console.log(`node:${current.index.slot}:${owner===undefined?-1:owner.index.slot}:${bit(IsRoot(current))}:${bit(isAlwaysTruthyTest(ast,current))}:${bit(isDestructuringTarget(ast,current))}:${bit(isThrowableIdentifier(ast,current))}:${labelsOf(ast,current).map(encoded).join(';')}:${encoded(normalizeBigIntLiteral(current.Text))}`);}
+ if(text(row,'op')==='roots') {
+ for(const summary of IndexRoots(ast,node))console.log(`root:${summary.Node.index.slot}:${bit(summary.BareReturn)}:${summary.Loops.join(',')}`);
+ } else {
+ const mask=list(row,'mask');const recorder=new Recorder(list(row,'trace'));
+ const hooks: Hooks={Expression:undefined,Read:undefined,Write:undefined,Statement:undefined,Loop:undefined};
+ if(json.node(mask[0] ?? panic('mask')).text==='true')hooks.Expression=(b: Builder,n: AstNode | undefined): void=>recorder.hook('Expression',b,n);
+ if(json.node(mask[1] ?? panic('mask')).text==='true')hooks.Read=(b: Builder,n: AstNode | undefined): void=>recorder.hook('Read',b,n);
+ if(json.node(mask[2] ?? panic('mask')).text==='true')hooks.Write=(b: Builder,n: AstNode | undefined): void=>recorder.hook('Write',b,n);
+ if(json.node(mask[3] ?? panic('mask')).text==='true')hooks.Statement=(b: Builder,n: AstNode | undefined): void=>recorder.hook('Statement',b,n);
+ if(json.node(mask[4] ?? panic('mask')).text==='true')hooks.Loop=(b: Builder,n: AstNode | undefined): void=>recorder.hook('Loop',b,n);
+ const graph=Build(ast,node,hooks);
+ console.log(`graph:${bit(graph.EndReachable)}:${graph.FinalBlocks.map(blockSlot).join(',')}:${graph.ThrownBlocks.map(blockSlot).join(',')}`);
+ for(let i=0;i<graph.arena.length;i++){
+ const block=graph.arena.read(graph.arena.indexAtSlot(i));let barriers='null';if(block.cycleBarrier!==undefined)barriers=block.cycleBarrier.map(bit).join(',');
+ console.log(`block:${Index(graph.arena,graph.arena.indexAtSlot(i))}:${bit(block.Reachable)}:${bit(block.hasIncoming)}:${bit(block.final)}:${bit(block.thrown)}:${block.Successors.map(blockSlot).join(',')}:${block.Predecessors.map(blockSlot).join(',')}:${barriers}:${block.Events.length}`);
+ }
+ console.log(`hooks:${recorder.position}`);
+ graph.arena.dispose();
+ }
+ ast.dispose();
+}

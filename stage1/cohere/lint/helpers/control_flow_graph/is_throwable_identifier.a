@@ -1,0 +1,11 @@
+import { needNode } from './support.a';
+import type { AstNode } from './ast.a';
+import { AstArena } from './ast.a';
+export function isThrowableIdentifier(ast: AstArena, input: AstNode | undefined): boolean {
+ const node=needNode(input); if(node.Parent === undefined || node.jsxTag) return false; const parent=ast.read(node.Parent);
+ switch(parent.Kind) {
+ case 'LabeledStatement': case 'BreakStatement': case 'ContinueStatement': case 'ArrayBindingPattern': case 'ImportSpecifier': case 'ExportSpecifier': case 'ImportClause': case 'NamespaceImport': case 'NamespaceExport': case 'JsxAttribute': case 'JsxNamespacedName': case 'CatchClause': return false;
+ case 'BindingElement': if(parent.DotDotDotToken !== undefined || parent.PropertyName === node.index) return false; return parent.Parent !== undefined && ast.read(parent.Parent).Kind === 'ObjectBindingPattern';
+ case 'FunctionDeclaration': case 'FunctionExpression': case 'ArrowFunction': case 'ClassDeclaration': case 'ClassExpression': case 'VariableDeclaration': case 'PropertyAssignment': case 'PropertyDeclaration': case 'MethodDeclaration': case 'GetAccessor': case 'SetAccessor': case 'EnumDeclaration': case 'ModuleDeclaration': case 'InterfaceDeclaration': case 'TypeAliasDeclaration': return parent.Name !== node.index;
+ } return true;
+}

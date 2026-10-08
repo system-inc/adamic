@@ -1,0 +1,3 @@
+import { PathAnalysis,pathCyclic,pathOnEveryFinal,pathExit } from './path_analysis.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function IsExit(a: PathAnalysis, block: BlockIndex | undefined): boolean { if(block===undefined)return false;return (a.flag(block)&pathExit)!==0; }

@@ -1,0 +1,52 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { isAlwaysTruthyTest } from './is_always_truthy_test.a';
+export function forStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    if ((b.ast.maybe(needNode(stmt).Initializer) !== undefined)) {
+        if ((needNode(b.ast.maybe(needNode(stmt).Initializer)).Kind === 'VariableDeclarationList')) {
+            b.variableDeclarationList(b.ast.maybe(needNode(stmt).Initializer));
+        } else {
+            b.expr(b.ast.maybe(needNode(stmt).Initializer));
+        }
+    }
+    if (((b.ast.maybe(needNode(stmt).Condition) === undefined) && (b.ast.maybe(needNode(stmt).Incrementor) === undefined))) {
+        let body = b.newBlock();
+        b.link(b.cur, body);
+        let after = b.newBlock();
+        b.pushJump(node, after, body, node);
+        b.enter(body);
+        b.statement(b.ast.maybe(needNode(stmt).Statement));
+        b.loop(node);
+        b.link(b.cur, body);
+        b.popJump();
+        b.enter(after);
+        return;
+    }
+    let test = b.newBlock();
+    b.link(b.cur, test);
+    b.enter(test);
+    let after = b.newBlock();
+    let body = b.newBlock();
+    let falseEntry: BlockIndex | undefined = after;
+    if (((b.ast.maybe(needNode(stmt).Condition) === undefined) || isAlwaysTruthyTest(b.ast, b.ast.maybe(needNode(stmt).Condition)))) {
+        falseEntry = undefined;
+    }
+    b.condition(b.ast.maybe(needNode(stmt).Condition), body, falseEntry);
+    let update = test;
+    if ((b.ast.maybe(needNode(stmt).Incrementor) !== undefined)) {
+        update = b.newBlock();
+        b.enterDisconnected(update);
+        b.expr(b.ast.maybe(needNode(stmt).Incrementor));
+        b.link(b.cur, test);
+    }
+    b.pushJump(node, after, update, node);
+    b.enter(body);
+    b.statement(b.ast.maybe(needNode(stmt).Statement));
+    b.loop(node);
+    b.link(b.cur, update);
+    b.popJump();
+    b.enter(after);
+}
