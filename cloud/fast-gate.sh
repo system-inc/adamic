@@ -260,7 +260,11 @@ esac
 # --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
 range="${first}-$((first + ${width:-${share}} - 1))"
 echo "cpus=${range}" >> ~/"${out}"/box.txt
-taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}"
+# Landings and areas run every test and fixture and name every failure, failing at the end (run.py
+# --complete): one pass shows all a candidate's moved outcomes, not one per gate.
+complete=""
+case ${branch} in cloud/land-*|area/*) complete=--complete ;; esac
+taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}" ${complete}
 BOX
 code=$?
 set -e

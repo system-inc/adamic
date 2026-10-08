@@ -13,6 +13,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import types
 import signal
 import threading
 import time
@@ -241,6 +242,39 @@ class Coverage(FailClosed):
         self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
         self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
         self.assertEqual(result["executors"], {"stage3": 2})
+
+
+class CompleteMode(unittest.TestCase):
+    """Landing and area gates run on after a failure (run.py --complete): every test and fixture still
+    runs and the verdict names them all; an ordinary fast gate still stops everything at the first."""
+
+    def gate(self, complete):
+        gate = run.Gate.__new__(run.Gate)
+        arguments = types.SimpleNamespace(full=False, out=tempfile.mkdtemp(), sha="a" * 40)
+        if complete:
+            arguments.complete = True
+        gate.arguments = arguments
+        gate.complete = vars(arguments).get("complete") is True
+        gate.lock = threading.Lock()
+        gate.started = 0.0
+        gate.failure = None
+        gate.killed = 0
+        gate.killSessions = lambda: setattr(gate, "killed", gate.killed + 1)
+        return gate
+
+    def test_complete_mode_keeps_running_after_the_first_failure(self):
+        gate = self.gate(True)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "first")
+            gate.fail("tests", "second")
+        self.assertEqual(gate.killed, 0)
+        self.assertEqual(gate.failure["detail"], "first")
+
+    def test_an_ordinary_fast_gate_still_stops_at_the_first_failure(self):
+        gate = self.gate(False)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "first")
+        self.assertEqual(gate.killed, 1)
 
 
 class OracleSelection(unittest.TestCase):

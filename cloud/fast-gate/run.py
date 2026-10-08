@@ -61,6 +61,9 @@ def main():
     # also runs clang and Node: a slot that oversubscribed itself sent a 150 s node deadline red.
     parser.add_argument("--parallel", type=int, default=max(1, len(os.sched_getaffinity(0)) // 2))
     parser.add_argument("--full", action="store_true")
+    # Landing and area gates (@system_adamic, Oct 8 09:43): run every test and fixture and report every
+    # failure in one pass, failing at the end; area-next found its moved fixtures one per gate.
+    parser.add_argument("--complete", action="store_true", help="fast gate that runs on after a failure and names every failed test")
     parser.add_argument("--branch", default="")
     parser.add_argument("--branch-source", default="")
     parser.add_argument("--session", default="")
@@ -87,6 +90,8 @@ class Gate:
         self.processes = []
         self.steps = {}
         self.counts = {"pass": 0, "fail": 0, "skip": 0}
+        self.complete = vars(arguments).get("complete") is True
+        self.failedTests = []
         self.skipped = []
         self.census = {"required_input": [], "unclassified": []}
         # Fail closed: green needs every planned stage to have recorded exit 0, not just no failure,
@@ -837,7 +842,7 @@ class Gate:
             tests = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
-                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
+                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
                 thread = self.guarded("tests", self.slotted, slots, command, log, importPath, name, tally)
                 thread.start()
                 tests.append(thread)
@@ -896,7 +901,7 @@ class Gate:
                     passed.add((lane, test.split("/", 1)[1]))
 
         self.watchers.append(watch)
-        self.test("smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
+        self.test("smoke", ["go", "test", "-count=1"] + ([] if self.complete else ["-failfast"]) + ["-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
         if self.exits.get("smoke") != 0:
             return
         absent = sorted("%s %s" % entry for entry in smoke if entry[0] not in seen)
@@ -949,6 +954,8 @@ class Gate:
                     self.counts[event["Action"]] += 1
                     if event["Action"] == "skip":
                         self.skipped.append(key)
+                    if event["Action"] == "fail":
+                        self.failedTests.append("%s %s" % (event.get("Package"), event.get("Test")))
             if event.get("Action") == "fail" or event.get("Action") == "build-fail":
                 text = "".join(output.get(key, [])) or "".join(output.get((event.get("Package"), None), []))
                 self.fail(name, "%s %s\n%s" % (event.get("Package"), event.get("Test") or "(package)", text[-4000:]))
@@ -957,7 +964,7 @@ class Gate:
         if code != 0 and self.failure is None:
             with open(stderrPath) as handle:
                 self.fail(name, "%s exited %d\n%s" % (" ".join(command[:4]), code, handle.read()[-4000:]))
-        return None if self.failure is not None and not self.arguments.full else code
+        return None if self.failure is not None and not self.arguments.full and not self.complete else code
 
     def checkCensus(self):
         started = time.monotonic()
@@ -995,7 +1002,7 @@ class Gate:
 
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
-            if self.failure is not None and not self.arguments.full:
+            if self.failure is not None and not self.arguments.full and not self.complete:
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
             variables = dict(os.environ, **gateEnvironment)
@@ -1019,6 +1026,9 @@ class Gate:
                 with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
                     handle.write(detail + "\n")
                 self.status("red: %s first failure at %s after %.1f s (still running for triage)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                return
+            if self.complete:
+                # Nothing is stopped: every test and fixture still runs, and the verdict names them all.
                 return
             self.killSessions()
 
@@ -1067,6 +1077,8 @@ class Gate:
             "steps_seconds": self.steps,
             "pass": self.counts["pass"],
             "fail": self.counts["fail"],
+            "failed_tests": self.failedTests,
+            "complete": self.complete,
             "skip": self.counts["skip"],
             "required_input_skips": self.census["required_input"],
             "unclassified_skips": self.census["unclassified"],
