@@ -275,6 +275,23 @@ func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments
 	return ir.Call{Function: function, Arguments: values, Returns: ir.String}
 }
 
+func (l *lowering) stringPositionMethod(value ir.Expression, name string, arguments []ir.Expression) ir.Expression {
+	values := append([]ir.Expression{value}, arguments...)
+	function, reads := l.stringHelper(name, values)
+	position := ir.MathCall{Function: "min", Arguments: []ir.Expression{
+		ir.MathCall{Function: "max", Arguments: []ir.Expression{stringInteger(reads[2]), ir.NumberConstant{Value: 0}}},
+		ir.StringLength{Value: reads[0]},
+	}}
+	bounds := []ir.Expression{position}
+	if name == "endsWith" {
+		bounds = []ir.Expression{ir.NumberConstant{Value: 0}, position}
+	}
+	result := ir.StringCall{Method: name, Value: ir.StringCall{Method: "slice", Value: reads[0], Arguments: bounds}, Arguments: []ir.Expression{reads[1]}}
+	l.result.Functions[function].Returns = ir.Boolean
+	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
+	return ir.Call{Function: function, Arguments: values, Returns: ir.Boolean}
+}
+
 // String.raw's supported shape has a present raw string array. Index signatures, holes, getters
 // and user ToPrimitive methods remain refused. Reading raw occurs after all call arguments, as in JS.
 func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression, error) {

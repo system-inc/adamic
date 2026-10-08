@@ -1,0 +1,6 @@
+const text = 'héllo, wörld';
+const positions = [-5, 0, 1, 2, 7, 8, 11, 12, 99, NaN, Infinity, -Infinity, 2.9];
+for (const position of positions) {
+	console.log(`${position} ${text.startsWith('é', position)} ${text.endsWith('é', position)} ${text.startsWith('wö', position)} ${text.endsWith('hé', position)} ${text.startsWith('', position)}`);
+}
+console.log(`${'😀x😀'.startsWith('x', 2)} ${'😀x😀'.endsWith('x', 3)} ${'abc'.startsWith('abcd', 0)} ${'abc'.endsWith('c', 2)}`);
