@@ -48,6 +48,7 @@ function baseName(name: string): boolean { return name === 'Component' || name =
 export class Rule {
     readonly context: RuleContext;
     entries: Deprecation[] = defaultEntries;
+    pragma = 'React';
     constructor(context: RuleContext) { this.context = context; }
     prepare(root: number): void {
         // A comment annotation cannot exist unless its shape also occurs in the source.
@@ -61,6 +62,7 @@ export class Rule {
             pragma = identifier(candidate) ? candidate : 'React';
             break;
         }
+        this.pragma = pragma;
         this.entries = pragma === 'React' ? defaultEntries : deprecations(pragma);
     }
     report(index: number, name: string): void {
@@ -99,10 +101,18 @@ export class Rule {
         const name = context.property(callee);
         return context.kind(receiver) === 'Identifier' && context.node(receiver).text === 'React' && context.kind(name) === 'Identifier' && context.node(name).text === 'createReactClass';
     }
+    propertyCouldMatch(index: number): boolean {
+        const context = this.context;
+        let cursor = index;
+        while(context.kind(cursor) === 'PropertyAccessExpression') { cursor = context.child(cursor, 0); }
+        const prefix = context.kind(cursor) === 'ThisKeyword' ? 'this' : context.kind(cursor) === 'Identifier' ? context.node(cursor).text : '';
+        return [this.pragma, 'this', 'ReactPerf', 'Perf', 'ReactDOM', 'ReactDOMServer'].includes(prefix);
+    }
     visit(index: number): void {
         const context = this.context;
         const kind = context.kind(index);
         if(kind === 'PropertyAccessExpression') {
+            if(!this.propertyCouldMatch(index)) { return; }
             this.report(index, context.raw(index));
             return;
         }
