@@ -12,19 +12,8 @@ import (
 func adaptRegExpLiterals(source string) adapted {
 	tokens := tokenize(source)
 	counts := map[string]int{}
-	for i, t := range tokens {
-		if t.text != "RegExp" {
-			continue
-		}
-		if i > 0 && (strings.Contains("|const|let|var|function|class|[|{|:|.|...|", "|"+tokens[i-1].text+"|") || ((tokens[i-1].text == "(" || tokens[i-1].text == ",") && (i+1 >= len(tokens) || tokens[i+1].text != "("))) {
-			return adapted{Source: source, Counts: counts}
-		}
-		if i+1 < len(tokens) {
-			switch tokens[i+1].text {
-			case "=", "+=", "-=", "*=", "/=", "%=", "**=", "&=", "^=", "|=", "&&=", "||=", "??=", "<<=", ">>=", ">>>=", "=>", ".", "[", "++", "--":
-				return adapted{Source: source, Counts: counts}
-			}
-		}
+	if !regexpPristine(tokens) {
+		return adapted{Source: source, Counts: counts}
 	}
 	var edits []edit
 	for _, t := range tokens {
@@ -371,4 +360,22 @@ func adaptRegExpReads(source string, counts map[string]int) string {
 		counts["regex-checked-match-read"]++
 	}
 	return applyEdits(source, edits)
+}
+
+func regexpPristine(tokens []token) bool {
+	for i, t := range tokens {
+		if t.text != "RegExp" {
+			continue
+		}
+		if i > 0 && (strings.Contains("|const|let|var|function|class|.|...|", "|"+tokens[i-1].text+"|") || (strings.Contains("|[|{|:|", "|"+tokens[i-1].text+"|") && (i+1 >= len(tokens) || tokens[i+1].text != "(")) || ((tokens[i-1].text == "(" || tokens[i-1].text == ",") && (i+1 >= len(tokens) || tokens[i+1].text != "("))) {
+			return false
+		}
+		if i+1 < len(tokens) {
+			switch tokens[i+1].text {
+			case "=", "+=", "-=", "*=", "/=", "%=", "**=", "&=", "^=", "|=", "&&=", "||=", "??=", "<<=", ">>=", ">>>=", "=>", ".", "[", "++", "--":
+				return false
+			}
+		}
+	}
+	return true
 }

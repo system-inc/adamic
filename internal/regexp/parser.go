@@ -21,11 +21,17 @@ func (e *SyntaxError) Error() string {
 
 // Parse parses pattern and flags according to ECMAScript 2025.
 func Parse(pattern, flags string) (*Pattern, error) {
+	return parsePattern(pattern, flags, false)
+}
+
+// Native compilation uses Node 24.19.0 V8 interval bounds; Parse remains the
+// specification reference for syntax-oracle diagnostics.
+func parsePattern(pattern, flags string, nativeBounds bool) (*Pattern, error) {
 	f, err := parseFlags(flags)
 	if err != nil {
 		return nil, err
 	}
-	p := &parser{source: pattern, flags: f, names: make(map[string]bool)}
+	p := &parser{source: pattern, flags: f, nativeBounds: nativeBounds, names: make(map[string]bool)}
 	// Decimal escapes depend on the total capture count, including captures to
 	// their right. Count them without interpreting pattern contents first.
 	p.captureCount, p.hasNamedCapture = countCaptures(pattern)
@@ -114,6 +120,7 @@ func parseFlags(s string) (Flags, error) {
 }
 
 type parser struct {
+	nativeBounds           bool
 	source                 string
 	pos                    int
 	flags                  Flags
@@ -332,6 +339,17 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 				}
 			}
 			return nil, p.failAt(start, "quantifier range out of order")
+		}
+		if p.nativeBounds {
+			// Port of V8 RegExpParserImpl::ParseIntervalQuantifier after the
+			// exact-order refusal. kInfinity is the unbounded maximum sentinel.
+			limit := big.NewInt(2147483647)
+			if min.Cmp(limit) > 0 {
+				min.Set(limit)
+			}
+			if max != nil && max.Cmp(limit) >= 0 {
+				max = nil
+			}
 		}
 	}
 	greedy := !p.take('?')

@@ -466,7 +466,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
-			throws = throws || ir.LibraryMayThrow(value.Interface())
+			throws = throws || ir.LibraryMayThrow(value.Interface()) || ir.NumberFormatMayThrow(value.Interface())
 			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
 				throws = true
 			}
@@ -474,6 +474,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.RegExpCall{}):
+				throws = throws || value.Interface().(ir.RegExpCall).MayThrow()
 			case reflect.TypeOf(ir.StringFromCodes{}):
 				if value.Interface().(ir.StringFromCodes).CodePoints {
 					throws = true

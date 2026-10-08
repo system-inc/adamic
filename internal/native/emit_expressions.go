@@ -733,6 +733,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(isfinite(%s) && trunc(%s) == %s && fabs(%s) <= 9007199254740991.0)", arguments[0], arguments[0], arguments[0], arguments[0])
 	case ir.ToFixed:
+		if ir.NumberFormatMayThrow(expression) {
+			return e.libraryNumberFormat("fixed", expression.Value, expression.Digits)
+		}
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)
 		result := e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))

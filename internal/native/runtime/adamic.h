@@ -896,6 +896,8 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 // lastIndexOf, and replace and replaceAll with a string pattern and a replacement string (its $$, $&,
 // $` and $' expanded, as JavaScript does).
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
+// position is a JavaScript number: NaN means the end; truncate and clamp before converting to size_t.
+double adamic_string_last_index_of_from(const adamic_string *string, const adamic_string *search, double position);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
 // ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
@@ -1175,6 +1177,7 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "library_number_format.h"
 #include "node_fs_file.h"
 #include "date.h"
 #include "node_buffer.h"

@@ -24,14 +24,29 @@ static adamic_string *regex_runtime_source(adamic_string *pattern,unsigned flags
 }
 adamic_object *adamic_regex_compile_new(adamic_string *pattern,adamic_string *flags) {
     if(pattern==NULL)pattern=&adamic_string_empty;if(flags==NULL)flags=&adamic_string_empty;
-    adamic_regex_parse_result result;adamic_regex_parse((const unsigned char *)pattern->bytes,pattern->length,(const unsigned char *)flags->bytes,flags->length,&result);
+    adamic_regex_parse_result result;adamic_regex_parse_native((const unsigned char *)pattern->bytes,pattern->length,(const unsigned char *)flags->bytes,flags->length,&result);
     adamic_regex_program *program=result.status==0?adamic_regex_compile_checked(&result):NULL;
     if(program==NULL){
         const char *message=result.message;if(message==NULL)message=result.reference_reason;if(message==NULL)message="RegExp runtime compiler: out of memory";
         size_t length=result.message!=NULL?result.message_length:strlen(message);
+        /* Only status 1 is Node's SyntaxError. Resource failures, missing
+         * native features and V8 divergences must escape tsc's catch path. */
+        if(result.status!=1){
+            const char prefix[]="RegExp runtime compilation refused for /";
+            size_t fixed=sizeof(prefix)-1+3;
+            if(pattern->length>SIZE_MAX-fixed || flags->length>SIZE_MAX-fixed-pattern->length || length>SIZE_MAX-fixed-pattern->length-flags->length)
+                adamic_panic("RegExp runtime compiler: diagnostic too large",sizeof("RegExp runtime compiler: diagnostic too large")-1);
+            adamic_string *diagnostic=adamic_string_allocate(fixed+pattern->length+flags->length+length);
+            char *out=(char *)diagnostic->bytes;size_t at=0;
+            memcpy(out,prefix,sizeof(prefix)-1);at+=sizeof(prefix)-1;
+            memcpy(out+at,pattern->bytes,pattern->length);at+=pattern->length;out[at++]='/';
+            memcpy(out+at,flags->bytes,flags->length);at+=flags->length;out[at++]=':';out[at++]=' ';
+            memcpy(out+at,message,length);
+            adamic_regex_parse_free(&result);adamic_panic(diagnostic->bytes,diagnostic->length);
+        }
         adamic_string *text=adamic_string_allocate(length);memcpy((char *)text->bytes,message,length);
         adamic_object *error=adamic_error_new(text);adamic_release(text);
-        if(result.status==1||result.status==3){adamic_string *name=adamic_string_allocate(11);memcpy((char *)name->bytes,"SyntaxError",11);adamic_release(error->slots[0].reference);error->slots[0].reference=name;}
+        adamic_string *name=adamic_string_allocate(11);memcpy((char *)name->bytes,"SyntaxError",11);adamic_release(error->slots[0].reference);error->slots[0].reference=name;
         adamic_regex_parse_free(&result);adamic_thrown=error;return NULL;
     }
     if(program->group_count!=0){

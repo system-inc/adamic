@@ -77,6 +77,13 @@ func classify(path string, source string, adapt bool) classified {
 		body = literalAdapted.Source
 		result.Adaptations = literalAdapted.Counts
 	}
+	if adapt && result.Original != "" {
+		legacy := adaptRegExpConstructorErrors(body)
+		body = legacy.Source
+		for kind, count := range legacy.Counts {
+			result.Adaptations[kind] += count
+		}
+	}
 	if reason := syntaxSkip(codeOnly(body)); reason != "" {
 		result.Skip = reason
 		return result
@@ -101,7 +108,26 @@ func classify(path string, source string, adapt bool) classified {
 			}
 		}
 	}
+	if adapt && result.Original != "" {
+		checked := adaptRegExpSyntaxAssertions(body)
+		body = checked.Source
+		for kind, count := range checked.Counts {
+			result.Adaptations[kind] += count
+		}
+		// Only assertions discharged by the intrinsic-only proof can bypass
+		// the generic harness constructor-identity refusal.
+		result.ConstructorAssertion = false
+		tokens := tokenize(body)
+		for i := 0; i+3 < len(tokens); i++ {
+			if tokens[i].text == "assert" && tokens[i+1].text == "." && tokens[i+2].text == "throws" && tokens[i+3].text == "(" {
+				result.ConstructorAssertion = true
+			}
+		}
+	}
 	result.Program = program(rewriteHarnessCalls(body))
+	if result.Adaptations["regex-intrinsic-syntax-assertion"] > 0 {
+		result.Program = regexpSyntaxPrelude + "\n" + result.Program
+	}
 	for _, include := range meta.Includes {
 		if include == "regExpUtils.js" {
 			result.Program = regexpPrelude + "\n" + result.Program

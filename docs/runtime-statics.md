@@ -508,3 +508,15 @@ Prototype files: `runtime-file:library_prototypes.c`, `runtime-file:library_prot
 `library_prototypes.c:object_prototype:1` is a statically initialized immortal
 empty intrinsic with no writers. Lowering prevents it from being a mutation
 receiver. `empty_shape` is const; all counted links live on heap or region objects.
+
+## Regex stack error names
+
+- `runtime-file:library_number_format.c`
+- `runtime-file:library_number_format.h`
+
+`library_number_format.c:name:1` and `regexp.c:name:1` are immortal
+RangeError and TypeError literals initialized by C before any pool starts.
+Their zero reference counts prevent retain/release writes, and the literal
+index marker prevents lazy string-cache writes. Error objects and messages
+are owned per call; adamic_thrown remains thread-local. The formatting header
+only declares functions and adds no storage.

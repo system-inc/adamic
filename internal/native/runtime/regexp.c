@@ -117,6 +117,7 @@ typedef struct regex_state {
 // Choice points own their snapshots until popped. Freed frames can be reused
 // across search positions; overflow blocks are released at execution end.
 struct regex_workspace {
+	const adamic_string *source; // Borrowed from the regex for this execution, including lookarounds.
 	regex_state *free_frames;
 	union {
 		max_align_t alignment;
@@ -124,6 +125,15 @@ struct regex_workspace {
 	} arena;
 	size_t used;
 };
+// A resource stop is never a failed match, and must identify the pattern.
+static void regex_budget_stop(const regex_workspace *workspace, const char *reason) {
+    size_t n=strlen(reason), length=workspace->source->length;
+    if(length>SIZE_MAX-n-5)adamic_panic(reason,n);
+    char *message=regex_memory(n+length+5);
+    memcpy(message,reason,n);memcpy(message+n," /",2);
+    memcpy(message+n+2,workspace->source->bytes,length);message[n+length+2]='/';
+    adamic_panic(message,n+length+3);
+}
 static void regex_workspace_destroy(regex_workspace *workspace) {
 	while (workspace->free_frames != NULL) {
 		regex_state *frame = workspace->free_frames;
@@ -203,8 +213,7 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 	for (;;) {
 		uint64_t limit = regex_step_limit;
 		if (limit != 0 && *steps >= limit) {
-			static const char message[] = "regexp: instruction step limit exceeded";
-			adamic_panic(message, sizeof message - 1);
+			regex_budget_stop(workspace,"regexp: instruction step limit exceeded");
 		}
 		(*steps)++;
 		const adamic_regex_instruction *i = &p->code[state.pc];
@@ -389,8 +398,7 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				failed = true;
 			else {
 				if (reg->count == UINT64_MAX) {
-					static const char message[] = "regexp counter overflow";
-					adamic_panic(message, sizeof message - 1);
+					regex_budget_stop(workspace,"regexp counter overflow");
 				}
 				reg->count++;
 				state.pc = (size_t)i->y;
@@ -524,6 +532,7 @@ regex_execute_kernel(adamic_object *regex, const uint16_t *input, size_t length,
 					 uint64_t *steps, bool enhanced) {
 	const adamic_regex_program *p = regex_program(regex);
 	regex_workspace workspace;
+	workspace.source = regex->slots[2].reference;
 	workspace.free_frames = NULL;
 	workspace.used = 0;
 	ADAMIC_CHECK_STACK();
@@ -845,14 +854,25 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL};
-static void regex_require_global(const adamic_regex_program *p, const char *message) {
-	if (!(p->flags & 8))
-		adamic_panic(message, strlen(message));
+// V8 String.prototype.matchAll/replaceAll reject non-global patterns before executing them.
+// Their TypeError owns its message and follows the ordinary catch/cleanup path.
+static bool regex_require_global(const adamic_regex_program *p, const char *message) {
+	if (p->flags & 8) return true;
+	adamic_string text = {{0, adamic_kind_string, 0}, strlen(message), message, 0, NULL, NULL, 0};
+	adamic_string *owned = adamic_string_concat(1, (adamic_string *const[]){&text});
+	adamic_object *error = adamic_error_new(owned);
+	adamic_release(owned);
+	static adamic_string name = ADAMIC_STRING("TypeError");
+	adamic_release(error->slots[0].reference);
+	error->slots[0].reference = adamic_retain(&name);
+	adamic_error_tag(error);
+	adamic_thrown = error;
+	return false;
 }
 adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex) {
 	const adamic_regex_program *p = regex_program(regex);
-	regex_require_global(
-		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
+	if (!regex_require_global(
+		p, "String.prototype.matchAll called with a non-global RegExp argument")) return NULL;
 	#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
  adamic_object *copy = regex_copy_object(regex);
 #else
@@ -1074,9 +1094,8 @@ static void regex_substitution(adamic_array *pieces, adamic_string *input, size_
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global) {
 	const adamic_regex_program *p = regex_program(regex);
-	if (require_global)
-		regex_require_global(
-			p, "TypeError: String.prototype.replaceAll called with a non-global RegExp argument");
+	if (require_global && !regex_require_global(
+		p, "String.prototype.replaceAll called with a non-global RegExp argument")) return NULL;
 	bool global = (p->flags & 8) != 0;
 	if (global)
 		regex->slots[1].number = 0;

@@ -57,7 +57,11 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 	}
 	invocation := "adamic_regex_" + method + "(" + strings.Join(arguments, ", ") + ")"
 	if call.Returns.IsReference() {
-		return e.own(call.Returns, invocation)
+		result := e.own(call.Returns, invocation)
+		if call.MayThrow() {
+			e.checkThrown()
+		}
+		return result
 	}
 	return e.snapshot(call.Returns, invocation)
 }

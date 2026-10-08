@@ -10,8 +10,6 @@ import (
 
 func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
-		"const matches = /a{18446744073709551616}/.test('a');",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {
@@ -53,6 +51,7 @@ func TestRegExpSourceNode(t *testing.T) {
 
 func TestRegExpRuntimeConstructionLowers(t *testing.T) {
 	for _, source := range []string{
+		"const matches = /a{18446744073709551616}/.test('a');",
 		"new RegExp('x' + undefined).test('x');",
 		`let flags: string | undefined = undefined; function change(): void { flags = 's'; } if (flags === undefined) { change(); new RegExp('.', flags).test('\n'); }`,
 		"let pattern = 'a'; pattern = 'b'; new RegExp(pattern).test('a');",
