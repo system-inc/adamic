@@ -1,0 +1,238 @@
+import { panic, utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { unnecessary, missing } from './messages.a';
+
+function jsx(kind: string): boolean {
+    return ['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'].includes(kind);
+}
+function whitespace(code: number): boolean {
+    return [9, 10, 11, 12, 13, 32, 160, 5760, 8192, 8193, 8194, 8195, 8196,
+        8197, 8198, 8199, 8200, 8201, 8202, 8232, 8233, 8239, 8287, 12288, 65279].includes(code);
+}
+function allWhitespace(text: string): boolean {
+    for(let i = 0; i < text.length; i++) { if(!whitespace(text.charCodeAt(i))) { return false; } }
+    return true;
+}
+function edgeWhitespace(text: string): boolean {
+    return text !== '' && (whitespace(text.charCodeAt(0)) || whitespace(text.charCodeAt(text.length - 1)));
+}
+function terminator(text: string): boolean {
+    return text.includes('\n') || text.includes('\r') || text.includes('\u2028') || text.includes('\u2029');
+}
+function referenceBody(code: number): boolean {
+    return (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57) || code === 35;
+}
+function references(text: string): number[] {
+    const found: number[] = [];
+    for(let i = 0; i < text.length; i++) {
+        if(text.charCodeAt(i) !== 38) { continue; }
+        let end = i + 1;
+        while(end < text.length && referenceBody(text.charCodeAt(end))) { end++; }
+        if(end > i + 1 && text.charCodeAt(end) === 59) { found.push(i, end + 1); i = end; }
+    }
+    return found;
+}
+function onlyReferences(text: string): boolean {
+    const spans = references(text);
+    if(spans.length === 0) { return text !== '' && allWhitespace(text); }
+    let rest = ''; let end = 0;
+    for(let i = 0; i < spans.length; i += 2) {
+        rest += text.slice(end, spans[i] ?? panic('reference start'));
+        end = spans[i + 1] ?? panic('reference end');
+    }
+    return allWhitespace(rest + text.slice(end));
+}
+// Go's JSON encoder escapes U+2028 and U+2029 even with SetEscapeHTML(false).
+function quote(text: string): string {
+    let out = '"';
+    for(let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        const character = text.slice(i, i + 1);
+        if(character === '"' || character === '\\') { out += '\\' + character; }
+        else if(code === 8) { out += '\\b'; }
+        else if(code === 9) { out += '\\t'; }
+        else if(code === 10) { out += '\\n'; }
+        else if(code === 12) { out += '\\f'; }
+        else if(code === 13) { out += '\\r'; }
+        else if(code < 32 || code === 8232 || code === 8233) {
+            out += '\\u' + code.toString(16).padStart(4, '0');
+        }
+        else { out += character; }
+    }
+    return out + '"';
+}
+function wrapReferences(text: string): string {
+    const spans = references(text); let result = ''; let end = 0;
+    for(let i = 0; i < spans.length; i += 2) {
+        const start = spans[i] ?? panic('reference start');
+        const next = spans[i + 1] ?? panic('reference end');
+        if(start > end) { result += '{' + quote(text.slice(end, start)) + '}'; }
+        result += text.slice(start, next); end = next;
+    }
+    if(end < text.length) { result += '{' + quote(text.slice(end)) + '}'; }
+    return result;
+}
+function wrapChild(text: string): string {
+    if(!terminator(text)) { return '{' + quote(text) + '}'; }
+    const lines = text.split('\n');
+    for(let i = 0; i < lines.length; i++) {
+        const line = lines[i] ?? panic('line');
+        if(allWhitespace(line)) { continue; }
+        let start = 0;
+        while(start < line.length && whitespace(line.charCodeAt(start))) { start++; }
+        const content = line.slice(start);
+        lines[i] = line.slice(0, start) + (references(content).length > 0 ? wrapReferences(content) : '{' + quote(content) + '}');
+    }
+    return lines.join('\n');
+}
+function valid(value: string): boolean { return ['always', 'never', 'ignore'].includes(value); }
+
+export class Rule {
+    readonly context: RuleContext;
+    props = 'never'; children = 'never'; elements = 'ignore';
+    constructor(context: RuleContext) {
+        this.context = context;
+        if(context.settings.text === '') { return; }
+        const options = new OptionsJson(context.settings.text); const root = options.parse();
+        if(root < 0 || options.error !== '') { panic(options.error); }
+        const node = options.node(root);
+        if(node.kind === 'string') {
+            if(valid(node.text)) { this.props = node.text; this.children = node.text; }
+            return;
+        }
+        if(node.kind === 'null') { return; }
+        if(node.kind !== 'object') { panic('invalid jsx-curly-brace-presence options'); }
+        for(let i = 0; i < node.keys.length; i++) {
+            const key = (node.keys[i] ?? panic('option key')).toLowerCase();
+            const value = options.node(node.children[i] ?? panic('option value'));
+            if(!['props', 'children', 'propelementvalues'].includes(key)) { panic('unknown jsx-curly-brace-presence option'); }
+            if(value.kind === 'null') { continue; }
+            if(value.kind !== 'string') { panic('invalid jsx-curly-brace-presence setting'); }
+            if(!valid(value.text)) { continue; }
+            if(key === 'props') { this.props = value.text; }
+            if(key === 'children') { this.children = value.text; }
+            if(key === 'propelementvalues') { this.elements = value.text; }
+        }
+    }
+    expression(index: number): number {
+        let expression = this.context.node(index).children[0] ?? -1;
+        while(this.context.kind(expression) === 'ParenthesizedExpression') {
+            expression = this.context.node(expression).children[0] ?? -1;
+        }
+        return expression;
+    }
+    childList(index: number): number[] {
+        if(!['JsxElement', 'JsxFragment'].includes(this.context.kind(index))) { return []; }
+        return this.context.node(index).children.slice(1, -1);
+    }
+    whitespaceLiteral(index: number): boolean {
+        if(this.context.kind(index) !== 'StringLiteral') { return false; }
+        const value = this.context.node(index).text;
+        return value !== '' && allWhitespace(value);
+    }
+    whitespaceExpression(index: number): boolean {
+        if(this.context.kind(index) !== 'JsxExpression') { return false; }
+        const expression = this.expression(index);
+        if(!['JsxText', 'StringLiteral'].includes(this.context.kind(expression))) { return false; }
+        const value = this.context.node(expression).text;
+        return value !== '' && allWhitespace(value);
+    }
+    adjacent(index: number, children: number[]): number[] {
+        const filtered = children.filter(child => !this.whitespaceLiteral(child));
+        const position = filtered.indexOf(index);
+        if(position < 0 || filtered.length < 2) { return []; }
+        if(position === 0) { return filtered.slice(1, 2); }
+        if(position === filtered.length - 1) { return filtered.slice(position - 1, position); }
+        return [filtered[position - 1] ?? panic('previous sibling'), filtered[position + 1] ?? panic('next sibling')];
+    }
+    raw(index: number): string {
+        const context = this.context;
+        return context.kind(index) === 'JsxText' ? context.source.slice(context.node(index).pos, context.node(index).end) : context.raw(index);
+    }
+    wanted(parent: number, value: string): boolean {
+        return this.context.kind(parent) === 'JsxAttribute' ? this.props === value : jsx(this.context.kind(parent)) && this.children === value;
+    }
+    commentInside(index: number): boolean {
+        const context = this.context;
+        // Shared helper comments use UTF-8 offsets. Compare against encoded prefix lengths.
+        const start = utf8Length(context.source.slice(0, context.start(index)));
+        const end = utf8Length(context.source.slice(0, context.node(index).end));
+        for(const comment of forFile(context.parser, context.root, undefined)) {
+            if(comment.start >= start && comment.end <= end) { return true; }
+        }
+        return false;
+    }
+    unnecessary(index: number, parent: number): void {
+        const context = this.context; const expression = this.expression(index);
+        if(expression < 0) { return; }
+        const kind = context.kind(expression); const raw = this.raw(expression);
+        const inAttribute = context.kind(parent) === 'JsxAttribute';
+        let replacement = context.node(expression).text;
+        if(jsx(kind)) { replacement = raw; }
+        else if(inAttribute) {
+            const inner = raw.slice(1, -1);
+            replacement = kind !== 'NoSubstitutionTemplateLiteral' && inner.includes('"') ? raw : '"' + inner + '"';
+        }
+        context.reportNode(index, 'react/jsx-curly-brace-presence', 'UnnecessaryCurly', unnecessary, [context.edit(index, replacement)]);
+    }
+    missing(index: number, parent: number): void {
+        const context = this.context; const raw = this.raw(index);
+        const inAttribute = context.kind(parent) === 'JsxAttribute';
+        if(!jsx(context.kind(index)) && (onlyReferences(raw) || (inAttribute && terminator(raw)) || (terminator(raw) && allWhitespace(raw)))) {
+            context.reportNode(index, 'react/jsx-curly-brace-presence', 'MissingCurly', missing); return;
+        }
+        let replacement = '{' + raw + '}';
+        if(!jsx(context.kind(index))) {
+            if(inAttribute) {
+                const escaped = raw.slice(1, -1).split('\\').join('\\\\').split('\\"').join('"').split('"').join('\\"');
+                replacement = '{"' + escaped + '"}';
+            }
+            else { replacement = wrapChild(raw); }
+        }
+        const start = context.kind(index) === 'JsxText' ? context.node(index).pos : context.start(index);
+        context.reportRange(start, context.node(index).end, 'react/jsx-curly-brace-presence', 'MissingCurly', missing, [context.edit(index, replacement)]).editStart = start;
+    }
+    visit(index: number, parent: number): void {
+        const context = this.context; const kind = context.kind(index);
+        if(jsx(kind)) {
+            if(context.kind(parent) === 'JsxAttribute' && this.elements === 'always') { this.missing(index, parent); }
+            return;
+        }
+        if(kind === 'JsxExpression') {
+            const expression = this.expression(index); const expressionKind = context.kind(expression);
+            if(context.kind(parent) === 'JsxAttribute' && jsx(expressionKind)) {
+                if(this.elements === 'never') { this.unnecessary(index, parent); }
+                return;
+            }
+            if(context.kind(parent) === 'JsxAttribute' && expression >= 0 && !['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(expressionKind)) { return; }
+            if(jsx(context.kind(parent))) {
+                const children = this.childList(parent); const adjacent = this.adjacent(index, children);
+                if(adjacent.some(sibling => context.kind(sibling) === 'JsxExpression')) { return; }
+                if(this.whitespaceExpression(index) && (children.length === 1 || adjacent.some(sibling => ['JsxExpression', 'JsxElement'].includes(context.kind(sibling))))) { return; }
+            }
+            if(!this.wanted(parent, 'never') || expression < 0 || this.commentInside(index)) { return; }
+            const raw = this.raw(expression); const value = context.node(expression).text;
+            const inAttribute = context.kind(parent) === 'JsxAttribute';
+            if(expressionKind === 'StringLiteral') {
+                if(inAttribute ? value !== '' && allWhitespace(value) : edgeWhitespace(value)) { return; }
+                if(value.includes('/*')) { return; }
+            }
+            else if(expressionKind === 'NoSubstitutionTemplateLiteral') {
+                const inner = raw.slice(1, -1);
+                if(inner.includes('\n') || edgeWhitespace(inner) || value.includes("'") || value.includes('"')) { return; }
+            }
+            else if(!jsx(expressionKind)) { return; }
+            if(!jsx(expressionKind) && (raw.includes('\\') || references(raw).length > 0 || (!inAttribute && ['{', '}', '<', '>'].some(character => raw.includes(character))))) { return; }
+            this.unnecessary(index, parent); return;
+        }
+        if(kind !== 'JsxText' && !(kind === 'StringLiteral' && context.kind(parent) === 'JsxAttribute')) { return; }
+        const raw = this.raw(index);
+        if((terminator(raw) && allWhitespace(raw)) || onlyReferences(raw)) { return; }
+        const children = this.childList(parent);
+        if(children.length === 1 && this.whitespaceExpression(children[0] ?? panic('child'))) { return; }
+        if(this.wanted(parent, 'always')) { this.missing(index, parent); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
