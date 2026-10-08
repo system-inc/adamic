@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -12,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -43,16 +45,36 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 }
 func build(t *testing.T, directory string) string {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
+	start := time.Now()
+	defer func() { t.Logf("build native %s wall %.6fs", directory, time.Since(start).Seconds()) }()
+	buildDirectory := t.TempDir()
+	binary := filepath.Join(buildDirectory, "helpers")
+	// Inputs: directory/main.ts and its transitive imports; native runtime; Go and clang toolchains; Sanitize=true.
+	product := func(dir string) error {
+		stage := time.Now()
+		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		t.Logf("build load wall %.6fs", time.Since(stage).Seconds())
+		if err != nil {
+			return err
+		}
+		stage = time.Now()
+		ir, err := lower.Lower(context.Background(), program)
+		t.Logf("build lower wall %.6fs", time.Since(stage).Seconds())
+		if err != nil {
+			return err
+		}
+		stage = time.Now()
+		source := native.C(ir)
+		if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(source), 0644); err != nil {
+			return err
+		}
+		t.Logf("build emit wall %.6fs", time.Since(stage).Seconds())
+		stage = time.Now()
+		err = native.Build(source, filepath.Join(dir, "helpers"), native.Options{Sanitize: true})
+		t.Logf("build clang wall %.6fs", time.Since(stage).Seconds())
+		return err
 	}
-	ir, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "helpers")
-	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+	if err := product(buildDirectory); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -73,17 +95,33 @@ func compare(t *testing.T, got, want []byte) {
 
 func oracle(t *testing.T) string {
 	t.Helper()
+	start := time.Now()
+	defer func() { t.Logf("build Go oracle wall %.6fs", time.Since(start).Seconds()) }()
 	root, _ := filepath.Abs("../../../../../cohere")
 	main, _ := filepath.Abs("testdata/oracle.go")
 	exports, _ := filepath.Abs("testdata/exports.go")
 	virtual := filepath.Join(root, "adamic_comments_oracle.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: main, filepath.Join(root, "internal/lint/ecmascript/comments/adamic_exports.go"): exports}})
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
+	// Inputs: testdata/oracle.go, testdata/exports.go, pinned cohere and
+	// TypeScript modules; -overlay; the Go toolchain. No package-local cache.
+	directory := t.TempDir()
+	product := func(dir string) error {
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		command := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "go-oracle"), virtual)
+		command.Dir = root
+		output, err := childguard.CombinedOutput(command, childguard.Options{})
+		if err != nil || len(output) != 0 {
+			return fmt.Errorf("Go oracle build: %v: %s", err, output)
+		}
+		return nil
+	}
+	if err := product(directory); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "go-oracle")
-	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	binary := filepath.Join(directory, "go-oracle")
 	return binary
 }
 func TestCommentsMatchCohere(t *testing.T) {
@@ -96,52 +134,66 @@ func TestCommentsMatchCohere(t *testing.T) {
 	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
-// Not parallel: compile each mutant separately to bound clang and parser memory.
+// ADAMIC_TEST_SHARD=i/n (zero-based i) selects deterministic mutant shards; unset runs all.
+// Builds are inputs, prepared once before the parallel units. Every unit runs
+// the entire witness corpus under the original sanitizers and leak checks.
 func TestCommentMutants(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
+	// The runtime archive is a separate hashed input shared by all mutant builds.
+	start := time.Now()
+	if _, err := native.RuntimeLibrary("", native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("build sanitized runtime archive wall %.6fs", time.Since(start).Seconds())
 	want := run(t, "", oracle(t), path)
-	for _, m := range []struct{ file, old, new string }{
+	mutants := []struct{ file, old, new string }{
 		{"can_begin_at.ts", "if(position === 0 && text.startsWith('#!'))", "if(false)"},
 		{"collect_list_interiors.ts", "if(depth === 1)", "if(false)"},
 		{"sort_by_position.ts", "> current.start", "< current.start"},
 		{"all.ts", "anchors[node.end] = true;", "anchors[node.end] = false;"},
 		{"for_file.ts", "if(!this.ready)", "if(true)"},
-	} {
-		t.Run(m.file, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				text := string(data)
-				if file == m.file {
-					if strings.Count(text, m.old) != 1 {
-						t.Fatalf("mutant anchor count %d", strings.Count(text, m.old))
-					}
-					text = strings.Replace(text, m.old, m.new, 1)
-				}
-				parserRoot, _ := filepath.Abs("../../../../typescript")
-				options, _ := filepath.Abs("../options_json.ts")
-				text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
-				text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-				if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			got := run(t, "", build(t, directory), path)
-			if bytes.Equal(got, want) {
-				t.Fatal("compiled semantic mutant survived")
-			}
-			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-			for i := 0; i < len(a) && i < len(b); i++ {
-				if a[i] != b[i] {
-					t.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
-					break
-				}
-			}
-		})
 	}
+	ids := make([]string, len(mutants))
+	binaries := make([]string, len(mutants))
+	for i, m := range mutants {
+		ids[i] = m.file
+	}
+	checkCommentMutantUnion(t, ids, path)
+	for i, m := range mutants {
+		directory := t.TempDir()
+		for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			text := string(data)
+			if file == m.file {
+				if strings.Count(text, m.old) != 1 {
+					t.Fatalf("mutant anchor count %d", strings.Count(text, m.old))
+				}
+				text = strings.Replace(text, m.old, m.new, 1)
+			}
+			parserRoot, _ := filepath.Abs("../../../../typescript")
+			options, _ := filepath.Abs("../options_json.ts")
+			text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
+			text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
+			if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		binaries[i] = build(t, directory)
+	}
+	runCommentMutantShards(t, ids, func(t *testing.T, i int) {
+		got := run(t, "", binaries[i], path)
+		requireCommentMutantKilled(t, got, want)
+		a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+		for i := 0; i < len(a) && i < len(b); i++ {
+			if a[i] != b[i] {
+				t.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
+				break
+			}
+		}
+	})
 }
 
 // The inventory assumes a common AST adapter. This comparison isolates that
@@ -278,4 +330,140 @@ func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 		t.Fatal(err)
 	}
 	return output, stderr.String(), runErr
+}
+
+func requireCommentMutantKilled(t *testing.T, got, want []byte) {
+	t.Helper()
+	if bytes.Equal(got, want) {
+		t.Fatal("compiled semantic mutant survived")
+	}
+}
+
+func commentMutantSelected(t *testing.T, index int) bool {
+	t.Helper()
+	value := os.Getenv("ADAMIC_TEST_SHARD")
+	if value == "" {
+		return true
+	}
+	parts := strings.Split(value, "/")
+	if len(parts) != 2 {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: want zero-based i/n", value)
+	}
+	selected, first := strconv.Atoi(parts[0])
+	count, second := strconv.Atoi(parts[1])
+	if first != nil || second != nil || count < 1 || selected < 0 || selected >= count {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+	}
+	return index%count == selected
+}
+
+func runCommentMutantShards(t *testing.T, ids []string, check func(*testing.T, int)) {
+	t.Helper()
+	for i, id := range ids {
+		if !commentMutantSelected(t, i) {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%02d-%s", i, id), func(t *testing.T) {
+			t.Parallel()
+			start := time.Now()
+			defer func() {
+				if elapsed := time.Since(start); elapsed > 30*time.Second {
+					t.Errorf("invalid test unit: wall %s exceeds 30s", elapsed)
+				}
+			}()
+			check(t, i)
+		})
+	}
+}
+
+// Count and compare the full mutant/witness Cartesian product, independently
+// of gate selection, so selecting one box never hides an enumeration error.
+func checkCommentMutantUnion(t *testing.T, ids []string, path string) {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []struct{ Name string }
+	if err := json.Unmarshal(data, &rows); err != nil {
+		t.Fatal(err)
+	}
+	expected := make(map[string]bool)
+	for _, id := range ids {
+		for rowIndex, row := range rows {
+			key := fmt.Sprintf("%s/%04d/%s", id, rowIndex, row.Name)
+			if row.Name == "" || expected[key] {
+				t.Fatalf("repeated or empty unsplit case id %q", key)
+			}
+			expected[key] = true
+		}
+	}
+	actual := make(map[string]bool)
+	count := 0
+	for shard := range ids {
+		for index, id := range ids {
+			if index != shard {
+				continue
+			}
+			for rowIndex, row := range rows {
+				key := fmt.Sprintf("%s/%04d/%s", id, rowIndex, row.Name)
+				if actual[key] || !expected[key] {
+					t.Fatalf("repeated or unexpected shard case %q", key)
+				}
+				actual[key] = true
+				count++
+			}
+		}
+	}
+	if count != len(expected) || count != len(ids)*len(rows) {
+		t.Fatalf("union count %d, unsplit %d", count, len(expected))
+	}
+	for key := range expected {
+		if !actual[key] {
+			t.Fatalf("missing shard case %q", key)
+		}
+	}
+	t.Logf("union: %d mutants x %d witnesses = %d unique cases across %d shards", len(ids), len(rows), count, len(ids))
+}
+
+// A prepared output equal to the oracle plants a survivor in exactly one unit.
+// Subprocesses exercise the same parallel runner and fatal check as the real test.
+func TestCommentMutantShardCatchesSurvivor(t *testing.T) {
+	ids := []string{"can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"}
+	if os.Getenv("ADAMIC_COMMENT_SURVIVOR_PROBE") == "1" {
+		runCommentMutantShards(t, ids, func(t *testing.T, i int) {
+			got := []byte("killed")
+			if i == 2 {
+				got = []byte("oracle")
+			}
+			requireCommentMutantKilled(t, got, []byte("oracle"))
+		})
+		return
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := range ids {
+		command := exec.Command(executable, "-test.run=^TestCommentMutantShardCatchesSurvivor$", "-test.v")
+		for _, value := range os.Environ() {
+			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_COMMENT_SURVIVOR_PROBE=") {
+				command.Env = append(command.Env, value)
+			}
+		}
+		command.Env = append(command.Env, "ADAMIC_COMMENT_SURVIVOR_PROBE=1", fmt.Sprintf("ADAMIC_TEST_SHARD=%d/%d", i, len(ids)))
+		output, err := command.CombinedOutput()
+		failed := err != nil
+		if failed != (i == 2) {
+			t.Fatalf("shard %d: unexpected result %v: %s", i, err, output)
+		}
+		name := fmt.Sprintf("shard-%02d-%s", i, ids[i])
+		if !bytes.Contains(output, []byte(name)) {
+			t.Fatalf("shard name missing: %s", output)
+		}
+		if failed && !bytes.Contains(output, []byte("compiled semantic mutant survived")) {
+			t.Fatalf("wrong failure: %s", output)
+		}
+		t.Logf("%s: planted survivor caught=%v", name, failed)
+	}
 }
